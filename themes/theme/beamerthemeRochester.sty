@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemeIlmenau}[2003/11/07 ver 0.93]
+\ProvidesPackage{beamerthemeRochester}[2003/11/07 ver 0.93]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -8,16 +8,13 @@
 % archives in directory macros/latex/base/lppl.txt.
 
 
-\DeclareOptionBeamer{compress}{\beamer@compresstrue}
+\DeclareOptionBeamer{height}{\PassOptionsToPackage{height=#1}{beamerlayoutthemesidebar}}
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
-\uselayouttheme{bars}
-\useelementtheme[%
-  blockheadcolor=beamerstructure!75!averagebackgroundcolor,%
-  titlecolor=beamerstructure!75!averagebackgroundcolor]%
-  {rounded}
+\uselayouttheme[width=0pt]{sidebar}
+\useelementtheme{rectangles}
 
 \mode
 <all>

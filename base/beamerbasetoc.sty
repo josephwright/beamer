@@ -21,8 +21,11 @@
 %
 %
 
-\define@key{beamertoc}{sectionstyle}{\beamer@toc@process\beamer@toc@cs\beamer@toc@os#1//}
-\define@key{beamertoc}{subsectionstyle}{\beamer@toc@sprocess\beamer@toc@css\beamer@toc@oss\beamer@toc@ooss#1///}
+\def\beamer@toc@sectionstyle#1{\beamer@toc@process\beamer@toc@cs\beamer@toc@os#1//}
+\def\beamer@toc@subsectionstyle#1{\beamer@toc@sprocess\beamer@toc@css\beamer@toc@oss\beamer@toc@ooss#1///}
+
+\define@key{beamertoc}{sectionstyle}{\beamer@toc@sectionstyle{#1}}
+\define@key{beamertoc}{subsectionstyle}{\beamer@toc@subsectionstyle{#1}}
 \def\beamer@toc@process#1#2#3/#4/{%
   \beamer@ifempty{#4}{\def#1{#3}\def#2{#3}}{\def#1{#3}\def#2{#4}\@gobble}}
 \def\beamer@toc@sprocess#1#2#3#4/#5/#6/{%
@@ -35,8 +38,14 @@
 \define@key{beamertoc}{pausesections}[true]{\beamer@pausesectionstrue}
 \define@key{beamertoc}{pausesubsections}[true]{\beamer@pausesubsectionstrue}
 
-\define@key{beamertoc}{currentsection}[]{\setkeys{beamertoc}{sectionstyle=show/shaded,subsectionstyle=show/show/shaded}}
-\define@key{beamertoc}{currentsubsection}[]{\setkeys{beamertoc}{subsectionstyle=show/shaded}}
+\define@key{beamertoc}{currentsection}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}}
+\define@key{beamertoc}{currentsubsection}[]{\beamer@toc@subsectionstyle{show/shaded}}
+\define@key{beamertoc}{hideallsubsections}[]{\beamer@toc@subsectionstyle{hide}}
+\define@key{beamertoc}{hideothersubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}}
+
+\define@key{beamertoc}{current}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}}
+\define@key{beamertoc}{hidesubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}}
+\define@key{beamertoc}{shadesubsections}[]{\beamer@toc@subsectionstyle{shaded}}
 
 \define@key{beamertoc}{part}{\beamer@showpartnumber=#1\relax}
 \define@key{beamertoc}{sections}{\beamer@parsetocsections#1[]}
@@ -74,7 +83,7 @@
 \def\beamer@tocifnothide#1{\csname beamer@tocinvcheck@#1\endcsname}
 \let\beamer@tocinvcheck@hide\@gobble
 
-\def\beamer@hidetex{hide}
+\def\beamer@hidetext{hide}
 
 \def\sectionintoc{}
 \def\beamer@sectionintoc#1#2#3#4#5{%
@@ -92,7 +101,7 @@
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
       {
         \ifbeamer@pausesections\pause\fi%
-        \ifx\beamer@toc@ooss\beamer@hidetex
+        \ifx\beamer@toc@ooss\beamer@hidetext
           \vskip1.5em
         \else
           \vfill

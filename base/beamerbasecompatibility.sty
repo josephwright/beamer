@@ -210,9 +210,9 @@
 \def\beamertemplaterectblocks{\beamertemplateboxedblocks{rect}}
 \def\beamertemplateplaintoc{\beamertemplatedefaulttoc}
 
-\define@key{beamertoc}{current}[]{\setkeys{beamertoc}{currentsection}}
-\define@key{beamertoc}{hidesubsections}[]{\setkeys{beamertoc}{subsectionstyle=show/show/hide}}
-\define@key{beamertoc}{shadesubsections}[]{\setkeys{beamertoc}{subsectionstyle=shaded}}
+\define@key{beamertoc}{current}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}}
+\define@key{beamertoc}{hidesubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}}
+\define@key{beamertoc}{shadesubsections}[]{\beamer@toc@subsectionstyle{shaded}}
 
 \mode
 <all>{\def\unpause{\onslide{}}}

@@ -18,6 +18,9 @@
 \def\beamer@lefttext{left}
 \def\beamer@sbt@bg{\beamertemplatesidebarcolor[\beamer@sidebarside]{beamerstructure}}
 
+\DeclareOptionBeamer{hideothersubsections}[]{\beamer@nav@subsectionstyle{show/show/hide}}
+\DeclareOptionBeamer{hideallsubsections}[]{\beamer@nav@subsectionstyle{hide}}
+
 \DeclareOptionBeamer{sidebarshade}{\def\beamer@sbt@bg{\beamertemplatesidebarverticalshading[\beamer@sidebarside]#1}}
 \DeclareOptionBeamer{cornercolor}{\def\beamersidebar@cornercolor{#1}}
 \DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}

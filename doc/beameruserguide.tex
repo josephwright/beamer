@@ -3461,6 +3461,14 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
     show them, you must install a different table of contents
     templates.
   \item
+    \declare{|hideallsubsections|} causes all subsections to be
+    hidded. This command is a shorthand for specifying
+    the option |subsectionstyle=hide|.
+  \item
+    \declare{|hideothersubsections|} causes the subsections of
+    sections other than the current one to be hidded. This command is
+    a shorthand for specifying the option |subsectionstyle=show/show/hide|.
+  \item
     \declare{|part=|\meta{part number}} causes the table of contents
     of part \meta{part number} to be shown, instead of the table of
     contents of the current part (which is the default). This option
@@ -3513,7 +3521,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
     subsections outside the current section to be suppressed and only
     the current subsection in the current section to be hilighted.
   \end{itemize}
-  The last two commands examples are useful if you do not wish to show
+  The last examples are useful if you do not wish to show
   too many details when presenting the talk outline.
 
   \articlenote
