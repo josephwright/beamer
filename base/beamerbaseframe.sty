@@ -484,7 +484,9 @@
   \end{beamer@frameslide}}%
   {\beamer@masterdecode{\beamer@whichframes}}%
   \beamer@donow%
-  \beamer@dosecondscreennow{#1}% two screen stuff
+  \ifbeamer@twoscreenstext%
+    \beamer@dosecondscreennow{#1}% two screen stuff
+  \fi%
   \ifbeamer@anotherslide
   \advance\beamer@slideinframe by 1\relax
   \repeat%
