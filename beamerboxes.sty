@@ -17,27 +17,27 @@
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
       color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
   \end{colormixin}
-  \pgfaliasshading{bmb@cs#1!20!averagebackgroundcolor}{bmb@shaded}
+  \pgfaliasshading{bmb@cs#1.!20!averagebackgroundcolor}{bmb@shaded}
   \begin{colormixin}{15!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
       color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
   \end{colormixin}
-  \pgfaliasshading{bmb@cs#1!15!averagebackgroundcolor}{bmb@shaded}
+  \pgfaliasshading{bmb@cs#1.!15!averagebackgroundcolor}{bmb@shaded}
   \begin{colormixin}{10!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
       color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
   \end{colormixin}
-  \pgfaliasshading{bmb@cs#1!10!averagebackgroundcolor}{bmb@shaded}
+  \pgfaliasshading{bmb@cs#1.!10!averagebackgroundcolor}{bmb@shaded}
   \begin{colormixin}{5!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
       color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
   \end{colormixin}
-  \pgfaliasshading{bmb@cs#1!5!averagebackgroundcolor}{bmb@shaded}
+  \pgfaliasshading{bmb@cs#1.!5!averagebackgroundcolor}{bmb@shaded}
   \begin{colormixin}{2!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
       color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
   \end{colormixin}
-  \pgfaliasshading{bmb@cs#1!2!averagebackgroundcolor}{bmb@shaded}
+  \pgfaliasshading{bmb@cs#1.!2!averagebackgroundcolor}{bmb@shaded}
   \colorlet{bmb@up#1}{#2}%
   \colorlet{bmb@down#1}{#3}%
 }
@@ -57,7 +57,7 @@
 \def\@beamerboxesrounded[#1]#2{%
   \setkeys{beamerboxes}{scheme=default,width=\textwidth,shadow=false}%
   \setkeys{beamerboxes}{#1}%
-  \@ifundefined{@pgfshadingbmb@cs\bmb@scheme}{\PackageError{beamerboxes}{Undefined scheme "\bmb@scheme"}{}}{}%
+  \@ifundefined{@pgfshadingbmb@cs\bmb@scheme!}{\PackageError{beamerboxes}{Undefined scheme "\bmb@scheme"}{}}{}%
   %
   % Typeset head
   %
@@ -210,9 +210,9 @@
       color(4pt)=(black!50!averagebackgroundcolor);
       color(8pt)=(black!50!averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bmb@shadow!20!averagebackgroundcolor}{bmb@shadowshaded}
-  \pgfaliasshading{bmb@shadowball!20!averagebackgroundcolor}{bmb@shadowballshaded}
-  \pgfaliasshading{bmb@shadowballlarge!20!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+  \pgfaliasshading{bmb@shadow.!20!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball.!20!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge.!20!averagebackgroundcolor}{bmb@shadowballlargeshaded}
 
   \begin{colormixin}{15!averagebackgroundcolor}
     \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
@@ -227,9 +227,9 @@
       color(4pt)=(black!50!averagebackgroundcolor);
       color(8pt)=(black!50!averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bmb@shadow!15!averagebackgroundcolor}{bmb@shadowshaded}
-  \pgfaliasshading{bmb@shadowball!15!averagebackgroundcolor}{bmb@shadowballshaded}
-  \pgfaliasshading{bmb@shadowballlarge!15!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+  \pgfaliasshading{bmb@shadow.!15!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball.!15!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge.!15!averagebackgroundcolor}{bmb@shadowballlargeshaded}
 
   \begin{colormixin}{10!averagebackgroundcolor}
     \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
@@ -244,9 +244,9 @@
       color(4pt)=(black!50!averagebackgroundcolor);
       color(8pt)=(black!50!averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bmb@shadow!10!averagebackgroundcolor}{bmb@shadowshaded}
-  \pgfaliasshading{bmb@shadowball!10!averagebackgroundcolor}{bmb@shadowballshaded}
-  \pgfaliasshading{bmb@shadowballlarge!10!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+  \pgfaliasshading{bmb@shadow.!10!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball.!10!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge.!10!averagebackgroundcolor}{bmb@shadowballlargeshaded}
 
   \begin{colormixin}{5!averagebackgroundcolor}
     \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
@@ -261,9 +261,9 @@
       color(4pt)=(black!50!averagebackgroundcolor);
       color(8pt)=(black!50!averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bmb@shadow!5!averagebackgroundcolor}{bmb@shadowshaded}
-  \pgfaliasshading{bmb@shadowball!5!averagebackgroundcolor}{bmb@shadowballshaded}
-  \pgfaliasshading{bmb@shadowballlarge!5!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+  \pgfaliasshading{bmb@shadow.!5!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball.!5!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge.!5!averagebackgroundcolor}{bmb@shadowballlargeshaded}
 
   \begin{colormixin}{2!averagebackgroundcolor}
     \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
@@ -278,7 +278,11 @@
       color(4pt)=(black!50!averagebackgroundcolor);
       color(8pt)=(black!50!averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bmb@shadow!2!averagebackgroundcolor}{bmb@shadowshaded}
-  \pgfaliasshading{bmb@shadowball!2!averagebackgroundcolor}{bmb@shadowballshaded}
-  \pgfaliasshading{bmb@shadowballlarge!2!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+  \pgfaliasshading{bmb@shadow.!2!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball.!2!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge.!2!averagebackgroundcolor}{bmb@shadowballlargeshaded}
 }
+
+\AtBeginDocument{
+  \beamerboxessetupshadows
+  }

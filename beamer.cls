@@ -1222,7 +1222,7 @@
 \def\beamer@spacingcover{\pgfsys@begininvisible\pgfsys@endinvisible}%for spacing reasons
 \def\beamer@startcovered{%
   \gdef\beamer@do{\aftergroup\pgfsys@endinvisible\pgfsys@begininvisible}%
-  \def\mixinon<##1>##2{\only<##1>{\gdef\beamer@do{\XXC@@beginmixinblock{##2}}}\ignorespaces}%
+  \def\mixinon<##1>##2{\only<##1>{\gdef\beamer@do{\colormixin{##2}}}\ignorespaces}%
   \def\invisibleon<##1>{\only<##1>{\gdef\beamer@do{\aftergroup\pgfsys@endinvisible\pgfsys@begininvisible}}\ignorespaces}%
   \ifnum\serialnumber<\beamer@minimum%ok, at beginning
   {%
@@ -2095,7 +2095,7 @@
 \newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
 \newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
 
-\newcommand{\BeispielInline}[1]{{\color{black50!green}Beispiel: \ignorespaces#1}}
+\newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
 \newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
 
 
