@@ -31,7 +31,7 @@
 %\usepackage{lmodern}
 %\usepackage[T1]{fontenc}
 
-\usepackage{times}
+%\usepackage{times}
 
 % Use some nice templates
 \beamertemplatetransparentcovereddynamic
@@ -205,43 +205,43 @@
     
     \column{4.5cm}
       \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
-        \pgfonly<1| trans:1>{
+        \only<1| trans:1>{
           \putmachine{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{1}}
-        \pgfonly<2| handout:0| trans:2>{
+        \only<2| handout:0| trans:2>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{2}}        
-        \pgfonly<3| handout:0| trans:3>{
+        \only<3| handout:0| trans:3>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{8}}        
-        \pgfonly<4| handout:0| trans:4>{
+        \only<4| handout:0| trans:4>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{\$}
           \selectpos{7}}      
-        \pgfonly<5| handout:0| trans:0>{
+        \only<5| handout:0| trans:0>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{\$}
           \selectpos{2}}      
-        \pgfonly<6| handout:0| trans:0>{
+        \only<6| handout:0| trans:0>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{\$}{1}{0}{0}{1}{0}{\$}
           \selectpos{3}}      
-        \pgfonly<7| handout:0| trans:0>{
+        \only<7| handout:0| trans:0>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{\$}{1}{0}{0}{1}{0}{\$}
           \selectpos{7}}      
-        \pgfonly<8| handout:0| trans:0>{
+        \only<8| handout:0| trans:0>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{\$}{1}{0}{0}{1}{\$}{\$}
           \selectpos{6}}      
-        \pgfonly<9| handout:0| trans:0>{
+        \only<9| handout:0| trans:0>{
           \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{\$}{\$}{\$}{\$}{\$}{\$}{\$}
           \selectpos{5}}      
-        \pgfonly<10| handout:0| trans:5>{
+        \only<10| handout:0| trans:5>{
           \putmachine{\pgfxy(1.75,3)}{Turing machine}
           \tape{\pgfxy(0,5)}{\$}{\$}{\$}{\$}{\$}{\$}{\$}{\$}
           \selectpos{5}}      
@@ -301,31 +301,31 @@
 
     \column{4.5cm}
       \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
-        \pgfonly<1| trans:1>{%
+        \only<1| trans:1>{%
           \putmachinea{\pgfxy(1.75,3)}{Turing machine}%
           \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}%
           \selectpos{1}}%
-        \pgfonly<2| handout:0| trans:2>{%
+        \only<2| handout:0| trans:2>{%
           \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}%
           \selectpos{2}}%      
-        \pgfonly<3| handout:0| trans:3>{%
+        \only<3| handout:0| trans:3>{%
           \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}%
           \selectpos{8}}%      
-        \pgfonly<4| handout:0| trans:0>{%
+        \only<4| handout:0| trans:0>{%
           \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}%
           \selectpos{7}}%      
-        \pgfonly<5| handout:0| trans:0>{%
+        \only<5| handout:0| trans:0>{%
           \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}%
           \selectpos{2}}%      
-        \pgfonly<6| handout:0| trans:0>{%
+        \only<6| handout:0| trans:0>{%
           \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
           \tape{\pgfxy(0,5)}{1}{1}{1}{0}{0}{1}{0}{1}%
           \selectpos{3}}%      
-        \pgfonly<7| handout:0| trans:4>{%
+        \only<7| handout:0| trans:4>{%
           \putmachinea{\pgfxy(1.75,3)}{Turing machine}%
           \pgfputat{\pgfxy(1.75,5.5)}{\pgfbox[center,center]{\pgfuseimage{ram}}}%
           \pgfnodecircle{n3}[virtual]{\pgfxy(1.25,5)}{2pt}%
@@ -435,67 +435,67 @@
 
     \column{4.5cm}
       \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
-        \pgfonly<1| trans:1>{
+        \only<1| trans:1>{
           \putmachinea{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{1}}
-        \pgfonly<2| handout:0| trans:0>{
+        \only<2| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{2}}      
-        \pgfonly<3| handout:0| trans:0>{
+        \only<3| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{8}}
-        \pgfonly<4| handout:0| trans:2>{
+        \only<4| handout:0| trans:2>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}
           \selectpos{7}}      
-        \pgfonly<5| handout:0| trans:0>{
+        \only<5| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}
           \selectpos{1}}      
-        \pgfonly<6| handout:0| trans:3>{
+        \only<6| handout:0| trans:3>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{0}{1}
           \selectpos{2}}      
-        \pgfonly<7| handout:0| trans:0>{
+        \only<7| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{0}{1}
           \selectpos{8}}      
-        \pgfonly<8| handout:0| trans:4>{
+        \only<8| handout:0| trans:4>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{1}{0}
           \selectpos{7}}      
-        \pgfonly<9| handout:0| trans:0>{
+        \only<9| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{1}{0}
           \selectpos{2}}      
-        \pgfonly<10| handout:0| trans:0>{
+        \only<10| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{1}{0}
           \selectpos{3}}      
-        \pgfonly<11| handout:0| trans:0>{
+        \only<11| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{1}{0}
           \selectpos{7}}      
-        \pgfonly<12| handout:0| trans:5>{
+        \only<12| handout:0| trans:5>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{6}}      
-        \pgfonly<13| handout:0| trans:0>{
+        \only<13| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
           \selectpos{3}}      
-        \pgfonly<14| handout:0| trans:0>{
+        \only<14| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{0}{1}{0}{1}{0}{0}
           \selectpos{4}}      
-        \pgfonly<15| handout:0| trans:0>{
+        \only<15| handout:0| trans:0>{
           \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{0}{1}{0}{1}{0}{0}
           \selectpos{6}}      
-        \pgfonly<16| handout:0| trans:6>{
+        \only<16| handout:0| trans:6>{
           \putmachinea{\pgfxy(1.75,3)}{overhead-free machine}
           \tape{\pgfxy(0,5)}{0}{0}{0}{1}{1}{0}{0}{0}
           \selectpos{5}}      
@@ -675,7 +675,7 @@
 \frame
 {
   \frametitle{Relationships among Overhead-Free Computation Classes}
-  
+
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
     \pgfsetlinewidth{0.8pt}
     \pgfxyline(-5,0)(5,0)

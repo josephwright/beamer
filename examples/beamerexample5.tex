@@ -316,30 +316,30 @@
 
         \color{black}
 
-        \pgfonly<1-4,6->{\pgfputat{\pgfxy(1.75,2.5)}{\pgfbox[center,center]{\pgfuseimage{computerimage}}}}
-        \pgfonly<5>{\pgfputat{\pgfxy(1.75,2.5)}{\pgfbox[center,center]{\pgfuseimage{computerworkingimage}}}}
+        \only<1-4,6->{\pgfputat{\pgfxy(1.75,2.5)}{\pgfbox[center,center]{\pgfuseimage{computerimage}}}}
+        \only<5>{\pgfputat{\pgfxy(1.75,2.5)}{\pgfbox[center,center]{\pgfuseimage{computerworkingimage}}}}
 
         \begin{pgfscope}
-          \pgfonly<1>{\ClipSlot{0cm}}
-          \pgfonly<2>{\ClipSlot{0.6cm}}
-          \pgfonly<3>{\ClipSlot{1.2cm}}
-          \pgfonly<4->{\ClipSlot{1.8cm}}
+          \only<1>{\ClipSlot{0cm}}
+          \only<2>{\ClipSlot{0.6cm}}
+          \only<3>{\ClipSlot{1.2cm}}
+          \only<4->{\ClipSlot{1.8cm}}
           \BaenderNormal
         \end{pgfscope}        
 
-        \pgfonly<1>{\Slot{0cm}}
-        \pgfonly<2>{\Slot{0.6cm}}
-        \pgfonly<3>{\Slot{1.2cm}}
-        \pgfonly<4->{\Slot{1.8cm}}
+        \only<1>{\Slot{0cm}}
+        \only<2>{\Slot{0.6cm}}
+        \only<3>{\Slot{1.2cm}}
+        \only<4->{\Slot{1.8cm}}
         
-        \pgfonly<6->{
+        \only<6->{
           \pgfxyline(0,0.5)(0,1)
           \pgfxyline(1,0.5)(1,1)
           \pgfputat{\pgfxy(0.5,0.75)}{\pgfbox[center,center]{$u_1$}}}
-        \pgfonly<7->{
+        \only<7->{
           \pgfxyline(2,0.5)(2,1)
           \pgfputat{\pgfxy(1.5,0.75)}{\pgfbox[center,center]{\alert<9>{$u_2$}}}}
-        \pgfonly<8->{
+        \only<8->{
           \pgfxyline(3,0.5)(3,1)
           \pgfputat{\pgfxy(2.5,0.75)}{\pgfbox[center,center]{$u_3$}}}
         
@@ -350,15 +350,15 @@
         \pgfsetlinewidth{0.6pt}
         \color{structure}
         \pgfsetendarrow{\pgfarrowto}
-        \pgfonly<-5>{\pgfxycurve(1.75,1.5)(1.75,1)(0,1.5)(0,1.05)}
-        \pgfonly<6>{\pgfxycurve(1.75,1.5)(1.75,1)(1,1.5)(1,1.05)}
-        \pgfonly<7>{\pgfxycurve(1.75,1.5)(1.75,1)(2,1.5)(2,1.05)}
-        \pgfonly<8->{\pgfxycurve(1.75,1.5)(1.75,1)(3,1.5)(3,1.05)}
+        \only<-5>{\pgfxycurve(1.75,1.5)(1.75,1)(0,1.5)(0,1.05)}
+        \only<6>{\pgfxycurve(1.75,1.5)(1.75,1)(1,1.5)(1,1.05)}
+        \only<7>{\pgfxycurve(1.75,1.5)(1.75,1)(2,1.5)(2,1.05)}
+        \only<8->{\pgfxycurve(1.75,1.5)(1.75,1)(3,1.5)(3,1.05)}
         
-        \pgfonly<1>{\pgfxycurve(1.75,3.5)(1.75,3.75)(0,3.5)(0,3.85)}
-        \pgfonly<2>{\pgfxycurve(1.75,3.5)(1.75,3.75)(0.6,3.5)(0.6,3.85)}
-        \pgfonly<3>{\pgfxycurve(1.75,3.5)(1.75,3.75)(1.2,3.5)(1.2,3.85)}
-        \pgfonly<4->{\pgfxycurve(1.75,3.5)(1.75,3.75)(1.8,3.5)(1.8,3.85)}
+        \only<1>{\pgfxycurve(1.75,3.5)(1.75,3.75)(0,3.5)(0,3.85)}
+        \only<2>{\pgfxycurve(1.75,3.5)(1.75,3.75)(0.6,3.5)(0.6,3.85)}
+        \only<3>{\pgfxycurve(1.75,3.5)(1.75,3.75)(1.2,3.5)(1.2,3.85)}
+        \only<4->{\pgfxycurve(1.75,3.5)(1.75,3.75)(1.8,3.5)(1.8,3.85)}
       \end{pgfpicture}
     \end{column}
     \begin{column}{6.5cm}
@@ -470,7 +470,7 @@
 
     \pgfputat{\pgfxy(-0.2,5.75)}{\pgfbox[right,base]{Turing machines}}
 
-    \pgfonly<2>{
+    \only<2>{
     \pgfputat{\pgfxy(-0.2,3.75)}{\pgfbox[right,base]{\alert{resource-bounded}}}
     \pgfputat{\pgfxy(-0.2,3.25)}{\pgfbox[right,base]{\alert{machines}}}
     \pgfcircle[fill]{\pgfxy(0,3.6)}{2pt}
@@ -574,7 +574,7 @@
     \pgfxyline(0,0.3)(0,6.5)
     \pgfclearendarrow
 
-    \pgfonly<2->{
+    \only<2->{
     \pgfputat{\pgfxy(-0.3,0.5)}{\pgfbox[right,base]{Presburger arithmetic}}
     \pgfcircle[fill]{\pgfxy(0,0.6)}{2pt}
     \pgfputat{\pgfxy(0.3,0.5)}{\pgfbox[left,base]{$(\Nat, +)$}}
@@ -591,7 +591,7 @@
     \pgfcircle[fill]{\pgfxy(0,3.6)}{2pt}
     \pgfputat{\pgfxy(0.3,3.5)}{\pgfbox[left,base]{positively in $\mathcal R$}}
 
-    \pgfonly<2->{
+    \only<2->{
     \pgfputat{\pgfxy(-0.3,4.5)}{\pgfbox[right,base]{arithmetic hierarchy}}
     \pgfcircle[fill]{\pgfxy(0,4.6)}{2pt}
     \pgfputat{\pgfxy(0.3,4.5)}{\pgfbox[left,base]{$(\Nat, +, \cdot)$}}
@@ -790,7 +790,7 @@
   \frametitle{Relationships Between Cardinality Theorems (CT)}
 
   \begin{pgfpicture}{0cm}{0cm}{10cm}{5cm}
-    \pgfonly<2>{%
+    \only<2>{%
     \color{alert}
     \pgfnodebox{autX}[virtual]{\pgfxy(2.2,4)}{CT}{2pt}{2pt}
     \color{black}}%
@@ -798,7 +798,7 @@
     \pgfnodebox{autB}[virtual]{\pgfxy(1,2)}{2nd Weak CT}{2pt}{2pt}
     \pgfnodebox{autC}[virtual]{\pgfxy(1,1)}{3rd Weak CT}{2pt}{2pt}
 
-    \pgfonly<2>{%
+    \only<2>{%
     \color{alert}
     \pgfnodebox{logX}[virtual]{\pgfxy(6.2,4.5)}{CT}{2pt}{2pt}%
     \color{black}}%
@@ -831,8 +831,8 @@
     \pgfnodeconncurve{recX}{recB}{-55}{5}{10pt}{20pt}
     \pgfnodeconncurve{recX}{recC}{-50}{5}{10pt}{30pt}
 
-    \pgfonly<2>{%
-      \pgfalert{
+    \only<2>{%
+      \alert{
         \pgfnodeconnline{logX}{autX}
         \pgfnodeconncurve{logX}{logA}{-60}{0}{10pt}{10pt}
         \pgfnodeconncurve{logX}{logB}{-55}{0}{10pt}{20pt}
@@ -847,8 +847,8 @@
     \pgfnodeconnline{logB}{recB}
     \pgfnodeconnline{logC}{recC}
 
-    \pgfonly<2>{%
-    \pgfalert{\pgfnodeconnline{logX}{recX}}}
+    \only<2>{%
+    \alert{\pgfnodeconnline{logX}{recX}}}
   \end{pgfpicture}
 }
 
@@ -913,12 +913,12 @@
         \pgfrect[fill]{\pgfxy(-2,-1.75)}{\pgfxy(4,4)}
                                 %\pgfcircle[fill]{\pgforigin}{2cm}
 
-        \pgfonly<1>{%
+        \only<1>{%
           \color{white}%
           \pgfcircle[fill]{\pgfpolar{90}{1cm}}{\innerradius}
           \pgfcircle[fill]{\pgfpolar{210}{1cm}}{\innerradius}
           \pgfcircle[fill]{\pgfpolar{330}{1cm}}{\innerradius}}%
-        \pgfonly<2->{%      
+        \only<2->{%      
         \color{softred}
         \pgfcircle[fill]{\pgfpolar{90}{1cm}}{\radius}
         \color{softgreen}
@@ -926,7 +926,7 @@
         \color{softblue}
         \pgfcircle[fill]{\pgfpolar{330}{1cm}}{\radius}}%
         %
-      \pgfonly<2->{%
+      \only<2->{%
         \begin{pgftranslate}{\pgfpolar{90}{1cm}}
           \pgfzerocircle{\radius}
           \pgfclip

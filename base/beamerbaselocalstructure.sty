@@ -28,14 +28,8 @@
 \newoverlaycommand{\alert}{\beamer@alert}{}
 \def\beamer@alert#1{\begin{alertenv}#1\end{alertenv}}
 
-\newoverlaycommand{\pgfalert}{\beamer@alertinsp}{\beamer@insp}
-\def\beamer@alertinsp#1{\begin{alertenv}#1\ignorespaces\end{alertenv}\ignorespaces}
-
 \newoverlaycommand{\structure}{\beamer@structure}{}
 \def\beamer@structure#1{\begin{structureenv}#1\end{structureenv}}
-
-\newoverlaycommand{\pgfstructure}{\beamer@structureinsp}{\beamer@insp}
-\def\beamer@structureinsp#1{\begin{structureenv}#1\ignorespaces\end{structureenv}\ignorespaces}
 
 \long\def\usealerttemplate#1#2{%
   \gdef\beamer@templatestartalert{#1}\gdef\beamer@templateendalert{#2}}
@@ -57,10 +51,6 @@
   
   \newoverlaycommand{\alert}{\emph}{}
   \newoverlaycommand{\structure}{\textbf}{}
-  \newoverlaycommand{\pgfalert}{\beamer@emphinsp}{\beamer@insp}
-  \def\beamer@emphinsp#1{\emph{\ignorespaces#1}\ignorespaces}
-  \newoverlaycommand{\pgfstructure}{\beamer@structinsp}{\beamer@insp}
-  \def\beamer@structinsp#1{\textbf{\ignorespaces#1}\ignorespaces}  
 }
 
 

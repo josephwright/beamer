@@ -93,17 +93,16 @@
 % Pausing environment
 %
 
-\def\pauses{\@ifnextchar[{\@pauses}{\@@pauses}}
-\def\@pauses[#1]{\global\beamer@pausecount=#1\relax%
-  \@@pauses}
-\def\@@pauses{%
+\newenvironment{pauses}[1][\beamer@pausecount]%
+{%
+  \global\beamer@pausecount=#1\relax%
   \alt<\beamer@pausecount->%
   {\beamer@spacingcover\def\beamer@endpause{\beamer@spacingcover}}%
   {\beamer@startcovered\def\beamer@endpause{\beamer@endcovered}}%
 }
-\def\endpauses{\beamer@closeitem\gdef\beamer@closeitem{}\beamer@endpause}
+{\beamer@closeitem\gdef\beamer@closeitem{}\beamer@endpause}
 
-\def\pause{%
+\newcommand{\pause}{%
   \beamer@endpause%
   \global\advance\beamer@pausecount by1\relax%
   \alt<\beamer@pausecount->%
@@ -227,16 +226,9 @@
 
 \common
 {
-  \long\def\beamer@gobbleoptional{\@ifnextchar[{\beamer@@gobbleoptional}{\beamer@@gobbleoptional[]}}
-  \long\def\beamer@@gobbleoptional[#1]#2{}
-  \long\def\beamer@gobbleoptionalinsp{\@ifnextchar[{\beamer@@gobbleoptionalinsp}{\beamer@@gobbleoptionalinsp[]}}
-  \long\def\beamer@@gobbleoptionalinsp[#1]#2{\ignorespaces}
-
-  \long\def\beamer@ignoreoptional{\@ifnextchar[{\beamer@@ignoreoptional}{}}
-  \long\def\beamer@@ignoreoptional[#1]{}
-
-  \long\def\beamer@insp#1{\ignorespaces#1\ignorespaces}
-  \long\def\beamer@gobbleis#1{\ignorespaces}
+  \newcommand*\beamer@gobbleoptional[2][]{}
+  \newcommand*\beamer@gobbleoptionalinsp[2][]{\ignorespaces}
+  \newcommand*\beamer@ignoreoptional[1][]{}
 }
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
@@ -246,7 +238,6 @@
 \long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
 
 \newoverlaycommand{\uncover}{\fakeinvisible}{\makeinvisible}
-\newoverlaycommand{\pgfuncover}{\fakeinvisibleinsp}{\makeinvisibleinsp}
 \newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\fakeinvisible}
 \newoverlayenvironment{uncoverenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
@@ -255,7 +246,6 @@
 \article
 {
   \newoverlaycommand{\uncover}{\@firstofone}{\@gobble}
-  \newoverlaycommand{\pgfuncover}{\@firstofone\ignorespaces}{\beamer@gobbleis}
   \newoverlaycommand{\invisible}{\@gobble}{\@firstofone}
   \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
   \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
@@ -268,7 +258,6 @@
 
 \common
 {
-  \newoverlaycommand{\pgfonly}{\beamer@insp}{\beamer@gobbleis}
   \newoverlaycommand{\only}{\@firstofone}{\@gobble}
   \renewoverlaycommand{\textbf}{\beameroriginal{\textbf}}{}
   \renewoverlaycommand{\textit}{\beameroriginal{\textit}}{}
@@ -298,9 +287,6 @@
 }
 
 
-\newoverlaycommand{\nameslide}{\beamer@nameslide}{\@gobble}%obsolete
-
-
 
 %
 % Insert area
@@ -325,16 +311,14 @@
 }
 
 
-\def\overprint{\@ifnextchar[{\@overprint}{\@overprint[\textwidth]}}
-\def\@overprint[#1]{%
+\newenvironment{overprint}[1][\textwidth]{%
   \beamer@animht=0pt%
   \beamer@animdp=0pt%
   \beamer@animwd=#1\relax%
   \setbox\beamer@animcurrent=\box\beamer@animshowbox% makes animshowbox empty
   \setbox\beamer@animcurrent=\hbox{}%
   \def\beamer@endaction{}%
-}
-\def\endoverprint{%
+}{%
   \beamer@endaction%
   \ifvoid\beamer@animshowbox\setbox\beamer@animshowbox=\hbox{}\fi%
   \ht\beamer@animshowbox=\beamer@animht%
