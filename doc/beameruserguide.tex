@@ -218,8 +218,8 @@ table of contents, but will also in the navigation bars.
 Once installed (see Section~\ref{section-installation}), using the
 \beamer\ class  together with \LyX\ is quite easy: You open a new file
 and choose |beamer| as the document class. It is often even easier to
-choose ``New from template'' and to pick a template from the directory
-|beamer/lyx/templates|. 
+choose ``New from template'' and to pick a template from one of the
+subdirectories of the directory |beamer/solutions|. 
 
 To reproduce the example from the previous subsection in \LyX, proceed
 as follows:
@@ -272,7 +272,7 @@ In the subdirectories of the directory |beamer/solutions| you will
 find \emph{solution templates} in different languages. A solution
 template is a \TeX-text that ``solves'' a specific problem. Such a
 problem might be ``I need to create a 20 minute talk for a
-conference'' or ``I want to create a slide that introduced the next
+conference'' or ``I want to create a slide that introduces the next
 speaker'' or ``I want to create a table that is uncovered piecewise.''
 For such a problem, a solution template consists of a mixture of a
 template and an example that can be used to solve this particular
@@ -489,8 +489,8 @@ looks correct. If so, you are all set.
 
 \lyxnote
 To test the \LyX\ installation, try creating a new file from the
-template |beamerpresentation.lyx|, which is located in the directory
-|beamer/lyx/templates|.
+template |generic-ornate-15min-45min.en.lyx|, which is located in the directory
+|beamer/solutions/generic-talks|.
 
 
 
@@ -563,7 +563,7 @@ Section~\ref{section-article-version-workflow} for details.
 \lyxnote
 You can either open a new file and then select |beamer| as the
 document class or you say ``New from template'' and then use a
-template from the directory |beamer/lyx/templates|.
+template from the directory |beamer/solutions|.
 
 
 \subsubsection{Solution Templates for Presentations}
@@ -579,8 +579,23 @@ can be found in the directory |beamer/solutions|.
   \item
     Talk length is about 2min.
   \item
-    Orante style.
+    Ornate style.
   \end{itemize}
+  \beamernote \TeX-version available in languages |de| and |en|.
+  \lyxnote    \LyX-version available in languages |de| and |en|.
+\end{solution}
+
+\begin{solution}{generic-talks/generic-ornate-15min-45min}
+  \begin{itemize}
+  \item
+    Generic solution template for talks on any subject.
+  \item
+    Talk length is between 15min and 45min.
+  \item
+    Ornate style.
+  \end{itemize}
+  \beamernote \TeX-version not available.
+  \lyxnote    \LyX-version available in language |en|.
 \end{solution}
 
 \begin{solution}{conference-talks/conference-ornate-20min}
@@ -592,6 +607,8 @@ can be found in the directory |beamer/solutions|.
   \item
     Ornate style.
   \end{itemize}
+  \beamernote \TeX-version available in languages |de| and |en|.
+  \lyxnote    \LyX-version not available.
 \end{solution}
 
 
@@ -2613,6 +2630,189 @@ but less user-friendly.
   commands. 
 \end{environment}
 
+
+
+\subsubsection{Including External Overlay Graphic Sequences}
+\label{section-mpmulti}
+
+This section describes how you can include a sequence of graphics that
+reside in external files in a presentation in a convenient way.
+
+Suppose you have a series of pictures named |first.pdf|, |second.pdf|,
+and |third.pdf| that show different stages of some process. To make a
+frame that shows these pictures on different slides, the following
+code might be used:
+
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Three Process Stages}
+
+  \includegraphics<1>{first.pdf}
+  \includegraphics<2>{second.pdf}
+  \includegraphics<3>{third.pdf}
+\end{frame}
+\end{verbatim}
+
+The above code uses the fact the \beamer\ makes the |\includegraphics|
+command overlay-specification-aware. If works nicely, but only if each
+|.pdf| file contains the complete graphic to be shown. However, some
+programs, like |xfig|, sometimes also produce series of graphics in
+which each file just contains the \emph{additional} graphic elements
+to be shown on the next slide. In this case, the first graphic must be
+shown not on overlay~1, but from overlay~1 on, and so on. While this
+is easy to achieve by changing the overlay specification |<1>| to
+|<1->|, the graphics must also be shown \emph{on top of each
+  other}. To achieve this, you can use \TeX's |\llap| command like this:
+
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Three Process Stages}
+
+  \includegraphics<1->{first.pdf}%
+  \llap{\includegraphics<2->{second.pdf}}%
+  \llap{\includegraphics<3->{third.pdf}}
+\end{frame}
+\end{verbatim}
+
+or like this:
+
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Three Process Stages}
+
+  \includegraphics{first.pdf}%
+  \pause%
+  \llap{\includegraphics{second.pdf}}%
+  \pause%
+  \llap{\includegraphics{third.pdf}}
+\end{frame}
+\end{verbatim}
+
+While this works, it is a bit of a hassle. To make things more
+convenient, you can use the style |mpmulti.sty| from the ppower4
+package. This style, written by Klaus Guntermann, 
+introduces a command called |\multiinclude| that takes the base name
+of a graphic file like |mygraphic| and will then search for files
+called |mygraphic.0|, |mygraphic.1|, and so on, till no more files are
+found. It will then include these graphics files using the
+|\includegraphics| command, but will put these graphics ``on top of
+each other.'' Furthermore, and this is the important part,
+it inserts a |\pause| command after each graphic. This command is
+defined in the ppower4 package and has the same effect as the |\pause|
+command of \beamer. For this reason, both ppower4 and also \beamer\
+will first display the basic graphic and will then additionally show
+the next graphic on each slide.
+
+You cannot directly use |mpmulti.sty| since it includes a file called
+|pause.sty|, which is part of the ppower4 package and which clashes
+with \beamer. Essentially, |pause.sty| just defines the
+ppower4-version of |\pause| and is thus not needed in conjunction with
+\beamer. So, in order to use |mpmulti.sty| in \beamer, you either have
+to comment out the line in |mpmulti.sty| reading
+|\RequirePackage{pause}| or somehow make |mpmulti.sty| believe that
+this file has already been included. Alternatively, you can also save
+\beamer's definition of |\pause| and restore it after |mpmulti.sty|
+has been loaded.
+
+You might also consider using the style |xmpmulti.sty| that comes with
+\beamer. This file is mainly identical to |mpmulti|, except for two
+differences: First, it does not include |pause.sty|. Second, it
+extends the |\multiinclude| command by allowing a special default
+overlay specification to be given. The effect of this is explained
+below. 
+
+\begin{package}{{xmpmulti}}
+  Defines the command |\multiinclude|. The code of this package is
+  essentially due to Klaus Guntermann. It can used together with \beamer\
+  and with ppower4, i.\,e., it can be used as a replacement for
+  |mpmulti| if the |pause| package is also included in a
+  ppower4-presentation. 
+\end{package}
+
+\begin{command}{\multiinclude\opt{|[<|\meta{default overlay
+        specification}|>]|}\oarg{options}\marg{base file name}}
+  Except for the possibility of specifying a \meta{default overlay
+    specification}, this command is identical to the |\multiinclude|
+  command from the ppower4 package.
+
+  If no overlay specification is given, the command will search for
+  files called \meta{base file name}|.|\meta{number} for increasing
+  numbers \meta{number}, starting with zero. As long as it finds these
+  files, it issues an |\includegraphics| command on them. The files
+  following the first one are put ``on top'' of the first one. Between
+  any two invocations of |\includegraphics|, a |\pause| command is
+  inserted. You can modify this behaviour is different ways by given
+  suitable \meta{options}, see below.
+
+  \example Assume that MetaPost has created files called |gra.0|,
+  |gra.1|, and |gra.2|. You can then create frame consisting of three
+  slides that incrementally show the graphic as follows:
+
+\begin{verbatim}
+\begin{frame}
+  \multiinclude{gra}
+\end{frame}
+\end{verbatim}
+  
+  The effect of providing a \meta{default overlay specification} is
+  the following: First, no |\pause| command is inserted between
+  graphics. Instead, each graphic is surrounded by an |actionenv|
+  environment with the overlay specification set to \meta{default
+    overlay specification}.
+
+  \example You can create the same effect as in the previous example
+  using |\multiinclude[<+->]{gra}|.
+
+  \example For a more interesting usage of the \meta{default overlay
+    specification}, consider the following usage:
+\begin{verbatim}
+\multiinclude[<alert@+| +->]{gra}
+\end{verbatim}
+  This will always paint the most recently added part of the graphic
+  in red (assuming you do not use special colors in the graphic
+  itself).
+
+  \example In order to have each graphic completely \emph{replace} the
+  previous one, you could use |\multiinclude[<+>]{gra}|.
+
+  The following \meta{options} may be given (these are the same as for
+  the original command from the ppower4 package):
+  \begin{itemize}
+  \item
+    \declare{|pause=|\meta{command}} replaces the default pausing
+    command |\pause| by \meta{command}. If a \meta{default overlay
+      specification} is given, the default pausing command is empty;
+    otherwise it is |\pause|. Note that commands like |\pauselevel|
+    are not available in |\beamer|.
+  \item
+    \declare{|graphics=|\meta{options}} passes the \meta{options} to
+    the |\includegraphics| command.
+
+    \example |\multiinclude[graphics={height=5cm}]{gra}|
+  \item
+    \declare{|format=|\meta{extension}} will cause the file names for
+    which we search change from \meta{base file name}|.|\meta{number}
+    to \meta{base file name}|-|\meta{number}|.|\meta{extension}. Note
+    the change from the dot to a hyphen. This option allows you to
+    include, say, |.jpg| files.
+  \item
+    \declare{|start=|\meta{number}} specifies the start
+    \meta{number}. The default is zero.
+  \item
+    \declare{|end=|\meta{number}} specifies the end 
+    \meta{number}. The default is infinity.
+  \end{itemize}  
+\end{command}
+
+Note that, if you do not use the |format=| option, the
+|\includegraphics| command will be somewhat at a loss in which format
+your graphic file actually is. After all, it end with the cryptic
+``format suffix'' |.0| or |.1|. You can tell |\includegraphics| that
+any file having a suffix it knows nothing about is actually in format,
+say, |.mps|, using the following command:
+\begin{verbatim}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\end{verbatim}
 
 
 
@@ -5230,9 +5430,7 @@ of creating graphics for \beamer\ presentations are discussed. Much of
 the information presented in the following is not really special to
 \beamer, but applies to any other document class as well.
 
-
-
-\subsubsection{External Graphic Files Versus Inlined Graphics}
+\subsubsection{Including External Graphic Files Versus Inlines Graphics}
 
 There are two principal ways of creating \TeX-documents that include
 graphics: Either the graphic resides in an external file that is
@@ -5270,46 +5468,18 @@ The main disadvantages are:
 \end{itemize}
 
 You can use all the standard \LaTeX\ commands for inserting graphics,
-like |\includegraphics| (be sure to use the package
-|graphics|). Also, the |pgf| package offers commands for including
-graphics. Either will work fine in most situations, so choose
-whichever you like. Like |\pgfdeclareimage|,
+like |\includegraphics| (be sure to include the package
+|graphics| or |graphicx|). Also, the |pgf| package offers commands for
+including graphics. Either will work fine in most situations, so
+choose whichever you like. Like |\pgfdeclareimage|,
 |\includegraphics| also includes an image only once in a |.pdf| file,
 even if it used several times (as a matter of fact, the |graphics|
 package is even a bit smarter about this than |pgf|). However,
 currently only |pgf| offers the ability to include images that are
 partly transparent.
 
-There are few things to note about the format of graphics you can
-include:
-\begin{itemize}
-\item
-  When using |latex| and |dvips|, you can only include external
-  graphic files ending with the extension |.eps| (Encapsulated
-  PostScript) or |.ps| (PostScript). This is true
-  both for the normal |graphics| package and for |pgf|. When using
-  |pgf|, do \emph{not} add the extension |.eps|. When using
-  |graphics|, do add the extension. If your graphic file has a
-  different format (like a |.jpg| file), you must first convert it to
-  an |.eps| file using some conversion program.
-\item
-  When using |pdflatex|, you can only include external graphic files
-  ending with one of the extensions |.pdf|, |.jpg|, |.jpeg|, or
-  |.png|. As before, do not add these extension when using |pgf|, but
-  do add them when using |graphics|. If your graphic file has a
-  different format, you have to convert it.
-
-  You can \emph{also} include PostScript output from MetaPost when
-  using the |graphics| package, since it implements some filters to
-  convert such PostScript output to \pdf\ on-the-fly. This is a nifty
-  feature since it allows you to use MetaPost output for both \pdf\ and
-  PostScript. The extension of the file must be |.mps| for this to
-  work.
-\end{itemize}
-
-Note that, frustratingly, most graphics format cannot be read by
-\emph{both} |pdflatex| \emph{and} |dvips|, except for |.mps|. 
-
+At the end of this section you will find notes on how to include
+specific graphic formats like |.eps| or |.jpg|.
 
 \lyxnote
 You can use the usual ``Insert Graphic'' command to insert a graphic.
@@ -5327,7 +5497,6 @@ different file:
   \includegraphics<3>[height=2cm]{step3.pdf}%
 \end{frame}
 \end{verbatim}
-
 
 
 A different way of creating graphics is to insert
@@ -5368,156 +5537,83 @@ Inlined graphics must currently by inserted in a large \TeX-mode
 box. This is not very convenient.
 
 
-\subsubsection{Including Multi-MetaPost Graphics}
-\label{section-mmp}
+\subsubsection{Including Graphic Files Ending \texttt{.eps} or \texttt{.ps}}
 
-As you know, \TeX\ is a program that converts simple plain text into
-beautifully typeset documents. The MetaPost program is similar, only
-it converts simple plain text into beautiful graphics. While it is
-a pain to create graphics in \TeX\ and always fun to create
-text, it is a pain to create text in MetaPost and always fun to create
+External graphic files ending with the extension |.eps| (Encapsulated
+PostScript) or |.ps| (PostScript) can be included if you use |latex|
+and |dvips|, but \emph{not} when using |pdflatex|. This is true
+both for the normal |graphics| package and for |pgf|. When using
+|pgf|, do \emph{not} add the extension |.eps|. When using
+|graphics|, do add the extension.
+
+If you have a |.eps| graphic and wish to use |pdflatex|, you can use
+the program |ps2pdf| to convert the graphic to a |.pdf| file. Note,
+however, that it is often a better idea to directly generate a |.pdf|
+if the program that produced the |.eps| supports this.
+
+
+\subsubsection{Including Graphic Files Ending \texttt{.pdf},
+  \texttt{.jpg}, \texttt{.jpeg} or \texttt{.png}}
+
+The four formats |.pdf|, |.jpg|, |.jpeg|, and |.png| can only be
+included by |pdflatex|. As before, do not add these extension when
+using |pgf|, but do add them when using |graphics|. If your graphic
+file has any of these formats and you wish/must you |latex| and
+|dvips|, you  have to convert your graphic to |.eps| first.
+
+
+\subsubsection{Including Graphic Files Ending \texttt{.mps}}
+
+A graphic file ending |.mps| (MetaPost PostScript) is a special kind
+of Encapsulated PostScript file. Files in this format are produced by
+the MetaPost program. As you know, \TeX\ is a program that converts
+simple plain text into beautifully typeset documents. The MetaPost
+program is similar, only it converts simple plain text into beautiful
 graphics.
 
 The MetaPost program converts a plain text file ending |.mp|
-into an encapsulated PostScript file (|.eps| or |.mps|, although for
-some unfathomable reason the extension is not added). The |.mp| file
-must contain text written in the MetaFont programming language. To
-include the resulting |.eps| file, you can use the normal
-|\includegraphics| command. As a special bonus, you can \emph{also}
-include such an file when using pdf\LaTeX. Normally, pdf\LaTeX\ cannot
-handle |.eps| files, but the |.eps| files produced by MetaPost have
-such a simple structure that this possible. For this to work, the file
-should end |.mps| instead of |.eps|. The following command can be used
-to make the |graphics| package just \emph{assume} the extension |.mps|
-for any file it knows nothing about (like files ending with |.1|,
-which is what MetaPost loves to produce):
+into an |.mps| file (although for some unfathomable reason the
+extension is not added). The |.mp| file 
+must contain text written in the MetaFont programming language. Since
+|.mps| files are actually also |.eps| files, you can use the normal 
+|\includegraphics| command to include them.
+
+However, as a special bonus, you can \emph{also}
+include such an file when using |pdflatex|. Normally, |pdflatex| cannot
+handle |.eps| files, but the |.mps| files produced by MetaPost have
+such a simple and special structure that this possible. The |graphics|
+package implements some filters to convert such PostScript output to
+\pdf\ on-the-fly. For this to work, the file should end |.mps| instead
+of |.eps|. The following command can be used to make the |graphics|
+package just \emph{assume} the extension |.mps| for any file it knows
+nothing about (like files ending with |.1|, which is what MetaPost
+loves to produce): 
 \begin{verbatim}
 \DeclareGraphicsRule{*}{mps}{*}{}
 \end{verbatim}
 
-However, MetaPost can do even more: you can have multiple graphics
-reside in a single |.mp| file, which is then usually called a
-Multi-MetaPost file, ending |.mmp|. When running MetaPost on such a
-file, it will create not a single encapsulated PostScript file, but
-several, ending |.0|, |.1|, |.2|, and so on. The idea is that |.0|
-might contain a main graphics and the following pictures contain
-overlay material that should be incrementally added to this graphic.
+This special feature currently  only works with the |graphics|
+package, not with |pgf|.
 
-The obvious problem is how to include the overlays in a presentation
-in a convenient way. To solve this problem, you can use |mpmulti.sty|
-from the ppower4 package. This style, written by Klaus Guntermann,
-introduces a command called |\multiinclude| that takes the base name
-of a graphic file like |mygraphic| and will then search for files
-called |mygraphic.0|, |mygraphic.1|, and so on, till no more files are
-found. It will then include these graphics files using the
-|\includegraphics| command, but will put these graphics ``on top of
-each other.'' Furthermore, and this is the important part,
-it inserts a |\pause| command after each graphic. This command is
-defined in the ppower4 package and has the same effect as the |\pause|
-command of \beamer. For this reason, both ppower4 and also \beamer\
-will first display the basic graphic and will then additionally show
-the next graphic on each slide.
 
-You cannot directly use |mpmulti.sty| since it includes a file called
-|pause.sty|, which is part of the ppower4 package and which clashes
-with \beamer. Essentially, |pause.sty| just defines the
-ppower4-version of |\pause| and is thus not needed in conjunction with
-\beamer. So, in order to use |mpmulti.sty| in \beamer, you either have
-to comment out the line in |mpmulti.sty| reading
-|\RequirePackage{pause}| and somehow make |mpmulti.sty| believe that
-this file has already been included. Alternatively, you can also save
-\beamer's definition of |\pause| and restore it after |mpmulti.sty|
-has been loaded.
 
-If you do not have a working ppower4 installation, you might also
-consider using the style |xmpmulti.sty| that comes with \beamer. This
-file is mainly identical to |mpmulti|, except for two differences:
-First, it does not include |pause.sty|. Second, it extends the
-|\multiinclude| command by allowing a special default overlay
-specification to be given. The effect of this is explained below. Note
-that |xmpmulti.sty| can be used independently from ppower4, but I
-would once more like to stress that the code is essentially due to
-Klaus Guntermann.
+\subsubsection{Including Graphic Files Ending \texttt{.mmp}}
 
-\begin{package}{{xmpmulti}}
-  Defines the command |\multiinclude|. The code of this package is
-  mostly due to Klaus Guntermann.
-\end{package}
+The format |.mmp| (Multi-MetaPost) is actually not format that can be
+included directly in a \TeX-file. Rather, like a |.mp| file, it first
+has to be converted using the MetaPost program. The crucial difference
+between |.mp| and |.mmp| is that in the latter multiple graphics
+can reside in a single |.mmp| file (actually, mulitple graphics can
+also reside in a |.mp| file, but by convention such a file is called
+|.mmp|). When running MetaPost on a |.mmp| file, it will create not a
+single encapsulated PostScript file, but several, ending |.0|, |.1|,
+|.2|, and so on. The idea is that |.0| might contain a main graphics
+and the following pictures contain overlay material that should be
+incrementally added to this graphic. 
 
-\begin{command}{\multiinclude\opt{|[<|\meta{default overlay
-        specification}|>]|}\oarg{options}\marg{base file name}}
-  Except for the possibility of specifying a \meta{default overlay
-    specification}, this command is identical to the |\multiinclude|
-  command from the ppower4 package.
-
-  If no overlay specification is given, the command will search for
-  files called \meta{base file name}|.|\meta{number} for increasing
-  numbers \meta{number}, starting with zero. As long as it finds these
-  files, it issues an |\includegraphics| command on them. The files
-  following the first one are put ``on top'' of the first one. Between
-  any two invocations of |\includegraphics|, a |\pause| command is
-  inserted. You can modify this behaviour is different ways by given
-  suitable \meta{options}, see below.
-
-  \example Assume that MetaPost has created files called |gra.0|,
-  |gra.1|, and |gra.2|. You can then create frame consisting of three
-  slides that incrementally show the graphic as follows:
-
-\begin{verbatim}
-\begin{frame}
-  \multiinclude{gra}
-\end{frame}
-\end{verbatim}
-  
-  The effect of providing a \meta{default overlay specification} is
-  the following: First, no |\pause| command is inserted between
-  graphics. Instead, each graphic is surrounded by an |actionenv|
-  environment with the overlay specification set to \meta{default
-    overlay specification}.
-
-  \example You can create the same effect as in the previous example
-  using |\multiinclude[<+->]{gra}|.
-
-  \example For a more interesting usage of the \meta{default overlay
-    specification}, consider the following usage:
-\begin{verbatim}
-\multiinclude[<alert@+| +->]{gra}
-\end{verbatim}
-  This will always paint the most recently added part of the graphic
-  in red (assuming you do not use special colors in the graphic
-  itself).
-
-  \example In order to have each graphic completely \emph{replace} the
-  previous one, you could use |\multiinclude[<+>]{gra}|.
-
-  The following \meta{options} may be given (these are the same as for
-  the original command from the ppower4 package):
-  \begin{itemize}
-  \item
-    \declare{|pause=|\meta{command}} replaces the default pausing
-    command |\pause| by \meta{command}. If a \meta{default overlay
-      specification} is given, the default pausing command is empty;
-    otherwise it is |\pause|. Note that commands like |\pauselevel|
-    are not available in |\beamer|.
-  \item
-    \declare{|graphics=|\meta{options}} passes the \meta{options} to
-    the |\includegraphics| command.
-
-    \example |\multiinclude[graphics={height=5cm}]{gra}|
-  \item
-    \declare{|format=|\meta{extension}} will cause the file names for
-    which we search change from \meta{base file name}|.|\meta{number}
-    to \meta{base file name}|-|\meta{number}|.|\meta{extension}. Note
-    the change from the dot to a hyphen. This option allows you to
-    include, say, |.jpg| files.
-  \item
-    \declare{|start=|\meta{number}} specifies the start
-    \meta{number}. The default is zero.
-  \item
-    \declare{|end=|\meta{number}} specifies the end 
-    \meta{number}. The default is infinity.
-  \end{itemize}  
-\end{command}
+To include the series of resulting files, you can use the command
+|\multiinclude| from the |mpmulti| or from the |xmpmulti| package. How
+this program works is explained in Section~\ref{section-mpmulti}.
 
 
 
@@ -5892,6 +5988,19 @@ following commands can be used: |\animate| and |\animatevalue|.
   This command is ignored in |article| mode.
 \end{command}
 
+If your animation ``graphics'' reside in indivual external graphic
+files, you might also consider using the |\multiinclude| command,
+which is explained in Section~\ref{section-mpmulti}, together with
+|\animate|. For example, you might create an animation like this,
+assuming you have created graphic files named |animation.1| through to
+|animation.10|:
+
+\begin{verbatim}
+\begin{frame}
+  \animate<2-9>
+  \multiinclude[start=1]{animation}
+\end{frame}
+\end{verbatim}
 
 
 
