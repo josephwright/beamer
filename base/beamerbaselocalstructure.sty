@@ -18,7 +18,7 @@
 % The \frametitle command
 %
 %
-\newcommand*\frametitle{\@dblarg\beamer@frametitle}
+\newcommand\frametitle{\@dblarg\beamer@frametitle}
 \long\def\beamer@frametitle[#1]#2{%
   \beamer@ifempty{#2}{}{%
   \vskip0pt plus -1fill%
@@ -41,7 +41,7 @@
 
 \article
 {
-  \newcommand*\frametitle[2][]{\gdef\insertframetitle{#2}\beamer@headrenderer}
+  \newcommand\frametitle[2][]{\gdef\insertframetitle{#2}\beamer@headrenderer}
   \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
   \useframetitletemplate{\paragraph{\insertframetitle}\ \par}
 }

@@ -387,13 +387,13 @@
   \fi%
   \beamer@argscount=#2\relax%
   \advance\beamer@argscount by 1\relax%
-  \expandafter\newcommand\expandafter*\csname beamerx@\string#1\endcsname[\beamer@argscount]{#3}%
+  \expandafter\newcommand\csname beamerx@\string#1\endcsname[\beamer@argscount]{#3}%
 }
 \long\def\beamer@newcomopt#1#2[#3]#4{%
   \expandafter\def\expandafter#1\expandafter{\expandafter\beamer@presort\expandafter{\csname beamerx@\string#1\endcsname}{#2}{#3}}%
   \beamer@argscount=#2\relax%
   \advance\beamer@argscount by 1\relax%
-  \expandafter\newcommand\expandafter*\csname beamerx@\string#1\endcsname[\beamer@argscount]{#4}%
+  \expandafter\newcommand\csname beamerx@\string#1\endcsname[\beamer@argscount]{#4}%
 }
 
 \let\beamer@origrenewcommand=\renewcommand
@@ -441,7 +441,7 @@
 \def\beamer@foundspec<#1>{%
   \def\beamer@ospec{<#1>}%
   \beamer@lookforarg}
-\def\beamer@readarg#1{%
+\long\def\beamer@readarg#1{%
   \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
   \advance\beamer@argscount by-1\relax%
   \beamer@parseargs%

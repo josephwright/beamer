@@ -206,7 +206,7 @@
 
   \define@key{beamerverb}{colored}[true]{\def\beamer@colorsup{}}
   
-  \newcommand*{\defverbatim}[2][]{%
+  \newcommand{\defverbatim}[2][]{%
     \def\beamer@colorsup{\def\set@color{}\def\reset@color{}}%
     \setkeys{beamerverb}{#1}%
     \expandafter\newbox\csname @verb\string#2\endcsname%
@@ -224,9 +224,7 @@
 
 \common
 {
-  \newcommand*\beamer@gobbleoptional[2][]{}
-  \newcommand*\beamer@gobbleoptionalinsp[2][]{\ignorespaces}
-  \newcommand*\beamer@ignoreoptional[1][]{}
+  \newcommand\beamer@gobbleoptionalinsp[2][]{\ignorespaces}
 }
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
