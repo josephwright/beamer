@@ -72,34 +72,6 @@
 } 
 
 
-% Frame title: default
-
-\defbeamertemplate*{frametitle}{default}[1][left]
-{
-  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
-  \@tempdima=\textwidth%
-  \advance\@tempdima by\beamer@leftmargin%
-  \advance\@tempdima by\beamer@rightmargin%
-  \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
-    \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
-    {\usebeamerfont{frametitle}\insertframetitle\par}%
-    {%
-      \ifx\insertframesubtitle\@empty%
-      \else%
-      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
-      \fi
-    }%
-    \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
-  \end{beamercolorbox}%
-}
-
-\def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip by1.7cm}
-
-
-% Frame title continuations, default
-
-\defbeamertemplate*{frametitle continuation}{default}{\insertcontinuationcountroman}
-
 
 
 

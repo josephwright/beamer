@@ -7,6 +7,8 @@
 
 \mode<presentation>
 
+\definecolor{darkblue}{rgb}{0,0,0.8}
+
 \setbeamercolor{alerted text}{fg=darkblue!80!yellow}
 \setbeamercolor*{palette primary}{fg=darkblue!60!black,bg=yellow!85!orange}
 \setbeamercolor*{palette secondary}{fg=darkblue!70!black,bg=yellow!60!orange}
@@ -26,6 +28,14 @@
 
 \setbeamercolor*{separation line}{}
 \setbeamercolor*{fine separation line}{}
+
+\setbeamercolor*{block title}{use=structure,fg=structure.fg,bg=yellow!85!orange}
+\setbeamercolor*{block title alerted}{use=alerted text,fg=alerted text.fg,bg=alerted text.fg!75!bg}
+\setbeamercolor*{block title example}{use=example text,fg=example text.fg,bg=example text.fg!75!bg}
+
+\setbeamercolor*{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
+\setbeamercolor*{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+\setbeamercolor*{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
 
 \mode
 <all>

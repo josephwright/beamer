@@ -271,11 +271,11 @@ otherwise it contains only one slide.
     file, but interpreted directly, which is ``faster and cleaner.''
   \item
     \declare{|environment=|\meta{frame environment name}}. This option
-    is only usedful in conjunction with the |fragile| option (but it
+    is only useful together with the |fragile| option (but it
     is not used for |fragile=singleslide|, only for the plain
     |fragile|). The \meta{frame environment name} is used to determine
     the end of the scanning when gathering the frame
-    contents. Normally, the frame ends when the a line reading
+    contents. Normally, the frame ends when  a line reading
     |\end{frame}| is reached. However, if you use |\begin{frame}|
     inside another environment, you need to use this option:
 
@@ -570,7 +570,7 @@ following templates:
     \itemoption{tree}{}
     This option becomes available (and is used) if the |tree|
     outer theme is loaded. A navigational tree is shown in the headline.
-    \itemoption{split}{}
+    \itemoption{split theme}{}
     This option becomes available (and is used) if the |split|
     outer theme is loaded. The headline is split into a left part
     showing the sections and a right part showing the subsections.
@@ -815,7 +815,7 @@ next to the left sidebar, you might write
   The template is used to typeset the left sidebar. As mentioned
   above, the size of the left sidebar is set using the command
 \begin{verbatim}
-\setbeamersize{sidebar widt left=2cm}
+\setbeamersize{sidebar width left=2cm}
 \end{verbatim}
   \beamer\ will not clip sidebars automatically if they are too
   large.
