@@ -6,10 +6,15 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\RequirePackage{keyval}
 \RequirePackage{pgf}
 
-\newcommand\speakersymbol{%
-  \begin{pgfpicture}{0pt}{0pt}{2ex}{1.5ex}
+\define@key{multimediasym}{fill}[]{\def\mm@action{\pgffillstroke}}
+
+\newcommand\speakersymbol[1][]{%
+  \def\mm@action{}%
+  \setkeys{multimediasym}{#1}%
+  \begin{pgfpicture}{-.1ex}{0pt}{2.1ex}{1.5ex}
     \pgfsetroundjoin\pgfsetroundcap
     \pgfmoveto{\pgfpoint{0cm}{.5\pgfex}}
     \pgflineto{\pgfpoint{.5\pgfex}{.5\pgfex}}
@@ -18,6 +23,7 @@
     \pgflineto{\pgfpoint{.5\pgfex}{\pgfex}}
     \pgflineto{\pgfpoint{0pt}{\pgfex}}
     \pgfclosepath
+    \mm@action
     \pgfmoveto{\pgfpoint{1.25\pgfex}{.5\pgfex}}
     \pgfcurveto{\pgfpoint{1.4\pgfex}{.6\pgfex}}{\pgfpoint{1.4\pgfex}{.9\pgfex}}{\pgfpoint{1.25\pgfex}{1\pgfex}}
     \pgfmoveto{\pgfpoint{1.5\pgfex}{.25\pgfex}}
