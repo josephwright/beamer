@@ -166,13 +166,6 @@
 
 
       
-\ifbeamer@sansmath
-  \SetSymbolFont{operators}{normal}{OT1}{cmss}{m}{n}
-  \ifx\mv@bold\@undefined
-  \else
-    \SetSymbolFont{operators}{bold}{OT1}{cmss}{bx}{n}
-  \fi
-\fi
 
   
 \AtBeginDocument{%
@@ -190,6 +183,13 @@
 \@ifpackageloaded{hvmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
 
 \ifbeamer@suppressreplacements\else
+  \ifbeamer@sansmath
+    \SetSymbolFont{operators}{normal}{OT1}{\mathfamilydefault}{m}{n}
+    \ifx\mv@bold\@undefined
+    \else
+      \SetSymbolFont{operators}{bold}{OT1}{\mathfamilydefault}{bx}{n}
+    \fi
+  \fi
   \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{m}{n}
   \DeclareSymbolFont{pureletters}{\encodingdefault}{\mathfamilydefault}{m}{it}
   \SetMathAlphabet{\mathrm}{normal}{\encodingdefault}{\rmdefault}{m}{n}
