@@ -176,6 +176,7 @@
       \pgflineto{\pgfpoint{-4bp}{\bmb@dima}}
       \pgffill
       }
+      \ifbmb@shadow%
       {
         \color{black!50!bg}
         \pgfsetlinewidth{0pt}
@@ -210,8 +211,7 @@
         \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
         \pgfstroke
       }
-      {
-      }      
+      \fi
     \end{pgfpicture}%
     \box\bmb@box%
   }%

@@ -191,7 +191,11 @@
     \fi%
     \ifbeamer@colbox@rounded%
       \if@tempswa%
-        \begin{beamerboxesrounded}[shadow=\beamer@colbox@shadow,lower=\beamer@colbox@color,upper=normal text]{}%
+        \begin{beamerboxesrounded}[%
+          shadow=\beamer@colbox@shadow,%
+          lower=\beamer@colbox@color,%
+          upper=normal text,%
+          width=\beamer@colbox@wd]{}%
           \box\beamer@tempbox%
         \end{beamerboxesrounded}%
       \else%
