@@ -77,10 +77,9 @@
     \beamerorig@reset@color%
   \else% mixin changed -> recalculate
     \colorlet{@hookcolor}{.}%
-    \XC@logcolor2{@hookcolor}%  
     \colorhook%
     \expandafter\let\expandafter\current@color%
-      \csname\string\color @@hookcolor\endcsname%
+      \csname\string\color@ @hookcolor\endcsname%
     \beamerorig@reset@color%
     \beamer@postscriptcolorhack%  
   \fi%
@@ -90,8 +89,7 @@
 
 \ifx\pdftexversion\@undefined
   \def\beamer@postscriptcolorhack{%
-    \edef\beamer@pscolor{\expandafter\expandafter\expandafter%
-      \c@lor@to@ps\csname\string\color @@hookcolor\endcsname\@@}%
+    \edef\beamer@pscolor{\XC@c@lor@to@ps{@hookcolor}}%
     \special{ps: \beamer@pscolor}}
 \else
   \def\beamer@postscriptcolorhack{}%
