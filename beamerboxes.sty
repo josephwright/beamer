@@ -129,36 +129,42 @@
   \bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
   \bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
   \hbox{%
+    \ifbmb@shadow%
     \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
-      \ifbmb@shadow%
       \pgfputat{\pgfpoint{4bp}{-3bp}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowball}}}
-      \begin{pgfscope}
-        {%
-        \advance\bmb@temp by-1bp%
-        \pgfrect[clip]{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
-        }%
-        \pgfputat{\pgfpoint{\bmb@temp}{1bp}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowballlarge}}}
-      \end{pgfscope}
-      \begin{pgfscope}
-        \advance\bmb@temp by-4bp%
-        \pgfrect[clip]{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
-        \pgfputat{\pgfpoint{4bp}{-7bp}}{\pgfbox[left,base]{\pgfuseshading{bmb@shadow}}}%
-      \end{pgfscope}
-      \begin{pgfscope}
-        \advance\bmb@temp by 4bp%
-        \bmb@dima=\ht\bmb@box%
-        \advance\bmb@dima by\bmb@prevheight%
-        \advance\bmb@dima by 4bp%
+    \end{pgfpicture}%
+    \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
+      {%
+      \advance\bmb@temp by-1bp%
+      \pgfrect[clip]{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
+      }%
+      \pgfputat{\pgfpoint{\bmb@temp}{1bp}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowballlarge}}}
+    \end{pgfpicture}%
+    \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
+      \advance\bmb@temp by-4bp%
+      \pgfrect[clip]{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
+      \pgfputat{\pgfpoint{4bp}{-7bp}}{\pgfbox[left,base]{\pgfuseshading{bmb@shadow}}}%
+    \end{pgfpicture}%
+    {%
+      \advance\bmb@temp by 4bp%
+      \bmb@dima=\ht\bmb@box%
+      \advance\bmb@dima by\bmb@prevheight%
+      \advance\bmb@dima by 4bp%
+      \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
         \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \advance\bmb@dima by-4bp%
         \pgfputat{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowball}}}
-        \advance\bmb@dima by-1bp%
+      \end{pgfpicture}%
+      \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
+        \advance\bmb@dima by-5bp%
         \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \advance\bmb@temp by4bp%
         \pgfputat{\pgfpoint{\bmb@temp}{-3bp}}%
         {\begin{pgfrotateby}{\pgfdegree{90}}\pgfbox[left,base]{\pgfuseshading{bmb@shadow}}\end{pgfrotateby}}%
-      \end{pgfscope}
-      \fi%
+      \end{pgfpicture}%
+    }%
+    \fi%
+    \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
       \color{bmb@down\bmb@scheme}%
       \pgfqmoveto{-4}{1}
       \pgfqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
@@ -281,5 +287,4 @@
   \pgfaliasshading{bmb@shadow!2!averagebackgroundcolor}{bmb@shadowshaded}
   \pgfaliasshading{bmb@shadowball!2!averagebackgroundcolor}{bmb@shadowballshaded}
   \pgfaliasshading{bmb@shadowballlarge!2!averagebackgroundcolor}{bmb@shadowballlargeshaded}
-
 }

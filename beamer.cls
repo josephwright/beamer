@@ -620,6 +620,7 @@
 \def\beamer@endpageofpart{1}
 \def\beamer@endpageofdocument{1}
 \def\beamer@startpageofappendix{}
+\def\inserttotalframenumber{1}
 
 \def\partentry#1#2{\beamer@sectioncount=0}
 \def\sectionentry#1#2#3#4#5{\advance\beamer@sectioncount by1\relax%
@@ -2240,6 +2241,8 @@
     {\noexpand\headcommand{\noexpand\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}}%
   \immediate\write\@auxout{\string\@writefile{head}%
     {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\def\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
     \if@filesw
       \newwrite\tf@head
       \immediate\openout\tf@head\jobname.head\relax
@@ -2249,7 +2252,6 @@
       \immediate\openout\tf@snm\jobname.snm\relax
     \fi
 }
-
 
 \raggedright
 
