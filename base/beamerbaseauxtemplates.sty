@@ -70,7 +70,8 @@
   \setkeys{beamer@backgroundgrid}{#1}%
   \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
     \beamer@bggc
-    \pgfgrid[stepx=\beamer@bggw,stepy=\beamer@bggw]{\pgforigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
+    \pgfpathgrid[stepx=\beamer@bggw,stepy=\beamer@bggw]{\pgforigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}%
+    \pgfusepath}
   \end{pgfpicture}%    
 }
 
@@ -221,7 +222,8 @@
     \usebeamercolor{section number projected}%
     \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
       \color{bg}
-      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+      \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+      \pgfusepath[fill]
       \pgfbox[center,base]{\color{fg}\inserttocsectionnumber}
     \end{pgfpicture}\kern1.25ex%
   }%
@@ -481,7 +483,8 @@
   \usebeamerfont*{item projected}%
   \usebeamercolor[bg]{item projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
 }
@@ -493,7 +496,8 @@
   \usebeamerfont*{subitem projected}%
   \usebeamercolor[bg]{subitem projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertsubenumlabel}
   \end{pgfpicture}%
 }
@@ -503,7 +507,8 @@
   \usebeamerfont*{subsubitem projected}%
   \usebeamercolor[bg]{subsubitem projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertsubsubenumlabel}
   \end{pgfpicture}%
 }
@@ -513,7 +518,8 @@
   \usebeamerfont*{\beameritemnestingprefix item projected}%
   \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
 }
@@ -583,7 +589,8 @@
 \defbeamertemplate{mini frame}{box}
 {%
   \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-    \pgfrect[fillstroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfpathrectangle{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfusepath[fill,stroke]
   \end{pgfpicture}%
 }
 [action]
@@ -594,7 +601,8 @@
 \defbeamertemplate{mini frame in current subsection}{box}
 {%
   \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-    \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfpathrectangle{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfusepath
   \end{pgfpicture}%
 }
 

@@ -77,18 +77,18 @@
       \else%        
         \color{upper.bg}%
       \fi%  
-      \pgfqmoveto{-4}{-1}
-      \pgfqcurveto{-4}{1.2}{-2.2}{3}{0}{3}
-      \pgflineto{\pgfpoint{\bmb@temp}{3bp}}
-      \pgfcurveto%
+      \pgfpathqmoveto{-4}{-1}
+      \pgfpathqcurveto{-4}{1.2}{-2.2}{3}{0}{3}
+      \pgfpathlineto{\pgfpoint{\bmb@temp}{3bp}}
+      \pgfpathcurveto%
       {\pgfpoint{\bmb@dima}{3bp}}%
       {\pgfpoint{\bmb@dimb}{1.2bp}}%
       {\pgfpoint{\bmb@dimb}{-1bp}}%
       \bmb@dima=-\ht\bmb@box%
       \advance\bmb@dima by-2pt%
-      \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-      \pgflineto{\pgfpoint{-4bp}{\bmb@dima}}
-      \pgffill
+      \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+      \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
+      \pgfusepath[fill]
     \end{pgfpicture}%
     \copy\bmb@box%
   }%
@@ -100,7 +100,8 @@
     \begin{pgfpicture}{0pt}{0pt}{\bmb@width}{6pt}
       \bmb@dima=\bmb@width%
       \advance\bmb@dima by8bp%
-      \pgfrect[clip]{\pgfpoint{-4bp}{-1bp}}{\pgfpoint{\bmb@dima}{8bp}}
+      \pgfpathrectangle{\pgfpoint{-4bp}{-1bp}}{\pgfpoint{\bmb@dima}{8bp}}
+      \pgfclip
       \pgfputat{\pgfpoint{-4bp}{0bp}}{\pgfbox[left,base]{\pgfuseshading{bmb@transition}}}%
     \end{pgfpicture}%
   }%
@@ -138,13 +139,15 @@
       \begin{pgfscope}
         {%
         \advance\bmb@temp by-1bp%
-        \pgfrect[clip]{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
+        \pgfpathrectangle{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
+        \pgfclip
         }%
         \pgfputat{\pgfpoint{\bmb@temp}{1bp}}{\pgfbox[center,center]{\box\bmb@boxshadowballlarge}}
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by-4bp%
-        \pgfrect[clip]{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
+        \pgfpathrectangle{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
+        \pgfclip
         \pgfputat{\pgfpoint{4bp}{-7bp}}{\pgfbox[left,base]{\copy\bmb@boxshadow}}%
       \end{pgfscope}
       \begin{pgfscope}
@@ -152,64 +155,66 @@
         \bmb@dima=\ht\bmb@box%
         \advance\bmb@dima by\bmb@prevheight%
         \advance\bmb@dima by 4bp%
-        \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
+        \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
+        \pgfclip
         \advance\bmb@dima by-4bp%
         \pgfputat{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgfbox[center,center]{\box\bmb@boxshadowball}}
         \advance\bmb@dima by-1bp%
-        \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
+        \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
+        \pgfclip
         \advance\bmb@temp by4bp%
         \pgfputat{\pgfpoint{\bmb@temp}{-3bp}}%
         {\begin{pgfrotateby}{\pgfdegree{90}}\pgfbox[left,base]{\box\bmb@boxshadow}\end{pgfrotateby}}%
       \end{pgfscope}
       \fi%
       \unhbox\bmb@colorbox%
-      \pgfqmoveto{-4}{1}
-      \pgfqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
-      \pgflineto{\pgfpoint{\the\bmb@temp}{-3bp}}
-      \pgfcurveto%
+      \pgfpathqmoveto{-4}{1}
+      \pgfpathqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
+      \pgfpathlineto{\pgfpoint{\the\bmb@temp}{-3bp}}
+      \pgfpathcurveto%
       {\pgfpoint{\the\bmb@dima}{-3bp}}%
       {\pgfpoint{\the\bmb@dimb}{-1.2bp}}%
       {\pgfpoint{\the\bmb@dimb}{1bp}}%
       {
       \bmb@dima=\ht\bmb@box%
-      \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-      \pgflineto{\pgfpoint{-4bp}{\bmb@dima}}
-      \pgffill
+      \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+      \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
+      \pgfusepath[fill]
       }
       \ifbmb@shadow%
       {
         \color{black!50!bg}
         \pgfsetlinewidth{0pt}
-        \pgfmoveto{\pgfpoint{\bmb@dimb}{-.5bp}}
+        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{-.5bp}}
         \bmb@dima=\ht\bmb@box%
         \advance\bmb@dima by\bmb@prevheight%
         \advance\bmb@dima by 1bp%
-        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfstroke
+        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfusepath
         \bmb@temp=\bmb@dima
         \advance\bmb@dima by 1bp%
         \color{black!31!bg}
-        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfstroke
+        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfusepath
         \advance\bmb@dima by 1bp%
         \advance\bmb@temp by 1bp%
         \color{black!19!bg}
-        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfstroke
+        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfusepath
         \advance\bmb@dima by 1bp%
         \advance\bmb@temp by 1bp%
         \color{black!6!bg}
-        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfstroke
+        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfusepath
         \advance\bmb@dima by 1.5bp%
         \advance\bmb@temp by 1bp%
         \color{bg}
-        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfstroke
+        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfusepath
       }
       \fi
     \end{pgfpicture}%
@@ -228,9 +233,9 @@
 %
 
 % Shadows
-\pgfdeclareradialshading[black,bg]{bmb@shadowball}{\pgforigin}{%
+\pgfdeclareradialshading[black,bg]{bmb@shadowball}{\pgfpointorigin}{%
   color(0bp)=(black!50!bg); color(4bp)=(bg)}
-\pgfdeclareradialshading[black,bg]{bmb@shadowballlarge}{\pgforigin}{%
+\pgfdeclareradialshading[black,bg]{bmb@shadowballlarge}{\pgfpointorigin}{%
   color(0bp)=(black!50!bg); color(4bp)=(black!50!bg); color(8bp)=(bg)}
 \pgfdeclareverticalshading[black,bg]{bmb@shadow}{30cm}{%
   color(0bp)=(bg); color(4bp)=(black!50!bg); color(8bp)=(black!50!bg)}
