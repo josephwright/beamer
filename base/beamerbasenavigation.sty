@@ -761,12 +761,28 @@
 % Name slides
 %
 
+\def\beamer@inserttarget#1{%
+  \ifbeamer@inframe%
+    \ifvmode%
+      \nointerlineskip\vbox to0pt{#1}%
+    \else%
+      \hbox{#1}%
+    \fi%
+  \else% defer to next frame
+    \expandafter\gdef\expandafter\beamer@framehypertargets\expandafter{\beamer@framehypertargets#1}%
+  \fi%
+}
+
+
 \def\beamer@nameslide#1{%
   \addtocontents{snm}{\protect\beamer@slide{#1}{\the\c@page}}%
-  \ifvmode\nointerlineskip\vbox to0pt{\hypertarget{#1}{}}\else\hbox{\hypertarget{#1}{}}\fi}
+  \beamer@inserttarget{\hypertarget{#1}{}}}
+\def\beamer@dummynameslide{\beamer@inserttarget{}}
+
 \def\beamer@slide#1#2{\expandafter\def\csname beamer@hyperlink#1\endcsname{%
   \hyperlink{Navigation#2}}}
-\def\beamer@dummynameslide{\ifvmode\nointerlineskip\vbox to0pt{}\else\hbox{}\fi}
+
+\let\beamer@framehypertargets\@empty
 
 
 \mode

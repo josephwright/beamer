@@ -86,6 +86,12 @@
         \fi%
         }\nointerlineskip%
       \fi%
+      \ifx\beamer@framehypertargets\@empty\else%
+        \nointerlineskip\vbox to0pt{\vss%
+          \beamer@framehypertargets%
+          \global\let\beamer@framehypertargets\@empty%
+        }\nointerlineskip%
+      \fi%
       \vskip-\parskip\vbox{}%
       \beamer@initfirstlineunskip%
       \ifbeamer@plainframe\nointerlineskip\fi}%

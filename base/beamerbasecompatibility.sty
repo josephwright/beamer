@@ -435,6 +435,13 @@
   \setbeamertemplate{sidebar canvas #1}[vertical shading][top=#3,bottom=#2]}
 \newcommand{\beamertemplatesidebarhorizontalshading}[3][left]{%
   \setbeamertemplate{sidebar canvas #1}[vertical shading][right=#3,left=#2]}
+\define@key{beamer@margin}{descriptionwidth}{%
+  \beamer@descriptionwidth=#1\relax%
+}
+\define@key{beamer@margin}{descriptionwidthof}{%
+  \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\usebeamertemplate**{description item}}%
+  \beamer@descriptionwidth=\wd\beamer@tempbox\relax%
+}
 
 \mode
 <all>
