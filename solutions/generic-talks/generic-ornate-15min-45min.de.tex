@@ -2,8 +2,9 @@
 
 % Diese Datei enthält eine Lösungsvorlage für:
 
-% - Vorträge bei einer (deutschsprachigen) Konferenz/einem Kolloquium.
-% - Vortragslänge von etwa 20 Minuten.
+
+% - Vorträge über ein beliebiges Thema.
+% - Vortragslänge zwischen 15 und 45 Minuten. 
 % - Aussehen des Vortrags ist verschnörkelt/dekorativ.
 
 
@@ -57,14 +58,13 @@
 
 
 \title[Kurzversion des Titels] % (optional, nur bei langen Titeln nötig)
-{Titel wie im Tagunsband angegeben\\ (u.U.\ also englisch)}
+{Titel}
 
 \subtitle
-{Untertitel nur angeben, wenn es einen im Tagungsband gibt}
+{Untertitel} % (optional)
 
 \author[Autor, Anders] % (optional, nur bei vielen Autoren)
 {F.~Autor\inst{1} \and S.~Anders\inst{2}}
-% - Namen müssen in derselben Reihenfolge wie im Papier erscheinen.
 % - Der \inst{?} Befehl sollte nur verwendet werden, wenn die Autoren
 %   unterschiedlichen Instituten angehören.
 
@@ -81,12 +81,9 @@
 %   unterschiedlichen Instituten angehören.
 % - Keep it simple, niemand interessiert sich für die genau Adresse.
 
-\date[KPT 2003] % (optional, sollte der abgekürzte Konferenzname sein)
-{Konferenz über Präsentationstechniken, 2004}
-% - Vollee oder abgekürzter Name sind möglich.
-% - Dieser Eintrag ist nicht für das Publikum gedacht (das weiß
-%   nämlich, bei welcher Konferenz es ist), sondern für Leute, die die
-%   Folien später lesen.
+\date[Kurzversion des Anlass] % (optional)
+{Datum / Anlass}
+
 
 \subject{Informatik}
 % Dies wird lediglich in den PDF Informationskatalog einfügt. Kann gut
@@ -108,7 +105,7 @@
 {
   \begin{frame}<beamer>
     \frametitle{Gliederung}
-    \tableofcontents[current,currentsubsection]
+    \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
 
@@ -134,9 +131,10 @@
 
 
 
-% Einen Vortrag zu strukturieren ist nicht immer einfach. Die
-% nachfolgende Struktur kann unangemessen sein. Hier ein paar Regeln,
-% die für diese Lösungsvorlage gelten:
+% Da dies ein Vorlage für beliebige Vorträge ist, lassen sich kaum
+% allgemeine Regeln zur Strukturierung angeben. Da die Vorlage für
+% einen Vortrag zwischen 15 und 45 Minuten gedacht ist, fährt man aber
+% mit folgenden Regeln oft gut.  
 
 % - Es sollte genau zwei oder drei Abschnitte geben (neben der
 %   Zusammenfassung). 
@@ -144,18 +142,12 @@
 % - Pro Rahmen sollte man zwischen 30s und 2min reden. Es sollte also
 %   15 bis 30 Rahmen geben.
 
-% - Konferenzteilnehmer wissen oft wenig von der Materie des
-%   Vortrags. Deshalb: vereinfachen!
-% - In 20 Minuten ist es schon schwer genug, die Hauptbotschaft zu
-%   vermitteln. Deshalb sollten Details ausgelassen werden, selbst
-%   wenn dies zu Ungenauigkeiten oder Halbwahrheiten führt.          
-% - Falls man Details weglässt, die eigentlich wichtig für einen
-%   Beweis/Implementation sind, so sagt man dies einmal nüchtern. Alle
-%   werden damit glücklich sein.
 
-\section{Motivation}
 
-\subsection{Das behandelte Problem}
+\section{Einleitung}
+
+\subsection[Kurzversion des ersten Unterabschnittstitels]
+{Erster Unterabschnittstitel}
 
 \begin{frame}
   \frametitle{Überschriften müssen informativ sein.\\
@@ -206,7 +198,7 @@
 \end{frame}
 
 
-\subsection{Frühere Arbeiten}
+\subsection{Zweiter Unterabschnittstitel}
 
 \begin{frame}
   \frametitle{Überschriften müssen informativ sein.}
@@ -215,41 +207,6 @@
 \begin{frame}
   \frametitle{Überschriften müssen informativ sein.}
 \end{frame}
-
-
-\section{Unsere Resultate/Beitrag}
-
-\subsection{Hauptresultate}
-
-\begin{frame}
-  \frametitle{Überschriften müssen informativ sein.}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Überschriften müssen informativ sein.}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Überschriften müssen informativ sein.}
-\end{frame}
-
-
-
-\subsection{Beweis-/Implementationsideen}
-
-\begin{frame}
-  \frametitle{Überschriften müssen informativ sein.}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Überschriften müssen informativ sein.}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Überschriften müssen informativ sein.}
-\end{frame}
-
-
 
 \section*{Zusammenfassung}
 
@@ -280,36 +237,6 @@
   \end{itemize}
 \end{frame}
 
-
-
-% Alles nachfolgende ist optional und typischerweise nicht nötig.
-\appendix
-\section<presentation>*{\appendixname}
-\subsection<presentation>*{Weiterführende Literatur}
-
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{Weiterführende Literatur}
-    
-  \begin{thebibliography}{10}
-    
-  \beamertemplatebookbibitems
-  % Anfangen sollte man mit Übersichtswerken.
-
-  \bibitem{Autor1990}
-    A.~Autor.
-    \newblock {\em Einführung in das Präsentationswesen}.
-    \newblock Klein-Verlag, 1990.
-
-    
-  \beamertemplatearticlebibitems
-  % Vertiefende Literatur kommt später. Die Liste sollte kurz sein.
-
-  \bibitem{Jemand2000}
-    S.~Jemand.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100, 2000.
-  \end{thebibliography}
-\end{frame}
 
 \end{document}
 
