@@ -1,4 +1,4 @@
-2004-01-19 Till Tantau <tantau@users.sourceforge.net>
+2004-02-13 Till Tantau <tantau@users.sourceforge.net>
 
 	Bugfixes:
 	- Fixed bugs with "jumping" blocks in overlays.
@@ -25,12 +25,13 @@
 	- Added grid density option to grid background.
 	- Added professionalfont option.
 	- Added automatic support of serif math minion fonts.
-	- Added option to \pause command.
+	- Added option to \pause command to pause only from a specific
+	  slide on.
 	- Includes enumerate.sty by default and allows one to use its
 	  functionality in beamer.
 	- Added dark and tab options to beamerthemesidebar. Other sidebar
 	  themes no longer needed.
-	- Added \noteitem and \notes commands.
+	- Added \note commands.
 	- Added templates for notes.
 	- Added notes=onlyframeswithnotes option for generating only
 	  frames that contain a note.
@@ -48,8 +49,17 @@
 	  "at the end".
 	- Block environments now accept overlay specification also before
 	  the argument.
+	- Added \mode command
+	- Added beamerbasearticle.sty -> makes nearly all beamer commands
+	  available in article mode in a sensible way.
+	- Added mode specifications to \section and \subsection commands
+	  (useful for the article version).
+	- Started adding some templates for rendering frames in article mode.
 	- Added \lecture command and \includeonlylecture (useful for
 	  lecture notes).  
+	- Added a containsverbatim option to the \frame command. Should be
+	  used instead of the old \frame<all:1> (which is, however, still
+	  supported). 
 	
 	Changed:
 	- Every frame is now put into a box internally. Slides will never
@@ -66,8 +76,9 @@
 	- Renamed \original to \beameroriginal because of clash with
 	  lucidia font styles.
 	- "Streamlined" themes to use the same basic templates.
-	- \note command should be renamed to \notes outside frames (old
+	- \note command is renamed to \notes outside frames (old
 	  behaviour tolerated)
+	- \noteitems replaces by \notes[enumerate].
 	- \nameslide command is now obsolete. Use the label= option
 	  instead.
 	- Removed notesonly option. Use notes=only.
@@ -89,6 +100,9 @@
 	  new \pause command; use \opaqueness instead).
 	- Removed \newoverlaycommand and \renewoverlaycommand. Can be
 	  better implemented using \newcommand<>.
+	- Removed \article, \presentation, and \common commands (still
+	  quietly tolerated). Should be replaced by \mode<article>,
+	  \mode<presentation>, and \mode<all>. 
 	- Removed beamer/lyx/doc. Documentation is now incorporated in
 	  the main user's guide.
 	
@@ -101,11 +115,12 @@
 	- Added \againframe command.
 	- Changed beamer.layout to use new command \column. Old environment
  	  no longer supported in lyx.
+	- A new frame and a section or subsection will automatically close
+	  the previous frame. EndFrame is only needed before the end of
+	  the document, before the appendix, and before "out-of-frame"
+	  material. 
 	- Added TitleGraphic command.
-	- New frame, new section, and new subsection automatically end
-	  previous frame.
 	- Documented the LyX interface in beameruserguide.pdf.
-	
 
 2004-01-19 Till Tantau <tantau@users.sourceforge.net>
 

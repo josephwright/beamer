@@ -1335,8 +1335,9 @@ contain multiple slides; otherwise it contains only one slide.
   The \meta{overlay specification} dictates which slides of a frame are
   to be shown. If left out, the number is calculated automatically.
   The \meta{frame text} can be normal \LaTeX\ text, but may not contain
-  |\verb| commands or |verbatim| environments, unless special
-  precautions are taken, see Section~\ref{section-verbatim}.
+  |\verb| commands or |verbatim| environments, unless the
+  |containsverbatim| options is given, see also
+  Section~\ref{section-verbatim}. 
   
   \example
 \begin{verbatim}
@@ -1401,7 +1402,16 @@ contain multiple slides; otherwise it contains only one slide.
     \emph{first} slide, furthermore, a label with the name \meta{name}
     is created (so the labels \meta{name} and \meta{name}|<1>| point
     to the same slide). Note that labels in general, and these labels
-    in particular, can be used as targets for hyperlinks. 
+    in particular, can be used as targets for hyperlinks.
+    
+  \item
+    \declare{|containsverbatim|} tells \beamer\ that the frame
+    contains verbatim commands. In this case, only the first slide of
+    the frame is typeset (unless this slide is also suppressed by the
+    \meta{overlay specification}). If you wish to use verbatim text in
+    a frame with several slides, a more roundabout approach is
+    necessary, see Section~\ref{section-verbatim}. This option cannot
+    be used together with the |label| option.
   \end{itemize}
 
   \lyxnote
@@ -1419,6 +1429,11 @@ contain multiple slides; otherwise it contains only one slide.
   passes the |plain| option to the frame. To pass further options to a
   plain frame, you should use the normal ``BeginFrame'' style and
   specify all options (include |plain| at once).
+
+  \lyxnote
+  In \LyX, you can insert verbatim text directly even in overlayed
+  frames. The reason is that \LyX\ uses a different internal mechanism
+  for typesetting verbatim text, that is easier to handle for \beamer.
 \end{command}
 
 
@@ -1636,9 +1651,9 @@ The |\verb| command, the |verbatim| environment, the
 you to typeset arbitrary text work only in
 frames that contain a single slide or that are suppressed
 altogether. Furthermore, you must explicitly specify that the frame
-contains only one slide; like this:
+contains verbatim text using the |containsverbatim| commans:
 \begin{verbatim}
-\frame<all:1>
+\frame[containsverbatim]
 {
   \frametitle{Our Search Procedure}
 
@@ -1656,15 +1671,8 @@ contains only one slide; like this:
 }
 \end{verbatim}
 
-Instead of |\frame<all:1>| you could also have specified
-|\frame<1>|, but this works only for the presentation version of
-the talk, not for the handout version. To make verbatim accessible
-also in the handout version, you would have to specify
-\verb!\frame<1| handout: 1>! and even more if you also have a
-transparencies version. The specification |\frame<all:1>| states
-that the frame has just one slide in all versions. You may \emph{not}
-use the |label=|\meta{label name} option if you have a verbatim text
-on a slide.
+You may \emph{not} use the |label=|\meta{label name} option if you
+have a verbatim text on a slide.
 
 If you need to use verbatim commands in frames that contain several
 slides or on a frame that uses the |label| option, you must
@@ -4797,14 +4805,13 @@ mind when presenting a slide.
 
 \subsubsection{Specifying Note Contents}
 
-There are four commands for specifying what should be put on a note:
- |\note|, |\noteitem|, |\notes|, and |\noteitems|. The first two
-commands can only be used \emph{inside} a frame, the last two only
-\emph{outside}.
+There are two commands for specifying what should be put on a note:
+|\note| and |\notes|. The first commands can only be used
+\emph{inside} a frame, the second only \emph{outside}.
 
 \lyxnote
-In \LyX, only the most useful of these commands, namely |\noteitem| is
-avaiable in the form of the NoteItem style.
+In \LyX, only the |\note| command with the option |[item]| is avaiable
+in the form of the NoteItem style. 
 
 The effect of |\note|\meta{text} is the following: When you use it
 somewhere inside the frame on a specific slide, a note page is created
@@ -4815,10 +4822,9 @@ commands on one slide, they ``accumulate'' and are all shown on the
 same note.
 
 To make the accumulation of notes more convenient, you can use the
-|\noteitem| command. It does the same as the |\note| command, but all
-notes added using |\noteitem| are accumulated in a list that follows
-any text inserted using |\note|. Usually, it is better not to mix
-|\noteitem| and |\note| on a slide, but it is certainly possible.
+|\note| command with the option |[item]|. The notes added with this
+option are accumulated in an |enumerate| list that follows any text
+inserted using |\note|. 
 
 The following example will produce one note page that follows the
 second slide and has two entries. 
@@ -4828,34 +4834,29 @@ second slide and has two entries.
   \begin{itemize}
   \item<1-> Eggs
   \item<2-> Plants
-    \noteitem<2>{Tell joke about plants.}
-    \noteitem<2>{Make it short.}
+    \note[item]<2>{Tell joke about plants.}
+    \note[item]<2>{Make it short.}
   \item<3-> Animals
   \end{itemize}
 }
 \end{verbatim}
 
-\begin{command}{\note\sarg{overlay specification}\marg{note text}}
+\begin{command}{\note\sarg{overlay
+      specification}\oarg{options}\marg{note text}} 
   Addends to \meta{note text} to the note that follows the current
   slide. Multiple uses of this command on a slide accumulate. If you
   do not specify an \meta{overlay specification}, the 
   note will be added to \emph{all} slides of the current frame. This
   often not what you want, so adding a specification like |<1>| is
   usually a good idea.
-  
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|item|} causes the note to be put as an item in a
+    list that is shown at the end of the note page.
+  \end{itemize}
+    
   \example|\note<2>{Do not talk longer than 2 minutes about this.}|
-
-  \articlenote
-  Notes are ignored in |article| mode.
-\end{command}
-
-\begin{command}{\noteitem\sarg{overlay specification}\marg{note text}}
-  Appends an item in a list of note items with the given \meta{note
-  text} to the note following the current slide. If uses of |\note|
-  and |\noteitem| are mixed on a slide, the notes come first, followed
-  by the list of note items.
-  
-  \example|\noteitem<2>{Stress this.}|
 
   \articlenote
   Notes are ignored in |article| mode.
@@ -4864,38 +4865,35 @@ second slide and has two entries.
   Use the NoteItem style to insert a note item. 
 \end{command}
 
-The commands |\notes| and |\noteitems| should be used outside
-frames. They create a single note page when they are used. They are
-``independent'' of any usage of the |\note| or |\noteitem| commands
+
+The command |\notes| must be used outside
+frames. It create a single note page. It is
+``independent'' of any usage of the |\note| commands
 inside the previous frame. If you say |\note| inside a frame and
 |\notes| right after it, \emph{two} note pages are created.
 
-The only difference between |\notes| and |\noteitems| is that the
-latter commands installs an enumerate environment.
-
-\begin{command}{\note\marg{note text}}
+\begin{command}{\notes\oarg{options}\marg{note text}}
   Creates a note page. Must be used outside frames. This command is
   \emph{not} affected by the |notes=onlyframeswithnotes| option, see
   below.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|itemize|} will enclose the whole note page in an
+    |itemize| environment. This is just a convenience.
+  \item \decalre{|enumerate|} will enclose the whole note page in an
+    |enumerate| environment.
+  \end{itemize}
+  
   \example
 \begin{verbatim}
 \frame{some text}
-\note{Talk no more than 1 minute.}
-\end{verbatim}
+\notes{Talk no more than 1 minute.}
 
-  \articlenote
-  Notes are ignored in |article| mode.
-\end{command}
-
-\begin{command}{\noteitems\marg{list of item commands}}
-  Just like the |\note| command, except that an |enumerate|
-  environment is setup inside the note.
-  \example
-\begin{verbatim}
-\frame{Bla bla...}
-\noteitems{
-\item Stress the importance.
-\item Use no more than 2 minutes.
+\notes[enumerate]
+{
+\item Stress this first.
+\item Then this.
 }
 \end{verbatim}
 

@@ -10,11 +10,17 @@
 \beamertemplatelargetitlepage
 \beamertemplatelargepartpage
 \beamertemplatelargeframetitle
-\beamertemplatelightsectionheads
 \beamertemplateplaintoc
 \beamertemplatelargeblocks
-\beamertemplaterightsidebarlogonavigation
 
+
+\usesectionheadtemplate
+  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
+
+\usesubsectionheadtemplate
+  {\color{white}\tiny\textbf{\insertsubsectionhead}}
+  {\color{white!50!structure}\tiny\textbf{\insertsubsectionhead}}
 
                                 % Head
 \ifbeamer@compress

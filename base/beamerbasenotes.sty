@@ -16,8 +16,18 @@
 % Notes
 %
 
-\long\def\notes#1{%
+\define@key{beamernotes}{enumerate}[true]{%
+  \def\beamer@noteenvstart{\begin{enumerate}\itemsep=0pt\parskip=0pt}%
+  \def\beamer@noteenvend{\end{enumerate}}}
+\define@key{beamernotes}{itemize}[true]{%
+  \def\beamer@noteenvstart{\begin{itemize}\itemsep=0pt\parskip=0pt}%
+  \def\beamer@noteenvend{\end{itemize}}}
+
+\newcommand\notes[2][]{%
   \beamer@savemode%
+  \def\beamer@noteenvstart{}%
+  \def\beamer@noteenvend{}%
+  \setkeys{beamernotes}{#1}%
   \ifbeamer@notes
   \begingroup
     \useitemizeitemtemplate{\textbullet}
@@ -35,7 +45,9 @@
         \def\Gm@lmargin{1cm}\def\Gm@rmargin{1cm}%
       \textwidth=10.8cm\hsize=\textwidth%
       \vskip-\headheight%
-      \def\insertnote{\vbox{}#1}%
+      \def\insertnote{\vbox{}%
+        \beamer@noteenvstart#2\beamer@noteenvend%
+      }%
       \beamer@notetemplate%
       \vfil%
       \vskip-4pt% foot separator
@@ -45,24 +57,34 @@
   \fi%
   \beamer@resumemode}
 
-\long\def\noteitems#1{\notes{\begin{enumerate}\itemsep=0pt\parskip=0pt#1\end{enumerate}}}
-
 %
 % Notes in frames
 %
 
-\newcommand{\note}{\alt{\beamer@note}{\@gobble}}
-\def\beamer@note#1{%
-  \expandafter\gdef\expandafter\beamer@notes\expandafter{\beamer@notes%
-    #1}}
+\def\beamer@itemtext{item}
+
+\newcommand<>{\note}[2][]{%
+  \only#3{%
+    \def\beamer@temp{#1}%
+    \ifx\beamer@temp\beamer@itemtext%
+      \expandafter\gdef\expandafter\beamer@noteitems%
+      \expandafter{\beamer@noteitems\item#2}%
+    \else
+      \expandafter\gdef\expandafter\beamer@notes%
+        \expandafter{\beamer@notes#2}%
+    \fi%
+  }}    
+%\def\beamer@note#1{%
+%  \expandafter\gdef\expandafter\beamer@notes\expandafter{\beamer@notes%
+%    #1}}
 
 \let\beamer@noteorig=\note% will be reset at beginning of frame
 \def\note{\ClassWarning{beamer}{\noexpand\note should not be used outside frames. Use \noexpand\notes instead}\notes}
 
-\newcommand{\noteitem}{\alt{\beamer@noteitem}{\@gobble}}
-\def\beamer@noteitem#1{%
-  \expandafter\gdef\expandafter\beamer@noteitems\expandafter{\beamer@noteitems%
-    \item#1}}
+%\newcommand{\noteitem}{\alt{\beamer@noteitem}{\@gobble}}
+%\def\beamer@noteitem#1{%
+%  \expandafter\gdef\expandafter\beamer@noteitems\expandafter{\beamer@noteitems%
+%    \item#1}}
 
 \def\beamer@framenotesbegin{% at beginning of slide
   \gdef\beamer@noteitems{}%
@@ -179,10 +201,8 @@
 \mode
 <article>
 {
-  \long\def\note#1{}
-  \long\def\noteitems#1{}
-  \newcommand<>\note[1]{}
-  \newcommand<>\noteitem[1]{}
+  \newcommand<>\note[2][]{}
+  \newcommand<>\notes[2][]{}
 }
 
 

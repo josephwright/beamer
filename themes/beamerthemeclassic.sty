@@ -8,9 +8,6 @@
 % archives in directory macros/latex/base/lppl.txt.
 
 
-                                % default templates
-\beamertemplaterightsidebarlogonavigation
-\beamertemplatelargeblocks
 
                                 % Title page  
 \usetitlepagetemplate{
@@ -64,12 +61,12 @@
 
 \pgfdeclareverticalshading{headfade}{\paperwidth}
 {color(0cm)=(averagebackgroundcolor);
-  color(1.25cm)=(structure!50!averagebackgroundcolor)}
+  color(1.25cm)=(beamerstructure!50!averagebackgroundcolor)}
 
 \AtBeginDocument{% redo at begin of document to catch changed background color
 \pgfdeclareverticalshading{headfade}{\paperwidth}
 {color(0cm)=(averagebackgroundcolor);
-  color(1.25cm)=(structure!50!averagebackgroundcolor)}}
+  color(1.25cm)=(beamerstructure!50!averagebackgroundcolor)}}
 
                                 % Head
 \useheadtemplate{%
@@ -84,7 +81,15 @@
 \usefoottemplate{}
 
 
+                                % Blocks
+\useblocktemplate{\medskip{\color{beamerstructure}\large\textrm{\textit{\hskip-1pt\insertblockname}}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large\textrm{\textit{\hskip-1pt\insertblockname}}}}%
+  \colorlet{beamerstructure}{beameralert}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large\textrm{\textit{\hskip-1pt\insertblockname}}}\par%
+    \color{black!50!green}\colorlet{beamerstructure}{beamerstructure!50!green}}{\endgroup\medskip}
+
+  
  
                                 % Itemize
-\useitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
-\usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
+\useitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
+\usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}

@@ -66,7 +66,14 @@
 
 \beamertemplateballitem
 \beamertemplatesolidbuttons
-\beamertemplatelightsectionheads
+
+\usesectionheadtemplate
+  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
+
+\usesubsectionheadtemplate
+  {\color{white}\tiny\textbf{\insertsubsectionhead}}
+  {\color{white!50!structure}\tiny\textbf{\insertsubsectionhead}}
 
                                 % Entries in table of contents
 \beamertemplatenumberedballsectiontoc
@@ -96,7 +103,7 @@
       \color{structure}\vrule width.5\paperwidth height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
     \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin
     }%
-    \vskip-0.1pt
+    \vskip-0.2pt
     \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
     \vskip-2pt
   }%
@@ -121,7 +128,7 @@
         height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
       \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin%
     }
-    \vskip-0.1pt
+    \vskip-0.2pt
     \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
     \vskip-2pt
   }%
