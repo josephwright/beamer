@@ -1,0 +1,205 @@
+\ProvidesPackage{beamerbasedecode}[2004/01/10 ver 1.30]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+%
+% News
+%
+\newcount\beamer@slideinframe
+\newcount\beamer@minimum
+\newif\ifbeamer@anotherslide
+\newif\ifbeamer@localanotherslide
+
+
+% Sets dowhat to doif, if \beamer@slideinframe is in the specified
+% interval. Example: 5-7,-3,9,11,13- would mean pages
+% 1,2,3,5,6,7,9,11,13,14,15,16,... 
+%
+% As a side effect, \@another is called whenever the there is a number
+% in the list that is larger than the current serialnumber
+
+\def\beamer@decode{\global\beamer@minimum=10000\relax\gdef\beamer@decodefound{+}\beamer@@decodefind}
+\def\beamer@@decodefind{\futurelet\beamer@next\beamer@decodeinsertdefault}
+\def\beamer@decodeinsertdefault{\ifcat\beamer@next a%
+  \gdef\beamer@next{}%
+  \else%
+  \gdef\beamer@next{default:}%
+  \fi%
+  \expandafter\beamer@decodefind\beamer@next}
+
+\def\beamer@modestop{stop}
+\def\beamer@modeall{all}
+\def\beamer@decodefind#1:#2| {%
+  \def\beamer@mode{#1}%
+  \ifx\beamer@mode\beamer@modestop%
+    \expandafter\beamer@@decode\beamer@decodefound,!%
+    \let\beamer@next=\relax%
+  \else
+    \ifx\beamer@mode\beamer@currentmode%
+      \gdef\beamer@decodefound{#2}%
+    \else%
+      \ifx\beamer@mode\beamer@modeall%
+        \gdef\beamer@decodefound{#2}%
+      \fi%
+    \fi%
+    \let\beamer@next=\beamer@@decodefind%
+  \fi%
+  \beamer@next}
+
+\def\beamer@doifnotinframe{}
+\def\beamer@@decode{%
+  \@ifnextchar!%
+  {\beamer@decodeend}%
+  {%
+    \@ifnextchar+%
+    {\beamer@decodeall}{%
+      \@ifnextchar-%
+      {\beamer@decodeuntil}%
+      {\beamer@decodenumber}}}}
+\def\beamer@decodeend!{}
+\def\beamer@decodeall+,{%
+  \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
+  \ifnum1>\beamer@slideinframe%
+  \global\beamer@anotherslidetrue%
+  \beamer@localanotherslidetrue%
+  \fi%
+  \gdef\beamer@doifnotinframe{\beamer@doifinframe}\beamer@@decode}
+\def\beamer@decodeuntil-#1,{%
+  \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum\beamer@slideinframe>#1\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
+  \beamer@@decode}
+\def\beamer@decodenumber#1{%
+  \@ifnextchar,%
+  {\beamer@decodeone{#1}}%
+  {\@ifnextchar-%
+    {\beamer@decodenumberto{#1}}%
+    {\beamer@decodegobble{#1}}}}
+\def\beamer@decodegobble#1#2{%
+  \beamer@decodenumber{#1#2}}
+\def\beamer@decodenumberto#1-{
+  \@ifnextchar,%
+  {\beamer@decodeto{#1}}%
+  {\beamer@decodebetween{#1}}}
+\def\beamer@decodeto#1,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
+  \beamer@@decode}
+\def\beamer@decodebetween#1#2,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#2>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\else\ifnum#2<\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi\fi%
+  \beamer@@decode}
+\def\beamer@decodeone#1,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1=\beamer@slideinframe\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
+  \beamer@@decode}
+
+\def\beamer@donow{\beamer@doifnotinframe}
+
+\def\beamer@saveanother{\let\beamer@savedif=\ifbeamer@anotherslide}
+\def\beamer@restoreanother{\global\let\ifbeamer@anotherslide=\beamer@savedif}
+
+
+
+
+
+%
+%
+% Basic overlay commands
+%
+%
+
+\def\beamer@parsebr#1{\@ifnextchar<{\beamer@@parsebr#1}{#1}}
+\def\beamer@@parsebr#1{\begingroup\catcode`:=12\catcode`|=12\beamer@parseinner{#1}}%
+\def\beamer@parseinner#1<#2>{\endgroup\edef\beamer@spec{<#2>}%
+  \expandafter#1\beamer@spec}
+
+\def\alt{\beamer@parsebr\@alt}
+\long\def\@alt<#1>#2#3{%
+  \def\beamer@doifnotinframe{#3}\def\beamer@doifinframe{#2}%
+  {\setbox0=\hbox{\beamer@decode#1| stop:| }}\beamer@donow}
+
+\def\temporal{\beamer@parsebr\@temporal}
+\long\def\@temporal<#1>#2#3#4{% past, present, future
+  \def\beamer@doifnotinframe{\beamer@picked}\def\beamer@doifinframe{#3}%
+  {\setbox0=\hbox{\beamer@localanotherslidefalse\beamer@decode#1| stop:|
+      \ifbeamer@localanotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi}}\beamer@donow}
+
+\def\beameroriginal#1{\csname @orig\string#1\endcsname}
+
+\long\def\newoverlaycommand#1#2#3{% In slides, #1 does #2, otherwise #3
+  \def#1{\@ifnextchar<{\@overlayparse{#2}{#3}}{#2}}}
+
+\long\def\renewoverlaycommand#1#2#3{% In slides, #1 does #2, otherwise #3
+  \edef\@name{\beameroriginal#1}
+  \expandafter\let\@name=#1\relax%
+  \def#1{\@ifnextchar<{\@overlayparse{#2}{#3}}{#2}}}
+
+\long\def\@overlayparse#1#2<#3>{\alt<#3>{#1}{#2}}
+
+\def\newoverlayenvironment#1{%
+  \@ifnextchar[{\@@newoverlayenvironment{#1}}{\@newoverlayenvironment{#1}}}
+
+\long\def\@newoverlayenvironment#1#2#3#4#5{% In slides, #1 forms an
+% environment with begin #2 and end #3, otherwise an environment with 
+% begin #4 and end #5
+  \newenvironment{#1}{}{}%
+  \expandafter\def\csname #1\endcsname{%
+    \@ifnextchar<{\beamer@parsebegin{#1}{#2}{#3}{#4}{#5}}{%
+      \expandafter\def\csname end#1\endcsname{#3}#2}}%
+  }
+    
+\long\def\beamer@parsebegin#1#2#3#4#5<#6>{%
+  \alt<#6>{% In slide case
+    \expandafter\def\csname end#1\endcsname{#3}%
+    #2}{%
+    \expandafter\def\csname end#1\endcsname{#5}%
+    #4}}
+
+\long\def\renewoverlayenvironment#1#2#3#4#5{%
+  \edef\beamer@do{\csname original#1\endcsname=\expandafter\noexpand\csname#1\endcsname}
+  \expandafter\let\beamer@do
+  \edef\beamer@do{\csname endoriginal#1\endcsname=\expandafter\noexpand\csname end#1\endcsname}
+  \expandafter\let\beamer@do
+  \renewenvironment{#1}{}{}%
+  \expandafter\def\csname #1\endcsname{%
+    \@ifnextchar<{\beamer@parsebegin{#1}{#2}{#3}{#4}{#5}}{%
+      \expandafter\def\csname end#1\endcsname{#3}#2}%
+    }%
+  }
+
+\long\def\@@newoverlayenvironment#1[1]#2#3#4#5{% Currently, this works
+% only for a single argument
+  \newenvironment{#1}{}{}%
+  \expandafter\new@command\csname @in#1\endcsname[1]{#2}%
+  \expandafter\new@command\csname @out#1\endcsname[1]{#4}%
+  \expandafter\long\expandafter\def\csname #1\endcsname##1{%
+    \@ifnextchar<{\beamer@parsebegin{#1}{\csname @in#1\endcsname{##1}}{#3}{\csname @out#1\endcsname{##1}}{#5}}{%
+      \expandafter\def\csname end#1\endcsname{#3}#2}}%
+}
+
+
+\long\def\beamer@gobbleoptional{\@ifnextchar[{\beamer@@gobbleoptional}{\beamer@@gobbleoptional[]}}
+\long\def\beamer@@gobbleoptional[#1]#2{}
+
+\long\def\beamer@ignoreoptional{\@ifnextchar[{\beamer@@ignoreoptional}{}}
+\long\def\beamer@@ignoreoptional[#1]{}
+
+\long\def\beamer@insp#1{\ignorespaces#1\ignorespaces}
+\long\def\beamer@gobbleis#1{\ignorespaces}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

@@ -131,6 +131,7 @@
 \def\beamer@@frame<#1>{\endgroup%
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
 \def\beamer@@@frame<#1>[#2]{%
+  \beamer@savemode%
   \def\beamer@frametheme{}%
   \def\beamer@resumename{}%
   \setkeys{beamerframe}{#2}%
@@ -166,7 +167,10 @@
   \beamer@howtotreatframe}
 \long\def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
-  \setbox\beamer@tempbox\vbox\bgroup\leavevmode\def\pause{}\afterassignment\beamer@checknoslide\let\beamer@next}
+  \setbox\beamer@tempbox\vbox\bgroup%
+    \leavevmode%
+    \def\pause{}%
+    \afterassignment\beamer@checknoslide\let\beamer@next}
 \def\beamer@checknoslide{%
   \ifcat\bgroup\noexpand\beamer@next%
   \let\beamer@do\beamer@reseteecodes%
@@ -219,7 +223,7 @@
     \clearpage%
   }
 }
-\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}}
+\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\beamer@resumemode}
 
 
 

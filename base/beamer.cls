@@ -25,9 +25,8 @@
   \fi%
   \beamer@next}
 
-
-\RequirePackage{beamerbasearticle}
-% Setup article mode
+\RequirePackage{beamerbasemodes}
+% Setup modes and check for article option
 
 \beamer@transferifnecessary
 
@@ -79,12 +78,10 @@
 \newcount\beamer@pausecount
 \newcount\beamer@animationtempa
 \newcount\beamer@animationtempb
-\newcount\beamer@minimum
 \newcount\beamer@xpos
 \newcount\beamer@ypos
 \newcount\beamer@showpartnumber
 \newcount\beamer@currentsubsection
-\newcount\beamer@slideinframe
 \newcount\beamer@coveringdepth
 \newcount\beamer@sectionadjust
 \newcount\beamer@tocsectionnumber
@@ -97,8 +94,6 @@
 \newif\ifbeamer@centered
 \newif\ifbeamer@draftmode
 \newif\ifbeamer@compressnotes
-\newif\ifbeamer@anotherslide
-\newif\ifbeamer@localanotherslide
 
 
 
@@ -304,6 +299,9 @@
 
 \RequirePackage{beamerbasecolor}
 % Headlines, sidebars, columns
+
+\RequirePackage{beamerbasedecode}
+% Overlay stuff
 
 \RequirePackage{beamerbaseoverlay}
 % Overlay stuff
