@@ -15,13 +15,15 @@
 \setbeamercolor{frametitle right}{parent=section in head/foot}
 
 
-\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\the\paperheight}{%
+\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\paperheight}{%
   color(0pt)=(frametitle.bg);
   color(\paperwidth)=(frametitle right.bg)}
 
-\pgfdeclareverticalshading{beamer@topshade}{\the\paperwidth}{%
-  color(0pt)=(bg);
-  color(4pt)=(black!50!bg)}
+\AtBeginDocument{
+  \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
+    color(0pt)=(bg);
+    color(4pt)=(black!50!bg)}
+}
 
 \addtobeamertemplate{headline}
 {}
@@ -60,7 +62,8 @@
       \advance\beamer@tempdim by 2pt%
       \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{\beamer@tempdim}
         \usebeamercolor{frametitle right}
-        \pgfrect[clip]{\pgforigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
+        \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
+        \pgfusepath[clip]
         \pgfbox[left,base]{\pgfuseshading{beamer@frametitleshade}}
       \end{pgfpicture}
       \hskip-\paperwidth%

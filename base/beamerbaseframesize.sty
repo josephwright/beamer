@@ -103,13 +103,13 @@
           \begin{pgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
             \pgfbox[left,top]{\box\@tempboxa}
             \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
-            \pgfclip
-            \begin{pgfmagnify}{\beamer@temp}{\beamer@temp}
+            \pgfusepath[clip]
+            \begin{pgflowlevelscope}{\pgftransformscale{\beamer@temp}}
               \@tempdima=#4\relax%
               \@tempdimb=#5\relax%
-              \pgftranslateto{\pgfpoint{-\@tempdima}{\@tempdimb}}
+              \pgflowlevel{\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}}
               \pgfbox[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}
-            \end{pgfmagnify}
+            \end{pgflowlevelscope}
           \end{pgfpicture}%
         }}%
       \setbox\beamer@framebox=\vbox{%
@@ -157,9 +157,8 @@
     \edef\beamer@factortemp{\strip@pt\@tempdimc}%
     \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
       \begin{pgfpicture}{0pt}{-\beamer@frametextheight}{0pt}{0pt}
-        \begin{pgfmagnify}{\beamer@factortemp}{\beamer@factortemp}
-          \pgfbox[left,top]{\box\beamer@framebox}
-        \end{pgfmagnify}
+        \pgflowlevelobj{\pgftransformscale{\beamer@factortemp}}{%
+          \pgfbox[left,top]{\box\beamer@framebox}}%
       \end{pgfpicture}%
     }%
 %  \fi%
@@ -174,6 +173,7 @@
 \splittopskip=10pt
 \newbox\beamer@splitbox
 \newcount\beamer@autobreakcount
+\newdimen\beamer@autobreaklastheight
 
 \def\beamer@autobreakframe{%
   \beamer@slideinframe=1\relax%
@@ -197,6 +197,13 @@
     % Ok, frame was overful -> split it!
     \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
     \global\setbox\beamer@splitbox=\box\beamer@framebox%
+    \@tempdima=\ht\@tempboxa%
+    \ifdim\@tempdima<\beamer@autobreaklastheight%
+      \global\beamer@autobreaklastheight=\@tempdima\relax%
+    \else%
+      \setbox\@tempboxa=\vbox{\unvbox\@tempboxa\unvbox\beamer@splitbox}%
+      \global\setbox\beamer@splitbox=\box\voidb@x%
+    \fi% 
     \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa%
       \vskip\beamer@framebottomskipautobreak%
       \ifvoid\beamer@splitbox%

@@ -111,6 +111,8 @@
     \def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
     \def\insertpart{\expandafter\hyperlink\partlink}%
+    \Hy@writebookmark{\the\c@section}{#1}{Outline\the\c@part}{1}{toc}%
+    \hyper@anchorstart{Outline\the\c@part}\hyper@anchorend%
     \beamer@atbeginpart%
   \fi%
   \beamer@resumemode}%
@@ -185,8 +187,8 @@
     \def\insertsubsectionhead{}%
     \def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
-    \Hy@writebookmark{\the\c@section}{\secname}{Outline\the\c@section}{1}{toc}%
-    \hyper@anchorstart{Outline\the\c@section}\hyper@anchorend%
+    \Hy@writebookmark{\the\c@section}{\secname}{Outline\the\c@part.\the\c@section}{2}{toc}%
+    \hyper@anchorstart{Outline\the\c@part.\the\c@section}\hyper@anchorend%
     \beamer@ifempty{#2}{\beamer@atbeginsections}{\beamer@atbeginsection}%
   \fi%
   \beamer@resumemode}%
@@ -203,10 +205,11 @@
 <all>
 {
   \def\AtBeginSection{\@ifnextchar[{\beamer@AtBeginSection}{\beamer@@AtBeginSection}}
-  \long\def\beamer@@AtBeginSection#1{\beamer@AtBeginSection[#1]{#1}}
+  \long\def\beamer@@AtBeginSection#1{\beamer@AtBeginSection[{#1}]{#1}}
   \long\def\beamer@AtBeginSection[#1]#2{%
     \def\beamer@atbeginsection{#2}%
-    \def\beamer@atbeginsections{#1}}
+    \def\beamer@atbeginsections{#1}%
+  }
   \AtBeginSection{}
 }
 
@@ -250,8 +253,8 @@
     \def\insertsubsubsection{}%
     \def\insertsubsectionhead{#1}%
     \def\insertsubsubsectionhead{}%
-    \Hy@writebookmark{\the\c@subsection}{#1}{Outline\the\c@section.\the\c@subsection.\the\c@page}{2}{toc}%
-    \hyper@anchorstart{Outline\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
+    \Hy@writebookmark{\the\c@subsection}{#1}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
+    \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
     \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}%
   \fi%
   \beamer@resumemode}
@@ -267,7 +270,7 @@
 <all>
 {
   \def\AtBeginSubsection{\@ifnextchar[{\beamer@AtBeginSubsection}{\beamer@@AtBeginSubsection}}
-  \long\def\beamer@@AtBeginSubsection#1{\beamer@AtBeginSubsection[#1]{#1}}
+  \long\def\beamer@@AtBeginSubsection#1{\beamer@AtBeginSubsection[{#1}]{#1}}
   \long\def\beamer@AtBeginSubsection[#1]#2{%
     \def\beamer@atbeginsubsection{#2}%
     \def\beamer@atbeginsubsections{#1}}
@@ -310,8 +313,8 @@
     \edef\subsubsectionlink{{Navigation\the\c@page}{\noexpand\subsubsecname}}%
     \def\insertsubsubsection{\expandafter\hyperlink\subsubsectionlink}%
     \def\insertsubsubsectionhead{#1}%
-    \Hy@writebookmark{\the\c@subsubsection}{#1}{Outline\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}{3}{toc}%
-    \hyper@anchorstart{Outline\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}\hyper@anchorend%
+    \Hy@writebookmark{\the\c@subsubsection}{#1}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}{4}{toc}%
+    \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}\hyper@anchorend%
     \beamer@ifempty{#2}{\beamer@atbeginsubsubsections}{\beamer@atbeginsubsubsection}%
   \fi%
   \beamer@resumemode}
@@ -322,7 +325,7 @@
 <all>
 {
   \def\AtBeginSubsubsection{\@ifnextchar[{\beamer@AtBeginSubsubsection}{\beamer@@AtBeginSubsubsection}}
-  \long\def\beamer@@AtBeginSubsubsection#1{\beamer@AtBeginSubsubsection[#1]{#1}}
+  \long\def\beamer@@AtBeginSubsubsection#1{\beamer@AtBeginSubsubsection[{#1}]{#1}}
   \long\def\beamer@AtBeginSubsubsection[#1]#2{%
     \def\beamer@atbeginsubsubsection{#2}%
     \def\beamer@atbeginsubsubsections{#1}}

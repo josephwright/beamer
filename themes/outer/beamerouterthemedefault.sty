@@ -16,7 +16,8 @@
 \defbeamertemplate*{mini frame}{default}
 {%
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \pgfcircle[fillstroke]{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfusepath[fill,stroke]
   \end{pgfpicture}%
 }
 [action]
@@ -27,7 +28,8 @@
 \defbeamertemplate*{mini frame in current subsection}{default}
 {%
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \pgfcircle[stroke]{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfusepath[stroke]
   \end{pgfpicture}%
 }
 
@@ -175,10 +177,10 @@
       \vskip-0.25\paperheight%
       \nointerlineskip
       \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
-        \begin{pgfrotateby}{\pgfdegree{90}}
-          \pgfputat{\pgfpoint{-2cm}{0.2cm}}%
+        \begin{pgflowlevelscope}{\pgftransformrotate{90}}
+          \pgflowlevelobj{\pgftransformshift{\pgfpoint{-2cm}{0.2cm}}}%
           {\pgfbox[base,left]{\footnotesize\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
-        \end{pgfrotateby}
+        \end{pgflowlevelscope}
       \end{pgfpicture}}
     \nointerlineskip
     \vbox to .25\paperheight{\vskip0.5em

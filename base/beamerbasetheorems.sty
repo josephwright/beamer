@@ -5,7 +5,16 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\mode<presentation>
+
+\mode
+<all>
+
+\IfFileExists{translator.sty}{\RequirePackage{translator}}{}
+\providecommand\translation[2][]{#2}
+
+
+\mode
+<presentation>
 
 \ifbeamer@ams
 
@@ -94,8 +103,9 @@
 
   \def\th@example{\th@remark}
 
+  \newcommand{\ExampleInline}[1]{\translation{Example}: \ignorespaces#1}
+
   \newcommand{\BeispielInline}[1]{Beispiel: \ignorespaces#1}
-  \newcommand{\ExampleInline}[1]{Example: \ignorespaces#1}
 }
 
 \mode
@@ -103,33 +113,33 @@
 {
   \ifbeamer@blocks
     \ifbeamer@countsect
-      \newtheorem{theorem}{Theorem}[section]
+      \newtheorem{theorem}{\translation{Theorem}}[section]
     \else
-      \newtheorem{theorem}{Theorem}
+      \newtheorem{theorem}{\translation{Theorem}}
     \fi
-    \newtheorem{corollary}[theorem]{Corollary}
-    \newtheorem{fact}[theorem]{Fact}
-    \newtheorem{lemma}[theorem]{Lemma}
-    \newtheorem{problem}[theorem]{Problem}
+    \newtheorem{corollary}[theorem]{\translation{Corollary}}
+    \newtheorem{fact}[theorem]{\translation{Fact}}
+    \newtheorem{lemma}[theorem]{\translation{Lemma}}
+    \newtheorem{problem}[theorem]{\translation{Problem}}
+    \newtheorem{solution}[theorem]{\translation{Solution}}
+
+    \theoremstyle{definition}
+    \newtheorem{definition}[theorem]{\translation{Definition}}
+    \newtheorem{definitions}[theorem]{\translation{Definitions}}
     
+    \theoremstyle{example}
+    \newtheorem{example}[theorem]{\translation{Example}}
+    \newtheorem{examples}[theorem]{\translation{Examples}}
+
+    
+    % Compatibility
+    \newtheorem{Beispiel}[theorem]{Beispiel}
+    \newtheorem{Beispiele}[theorem]{Beispiele}
+    \theoremstyle{plain}
     \newtheorem{Loesung}[theorem]{L\"osung}
     \newtheorem{Satz}[theorem]{Satz}
     \newtheorem{Folgerung}[theorem]{Folgerung}
     \newtheorem{Fakt}[theorem]{Fakt}
-
-    \theoremstyle{definition}
-    \newtheorem{definition}[theorem]{Definition}
-    \newtheorem{definitions}[theorem]{Definitions}
-    
-    \theoremstyle{example}
-    \newtheorem{Beispiel}[theorem]{Beispiel}
-    \newtheorem{Beispiele}[theorem]{Beispiele}
-    \newtheorem{example}[theorem]{Example}
-    \newtheorem{examples}[theorem]{Examples}
-
-    \theoremstyle{plain}
-
-    % Alias
     \newenvironment{Beweis}{\begin{proof}[Beweis.]}{\end{proof}}
     \newenvironment{Lemma}{\begin{lemma}}{\end{lemma}}
     \newenvironment{Proof}{\begin{proof}}{\end{proof}}

@@ -9,8 +9,6 @@
 \mode<presentation>
 
 
-
-\RequirePackage{pgfshade}
 \RequirePackage{beamerbaseboxes}
 
 
@@ -70,8 +68,8 @@
   \setkeys{beamer@backgroundgrid}{#1}%
   \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
     \beamer@bggc
-    \pgfpathgrid[stepx=\beamer@bggw,stepy=\beamer@bggw]{\pgforigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}%
-    \pgfusepath}
+    \pgfpathgrid[stepx=\beamer@bggw,stepy=\beamer@bggw]{\pgfpointorigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
+    \pgfusepath
   \end{pgfpicture}%    
 }
 
@@ -222,7 +220,7 @@
     \usebeamercolor{section number projected}%
     \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
       \color{bg}
-      \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+      \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
       \pgfusepath[fill]
       \pgfbox[center,base]{\color{fg}\inserttocsectionnumber}
     \end{pgfpicture}\kern1.25ex%
@@ -360,10 +358,10 @@
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
     \usebeamercolor[fg]{item projected}
-    \begin{pgfmagnify}{1.75}{1.75}
+    \begin{pgflowlevelscope}{\pgftransformscale{1.75}}
       \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgfmagnify}
-    \pgfputat{\pgfpoint{0pt}{0.5pt}}
+    \end{pgflowlevelscope}
+    \pgflowlevelobj{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}}
     {%
       \pgfbox[center,center]{%
         \usebeamerfont*{item projected}%
@@ -375,9 +373,9 @@
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
     \usebeamercolor[fg]{subitem projected}
-    \begin{pgfmagnify}{1.4}{1.4}
+    \begin{pgflowlevelscope}{\pgftransformscale{1.4}}
       \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgfmagnify}
+    \end{pgflowlevelscope}
     \pgfbox[center,center]{%
       \usebeamerfont*{subitem projected}%
       \insertsubenumlabel}
@@ -388,9 +386,9 @@
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
     \usebeamercolor[fg]{subsubitem projected}
-    \begin{pgfmagnify}{1.4}{1.4}
+    \begin{pgflowlevelscope}{\pgftransformscale{1.4}}
       \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgfmagnify}
+    \end{pgflowlevelscope}
     \pgfbox[center,center]{%
       \usebeamerfont*{subitem projected}%
       \insertsubsubenumlabel}
@@ -401,10 +399,10 @@
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
     \usebeamercolor[fg]{\beameritemnestingprefix item projected}
-    \begin{pgfmagnify}{1.75}{1.75}
+    \begin{pgflowlevelscope}{\pgftransformscale{1.75}}
       \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgfmagnify}
-    \pgfputat{\pgfpoint{0pt}{0.5pt}}
+    \end{pgflowlevelscope}
+    \pgflowlevelobj{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}}
     {%
       \usebeamerfont*{\beameritemnestingprefix item projected}%
       \pgfbox[center,center]{\insertenumlabel}}
@@ -483,7 +481,7 @@
   \usebeamerfont*{item projected}%
   \usebeamercolor[bg]{item projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
@@ -496,7 +494,7 @@
   \usebeamerfont*{subitem projected}%
   \usebeamercolor[bg]{subitem projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertsubenumlabel}
   \end{pgfpicture}%
@@ -507,7 +505,7 @@
   \usebeamerfont*{subsubitem projected}%
   \usebeamercolor[bg]{subsubitem projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertsubsubenumlabel}
   \end{pgfpicture}%
@@ -518,7 +516,7 @@
   \usebeamerfont*{\beameritemnestingprefix item projected}%
   \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-    \pgfpathcircle{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
     \pgfbox[center,base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
@@ -589,7 +587,7 @@
 \defbeamertemplate{mini frame}{box}
 {%
   \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-    \pgfpathrectangle{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
     \pgfusepath[fill,stroke]
   \end{pgfpicture}%
 }
@@ -601,8 +599,8 @@
 \defbeamertemplate{mini frame in current subsection}{box}
 {%
   \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-    \pgfpathrectangle{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
-    \pgfusepath
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfusepath[stroke]
   \end{pgfpicture}%
 }
 

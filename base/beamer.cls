@@ -165,8 +165,8 @@
 
   \def\beamer@activecjk{
     % Activate all >128 characters. 
-    \count@=127
-    \@whilenum\count@<255 \do{%
+    \count@=128
+    \@whilenum\count@<254 \do{%
       \advance\count@ by 1
       \lccode`\~=\count@
       \catcode\count@=\active

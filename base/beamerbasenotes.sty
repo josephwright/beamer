@@ -191,9 +191,10 @@
   \begin{pgfpicture}{0cm}{0cm}{#1\paperwidth}{#1\paperheight}
     \begin{pgfmagnify}{#1}{#1}
       \color[gray]{0.8}
-      \pgfrect[fill]{\pgforigin}{\pgfpoint{\paperwidth}{\paperheight}}
+      \pgfpathrectangle{\pgforigin}{\pgfpoint{\paperwidth}{\paperheight}}
+      \pgfusepath[fill]
       \color{black}
-      \pgfputat{\pgfpoint{\beamer@origlmargin}{\footheight}}{\pgfbox[left,bottom]{\copy\beamer@frameboxcopy}}
+      \pgflowlevelobj{\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}}{\pgfbox[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgfmagnify}
   \end{pgfpicture}%
   }}
