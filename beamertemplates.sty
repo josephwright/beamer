@@ -257,3 +257,35 @@
   \beamersetuncovermixins%
   {\mixinon<1->{15!averagebackgroundcolor}}
   {\mixinon<1->{15!averagebackgroundcolor}}}
+
+
+
+
+%
+% Buttons
+%
+
+\newcommand{\beamertemplatenavigationbuttonsempty}{
+  \usenavigationbuttontemplate{}}
+
+\newcommand{\beamertemplatenavigationbuttonsframe}{
+  \usenavigationbuttontemplate{\insertframenavigationbuttons}}
+
+\newcommand{\beamertemplatenavigationbuttonsvertical}{%
+  \usenavigationbuttontemplate{
+  \vbox{%
+  \hbox{\insertslidenavigationbuttons}
+  \hbox{\insertframenavigationbuttons}
+  \hbox{\insertsubsectionnavigationbuttons}
+  \hbox{\insertsectionnavigationbuttons}
+  \hbox{\insertdocnavigationbuttons}
+  \hbox{\insertbackfindforwardnavigationbuttons}}}}
+
+\newcommand{\beamertemplatenavigationbuttonshorizontal}{%
+  \usenavigationbuttontemplate{\hbox{%
+  \hbox{\insertslidenavigationbuttons}
+  \hbox{\insertframenavigationbuttons}
+  \hbox{\insertsubsectionnavigationbuttons}
+  \hbox{\insertsectionnavigationbuttons}
+  \hbox{\insertdocnavigationbuttons}
+  \hbox{\insertbackfindforwardnavigationbuttons}}}}

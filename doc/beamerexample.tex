@@ -36,7 +36,7 @@
 \beamertemplateshadingbackground{red!10}{structure!10}
 \beamertemplatetransparentcovereddynamic
 \beamertemplateballitem
-
+\beamertemplatenavigationbuttonshorizontal
 
 %
 % The following defintions are peculiar to this particular
@@ -155,7 +155,6 @@
   Technical University of Berlin}
 \date[DLT 2003]{Developments in Language Theory Conference, 2003}
 
-
 \begin{document}
 
 \presentation
@@ -231,7 +230,6 @@
         Input may be \alert{modified}
       \item
         Tape alphabet \alert{is larger than}\\ input alphabet
-        \hyperlinkdocumentend{Go to End}
       \end{itemize}
       \end{block}
     \end{column}
@@ -642,19 +640,24 @@
     Let $L$ be a context-free language with a forbidden word.\\
     Then $L  \in \NOFpoly$.
   \end{Theorem}
-  \vskip1em
 
-  The proof is based on the fact that every context-free
-  language can be accepted by a nondeterministic almost-overhead-free
-  machine in polynomial time.
+  \begin{overprint}
+  \onslide<1>
+    \hfill\beamerskipbutton{skipproof}{Skip proof}
+  \onslide<2>
+    \begin{proof}
+      Every context-free language can be accepted by a nondeterministic
+      almost-overhead-free machine in polynomial time.
+    \end{proof}
+  \end{overprint}
 }
-
-
 
 \frame
 {
   \frametitle{Relationships among Overhead-Free Computation Classes}
 
+  \hypertarget<1>{skipproof}{}
+  
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
     \pgfsetlinewidth{0.8pt}
     \pgfxyline(-5,0)(5,0)
@@ -685,7 +688,7 @@
   \end{Theorem}
   \vskip1em
 
-  \hyperlink{proofdetails}{Go to proof details.}
+  \beamergotobutton{proofdetails}{Proof details}
   \hypertarget{backfromproofdetails}{}
 }
 
@@ -885,7 +888,7 @@
     \end{itemize}
   \end{proof}
 
-  \hfill\hyperlink{backfromproofdetails}{return}
+  \hfill\beamerreturnbutton{backfromproofdetails}{Return}
 }
 
 \subsection{Improvements for Context-Free Languages}

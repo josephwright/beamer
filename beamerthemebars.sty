@@ -79,9 +79,13 @@
 \usefoottemplate{%
   \vbox{%
     \tinycolouredline{structure!75!white}{\color{white}\textbf{\insertshortauthor\hfill\insertshortinstitute}}%
-    \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill}%
+    \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationbuttons}}%
     }}
 
+\def\beamernavigationcolorlight{structure!65!white}
+\def\beamernavigationcolorstrong{structure!50!white}
+  
+  
 \def\logo#1{%
   \def\insertlogo{#1}%
   \usefoottemplate{%
@@ -112,6 +116,3 @@
 \usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
 \useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
 \color{black!50!green}}{\endgroup\medskip}
-
-
-
