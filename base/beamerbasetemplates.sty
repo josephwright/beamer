@@ -207,15 +207,15 @@
     \inserttocsection\par}
   
   \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=2em\color{black}\llap{\raise0.2ex\hbox{\pgfuseshading{smallsphere}}\ }\inserttocsubsection\par}
+    {\leavevmode\leftskip=2em\color{black}\llap{\raise0.2ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}\ }\inserttocsubsection\par}
 }
 
 \newcommand{\beamertemplateballtoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-    {\leavevmode\color{structure}\raise0.1ex\hbox{\pgfuseshading{bigsphere}}\ \inserttocsection\par}
+    {\leavevmode\color{structure}\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\ \inserttocsection\par}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=1.5em\color{black}\raise0.2ex\hbox{\pgfuseshading{smallsphere}}\ \inserttocsubsection\par}
+    {\leavevmode\leftskip=1.5em\color{black}\raise0.2ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}\ \inserttocsubsection\par}
 }
 
 
@@ -229,108 +229,8 @@
   }
 
 \newcommand{\beamertemplateballitem}{%
-  \pgfdeclareradialshading{bigsphere}{\pgfpoint{-0.9pt}{1.1pt}}%
-  {color(0cm)=(structure!15);
-    color(0.8pt)=(structure!75);
-    color(1.6pt)=(structure!70!black);
-    color(2.2pt)=(structure!50!black);
-    color(2.6pt)=(averagebackgroundcolor)}
-  \pgfdeclareradialshading{smallsphere}{\pgfpoint{-0.72pt}{0.89pt}}%
-  {color(0cm)=(structure!15);
-    color(0.64pt)=(structure!75);
-    color(1.28pt)=(structure!70!black);
-    color(1.76pt)=(structure!50!black);
-    color(2.08pt)=(averagebackgroundcolor)}
-  
-  \begin{colormixin}{20!averagebackgroundcolor}
-  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
-  {color(0cm)=(structure!15);
-    color(0.8pt)=(structure!75);
-    color(1.6pt)=(structure!70!black);
-    color(2.2pt)=(structure!50!black);
-    color(2.6pt)=(averagebackgroundcolor)}
-  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
-  {color(0cm)=(structure!15);
-    color(0.64pt)=(structure!75);
-    color(1.28pt)=(structure!70!black);
-    color(1.76pt)=(structure!50!black);
-    color(2.08pt)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{bigsphere.!20opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!20opaque}{smallsphereshaded}
-  \pgfaliasshading{bigsphere.!20!averagebackgroundcolor}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!20!averagebackgroundcolor}{smallsphereshaded}
-  
-  \begin{colormixin}{15!averagebackgroundcolor}
-  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
-  {color(0cm)=(structure!15);
-    color(0.8pt)=(structure!75);
-    color(1.6pt)=(structure!70!black);
-    color(2.2pt)=(structure!50!black);
-    color(2.6pt)=(averagebackgroundcolor)}
-  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
-  {color(0cm)=(structure!15);
-    color(0.64pt)=(structure!75);
-    color(1.28pt)=(structure!70!black);
-    color(1.76pt)=(structure!50!black);
-    color(2.08pt)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{bigsphere.!15opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!15opaque}{smallsphereshaded}
-  
-  \begin{colormixin}{10!averagebackgroundcolor}
-  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
-  {color(0cm)=(structure!15);
-    color(0.8pt)=(structure!75);
-    color(1.6pt)=(structure!70!black);
-    color(2.2pt)=(structure!50!black);
-    color(2.6pt)=(averagebackgroundcolor)}
-  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
-  {color(0cm)=(structure!15);
-    color(0.64pt)=(structure!75);
-    color(1.28pt)=(structure!70!black);
-    color(1.76pt)=(structure!50!black);
-    color(2.08pt)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{bigsphere.!10opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!10opaque}{smallsphereshaded}
-  
-  \begin{colormixin}{5!averagebackgroundcolor}
-  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
-  {color(0cm)=(structure!15);
-    color(0.8pt)=(structure!75);
-    color(1.6pt)=(structure!70!black);
-    color(2.2pt)=(structure!50!black);
-    color(2.6pt)=(averagebackgroundcolor)}
-  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
-  {color(0cm)=(structure!15);
-    color(0.64pt)=(structure!75);
-    color(1.28pt)=(structure!70!black);
-    color(1.76pt)=(structure!50!black);
-    color(2.08pt)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{bigsphere.!5opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!5opaque}{smallsphereshaded}
-  
-  \begin{colormixin}{2!averagebackgroundcolor}
-  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
-  {color(0cm)=(structure!15);
-    color(0.8pt)=(structure!75);
-    color(1.6pt)=(structure!70!black);
-    color(2.2pt)=(structure!50!black);
-    color(2.6pt)=(averagebackgroundcolor)}
-  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
-  {color(0cm)=(structure!15);
-    color(0.64pt)=(structure!75);
-    color(1.28pt)=(structure!70!black);
-    color(1.76pt)=(structure!50!black);
-    color(2.08pt)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{bigsphere.!2opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!2opaque}{smallsphereshaded}
-  
-  \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bigsphere}}}
-  \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{smallsphere}}}
+  \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}}
+  \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}}
   }
 
 %

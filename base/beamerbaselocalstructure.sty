@@ -102,6 +102,31 @@
 \newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
 \newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
 
+
+
+%
+% List stuff
+%
+
+\setlength\leftmargini  {2em}
+\setlength\leftmarginii  {2em}
+\setlength  \labelsep  {.5em}
+\setlength  \labelwidth{\leftmargini}
+\addtolength\labelwidth{-\labelsep}
+\renewcommand\theenumi{\@arabic\c@enumi}
+\renewcommand\theenumii{\@arabic\c@enumii}
+
+\def\@listi{\leftmargin\leftmargini
+            \topsep 4\p@ \@plus2\p@ \@minus\p@
+            \parsep 0\p@
+            \itemsep4\p@ \@plus2\p@ \@minus2\p@}
+\let\@listI\@listi
+\def\@listii {\leftmargin\leftmarginii
+              \topsep    2\p@ \@plus2\p@ \@minus\p@
+              \parsep    0\p@   \@plus\p@  \@minus\p@
+              \itemsep   \parsep}
+
+            
 %
 %
 % Enumerations

@@ -11,35 +11,135 @@
 
 
 \def\beamerboxesdeclarecolorscheme#1#2#3{% scheme name, upper color, lower color
+  \colorlet{bmb@up#1}{#2}%
+  \colorlet{bmb@down#1}{#3}%
   \pgfdeclareverticalshading{bmb@cs#1}{\paperwidth}{%
-    color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+    color(0pt)=(bmb@down#1); color(2pt)=(bmb@down#1); color(4pt)=(bmb@up#1)}
   \begin{colormixin}{20!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
-      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+      color(0pt)=(bmb@down#1); color(2pt)=(bmb@down#1); color(4pt)=(bmb@up#1)}
   \end{colormixin}
   \pgfaliasshading{bmb@cs#1.!20opaque}{bmb@shaded}
   \begin{colormixin}{15!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
-      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+      color(0pt)=(bmb@down#1); color(2pt)=(bmb@down#1); color(4pt)=(bmb@up#1)}
   \end{colormixin}
   \pgfaliasshading{bmb@cs#1.!15opaque}{bmb@shaded}
   \begin{colormixin}{10!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
-      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+      color(0pt)=(bmb@down#1); color(2pt)=(bmb@down#1); color(4pt)=(bmb@up#1)}
   \end{colormixin}
   \pgfaliasshading{bmb@cs#1.!10opaque}{bmb@shaded}
   \begin{colormixin}{5!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
-      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+      color(0pt)=(bmb@down#1); color(2pt)=(bmb@down#1); color(4pt)=(bmb@up#1)}
   \end{colormixin}
   \pgfaliasshading{bmb@cs#1.!5opaque}{bmb@shaded}
   \begin{colormixin}{2!averagebackgroundcolor}
     \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
-      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+      color(0pt)=(bmb@down#1); color(2pt)=(bmb@down#1); color(4pt)=(bmb@up#1)}
   \end{colormixin}
   \pgfaliasshading{bmb@cs#1.!2opaque}{bmb@shaded}
-  \colorlet{bmb@up#1}{#2}%
-  \colorlet{bmb@down#1}{#3}%
+
+  \pgfdeclareradialshading{bmb@cs#1bigsphere}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.8pt)=(bmb@up#1!75);
+    color(1.6pt)=(bmb@up#1!70!black);
+    color(2.2pt)=(bmb@up#1!50!black);
+    color(2.6pt)=(bmb@down#1)}
+  \pgfdeclareradialshading{bmb@cs#1smallsphere}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.64pt)=(bmb@up#1!75);
+    color(1.28pt)=(bmb@up#1!70!black);
+    color(1.76pt)=(bmb@up#1!50!black);
+    color(2.08pt)=(bmb@down#1)}
+  
+  \begin{colormixin}{20!bmb@down#1}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.8pt)=(bmb@up#1!75);
+    color(1.6pt)=(bmb@up#1!70!black);
+    color(2.2pt)=(bmb@up#1!50!black);
+    color(2.6pt)=(bmb@down#1)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.64pt)=(bmb@up#1!75);
+    color(1.28pt)=(bmb@up#1!70!black);
+    color(1.76pt)=(bmb@up#1!50!black);
+    color(2.08pt)=(bmb@down#1)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1bigsphere.!20opaque}{bigsphereshaded}
+  \pgfaliasshading{bmb@cs#1smallsphere.!20opaque}{smallsphereshaded}
+  \pgfaliasshading{bmb@cs#1bigsphere.!20!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bmb@cs#1smallsphere.!20!averagebackgroundcolor}{smallsphereshaded}
+  
+  \begin{colormixin}{15!bmb@down#1}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.8pt)=(bmb@up#1!75);
+    color(1.6pt)=(bmb@up#1!70!black);
+    color(2.2pt)=(bmb@up#1!50!black);
+    color(2.6pt)=(bmb@down#1)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.64pt)=(bmb@up#1!75);
+    color(1.28pt)=(bmb@up#1!70!black);
+    color(1.76pt)=(bmb@up#1!50!black);
+    color(2.08pt)=(bmb@down#1)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1bigsphere.!15opaque}{bigsphereshaded}
+  \pgfaliasshading{bmb@cs#1smallsphere.!15opaque}{smallsphereshaded}
+  
+  \begin{colormixin}{10!bmb@down#1}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.8pt)=(bmb@up#1!75);
+    color(1.6pt)=(bmb@up#1!70!black);
+    color(2.2pt)=(bmb@up#1!50!black);
+    color(2.6pt)=(bmb@down#1)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.64pt)=(bmb@up#1!75);
+    color(1.28pt)=(bmb@up#1!70!black);
+    color(1.76pt)=(bmb@up#1!50!black);
+    color(2.08pt)=(bmb@down#1)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1bigsphere.!10opaque}{bigsphereshaded}
+  \pgfaliasshading{bmb@cs#1smallsphere.!10opaque}{smallsphereshaded}
+  
+  \begin{colormixin}{5!bmb@down#1}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.8pt)=(bmb@up#1!75);
+    color(1.6pt)=(bmb@up#1!70!black);
+    color(2.2pt)=(bmb@up#1!50!black);
+    color(2.6pt)=(bmb@down#1)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.64pt)=(bmb@up#1!75);
+    color(1.28pt)=(bmb@up#1!70!black);
+    color(1.76pt)=(bmb@up#1!50!black);
+    color(2.08pt)=(bmb@down#1)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1bigsphere.!5opaque}{bigsphereshaded}
+  \pgfaliasshading{bmb@cs#1smallsphere.!5opaque}{smallsphereshaded}
+  
+  \begin{colormixin}{2!bmb@down#1}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.8pt)=(bmb@up#1!75);
+    color(1.6pt)=(bmb@up#1!70!black);
+    color(2.2pt)=(bmb@up#1!50!black);
+    color(2.6pt)=(bmb@down#1)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(bmb@up#1!15);
+    color(0.64pt)=(bmb@up#1!75);
+    color(1.28pt)=(bmb@up#1!70!black);
+    color(1.76pt)=(bmb@up#1!50!black);
+    color(2.08pt)=(bmb@down#1)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1bigsphere.!2opaque}{bigsphereshaded}
+  \pgfaliasshading{bmb@cs#1smallsphere.!2opaque}{smallsphereshaded}
 }
 
 \define@key{beamerboxes}{scheme}{\edef\bmb@scheme{#1}}
@@ -121,7 +221,9 @@
   \nointerlineskip%
   \fi%
   \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
+    \vskip2pt%
     \colorlet{averagebackgroundcolor}{bmb@down\bmb@scheme}%
+    \colorlet{structure}{bmb@up\bmb@scheme}%
   }
 
 \def\endbeamerboxesrounded{%
@@ -187,8 +289,10 @@
   \egroup% of \vbox\bgroup
 }
 
+\def\bmb@scheme{default}
+\beamerboxesdeclarecolorscheme{default}{structure}{averagebackgroundcolor}
 
-  
+
 \newcommand{\beamerboxessetupshadows}{
   \pgfdeclareradialshading{bmb@shadowball}{\pgforigin}{%
     color(0bp)=(black!50!averagebackgroundcolor);
@@ -286,6 +390,9 @@
   \pgfaliasshading{bmb@shadow.!2opaque}{bmb@shadowshaded}
   \pgfaliasshading{bmb@shadowball.!2opaque}{bmb@shadowballshaded}
   \pgfaliasshading{bmb@shadowballlarge.!2opaque}{bmb@shadowballlargeshaded}
+
+  % Redo, just in case structure has changed.
+  \beamerboxesdeclarecolorscheme{default}{structure}{averagebackgroundcolor}
 }
 
 \AtBeginDocument{\beamerboxessetupshadows}

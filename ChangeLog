@@ -1,5 +1,6 @@
 2004-01-16 Till Tantau <tantau@users.sourceforge.net>
 
+	Version 1.20
 	- Reorganzed directory structure: new directories base and themes
 	- Added some explanations in user guide on font encodings and
 	  graphic file formats.
@@ -17,8 +18,9 @@
 	- Shadow theme now uses a numbered table of contents by
 	  default. Use \beamertemplateplaintoc to get the old behaviour.
 	- Changed the syntax of \frame. Overlay specification must now be
-	  given in pointed brackets.
-	- Command \plainframe has been replaced by \frame[plain].
+	  given in pointed brackets. (Old syntax is quietly tolerated.)
+	- Command \plainframe has been replaced by \frame[plain]. (Old
+	  syntax is quietly tolerated.) 
 	- Renamed beamerboxes to beamerbaseboxes and beamertemplates to
 	  beamerbasetemplate. They are included automatically, so simply
 	  delete an inclusion of the old packages).
@@ -26,6 +28,8 @@
 	- Uncover now also works for whole lines or passages in tables and
 	  alignments, both for completely invisible covered and
 	  transparent covered text.
+	- Item balls/icons now change color inside beamerboxes according
+	  to the color scheme.
 	- Added versioning system for head and toc entries. Will no longer
 	  do weird things when left over files from an old version are
 	  encountered. (Makes updating a lot easier.)

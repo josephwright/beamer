@@ -265,7 +265,7 @@
   {\beamer@spacingcover\def\beamer@endpause{\beamer@spacingcover}}%
   {\beamer@startcovered\def\beamer@endpause{\beamer@endcovered}}%
 }
-\def\endpauses{\beamer@endpause}
+\def\endpauses{\beamer@closeitem\gdef\beamer@closeitem{}\beamer@endpause}
 
 \def\pause{%
   \beamer@endpause%
@@ -289,7 +289,7 @@
 \def\beamer@closeitem{}
 \def\beamer@parseitem<#1>{%
   \alt<#1>{\beamer@spacingcover%for spacing reasons
-    \gdef\beamer@closeitem{\beamer@spacingcover\color{.}}\beamer@origitem}%
+    \gdef\beamer@closeitem{\beamer@spacingcover}\beamer@origitem}%
   {\beamer@startcovered\gdef\beamer@closeitem{\beamer@endcovered}\beamer@origitem}%
   }
 
@@ -298,14 +298,17 @@
   \beamer@closeitem%
   \global\let\beamer@closeitem=\beamer@sci%
   \global\let\beamer@sci=\beamer@ssci%
-  \global\let\beamer@ssci=\beamer@sssci\beamer@origendtrivlist}
+  \global\let\beamer@ssci=\beamer@sssci%
+  \beamer@origendtrivlist}
+
 \let\beamer@orig@trivlist=\@trivlist
 \def\@trivlist{%
   \global\let\beamer@sssci=\beamer@ssci%
-  \global\let\beamer@ssci=\beamer@sci\global%
-  \let\beamer@sci=\beamer@closeitem%
+  \global\let\beamer@ssci=\beamer@sci%
+  \global\let\beamer@sci=\beamer@closeitem%
   \gdef\beamer@closeitem{}%
-  \beamer@orig@trivlist}
+  \beamer@orig@trivlist%
+  }
 \def\beamer@closeitem{}
 
 \let\beamer@list=\list

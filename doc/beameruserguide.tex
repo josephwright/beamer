@@ -87,7 +87,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 1.10-dev\\
+\title{User's Guide to the Beamer Class, Version 1.20\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -2675,8 +2675,7 @@ package |fancybox|, which defines the following commands:
 |\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult
 the \LaTeX\ Companion for details on how to use these commands.
 
-The style file |beamerboxes| implements the following further commands
-for creating framed text:
+The \beamer\ class also defines an environment for creating boxes:
 
 \begin{environment}{{beamerboxesrounded}\oarg{options}\marg{head}}
   The text inside the environment is framed by a rectangular area with
@@ -4316,19 +4315,21 @@ title.
 In the following subsections all commands for changing templates are
 listed, like the above-mentioned command
 |\useframetitletemplate|. Inside these commands, you should use
-the |\insertxxxx| commands listed in 
-the next subsection. 
+the |\insertxxxx| commands, which are listed following the template
+changing commands. Although the |\insertxxxx| commands are listed
+alongside the templates for which they make the most sense, you can
+(usually) also use them in all other templates.
 
 Some of the below subsections start with commands for using
 \emph{predefined} templates. Calling one of them will change a template in
 a predefined way. Using them, you can use, for example, your favorite
-theme together with a predefined background.
+theme together with a predefined background. 
 
 Here are a few hints that might be helpful when you wish to redefine a
 template: 
 \begin{itemize}
 \item
-  Usually, you might wish to copy code from an existing template. This
+  Usually, you might wish to copy code from an existing template. The
   code often takes care of some things that you may not yet have
   thought about.
 \item
@@ -4403,7 +4404,8 @@ template:
 \end{command}
 
 If you wish to suppress the head and foot line in the title page, use
-|\plainframe{\titlepage}|.
+|\frame[plain]{\titlepage}|.
+
 
 
 
@@ -4599,7 +4601,7 @@ If you wish to suppress the head and foot line in the title page, use
 \begin{verbatim}
 \usetemplatetocsubsection
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-{\leavevmode\leftskip=1.5em\color{black!50}\inserttocsubsection\par}
+{\leavevmode\leftskip=1.5em\color{black!50!white}\inserttocsubsection\par}
 
 \usetemplatetocsection[50!averagebackgroundcolor]
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
