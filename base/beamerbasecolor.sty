@@ -220,7 +220,9 @@
   \beamer@lastskip=\lastskip%
   \edef\beamer@lastskiptexta{\the\lastskip}%
   \ifx\beamer@lastskiptexta\beamer@zeropt\else%
-  \ifvmode\unskip\fi\ifhmode\unskip\fi\fi%
+  \ifvmode\unskip\fi%
+  \ifhmode\unskip\fi%
+  \fi%
    \ifx\beamer@current@colorhook\beamer@colorhook%
     \beamerorig@reset@color%
   \else% mixin changed -> recalculate
@@ -231,7 +233,9 @@
     \beamer@postscriptcolorhack%  
   \fi%
   \ifx\beamer@lastskiptexta\beamer@zeropt\else%
-  \ifvmode\vskip\beamer@lastskip\fi\ifhmode\hskip\beamer@lastskip\fi\fi%
+  \ifvmode\vskip\beamer@lastskip\fi%
+  \ifhmode\hskip\beamer@lastskip\fi%
+  \fi%
 }
 
 \ifx\pdftexversion\@undefined

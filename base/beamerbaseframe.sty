@@ -97,7 +97,9 @@
         \fi%
         }\nointerlineskip%
       \fi%
-      \vskip-\parskip\vbox{}\ifbeamer@plainframe\nointerlineskip\fi}%
+      \vskip-\parskip\vbox{}%
+      \everypar{\let\beamer@firstlineitemizeunskip=\relax}%
+      \ifbeamer@plainframe\nointerlineskip\fi}%
     {\end{beamer@framepauses}%
   \egroup%
   \ifx\beamer@frametitle\@empty%
@@ -115,8 +117,6 @@
   \fi%
   \advance\beamer@frametextheight by-\ht\beamer@frametitlebox%
   \advance\beamer@frametextheight by-\dp\beamer@frametitlebox%
-%  \advance\beamer@frametextheight by-\beamer@frametopskip%
-%  \advance\beamer@frametextheight by-\beamer@framebottomskip%
   \ifbeamer@shrink%
     \beamer@shrinkframebox%
   \fi%
@@ -216,6 +216,7 @@
 \define@key{beamerframe}{t}[true]{% top
   \beamer@frametopskip=.2cm plus 8cm\relax%
   \beamer@framebottomskip=0pt plus 1fill\relax%
+  \def\beamer@firstlineitemizeunskip{\vskip-\partopsep\vskip-\topsep\vskip-\parskip\global\let\beamer@firstlineitemizeunskip=\relax}%
 }
 \define@key{beamerframe}{b}[true]{% bottom
   \beamer@frametopskip=0pt plus 1fill\relax%
@@ -228,6 +229,7 @@
 \newif\ifbeamer@plainframe
 \newif\ifbeamer@slidehaszoom
 
+\let\beamer@firstlineitemizeunskip\relax
 
 
 % Save!

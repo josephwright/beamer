@@ -228,7 +228,9 @@
       {\usecounter\@enumctr%
         \def\makelabel##1{{\hss\llap{\usebeamerfont*{item}##1}}}}%
   \beamer@cramped%
-  \raggedright}
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
 \def\endenumerate{\ifhmode\unskip\fi\endlist\csname\@enumctr endtemplate\endcsname}
 
 \def\useenumerateitemminitemplate#1{%
@@ -255,7 +257,9 @@
       {\def\makelabel##1{{\hss\llap{\usebeamerfont*{item}##1}}}}
   \fi%
   \beamer@cramped%
-  \raggedright}
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
     
 \def\enditemize{\ifhmode\unskip\fi\endlist\csname\@itemctr endtemplate\endcsname}
 
@@ -331,7 +335,9 @@
   \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
 \def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
   \beamer@cramped%
-  \raggedright}
+  \raggedright
+  \beamer@firstlineitemizeunskip%
+}
 \def\enddescription{\ifhmode\unskip\fi\endlist}
 \long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep\usebeamerfont*{description item}\usebeamercolor[fg]{description item}\descriptionitemtemplate}

@@ -290,8 +290,7 @@
         \the\beamer@coveringdepth\endcsname{\beamer@colorhook}%
         \expandafter\xdef\csname beamer@oldpgfextension%
         \the\beamer@coveringdepth\endcsname{\beamer@pgfextension}%
-        {\globalcolorstrue\colorlet{beamer@freeze\the\beamer@coveringdepth}%
-        {averagebackgroundcolor}}%
+        {\globalcolorstrue\colorlet{beamer@freeze\the\beamer@coveringdepth}{bg}}%
         \xdef\beamer@colorhook{!##2!beamer@freeze%
           \the\beamer@coveringdepth\beamer@colorhook}%
         \gdef\beamer@pgfextension{!##2opaque}%
@@ -553,8 +552,9 @@
   \newcommand\beamer@gobbleoptionalinsp[2][]{\ignorespaces}
 }
 
-\long\def\beamer@spacingcover{\beamer@smuggle{\pgfsys@begininvisible\pgfsys@endinvisible}}
-\long\def\beamer@spacingcoverb{\pgfsys@begininvisible\pgfsys@endinvisible}
+\def\beamer@@spacingcover{\beamer@smuggle{\pgfsys@begininvisible\pgfsys@endinvisible}}
+\def\beamer@spacingcover{\beamer@@spacingcover\aftergroup\beamer@@spacingcover}
+\def\beamer@spacingcoverb{\pgfsys@begininvisible\pgfsys@endinvisible}
 \long\def\beamer@fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
 \long\def\beamer@makecovered#1{\beamer@startcovered#1\beamer@endcovered}
 \long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
