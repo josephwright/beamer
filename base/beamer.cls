@@ -331,12 +331,17 @@
 \normalfont
 \raggedright
 
-\addtocontents{toc}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
-\addtocontents{nav}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
-
+\AtBeginDocument
+{
+  \addtocontents{toc}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
+  \addtocontents{nav}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
+}
 
 \RequirePackage{beamerbasemisc}
 % Miscellaneous commands
+
+\RequirePackage{beamerbasetwoscreens}
+% Stuff for using two screens
 
 \RequirePackage{beamerbaseoverlay}
 % Overlay stuff

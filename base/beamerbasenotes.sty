@@ -56,6 +56,9 @@
           \vfil%
           \vskip-4pt% foot separator
           \vskip-\footheight}\hskip-\Gm@lmargin\hskip1cm}%
+      \ifbeamer@twoscreens%
+        \pgfcurrentpagewillbelogicalpage{2}%
+      \fi%
       \clearpage
       \endgroup
     \fi%
