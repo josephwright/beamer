@@ -619,23 +619,24 @@
       \advance\beamer@tempdim by -\beamer@boxsize%
       \advance\beamer@tempdim by 1pt%
       \kern\beamer@tempdim\hbox{\beamer@link(#4){%
+          \usebeamerfont{mini frame}%
           \ifnum\c@section=#1%
             \ifnum\c@subsection=#2%
-              \usebeamercolor[fg]{mini frames}%
+              \usebeamercolor[fg]{mini frame}%
               \ifnum\c@subsectionslide=#3%
-                \beamer@minislidehilight%
+                \usebeamertemplate{mini frame}%\beamer@minislidehilight%
               \else%
-                \beamer@minisliderowhilight%
+                \usebeamertemplate{mini frame in current subsection}%\beamer@minisliderowhilight%
               \fi%
             \else%
-              \usebeamercolor{mini frames}%
-              \color{fg!50!bg}%
-              \beamer@minislide%
+              \usebeamercolor{mini frame}%
+              %\color{fg!50!bg}%
+              \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
             \fi%
           \else%
-            \usebeamercolor{mini frames}%
-            \color{fg!50!bg}%
-            \beamer@minislide%
+            \usebeamercolor{mini frame}%
+            %\color{fg!50!bg}%
+            \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
           \fi%
         }}}\hskip-10cm plus 1fil%
   }\fi\fi%
@@ -667,13 +668,8 @@
   \fi\fi%
   \expandafter\hyperlink\beamer@goto}
 
-
-\def\useminislidetemplate#1#2#3#4#5{%
-  \gdef\beamer@minislidehilight{#1}%
-  \gdef\beamer@minisliderowhilight{#2}%
-  \gdef\beamer@minislide{#3}%
-  \beamer@boxsize=#4%
-  \beamer@vboxoffset=#5}
+\define@key{beamer@margin}{mini frame size}{\beamer@boxsize=#1}
+\define@key{beamer@margin}{mini frame offset}{\beamer@vboxoffset=#1}
 
 \def\insertsectionnavigation#1{%
   \hbox to #1{%

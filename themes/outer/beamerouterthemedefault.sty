@@ -9,8 +9,72 @@
 
 \mode<presentation>
 
-\beamertemplatedefaultsectionheads
-\beamertemplatecircleminiframe
+
+% Mini frames
+
+\defbeamertemplateparent{mini frames}{mini frame,mini frame in current subsection}
+{}
+
+\defbeamertemplate*{mini frame}{default}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+    \pgfcircle[fillstroke]{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+  \end{pgfpicture}%
+}
+[action]
+{
+  \setbeamersize{mini frame size=.14cm,mini frame offset=.03cm}
+}
+
+\defbeamertemplate*{mini frame in current subsection}{default}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+    \pgfcircle[stroke]{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate*{mini frame in other subsection}{default}[1][50]
+{\color{fg!#1!bg}\usebeamertemplate{mini frame in current subsection}}
+
+
+
+
+% Navigation symbols
+
+\defbeamertemplate*{navigation symbols}{default}
+{%
+  \hbox{%
+    \hbox{\insertslidenavigationsymbol}
+    \hbox{\insertframenavigationsymbol}
+    \hbox{\insertsubsectionnavigationsymbol}
+    \hbox{\insertsectionnavigationsymbol}
+    \hbox{\insertdocnavigationsymbol}
+    \hbox{\insertbackfindforwardnavigationsymbol}%
+  }%
+}
+
+
+% Section and subsections in head/foot
+
+\defbeamertemplate*{section in head/foot}{default}
+{\insertsectionhead}
+
+\defbeamertemplate*{section in head/foot shaded}{default}[1][50]
+{\color{fg!#1!bg}\usebeamertemplate{section in head/foot}}
+
+\defbeamertemplate*{subsection in head/foot}{default}
+{\insertsubsectionhead}
+
+\defbeamertemplate*{subsection in head/foot shaded}{default}[1][50]
+{\color{fg!#1!bg}\usebeamertemplate{subsection in head/foot}}
+
+
+
+% Sidebars
+
+\beamertemplaterightsidebarlogonavigation
+
+
 
 % Headline and footline
 

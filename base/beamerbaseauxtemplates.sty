@@ -505,66 +505,39 @@
 
 
 
-%
-% Headline stuff
-%
+% Mini frames
 
-
-
-\newcommand{\beamertemplatecircleminiframe}{
-  \def\beamer@sphereradius{0.05cm}
-  \useminislidetemplate
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \pgfcircle[fillstroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {.14cm}{.03cm}
+\defbeamertemplate{mini frame}{box}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+    \pgfrect[fillstroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+  \end{pgfpicture}%
+}
+[action]
+{
+  \setbeamersize{mini frame size=.1cm,mini frame offset=.05cm}
 }
 
-\newcommand{\beamertemplateboxminiframe}{
-  \useminislidetemplate{%
-    \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \pgfrect[fillstroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
-    \end{pgfpicture}%
-  }  
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
-    \end{pgfpicture}%
-  }
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
-    \end{pgfpicture}%
-  }
-  {.1cm}{.05cm}
+\defbeamertemplate{mini frame in current subsection}{box}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+    \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+  \end{pgfpicture}%
 }
 
+\defbeamertemplate{mini frame}{tick}
+{%
+  \hskip-0.4pt\vrule height\beamer@boxsize width1.2pt%
+}
+[action]
+{
+  \setbeamersize{mini frame size=.1cm,mini frame offset=.05cm}
+}
 
-\newcommand{\beamertemplateticksminiframe}{
-  \useminislidetemplate
-  {%
-    \hskip-0.4pt\vrule height\beamer@boxsize width1.2pt%
-  }  
-  {%
-    \vrule height\beamer@boxsize width0.4pt%
-  }
-  {%
-    \vrule height\beamer@boxsize width0.4pt%
-  }
-  {.1cm}{.05cm}}
-
+\defbeamertemplate{mini frame in current subsection}{tick}
+{%
+  \vrule height\beamer@boxsize width0.4pt%
+}
 
 
 

@@ -431,6 +431,7 @@ Each frame consists of several components:
 \begin{enumerate}\itemsep=0pt\parskip=0pt
 \item a headline and a footline,
 \item a left and a right sidebar,
+\item navigation bars,
 \item navigation symbols,
 \item a logo,
 \item a frame title, 
@@ -616,7 +617,7 @@ following templates:
     Inserts a vertical navigation bar of the given \meta{width} into a
     template. The bar shows a little table of contents. The individual
     lines are typeset using the templates
-    |\usesectionsidetemplate| and |\usesubsectionsidetemplate|.
+    |section in head/foot| and |subsection in head/foot|.
 
     \iteminsert{\insertframenumber}
     Inserts the number of the current frame (not slide) into a template.
@@ -720,7 +721,177 @@ following templates:
     or frame number in the footline.
   \end{element}
 \end{element}
+\label{section-navigation-bars}
 
+
+
+
+\subsubsection{The Sidebars}
+
+
+Sidebars are vertical areas that stretch from the lower end of the
+headline to the top of the footline. There can be a sidebar at the
+left and another one at the right (or even both). Sidebars can show a
+table of contents, but they could also be added for purely aesthetic
+reasons.
+
+When you install a sidebar template, you must explicitly specify the
+horizontal size of the sidebar. The vertical size is determined
+automatically. Each sidebar can have its own background, which can be
+setup using special sidebar background templates.
+
+Adding a sidebar of a certain size, say 1cm, will make the main text
+1cm narrower. The distance between the inner side of a side
+bar and the outer side of the text, as specified by
+the command |\beamersetleftmargin| and its counterpart for the
+right margin, is not changed when a sidebar is installed.
+
+Internally, the sidebars are typeset by showing them as part of the
+headline. The \beamer\ class keeps track of six dimensions, three 
+for each side: the variables |\beamer@leftsidebar| and
+|\beamer@rightsidebar| store the (horizontal) sizes of the side
+bars, the variables |\beamer@leftmargin| and
+|\beamer@rightmargin| store the distance between sidebar and
+text, and the macros |\Gm@lmargin| and  |\Gm@rmargin| store
+the distance from the edge of the paper to the edge of the text. Thus
+the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
+exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
+next to the left sidebar, you might write
+|\hskip-\beamer@leftmargin| to get there.
+
+
+
+\subsubsection{Navigation Bars}
+
+Many themes install a headline or a sidebar that shows a
+\emph{navigation bar}. Although these navigation bars take up quite
+a bit of space, they are often useful for two reasons: 
+
+\begin{itemize}
+\item
+  They provide the audience with a visual feedback of how much of your
+  talk you have covered and what is yet to come. Without such
+  feedback, an audience will often puzzle whether something you are
+  currently introducing will be explained in more detail later on or
+  not.
+\item
+  You can click on all parts of the navigation bar. This will directly
+  ``jump'' you to the part you have clicked on. This is particularly
+  useful to skip certain parts of your talk and during a ``question
+  session,'' when you wish to jump back to a particular frame someone
+  has asked about.
+\end{itemize}
+
+Some navigation bars can be ``compressed'' using the following option:
+
+\begin{classoption}{compress}
+  Tries to make all navigation bars as small as possible. For example,
+  all small frame representations in the navigation bars for a single
+  section are shown alongside each other. Normally, the representations
+  for different subsections are shown in different lines. Furthermore,
+  section and subsection navigations are compressed into one line.
+\end{classoption}
+
+
+
+Some themes use the |\insertnavigation| to insert a navigation bar
+into the headline. Inside this bar, small icons are shown (called
+``mini frames'') that represent the frames of a presentation. 
+When you click on such an icon, the
+following happens: 
+\begin{itemize}
+\item
+  If you click on (the icon of) any frame other than the current frame, the
+  presentation will jump to the first slide of the frame you clicked
+  on.
+\item
+  If you click on the current frame and you are not on the last slide
+  of this frame, you will jump to the last slide of the frame.
+\item
+  If you click on the current frame and you are on the last slide, you
+  will jump to the first slide of the frame.
+\end{itemize}
+By the above rules you can:
+\begin{itemize}
+\item
+  Jump to the beginning of a frame from somewhere else by clicking on
+  it once.  
+\item
+  Jump to the end of a frame from somewhere else by clicking on it
+  twice.
+\item
+  Skip the rest of the current frame by clicking on it once.
+\end{itemize}
+
+I also tried making a jump to an already-visited frame jump
+automatically to the last slide of this frame. However, this turned
+out to be more confusing than helpful. With the current implementation
+a double-click always brings you to the end of a slide, regardless
+from where you ``come.''
+
+\begin{element}{mini frames}\semiyes\no\no
+  This parent template has the children |mini frame| and
+  |mini frame in current subsection|.
+
+  \example |\setbeamertemplate{mini frames}[box]|
+
+  \begin{templateoptions}
+    \itemoption{default}{}
+    shows small circles as mini frames.
+    \itemoption{box}{}
+    shows small rectangles as mini frames.
+    \itemoption{tick}{}
+    shows small vertical bars as mini frames.
+  \end{templateoptions}
+\end{element}
+
+\begin{element}{mini frame}\yes\yes\yes
+  The template is used to render the mini frame of the current frame
+  in a navigation bar.
+
+  The width of the template is ignored. Instead, when multiple mini
+  frames are shown, their position is calculated based on the
+  \beamer-sizes |mini frame size| and |mini frame offset|. See the
+  command |\setbeamersize| for a description of how to change them.
+\end{element}
+
+\begin{element}{mini frame in current subsection}\yes\no\no
+  This template is used to render the mini frame of frames in the
+  current subsection that are not the current frame. The
+  \beamer-color/-font |mini frame| is installed prior to the usage of
+  this template is invoked.
+\end{element}
+
+\begin{element}{mini frame in other subsection}\yes\no\no
+  This template is used to render mini frames of frame from
+  subsections other than the current one.
+  \begin{templateoptions}
+    \itemoption{default}{\oarg{percentage}}
+    By default, this template shows |mini frame in current subsection|, except that the color is first
+    changed to |fg!|\meta{percentage}|!bg|. The default
+    \meta{percentage} is 50\%.
+
+    \example To get an extremely ``shaded'' rendering of the frames
+    outside the current subsection you can use the following:
+\begin{verbatim}
+\setbeamertemplate{mini frame in other subsection}[default][20]
+\end{verbatim}
+
+    \example To render all mini frames other than the current one in
+    the same way, use
+\begin{verbatim}
+\setbeamertemplate{mini frame in other subsection}[default][100]
+\end{verbatim}
+  \end{templateoptions}
+\end{element}
+
+
+
+Some themes show sections and/or subsections in the navigation bars. 
+By clicking on a section or subsection in the navigation bar, you will
+jump to that section. Clicking on a section is particularly useful if
+the section starts with a |\tableofcontents[currentsection]|, since you
+can use it to jump to the different subsections.
 
 \begin{element}{section in head/foot}\yes\yes\yes
   This template is used to render a section entry if it occurs in the
@@ -801,45 +972,148 @@ following templates:
   \end{templateoptions}
 \end{element}
 
-
-
-\subsubsection{The Sidebars}
-
-
-Sidebars are vertical areas that stretch from the lower end of the
-headline to the top of the footline. There can be a sidebar at the
-left and another one at the right (or even both). Sidebars can show a
-table of contents, but they could also be added for purely aesthetic
-reasons.
-
-When you install a sidebar template, you must explicitly specify the
-horizontal size of the sidebar. The vertical size is determined
-automatically. Each sidebar can have its own background, which can be
-setup using special sidebar background templates.
-
-Adding a sidebar of a certain size, say 1cm, will make the main text
-1cm narrower. The distance between the inner side of a side
-bar and the outer side of the text, as specified by
-the command |\beamersetleftmargin| and its counterpart for the
-right margin, is not changed when a sidebar is installed.
-
-Internally, the sidebars are typeset by showing them as part of the
-headline. The \beamer\ class keeps track of six dimensions, three 
-for each side: the variables |\beamer@leftsidebar| and
-|\beamer@rightsidebar| store the (horizontal) sizes of the side
-bars, the variables |\beamer@leftmargin| and
-|\beamer@rightmargin| store the distance between sidebar and
-text, and the macros |\Gm@lmargin| and  |\Gm@rmargin| store
-the distance from the edge of the paper to the edge of the text. Thus
-the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
-exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
-next to the left sidebar, you might write
-|\hskip-\beamer@leftmargin| to get there.
-
+By clicking on the document title in a navigation bar (not all themes
+show it), you will jump to the first slide of your presentation
+(usually the title page) \emph{except} if you are already at the first
+slide. On the first slide, clicking on the document title will jump to
+the end of the presentation, if there is one. Thus by \emph{double}
+clicking the document title in a navigation bar, you can jump to the end.
 
 
 
 \subsubsection{The Navigation Symbols}
+\label{section-navigation-symbols}
+
+
+Navigation symbols are small icons that are shown on every slide
+by default. The following symbols are shown: 
+\begin{enumerate}
+\item
+  A slide icon, which is depicted as  a single rectangle. To the left and
+  right of this symbol, a left and right arrow are shown.
+\item
+  A frame icon, which is depicted as three slide icons ``stacked on top of
+  each other''. This symbol is framed by arrows.
+\item
+  A subsection icon, which is depicted as a highlighted subsection
+  entry in a table of contents. This  symbols is framed by arrows.
+\item
+  A section icon, which is depicted as a highlighted section entry
+  (together with all subsections) in a table of contents. This symbol
+  is framed by arrows.
+\item
+  A presentation icon, which is depicted as a completely highlighted
+  table of contents.
+\item
+  An appendix icon, which is depicted as a completely highlighted
+  table of contents consisting of only one section. (This icon is only
+  shown if there is an appendix.)
+\item
+  Back and forward icons, depicted as circular arrows.
+\item
+  A ``search'' or ``find'' icon, depicted as a detective's
+  magnifying glass.
+\end{enumerate}
+
+Clicking on the left arrow next to an icon always jumps to (the
+last slide of) the previous slide, frame, subsection, or
+section. Clicking on the right arrow next to an icon always jump to
+(the first slide of) the next slide, frame, subsection, or section. 
+
+Clicking \emph{on} any of these icons has different effects:
+\begin{enumerate}
+\item
+  If supported by the viewer application, clicking on a slide icon
+  pops up a window that allows you to enter a slide number to which
+  you wish to jump.
+\item
+  Clicking on the left side of a frame icon will jump to the first
+  slide of the frame, clicking on the right side will jump to the last
+  slide of the frame (this can be useful for skipping overlays).
+\item
+  Clicking on the left side of a subsection icon will jump to the
+  first slide of the subsection, clicking on the right side will jump
+  to the last slide of the subsection.
+\item
+  Clicking on the left side of a section icon will jump to the
+  first slide of the section, clicking on the right side will jump
+  to the last slide of the section.
+\item
+  Clicking on the left side of the presentation icon will jump to the
+  first slide, clicking on the right side will jump to the last slide
+  of the presentation. However, this does \emph{not} include the
+  appendix. 
+\item
+  Clicking on the left side of the appendix icon will jump to the
+  first slide of the appendix, clicking on the right side will jump to
+  the last slide of the appendix.
+\item
+  If supported by the viewer application, clicking on the back and
+  forward symbols jumps to the previously visited slides.
+\item
+  If supported by the viewer application, clicking on the search icon
+  pops up a window that allows you to enter a search string. If found,
+  the viewer application will jump to this string.
+\end{enumerate}
+
+You can reduce the number of icons that are shown or their layout by
+adjusting the |navigation symbols| template.
+
+\begin{element}{navigation symbols}\yes\yes\yes
+  This template is invoked in ``three-star-mode'' by themes
+  at the place where the navigation symbols should be
+  shown. ``Three-star-mode'' means that the command
+  |\usebeamertemplate***| is used.
+
+  Note that, although it may \emph{look} like that the symbols are part of
+  the footline, they are more often part of an invisible right
+  sidebar.
+
+  \begin{templateoptions}
+    \itemoption{default}{}
+    Organizes the navigation symbols horizontally.
+    \itemoption{horizontal}{}
+    This is an alias for the default.
+    \itemoption{vertical}{}
+    Organizes the navigation symbols vertically.
+    \itemoption{only frame symbol}{}
+    Shows only the navigational symbol for navigating frames.
+  \end{templateoptions}
+
+  \example The following command suppresses all navigation symbols:
+\begin{verbatim}
+\setbeamertemplate{navigation symbols}{}
+\end{verbatim}
+
+  Inside this template, the following inserts are useful:
+  \begin{itemize}
+    \iteminsert{\insertslidenavigationsymbol}
+    Inserts the slide navigation symbols, that is, the slide symbols
+    (a rectangle) together with arrows to the left and right that are
+    hyperlinked.
+
+    \iteminsert{\insertframenavigationsymbol}
+    Inserts the frame navigation symbol.
+
+    \iteminsert{\insertsubsectionnavigationsymbol}
+    Inserts the subsection navigation symbol.
+
+    \iteminsert{\insertsectionnavigationsymbol}
+    Inserts the section navigation symbol.
+
+    \iteminsert{\insertdocnavigationsymbol}
+    Inserts the presentation navigation symbol and (if necessary) the
+    appendix navigation symbol.
+
+    \iteminsert{\insertbackfindforwardnavigationsymbol}
+    Inserts a back, a find, and a forward navigation symbol.
+  \end{itemize}
+\end{element}
+
+
+
+
+
 
 \subsubsection{The Logo}
 
@@ -1152,25 +1426,34 @@ You should refrain from changing the ``paper size.'' However, you
 default to 1cm. To change them, you should use the following 
 command:
 
-\begin{command}{\setbeamermargin\marg{options}}
-  The following options can be given:
+\begin{command}{\setbeamersize\marg{options}}
+  The following \meta{options} can be given:
   \begin{itemize}
   \item
-    \declare{|left=|\meta{\TeX\ dimension}} sets a new left
+    \declare{|left text margin=|\meta{\TeX\ dimension}} sets a new left
     margin. This excludes the left sidebar. Thus, it is the distance
     between the right edge of the left sidebar and the left edge of
     the text.
   \item
-    \declare{|right=|\meta{\TeX\ dimension}} sets a new right
+    \declare{|right text margin=|\meta{\TeX\ dimension}} sets a new right
     margin.
   \item
-    \declare{|descriptionwidth=|\meta{\TeX\ dimension}} sets the
+    \declare{|description width=|\meta{\TeX\ dimension}} sets the
     default width of description labels, see
     Section~\ref{section-descriptions}. 
   \item
-    \declare{|descriptionwidthof=|\meta{text}} sets the
+    \declare{|description width of=|\meta{text}} sets the
     default width of description labels to the width of the
-    \meta{text}, see  Section~\ref{section-descriptions}. 
+    \meta{text}, see  Section~\ref{section-descriptions}.
+  \item
+    \declare{|mini frame size=|\meta{\TeX\ dimension}} sets the size
+    of mini frames in a navigation bar. When two mini frame icons are
+    shown alongside each other, their left end points are \meta{\TeX\
+      dimension} far apart.
+  \item
+    \declare{|mini frame offset=|\meta{\TeX\ dimension}} set an
+    additional vertical offset that is added to the mini frame size
+    when arranging mini frames vertically.
   \end{itemize}
 
   \articlenote

@@ -299,6 +299,12 @@
 \def\usenavigationsymbolstemplate{\setbeamertemplate{navigation symbols}}
 \def\insertnavigationsymbols{\usebeamertemplate***{navigation symbols}}
 \def\beamersetaveragebackground#1{\setbeamercolor{normal text}{bg=#1}}
+\def\useminislidetemplate#1#2#3#4#5{%
+  \setbeamertemplate{mini frame}{#1}%
+  \setbeamertemplate{mini frame in current subsection}{#2}%
+  \setbeamertemplate{mini frame in other subsection}{#3}%
+  \setbeamermargin{mini frame size={#4},mini frame offset={#5}}}
+
 
 \def\beamertemplatedefaulttoc{\setbeamertemplate{table of contents}[default]}
 \def\beamertemplatenumberedsubsectiontoc{\setbeamertemplate{table of contents}[subsections numbered]}
@@ -371,7 +377,9 @@
   \setbeamertemplate{section in head/foot shaded}[default]
   \setbeamertemplate{subsection in head/foot shaded}[default]
 }
-
+\def\beamertemplatecircleminiframe{\setbeamertemplate{mini frames}[default]}
+\def\beamertemplateticksminiframe{\setbeamertemplate{mini frames}[tick]}
+\def\beamertemplateboxminiframe{\setbeamertemplate{mini frames}[box]}
 
 
 \mode
