@@ -164,6 +164,33 @@
   \newcommand<>\hyperlinkdocumentend[1]{}
 }
 
+\newcommand\insertframestartpage{\beamer@startpageofframe}
+\newcommand\insertframeendpage{\beamer@endpageofframe}
+\newcommand\insertsubsectionstartpage{\beamer@startpageofsubsection}
+\newcommand\insertsubsectionendpage{\beamer@endpageofsubsection}
+\newcommand\insertsectionstartpage{\beamer@startpageofsection}
+\newcommand\insertsectionendpage{\beamer@endpageofsection}
+\newcommand\insertpartstartpage{\beamer@startpageofpart}
+\newcommand\insertpartendpage{\beamer@endpageofpart}
+\newcommand\insertpresentationstartpage{1}
+\newcommand\insertpresentationendpage{{%
+  \ifx\beamer@startpageofappendix\@empty%
+    \beamer@tempcount=\beamer@endpageofdocument\relax%
+  \else%
+    \beamer@prevpage\beamer@startpageofappendix\relax%
+  \fi%
+  \the\beamer@tempcount}}
+\newcommand\insertappendixstartpage{{%
+  \ifx\beamer@startpageofappendix\@empty%
+    \beamer@tempcount=\beamer@endpageofdocument\relax%
+  \else%
+    \beamer@tempcount=\beamer@startpageofappendix\relax%
+  \fi%
+  \the\beamer@tempcount}}
+\newcommand\insertappendixendpage{\beamer@endpageofdocument}
+\newcommand\insertdocumentstartpage{1}
+\newcommand\insertdocumentendpage{\beamer@endpageofdocument}
+
 
 %
 % Navigation Button Art
