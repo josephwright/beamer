@@ -13,7 +13,14 @@
  % Start with a \documentclass declaration.  The [20pt] is optional
  % as that is the default.  The [dvips] option is supplied here even
  % though it really belongs in the {foiltex.cfg} file for the site/user.
-\documentclass[20pt,dvips]{foils}
+
+
+% CANGED: replaces by beamer
+%\documentclass[20pt,dvips]{foils}
+\documentclass{beamer}
+\usepackage{beamerfoils}
+\beamertemplatetheoremsnumbered
+
  %
  % An alternate uses smaller fonts, passes the draft mode to other
  % included packages (e.g., graphics packages) and does everything
@@ -38,8 +45,10 @@
  %
 \title{A Sample Foils Document}
  %
-\author{Jim Hafner\\
-        IBM Research Division\\
+
+% CHANGED to use \institute
+\author{Jim Hafner}
+\institute{IBM Research Division\\
         Almaden Research Center\\
         \texttt{hafner@almaden.ibm.com}
         }
@@ -54,6 +63,9 @@
  % controlled by redefining \MyLogo or by using the switches \LogoOn
  % and \LogoOff.
  %
+
+% CHANGED: Added (default is empty in the emulation):
+\MyLogo{\tiny-- Typeset by beamer emulation of \FoilTeX\ --}
  %\MyLogo{-- Typeset by \FoilTeX\ --}   % this is the default
  %\rightfooter{quad\textsf{\thepage}}   % this is the default
 \leftheader{Jim Hafner}
@@ -65,12 +77,16 @@
  % Now we can begin the document.  The first thing is the title page
  % on which we might put a VERY short abstract.
 \begin{document}
+
+% CHANGE: Added \frame
+\frame{
 \maketitle
  %
 \begin{abstract}
 This is where an abstract might go if you want one.  There is usually
 not a lot of room for much here.
 \end{abstract}
+}
  %
  % Now we can begin to start the individual foils.  Note that we let
  % \LaTeX split the pages and don't force each foil to be a separate
@@ -136,7 +152,8 @@ and some enumerating:
 \end{enumerate}
 
 \begin{center}
-\framebox{\parbox{5.5in}{Above, we used \texttt{\bs emph\{new foil\}}
+  % CHANGED to size from 5.5in to 10cm
+\framebox{\parbox{10cm}{Above, we used \texttt{\bs emph\{new foil\}}
 instead of the old \texttt{\{\bs em new foil\bs/\}}!}}
 \end{center}
 
@@ -349,7 +366,8 @@ document.
 
 \begin{figure}
 \begin{center}
-\setlength{\unitlength}{.08in}
+% CHANGED the unitlength to sth more sensible    
+\setlength{\unitlength}{.03in}
 \begin{picture}(50,50)(0,0)
  %\thicklines         % don't know why it looks worse with this
 \put(10,35){\framebox(10,10){gnat}}
@@ -380,10 +398,11 @@ like \cite{rocky} and \cite{bullwinkle}.
  % We can use any bibliography mechanism, including BibTeX.
 \begin{thebibliography}{99}
 
-\bibitem{rocky} Rocky and Bullwinkle, Open problems, in \textsl{Mr.
+% CHANGED: Added \newblocks, changed ``,'' into ``.''
+\bibitem{rocky} Rocky and Bullwinkle. \newblock Open problems. \newblock \textsl{Mr.
 Know-it-all's Rock Encyclopedia}.
 
-\bibitem{bullwinkle} Bullwinkle, Getting things out of hats,
+\bibitem{bullwinkle} Bullwinkle. \newblock Getting things out of hats.\newblock
 \textsl{Annals} \textbf{1} (1990BC), 1--2.
 
 \end{thebibliography}
@@ -400,6 +419,9 @@ Know-it-all's Rock Encyclopedia}.
 \item \textsc{PostScript} fonts can used just by adding any of the
       package files from the PSNFSS package.
 \end{itemize}
+
+% CHANGED: Added
+\endfoil
 
 \end{document}
 \endinput

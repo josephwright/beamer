@@ -6,7 +6,51 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\let\leftheader=\@gobble
+\let\rightheader=\@gobble
+\let\leftfooter=\@gobble
+\let\rightfooter=\@gobble
+\let\Restriction=\@gobble
+\let\marginpar=\@gobble
 
+\newcommand\LogoOff{\expandafter\global\logo{}}
+\newcommand\LogoOn{\expandafter\global\logo{\beamerfoils@logo}}
+\def\MyLogo#1{\gdef\beamerfoils@logo{#1}\LogoOn}
+\def\beamerfoils@logo{}
+
+\newtheorem*{Theorem*}{Theorem}
+\newtheorem*{Lemma*}{Lemma}
+\newtheorem*{Corollary*}{Corollary}
+\newtheorem*{Proposition*}{Proposition}
+\newtheorem*{Definition*}{Definition}
+
+\def\beamerfoils@closer{}%
+\newcommand\foilhead[2][]{%
+  \beamerfoils@closer%
+  \ifbeamer@inframe
+    \def\beamerfoils@closer{}%
+  \else
+    \def\beamerfoils@closer{\egroup}%
+    \beamerfoils@origframe[containsverbatim]\bgroup%
+  \fi
+  \frametitle{#2}%
+  }
+\let\rotatefoilhead=\foilhead
+
+\let\beamerfoils@origframe=\frame
+\def\frame{\beamerfoils@closer\def\beamerfoils@closer{}\beamerfoils@origframe}
+
+\def\endfoil{\beamerfoils@closer\def\beamerfoils@closer{}}
+
+
+\newenvironment{boldequation}{\boldmath\begin{equation}}{\end{equation}}
+\newenvironment{boldequation*}{\boldmath\begin{equation*}}{\end{equation*}}
+
+% Definition taken from foils.cls:
+\DeclareRobustCommand\FoilTeX{{\normalfont%
+   {\sffamily Foil}\kern-.03em{\rmfamily\TeX}}}
+\def\bm#1{\mathpalette\bmstyle{#1}}
+\def\bmstyle#1#2{\mbox{\boldmath$#1#2$}}
 
 %%% Local Variables: 
 %%% mode: latex
