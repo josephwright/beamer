@@ -1,10 +1,9 @@
-% $Header$
-
 % $Source$
 % $Revision$
 % $Date$
 % $Author$
 % $Name$
+% $State$
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -244,7 +243,7 @@
   \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}  
   \def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
 \DeclareOptionBeamer{professionalfont}{
-  \ClassWarning{beamer}{``professinoalfont'' is obsolete. Use font theme ``professinoalfonts'' instead}
+  \ClassWarning{beamer}{``professionalfont'' is obsolete. Use font theme ``professionalfonts'' instead}
   \beamer@suppressreplacementstrue}
 
 % has to be done here for compatibility

@@ -278,7 +278,11 @@
   % Fix $ usage in underline:
   \let\beamer@orig@underline=\underline
   \def\underline#1{{\donotcoloroutermaths\beamer@orig@underline{#1}}}
-
+  
+  % Fix $ usage in underline:
+  \let\beamer@orig@@textsuperscript=\@textsuperscript
+  \def\@textsuperscript#1{{\donotcoloroutermaths\beamer@orig@@textsuperscript{#1}}}
+  
   % Fix $ usage in parbox:
   \let\beamer@orig@pboxswture=\@pboxswtrue
   \def\@pboxswtrue{\donotcoloroutermaths\beamer@orig@pboxswture}

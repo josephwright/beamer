@@ -286,7 +286,6 @@
   \def\insertfootnotetext{#1}%
   \def\insertfootnotemark{\@makefnmark}%
   \usebeamertemplate***{footnote}}
-\def\usefootnotetemplate{\setbeamertemplate{footnote}}
 
 
 \newbox\beamer@footins
@@ -304,9 +303,25 @@
         \rule\z@\footnotesep\ignorespaces#2\@finalstrut\strutbox}}%
     \color@endgroup}}
 
+\long\def\@mpfootnotetext#1#2{%
+  \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    \reset@font\footnotesize
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \color@begingroup
+      \uncover#1{\@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#2\@finalstrut\strutbox}}%
+    \color@endgroup}}
+
 \let\@footnotetext=\beamer@framefootnotetext
 
-\define@key{beamerfootnote}{frame}[true]{\let\beamer@footnotetext=\beamer@framefootnotetext\def\beamer@mpfn{footnote}\def\beamer@thempfn{\thefootnote}}
+\define@key{beamerfootnote}{frame}[true]{%
+  \let\beamer@footnotetext=\beamer@framefootnotetext%
+  \def\beamer@mpfn{footnote}%
+  \def\beamer@thempfn{\thefootnote}}
 
 \renewcommand<>{\footnote}[1][]{%
   \let\beamer@footnotetext=\@footnotetext%
