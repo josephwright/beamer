@@ -21,6 +21,14 @@
 \def\beamer@usebeamertemplatedoss#1{{{\usebeamerfont*{#1}\usebeamercolor[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
 \def\beamer@usebeamertemplatedosss#1{{{\usebeamerfont*{#1}\usebeamercolor*[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
 
+\long\def\beamer@@empty{}
+\def\expandbeamertemplate#1{\csname beamer@@tmpl@#1\endcsname}
+\def\ifbeamertemplateempty#1#2#3{%
+  \def\beamer@ifdo{#3}%
+  \expandafter\ifx\csname beamer@@tmpl@#1\endcsname\relax\def\beamer@ifdo{#2}\fi%
+  \expandafter\ifx\csname beamer@@tmpl@#1\endcsname\beamer@@empty\def\beamer@ifdo{#2}\fi%
+  \beamer@ifdo}
+
 
 \mode<article>
 {

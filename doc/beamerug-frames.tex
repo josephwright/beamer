@@ -533,9 +533,6 @@ following templates:
 
   Inside the template numerous inserts can be used:
   \begin{itemize}
-    \iteminsert{\insertlogo}
-    Inserts the logo(s) into a template.
-
     \iteminsert{\insertnavigation\marg{width}}
     Inserts a horizontal navigation bar of the given \meta{width} into a
     template. The bar lists the sections and below them mini frames for
@@ -766,19 +763,41 @@ next to the left sidebar, you might write
 
 \subsubsection{The Logo}
 
-To install
-a logo, use the following command:
+To install a logo, use the following command:
 
 \begin{command}{\logo\marg{logo text}}
-  The \meta{logo text} is usually a command for including a
-  graphic.
+  The \meta{logo text} is usually a command for including a graphic,
+  but it can be any text. The position where the logo is inserted is
+  determined by the current theme, you cannot (currently) specify this
+  position directly.
+  
   \example
 \begin{verbatim}
 \pgfdeclareimage[height=0.5cm]{logo}{tu-logo}
 \logo{\pgfuseimage{logo}}
 \end{verbatim}
 
+  \example
+\begin{verbatim}
+\logo{\includegraphics[height=0.5cm]{logo.pdf}}
+\end{verbatim}
+
+  Currently, the effect of this command is just to setup the |logo|
+  template. However, a more sophisticated effect might be implemented
+  in the future.
+  
   \articlenote This command has no effect.
+
+  \begin{element}{logo}\yes\yes\yes
+    This template is used to render the logo.
+  \end{element}
+
+  The following insert can be used to insert a logo somewhere:
+  \begin{itemize}
+    \iteminsert{\insertlogo}
+    inserts the logo at the current position. This command has the
+    same effect as |\usebeamertemplate*{logo}|.
+  \end{itemize}
 \end{command}
 
 

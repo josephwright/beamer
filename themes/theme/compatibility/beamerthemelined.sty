@@ -10,7 +10,8 @@
 
 \mode<presentation>
 
-\useheadtemplate{%
+\setbeamertemplate{headline}[text line]
+{%
   \vbox{%
     \vskip3pt%
     \beamerline{\insertnavigation{\paperwidth}}%
@@ -19,41 +20,41 @@
     \vskip1.5pt%
     \tinyline{\color{beamerstructure}\insertsubsection\hfill}
     \insertvrule{4pt}{beamerstructure!50!averagebackgroundcolor}%
-    }%
-  }
+  }%
+}
 
                                 % Footline
-\usefoottemplate{%
-  \vbox{%
-    \setbox\beamer@tempbox=\hbox{\tiny\insertshortauthor: \insertshorttitle\hskip1.5cm\insertshortinstitute}%
-    \ifdim\wd\beamer@tempbox>\paperwidth%
-    \insertvrule{4pt}{beamerstructure!50!averagebackgroundcolor}%
-    \vskip1.5pt
-    \tinyline{\color{beamerstructure}\insertshortauthor:\hfill\insertshortinstitute}%
-    \tinyline{\color{beamerstructure}\insertshorttitle\hfill\lower1pt\hbox{\insertnavigationsymbols}}%
-    \else%
-    \setbox\beamer@tempbox=\hbox{\beamerline{\hbox to\paperwidth{\hfill\lower1pt\hbox{\insertnavigationsymbols}}}}%
-    \ht\beamer@tempbox=0pt%
-    \box\beamer@tempbox%
-    \insertvrule{4pt}{beamerstructure!50!averagebackgroundcolor}%
-    \vskip1.5pt
-    \tinyline{\color{beamerstructure}\insertshortauthor: \insertshorttitle\hfill\insertshortinstitute}%
-    \fi}%
+\setbeamertemplate{footline}[text line]
+{%
+  \ifbeamertemplateempty{logo}
+  {%
+    \vbox{%
+      \setbox\beamer@tempbox=\hbox{\tiny\insertshortauthor: \insertshorttitle\hskip1.5cm\insertshortinstitute}%
+      \ifdim\wd\beamer@tempbox>\paperwidth%
+        \insertvrule{4pt}{beamerstructure!50!averagebackgroundcolor}%
+        \vskip1.5pt
+        \tinyline{\color{beamerstructure}\insertshortauthor:\hfill\insertshortinstitute}%
+        \tinyline{\color{beamerstructure}\insertshorttitle\hfill\lower1pt\hbox{\insertnavigationsymbols}}%
+      \else%
+        \setbox\beamer@tempbox=\hbox{\beamerline{\hbox to\paperwidth{\hfill\lower1pt\hbox{\insertnavigationsymbols}}}}%
+        \ht\beamer@tempbox=0pt%
+        \box\beamer@tempbox%
+        \insertvrule{4pt}{beamerstructure!50!averagebackgroundcolor}%
+        \vskip1.5pt
+        \tinyline{\color{beamerstructure}\insertshortauthor: \insertshorttitle\hfill\insertshortinstitute}%
+      \fi}%
   }
-
-\def\logo#1{%
-  \def\insertlogo{#1}%
-  \usefoottemplate{%
+  {%
     \vbox{%
       \insertvrule{4pt}{beamerstructure!50!averagebackgroundcolor}%
       \vskip1.5pt%
-      \setbox\beamer@logobox=\hbox{\lower1pt\hbox{\insertlogo}}%
+      \setbox\beamer@logobox=\hbox{\lower1pt\hbox{\usebeamertemplate*{logo}}}%
       \tinyline{\color{beamerstructure}\insertshortauthor:\hfill}%
       \tinyline{\color{beamerstructure}\insertshorttitle\hfill\lower1pt\hbox{\insertnavigationsymbols}\hskip0.1cm\hbox{\dp\beamer@logobox=0pt\ht\beamer@logobox=0pt\box\beamer@logobox}
-        }%
       }%
     }%
-  }
+  }%
+}
 
 
 

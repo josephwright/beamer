@@ -536,7 +536,7 @@ before the frame, for using verbatims together with overlays.
 
 
 
-\subsection{Changing the Way Things Look}
+\subsection{Changing the Way Things Look I: Theming}
 
 With the contents of this talk fixed, Euclid decides to have a second
 look at the way things look. He goes back to the beginning and finds
@@ -572,6 +572,33 @@ are a bit hard to read as they are so thin. Adding the following
 helps:
 \begin{verbatim}
 \usefonttheme[onlysmall]{structurebold}
+\end{verbatim}
+
+
+\subsection{Changing the Way Things Look II: Colors and Fonts}
+
+Since Euclid wants to give a \emph{perfect} talk, he decides that the
+font used for the title simply has to be a serif italics. To change
+only the font used for the title, Euclid uses the following command:
+\begin{verbatim}
+\setbeamerfont{title}{shape=\itshape,family=\rmfamily}
+\end{verbatim}
+He notices that the font is still quite large (which he likes), but
+wonders why this is the case since he did not specify this. The reason
+is that calls of |\setbeamerfont| accumulate and the size was already
+set to |\large| by some font theme. Using the starred version of
+|\setbeamerfont| ``resets'' the font.
+
+Euclid decides that he would also like to change the color of the
+title to a dashing red, though, perhaps, with a bit of black added. He
+uses the following command:
+\begin{verbatim}
+\setbeamercolor{title}{fg=red!80!black}
+\end{verbatim}
+Trying the following command, Euclid is delighted to find that
+specifying a background color also has an effect:
+\begin{verbatim}
+\setbeamercolor{title}{fg=red!80!black,bg=red!20!white}
 \end{verbatim}
 
 

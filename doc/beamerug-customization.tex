@@ -10,49 +10,6 @@
 \label{section-customization}
 
 
-\subsection{Introduction to Templates}
-
-
-
-\subsection{Default Templates, Fonts, and Colors}
-
-\label{section-color-listing}
-
-In this section all templates, colors, and fonts that are used by the
-default \beamer\ themes are listed in alphabetical order. 
-
-\begin{itemize}
-
-  \templatefontcolor{example text}\no\yes\yes
-  The color/font is used when text is typeset inside an |example|
-  block. 
- 
-  \templatefontcolor{normal text}\no\yes\yes
-  \colornote
-  The color is used for normal text. At the beginning of
-  the document the foreground color is installed as
-  |\normalcolor|. The background of this color is used by the
-  default background canvas for the background of the
-  presentation, see Section~\ref{section-canvas}. The background is
-  also the default value of the normal color |bg|. 
-
-  Since the color is the ``root'' of all other \beamer-colors, both a
-  foreground and a background must be installed. In particular, to get
-  a transparent background canvas, make the background of the
-  \beamer-color |background canvas| empty, not the background of this
-  color.
-
-  \fontnote
-  This font is not used, currently. In particular, redefining this
-  font will not have any effect. This may change in the future.
-
-  \templatefontcolor{titlelike}\no\yes\yes
-  This color/font is a more specialized form of the |structure|
-  color/font. It is the base for all elements that are ``like
-  titles.'' This includes the frame title and subtitle as well as the
-  document title and subtitle.
-\end{itemize}
-
 
 
 %% \subsection{Title Page}
@@ -1176,33 +1133,33 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsection{Footnotes}
+%% \subsection{Footnotes}
 
-\label{section-templates-footnotes}
+%% \label{section-templates-footnotes}
 
-\paragraph{Template Installation Commands}\
+%% \paragraph{Template Installation Commands}\
 
-\begin{command}{\usefootnotetemplate\marg{footnote template}}
-  \example
-\begin{verbatim}
-\usefootnotetemplate{
-  \parindent 1em
-  \noindent
-  \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
-\end{verbatim}
-\end{command}
+%% \begin{command}{\usefootnotetemplate\marg{footnote template}}
+%%   \example
+%% \begin{verbatim}
+%% \usefootnotetemplate{
+%%   \parindent 1em
+%%   \noindent
+%%   \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
+%% \end{verbatim}
+%% \end{command}
 
 
-\paragraph{Inserts for these Templates}\
+%% \paragraph{Inserts for these Templates}\
 
-\begin{command}{\insertfootnotemark}
-  Inserts the current footnote mark (like a raised number) into a
-  template. 
-\end{command}
+%% \begin{command}{\insertfootnotemark}
+%%   Inserts the current footnote mark (like a raised number) into a
+%%   template. 
+%% \end{command}
 
-\begin{command}{\insertfootnotetext}
-  Inserts the current footnote text into a template. 
-\end{command}
+%% \begin{command}{\insertfootnotetext}
+%%   Inserts the current footnote text into a template. 
+%% \end{command}
 
 
 

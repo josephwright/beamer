@@ -1389,10 +1389,24 @@ bottom instead of at the bottom of the current minipage.
   \example |\footnote{On a fast machine.}|
   \example |\footnote[frame,2]{Not proved.}|
   \example |\footnote<.->{Der Spiegel, 4/04, S.\ 90.}|
-\end{command}
 
-You can change the way footnotes are typeset by changing the footnote
-templates, see Section~\ref{section-templates-footnotes}
+  \begin{element}{footnote}\yes\yes\yes
+    This template will be used to render the footnote. Inside this
+    template, the following two inserts can be used:
+    \begin{itemize}
+    \item{\insertfootnotetext}
+      Inserts the current footnote text.
+    \item{\insertfootnotemark}
+      Inserts the current footnote mark (like a raised number). This mark
+      is computed automatically.
+    \end{itemize}
+  \end{element}
+
+  \begin{element}{footnote mark}\no\yes\yes
+    This \beamer-color/-font is used when rendering the footnote mark,
+    both in the text and at the beginning of the footnote itself.
+  \end{element}
+\end{command}
 
 
 %%% Local Variables: 

@@ -255,8 +255,9 @@
 % The \logo command
 %
 %
-\long\def\logo#1{\def\insertlogo{#1}}
-\logo{}
+\def\logo{\setbeamertemplate{logo}}
+\def\insertlogo{\usebeamertemplate*{logo}}
+
 
 \mode
 <article>

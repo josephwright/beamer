@@ -213,7 +213,7 @@
       \ifvoid\beamer@splitbox%
         \ifvoid\beamer@footins%
         \else%
-          \normalcolor%
+          \usebeamercolor*[fg]{footnote}%
           \footnoterule%
           \unvbox \beamer@footins%
           \global\setbox\beamer@footins=\box\voidb@x%
@@ -226,7 +226,7 @@
       \vskip\beamer@framebottomskip%
       \ifvoid\beamer@footins%
       \else%
-        \normalcolor%
+        \usebeamercolor*[fg]{footnote}%
         \footnoterule%
         \unvbox \beamer@footins%
         \global\setbox\beamer@footins=\box\voidb@x%

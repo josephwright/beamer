@@ -300,16 +300,14 @@
 %
 %
 
+\def\@makefnmark{\hbox{\@textsuperscript{{\usebeamercolor[fg]{footnote mark}\usebeamerfont*{footnote mark}\@thefnmark}}}}
+
 \def\@makefntext#1{%
   \def\insertfootnotetext{#1}%
   \def\insertfootnotemark{\@makefnmark}%
-  \footnotetemplate}
-\def\usefootnotetemplate#1{%
-  \def\footnotetemplate{#1}}
+  \usebeamertemplate***{footnote}}
+\def\usefootnotetemplate{\setbeamertemplate{footnote}}
 
-\usefootnotetemplate{
-  \parindent 1em\noindent%
-  \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
 
 \newbox\beamer@footins
 

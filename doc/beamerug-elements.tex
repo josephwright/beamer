@@ -494,7 +494,21 @@ Your answer is \usebeamertemplate{my template}.
   version is the ``most protected'' version avialable.
 \end{command}
 
+\begin{command}{\ifbeamertemplateempty\marg{beamer template
+      name}\marg{executed if empty}\marg{executed otherwise}}
+  This command checks whether a template is defined and set to a    
+  non-empty text. If the text is empty or the template is not
+  defined at all, \meta{executed if empty} is executed. Otherwise,
+  \meta{executed otherwise} is executed. 
+\end{command}
 
+\begin{command}{\expandbeamertemplate\marg{beamer template name}}
+  This command does the same as |\usebeamertemplate|\marg{beamer
+    template name}. The difference is that this command performs a
+  direct expansion and does not scan for a star. This is important
+  inside, for example, an |\edef|. If you don't know the difference
+  between |\def| and |\edef|, you won't need this command.
+\end{command}
 
 \subsubsection{Setting Beamer's Templates}
 
