@@ -3,17 +3,17 @@
 \textclass beamer
 \begin_preamble
 \usetheme{Warsaw}
-% or ...
-
+% or whatever
+  
 \beamertemplatetransparentcovered
 % or whatever (possibly just delete it)
   
 \beamertemplatecontinuationtext
 % or whatever (possibly just delete it)
 \end_preamble
-\language english
+\language ngerman
 \inputencoding auto
-\fontscheme times
+\fontscheme default
 \graphics default
 \paperfontsize default
 \spacing single 
@@ -28,7 +28,7 @@
 \tocdepth 2
 \paragraph_separation indent
 \defskip medskip
-\quotes_language english
+\quotes_language danish
 \quotes_times 2
 \papercolumns 1
 \papersides 1
@@ -42,18 +42,17 @@ collapsed false
 
 \layout Standard
 
-This file is a solution template for:
+Diese Datei enthält eine Lösungsvorlage für:
 \layout Standard
 
-- Talk at a conference/colloquium.
+- Vorträge über ein beliebiges Thema.
+\layout Standard
+
+- Vortragslänge zwischen 15 und 45 Minuten.
  
 \layout Standard
 
-- Talk length is about 20min.
- 
-\layout Standard
-
-- Style is ornate.
+- Aussehen des Vortrags ist verschnörkelt/dekorativ.
 \end_inset 
 
 
@@ -83,19 +82,19 @@ In principle, this file can be redistributed and/or modified under the terms
 
 \layout Title
 
-Title As It Is In the Proceedings
+Titel
 \begin_inset OptArg
 collapsed false
 
 \layout Standard
 
-Short Paper Title 
+Kurzversion des Titels 
 \begin_inset Note
 collapsed false
 
 \layout Standard
 
-optional, use only with long paper titles
+optional, nur bei langen Titeln nötig
 \end_inset 
 
 
@@ -104,11 +103,20 @@ optional, use only with long paper titles
 
 \layout Subtitle
 
-Include Only If Paper Has a Subtitle
+Untertitel
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional
+\end_inset 
+
+
 \layout Author
 
 F.\SpecialChar ~
-Author
+Autor
 \begin_inset ERT
 status Collapsed
 
@@ -129,7 +137,7 @@ and
 \end_inset 
 
  S.\SpecialChar ~
-Another
+Anders
 \begin_inset ERT
 status Collapsed
 
@@ -145,13 +153,10 @@ collapsed false
 
 \layout Standard
 
-- Give the names in the same order as the appear in the paper.
- 
-\layout Standard
-
-- Use the 
+- Der 
 \backslash 
-inst{?} command only if the authors have different affiliations.
+inst{?} Befehl sollte nur verwendet werden, wenn die Autoren unterschiedlichen
+ Instituten angehören.
 \end_inset 
 
 
@@ -166,15 +171,15 @@ collapsed false
 
 \layout Standard
 
-- optional, use only with lots of authors
+- optional, nur bei vielen Autoren
 \layout Standard
 
-- if there are reallylots of authors, use 
-\begin_inset Quotes eld
+- wenn es wirklich viele Autoren gibt, 
+\begin_inset Quotes ald
 \end_inset 
 
-Author et al.
-\begin_inset Quotes erd
+Autor et al.
+\begin_inset Quotes ard
 \end_inset 
 
 
@@ -196,10 +201,9 @@ status Collapsed
 inst{1}
 \end_inset 
 
-Department of Computer Science
-\layout Date
-
-University of Somewhere
+Institut für Informatik
+\newline 
+Universität Hier
 \begin_inset ERT
 status Collapsed
 
@@ -219,56 +223,23 @@ status Collapsed
 inst{2}
 \end_inset 
 
-Department of Theoretical Philosophy
-\layout Date
-
-University of Elsewhere
+Institut für theoretische Philosophie
+\newline 
+Universität Dort
 \begin_inset Note
 collapsed false
 
 \layout Standard
 
-- Use the 
+- Der 
 \backslash 
-inst command only if there are several affiliations.
-\layout Standard
-
-- Keep it simple, no one is interested in your street address.
-\end_inset 
-
-
-\begin_inset OptArg
-collapsed false
-
-\layout Standard
-
-Universities of Somewhere and Elsewhere
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
-optional, but mostly needed
-\end_inset 
-
-
-\end_inset 
-
-
-\layout Date
-
-Conference on Fabulous Presentations, 2003
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
-- Either use conference name or its abbreviation.
+inst{?} Befehl sollte nur verwendet werden, wenn die Autoren unterschiedlichen
+ Instituten angehören.
  
 \layout Standard
 
-- Not really informative to the audience, more for people (including yourself)
- who are reading the slides online
+- Keep it simple, niemand interessiert sich für die genau Adresse.
+ 
 \end_inset 
 
 
@@ -277,7 +248,34 @@ collapsed false
 
 \layout Standard
 
-CFP 2003
+Universitäten Hier und Dort
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, aber oft nötig
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Date
+
+Datum / Anlass für den Vortrag
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Kurzversion des Anlass.
+\end_inset 
+
+
+\layout TitleGraphic
+
+Titelgraphik
 \layout Standard
 
 
@@ -286,24 +284,9 @@ collapsed false
 
 \layout Standard
 
-optional, should be abbreviation of conference name
-\end_inset 
-
-
-\end_inset 
-
-
-\layout Standard
-
-
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
-If you have a file called "institution-logo-filename.xxx", where xxx is a
- graphic format that can be processed by latex or pdflatex, resp., then you
- can add a logo by uncommenting the following:
+Falls eine Logodatei namens "university-logo-filename.xxx" vorhanden ist,
+ wobei xxx ein von latex bzw.
+ pdflatex lesbares Graphikformat ist, so kann man wie folgt ein Logo einfügen:
 \end_inset 
 
 
@@ -334,9 +317,9 @@ collapsed false
 
 \layout Standard
 
-The following causes the table of contents to be shown at the beginning
- of every subsection.
- Delete this, if you do not want it.
+Folgendes sollte gelöscht werden, wenn man nicht am Anfang jedes Unterabschnitts
+ die Gliederung nochmal sehen möchte.
+ 
 \end_inset 
 
 
@@ -357,11 +340,11 @@ frame<beamer>{
 \layout Standard
     
 \backslash 
-frametitle{Outline}   
+frametitle{Gliederung}   
 \layout Standard
     
 \backslash 
-tableofcontents[current,currentsubsection] 
+tableofcontents[currentsection,currentsubsection] 
 \layout Standard
   }
 \layout Standard
@@ -377,8 +360,8 @@ collapsed false
 
 \layout Standard
 
-If you wish to uncover everything in a step-wise fashion, uncomment the
- following command:
+Falls Aufzählungen immer schrittweise gezeigt werden sollen, kann folgendes
+ Kommando benutzt werden:
 \end_inset 
 
 
@@ -397,7 +380,7 @@ beamerdefaultoverlayspecification{<+->}
 
 \layout BeginFrame
 
-Outline
+Gliederung
 \layout Standard
 
 
@@ -414,95 +397,78 @@ collapsed false
 
 \layout Standard
 
-Structuring a talk is a difficult task and the following structure may not
- be suitable.
- Here are some rules that apply for this solution: 
+Da dies ein Vorlage für beliebige Vorträge ist, lassen sich kaum allgemeine
+ Regeln zur Strukturierung angeben.
+ Da die Vorlage für einen Vortrag zwischen 15 und 45 Minuten gedacht ist,
+ fährt man aber mit folgenden Regeln oft gut.
 \layout Standard
 
-- Exactly two or three sections (other than the summary).
+- Es sollte genau zwei oder drei Abschnitte geben (neben der Zusammenfassung).
  
 \layout Standard
 
-- At *most* three subsections per section.
+- *Höchstens* drei Unterabschnitte pro Abschnitt.
  
 \layout Standard
 
-- Talk about 30s to 2min per frame.
- So there should be between about 15 and 30 frames, all told.
+- Pro Rahmen sollte man zwischen 30s und 2min reden.
+ Es sollte also 15 bis 30 Rahmen geben.
 \layout Standard
 
-- A conference audience is likely to know very little of what you are going
- to talk about.
- So *simplify*! 
-\layout Standard
-
-- In a 20min talk, getting the main ideas across is hard enough.
- Leave out details, even if it means being less precise than you think necessary.
- 
-\layout Standard
-
-- If you omit details that are vital to the proof/implementation, just say
- so once.
- Everybody will be happy with that.
+- In 20 Minuten ist es schon schwer genug, die Hauptbotschaft zu vermitteln.
+ Deshalb sollten Details ausgelassen werden, selbst wenn dies zu Ungenauigkeiten
+ oder Halbwahrheiten führt.
  
 \end_inset 
 
 
 \layout Section
 
-Motivation
+Einleitung
 \layout Subsection
 
-The Basic Problem That We Studied
-\begin_inset OptArg
-collapsed false
-
-\layout Standard
-
-Basic Problem
-\end_inset 
-
-
+Erster Unterabschnitt
 \layout BeginFrame
 
-Make Titles Informative.
- Use Uppercase Letters.
+Überschriften sollten informativ sein.
+ 
+\newline 
+Korrekte Groß-/Kleinschreibung beachten.
 \layout FrameSubtitle
 
-Frame subtitles are optional.
- Use upper- or lowercase letters.
+Untertitel sind optional.
 \begin_inset Note
 collapsed false
 
 \layout Standard
 
-- A title should summarize the slide in an understandable fashion for anyone
- how does not follow everything on the slide itself.
+- Eine Überschrift fasst einen Rahmen verständlich zusammen.
+ Man muss sie verstehen können, selbst wenn man nicht den Rest des Rahmens
+ versteht.
  
 \end_inset 
 
 
 \layout Itemize
 
-Use Itemize a lot.
+Viel Itemize benutzen.
 \begin_deeper 
 \layout Pause
 
 \end_deeper 
 \layout Itemize
 
-Use very short sentences or short phrases.
+Sehr kurze Sätze oder Satzglieder verwenden.
 \begin_deeper 
 \layout Pause
 
 \end_deeper 
 \layout Itemize
 
-These overlays are created using the Pause style.
+Diese Overlays werden mit dem Pause Stil erzeugt.
 \layout BeginFrame
 
-Make Titles Informative.
- 
+Überschriften müssen informativ sein.
 \layout Itemize
 
 
@@ -513,7 +479,7 @@ status Collapsed
 <1->
 \end_inset 
 
-You can also use overlay specifications to create overlays.
+Man kann auch Overlay-Spezifikationen benutzen, um Overlays zu erzeugen.
 \layout Itemize
 
 
@@ -524,7 +490,7 @@ status Collapsed
 <3->
 \end_inset 
 
-This allows you to present things in any order.
+Hiermit können, Punkte in beliebiger Reihenfolge präsentiert werden.
 \layout Itemize
 
 
@@ -535,10 +501,10 @@ status Collapsed
 <2->
 \end_inset 
 
-This is shown second.
+Dies wird als zweites gezeigt.
 \layout BeginFrame
 
-Make Titles Informative.
+Überschriften müssen informativ sein.
 \layout Block
 
 
@@ -569,10 +535,10 @@ status Collapsed
 \begin_deeper 
 \layout Itemize
 
-Untitled block.
+Block ohne Überschrift.
 \layout Itemize
 
-Shown on all slides.
+Wird auf allen Overlays angezeigt.
 \end_deeper 
 \layout ExampleBlock
 
@@ -592,7 +558,7 @@ status Collapsed
 {
 \end_inset 
 
-Some Example Block Title
+Ein Beispielblocktitel
 \begin_inset ERT
 status Collapsed
 
@@ -619,11 +585,10 @@ status Collapsed
 \end_deeper 
 \layout Subsection
 
-Previous Work
+Zweiter Unterabschnitt
 \layout BeginFrame
 
-Make Titles Informative.
- 
+Überschriften müssen informativ sein.
 \layout Example
 
 
@@ -634,8 +599,7 @@ status Collapsed
 <1->
 \end_inset 
 
-On first slide.
- 
+Auf dem ersten Overlay.
 \layout Separator
 
 \layout Example
@@ -648,29 +612,27 @@ status Collapsed
 <2->
 \end_inset 
 
-On second slide.
+Auf dem zweiten Overlay.
 \layout Section
 
-Our Results/Contribution
+Erster Hauptteil
 \layout Subsection
 
-Main Results
+Unterabschnitt
 \layout BeginFrame
 
-Make Titles Informative.
- 
+Überschriften müssen informativ sein.
 \layout Theorem
 
-On first slide.
+Auf dem ersten Overlay.
 \layout Pause
 
 \layout Corollary
 
-On second slide.
+Auf dem zweiten Overlay.
 \layout BeginFrame
 
-Make Titles Informative.
- 
+Überschriften müssen informativ sein.
 \layout ColumnsTopAligned
 
 \begin_deeper 
@@ -687,7 +649,7 @@ status Collapsed
 <1->
 \end_inset 
 
-In left column.
+In der linken Spalte.
 \layout Column
 
 5cm
@@ -701,40 +663,16 @@ status Collapsed
 <2->
 \end_inset 
 
-In right column.
+In der rechten Spalte.
 \newline 
-New line
+Neue Zeile.
 \end_deeper 
-\layout Subsection
-
-Basic Ideas for Proofs/Implementations
 \layout Section*
 
-Summary
+Zusammenfassung
 \layout BeginFrame
 
-Summary
-\layout Itemize
-
-The 
-\color red
-first main message
-\color default
- of your talk in one or two lines.
-\layout Itemize
-
-The 
-\color red
-second main message
-\color default
- of your talk in one or two lines.
-\layout Itemize
-
-Perhaps a 
-\color red
-third message
-\color default
-, but not more than that.
+Zusammenfassung
 \layout Standard
 
 
@@ -743,7 +681,40 @@ collapsed false
 
 \layout Standard
 
-An outlook is always optional.
+Die Zusammenfassung sollte sehr kurz sein.
+\end_inset 
+
+
+\layout Itemize
+
+Die 
+\color red
+erste Hauptbotschaft
+\color default
+ des Vortrags in ein bis zwei Zeilen.
+\layout Itemize
+
+Die 
+\color red
+zweite Hauptbotschaft
+\color default
+ des Vortrags in ein bis zwei Zeilen.
+\layout Itemize
+
+Eventuell noch eine 
+\color red
+dritte Botschaft
+\color default
+, aber nicht noch mehr.
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Der folgende Ausblick ist optional.
 \end_inset 
 
 
@@ -762,151 +733,15 @@ vskip0pt plus.5fill
 
 \layout Itemize
 
-Outlook
+Ausblick
 \begin_deeper 
 \layout Itemize
 
-What we have not done yet.
+Etwas, was wir noch nicht lösen konnten.
 \layout Itemize
 
-Even more stuff.
+Nochwas, das wir noch nicht lösen konnten.
 \end_deeper 
-\layout EndFrame
-
-\layout Section*
-\start_of_appendix 
-
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
-All of the following is optional and typically not needed.
-\end_inset 
-
-Appendix
-\layout Subsection*
-
-For Further Reading
-\layout BeginFrame
-
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-[allowframebreaks]
-\end_inset 
-
-For Further Reading
-\layout Standard
-
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\backslash 
-beamertemplatebookbibitems
-\end_inset 
-
-
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
-Start with overview books.
-\end_inset 
-
-
-\layout Bibliography
-\bibitem {Author1990}
-
-A.
- Author.
- 
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\backslash 
-newblock
-\end_inset 
-
-
-\emph on 
-Handbook of Everything
-\emph default 
-.
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\backslash 
-newblock
-\end_inset 
-
- Some Press, 1990.
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\backslash 
-beamertemplatearticlebibitems
-\end_inset 
-
-
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
-Followed by interesting articles.
- Keep the list short.
- 
-\end_inset 
-
-
-\layout Bibliography
-\bibitem {Someone2002}
-
-S.
- Someone.
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\backslash 
-newblock
-\end_inset 
-
- On this and that
-\emph on 
-.
- 
-\emph default 
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\backslash 
-newblock
-\end_inset 
-
-
-\emph on 
-Journal on This and That
-\emph default 
-.
- 2(1):50--100, 2000.
 \layout EndFrame
 
 \the_end
