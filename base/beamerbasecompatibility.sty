@@ -1,0 +1,118 @@
+\ProvidesPackage{beamerbasecompatibility}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+%
+%
+% Hyperlink fix for problem with empty test in pdfmark.def
+%
+%
+\let\beamer@orighyperlink\hyperlink
+\def\hyperlink#1#2{\beamer@orighyperlink{#1}{\relax#2}}
+
+
+% Hyperlinks must be suspended until document starts - they are used
+% inside \usetemplate commands before the beginning of the document,
+% but there we do not want them to have an effect.
+\let\beamer@suspendedhyperlink\hyperlink
+\let\beamer@suspendedAcrobatmenu\Acrobatmenu
+\def\hyperlink#1#2{#2}
+\def\Acrobatmenu#1#2{#2}
+\providecommand\hyper@pagetransition{}
+\providecommand\hyper@pageduration{}
+\providecommand\hyper@pagehidden{}
+
+\AtBeginDocument{%
+  \ifbeamer@notesnormals
+    \let\hyperlink\beamer@suspendedhyperlink
+    \let\Acrobatmenu\beamer@suspendedAcrobatmenu
+  \fi%
+}
+
+
+
+%
+% Fixes right before the start of the document.
+%
+
+\let\beamer@origdocument\document
+\def\document{%
+  \endgroup%
+  \recalculatefoot%
+  \recalculatehead%
+  \AtBeginDocument{
+    %
+    % Fix french.ldf's meddling with \itemize and \trivlist
+    %
+    \ifx\bbl@nonfrenchitemize\@undefined\else\bbl@nonfrenchitemize\fi%
+    \ifx\bbl@nonfrenchlistspacing\@undefined\else\bbl@nonfrenchlistspacing\fi}%
+  \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
+    %
+    % Fix spanish.ldf's meddling with < and > 
+    %
+    \@ifundefined{deactivatequoting}{}{\deactivatequoting}}
+  \begingroup\beamer@origdocument}
+
+\AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize 
+
+
+%
+% Fix for older versions of geometry
+%
+\ifx\ifGm@compatii\@undefined%
+\def\Gm@lmargin{\Geom@lmargin}\def\Gm@rmargin{\Geom@rmargin}
+\else
+\geometry{includeheadfoot}
+\fi
+
+
+
+%
+% Fix deluxetabular floats
+%
+\AtBeginDocument{
+  \def\@plano@float@#1{\begin{table}}
+  \def\end@plano@float@{\end{table}}
+}
+
+%
+% Fix for implict=false for hyperref
+%
+\def\WriteBookmarks{0}
+\expandafter\def\csname Parent-1\endcsname{}
+\expandafter\def\csname Parent0\endcsname{}
+\def\phantomsection{}
+
+%
+% Bugfix for old versions of pdfmark
+%
+\begingroup
+  \catcode`P=12
+  \catcode`T=12
+  \lowercase{\endgroup
+  \gdef\rem@ptetc#1.#2PT#3!{#1\ifnum#2>\z@.#2\fi}%
+}
+\def\strip@pt@and@otherjunk#1{\expandafter\rem@ptetc\the#1!}
+
+%
+% Make the effect of pdfpagetransition and duration global, not local
+%
+\define@key{Hyp}{pdfpagetransition}{\gdef\@pdfpagetransition{#1}}
+\define@key{Hyp}{pdfpageduration}{\gdef\@pdfpageduration{#1}}
+
+%
+%
+% Fix for babel (will have an effect only, if babel is loaded)
+%
+%
+\def\textlatin{}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: ../examples/beamerexample1.tex
+%%% End: 

@@ -1,0 +1,170 @@
+\ProvidesPackage{beamerbasearticle}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+%
+% Presentation/article stuff
+%
+% Copyright notice: Part of the following code is taken from the
+% package comment.sty by Victor Eijkhout
+%
+
+%
+% Comment stuff. This will also be needed, if we switch to another
+% class, so define it here already.
+%
+\newif\ifbeamer@inpresentation
+\beamer@inpresentationtrue
+
+\def\beamer@makeinnocent#1{\catcode`#1=12 }
+\def\beamer@startcomment{%
+    \begingroup%
+    \let\do\beamer@makeinnocent\dospecials%
+    \beamer@makeinnocent\^^L% and whatever other special cases
+    \endlinechar`\^^M \catcode`\^^M=12 \beamer@ignore}
+
+{\catcode`\^^M=12\endlinechar=-1%
+ \gdef\beamer@ignore#1^^M{%
+    \expandafter\beamer@processline}
+ \gdef\beamer@processline#1^^M{%
+   \def\beamer@test{#1}%
+    \ifx\beamer@test\beamer@stoparticle%
+      \let\next=\article%
+    \else%
+      \ifx\beamer@test\beamer@stoppresentation%
+        \let\next=\presentation%
+      \else%
+        \ifx\beamer@test\beamer@stopcommon%
+          \let\next=\common%
+        \else%
+          \ifx\beamer@test\beamer@stopdocument%
+            \let\next=\beamer@enddocument%
+          \else
+            \ifx\beamer@test\beamer@begindocument%
+              \let\next=\beamer@startdocument%
+            \else
+              \let\next=\beamer@processline%
+          \fi%  
+          \fi%  
+        \fi%
+      \fi%
+    \fi%
+    \next}
+}
+\def\article{\beamer@closer%
+  \ifbeamer@inpresentation%
+    \let\next=\beamer@startcomment%
+    \gdef\beamer@closer{\endgroup}%
+  \else%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+  \fi%
+  \next}  
+
+\def\presentation{\beamer@closer%
+  \ifbeamer@inpresentation%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+  \else%
+    \let\next=\beamer@startcomment%
+    \gdef\beamer@closer{\endgroup}%
+  \fi%
+  \next}
+\def\common{\beamer@closer\gdef\beamer@closer{}}
+\def\beamer@enddocument{\beamer@closer\end{document}}
+\def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}}
+\def\beamer@closer{}
+{\escapechar=-1\relax%
+  \xdef\beamer@stoparticle{\string\\article}
+  \xdef\beamer@stoppresentation{\string\\presentation}
+  \xdef\beamer@stopcommon{\string\\common}
+  \xdef\beamer@stopdocument{\string\\end\string\{document\string\}}
+  \xdef\beamer@begindocument{\string\\begin\string\{document\string\}}
+}
+\newbox\beamer@commentbox
+\def\beamer@startcommentinframe{%
+  \begingroup%
+  \edef\beamer@closer{\egroup\beamer@closer}%
+  \setbox\beamer@commentbox=\vbox\bgroup\leavevmode}
+
+
+
+
+%
+% Stuff needed in both article and presentation version
+%
+\def\jobnamebeamerversion{}%
+
+\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
+\def\@includeslide[#1]#2{%
+  \ifx\jobnamebeamerversion\@empty%
+  \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
+  \else%
+  \pgfimage[#1,page=\csname beamer@slide#2\endcsname]{\jobnamebeamerversion}
+  \fi}
+
+\def\setjobnamebeamerversion#1{%
+  \def\jobnamebeamerversion{#1}%
+  {\makeatletter
+  \@input{\jobnamebeamerversion.snm}}
+}
+
+
+
+%
+% Check whether we should initiate transfer to another class
+%
+
+% Extract class name, if present
+\def\beamer@classname{}
+\def\beamer@classoptions{}
+\def\beamer@classnamename{class}
+\def\beamer@eq{=,}
+\def\beamer@findclassname#1=#2,#3!{
+  \def\beamer@temp{#1}
+  \ifx\beamer@temp\beamer@classnamename
+    \def\beamer@classname{#2}
+    \beamer@stripsign#3!
+  \fi}
+\def\beamer@stripsign#1!{%
+  \def\beamer@temp{#1}
+  \ifx\beamer@temp\beamer@eq
+  % nothing to do
+  \else
+  \beamer@@stripsign#1!
+  \fi
+}
+\def\beamer@@stripsign#1,=,!{
+  \def\beamer@classoptions{#1}
+  }
+
+\def\beamer@transfer{%
+  % Prepare...
+  \def\beamer@slide##1##2{\expandafter\gdef\csname
+    beamer@slide##1\endcsname{##2}}
+
+  \beamer@inpresentationfalse
+  \edef\beamer@classwhat{[\beamer@classoptions]{\beamer@classname}}
+  \expandafter\LoadClass\beamer@classwhat
+  \endinput
+  }
+
+\expandafter\beamer@findclassname\@classoptionslist,=,!
+\ifx\beamer@classname\@empty
+  \let\beamer@transferifnecessary=\relax
+\else
+  % Need to transfer to another class soon
+  \let\beamer@transferifnecessary=\beamer@transfer
+\fi
+\endinput
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: ../examples/beamerexample1.tex
+%%% End: 

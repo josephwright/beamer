@@ -33,16 +33,16 @@
 \useheadtemplate{%
   \vbox{%
     \tiny%
-    \setbox\linebox=\hbox to\paperwidth{%
+    \setbox\beamer@linebox=\hbox to\paperwidth{%
       \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
       \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}\hfil}%
-    \ht\linebox=2.625ex
-    \dp\linebox=0pt
-    \setbox\linebox=\vbox{\box\linebox\vskip1.125ex}%
+    \ht\beamer@linebox=2.625ex
+    \dp\beamer@linebox=0pt
+    \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
     \hbox to\textwidth{%
-      {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth height\ht\linebox
-      \color{structure}\vrule width.5\paperwidth height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
-    \hskip-\Gm@lmargin\box\linebox\hfill\hskip-\Gm@rmargin
+      {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth height\ht\beamer@linebox
+      \color{structure}\vrule width.5\paperwidth height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin
     }%
   }%
 }
@@ -51,20 +51,20 @@
   \vbox{%
     \tiny%
     \tempdimen=2.4375ex%
-    \ifnum\subsection@max<\section@max%
-    \multiply\tempdimen by\section@max%
+    \ifnum\beamer@subsectionmax<\beamer@sectionmax%
+    \multiply\tempdimen by\beamer@sectionmax%
     \else%
-    \multiply\tempdimen by\subsection@max%
+    \multiply\tempdimen by\beamer@subsectionmax%
     \fi%
     \advance\tempdimen by 1.125ex%
-    \setbox\linebox=\hbox to\paperwidth{%
+    \setbox\beamer@linebox=\hbox to\paperwidth{%
       \vbox to \tempdimen{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
       \vbox to \tempdimen{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
     \hbox to\textwidth{%
       {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
-      height\ht\linebox\color{structure}\vrule width.5\paperwidth
-      height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
-     \hskip-\Gm@lmargin\box\linebox\hfill\hskip-\Gm@rmargin%
+      height\ht\beamer@linebox\color{structure}\vrule width.5\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+     \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin%
       }%
   }%
 }
@@ -73,18 +73,18 @@
 \usefoottemplate{%
   \vbox{\tiny%
     \hbox to\textwidth{\hfill%
-      \setbox\logobox=\hbox{\raise 10pt\hbox{\insertlogo}\llap{\insertnavigationsymbols}}\ht\logobox=0pt%
-      \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
+      \setbox\beamer@logobox=\hbox{\raise 10pt\hbox{\insertlogo}\llap{\insertnavigationsymbols}}\ht\beamer@logobox=0pt%
+      \box\beamer@logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
   \hbox{%
-  \setbox\linebox=\hbox to\paperwidth{%
+  \setbox\beamer@linebox=\hbox to\paperwidth{%
     \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
     \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
-  \ht\linebox=2.625ex%
-  \dp\linebox=0pt%
-  \setbox\linebox=\vbox{\box\linebox\vskip1.125ex}%
+  \ht\beamer@linebox=2.625ex%
+  \dp\beamer@linebox=0pt%
+  \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
   \color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
-  height\ht\linebox\color{structure}\vrule width.5\paperwidth
-  height\ht\linebox\hskip-\paperwidth% 
-  \hbox{\box\linebox\hfill}\hfill\hskip-\Gm@rmargin}}}
+  height\ht\beamer@linebox\color{structure}\vrule width.5\paperwidth
+  height\ht\beamer@linebox\hskip-\paperwidth% 
+  \hbox{\box\beamer@linebox\hfill}\hfill\hskip-\Gm@rmargin}}}
 
 \beamertemplatelargeblocks

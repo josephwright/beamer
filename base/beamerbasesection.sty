@@ -1,0 +1,130 @@
+\ProvidesPackage{beamerbasesection}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+%
+% Part Definitions
+%
+\newcounter{part}
+\renewcommand\thepart{\@arabic\c@part}
+\beamer@partstartpage=1
+
+\def\part{\@ifnextchar[\@part\@@part}
+\long\def\@@part#1{\@part[#1]{#1}}
+\long\def\@part[#1]#2{%
+  \refstepcounter{part}%
+  \def\beamer@partname{#2}%
+  \def\beamer@partnameshort{#1}%
+  \addtocontents{head}{\protect\headcommand{\protect\partentry{#2}{\thepart}}}%
+  \xdef\partlink{{Navigation\thepage}{\noexpand\beamer@partname}}%
+  \xdef\partlinkshort{{Navigation\thepage}{\noexpand\beamer@partnameshort}}%
+  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}%
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
+  \beamer@partstartpage=\c@page%
+  \beamer@sectionstartpage=\c@page%
+  \beamer@subsectionstartpage=\c@page%
+  \setcounter{subsection}{0}%
+  \def\insertsection{}%
+  \def\insertsubsection{}%
+  \def\lastsubsection{}%
+  \def\insertpart{\expandafter\hyperlink\partlink}%
+  \def\insertshortpart{\expandafter\hyperlink\partlinkshort}}%
+\def\insertpart{}
+\def\insertshortpart{}
+
+\def\insertromanpartnumber{\@Roman\c@part}
+\def\insertpartnumber{\@arabic\c@part}
+
+%
+% Section Definitions
+%
+\def\sectionname{Section}
+\newcounter{section}
+\renewcommand\thesection{\@arabic\c@section}
+\beamer@sectionstartpage=1\relax
+\beamer@tocsectionnumber=0\relax
+
+\def\section{\@ifnextchar[\@section\@@section}
+\long\def\@@section#1{\@section[#1]{#1}}
+\long\def\@section[#1]#2{%
+  \refstepcounter{section}%
+  \beamer@ifempty{#2}%
+  {\long\def\secname{#1}}%
+  {\advance\beamer@tocsectionnumber by 1\relax%
+   \long\def\secname{#2}\addtocontents{toc}{\protect\beamer@sectionintoc{\thesection}{#2}{\thepage}{\thepart}%
+      {\the\beamer@tocsectionnumber}}}%
+  \addtocontents{head}{\protect\headcommand{\protect\sectionentry{\thesection}{#1}{\thepage}{\secname}{\thepart}}}%
+  {\let\\=\relax\xdef\sectionlink{{Navigation\thepage}{\noexpand\secname}}}%
+  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
+  \beamer@sectionstartpage=\c@page%
+  \beamer@subsectionstartpage=\c@page%
+  \def\insertsection{\expandafter\hyperlink\sectionlink}%
+  \def\insertsubsection{}%
+  \def\lastsubsection{}%
+  \Hy@writebookmark{\thesection}{\secname}{Outline\thesection}{1}{toc}%
+  \hyper@anchorstart{Outline\thesection}\hyper@anchorend}%
+\def\insertsection{}
+\def\lastsubsection{}
+
+\def\breakhere{\protect\beamer@breakhere}
+\def\beamer@breakhere{}
+
+
+
+%
+% Subsection Definitions
+%
+\newcounter{subsection}[section]
+\renewcommand\thesubsection{\@arabic\c@subsection}
+
+\beamer@subsectionstartpage=1
+
+\def\subsection{\@ifnextchar[\@subsection\@@subsection}
+\def\@@subsection#1{\@subsection[#1]{#1}}
+
+\def\@subsection[#1]#2{%
+  \refstepcounter{subsection}%
+  \beamer@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}
+  {%
+    \long\def\subsecname{#2}%
+    \long\def\lastsubsection{#1}%
+    \addtocontents{toc}{\protect\beamer@subsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}{\thepart}{\the\beamer@tocsectionnumber}}%
+  }%
+  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
+  \beamer@subsectionstartpage=\c@page%
+  \edef\subsectionlink{{Navigation\thepage}{\noexpand\subsecname}}%
+  \def\insertsubsection{\expandafter\hyperlink\subsectionlink}
+  \Hy@writebookmark{\thesubsection}{#1}{Outline\thesection.\thesubsection.\thepage}{2}{toc}%
+  \hyper@anchorstart{Outline\thesection.\thesubsection.\thepage}\hyper@anchorend}
+
+\def\untitledsubsection{%
+  \refstepcounter{subsection}%
+  \def\insertsubsection{}%
+  \def\lastsubsection{}}
+\def\insertsubsection{}
+
+
+
+%
+% Appendix stuff
+%
+\def\appendix{%
+  \part{\appendixname}
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

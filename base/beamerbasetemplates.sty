@@ -1,8 +1,8 @@
-\ProvidesPackage{beamertemplates}[2003/10/29 ver 1.03]
+\ProvidesPackage{beamerbasetemplates}[2004/01/10 ver 1.20]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 \RequirePackage{pgfshade}
-\RequirePackage{beamerboxes}
+\RequirePackage{beamerbaseboxes}
 
 
 
@@ -94,6 +94,34 @@
   
 
 
+%
+% Table of contents templates
+%
+
+\newcommand{\beamertemplateplaintoc}{
+  \usetemplatetocsection[50!averagebackgroundcolor]
+    {\color{structure}\inserttocsection}
+
+  \usetemplatetocsubsection[50!averagebackgroundcolor]
+    {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+}
+
+\newcommand{\beamertemplatenumberedsubsectiontoc}{
+  \usetemplatetocsection[50!averagebackgroundcolor]
+    {\leavevmode\leftskip=2em\color{structure}\inserttocsection}
+
+  \usetemplatetocsubsection[50!averagebackgroundcolor]
+    {\leavevmode\leftskip=2em\color{black}\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
+}
+
+\newcommand{\beamertemplatenumberedsectiontoc}{
+  \usetemplatetocsection[50!averagebackgroundcolor]
+    {\leavevmode\color{structure}\inserttocsectionnumber. \inserttocsection}
+
+  \usetemplatetocsubsection[50!averagebackgroundcolor]
+    {\leavevmode\leftskip=2.5em\color{black}\inserttocsubsection\par}
+}
+
 
 %
 % Itemize templates
@@ -132,8 +160,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.!20!averagebackgroundcolor}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!20!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.20opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.20opaque}{smallsphereshaded}
   
   \begin{colormixin}{15!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -149,8 +177,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.!15!averagebackgroundcolor}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!15!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.15opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.15opaque}{smallsphereshaded}
   
   \begin{colormixin}{10!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -166,8 +194,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.!10!averagebackgroundcolor}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!10!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.10opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.10opaque}{smallsphereshaded}
   
   \begin{colormixin}{5!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -183,8 +211,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.!5!averagebackgroundcolor}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!5!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.5opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.5opaque}{smallsphereshaded}
   
   \begin{colormixin}{2!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -200,8 +228,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.!2!averagebackgroundcolor}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.!2!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.2opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.2opaque}{smallsphereshaded}
   
   \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bigsphere}}}
   \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{smallsphere}}}
@@ -450,15 +478,22 @@
 
 \pgfdeclareimage[width=14pt,height=12pt]{beamericonbook}{beamericonbook}
 \pgfdeclareimage[width=14pt,height=12pt]{beamericonbookshaded}{beamericonbook.20}
-\pgfaliasimage{beamericonbook!20!averagebackgroundcolor}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook!15!averagebackgroundcolor}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook!10!averagebackgroundcolor}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook!5!averagebackgroundcolor}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook!2!averagebackgroundcolor}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.20opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.15opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.10opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.5opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.2opaque}{beamericonbookshaded}
+\pgfdeclareimage[width=11pt,height=14pt]{beamericonarticle}{beamericonarticle}
+\pgfdeclareimage[width=11pt,height=14pt]{beamericonarticleshaded}{beamericonarticle.20}
+\pgfaliasimage{beamericonarticle.20opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.15opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.10opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.5opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.2opaque}{beamericonarticleshaded}
+
 \newcommand{\beamertemplatebookbibitems}{
   \usebibitemtemplate{\lower2pt\hbox{\pgfuseimage{beamericonbook}}}
 }
-
 
 \newcommand{\beamertemplatearticlebibitems}{
   \usebibitemtemplate{\lower3.5pt\hbox{\hskip1.5pt\pgfuseimage{beamericonarticle}}}
@@ -497,19 +532,13 @@
 %
 \newcommand{\beamertemplatetransparentcovereddynamic}{
   \beamersetuncovermixins
-  {\mixinon<1>{15!averagebackgroundcolor}%
-    \mixinon<2>{10!averagebackgroundcolor}%
-    \mixinon<3>{5!averagebackgroundcolor}%
-    \mixinon<4->{2!averagebackgroundcolor}}%
-  {\mixinon<1>{15!averagebackgroundcolor}%
-    \mixinon<2>{10!averagebackgroundcolor}%
-    \mixinon<3>{5!averagebackgroundcolor}%
-    \mixinon<4->{2!averagebackgroundcolor}}}
+  {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}%
+  {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}}
 
 \newcommand{\beamertemplatetransparentcovered}{
   \beamersetuncovermixins%
-  {\mixinon<1->{15!averagebackgroundcolor}}
-  {\mixinon<1->{15!averagebackgroundcolor}}}
+  {\opaqueness<1->{15}}
+  {\opaqueness<1->{15}}}
 
 
 

@@ -1,0 +1,138 @@
+\ProvidesPackage{beamerbasetoc}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+%
+%
+% Table of Contents Format
+%
+%
+
+\define@key{beamertoc}{current}[true]{\beamer@onlycurrenttrue}
+\define@key{beamertoc}{pausesections}[true]{\beamer@pausesectionstrue}
+\define@key{beamertoc}{pausesubsections}[true]{\beamer@pausesubsectionstrue}
+\define@key{beamertoc}{hidesubsections}[true]{\beamer@subsectionshidetrue}
+\define@key{beamertoc}{shadesubsections}[true]{\beamer@subsectionsshadedtrue}
+\define@key{beamertoc}{part}{\beamer@showpartnumber=#1\relax}
+\define@key{beamertoc}{sections}{\beamer@parsetocsections#1[]}
+\define@key{beamertoc}{firstsection}{\beamer@sectionadjust=-#1\relax\advance\beamer@sectionadjust by 1\relax}
+\def\beamer@parsetocsections{\@ifnextchar<\beamer@@parsetocsections\beamer@@@parsetocsections}
+\def\beamer@@parsetocsections#1[]{\def\beamer@tocsections{#1}}
+\def\beamer@@@parsetocsections#1[]{\def\beamer@tocsections{<all:#1>}}
+
+\def\tableofcontents{\@ifnextchar[{\@tableofcontents}{\@tableofcontents[]}}
+\def\@tableofcontents[#1]{%
+  \beamer@showpartnumber=\c@part%
+  \beamer@onlycurrentfalse%
+  \beamer@pausesectionsfalse%
+  \beamer@pausesubsectionsfalse%
+  \beamer@subsectionshidefalse%
+  \beamer@subsectionsshadedfalse%
+  \def\beamer@tocsections{<+>}%
+  \setkeys{beamertoc}{firstsection=1}%
+  \setkeys{beamertoc}{#1}%
+  \vspace*{-.5em}{\makeatletter%
+    \begin{pauses}[0]%
+      \@input{\jobname.toc}%
+    \end{pauses}\vfill}%
+  \normalcolor
+  }
+
+\def\tableofcontentscurrent{\tableofcontents[current]}
+
+\def\sectionintoc{}
+\def\beamer@sectionintoc#1#2#3#4#5{%
+  \ifnum#4=\beamer@showpartnumber%
+  {
+  \beamer@saveanother%
+  \gdef\beamer@todo{}%
+  \beamer@slideinframe=#1\relax%
+  \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+    \ifbeamer@pausesections\pause\fi%
+    \beamer@tempcount=#5\relax%
+    \advance\beamer@tempcount by\beamer@sectionadjust%
+    \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+    \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
+    \ifbeamer@subsectionshide
+    \vskip1.5em
+    \else
+    \vfill
+    \fi
+    \ifbeamer@onlycurrent%
+      \ifnum\thesection=#1%
+        \hbox{\vbox{\sectiontemplate}}%
+      \else%
+        \hbox{\vbox{\sectiontemplateshaded}}%
+      \fi%
+    \else%
+      \hbox{\vbox{\sectiontemplate}}%
+    \fi
+    \par}}%
+  \beamer@restoreanother%
+  }
+  \beamer@todo%
+  \fi%
+}
+
+\def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
+\long\def\@@usetemplatetocsection[#1]#2{
+  \@usetemplatetocsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}}}
+\long\def\@usetemplatetocsection#1#2{
+  \gdef\sectiontemplate{\def\beamer@breakhere{\\}#1}
+  \gdef\sectiontemplateshaded{\def\beamer@breakhere{\\}#2}}
+
+\def\subsectionintoc{}
+\long\def\beamer@subsectionintoc#1#2#3#4#5#6{%
+  \ifnum#5=\beamer@showpartnumber%
+  {
+    \beamer@saveanother%
+    \gdef\beamer@todo{}%
+    \beamer@slideinframe=#1\relax%
+    \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+      \ifbeamer@pausesubsections\pause\fi%
+      \beamer@tempcount=#6%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \def\inserttocsubsectionnumber{#2}%
+      \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
+      \ifbeamer@subsectionshide
+        \ifnum\thesection=#1
+          {\beamer@subsectiontemplate}
+        \fi
+      \else
+        \ifbeamer@onlycurrent
+          \ifnum\thesection=#1
+            {\beamer@subsectiontemplate}
+          \else
+            {\beamer@subsectiontemplateshaded}
+          \fi
+        \else
+          \ifbeamer@subsectionsshaded
+            {\beamer@subsectiontemplateshaded}
+          \else
+            {\beamer@subsectiontemplate}
+          \fi
+        \fi
+      \fi%
+    }}%
+    \beamer@restoreanother%
+  }
+  \beamer@todo%
+  \fi
+}
+
+\def\usetemplatetocsubsection{\@ifnextchar[\@@usetemplatetocsubsection\@usetemplatetocsubsection}
+\long\def\@@usetemplatetocsubsection[#1]#2{
+  \@usetemplatetocsubsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}}}
+\long\def\@usetemplatetocsubsection#1#2{
+  \gdef\beamer@subsectiontemplate{\def\beamer@breakhere{\\}#1}
+  \gdef\beamer@subsectiontemplateshaded{\def\beamer@breakhere{\\}#2}}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1"
+%%% End: 

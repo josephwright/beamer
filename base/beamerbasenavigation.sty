@@ -1,0 +1,471 @@
+\ProvidesPackage{beamerbasenavigation}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+%
+% Navigation buttons
+%
+
+% The following commands are called by the .nav file.
+\def\beamer@framepages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofframe{#1}%
+      \gdef\beamer@endpageofframe{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@subsectionpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofsubsection{#1}%
+      \gdef\beamer@endpageofsubsection{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@sectionpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofsection{#1}%
+      \gdef\beamer@endpageofsection{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@partpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofpart{#1}%
+      \gdef\beamer@endpageofpart{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@nextpage#1{%
+  \beamer@tempcount=#1%
+  \advance\beamer@tempcount by1\relax%
+  \ifnum\beamer@tempcount>\beamer@endpageofdocument%
+  \beamer@tempcount=\beamer@endpageofdocument%
+  \fi}
+\def\beamer@prevpage#1{%
+  \beamer@tempcount=#1\relax%
+  \ifnum\beamer@tempcount>1%
+  \advance\beamer@tempcount by-1%
+  \fi%
+}
+
+\def\hyperlinkslideprev{%
+  \beamer@prevpage\c@page%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkslidenext{%
+  \beamer@nextpage\c@page%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkframestart{\hyperlink{Navigation\beamer@startpageofframe}}
+\def\hyperlinkframeend{\hyperlink{Navigation\beamer@endpageofframe}}
+\def\hyperlinkframestartnext{%
+  \beamer@nextpage\beamer@endpageofframe%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkframeendprev{%
+  \beamer@prevpage\beamer@startpageofframe%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinksubsectionstart{\hyperlink{Navigation\beamer@startpageofsubsection}}
+\def\hyperlinksubsectionend{\hyperlink{Navigation\beamer@endpageofsubsection}}
+\def\hyperlinksubsectionstartnext{%
+  \beamer@nextpage\beamer@endpageofsubsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinksubsectionendprev{%
+  \beamer@prevpage\beamer@startpageofsubsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinksectionstart{\hyperlink{Navigation\beamer@startpageofsection}}
+\def\hyperlinksectionend{\hyperlink{Navigation\beamer@endpageofsection}}
+\def\hyperlinksectionstartnext{%
+  \beamer@nextpage\beamer@endpageofsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinksectionendprev{%
+  \beamer@prevpage\beamer@startpageofsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinkpartstart{\hyperlink{Navigation\beamer@startpageofpart}}
+\def\hyperlinkpartend{\hyperlink{Navigation\beamer@endpageofpart}}
+\def\hyperlinkpartstartnext{%
+  \beamer@nextpage\beamer@endpageofpart%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkpartendprev{%
+  \beamer@prevpage\beamer@startpageofpart%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinkpresentationstart{\hyperlink{Navigation1}}
+\def\hyperlinkpresentationend{%
+  \ifx\beamer@startpageofappendix\@empty%
+  \beamer@tempcount=\beamer@endpageofdocument%
+  \else%
+  \beamer@prevpage\beamer@startpageofappendix%
+  \fi%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkappendixstart{%
+  \ifx\beamer@startpageofappendix\@empty%
+  \beamer@tempcount=\beamer@endpageofdocument%
+  \else%
+  \beamer@tempcount=\beamer@startpageofappendix%
+  \fi%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkappendixend{\hyperlink{Navigation\beamer@endpageofdocument}}
+
+\def\hyperlinkdocumentstart{\hyperlink{Navigation1}}
+\def\hyperlinkdocumentend{\hyperlink{Navigation\beamer@endpageofdocument}}
+
+
+
+%
+% Navigation Button Art
+%
+
+\def\beamer@linkspace#1{\vbox to7.5pt{}\kern#1}
+
+\def\beamernavigationcolorlight{structure!20!averagebackgroundcolor}
+\def\beamernavigationcolorstrong{structure!40!averagebackgroundcolor}
+
+\pgfdefobject{beamerslidenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfqmoveto{4}{0.5}
+  \pgfqlineto{2}{2}
+  \pgfqlineto{4}{3.5}
+  \pgffill  
+  \pgfqmoveto{16}{0.5}
+  \pgfqlineto{18}{2}
+  \pgfqlineto{16}{3.5}
+  \pgffill}
+\pgfdefobject{beamerslidenavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{\pgfrect[stroke]{\pgfpoint{8.3pt}{0.8pt}}{\pgfpoint{3.4pt}{2.4pt}}}
+
+\def\insertslidenavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \color{\beamernavigationcolorlight}%
+    \pgfuseobject{beamerslidenavlight}%
+    \color{\beamernavigationcolorstrong}%
+    \pgfuseobject{beamerslidenavstrong}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkslideprev{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoToPage}{\beamer@linkspace{8pt}}%
+  \hyperlinkslidenext{\beamer@linkspace{6pt}}}
+
+\pgfdefobject{beamerframenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfqmoveto{4}{0.5}
+  \pgfqlineto{2}{2}
+  \pgfqlineto{4}{3.5}
+  \pgffill  
+  \pgfqmoveto{16}{0.5}
+  \pgfqlineto{18}{2}
+  \pgfqlineto{16}{3.5}
+  \pgffill}
+\pgfdefobject{beamerframenavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{\pgfrect[stroke]{\pgfpoint{7pt}{0pt}}{\pgfpoint{3.4pt}{2.4pt}}
+ \pgfqmoveto{7.8}{2.4}
+ \pgfqlineto{7.8}{3.2}
+ \pgfqlineto{11.2}{3.2}
+ \pgfqlineto{11.2}{.8}
+ \pgfqlineto{10.4}{.8}
+ \pgfstroke
+ \pgfqmoveto{8.6}{3.2}
+ \pgfqlineto{8.6}{4}
+ \pgfqlineto{12}{4}
+ \pgfqlineto{12}{1.6}
+ \pgfqlineto{11.2}{1.6}
+ \pgfstroke}
+
+\def\insertframenavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \color{\beamernavigationcolorlight}%
+    \pgfuseobject{beamerframenavlight}%
+    \color{\beamernavigationcolorstrong}%
+    \pgfuseobject{beamerframenavstrong}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkframeendprev{\beamer@linkspace{5pt}}%
+  \hyperlinkframestart{\beamer@linkspace{5pt}}%
+  \hyperlinkframeend{\beamer@linkspace{5pt}}%
+  \hyperlinkframestartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamersubsectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfqmoveto{4}{0.5}
+   \pgfqlineto{2}{2}
+   \pgfqlineto{4}{3.5}
+   \pgffill  
+   \pgfqmoveto{16}{0.5}
+   \pgfqlineto{18}{2}
+   \pgfqlineto{16}{3.5}
+   \pgffill 
+   \pgfsetlinewidth{0.6pt}
+   \pgfqmoveto{8}{4}
+   \pgfqlineto{11}{4}
+   \pgfstroke
+   \pgfqmoveto{9}{2}
+   \pgfqlineto{12}{2}
+   \pgfstroke
+   \pgfqmoveto{8}{1}
+   \pgfqlineto{11}{1}
+   \pgfstroke
+   \pgfqmoveto{9}{0}
+   \pgfqlineto{12}{0}
+   \pgfstroke}
+\pgfdefobject{beamersubsectionnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{\pgfsetlinewidth{0.6pt}
+  \pgfqmoveto{9}{3}
+  \pgfqlineto{12}{3}
+  \pgfstroke}
+
+\def\insertsubsectionnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \color{\beamernavigationcolorlight}%
+    \pgfuseobject{beamersubsectionnavlight}%
+    \color{\beamernavigationcolorstrong}%
+    \pgfuseobject{beamersubsectionnavstrong}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinksubsectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamersectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfqmoveto{4}{0.5}
+   \pgfqlineto{2}{2}
+   \pgfqlineto{4}{3.5}
+   \pgffill  
+   \pgfqmoveto{16}{0.5}
+   \pgfqlineto{18}{2}
+   \pgfqlineto{16}{3.5}
+   \pgffill 
+   \pgfsetlinewidth{0.6pt}
+   \pgfqmoveto{8}{1}
+   \pgfqlineto{11}{1}
+   \pgfstroke
+   \pgfqmoveto{9}{0}
+   \pgfqlineto{12}{0}
+   \pgfstroke}
+\pgfdefobject{beamersectionnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{\pgfsetlinewidth{0.6pt}
+  \pgfqmoveto{8}{4}
+  \pgfqlineto{11}{4}
+  \pgfstroke
+  \pgfqmoveto{9}{3}
+  \pgfqlineto{12}{3}
+  \pgfstroke
+  \pgfqmoveto{9}{2}
+  \pgfqlineto{12}{2}
+  \pgfstroke
+}
+
+\def\insertsectionnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \color{\beamernavigationcolorlight}%
+    \pgfuseobject{beamersectionnavlight}%
+    \color{\beamernavigationcolorstrong}%
+    \pgfuseobject{beamersectionnavstrong}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinksectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstartnext{\beamer@linkspace{5pt}}}
+
+\ifx\beamer@startpageofappendix\@empty
+% no appendix
+\pgfdefobject{beamerdocnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{\pgfsetlinewidth{0.6pt}
+  \pgfqmoveto{8}{4}
+  \pgfqlineto{11}{4}
+  \pgfstroke
+  \pgfqmoveto{9}{3}
+  \pgfqlineto{12}{3}
+  \pgfstroke
+  \pgfqmoveto{9}{2}
+  \pgfqlineto{12}{2}
+  \pgfstroke
+  \pgfqmoveto{7}{1}
+  \pgfqlineto{11}{1}
+  \pgfstroke
+  \pgfqmoveto{9}{0}
+  \pgfqlineto{12}{0}
+  \pgfstroke}
+
+\def\insertdocnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \color{\beamernavigationcolorstrong}%
+    \pgfuseobject{beamerdocnavstrong}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
+  \hyperlinkpresentationend{\beamer@linkspace{11pt}}}
+\else
+\pgfdefobject{beamerdocnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{\pgfqmoveto{10}{-.5}
+  \pgfqlineto{10}{4.5}
+  \pgfstroke
+}  
+\pgfdefobject{beamerdocnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{
+  \pgfsetlinewidth{0.6pt}
+  \pgfqmoveto{4}{4}
+  \pgfqlineto{7}{4}
+  \pgfstroke
+  \pgfqmoveto{5}{3}
+  \pgfqlineto{8}{3}
+  \pgfstroke
+  \pgfqmoveto{5}{2}
+  \pgfqlineto{8}{2}
+  \pgfstroke
+  \pgfqmoveto{3}{1}
+  \pgfqlineto{7}{1}
+  \pgfstroke
+  \pgfqmoveto{5}{0}
+  \pgfqlineto{8}{0}
+  \pgfstroke
+  \pgfqmoveto{12}{3}
+  \pgfqlineto{15}{3}
+  \pgfstroke
+  \pgfqmoveto{13}{2}
+  \pgfqlineto{16}{2}
+  \pgfstroke
+  \pgfqmoveto{13}{1}
+  \pgfqlineto{16}{1}
+  \pgfstroke
+}
+
+\def\insertdocnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \color{\beamernavigationcolorlight}%
+    \pgfuseobject{beamerdocnavlight}%
+    \color{\beamernavigationcolorstrong}%
+    \pgfuseobject{beamerdocnavstrong}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
+  \hyperlinkpresentationend{\beamer@linkspace{5pt}}%
+  \hyperlinkappendixstart{\beamer@linkspace{3.5pt}}%
+  \hyperlinkappendixend{\beamer@linkspace{6.5pt}}}
+\fi
+
+\pgfdefobject{beamerbackfindforwardnav}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{
+  % search symbol
+  \pgfsetlinewidth{0.6pt}
+  \pgfqmoveto{10.4}{1.6}
+  \pgfqlineto{12}{0}
+  \pgfstroke
+  \pgfsetlinewidth{0.4pt}
+  \pgfcircle[stroke]{\pgfpoint{9.5pt}{2.5pt}}{1.2pt}
+  % left arrow
+  \pgfsetroundcap
+  \pgfqmoveto{4}{0}
+  \pgfqcurveto{5.1}{0}{6}{0.9}{6}{2}
+  \pgfqcurveto{6}{3.1}{5.1}{4}{4}{4}
+  \pgfqcurveto{2.9}{4}{2}{3.1}{2}{2}
+  \pgfstroke
+  \pgfqmoveto{3.2}{2.6}
+  \pgfqlineto{2}{1.6}
+  \pgfqlineto{0.8}{2.6}
+  \pgfstroke
+  % right arrow
+  \pgfqmoveto{16}{0}
+  \pgfqcurveto{14.9}{0}{14}{0.9}{14}{2}
+  \pgfqcurveto{14}{3.1}{14.9}{4}{16}{4}
+  \pgfqcurveto{17.1}{4}{18}{3.1}{18}{2}
+  \pgfstroke
+  \pgfqmoveto{19.2}{2.6}
+  \pgfqlineto{18}{1.6}
+  \pgfqlineto{16.8}{2.6}
+  \pgfstroke
+}  
+
+\def\insertbackfindforwardnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \color{\beamernavigationcolorlight!50!\beamernavigationcolorstrong}%
+    \pgfuseobject{beamerbackfindforwardnav}%
+  \end{pgfpicture}\kern-20pt%
+  \Acrobatmenu{GoBack}{\beamer@linkspace{7pt}}%
+  \Acrobatmenu{Find}{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoForward}{\beamer@linkspace{7pt}}}
+
+
+\def\usenavigationsymbolstemplate#1{%
+  \def\insertnavigationsymbols{#1}}
+
+
+%
+% User Buttons
+%
+
+\pgfdefobject{beamergotosymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
+{
+  \pgfqmoveto{1.5}{0.5}
+  \pgfqlineto{3.5}{2}
+  \pgfqlineto{1.5}{3.5}
+  \pgffill
+}
+
+\def\insertgotosymbol{%
+  \begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+    \pgfuseobject{beamergotosymbol}%
+  \end{pgfpicture}}
+
+\pgfdefobject{beamerskipsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
+{
+  \pgfqmoveto{1.5}{0.5}
+  \pgfqlineto{3.5}{2}
+  \pgfqlineto{1.5}{3.5}
+  \pgfqmoveto{3.5}{0.5}
+  \pgfqlineto{5.5}{2}
+  \pgfqlineto{3.5}{3.5}
+  \pgffill
+}
+
+\def\insertskipsymbol{%
+  \begin{pgfpicture}{1pt}{0pt}{8pt}{5pt}
+    \pgfuseobject{beamerskipsymbol}%
+  \end{pgfpicture}}
+
+
+\pgfdefobject{beamerreturnsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
+{
+  \pgfqmoveto{3.5}{0.5}
+  \pgfqlineto{1.5}{2}
+  \pgfqlineto{3.5}{3.5}
+  \pgffill
+}
+
+\def\insertreturnsymbol{%
+  \begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+    \pgfuseobject{beamerreturnsymbol}%
+  \end{pgfpicture}}
+
+
+\def\usebuttontemplate#1{%
+  \def\beamer@buttontemplate{#1}}
+
+\def\beamerbutton#1{%
+  \def\insertbuttontext{#1}%
+  \beamer@buttontemplate}
+\def\beamergotobutton#1{%
+  \def\insertbuttontext{\insertgotosymbol#1}%
+  \beamer@buttontemplate}%
+\def\beamerskipbutton#1{%
+  \def\insertbuttontext{\insertskipsymbol#1}%
+  \beamer@buttontemplate}%
+\def\beamerreturnbutton#1{%
+  \def\insertbuttontext{\insertreturnsymbol#1}%
+  \beamer@buttontemplate}%
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: ../examples/beamerexample1.tex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1"
+%%% End: 

@@ -14,7 +14,6 @@
 
 \beamertemplateshadingbackground{red!10}{blue!10}
 
-\usepackage{beamerboxes}
 \usepackage{beamerthemeshadow}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
@@ -25,6 +24,7 @@
 
 % Use some nice templates
 \beamertemplatetransparentcovereddynamic
+\beamertemplatenumberedsectiontoc
 
 %
 % The following defintions are peculiar to this particular
@@ -769,22 +769,29 @@
   \frametitle{Candidates for Languages that\\
     Cannot be Accepted in an Overhead-Free Way}
 
-  \begin{block}{Conjecture}
-    $\Lang{double-palindromes} \notin \Class{DOF}$.
-  \end{block}
+  \begin{overprint}
+  \onslide<all:1>
+    \begin{block}{Conjecture}
+      $\Lang{double-palindromes} \notin \Class{DOF}$.
+    \end{block}
 
+  \onslide<all:2>
+    \begin{alertblock}{Theorem}
+      $\Lang{double-palindromes} \in \Class{DOF}$.
+    \end{alertblock}
+  \end{overprint}
+ 
   \begin{block}{Conjecture}
     $\Set{ww \mid w\in \Set{0,1}^*} \notin \Class{NOF}$. 
   \end{block}
 
   \vskip1em
-  Proving the first conjecture would show $\Class{DOF} \subsetneq
-  \Class{NOF}$. 
+  \uncover<1>{Proving the first conjecture would show $\Class{DOF} \subsetneq
+  \Class{NOF}$.}
 }
 
 
 \section[Summary]{}
-
 
 \subsection[Summary]{}
 
@@ -814,7 +821,6 @@
 \noteitems{
 \item Point out result concerning all context-free languages.
 \item Relationship to restart automata.}
-
 
 \subsection[Further Reading]{}
 

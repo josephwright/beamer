@@ -1,8 +1,8 @@
-\documentclass[compress]{beamer}
+\documentclass{beamer}
 
 \beamertemplateshadingbackground{red!10}{blue!10}
 
-\usepackage{beamerthemesplit}
+\usepackage{beamerthemeshadow}
 
 \usepackage[german]{babel}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps}
@@ -411,10 +411,10 @@
     recursive.
   \end{block}
 
-  \begin{block}{Weak Cardinality Theorems (\alert<2>{1987}, \alert<3>{1989}, \alert<4>{1992})}<2->
+  \begin{block}{Weak Cardinality Theorems (\uncover<2->{\alert<1-2>{1987},} \uncover<3->{\alert<3>{1989},} \uncover<4->{\alert<4>{1992}})}<2->
     \begin{itemize}
     \item<2->
-      \alert<2>{If $\chi_A^n$ is $n$-enumerable by a Turing machine, then $A$ is
+      \alert<1-2>{If $\chi_A^n$ is $n$-enumerable by a Turing machine, then $A$ is
         recursive.}
     \item<3->
       \alert<3>{If $\NumA^2$ is $2$-enumerable by a Turing machine, then $A$ is
