@@ -12,76 +12,78 @@
 \AtBeginDocument{
   {
     \usebeamerfont*{headline}
+    \colorlet{global.bg}{bg}
+
+    \usebeamercolor{title in head/foot}
+    \colorlet{title.bg}{bg}
+    \usebeamercolor{subsection in head/foot}
+    \colorlet{ssec.bg}{bg}
+    \usebeamercolor{section in head/foot}
     \pgfdeclareverticalshading{beamer@treeshade}{\the\paperwidth}{%
-      color(0ex)=(averagebackgroundcolor);%
-      color(1ex)=(beamerstructure!75!black);%
-      color(3.25ex)=(beamerstructure!75!black);%
-      color(4.25ex)=(beamerstructure!50!black);%
-      color(6.5ex)=(beamerstructure!50!black);%
-      color(7.5ex)=(black);%
-      color(10.25ex)=(black)%
+      color(0ex)=(global.bg);%
+      color(1ex)=(ssec.bg);%
+      color(3.25ex)=(ssec.bg);%
+      color(4.25ex)=(bg);%
+      color(6.5ex)=(bg);%
+      color(7.5ex)=(title.bg);%
+      color(10.25ex)=(title.bg)%
     }
-    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
-      color(0ex)=(averagebackgroundcolor);%
-      color(1ex)=(beamerstructure)
-    }
+    
+    \usebeamercolor{frametitle}
     \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
-      color(0ex)=(beamerstructure);%
-      color(1ex)=(beamerstructure);%
-      color(2ex)=(beamerstructure!75!black)
+      color(0ex)=(bg);%
+      color(1ex)=(bg);%
+      color(2ex)=(ssec.bg)
+    }
+
+    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+      color(0ex)=(global.bg);%
+      color(1ex)=(bg)
     }
   }
 }
 
-\useheadtemplate{%
-  \vbox{%
-    \beamerline{\pgfuseshading{beamer@treeshade}}%
-    \vskip-10.25ex%
-    \beamer@fixedline{%
-      \color{white}%
-      {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill%
-    }%
-    \setbox\beamer@tempbox=\hbox{\insertsection}%
-    \beamer@fixedline{%
-      \ifdim\wd\beamer@tempbox>1pt%
-        \hskip6pt%
-        \color{white}{\usebeamerfont{section in head/foot}\insertsection}%
-      \fi\hfill}%
-    \setbox\beamer@tempbox=\hbox{\insertsubsection}%
-    \beamer@fixedline{%
-      \ifdim\wd\beamer@tempbox>1pt%
-        \hskip12pt%
-        \color{white}{\usebeamerfont{subsection in head/foot}\insertsubsection}%
-      \fi\hfill}%
-    }%
-  }
-
+\useheadtemplate*{%
+  \pgfuseshading{beamer@treeshade}%
+  \vskip-10.25ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.125ex,dp=1.125ex,ignorebg,%
+    leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.125ex,dp=1.125ex,ignorebg,%
+    leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
+    \usebeamerfont{section in head/foot}%
+    \hskip6pt\insertsection
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.125ex,dp=1.125ex,ignorebg,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+    \usebeamerfont{subsection in head/foot}%
+    \hskip12pt\insertsubsection
+  \end{beamercolorbox}
+}
 
 \useframetitletemplate{%
   \nointerlineskip%
   \usebeamerfont{headline}%
-  \vskip-0.5ex%
-  \beamerline{\pgfuseshading{beamer@aboveframetitle}}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex]{empty}
+    \pgfuseshading{beamer@aboveframetitle}%
+  \end{beamercolorbox}%
   \vskip-.5ex%
   \nointerlineskip%
-  \beamer@colouredline{beamerstructure}{%
-    \begin{minipage}[b]{\paperwidth}%
-      \usebeamerfont*{frametitle}%
-      \vbox{}\vskip-1ex%
-      \leftskip0.3cm%
-      \advance\leftskip by18pt%
-      \rightskip18pt plus1fil\leavevmode\color{white}\insertframetitle%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=.935cm,rightskip=.3cm plus1fil]{frametitle}
+    \usebeamerfont*{frametitle}\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%
       \else
-        \par{\usebeamerfont*{framesubtitle}{\insertframesubtitle}\strut\par}%
-      \fi%
-      \nointerlineskip
-      \vbox{}%
-    \end{minipage}}%
-  \nointerlineskip%
-  \vskip-0.2pt%
-  \beamerline{\pgfuseshading{beamer@belowframetitle}}%
+        \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
+      \fi%%
+    \usebeamerfont{headline}%
+    \vskip.5ex  
+  \end{beamercolorbox}%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=.5ex,dp=0ex]{empty}
+    \pgfuseshading{beamer@belowframetitle}%
+  \end{beamercolorbox}%
 }
   
   

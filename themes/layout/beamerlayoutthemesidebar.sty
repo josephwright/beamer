@@ -16,41 +16,16 @@
 \reset@font
 
 \def\beamer@lefttext{left}
-\def\beamer@sbt@bg{\beamertemplatesidebarcolor[\beamer@sidebarside]{beamerstructure}}
 
 \DeclareOptionBeamer{hideothersubsections}[]{\beamer@nav@subsectionstyle{show/show/hide}}
 \DeclareOptionBeamer{hideallsubsections}[]{\beamer@nav@subsectionstyle{hide}}
 
-\DeclareOptionBeamer{sidebarshade}{\def\beamer@sbt@bg{\beamertemplatesidebarverticalshading[\beamer@sidebarside]#1}}
-\DeclareOptionBeamer{cornercolor}{\def\beamersidebar@cornercolor{#1}}
 \DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
 \DeclareOptionBeamer{height}{\beamer@headheight=#1}
-\DeclareOptionBeamer{left}{\ExecuteOptionsBeamer{side=left}}
-\DeclareOptionBeamer{right}{\ExecuteOptionsBeamer{side=right}}
-\DeclareOptionBeamer{side}{\def\beamer@sidebarside{#1}}
-\DeclareOptionBeamer{tabcolor}{\def\beamer@sbt@tabcol{#1}}
-\DeclareOptionBeamer{headcolor}{\def\beamer@sbt@headcol{#1}}
-\DeclareOptionBeamer{titlecolor}{\def\beamer@sbt@titlecol{#1}}
-\DeclareOptionBeamer{authorcolor}{\def\beamer@sbt@authorcol{#1}}
-\DeclareOptionBeamer{sectioncolor}{%
-  \expandafter\def\expandafter\beamer@sbt@sectioncola\expandafter{\@firstoftwo#1}
-  \expandafter\def\expandafter\beamer@sbt@sectioncolb\expandafter{\@secondoftwo#1}
-}
-\DeclareOptionBeamer{subsectioncolor}{%
-  \expandafter\def\expandafter\beamer@sbt@subsectioncola\expandafter{\@firstoftwo#1}
-  \expandafter\def\expandafter\beamer@sbt@subsectioncolb\expandafter{\@secondoftwo#1}
-}
-\ExecuteOptionsBeamer{%
-  cornercolor=beamerstructure!75!black,%
-  tabcolor=beamerstructure!70,
-  sectioncolor={{beamerstructure!25}{beamerstructure!25}},
-  subsectioncolor={{white}{white}},  
-  titlecolor=white,
-  headcolor=beamerstructure,
-  authorcolor=beamerstructure!50!averagebackgroundcolor,  
-  side=left}
+\DeclareOptionBeamer{left}{\def\beamer@sidebarside{left}}
+\DeclareOptionBeamer{right}{\def\beamer@sidebarside{right}}
+\ExecuteOptionsBeamer{left}
 \ProcessOptionsBeamer
-
 
 
 \mode<presentation>
@@ -59,98 +34,70 @@
 % if head height is 0pt, use default frame title
 
   \useframetitletemplate{%
-    {%
-      \nointerlineskip%
-      \vskip-\beamer@headheight%
-      \vbox to \beamer@headheight{%
-        \vfil
-        \leftskip=-\beamer@leftmargin%
-        \advance\leftskip by0.3cm%
-        \rightskip=-\beamer@rightmargin%
-        \advance\rightskip by0.3cm plus1fil%
-        \color{white}%
-        {\usebeamerfont{frametitle}\insertframetitle\par}%
-        {\usebeamerfont{framesubtitle}\insertframesubtitle\par}%
-        \vbox{}%
-        \vskip-1em%
-        \vfil
-      }%
+    \nointerlineskip%
+    \vskip-\beamer@headheight%
+    \vbox to \beamer@headheight{%
+      \vfil
+      \leftskip=-\beamer@leftmargin%
+      \advance\leftskip by0.3cm%
+      \rightskip=-\beamer@rightmargin%
+      \advance\rightskip by0.3cm plus1fil%
+      {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}%
+      {\usebeamercolor[fg]{frametitle}\usebeamerfont{framesubtitle}\insertframesubtitle\par}%
+      \vbox{}%
+      \vskip-1em%
+      \vfil
     }%
   }
 
-  \useheadtemplate{%
-    \hbox{%
-      \hskip-\Gm@lmargin%
-      \ifx\beamer@sidebarside\beamer@lefttext%
-        \color{\beamersidebar@cornercolor}%
-        \vrule width\beamer@sidebarwidth height \beamer@headheight%
-        \hskip-\beamer@sidebarwidth%
-        \hbox to \beamer@sidebarwidth{\hss\vbox to
-          \beamer@headheight{\vss\hbox{\normalcolor\insertlogo}\vss}\hss}%
-      \fi%
-      \color{\beamer@sbt@headcol}%
-      \@tempdima=\paperwidth%
-      \advance\@tempdima by-\beamer@sidebarwidth%
-      \vrule width\@tempdima height\beamer@headheight%
+  \useheadtemplate*{%
+    \begin{beamercolorbox}[wd=\paperwidth]{frametitle}
       \ifx\beamer@sidebarside\beamer@lefttext%
       \else%
-        \color{\beamersidebar@cornercolor}%
-        \vrule width\beamer@sidebarwidth height \beamer@headheight%
-        \hskip-\beamer@sidebarwidth%
-        \hbox to \beamer@sidebarwidth{\hss\vbox to
-          \beamer@headheight{\vss\hbox{\insertlogo}\vss}\hss}%
-        \fi%
-      \hskip-\Gm@rmargin%
-    }%
+        \hfill%
+      \fi%
+      \usebeamercolor[bg]{logo}%
+      \vrule width\beamer@sidebarwidth height \beamer@headheight%
+      \hskip-\beamer@sidebarwidth%
+      \hbox to \beamer@sidebarwidth{\hss\vbox to
+        \beamer@headheight{\vss\hbox{\color{fg}\insertlogo}\vss}\hss}%
+    \end{beamercolorbox}
   }
 \fi
 
-\def\beamer@colorbox#1#2{%
-  \ifx#1\@empty#2\else\hbox to \beamer@sidebarwidth{\fboxsep=0pt\colorbox{#1}{#2}}\fi}%
-\def\beamer@buildsidebarbox#1#2#3{%
-  \setbox#1=\hbox{%
-    \vbox{%
-      \hsize=\beamer@sidebarwidth%
-      \leftskip=#2%
-      \rightskip=1ex plus 1fil%
-      \parskip=0pt%
-      \vbox{}%
-      #3\par%
-      \vbox{}%
-      \vskip-1.5ex%
-      }}%
-  \wd#1=\beamer@sidebarwidth%
+\def\beamer@sidebarformat#1#2#3{%
+  \begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=1ex plus1fil]{#2}
+    \vbox{}%
+    #3\par%
+    \vbox{}%
+    \vskip-1.5ex%
+  \end{beamercolorbox}
 }
-  
                                 % Sections in sidebar
 \usesectionsidetemplate
 {%
-  {\usebeamerfont{section in sidebar}%
-    \vbox{\vskip1ex%
-      \beamer@buildsidebarbox{\beamer@tempbox}{3pt}{\color{\beamer@sbt@sectioncola}\insertsectionhead}%
-    \beamer@colorbox{\beamer@sbt@tabcol}{\box\beamer@tempbox}%
-    }}%
+  \usebeamerfont{section in sidebar}%
+  \vbox{%
+    \vskip1ex%
+    \beamer@sidebarformat{3pt}{section in sidebar current}{\insertsectionhead}%
+  }%
 }
 {%
-  {\usebeamerfont{section in sidebar}%
-    \vbox{\vskip1ex%
-    \beamer@buildsidebarbox{\beamer@tempbox}{3pt}{\color{\beamer@sbt@sectioncolb}\insertsectionhead}%
-    {\box\beamer@tempbox}%
-  }}%
+  \usebeamerfont{section in sidebar}%
+  \vbox{%
+    \vskip1ex%
+    \beamer@sidebarformat{3pt}{section in sidebar}{\insertsectionhead}%
+  }%
 }
 
 \usesubsectionsidetemplate
 {%
-  {\usebeamerfont{subsection in sidebar}%
-    \beamer@buildsidebarbox{\beamer@tempbox}{5pt}{\color{\beamer@sbt@subsectioncola}\insertsubsectionhead}%
-    \beamer@colorbox{\beamer@sbt@tabcol}{\box\beamer@tempbox}%
-    }%
+  \usebeamerfont{subsection in sidebar}%
+  \beamer@sidebarformat{5pt}{subsection in sidebar current}{\insertsubsectionhead}%
 }
 {%
-  {\usebeamerfont{subsection in sidebar}%
-    \beamer@buildsidebarbox{\beamer@tempbox}{5pt}{\color{\beamer@sbt@subsectioncolb}\insertsubsectionhead}%
-    {\box\beamer@tempbox}%
-  }%
+  \usebeamerfont{subsection in sidebar}%
+  \beamer@sidebarformat{5pt}{subsection in sidebar}{\insertsubsectionhead}%
 }
 
                                 % Foot
@@ -161,16 +108,19 @@
 
                                 % Sidebar
   \usesidebartemplate[\beamer@sidebarside]{\beamer@sidebarwidth}{%
+    \usebeamercolor{sidebar}%
     \beamer@tempdim=\beamer@sidebarwidth%
     \advance\beamer@tempdim by -6pt%
     {\usebeamerfont{title in sidebar}%
       \vskip1.5em%
-      \hskip3pt\color{\beamer@sbt@titlecol}%
+      \hskip3pt%
+      \usebeamercolor[fg]{title in sidebar}%
       \insertshorttitle[width=\beamer@tempdim,center,respectlinebreaks]\par%
       \vskip1.25em%
     }%
     {%
-      \hskip3pt\color{\beamer@sbt@authorcol}%
+      \hskip3pt%
+      \usebeamercolor[fg]{author in sidebar}%
       \usebeamerfont{author in sidebar}%
       \insertshortauthor[width=\beamer@tempdim,center,respectlinebreaks]\par%
       \vskip1.25em%
@@ -185,7 +135,28 @@
   }%
   
                                 % Side bar background
-  \beamer@sbt@bg
+  \AtBeginDocument{
+    \ifbeamercolorempty[bg]{sidebar top}{
+      \ifbeamercolorempty[bg]{sidebar}{}%
+      {
+        {
+          \usebeamercolor[bg]{sidebar}
+          \globalcolorstrue
+          \colorlet{sidebar.bg}{bg}
+        }
+        \beamertemplatesidebarcolor[\beamer@sidebarside]{sidebar.bg}
+      }
+      }
+      {
+        {
+          \usebeamercolor[bg]{sidebar top}
+          {\globalcolorstrue\colorlet{sidebar top.bg}{bg}}
+          \usebeamercolor[bg]{sidebar bottom}
+          {\globalcolorstrue\colorlet{sidebar bottom.bg}{bg}}
+        }
+        \beamertemplatesidebarverticalshading[\beamer@sidebarside]{sidebar top.bg}{sidebar bottom.bg}
+      }
+  }
 
   \ifx\beamer@sidebarside\beamer@lefttext%
     \usesidebartemplate[right]{0cm}{%

@@ -555,12 +555,12 @@
           \hyperlink{Navigation##3}{%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=0\relax%
-              \beamer@sectionsidehilight%
+              {\beamer@sectionsidehilight}%
             \else%
-              \ifx\beamer@nav@css\beamer@hidetext\beamer@sectionsidehilight\else\beamer@sectionsidenohilight\fi%
+              \ifx\beamer@nav@css\beamer@hidetext{\beamer@sectionsidehilight}\else{\beamer@sectionsidenohilight}\fi%
             \fi%
           \else
-            \beamer@sectionsidenohilight%
+            {\beamer@sectionsidenohilight}%
           \fi}}%
       \beamer@currentsubsection=0\relax\fi}%
     \def\slideentry##1##2##3##4##5##6{%
@@ -577,12 +577,12 @@
           \beamer@link(##4){%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=##2%
-              \beamer@subsectionsidehilight%
+              {\beamer@subsectionsidehilight}%
             \else%
-              \beamer@subsectionsidenohilight%
+              {\beamer@subsectionsidenohilight}%
             \fi%
           \else%
-            \beamer@subsectionsidenohilight%
+            {\beamer@subsectionsidenohilight}%
           \fi}}%
       }%
       \fi\fi}%

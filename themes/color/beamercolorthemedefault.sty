@@ -51,18 +51,26 @@
 \setbeamercolor{part title}{parent=titlelike}
 
 \setbeamercolor{section in toc}{parent=structure}
-\setbeamercolor{section in head/foot}{parent={structure in head/foot}}
-\setbeamercolor{section in sidebar}{parent={structure in sidebar}}
-\setbeamercolor{section number projected}{parent={item projected}}
+\setbeamercolor{section in head/foot}{parent=structure in head/foot}
+\setbeamercolor{section in sidebar}{parent=structure in sidebar}
+\setbeamercolor{section in sidebar current}{parent=section in sidebar,use=structure,bg=structure.fg!50!bg}
+\setbeamercolor{section number projected}{parent=item projected}
 
 \setbeamercolor{subsection in toc}{}
 \setbeamercolor{subsection in head/foot}{}
 \setbeamercolor{subsection in sidebar}{}
+\setbeamercolor{subsection in sidebar current}{parent=subsection in sidebar,%
+  use=section in sidebar current,bg=section in sidebar current.bg}
 \setbeamercolor{subsection number projected}{parent={subitem projected}}
 
 \setbeamercolor{headline}{}
 \setbeamercolor{footline}{}
+
 \setbeamercolor{sidebar}{}
+\setbeamercolor{sidebar top}{}
+\setbeamercolor{sidebar bottom}{}
+
+\setbeamercolor{logo}{}
 
 \setbeamercolor{frametitle}{parent=titlelike}
 \setbeamercolor{framesubtitle}{parent=frametitle}
