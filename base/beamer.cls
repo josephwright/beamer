@@ -376,7 +376,7 @@
 % Headlines, sidebars, columns
 
 \RequirePackage{beamerbasecolor}
-% Headlines, sidebars, columns
+% Color management
 
 \RequirePackage{beamerbasenotes}
 % Commands for adding notes

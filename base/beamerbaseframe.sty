@@ -98,7 +98,7 @@
         }\nointerlineskip%
       \fi%
       \vskip-\parskip\vbox{}%
-      \everypar{\let\beamer@firstlineitemizeunskip=\relax}%
+      \beamer@initfirstlineunskip%
       \ifbeamer@plainframe\nointerlineskip\fi}%
     {\end{beamer@framepauses}%
   \egroup%
@@ -213,15 +213,21 @@
 \define@key{beamerframe}{c}[true]{% centered
   \beamer@frametopskip=0pt plus 1fill\relax%
   \beamer@framebottomskip=0pt plus 1.5fill\relax%
+  \def\beamer@initfirstlineunskip{}%
 }
 \define@key{beamerframe}{t}[true]{% top
   \beamer@frametopskip=.2cm plus 8cm\relax%
   \beamer@framebottomskip=0pt plus 1fill\relax%
-  \def\beamer@firstlineitemizeunskip{\vskip-\partopsep\vskip-\topsep\vskip-\parskip\global\let\beamer@firstlineitemizeunskip=\relax}%
+  \def\beamer@initfirstlineunskip{%
+    \def\beamer@firstlineitemizeunskip{%
+      \vskip-\partopsep\vskip-\topsep\vskip-\parskip%
+      \global\let\beamer@firstlineitemizeunskip=\relax}%
+    \everypar{\global\let\beamer@firstlineitemizeunskip=\relax}}
 }
 \define@key{beamerframe}{b}[true]{% bottom
   \beamer@frametopskip=0pt plus 1fill\relax%
   \beamer@framebottomskip=0pt\relax%
+  \def\beamer@initfirstlineunskip{}%
 }
 
 \newif\ifbeamer@containsverbatim

@@ -6,21 +6,24 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\DeclareOptionBeamer{butsansserifmath}[]{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
-\DeclareOptionBeamer{butsansserifsmall}[]{\setbeamerfont{tiny structure}{family=\sffamily}}
-\DeclareOptionBeamer{butsansseriflarge}[]{\setbeamerfont{structure}{family=\sffamily}}
-\DeclareOptionBeamer{butsansseriftext}[]{\def\familydefault{\sfdefault}}
+\DeclareOptionBeamer{stillsansserifmath}[]{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
+\DeclareOptionBeamer{stillsansserifsmall}[]{\def\beamer@tsfont{\sffamily}}
+\DeclareOptionBeamer{stillsansseriflarge}[]{\def\beamer@sfont{\sffamily}}
+\DeclareOptionBeamer{stillsansseriftext}[]{\def\familydefault{\sfdefault}}
 
 \DeclareOptionBeamer{onlymath}[]{
-  \setbeamerfont{tiny structure}{family=\sffamily}
-  \setbeamerfont{structure}{family=\sffamily}
+  \def\beamer@tsfont{\sffamily}
+  \def\beamer@sfont{\sffamily}
   \def\familydefault{\sfdefault}
 }
 
-\setbeamerfont{tiny structure}{family=\rmfamily}
-\setbeamerfont{structure}{family=\rmfamily}
+\def\beamer@tsfont{\rmfamily}
+\def\beamer@sfont{\rmfamily}
 \def\familydefault{\rmdefault}
 \def\mathfamilydefault{\rmdefault}
 \beamer@sansmathfalse
 
 \ProcessOptionsBeamer
+
+\setbeamerfont{tiny structure}{family=\beamer@tsfont}
+\setbeamerfont{structure}{family=\beamer@sfont}

@@ -1,6 +1,12 @@
 \ProvidesPackage{beamerbasetemplates}[2004/02/24 ver 2.01]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
 
 \mode<presentation>
 
@@ -10,11 +16,28 @@
 
 
 
-% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
-% This program can be redistributed and/or modified under the terms
-% of the LaTeX Project Public License Distributed from CTAN
-% archives in directory macros/latex/base/lppl.txt.
+% Management
+%
+
+\def\usebeamertemplate{\@ifstar{\beamer@usebeamertemplates}{\beamer@usebeamertemplate}}
+\def\beamer@usebeamertemplate#1{{{\usebeamerfont{#1}\usebeamercolor[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
+\def\beamer@usebeamertemplates#1{\csname beamer@@tmpl@#1\endcsname}
+
+
+\newcommand\setbeamertemplateoption[3]{%
+  \expandafter\newcommand\expandafter{\csname beamer@@tmpop@#1@#2\endcsname}[1]{#3}}
+
+\newcommand\setbeamertemplate[3]{%
+  \expandafter\expandafter\expandafter%
+    \def\expandafter\expandafter\expandafter\beamer@temp%
+      \expandafter\expandafter\expandafter{\csname beamer@@tmpop@#1@#2\endcsname{#3}}%
+  \expandafter\def\expandafter\beamer@@@temp\expandafter{\csname beamer@@tmpl@#1\endcsname}%
+  \expandafter\expandafter\expandafter\def\expandafter\beamer@@@temp\expandafter{\beamer@temp}%
+}
+
+
+
 
 
 %
@@ -796,7 +819,7 @@
 
 \newcommand{\beamertemplatedefaultblocks}{
   \useblocktemplate{%
-    \medskip%
+    \par\medskip%
     \begin{beamercolorbox}[colsep*=.75ex]{block title}
       \usebeamerfont{block title}\insertblockname%
     \end{beamercolorbox}%
@@ -805,7 +828,7 @@
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\smallskip}
   \usealertblocktemplate{%
-    \medskip%
+    \par\medskip%
     \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
       \usebeamerfont{block title}\insertblockname%
     \end{beamercolorbox}%
@@ -814,7 +837,7 @@
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\smallskip}
   \useexampleblocktemplate{%
-    \medskip%
+    \par\medskip%
     \begin{beamercolorbox}[colsep*=.75ex]{block title example}
       \usebeamerfont{block title}\insertblockname%
     \end{beamercolorbox}%
@@ -827,19 +850,19 @@
 
 \newcommand{\beamertemplateroundedblocks}[1][shadow=false]{
   \useblocktemplate{%
-    \medskip%
+    \par\medskip%
     \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
       {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%      
     {\end{beamerboxesrounded}\smallskip}
   \usealertblocktemplate{%
-    \medskip%
+    \par\medskip%
     \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
       {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%
     {\end{beamerboxesrounded}\smallskip}
   \useexampleblocktemplate{%
-    \medskip%
+    \par\medskip%
     \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
       {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%

@@ -147,19 +147,19 @@
       \ifbeamercolorempty[bg]{sidebar}{}%
       {
         {
-          \usebeamercolor[bg]{sidebar}
+          \usebeamercolor{sidebar}
           \globalcolorstrue
-          \colorlet{@sidebar.bg}{bg}
+          \colorlet{@sidebar.bg}{sidebar.bg}
         }
         \beamertemplatesidebarcolor[\beamer@sidebarside]{@sidebar.bg}
       }
       }
       {
         {
-          \usebeamercolor[bg]{sidebar top}
-          {\globalcolorstrue\colorlet{sidebar top.bg}{bg}}
-          \usebeamercolor[bg]{sidebar bottom}
-          {\globalcolorstrue\colorlet{sidebar bottom.bg}{bg}}
+          \usebeamercolor{sidebar top}
+%          {\globalcolorstrue\colorlet{sidebar top.bg}{bg}}
+          \usebeamercolor{sidebar bottom}
+%          {\globalcolorstrue\colorlet{sidebar bottom.bg}{bg}}
         }
         \beamertemplatesidebarverticalshading[\beamer@sidebarside]{sidebar bottom.bg}{sidebar top.bg}
       }

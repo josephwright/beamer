@@ -57,8 +57,100 @@ explained in the next subsection.
   The default font theme installs a sans serif font for all text of
   the presentation. The default theme installs different font sizes
   for things like titles or head- and footlines, but does not use
-  boldface or italics for ``hilighting.''  
+  boldface or italics for ``hilighting.'' To change some or all text
+  to a serif font, use the |serif| theme.
+
+  Note: The command |\mathrm| will always produce upright (not
+  slanted), serif text and the command |\mathsf| will always produce
+  upright, sans-serif text. The command |\mathbf| will produce
+  upright, bold-face, sans-serif or serif text, depending on whether
+  |mathsans| or |mathserif| is used.
+
+  To produce an upright, sans-serif or serif text, depending on
+  whether |mathsans| or |mathserif| is used, you can use for instance
+  the command |\operatorname| from the |amsmath| package. Using this
+  command instead of |\mathrm| or |\mathsf| directly will
+  automatically adjust  upright mathematical text if you switch from
+  sans-serif to serif or back.
 \end{fontthemeexample}
+
+\begin{fontthemeexample*}{professionalfonts}
+  This font theme does not really change any fonts. Rather, it
+  \emph{suppresses} certain internal replacements performed by
+  \beamer. If you use ``professional fonts'' (fonts that you buy and
+  that come with a complete set of every symbol in all modes), you do
+  not want \beamer\ to meddle with the fonts you use.  \beamer\
+  normally replaces certain character glyphs in mathematical text by
+  more appropriate versions. For example, \beamer\ will normally
+  replace glyphs such that the italic characters from the main font
+  are used for variables in mathematical text. If your professional
+  font package takes care of this already, \beamer's meddling should
+  be switched off. Note that \beamer's substitution is automatically
+  turned off if one of the following packages is loaded: |mathtime|,
+  |mathpmnt|, |lucidabr|, |mtpro|, and |hvmath|. If your favorite
+  professional font package is not among these, use the
+  |professionalfont| option (and write me an email, so that the
+  package can be added). 
+\end{fontthemeexample*}
+
+
+
+\begin{fontthemeexample}[\oarg{options}]{serif}
+  This theme causes all text to be typeset using the default serif font
+  (except if you specify certain \meta{options}). You might wish to
+  consult Section~\ref{section-guidelines-serif} on whether you should
+  use serif fonts.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|stillsansserifmath|}
+    causes mathematical text still to be typeset using sans
+    serif. This option only makes sense if you also use the
+    |stillsansseriftext| option since sans serif math inside serif
+    text look silly. 
+  \item
+    \declare{|stillsansserifsmall|}
+    will cause ``small'' text to be still typeset using sans
+    serif. This refers to the text in the headline, footline, and
+    sidebars.  Using this options is often advisable since small text
+    is often easier to read in sans serif.
+  \item
+    \declare{|stillsansseriflarge|}
+    will cause ``large'' text like the presentation title or the frame
+    title to be still typeset using sans serif. Sans serif titles with
+    serif text are a popular combination in typography.
+  \item
+    \declare{|stillsansseriftext|}
+    will cause normal text (none of the above three) to be still
+    typeset using sans serif. If you use this option, you should most
+    likely also use the first two. However, by not using
+    |stillsansseriflarge|, you get a serif (possibly italic) title
+    over a sans serif text. This can be an interesting visual
+    effect. Naturally, ``interesting typographic effect'' can mean
+    ``terrible typographic effect'' if you choose the wrong fonts
+    combinations or sizes. You'll need some typographic experience to
+    judge this correctly. If in doubt, try asking someone who should
+    now. 
+  \item
+    \declare{|onlymath|}
+    is a short-cut for selecting all of the above options except for
+    the first. Thus, using this option causes only mathematical text
+    to by typeset using a serif font. Recall that, by default,
+    mathematical formulas are also typeset using sans-serif
+    letters. In most cases, this is visually the most pleasing and
+    easily readable way of typesetting mathematical formulas if the
+    surrounding text is typeset using sans serif. However,
+    in mathematical texts the font used to render, say, a variable is
+    sometimes used to differentiate between different meanings of this
+    variable. In such case, it may be necessary to typeset
+    mathematical text using serif letters. Also, if you have a lot of
+    mathematical text, the audience may be quicker to ``parse'' it if
+    it is typeset the way people usually read mathematical text: in a
+    serif font. 
+  \end{itemize}
+\end{fontthemeexample}
+
 
 
 \begin{fontthemeexample}[\oarg{options}]{structurebold}
@@ -106,28 +198,6 @@ explained in the next subsection.
   of using small caps.  
 \end{fontthemeexample}
 
-\begin{fontthemeexample}[\oarg{options}]{structuresansserif}
-  Another theme that works like the |structurebold| theme and accepts the same
-  options. Instead of making text set on bold, it causes text to be
-  typeset using a sans-serif font. Naturally, using this theme makes
-  only sense if you use the |serif| class option since otherwise is
-  typeset in sans serif anyway. However, when using the |serif|
-  option, it is often a good idea to typeset at least navigation text
-  in headlines or sidebars using sans serif font, which are easier to
-  read at small sizes.
-\end{fontthemeexample}
-
-\begin{fontthemeexample}[\oarg{options}]{structureserif}
-  Like |structuresansserif|, except that the text is typeset using a serif
-  font instead of sans serif. Using serif text for small text is
-  dangerous, but using a serif (possibly italic) title over a sans
-  serif text creates an interesting visual effect. Naturally,
-  ``interesting typographic effect'' can mean ``terrible typographic
-  effect'' if you choose the wrong fonts combinations or sizes. You'll
-  need some typographic experience to judge this correctly. If in
-  doubt, try asking someone who should now.
-\end{fontthemeexample}
-
 
 
 
@@ -139,65 +209,7 @@ While most font decisions can be made using font themes, for
 historical reasons some changes can only be made using class
 options or by loading special packages. These options are explained in
 the following. Possibly, these options will be replaced by themes in
-the future. 
-
-
-
-\subsubsection{Choosing Serif or Sans-Serif Text}
-
-The class options |sans| and |serif| globally decide whether normal
-text should be typeset in sans-serif or in serif. By default, |sans|
-is selected, so you do not need to specify this.
-
-\begin{classoption}{sans}
-  Use a sans-serif font during the presentation. (Default.)
-\end{classoption}
-
-\begin{classoption}{serif}
-  Use a serif font during the presentation.
-\end{classoption}
-
-You can achieve similar effects in other ways, but using these options
-is what I recommend since they take care of several remappings
-``behind the scenes.'' For example, the |sans| option also cause
-sans-serif fonts to be used in mathematical text, which is hard to
-achieve otherwise.
-
-By default, if a sans-serif font is used for the main text,
-mathematical formulas are also typeset using sans-serif letters. In
-most cases, this is visually the most pleasing and easily readable way of
-typesetting mathematical formulas. However, in mathematical texts the
-font used to render, say, a variable is sometimes used to
-differentiate between different meanings of this variable. In such
-case, it may be necessary to typeset mathematical text using serif
-letters. Also, if you have a lot of mathematical text, the audience
-may be quicker to ``parse'' it, if it is typeset the way people
-usually read mathematical text: in a serif font.
-
-You can use the two options |mathsans| and |mathserif| to override the
-overall sans-serif/serif choice for math text. However, using the option
-|mathsans| in a |serif| environment makes little sense in my opinion.
-
-\begin{classoption}{mathsans}
-  Override the math font to be a sans-serif font.
-\end{classoption}
-
-\begin{classoption}{mathserif}
-  Override the math font to be a serif font.
-\end{classoption}
-
-The command |\mathrm| will always produce upright (not slanted), serif
-text and the command |\mathsf| will always produce upright, sans-serif
-text. The command |\mathbf| will produce upright, bold-face,
-sans-serif or serif text, depending on whether |mathsans| or
-|mathserif| is used.
-
-To produce an upright, sans-serif or serif text, depending on
-whether |mathsans| or |mathserif| is used, you can use for instance
-the command |\operatorname| from the |amsmath| package. Using this
-command instead of |\mathrm| or |\mathsf| directly will  automatically
-adjust  upright mathematical text if you switch from sans-serif to
-serif or back.
+the future.
 
 
 \subsubsection{Choosing a Font Size for Normal Text}
@@ -264,47 +276,21 @@ To specify the font size, you can use the following class options:
 
 \label{section-substition}
 
-Independently of the serif/sans-serif choice, you can switch the font
-family of normal text globally. To do so, you can use one of the
-prepared packages of \LaTeX's font mechanism. For example, to change
-to Times/Helvetica, simply add 
+By default, \beamer\ uses the Computer Modern fonts. To change this,
+you can use one of the prepared packages of \LaTeX's font
+mechanism. For example, to change to Times/Helvetica, simply add 
 \begin{verbatim}
 \usepackage{mathptmx}
 \usepackage{helvet}
 \end{verbatim}
-in your preamble. Note that if you do not specify |serif| as a
-class option, Helvetica (not Times) will be selected as the text
-font.
+in your preamble. Note that if you do not use the |serif| font theme,
+Helvetica (not Times) will be selected as the text font.
 
 There may be many other fonts available on your
 installation. Typically, at least some of the following packages
 should be available: |avant|, |bookman|, |chancery|, |charter|,
 |euler|, |helvet|, |mathtime|, |mathptm|, |mathptmx|, |newcent|,
 |palatino|, |pifont|, |utopia|.
-
-If you use the |mathtime| package (you have to buy some of the fonts),
-you also need to specify the |serif| option.
-
-If you use professional fonts (fonts that you buy and that come with a
-complete set of every symbol in all modes), you may need to specify the
-class option |professionalfont|. This will tell \beamer\ that it
-should not meddle with the fonts you use. The reason is that \beamer\ 
-normally replaces certain character glyphs in mathematical text by
-more appropriate versions. For example, \beamer\ will normally replace
-glyphs such that the italic characters from the main font are used for
-variables in mathematical text. If your professional font package
-takes care of this already, \beamer's meddling should be switched
-off. Note that \beamer's substitution is automatically turned off if
-one of the following packages is loaded: |mathtime|, |mathpmnt|,
-|lucidabr|, |mtpro|, and |hvmath|. If your favorite professional font
-package is not among these, use the |professionalfont| option (and
-write me an email, so that the package can be added).
-
-\begin{classoption}{professionalfont}
-  Deactivates \beamer's internal font replacements for mathematical
-  text. This option should be used if you use a professional font
-  package that sets up all mathematical fonts correctly.
-\end{classoption}
 
 
 

@@ -95,6 +95,10 @@
   \@namelet{\string\color@ parent.bg}{\string\color@ bg}%
   \@namelet{\string\color@ fg}{\string\color@ temp@fg}%  
   \@namelet{\string\color@ bg}{\string\color@ temp@bg}%
+  {%
+    \global\@namelet{\string\color@ #2.fg}{\string\color@ temp@fg}%  
+    \global\@namelet{\string\color@ #2.bg}{\string\color@ temp@bg}%
+  }%
   \def\beamer@temp{#1}%
   \ifx\beamer@temp\@empty%
   \else%
@@ -230,7 +234,13 @@
 % Install these colors at the start of the document
 %
 
-\AtBeginDocument{\usebeamercolor{normal text}\color{fg}}%
+\AtBeginDocument{
+  \usebeamercolor*{alerted text} % Define these colors
+  \usebeamercolor*{example text} % Define these colors
+  \usebeamercolor*{structure}    % Define these colors
+  \usebeamercolor{normal text}
+  \color{fg}
+}
 
 
 
@@ -333,13 +343,9 @@
 \def\beamersetaveragebackground#1{\setbeamercolor{normal text}{bg=#1}}
 
 \AtBeginDocument{
-  \colorlet{averagebackgroundcolor}{bg}
-  {
-    \usebeamercolor[fg]{structure}
-    \globalcolorstrue
-    \colorlet{structure}{fg}
-    \colorlet{beamerstructure}{structure}
-  }
+  \colorlet{structure}{structure.fg}
+  \colorlet{beamerstructure}{structure.fg}
+  \colorlet{averagebackgroundcolor}{normal text.bg}
 }
 
 \mode
