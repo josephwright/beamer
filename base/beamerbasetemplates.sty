@@ -278,6 +278,16 @@
       \end{pgfmagnify}
       \pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}
     \end{pgfpicture}}
+  \useenumerateitemminitemplate{%
+    \color{beamerstructure}%
+    \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+      \begin{pgfmagnify}{1.75}{1.75}
+        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+      \end{pgfmagnify}
+      \pgfputat{\pgfpoint{0pt}{0.5pt}}
+        {\pgfbox[center,center]{\color{white}\tiny\textbf{\insertenumlabel}}}
+    \end{pgfpicture}}
+
   \AtBeginDocument{\beamertemplatesetupshadings}
 }
 

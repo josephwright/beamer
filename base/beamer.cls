@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2004/02/19 v2.00 Class for Typesetting a Beamer Presentation]
+[2004/02/19 v2.00-dev Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -277,7 +277,22 @@
 \ExecuteOptionsBeamer{blue,sans,slidescentered}
 
 \ProcessOptionsBeamer
-  
+
+
+% Filter class option list
+\def\beamer@filteredclassoptionslist{}
+\@for\CurrentOption:=\@classoptionslist\do{%
+  \ifx\CurrentOption\@empty\else
+    \@expandtwoargs\in@{=}{\CurrentOption}%
+    \ifin@
+    \else
+      \edef\beamer@filteredclassoptionslist{%
+        \beamer@filteredclassoptionslist,\CurrentOption}
+    \fi
+  \fi
+}%
+\let\@classoptionslist=\beamer@filteredclassoptionslist
+
 \RequirePackage{pgf}
 % For all sorts of things...
 
