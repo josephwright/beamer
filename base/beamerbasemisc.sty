@@ -187,6 +187,20 @@
 \mode
 <all>
 
+\AtBeginDocument
+{
+  \ifx\includegraphics\@undefined
+  \else
+    \renewcommand<>\includegraphics{\alt#1{\beameroriginal\includegraphics}{\beamer@gobbleoptional}}
+  \fi
+
+  \ifx\pgfuseimage\@undefined
+  \else
+    \renewcommand<>\pgfuseimage{\alt#1{\beameroriginal\pgfuseimage}{\beamer@gobbleoptional}}
+    \renewcommand<>\pgfimage{\alt#1{\beameroriginal\pgfimage}{\beamer@gobbleoptional}}
+  \fi
+}
+
 
 %%% Local Variables: 
 %%% mode: latex

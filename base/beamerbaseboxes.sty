@@ -221,6 +221,7 @@
   }%
   \nointerlineskip%
   \fi%
+  \edef\beamer@savedextension{\pgfalternateextension}
   \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
     \vskip2pt%
     \colorlet{averagebackgroundcolor}{bmb@down\bmb@scheme}%
@@ -231,6 +232,8 @@
 
 \def\endbeamerboxesrounded{%
   \end{minipage}\egroup%
+  % temporarily restore alternate extension
+  \edef\pgfalternateextension{\beamer@savedextension}%
   \wd\bmb@box=\bmb@width%
   \bmb@temp=\dp\bmb@box%
   \advance\bmb@temp by.5pt%

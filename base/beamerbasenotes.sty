@@ -23,7 +23,7 @@
   \def\beamer@noteenvstart{\begin{itemize}\itemsep=0pt\parskip=0pt}%
   \def\beamer@noteenvend{\end{itemize}}}
 
-\newcommand\notes[2][]{%
+\newcommand\beamer@outsideframenote[2][]{%
   \beamer@savemode%
   \def\beamer@noteenvstart{}%
   \def\beamer@noteenvend{}%
@@ -63,7 +63,7 @@
 
 \def\beamer@itemtext{item}
 
-\newcommand<>{\note}[2][]{%
+\newcommand<>{\beamer@inframenote}[2][]{%
   \only#3{%
     \def\beamer@temp{#1}%
     \ifx\beamer@temp\beamer@itemtext%
@@ -74,23 +74,20 @@
         \expandafter{\beamer@notes#2}%
     \fi%
   }}    
-%\def\beamer@note#1{%
-%  \expandafter\gdef\expandafter\beamer@notes\expandafter{\beamer@notes%
-%    #1}}
 
-\let\beamer@noteorig=\note% will be reset at beginning of frame
-\def\note{\ClassWarning{beamer}{\noexpand\note should not be used outside frames. Use \noexpand\notes instead}\notes}
-
-%\newcommand{\noteitem}{\alt{\beamer@noteitem}{\@gobble}}
-%\def\beamer@noteitem#1{%
-%  \expandafter\gdef\expandafter\beamer@noteitems\expandafter{\beamer@noteitems%
-%    \item#1}}
+\def\note{%
+  \ifbeamer@inframe%
+    \let\next=\beamer@inframenote%
+  \else%
+    \let\next=\beamer@outsideframenote%
+  \fi%
+  \next}
 
 \def\beamer@framenotesbegin{% at beginning of slide
   \gdef\beamer@noteitems{}%
   \gdef\beamer@notes{}%
-  \let\note\beamer@noteorig%
 }
+
 \def\beamer@framenotesend
 {% at end of slide
   \global\setbox\beamer@frameboxcopy=\copy\beamer@framebox%
@@ -115,7 +112,7 @@
 
 \def\beamer@setupnote{%
   \gdef\beamer@notesactions{%
-    \notes{%
+    \beamer@outsideframenote{%
       \beamer@notes%
       \ifx\beamer@noteitems\@empty\else
       \begin{enumerate}\itemsep=0pt\parskip=0pt%
@@ -202,7 +199,6 @@
 <article>
 {
   \newcommand<>\note[2][]{}
-  \newcommand<>\notes[2][]{}
 }
 
 

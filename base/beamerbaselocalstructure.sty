@@ -88,7 +88,7 @@
 \mode
 <article>
 {
-  \usealerttemplate{\begin{itshape}}{\end{itshape}}
+  \usealerttemplate{\ifmmode\else\begin{itshape}\fi}{\ifmmode\else\end{itshape}\fi}
   \usestructuretemplate{\begin{bfseries}}{\end{bfseries}}
 }
 
