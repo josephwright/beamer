@@ -24,6 +24,7 @@ beameruserguide.pdf: $(doc).tex \
  $(innerthemes:%=beameruginnertheme%.pdf) \
  $(outerthemes:%=beamerugoutertheme%.pdf) 
 	pdflatex $(doc).tex
+	makeindex beameruserguide.idx
 	(egrep -q $(rerun) $(doc).log && pdflatex $(doc).tex) || true
 
 beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../themes/theme/beamertheme%.sty

@@ -16,12 +16,24 @@
 \usepackage[pdfborder={0 0 0},bookmarksnumbered]{hyperref}
 \usepackage[latin1]{inputenc}
 \usepackage{pifont}
+\usepackage{makeidx}
 
 \input{beamerug-macros}
 
-%\includeonly{beamerug-customization}
+\makeindex
+
+%\includeonly{beamerug-introduction}
 
 \begin{document}
+
+\index{Themes|see{Presentation themes}}
+
+\index{Templates|see{Beamer templates}}
+\index{Colors|see{Beamer colors}}
+\index{Fonts|see{Beamer fonts}}
+
+\index{Beamer elements|see{Beamer templates, colors, and fonts}}
+\index{Elements|see{Beamer templates, colors, and fonts}}
 
 \title{User's Guide to the Beamer Class, Version \version\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
@@ -31,7 +43,6 @@
 \maketitle
 
 \tableofcontents
-
 
 \include{beamerug-introduction}
 
@@ -62,5 +73,7 @@
 \part{Howtos}
 \include{beamerug-tricks}
 \include{beamerug-emulation}
+
+\printindex
 
 \end{document}
