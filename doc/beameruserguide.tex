@@ -1,6 +1,6 @@
 \documentclass{ltxdoc}
 
-% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
 % of the LaTeX Project Public License Distributed from CTAN
@@ -84,7 +84,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 0.93-dev\\
+\title{User's Guide to the Beamer Class, Version 1.00\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -98,8 +98,8 @@
 \subsection{Overview}
 
 This user's guide explains the functionality of the \beamer\ class.
-It is a \LaTeX\ class that allows you to create a beamer
-presentation. It can also be used to create slides. It behaves
+It is a \LaTeX\ class that allows you to create a presentation with a
+projector. It can also be used to create slides. It behaves 
 similarly to other packages like \textsc{prosper}, but has the
 advantage that it works together directly with |pdflatex|, but
 also with |dvips|.
@@ -188,7 +188,7 @@ table of contents, but will also in the navigation bars.
 This user guide is both intended as a tutorial and as a reference
 guide. If you have not yet installed the package, please read
 Section~\ref{section-installation} first. If you do not have much
-experience with preparing presentations, the
+experience with preparing presentations, 
 Section~\ref{section-workflow} might be especially helpful. The later
 sections explain the basic usage of the |beamer| class as well as
 advanced features. If you wish to adjust the way your presentations
@@ -198,8 +198,10 @@ section.
 
 In this guide you will find the descriptions of all ``public''
 commands provided by the |beamer| class. In each such
-description, the described command, environment or option is printed 
+description, the described command, environment, or option is printed 
 in red. Text shown in green is optional and can be left out.
+
+
 
 
 \section{Installation and Compatibility}
@@ -316,8 +318,8 @@ However, note that the \beamer\ package does not come with a
 \subsection{Testing the Installation}
 
 To test your installation, copy the file |beamerexample1.tex|
-from the documentation subdirectory to some place where you usually
-create presentations. Then run the command |pdflatex| twice on
+from the examples subdirectory to some place where you usually
+create presentations. Then run the command |pdflatex| several times on
 the file and check whether the resulting |beamerexample1.pdf|
 looks correct. If so, you are all set.
 
@@ -329,12 +331,17 @@ files \TeX\ creates automatically (like the |.aux| and
 
 \subsection{Compatibility}
 
-When using certain packages together with the |beamer| class, there
-may be incompatibilities.
+When using certain packages together with the |beamer| class, extra
+options or precautions may be necessary.
 
 \begin{package}{{CJK}}
-  When using the |CJK| package, you should use the class option
-  \declare{|CJK|}.
+  When using the |CJK| package, you must use the class option
+  \declare{|CJK|}. See |beamerexample4.tex| for an example.
+\end{package}
+
+\begin{package}{{listings}}
+  Note that you must treat |lstlisting| environments exactly the same
+  way as you would treat |verbatim| environments.
 \end{package}
 
 
@@ -391,15 +398,18 @@ Christmas talk), followed by some reminder text of what the talk is
 all about. Putting the date at the front in this format causes your
 presentation folders to be listed nicely when you have several of them
 residing in one directory. If you use an extra directory for each
-presentation, you can call your main file
-|main.tex|. 
+presentation, you can call your main file |main.tex|. 
 
 To create an initial |main.tex| file for your talk, copy an
-existing file (like the file |beamerexample.tex| that comes along
+existing file (like the file |beamerexample1.tex| that comes along
 with the contribution) and delete everything that is not going to be
 part of your talk. Adjust the |\author{}| and other fields as 
 appropriate. 
 
+If you wish your talk to reside in the same file as some different,
+non-presentation article version of your text, it is advisable to
+setup a more elaborate file scheme. See
+Section~\ref{section-article-version-workflow} for details.
 
 
 
@@ -811,8 +821,7 @@ slides of the frame.
 
   \example A frame with a picture completely filling the frame:  
 \begin{verbatim}
-\pgfdeclareimage{bigimage}{}{9.6cm}{bigimagefilename}
-\plainframe{\hfill\pgfuseimage{bigimage}\hfill}
+\plainframe{\hfill\pgfimage[height=9.6cm]{bigimagefilename}\hfill}
 \end{verbatim}
   
   \example A title page, in which the head and foot lines are replaced
@@ -842,21 +851,35 @@ slides of the frame.
 
 \subsubsection{Components of a Frame}
 
-Each frame consists of up to six components:
+Each frame consists of several components:
 \begin{enumerate}\itemsep=0pt\parskip=0pt
 \item a head line,
 \item a foot line,
 \item a left side bar,
 \item a right side bar,
+\item navigation symbols,
+\item a logo,
 \item a frame title, and
 \item some frame contents.
 \end{enumerate}
 
-A frame need not have all of these components. Usually, the first four
+A frame need not have all of these components. Usually, the first six
 components are automatically setup by the theme you are
 using. To change them, you must install an appropriate template, see
 Section~\ref{section-head-templates} for the head and foot lines and
-Section~\ref{section-sidebar-templates} for the side bars.
+Section~\ref{section-sidebar-templates} for the side bars. To install
+a logo, invoke the following command in the preamble, \emph{after}
+having loaded the theme:
+
+\begin{command}{\logo\marg{logo text}}
+  The \meta{logo text} is usually a command for including a
+  graphic.
+  \example
+\begin{verbatim}
+\pgfdeclareimage[height=0.5cm]{logo}{tu-logo}
+\logo{\pgfuseimage{logo}}
+\end{verbatim}  
+\end{command}
 
 The frame title is shown prominently at the top of the frame and can
 be specified with the following command:
@@ -1425,15 +1448,18 @@ but less user-friendly.
   placed in a rectangular area of the specified width. The height and
   depth of the area are chosen large enough to accommodate the largest
   contents of the area. The overlay specifications of the
-  |\onslide| commands must be disjoint.
+  |\onslide| commands must be disjoint. This may be a problem for
+  handouts, since, there, all overlay specifications defaul to |1|. If
+  you use the option |handout|, you can disable all but one
+  |\onslide| by setting the others to |0|.
   \example
 \begin{verbatim}
 \begin{overprint}
-  \onslide<1>
+  \onslide<1| handout:1>
     Some text for the first slide.\\
     Possibly several lines long.
-  \onslide<2>
-    Replacement on the second slide.
+  \onslide<2| handout:0>
+    Replacement on the second slide. Supressed for handout.
 \end{overprint}
 \end{verbatim}
 \end{environment}
@@ -1724,7 +1750,7 @@ Like the |\section| and |\subsection| command, the |\part| command
 does not cause any frame or special text to be produced. However,
 it is often advisable for the start of a new part to use the command
 |\partpage| to insert some text into a frame that ``advertises'' the
-beginning of a new part. 
+beginning of a new part. See |beamerexample3.tex| for an example.
 
 \begin{command}{\part\oarg{short part name}\marg{part name}}
   Starts a part. The \meta{part name} will be shown when the
@@ -2212,10 +2238,10 @@ Some navigation bars can be ``compressed'' using the following option:
 
 \begin{classoption}{compress}
   Tries to make all navigation bars as small as possible. For example,
-  all small frame representation in the navigation bars for a single
-  section are shown alongside each other. Normally, the representation
+  all small frame representations in the navigation bars for a single
+  section are shown alongside each other. Normally, the representations
   for different subsections are shown in different lines. Furthermore,
-  section ans subsection navigations are compressed into one line.
+  section and subsection navigations are compressed into one line.
 \end{classoption}
 
 When you click on one of the icons representing a frame in a
@@ -2260,8 +2286,8 @@ By clicking on the document title in a navigation bar (not all themes
 show it), you will jump to the first slide of your presentation
 (usually the title page) \emph{except} if you are already at the first
 slide. On the first slide, clicking on the document title will jump to
-the appendix, if there is one. Thus by \emph{double} clicking the
-document title in a navigation bar, you can jump to the appendix.
+the end of the presentation, if there is one. Thus by \emph{double}
+clicking the document title in a navigation bar, you can jump to the end.
 
 
 
@@ -2653,48 +2679,18 @@ The main disadvantages are:
   impossible.
 \end{itemize}
 
+You can use all the standard \LaTeX\ commands for inserting graphics,
+like |\includegraphics| (be sure to use the package
+|graphics|). Also, the |pgf| package offers commands for including
+graphics. Either will work fine in most situations, so choose
+whichever you like. Note that, like |\pgfdeclareimage|,
+|\includegraphics| also includes an image only once in a |.pdf| file,
+even if it used several times (as a matter of fact, the |graphics|
+package is even a bit smarter about this than |pgf|). Internally, the
+|beamer| class uses |pgf| since this makes it much easier to produce
+both |.pdf| and |.ps| files from the same code and to use the color
+mix-ins.
 
-In principle, you can use all the standard \LaTeX\ commands for
-inserting graphics, like the command |\includegraphic|. However,
-it may be advisable to use the special commands from the \textsc{pgf}
-package instead for this particular purpose. The reason is that
-|\includegraphic| will put a copy of the graphic into the file
-upon each invocation. If a frame includes a graphic and
-shows this graphic on ten slides, then ten copies of the possibly
-large graphic file will be inserted into the presentation file. This
-can result in huge files.
-
-The \textsc{pgf} package offers a solution to this (but, currently,
-only if you use |pdflatex|): There, you must first \emph{declare}
-every graphic. Once you have done this, you can \emph{use} the graphic
-as often as you want and the graphic data will be put only once into
-the |.pdf| file. Furthermore, if you use |latex| instead of
-|pdflatex|, the \textsc{pgf} package will automatically search
-for a graphic file with the extension |.eps| instead of the
-extensions appropriate for |pdflatex|.
-
-The \textsc{pgf} commands are used as follows: To declare an image,
-you write, somewhere early in your file,
-\begin{verbatim}
-\pgfdeclareimage{icon}{9pt}{10pt}{iconfile}
-\end{verbatim}
-The first parameter is a string by which you can refer to the image
-later on. The second two parameters are the width and height of the
-image, although one (but not both) can be omitted in which case the
-missing value is computed automatically such that the image's aspect
-ratio remains correct. The last parameter is the graphic file name
-\emph{without} the extension. Depending on whether a \textsc{pdf} or a
-PostScript file is created, the package will try appropriate
-extensions automatically (|.eps| for normal \LaTeX,
-|.png|, |.jpg|, and |.pdf| for
-|pdflatex|). 
-
-To use a previously declared image, just write 
-\begin{verbatim}
-\pgfuseimage{icon}
-\end{verbatim}
-
-For more details, consult the \textsc{pgf} User Manual.
 
 
 \subsubsection{Inlining Graphic Commands}
@@ -3301,7 +3297,7 @@ You can use the same mechanism as for creating handouts: Specify
 specifications for the |trans| version as needed. An elaborated
 example of different overlay specifications for the presentation, the
 handout, and the transparencies can be found in the file
-|beamerexample.tex|.
+|beamerexample1.tex|.
 
 \begin{classoption}{trans}
   Create a version that uses the |trans| overlay
@@ -3337,12 +3333,21 @@ are suppressed. If you specify |notesonly| instead of
 |notes|, only notes will be included and all normal frames are
 parsed, but not displayed. This is useful for printing the notes.
 
+By default, you can fit only little on each note (they are only
+intended to be reminders after all). Using the class option
+|compressnotes| will allow you to squeeze much more on each note
+card. 
+
 \begin{classoption}{notes}
   Include notes in the output file. Normally, notes are not included.
 \end{classoption}
 
 \begin{classoption}{notesonly}
   Include only the notes in the output file. Useful for printing them.
+\end{classoption}
+
+\begin{classoption}{compressnotes}
+  Squeezes as much text as possible on each note card.
 \end{classoption}
 
 \begin{command}{\note\marg{note text}}
@@ -3460,7 +3465,8 @@ it is in common mode.
 \usepackage{beamerthemesplit}
 
 \begin{document}
-  \pgfdeclareimage{myimage}{1cm}{}{filename}
+
+\pgfdeclareimage[height=1cm]{myimage}{filename}
 
 \presentation
   \frame{
@@ -3504,7 +3510,7 @@ following example:
 
 
 \subsubsection{Workflow}
-
+\label{section-article-version-workflow}
 The following workflow steps are optional, but they can simplify the
 creation of the article version.
 
@@ -3541,6 +3547,9 @@ slides from the presentattion version in an article as figures.
   current file.  
 \end{command}
 
+An example of this workflow approach can be found in the |examples|
+subdirectory for files starting with |beamerexample2|.
+
 
 
 \subsubsection{Including Slides from the Presentation Version in the
@@ -3555,7 +3564,9 @@ using the following command:
   The specified slide gets assigned the name \meta{slide name}. This
   causes an entry with the slide's page number to be inserted into an
   auxiliary file with the extension |.snm|. Furthermore, a hyper
-  target of the name \meta{slide name} is also setup.
+  target of the name \meta{slide name} is also setup (this is just a
+  convenience for jumping to a named slide inside the presentation
+  version). 
   \example
 \begin{verbatim}
 \frame{
@@ -3577,35 +3588,58 @@ Once you have declared a slide, you can use the following command in
 your article version to insert the slide into it:
 
 \begin{command}{\includeslide\oarg{options}\marg{slide name}}
-  This command calls |\pgfimage| with the given \meta{options}, for
+  This command calls |\pgfimage| with the given \meta{options} for
   the file specified by
   \begin{quote}
     |\setjobnamebeamerversion|\meta{filename}
   \end{quote}
   Furthermore, the option |page=|\meta{page of slide name} is passed
-  to |\pgfimage|, where the \meta{page of slide name} is read from the
-  file \meta{filename}|.snm|. See the documentation of |pgf| for the
-  exact effect of this option.
+  to |\pgfimage|, where the \meta{page of slide name} is read
+  internally from the file \meta{filename}|.snm|.
   \example
 
 \begin{verbatim}
 \article
   \begin{figure}
     \begin{center}
-      \includeslide{slide1}
+      \includeslide[height=5cm]{slide1}
     \end{center}
-    \caption{The first slide. Note the partly covered second item.}
+    \caption{The first slide (height 5cm). Note the partly covered second item.}
   \end{figure}
   \begin{figure}
     \begin{center}
       \includeslide{slide2}
     \end{center}
-    \caption{The second slide. Now the second item is also shown.}
+    \caption{The second slide (original size). Now the second item is also shown.}
   \end{figure}
 \end{verbatim}  
 \end{command}
 
-
+The exact effect of passing the option |page=|\meta{page of slide
+  name} to the command |\pgfimage| is explained in the documentation
+of |pgf|. In essence, the following happens:
+\begin{itemize}
+\item
+  For old version of |pdflatex| and for any version of |latex|
+  together with |dvips|, the |pgf| package will look for a file named
+  \begin{quote}
+    \meta{filename}|.page|\meta{page of slide name}|.|\meta{extension}
+  \end{quote}
+  For each page of your |.pdf| or |.ps| file that is to be included in
+  this way, you must create such a file by hand. For example, if the
+  PostScript file of your presentation version is named
+  |main.beamer.ps| and you wish to include the slides with page
+  numbers 2 and~3, you must create (single page) files
+  |main.beamer.page2.ps| and |main.beamer.page3.ps| ``by hand'' (or
+  using some script). If these files cannot be found, |pgf| will
+  complain.
+\item
+  For new versions of |pdflatex|, |pdflatex| also looks for the files
+  according to the above naming scheme. However, if it fails to find
+  them (because you have not produced them), it uses a special
+  mechanism to directly extract the desired page from the presentation
+  file |main.beamer.pdf|.
+\end{itemize}
 
 
 
@@ -3979,13 +4013,13 @@ template:
   thought about.
 \item
   When copying code from another template and when inserting this code
-  in the preamble of you document (not in another style file), you may
+  in the preamble of your document (not in another style file), you may
   have to ``switch on'' the at-character (|@|). To do so, add the
   command |\makeatletter| before the |\usexxxtemplate| command and the
   command |\makeatother| afterward.
 \item
   Most templates having to do with the frame components (head lines,
-  side bars, etc.) can only be changed in the preamble. Other
+  side bars, etc.)\ can only be changed in the preamble. Other
   templates can be changed during the document.
 \item
   The height of the head line and foot line templates is calculated
@@ -5038,6 +5072,15 @@ The following inserts are useful for the navigation symbols template:
 
 
 \subsubsection{Block Environments}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplateroundedblocks}
+  Changes the block templates such that they are printed on a
+  rectangular area with rounded corners. Quite cute.
+\end{command}
+
+
 
 \paragraph{Template Installation Commands}\
 

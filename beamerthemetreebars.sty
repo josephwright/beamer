@@ -81,11 +81,6 @@
                                 % Footline
 \usefoottemplate{}
 
-\def\logo#1{%
-  \def\insertlogo{#1}%
-  \usefoottemplate{\vbox{\hbox to\textwidth{\hfill\insertlogo\hskip0.3cm\hskip-\Geom@rmargin}\vskip2pt}}}%
-
-
                                 % Background
 \usebackgroundtemplate{}
 
@@ -99,4 +94,6 @@
 
                                 % Buttons
 \userightsidebartemplate{0cm}{%
-  \vfill\llap{\insertnavigationsymbols}}
+  \vfill%
+  \llap{\insertlogo\hskip0.1cm}%
+  \llap{\insertnavigationsymbols}}

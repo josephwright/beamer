@@ -1,8 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/11/08 v0.93-dev Class for Typesetting a Beamer Presentation]
+[2003/11/12 v1.00 Class for Typesetting a Beamer Presentation]
 
-% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
 % of the LaTeX Project Public License Distributed from CTAN
@@ -277,6 +277,9 @@
 \newif\ifbeamer@draftmode
 \beamer@draftmodefalse
 
+\newif\ifbeamer@compressnotes
+\beamer@compressnotesfalse
+
 %
 %
 % Document options
@@ -288,6 +291,9 @@
 
 \DeclareOption{compress}
 {\beamer@compresstrue}
+
+\DeclareOption{compressnotes}
+{\beamer@compressnotestrue}
 
 \DeclareOption{slidescentered}
 {\beamer@centeredtrue}
@@ -2952,6 +2958,24 @@
   \def\@backgroundtemplate{}
   \vbox{%
     \vskip-\headheight%
+    \ifbeamer@compressnotes
+    \insertvrule{2.5em}{white!90!black}
+    \vskip2.5em
+    \nointerlineskip
+    \tiny
+    \setbox\tempbox=\hbox{\raise7em\hbox{\insertsection}}%
+    \ht\tempbox=0pt
+    \box\tempbox
+    \nointerlineskip
+    \setbox\tempbox=\hbox{\raise6em\hbox{\quad\insertsubsection}}%
+    \ht\tempbox=0pt
+    \box\tempbox
+    \nointerlineskip
+    \setbox\tempbox=\hbox{\raise5em\hbox{\quad\quad\insertframetitle}}%
+    \ht\tempbox=0pt
+    \box\tempbox
+    \nointerlineskip
+    \else    
     \insertvrule{8em}{white!90!black}
     \vskip-8.5em
     \hbox{\vbox{
@@ -2967,8 +2991,14 @@
     \hbox{\ifdim\wd\tempbox>1pt{\hskip17.4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertsubsection\end{minipage}}}\fi}%
     \setbox\tempbox=\hbox{\insertframetitle}%
     \hbox{\ifdim\wd\tempbox>1pt{\hskip30.8pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertframetitle\end{minipage}}}\fi}%
+    \fi
     }
+  \ifbeamer@compressnotes
+  \vskip-2em  
+  \else
   \vskip2.5em
+  \fi
+  \small
   #1%
   \clearpage
   }\fi}

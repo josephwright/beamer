@@ -265,6 +265,9 @@
 % Buttons
 %
 
+\newdimen\beamer@dima%
+\newdimen\beamer@dimb%
+
 \newcommand{\beamertemplateoutlinebuttons}
 {\usebuttontemplate{%
   \color{structure}
@@ -273,10 +276,8 @@
   \dp\beamer@tempbox=0pt%
   \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
   \beamer@tempdim=\wd\beamer@tempbox%
-  \newdimen\dima
-  \newdimen\dimb
-  \dima=\beamer@tempdim\advance\dima by2.2pt
-  \dimb=\beamer@tempdim\advance\dimb by4pt
+  \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2pt
+  \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4pt
   \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
     \color{structure!50!averagebackgroundcolor}
     \pgfsetlinewidth{0.8pt}
@@ -285,12 +286,12 @@
     \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
     \pgflineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
     \pgfcurveto%
-    {\pgfpoint{\the\dima}{8pt}}%
-    {\pgfpoint{\the\dimb}{6.2pt}}%
-    {\pgfpoint{\the\dimb}{4pt}}
+    {\pgfpoint{\the\beamer@dima}{8pt}}%
+    {\pgfpoint{\the\beamer@dimb}{6.2pt}}%
+    {\pgfpoint{\the\beamer@dimb}{4pt}}
     \pgfcurveto%
-    {\pgfpoint{\the\dimb}{1.8pt}}%
-    {\pgfpoint{\the\dima}{0pt}}%
+    {\pgfpoint{\the\beamer@dimb}{1.8pt}}%
+    {\pgfpoint{\the\beamer@dima}{0pt}}%
     {\pgfpoint{\the\beamer@tempdim}{0pt}}
     \pgfclosepath
     \pgfstroke
@@ -301,30 +302,28 @@
 
 \newcommand{\beamertemplatesolidbuttons}
 {\usebuttontemplate{%
-  \setbox\beamer@tempbox=\hbox{\tiny\color{white}\insertbuttontext}%
+  \setbox\beamer@tempbox=\hbox{{\tiny\color{white}\insertbuttontext}}%
   \ht\beamer@tempbox=6pt%
   \dp\beamer@tempbox=0pt%
   \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
   \beamer@tempdim=\wd\beamer@tempbox%
-  \newdimen\dima
-  \newdimen\dimb
-  \dima=\beamer@tempdim\advance\dima by2.2pt
-  \dimb=\beamer@tempdim\advance\dimb by4pt
-  \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
+  \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp
+  \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp
+  \begin{pgfpicture}{-4bp}{0bp}{\the\beamer@tempdim}{8bp}
     \color{structure!50!averagebackgroundcolor}
-    \pgfsetlinewidth{0.8pt}
+    \pgfsetlinewidth{0.8bp}
     \pgfqmoveto{0}{0}
     \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
     \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
-    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8bp}}
     \pgfcurveto%
-    {\pgfpoint{\the\dima}{8pt}}%
-    {\pgfpoint{\the\dimb}{6.2pt}}%
-    {\pgfpoint{\the\dimb}{4pt}}
+    {\pgfpoint{\the\beamer@dima}{8bp}}%
+    {\pgfpoint{\the\beamer@dimb}{6.2bp}}%
+    {\pgfpoint{\the\beamer@dimb}{4bp}}
     \pgfcurveto%
-    {\pgfpoint{\the\dimb}{1.8pt}}%
-    {\pgfpoint{\the\dima}{0pt}}%
-    {\pgfpoint{\the\beamer@tempdim}{0pt}}
+    {\pgfpoint{\the\beamer@dimb}{1.8bp}}%
+    {\pgfpoint{\the\beamer@dima}{0bp}}%
+    {\pgfpoint{\the\beamer@tempdim}{0bp}}
     \pgffill
   \end{pgfpicture}%
   \hskip-\beamer@tempdim%
@@ -354,3 +353,172 @@
   \hbox{\insertsectionnavigationsymbol}
   \hbox{\insertdocnavigationsymbol}
   \hbox{\insertbackfindforwardnavigationsymbol}}}}
+
+
+%
+% Blocks
+%
+
+\newcommand{\beamertemplateroundedblocks}{
+
+  \def\beamertemplateroundblockhead##1{% background color
+    \beamer@tempdim=\dp\beamer@tempbox%
+    \ifdim\beamer@tempdim<1.5pt%
+    \beamer@tempdim=1.5pt\fi
+    \setbox\beamer@tempbox=\hbox{\raise\beamer@tempdim\hbox{\box\beamer@tempbox}}%
+    \dp\beamer@tempbox=0pt%
+    \beamer@tempdim=\wd\beamer@tempbox%
+    \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp%
+    \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp%
+    \hbox{\begin{pgfpicture}{0bp}{-\ht\beamer@tempbox}{0bp}{-\ht\beamer@tempbox}
+      \color{##1}
+      \pgfqmoveto{-4}{-1}
+      \pgfqcurveto{-4}{1.2}{-2.2}{3}{0}{3}
+      \pgflineto{\pgfpoint{\the\beamer@tempdim}{3bp}}
+      \pgfcurveto%
+      {\pgfpoint{\the\beamer@dima}{3bp}}%
+      {\pgfpoint{\the\beamer@dimb}{1.2bp}}%
+      {\pgfpoint{\the\beamer@dimb}{-1bp}}%
+      \beamer@dima=-\ht\beamer@tempbox%
+      \advance\beamer@dima by-1pt%
+      \pgflineto{\pgfpoint{\the\beamer@dimb}{\the\beamer@dima}}
+      \pgflineto{\pgfpoint{-4bp}{\the\beamer@dima}}
+      \pgffill
+    \end{pgfpicture}%
+    \box\beamer@tempbox}%
+    \nointerlineskip}
+
+  \def\beamertemplateroundmidshade##1{% shading
+    \hbox{\kern-4bp%
+      \beamer@dima=\textwidth%
+      \advance\beamer@dima by8bp%
+      \begin{pgfpicture}{0pt}{0pt}{\textwidth}{6pt}
+        \pgfqmoveto{-4}{-1}
+        \pgfqlineto{-4}{7}
+        \pgflineto{\pgfpoint{\beamer@dima}{7bp}}
+        \pgflineto{\pgfpoint{\beamer@dima}{-1bp}}
+        \pgfclip
+        \pgfbox[left,base]{\pgfuseshading{##1}}%
+      \end{pgfpicture}
+      }%
+    \nointerlineskip%
+    }
+
+  \def\beamertemplateroundblocktail##1{% background color
+    \setbox\beamer@tempbox=\hbox{\raise\dp\beamer@tempbox\hbox{\box\beamer@tempbox}}%
+    \dp\beamer@tempbox=0pt%
+    %\vskip6pt%
+    \beamer@tempdim=\wd\beamer@tempbox%
+    \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp%
+    \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp%
+    \hbox{\begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
+      \color{##1}
+      \pgfqmoveto{-4}{1}
+      \pgfqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
+      \pgflineto{\pgfpoint{\the\beamer@tempdim}{-3bp}}
+      \pgfcurveto%
+      {\pgfpoint{\the\beamer@dima}{-3bp}}%
+      {\pgfpoint{\the\beamer@dimb}{-1.2bp}}%
+      {\pgfpoint{\the\beamer@dimb}{1bp}}%
+      \beamer@dima=\ht\beamer@tempbox%
+      \advance\beamer@dima by1pt%
+      \pgflineto{\pgfpoint{\the\beamer@dimb}{\the\beamer@dima}}
+      \pgflineto{\pgfpoint{-4bp}{\the\beamer@dima}}
+      \pgffill
+    \end{pgfpicture}%
+    \box\beamer@tempbox}
+  }
+  \colorlet{darkgreen}{green!50!black}
+
+  \pgfdeclareverticalshading{roundblock}{13cm}{%
+    color(0pt)=(structure!10!averagebackgroundcolor);
+    color(2pt)=(structure!10!averagebackgroundcolor);
+    color(4pt)=(structure!75!averagebackgroundcolor);
+    color(6pt)=(structure!75!averagebackgroundcolor)}
+  \pgfdeclareverticalshading{roundalertblock}{13cm}{%
+    color(0pt)=(alert!10!averagebackgroundcolor);
+    color(2pt)=(alert!10!averagebackgroundcolor);
+    color(4pt)=(alert!75!averagebackgroundcolor);
+    color(6pt)=(alert!75!averagebackgroundcolor)}
+  \pgfdeclareverticalshading{roundexampleblock}{13cm}{%
+    color(0pt)=(darkgreen!10!averagebackgroundcolor);
+    color(2pt)=(darkgreen!10!averagebackgroundcolor);
+    color(4pt)=(darkgreen!75!averagebackgroundcolor);
+    color(6pt)=(darkgreen!75!averagebackgroundcolor)}
+
+  \begin{colormixin}{16!averagebackgroundcolor}
+  \pgfdeclareverticalshading{roundblockshadeda}{13cm}{%
+    color(0pt)=(structure!10!averagebackgroundcolor);
+    color(2pt)=(structure!10!averagebackgroundcolor);
+    color(4pt)=(structure!75!averagebackgroundcolor);
+    color(6pt)=(structure!75!averagebackgroundcolor)}
+  \pgfdeclareverticalshading{roundalertblockshadeda}{13cm}{%
+    color(0pt)=(alert!10!averagebackgroundcolor);
+    color(2pt)=(alert!10!averagebackgroundcolor);
+    color(4pt)=(alert!75!averagebackgroundcolor);
+    color(6pt)=(alert!75!averagebackgroundcolor)}
+  \pgfdeclareverticalshading{roundexampleblockshadeda}{13cm}{%
+    color(0pt)=(darkgreen!10!averagebackgroundcolor);
+    color(2pt)=(darkgreen!10!averagebackgroundcolor);
+    color(4pt)=(darkgreen!75!averagebackgroundcolor);
+    color(6pt)=(darkgreen!75!averagebackgroundcolor)}
+  \end{colormixin}
+
+  \begin{colormixin}{9!averagebackgroundcolor}
+  \pgfdeclareverticalshading{roundblockshadedb}{13cm}{%
+    color(0pt)=(structure!10!averagebackgroundcolor);
+    color(2pt)=(structure!10!averagebackgroundcolor);
+    color(4pt)=(structure!75!averagebackgroundcolor);
+    color(6pt)=(structure!75!averagebackgroundcolor)}
+  \pgfdeclareverticalshading{roundalertblockshadedb}{13cm}{%
+    color(0pt)=(alert!10!averagebackgroundcolor);
+    color(2pt)=(alert!10!averagebackgroundcolor);
+    color(4pt)=(alert!75!averagebackgroundcolor);
+    color(6pt)=(alert!75!averagebackgroundcolor)}
+  \pgfdeclareverticalshading{roundexampleblockshadedb}{13cm}{%
+    color(0pt)=(darkgreen!10!averagebackgroundcolor);
+    color(2pt)=(darkgreen!10!averagebackgroundcolor);
+    color(4pt)=(darkgreen!75!averagebackgroundcolor);
+    color(6pt)=(darkgreen!75!averagebackgroundcolor)}
+  \end{colormixin}
+
+  \pgfaliasshading{roundblock!20!averagebackgroundcolor}{roundblockshadeda}
+  \pgfaliasshading{roundblock!15!averagebackgroundcolor}{roundblockshadeda}
+  \pgfaliasshading{roundblock!10!averagebackgroundcolor}{roundblockshadedb}
+  \pgfaliasshading{roundblock!5!averagebackgroundcolor}{roundblockshadedb}
+  \pgfaliasshading{roundblock!2!averagebackgroundcolor}{roundblockshadedb}  
+
+  \pgfaliasshading{roundalertblock!20!averagebackgroundcolor}{roundalertblockshadeda}
+  \pgfaliasshading{roundalertblock!15!averagebackgroundcolor}{roundalertblockshadeda}
+  \pgfaliasshading{roundalertblock!10!averagebackgroundcolor}{roundalertblockshadedb}
+  \pgfaliasshading{roundalertblock!5!averagebackgroundcolor}{roundalertblockshadedb}
+  \pgfaliasshading{roundalertblock!2!averagebackgroundcolor}{roundalertblockshadedb}  
+
+  \pgfaliasshading{roundexampleblock!20!averagebackgroundcolor}{roundexampleblockshadeda}
+  \pgfaliasshading{roundexampleblock!15!averagebackgroundcolor}{roundexampleblockshadeda}
+  \pgfaliasshading{roundexampleblock!10!averagebackgroundcolor}{roundexampleblockshadedb}
+  \pgfaliasshading{roundexampleblock!5!averagebackgroundcolor}{roundexampleblockshadedb}
+  \pgfaliasshading{roundexampleblock!2!averagebackgroundcolor}{roundexampleblockshadedb}  
+
+  \useblocktemplate{\medskip\vbox\bgroup%
+    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
+    \beamertemplateroundblockhead{structure!75!averagebackgroundcolor}%
+    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
+    \beamertemplateroundmidshade{roundblock}%
+    \beamertemplateroundblocktail{structure!10!averagebackgroundcolor}%
+    \egroup\medskip}
+  \usealertblocktemplate{\medskip\vbox\bgroup%
+    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
+    \beamertemplateroundblockhead{alert!75!averagebackgroundcolor}%
+    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
+    \beamertemplateroundmidshade{roundalertblock}%
+    \beamertemplateroundblocktail{alert!10!averagebackgroundcolor}%
+    \egroup\medskip}  
+  \useexampleblocktemplate{\medskip\vbox\bgroup%
+    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
+    \beamertemplateroundblockhead{darkgreen!75!averagebackgroundcolor}%
+    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
+    \beamertemplateroundmidshade{roundexampleblock}%
+    \beamertemplateroundblocktail{darkgreen!10!averagebackgroundcolor}%
+    \egroup\medskip}  
+}

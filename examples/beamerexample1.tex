@@ -3,7 +3,7 @@
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
 
-% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
 % of the LaTeX Project Public License Distributed from CTAN
@@ -13,13 +13,13 @@
 %\colorlet{structure}{green!50!black}
 
 \usepackage{beamertemplates}
-\usepackage{beamerthemebars}
+\usepackage{beamerthemesplit}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
 \usepackage[latin1]{inputenc}
 \usepackage{colortbl}
 \usepackage[english]{babel}
-
+%\usepackage{times}
 
 % Use some nice templates
 
@@ -27,6 +27,7 @@
 \beamertemplatetransparentcovereddynamic
 \beamertemplateballitem
 \beamertemplatesolidbuttons
+\beamertemplateroundedblocks
 
 %
 % The following defintions are peculiar to this particular
@@ -145,6 +146,9 @@
   Technical University of Berlin}
 \date[DLT 2003]{Developments in Language Theory Conference, 2003}
 
+%\pgfdeclareimage[height=0.5cm]{logo}{tu-logo}
+%\logo{\pgfuseimage{logo}}
+
 
 \begin{document}
 
@@ -261,6 +265,8 @@
 {
   \frametitle{Our Model of ``Absolutely No Space Overhead''}
 
+  \transdissolve<7>
+  
   \begin{columns}
     \begin{column}{4.5cm}
       \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
@@ -310,12 +316,12 @@
           \end{itemize}
         \end{block}
       \onslide<7-| trans:4| handout:2>
-        \begin{block}{Intuition}
+        \begin{alertblock}{Intuition}
           \begin{itemize}
           \item
-            Tape is used like a RAM module.
+            Tape is used like a\\ RAM module.
           \end{itemize}
-        \end{block}
+        \end{alertblock}
       \end{overprint}
     \end{column}
   \end{columns}

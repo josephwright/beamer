@@ -97,11 +97,6 @@
                                 % Footline
 \usefoottemplate{}
 
-\def\logo#1{%
-  \def\insertlogo{#1}%
-  \usefoottemplate{\hfill\insertlogo}
-  }
-
                                 % Background
 \usebackgroundtemplate{{\color{white}\vrule height\paperheight width\paperwidth}}
 % Necessary, because of strange bug in acroread fullscreen preview
@@ -120,4 +115,6 @@
 
                                 % Buttons
 \userightsidebartemplate{0cm}{%
-  \vfill\llap{\insertnavigationsymbols}}
+  \vfill%
+  \llap{\insertlogo\hskip0.1cm}%
+  \llap{\insertnavigationsymbols}}

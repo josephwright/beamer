@@ -92,8 +92,9 @@
     \setbox\logobox=\hbox{\insertlogo}%
     \vbox{%
       \tinycolouredline{structure!75}{\color{white}\textbf{\insertshortauthor\hfill}}%
-      \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill%
-        \hskip.5\wd\logobox%
+      \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}%
+        \hskip10pt%
+        \hskip\wd\logobox%
         \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
           \color{white}
           \pgfcircle[fill]{\pgforigin}{1.25\wd\logobox}
