@@ -24,6 +24,12 @@
 \RequirePackage{amsmath}
 \RequirePackage{amsthm}
 
+% For old versions of amsthm
+\providecommand\thm@space@setup{}
+\providecommand\pushQED[1]{\def\beamer@qed{#1}}
+\providecommand\popQED{\beamer@qed}
+\providecommand\qedhere{\qed}
+
 % Redfine certain amsthm internals:
 \def\@thm#1#2#3{%
   \ifhmode\unskip\unskip\par\fi
