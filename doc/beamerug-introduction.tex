@@ -8,11 +8,13 @@
 \section{Introduction}
 
 This user's guide explains the functionality of the \beamer\ class.
-It is a \LaTeX\ class that allows you to create a presentation with a
-projector. It can also be used to create slides. It behaves 
-similarly to other packages like \textsc{prosper}, but has the
-advantage that it works together directly with |pdflatex|, but
-also with |dvips|.
+It is a \LaTeX\ class that allows you to create a presentation to be
+held using a projector. It can also be used to create transparency
+slides. It behaves similarly to other packages like \textsc{prosper},
+but has the advantage that it works together directly with |pdflatex|,
+but also with |dvips|.
+
+
 
 \subsection{Getting Started with the Beamer Class and \LaTeX/pdf\LaTeX}
 
@@ -27,13 +29,13 @@ as follows:
   |subsection| commands.
 \item
   Place the text of the individual slides inside |frame|
-  commands.
+  environments.
 \item
   Run |pdflatex| on the text (or |latex|,
   |dvips|, and |ps2pdf|).
 \end{enumerate}
 
-To get jump-started try opening one of the |.tex| files in the
+To get jump-started, try opening one of the |.tex| files in the
 |solutions| directory.
 
 The \beamer\ class has several useful features: You don't need any
@@ -46,8 +48,6 @@ the class.
 \begin{verbatim}
 \documentclass{beamer}
 
-\usepackage{beamerthemesplit}
-
 \title{Example Presentation Created with the Beamer Package}
 \author{Till Tantau}
 \date{\today}
@@ -59,7 +59,10 @@ the class.
 \end{frame}
 
 \section*{Outline}
-\frame{\tableofcontents}
+
+\begin{frame}
+  \tableofcontents
+\end{frame}
 
 \section{Introduction}
 \subsection{Overview of the Beamer Class}
@@ -112,10 +115,6 @@ To reproduce the example from the previous subsection in \LyX, proceed
 as follows:
 
 \begin{itemize}
-\item
-  The command |\usepackage{beamerthemesplit}| must be added to the
-  preamble. You can edit the preamble using Layout $\rangle$ Document
-  $\rangle$ Preamble.
 \item
   Typeset the author and date the usual way, using the styles Author
   and Date. The title page will then be created automatically.
@@ -172,7 +171,9 @@ more solutions will become available and I would like to encourage
 users of the \beamer\ class to send me solutions they develop. I would
 also like to encourage users to help in translating solutions to
 languages other than English and German. If you have written a
-solution or a translation, please feel free to send it to me.
+solution or a translation, please feel free to send it to me (make
+sure however, that it contains about the same amount of explanations
+and justifications as do the existing solutions).
 
 
 
@@ -180,29 +181,32 @@ solution or a translation, please feel free to send it to me.
 \subsection{How to Read this User's Guide}
 
 First a word of warning: This text has grown rather wildly and is by
-no means perfectly structured or particularly well written. Hopefully
+no means well-structured or well-written. Hopefully
 this will change in the future, ideally by this text being superceded
 by a good book on creating presentations in \LaTeX\ becoming available.
 
-Till then, this user's guide is both intended as a tutorial and as a
-reference guide. If you have not yet installed the package, please read
+If you have not yet installed the package, please read
 Section~\ref{section-installation} first. If you do not have much
-experience with preparing presentations, 
-Section~\ref{section-workflow} might be especially helpful. The later
-sections explain the basic usage of the |beamer| class as well as
-advanced features. If you wish to adjust the way your presentations
-look (for example, if you wish to add a default logo of your
-institution to every presentation in the future), please read the
-section on customization. 
+experience with preparing presentations, the subsections named
+``Guidelines'' at the beginning of certain sections may be especially
+helpful. They contain 
+advice on how to create good presentations and do not refer
+specifically to the \beamer\ class. When you create your first
+presentation using \beamer, you might wish to read 
+Section~\ref{section-workflow} first, which outlines how you should
+proceed. The later sections explain the basic usage of the |beamer|
+class as well as advanced features. You can easily change the way your
+presentation looks by using an appropriate theme. The themes are
+documented in the third part of this user's guide.
 
 In this guide you will find the descriptions of all ``public''
 commands provided by the |beamer| class. In each such
 description, the described command, environment, or option is printed 
 in red. Text shown in green is optional and can be left out.
 
-Whenever a \beamer\ solution template exists for a specific problem, this will
-be pointed out in the (sub-)section that treats the topic of this
-problem. 
+Whenever a \beamer\ solution template exists for a specific problem,
+this will be pointed out in the (sub-)section that treats the topic of
+this problem. 
 
 You will sometimes find one of the words \textsc{beamer},
 \textsc{article}, or \textsc{lyx} in blue in some description of a

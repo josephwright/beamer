@@ -278,7 +278,7 @@
 
   % Fix \text:
   \let\beamer@orig@text@=\text@
-  \def\text@#1{{\usebeamercolor[fg]{normal text in math text}\beamer@orig@text@{#1}}}
+  \def\text@#1{{\ifbeamercolorempty[fg]{normal text in math text}{}{\usebeamercolor[fg]{normal text in math text}}\beamer@orig@text@{#1}}}
 }
 
 
@@ -353,7 +353,7 @@
 }
 
 \colorlet{alert}{red!95!black}
-\colorlet{structure}{black} % dummy
+\definecolor{structure}{rgb}{0.2,0.2,0.7} % dummy -- not used
 
 \colorlet{beameralert}{alert}
 \colorlet{beamerexample}{green!50!black}

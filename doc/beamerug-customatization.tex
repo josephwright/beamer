@@ -5,182 +5,148 @@
 % of the GNU Public License, version 2.
 
 
-\section{Customization}
-
-
-\subsection{Margin Sizes}
-
-The ``paper size'' of a \beamer\ presentation is fixed to 128mm times
-96mm. The aspect ratio of this size is 4:3, which is exactly what most
-beamers offer these days. It is the job of the
-presentation program (like |acroread|) to display the slides at
-full screen size. The main advantage of using a small ``paper size''
-is that you can use all your normal fonts at their natural sizes. In
-particular, inserting a graphic with 11pt labels will result in
-reasonably sized labels during the presentation.
-
-You should refrain from changing the ``paper size.'' However, you
-\emph{can} change the size of the left and right margins, which
-default to 1cm. To change them, you should use the following two
-commands:
-
-\begin{command}{\beamersetleftmargin\marg{left margin dimension}}
-  Sets a new left margin. This excludes the left sidebar. Thus, it is
-  the distance between the right edge of the left sidebar and the left
-  edge of the text. This command can only be used in the preamble
-  (before the |document| environment is used).
-  \example |\beamersetleftmargin{1cm}|
-
-  \articlenote
-  This command has no effect in |article| mode.
-\end{command}
-
-\begin{command}{\beamersetrightmargin\marg{left margin dimension}}
-  Like |\beamersetleftmargin|, only for the right margin.
-\end{command}
-
-For more information on sidebars, see
-Section~\ref{section-sidebar-templates}. 
+\section{Templates}
 
 
 
-\subsection{Themes}
 
-Just like \LaTeX\ in general, the \beamer\ class tries to separate the
-contents of a text from the way it is typeset (displayed). There are two ways in
-which you can change how a presentation is typeset: you can specify a
-different theme and you can specify different templates. A theme is
-a predefined collection of templates.
+%% \subsection{Themes}
 
-There exist a number of different predefined themes that can be used
-together with the \beamer\ class. Feel free to add further themes.
-Themes are used by including an appropriate \LaTeX\ style file, using
-the standard |\usepackage| command.
+%% Just like \LaTeX\ in general, the \beamer\ class tries to separate the
+%% contents of a text from the way it is typeset (displayed). There are two ways in
+%% which you can change how a presentation is typeset: you can specify a
+%% different theme and you can specify different templates. A theme is
+%% a predefined collection of templates.
 
-
-\begin{smallpackage}{{beamerthemebars}}
-  \example
-
-  \pgfuseimage{themebars}\quad\pgfuseimage{themebars2}
-\end{smallpackage}
+%% There exist a number of different predefined themes that can be used
+%% together with the \beamer\ class. Feel free to add further themes.
+%% Themes are used by including an appropriate \LaTeX\ style file, using
+%% the standard |\usepackage| command.
 
 
-\begin{package}{{beamerthemeboxes}\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}
-  \example
+%% \begin{smallpackage}{{beamerthemebars}}
+%%   \example
 
-  \pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}
-
-  \example
-\begin{verbatim}
-\usepackage[headheight=12pt,footheight=12pt]{beamerthemeboxes}
-\end{verbatim}
-
-  For this theme, you can specify an arbitrary number of templates for
-  the boxes in the headline and in the footline. You can add a
-  template for another box by using the following commands.
-\end{package}
-
-\begin{command}{\addheadboxtemplate%
-    \marg{background color command}\marg{box template}}
-  Each time this command is invoked, a new box is added to the head
-  line, with the first added box being shown on the left. All boxes
-  will have the same size.
-  \example
-\begin{verbatim}
-\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
-\addheadboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
-\addheadboxtemplate{\color{structure!50}}{\color{white}\tiny\quad 3. Box}
-\end{verbatim}
-\end{command}
-
-\begin{command}{\addfootboxtemplate%
-    \marg{background color command}\marg{box template}}
-  \example
-\begin{verbatim}
-\addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
-\addfootboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
-\end{verbatim}
-\end{command}
+%%   \pgfuseimage{themebars}\quad\pgfuseimage{themebars2}
+%% \end{smallpackage}
 
 
-\begin{smallpackage}{{beamerthemeclassic}}
-  \example
+%% \begin{package}{{beamerthemeboxes}\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}
+%%   \example
 
-  \pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}
-\end{smallpackage}
+%%   \pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}
+
+%%   \example
+%% \begin{verbatim}
+%% \usepackage[headheight=12pt,footheight=12pt]{beamerthemeboxes}
+%% \end{verbatim}
+
+%%   For this theme, you can specify an arbitrary number of templates for
+%%   the boxes in the headline and in the footline. You can add a
+%%   template for another box by using the following commands.
+%% \end{package}
+
+%% \begin{command}{\addheadboxtemplate%
+%%     \marg{background color command}\marg{box template}}
+%%   Each time this command is invoked, a new box is added to the head
+%%   line, with the first added box being shown on the left. All boxes
+%%   will have the same size.
+%%   \example
+%% \begin{verbatim}
+%% \addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+%% \addheadboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
+%% \addheadboxtemplate{\color{structure!50}}{\color{white}\tiny\quad 3. Box}
+%% \end{verbatim}
+%% \end{command}
+
+%% \begin{command}{\addfootboxtemplate%
+%%     \marg{background color command}\marg{box template}}
+%%   \example
+%% \begin{verbatim}
+%% \addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+%% \addfootboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
+%% \end{verbatim}
+%% \end{command}
 
 
-\begin{smallpackage}{{beamerthemelined}}
-  \example
+%% \begin{smallpackage}{{beamerthemeclassic}}
+%%   \example
 
-  \pgfuseimage{themelined}\quad\pgfuseimage{themelined2}
-\end{smallpackage}
-
-
-\begin{smallpackage}{{beamerthemeplain}}
-  \example
-
-  \pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}
-\end{smallpackage}
+%%   \pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}
+%% \end{smallpackage}
 
 
-\begin{package}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
-        width}|,dark,tab]|}}
-  The option |width| sets the width of the sidebar to \meta{sidebar
-    width}. The option |dark| makes the sidebar and the whole theme
-  darked. The option |tab| causes the current section or subsection to
-  be hilighted by changing the background behind the entry, rather
-  than hilighting the entry itself.
+%% \begin{smallpackage}{{beamerthemelined}}
+%%   \example
+
+%%   \pgfuseimage{themelined}\quad\pgfuseimage{themelined2}
+%% \end{smallpackage}
+
+
+%% \begin{smallpackage}{{beamerthemeplain}}
+%%   \example
+
+%%   \pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}
+%% \end{smallpackage}
+
+
+%% \begin{package}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
+%%         width}|,dark,tab]|}}
+%%   The option |width| sets the width of the sidebar to \meta{sidebar
+%%     width}. The option |dark| makes the sidebar and the whole theme
+%%   darked. The option |tab| causes the current section or subsection to
+%%   be hilighted by changing the background behind the entry, rather
+%%   than hilighting the entry itself.
   
-  \example |\usepackage{beamerthemesidebar}|
+%%   \example |\usepackage{beamerthemesidebar}|
 
-  \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
+%%   \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
 
-  \example |\usepackage[tab]{beamerthemesidebar}|
+%%   \example |\usepackage[tab]{beamerthemesidebar}|
 
-  \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
+%%   \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
 
-  \example |\usepackage[dark]{beamerthemesidebar}|
+%%   \example |\usepackage[dark]{beamerthemesidebar}|
 
-  \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
+%%   \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
 
-  \example |\usepackage[dark,tab]{beamerthemesidebar}|
+%%   \example |\usepackage[dark,tab]{beamerthemesidebar}|
 
-  \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
-\end{package}
-
-
-\begin{smallpackage}{{beamerthemeshadow}}
-  \example
-
-  \pgfuseimage{themeshadow}\quad\pgfuseimage{themeshadow2}
-\end{smallpackage}
-
-\begin{smallpackage}{{beamerthemesplit}}
-  \example
-
-  \pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}
-\end{smallpackage}
-
-\begin{smallpackage}{{beamerthemetree}}
-  \example
-
-  \pgfuseimage{themetree}\quad\pgfuseimage{themetree2}
-\end{smallpackage}
+%%   \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
+%% \end{package}
 
 
-\begin{smallpackage}{{beamerthemetree}\declare{|[bar]|}}
-  \example
+%% \begin{smallpackage}{{beamerthemeshadow}}
+%%   \example
 
-  \pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}
-\end{smallpackage}
+%%   \pgfuseimage{themeshadow}\quad\pgfuseimage{themeshadow2}
+%% \end{smallpackage}
+
+%% \begin{smallpackage}{{beamerthemesplit}}
+%%   \example
+
+%%   \pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}
+%% \end{smallpackage}
+
+%% \begin{smallpackage}{{beamerthemetree}}
+%%   \example
+
+%%   \pgfuseimage{themetree}\quad\pgfuseimage{themetree2}
+%% \end{smallpackage}
+
+
+%% \begin{smallpackage}{{beamerthemetree}\declare{|[bar]|}}
+%%   \example
+
+%%   \pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}
+%% \end{smallpackage}
 
 
 
-\subsection{Templates}
+%\subsection{Templates}
 \label{section-templates}
 
-\subsubsection{Introduction to Templates}
+\subsection{Introduction to Templates}
 
 If you only wish to modify a small part of how your presentation is
 rendered, you do not need to create a whole new theme. Instead, you
@@ -299,7 +265,7 @@ template:
 
 
 
-\subsubsection{Title Page}
+\subsection{Title Page}
 
 \paragraph{Predefined Templates}\ 
 
@@ -370,7 +336,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 
 
-\subsubsection{Part Page}
+\subsection{Part Page}
 
 \label{section-part-page-template}
 
@@ -417,7 +383,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 
 
-\subsubsection{Frames}
+\subsection{Frames}
 
 \label{section-frame-template}
 
@@ -446,7 +412,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 
 
-\subsubsection{Background}
+\subsection{Background}
 
 \label{section-backgrounds}
 
@@ -484,15 +450,16 @@ If you wish to suppress the head- and footline in the title page, use
 \paragraph{Template Installation Commands}\ 
 
 \begin{command}{\usebackgroundtemplate\marg{background template}}
-  Installs a new background template. Call
-  |\beamersetaveragebackground| after you have called this macro, see
-  Section~\ref{section-average} for details.
+  Installs a new background template. Set the background color of
+  |normal text| after you have called this macro to the average color
+  of the background you have installed.
   \example
 \begin{verbatim}
 \usebackgroundtemplate{%
   \color{red}%
   \vrule  height\paperheight width\paperwidth%
 }
+\setbeamercolor{normal text}{bg=red}
 \end{verbatim}
 \end{command}
 
@@ -502,7 +469,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 
 
-\subsubsection{Table of Contents}
+\subsection{Table of Contents}
 
 \label{section-toc-templates}
 
@@ -603,7 +570,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 
 
-\subsubsection{Bibliography}
+\subsection{Bibliography}
 
 \label{section-bib-templates}
 
@@ -676,7 +643,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 
 
-\subsubsection{Frame Titles}
+\subsection{Frame Titles}
 
 \label{section-continuation}
 
@@ -776,7 +743,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 
 
-\subsubsection{Headlines and Footlines}
+\subsection{Headlines and Footlines}
 
 \label{section-head-templates}
 
@@ -1034,7 +1001,7 @@ or
 
 
 
-\subsubsection{Sidebars}
+\subsection{Sidebars}
 
 \label{section-sidebar-templates}
 
@@ -1181,7 +1148,7 @@ with ``left'' replaced by ``right'' everywhere.
 
 
 
-\subsubsection{Buttons}
+\subsection{Buttons}
 \label{section-navigation-buttons}
 
 \paragraph{Predefined Templates}\ 
@@ -1240,7 +1207,7 @@ You can redefine these commands to change these symbols.
 
 
 
-\subsubsection{Navigation Bars}
+\subsection{Navigation Bars}
 
 \paragraph{Predefined Templates}\ 
 
@@ -1369,7 +1336,7 @@ You can redefine these commands to change these symbols.
 
 
 
-\subsubsection{Navigation Symbols}
+\subsection{Navigation Symbols}
 \label{section-navigation-symbols-template}
 
 \paragraph{Predefined Templates}\ 
@@ -1449,7 +1416,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Footnotes}
+\subsection{Footnotes}
 
 \label{section-templates-footnotes}
 
@@ -1481,7 +1448,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Captions}
+\subsection{Captions}
 \label{section-template-caption}
 
 \paragraph{Predefined Templates}\
@@ -1534,7 +1501,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Lists (Itemizations, Enumerations, Descriptions)}
+\subsection{Lists (Itemizations, Enumerations, Descriptions)}
 
 \label{section-template-enumerate}
 
@@ -1585,10 +1552,10 @@ The following inserts are useful for the navigation symbols template:
   \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
 \end{command}
 
-\begin{command}{\usesubsubitemizeitemtemplate\marg{template}}
+\begin{command}{\usesubitemizeitemtemplate\marg{template}}
   The \meta{template} is used to render the default item in the
   third level of an itemize list.
-  \example |\usesubsubitemizeitemtemplate{\pgfuseimage{mysubsubbullet}}|
+  \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
 \end{command}
 
 \begin{command}{\useitemizetemplate\marg{begin text}\marg{end text}}
@@ -1603,7 +1570,7 @@ The following inserts are useful for the navigation symbols template:
   \example |\usesubitemizetemplate{\begin{small}}{\end{small}}|
 \end{command}
 
-\begin{command}{\usesubsubitemizetemplate\marg{begin text}\marg{end text}}
+\begin{command}{\usesubitemizetemplate\marg{begin text}\marg{end text}}
   The \meta{begin text} is inserted at the beginning of a third-level
   itemize list, the \meta{end text} at its end.
   \example |\usesubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}|
@@ -1632,13 +1599,13 @@ The following inserts are useful for the navigation symbols template:
   |\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}|
 \end{command}
 
-\begin{command}{\usesubsubenumerateitemtemplate\marg{template}}
+\begin{command}{\usesubenumerateitemtemplate\marg{template}}
   The \meta{template} is used to render the default item in the third
   level of an enumeration. 
   \example
 \begin{verbatim}
-\usesubsubenumerateitemtemplate
-{\insertenumlabel-\insertsubenumlabel-\insertsubsubenumlabel}
+\usesubenumerateitemtemplate
+{\insertenumlabel-\insertsubenumlabel-\insertsubenumlabel}
 \end{verbatim}
 \end{command}
 
@@ -1655,10 +1622,10 @@ The following inserts are useful for the navigation symbols template:
   \example |\usesubenumeratetemplate{\begin{small}}{\end{small}}|
 \end{command}
 
-\begin{command}{\usesubsubenumeratetemplate\marg{begin text}\marg{end text}}
+\begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
   The \meta{begin text} is inserted at the beginning of a third-level
   enumeration, the \meta{end text} at its end.
-  \example |\usesubsubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}|
+  \example |\usesubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}|
 \end{command}
 
 \begin{command}{\usedescriptiontemplate\marg{description
@@ -1693,7 +1660,7 @@ The following inserts are useful for the navigation symbols template:
   Arabic number) into a template.
 \end{command}
 
-\begin{command}{\insertsubsubenumlabel}
+\begin{command}{\insertsubenumlabel}
   Inserts the current number of the third-level enumeration (as an
   Arabic number) into a template.
 \end{command}
@@ -1702,7 +1669,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Hilighting Commands}
+\subsection{Hilighting Commands}
 
 
 \paragraph{Template Installation Commands}\
@@ -1732,7 +1699,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Block Environments}
+\subsection{Block Environments}
 
 \paragraph{Predefined Templates}\
 
@@ -1821,7 +1788,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Theorem Environments}
+\subsection{Theorem Environments}
 
 \label{section-theorems-templates}
 
@@ -1944,7 +1911,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Verse, Quotation and Quote Environments}
+\subsection{Verse, Quotation and Quote Environments}
 
 
 \paragraph{Template Installation Commands}\
@@ -1972,7 +1939,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsubsection{Typesetting Notes}
+\subsection{Typesetting Notes}
 
 \label{section-note-templates}
 

@@ -389,9 +389,9 @@
 
 \usetheme{default}
 
-
-% Stuff that should be loaded later:
+% Compatibility stuff:
 \csname beamer@loadlater\endcsname
+
 
 %%% Local Variables: 
 %%% mode: latex

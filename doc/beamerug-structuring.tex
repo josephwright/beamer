@@ -5,6 +5,10 @@
 
 \section{Structuring a Presentation}
 
+
+
+
+
 \subsection{Guidelines}
 
 \label{section-structure-guidelines}
@@ -36,7 +40,7 @@ later anyway.
 
 
 
-\subsubsection{The Global Structure}
+\subsubsection{The Static Global Structure}
 
 To create the ``global structure'' of a presentation, with the time
 constraints in mind, make a mental inventory of the 
@@ -44,8 +48,11 @@ things you can reasonably talk about within the time available. Then
 categorize the inventory into sections and subsections. For very long
 talks (like a 90 minute lecture), you might also divide your talk into
 independent parts (like a ``review of the previous lecture part'' and
-a ``main part'').  Do not
-feel afraid to change it later on as you work on the talk. 
+a ``main part'').  Do not feel afraid to change it later on as you
+work on the talk.  
+
+
+\paragraph{Parts, Section, and Subsections.}
 
 You should not use more than four sections and not less than two per
 part. Even four sections are usually too much, unless they follow 
@@ -74,6 +81,184 @@ your ``second chance'' to get across a message.
 You can also add an appendix part using the |\appendix| command. Put
 everything into this part that you do not actually intend to talk
 about, but that might come in handy when questions are asked.
+
+
+
+\paragraph{Numbered Theorems and Definitions.}
+
+A common way of globally structuring (math) articles and books is to
+use consecutively numbered definitions and theorems. Unfortunately,
+for presentations the situtation is a bit more complicated and I would
+like to discourage using numbered theorems in presentations. The
+audience has no chance of remembering these numbers. \emph{Never} say
+things like ``now, by Theorem~2.5 that I showed you earlier, we have
+\dots'' It would be much better to refer to, say, Kummer's Theorem
+instead of Theorem~2.5. If Theorem~2.5 is some obscure theorem that
+does not have its own name (unlike Kummer's Theorem or Main Theorem or
+Second Main Theorem or Key Lemma), then the audience will have
+forgotten about it anyway by the time you refer to it again.
+
+In my opinion, the only situtation in which numbered theorems make
+sense in a presentation is in a lecture, in which the students can read
+lecture notes in parallel to the lecture where the theorems are
+numbered in exactly the same way.
+
+If you do number theorems and definition, number everything
+consecutively. Thus if there are one theorem, one lemma, 
+and one definition, you would have Theorem~1, Lemma~2, and
+Definition~3. Some people prefer all three to be numbered~1. I would
+\emph{strongly} like to discourage this. The problem is that this
+makes it virtually impossible to find anything since Theorem~2 might
+come after Definition~10 or the other way round. Papers and, worse,
+books that have a Theorem~1 and a Definition~1 are a pain. Do not
+inflict pain on other people. 
+
+
+
+\paragraph{Bibliographies.}
+
+You may also wish to present a bibliography at the end of your talk,
+so that people can see what kind of ``further reading'' is possible. 
+When adding a bibliography to a presentation, keep the following in mind:
+
+\begin{itemize}
+\item
+  It is a bad idea to present a long bibliography in a 
+  presentation. Present only very few references. (Naturally, this
+  applies only to the talk itself, not to a possible handout.)
+\item
+  If you present more references than fit on a single slide you can be 
+  almost sure that none of them will not be remembered. 
+\item
+  Present references only if they are intended as ``further reading.''
+  Do not present a list of all things you used like in a paper.
+\item
+  You should not present a long list of all your other great papers
+  \emph{except} if you are giving an application talk.
+\item
+  Using the |\cite| commands can be confusing since the audience
+  has little chance of remembering the citations. If you cite the
+  references, always cite them with full author name and year like
+  ``[Tantau, 2003]'' instead of something like ``[2,4]'' or
+  ``[Tan01,NT02]''.
+\item
+  If you want to be modest, you can abbreviate your name when citing
+  yourself as in ``[Nickelsen and T., 2003]'' or ``[Nickelsen and T,
+  2003]''. However, this can be confusing for the audience since it is
+  often not immediately clear who exactly ``T.'' might be. I recommend
+  using the full name.
+\end{itemize}
+
+
+
+
+
+\subsubsection{The Interactive Global Structure}
+
+Ideally, during most presentations you would like to present your
+slides in a perfectly linear fashion, presumably by pressing the
+page-down-key once for each slide. However, there are different
+reasons why you might have to deviate from this linear order:
+\begin{itemize}
+\item
+  Your presentation may contain ``different levels of detail'' that
+  may or may not be skipped or expanded, depending on the audience's
+  reaction.
+\item
+  You are asked questions and wish to show supplementary slides.
+\item
+  You present a complicated picture and you have to ``zoom out''
+  different parts to explain details.
+\item
+  You are asked questions about an earlier slide, which forces you to 
+  find and then jump to that slide.
+\end{itemize}
+You cannot really prepare against the last kind of questions. In this
+case, you can use the navigation bars and symbols to find the slide
+you are interested in, see \ref{section-navigation-bars}.
+
+Concerning the first three kinds of deviations, there are several
+things you can do to prepare ``planned detours'' or ``planned
+short cuts''.
+\begin{itemize}
+\item
+  You can add ``skip buttons.'' When such a button
+  is pressed, you jump over a well-defined part of your talk. Skip
+  button have two advantages over just pressing the forward key
+  is rapid succession: first, you immediately end up at the correct
+  position and, second, the button's label can give the audience a
+  visual feedback of what exactly will be skipped. For example, when
+  you press a skip button labeled ``Skip proof'' nobody will start
+  puzzling over what he or she has missed.
+\item
+  You can add an appendix to your talk. The appendix is kept
+  ``perfectly separated'' from the main talk. Only once you ``enter''
+  the appendix part (presumably by hyperjumping into it), does the
+  appendix structure become visible. You can put all frames that you
+  do not intend to show during the normal course of your talk, but
+  which you would like to have handy in case someone asks, into this
+  appendix.
+\item
+  You can add ``goto buttons'' and ``return buttons'' to create
+  detours. Pressing a goto button will jump to a certain part of the
+  presentation where extra details can be shown. In this part, there
+  is a return button present on each slide that will jump back to the
+  place where the goto button was pressed.
+\item
+  In \beamer, you can use the |\againframe| command to ``continue''
+  frames that you previously started somewhere, but where certain
+  details have been suppressed. You can use the |\againframe| command
+  at a much later point, for example only in the appendix to show
+  additional slides there.
+\item
+  In \beamer, you can use the |\framezoom| command to create links to
+  zoomed out parts of a complicated slide.
+\end{itemize}
+
+
+
+\subsubsection{The Local Structure}
+
+\label{section-guidelines-local}
+
+Just like your whole presentation, each frame should also be
+structured. A frame that is solely filled with some long text is very
+hard to follow. It is your job to structure the contents of each frame
+such that, ideally, the audience immediately seems which information
+is important, which information is just a detail, how the presented
+information is related, and so on.
+
+\begin{itemize}
+\item
+  Use block environments like |block|, |theorem|, |proof|, |example|,
+  and so on.
+\item
+  Prefer enumerations and itemize environments over plain text.
+\item
+  Use |description| when you define several things.
+\item
+  Do not use more than two levels of ``subitemizing.'' \beamer\
+  supports three levels, but you should not use that third level.
+\item
+  Never put more than five items in an |itemize| or an
+  |enumerate|. Thus, you need \emph{two} frames to present the Ten
+  Commandmends.
+\item
+  Emphasis is an important part of creating structure. Use |\alert| to
+  highlight important things. This can be a single word or a whole
+  sentence. However, do not overuse hilighting since this will negate
+  the effect.
+\item
+  Use columns.
+\item
+  \emph{Never} use footnotes. They needlessly disrupt the flow of
+  reading. Either what is said in the footnote is important and should
+  be put in the normal text; or it is not important and should be
+  omitted (\emph{especially} in a presentation).
+\item
+  Use |quote| or |quotation| to typeset quoted text.
+\end{itemize}
+
 
 
 
@@ -443,8 +628,9 @@ a few frames are actually part of any particular lecture.
 The |\lecture| command makes it easy to select only a certain set of
 frames from a file to be presented. This command takes (among other
 things) a label name. If you say |\includeonlylecture| with this label
-name, then only the frames following the |\lecture| command are
-shown. The frames following other |\lecture| commands are suppressed.
+name, then only the frames following the corresponding |\lecture|
+command are shown. The frames following other |\lecture| commands are
+suppressed. 
 
 By default, the |\lecture| command has no other effect. It does not
 create any frames or introduce entries in the table of
@@ -639,36 +825,9 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
 \subsubsection{Adding a Bibliography}
 
 You can use the bibliography environment and the |\cite| commands
-of \LaTeX\ in a \beamer\ presentation. However, there are a few things
-to keep in mind:
-
-\begin{itemize}
-\item
-  It is a bad idea to present a long bibliography in a 
-  presentation. Present only very few references.
-\item
-  Present references only if they are intended as ``further reading,''
-  for example at the end of a lecture.
-\item
-  Using the |\cite| commands can be confusing since the audience
-  has little chance of remembering the citations. If you cite the
-  references, always cite them with full author name and year like
-  ``[Tantau, 2003]'' instead of something like ``[2,4]'' or
-  ``[Tan01,NT02]''.
-\item
-  If you want to be modest, you can abbreviate your name when citing
-  yourself as in ``[Nickelsen and T., 2003]'' or ``[Nickelsen and T,
-  2003]''. However, this can be confusing for the audience since it is
-  often not immediately clear who exactly ``T.'' might be. I recommend
-  using the full name.
-\end{itemize}
-
-Keeping the above warnings in mind, proceed as follows to create the
-bibliography: 
-
-For a \beamer\ presentation, you will typically have to typeset your
-bibliography items partly ``by hand.'' Nevertheless, you \emph{can}
-use |bibtex| to create a ``first approximation'' of the
+of \LaTeX\ in a \beamer\ presentation. You will typically have to
+typeset your bibliography items partly ``by hand.'' Nevertheless, you
+\emph{can} use |bibtex| to create a ``first approximation'' of the
 bibliography. Copy the content of the file |main.bbl| into your
 presentation. If you are not familiar with |bibtex|, you may wish
 to consult its documentation. It is a  powerful tool for
@@ -796,68 +955,6 @@ talk.
 \subsection{Creating the Interactive Global Structure}
 
 \label{section-nonlinear}
-
-Ideally, during most presentations you would like to present your
-slides in a perfectly linear fashion, presumably by pressing the
-page-down-key once for each slide. However, there are different
-reasons why you might have to deviate from this linear order:
-\begin{itemize}
-\item
-  Your presentation may contain ``different levels of detail'' that
-  may or may not be skipped or expanded, depending on the audience's
-  reaction.
-\item
-  You are asked questions and wish to show supplementary slides.
-\item
-  You present a complicated picture and you have to ``zoom out''
-  different parts to explain details.
-\item
-  You are asked questions about an earlier slide, which forces you to 
-  find and then jump to that slide.
-\end{itemize}
-You cannot really prepare against the last kind of questions. In this
-case, you can use the navigation bars and symbols to find the slide
-you are interested in, see \ref{section-navigation-bars}.
-
-Concerning the first three kinds of deviations, the \beamer\ class
-offers several ways of preparing such ``planned detours'' or ``planned
-short cuts''.
-\begin{itemize}
-\item
-  You can easily add predefined ``skip buttons.'' When such a button
-  is pressed, you jump over a well-defined part of your talk. Skip
-  button have two advantages over just pressing the forward key
-  is rapid succession: first, you immediately end up at the correct
-  position and, second, the button's label can give the audience a
-  visual feedback of what exactly will be skipped. For example, when
-  you press a skip button labeled ``Skip proof'' nobody will start
-  puzzling over what he or she has missed.
-\item
-  You can add an appendix to your talk. The appendix is kept
-  ``perfectly separated'' from the main talk. Only once you ``enter''
-  the appendix part (presumably by hyperjumping into it), does the
-  appendix structure become visible. You can put all frames that you
-  do not intend to show during the normal course of your talk, but
-  which you would like to have handy in case someone asks, into this
-  appendix.
-\item
-  You can add ``goto buttons'' and ``return buttons'' to create
-  detours. Pressing a goto button will jump to a certain part of the
-  presentation where extra details can be shown. In this part, there
-  is a return button present on each slide that will jump back to the
-  place where the goto button was pressed.
-\item
-  You can use the |\againframe| command to ``continue'' frames that
-  you previously started somewhere, but where certain details have
-  been suppressed. You can use the |\againframe| command at a
-  much later point, for example only in the appendix to show
-  additional slides there.
-\item
-  You can use the |\framezoom| command to create links to zoomed out
-  parts of a complicated slide.
-\end{itemize}
-
-
 
 
 \subsubsection{Adding Hyperlinks and Buttons}
@@ -1171,19 +1268,16 @@ useful.
 
 \subsubsection{Adding Anticipated Zooming}
 
-When you present a graphic during a presentation, you should explain
-everything that is shown in the graphic. When graphics are imported
-from other context, they typically contain far too much information
-and should be radically simplified.
+\label{section-zooming}
 
-Sometimes however, the complexity of a graphic is intensional and you
-are willing to spend much time explaining the graphic in great
-detail. In this case, you will often run into the problem that fine
-details of the graphic are hard to discern for the audience. One way
-to solve this problem is to use the command |\framezoom|. This command
-allows you to specify that clicking on a certain area of a frame
-should zoom out this area. You can then explain the details. Clicking
-on the zoomed out picture will take you back to the original one.
+
+Anticipated zooming is necessary when you have a very complicated
+graphic that you are not willing to simplify since, indeed, all the
+complex details merit an explanation. In this case, use the command
+|\framezoom|. It allows you to specify that clicking on a certain area
+of a frame should zoom out this area. You can then explain the
+details. Clicking on the zoomed out picture will take you back to the
+original one. 
 
 \begin{command}{\framezoom\ssarg{button overlay
       specification}\ssarg{zoomed overlay
@@ -1452,13 +1546,6 @@ Section~\ref{section-navigation-symbols-template}.
 
 
 \subsection{Creating the Local Structure}
-
-Just like your whole presentation, each frame should also be
-structured. A frame that is solely filled with some long text is very
-hard to follow. It is your job to structure the contents of each frame
-such that, ideally, the audience immediately seems which information
-is important, which information is just a detail, how the presented
-information is related, and so on.
 
 \LaTeX\ provides different commands for structuring text ``locally,''
 for example, via the |itemize| environment. These environments
@@ -1910,41 +1997,17 @@ The environment \declare{|definitions|} behaves exactly the same way.
 
 The environment \declare{|examples|} behaves exactly the same way.
 
-Some remarks on numbered theorems:
-
 \beamernote
 The default template for typesetting theorems suppresses the theorem
 number, even if this number is ``available'' for typesetting (which it
 is by default in all predefined environments; but if you define your
-own environment using |\newtheorem*| no number will be available). I would 
-like to discourage using numbered theorems in presentations. The
-audience has no chance of remembering these numbers. \emph{Never} say
-things like ``now, by Theorem~2.5 that I showed you earlier, we have \dots''
-It would be much better to refer to, say, Kummer's
-Theorem instead of Theorem~2.5. If Theorem~2.5 is some obscure theorem
-that does not have its own name (like Kummer's Theorem or Main Theorem
-or Second Main Theorem or Key Lemma), then the audience will have
-forgotten about it anyway by the time you refer to it again.
-
-In my opinion, the only situtation in which numbered theorems make
-sense in a presentation is in a lecture, in which the students can read
-lecture notes in parallel to the lecture where the theorems are
-numbered in exactly the same way. 
+own environment using |\newtheorem*| no number will be available).
 
 \articlenote
 In |article| mode, theorems are automatically numbered. By specifying
 the class option |envcountsect|, theorems will be numbered locally to each
 section, which is usually a good idea, except for very short
 articles.
-
-The predefined environments number everything consecutively. Thus if
-there are one theorem, one lemma, and one definition, you would have
-Theorem~1, Lemma~2, and Definition~3. Some people prefer all three to
-be numbered~1. I would \emph{strongly} like to discourage this. The
-problem is that this makes it virtually impossible to find anything
-since Theorem~2 might come after Definition~10 or the other way
-round. Papers and, worse, books that have a Theorem~1 and a
-Definition~1 are a pain. Do not inflict pain on other people.
 
 \begin{environment}{{proof}\sarg{action specification}\oarg{proof
 name}\sarg{action specification}}

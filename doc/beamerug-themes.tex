@@ -99,6 +99,8 @@ color themes and font themes are discussed in the sections on colors
 and fonts, respectively.
 
 
+
+
 \subsection{Guidelines}
 
 \beamer\ comes with a number of different themes. Here are some
@@ -119,13 +121,18 @@ presentation:
   introductory speech, a table of contents is likely to just seem
   silly.
 \item
+  A theme showing the author's name and affiliation is appropriate in
+  situation where the audience is likely not to know you (like during
+  a conference). If everyone knows you, having your name on each slide
+  is just vanity. 
+\item
   First choose a presentation theme that has a layout that is
   appropriate for your talk.
 \item
   Next you might wish to change the colors by installing a different
   color theme. This can drastically change the appearance of your
   presentation. A ``colorful'' theme like |Berkeley| will look much
-  less flashy sober if you use the color themes |seahorse| and |lily|. 
+  less flashy if you use the color themes |seahorse| and |lily|. 
 \item
   You might also wish to change the fonts by installing a different
   font theme.
@@ -155,7 +162,7 @@ was a conference or workshop that I attended or that a
 co-author of mine attended. 
 
 
-\subsubsection{Presentation Themes Without Navigation Bars}
+\subsubsection{Presentation Themes without Navigation Bars}
 
 \begin{themeexample}{default}
   As the name suggests, this theme is installed by default. It is a
@@ -403,7 +410,33 @@ co-author of mine attended.
 \end{themeexample}
 
 
+\subsubsection{Presentation Themes Included For Compatibility}
 
+Earlier versions of \beamer\ included some further themes. These
+themes are still available for compatibility, though they are now
+implemented differently (they also mainly install appropriate color,
+font, element, and layout themes). However, they may or may not honour
+color themes and they will not be supported in the future. The
+following list shows which of the new themes should be used instead of
+the old themes. (When switching, you may want to use the font theme
+|bold| with the option |onlysmall|.)
+
+\medskip
+\begin{tabular}{lp{13cm}}
+  Old theme & Replacement options \\\hline
+  none & Use |compatibility|. \\
+  |bars| & Try |Dresden| instead. \\
+  |classic| & Try |Singapore| instead. \\
+  |lined| & Try |Szeged| instead. \\
+  |plain| & Try none or |Pittsburgh| instead. \\
+  |sidebar| & Try |Goettingen| for the light version and |Marburg| for
+  the dark version. \\
+  |shadow| & Try |Warsaw| instead. \\
+  |split| & Try |Malmoe| instead. \\
+  |tree| & Try |Montpellier| and, for the bars version, |Antibes| or
+  |JuansLesPins|. 
+\end{tabular}
+\medskip
 
 
 

@@ -15,20 +15,25 @@ This section explains how you can create frames and overlays.
 \label{section-frame-guidelines}
 
 In the following, I sketch some guidelines that I stick to on what to
-put on slides and what not to put. You can certainly ignore any of
+put on slides and what not to put. You can certainly break any of
 these guidelines, but you should be aware of it when you ignore a rule
-and you should be able to justify it to yourself.
+and you should be able to justify it to yourself. The central rule of
+typography also applies to creating presentations:
+\emph{Every rule can be broken, but no rule may be ignored.}
 
 
 \subsubsection{Frame Content}
 
 \begin{itemize}
 \item
-  A frame with too little on it is better than a
-  frame with too much on it.
+  A frame with too little on it is better than a frame with too much
+  on it.
+\item
+  A usual frame should have between 20 and 40 words. The
+  maximum should be at about 80 words.
 \item
   Do not assume that everyone in the audience is an expert on the
-  subject matter. (Remember the Ignorant Audience Law.) Even if the
+  subject matter. Even if the
   people listening to you should be experts, they may last have heard
   about things you consider obvious several years ago. You should
   always have the time for a quick reminder of what exactly a
@@ -87,28 +92,19 @@ and you should be able to justify it to yourself.
 
 \begin{itemize}
 \item
-  Lance Forthnow has claimed: PowerPoint users give better talks. His
-  reason: Since PowerPoint is so bad at typesetting math, they use
-  less math, making the talk easier to understand.
-
-  There is a lot of truth in this in my opinion. The great
-  math-typesetting capabilities of \TeX\ can easily lure you into
-  using many more formulas than is necessary and healthy. For example,
-  instead of writing {\catcode `|=12``Since $\left|\{x \in \{0,1\}^* \mid x \sqsubset
-    y\}\right| < \infty$}, we have\dots'' use ``Since $y$ has only
-  finitely many prefixs, we have\dots''
-
-  You will be suprised how much mathematical text can be reformulated
-  in plain English or can just be omitted. Naturally, if some
-  mathematical argument is what you are actually talking about, as in
-  a math lecture, make use of \TeX's typesetting capabilities to your
-  heart's content. 
+  Use short sentences.
+\item
+  Prefer phrases over complete sentences. For example,
+  instead of ``The figure on the left shows a Turing machine, the
+  figure on the right shows a finite automaton.''\ try ``Left: A Turing
+  machine. Right: A finite automaton.'' Even better, turn this into an
+  itemize or a description.
+\item
+  Punctuate correctly: no punctuation after phrases, complete
+  punctuation in and after complete sentences.
 \item
   \emph{Never} use a smaller font size to ``fit more on a frame.''
   \emph{Never ever} use the \emph{evil} option |shrink|.
-\item
-  Prefer enumerations and itemize environments over plain text. Do not
-  use long sentences.
 \item
   Do not hyphenate words. If absolutely necessary, hyphenate words
   ``by hand,'' using the command~|\-|.
@@ -126,8 +122,27 @@ and you should be able to justify it to yourself.
 \item
   Do not use the option |allowframebreaks| except for long
   bibliographies. Do not use long bibliographies.
+\item
+  Lance Forthnow claims: PowerPoint users give better talks. His
+  reason: Since PowerPoint is so bad at typesetting math, they use
+  less math, making their talks easier to understand.
+
+  There is some truth in this in my opinion. The great
+  math-typesetting capabilities of \TeX\ can easily lure you into
+  using many more formulas than is necessary and healthy. For example,
+  instead of writing {\catcode `|=12``Since $\left|\{x \in \{0,1\}^*
+  \mid x \sqsubseteq y\}\right| < \infty$}, we have\dots''\ use ``Since
+  $y$ has only finitely many prefixes, we have\dots''
+
+  You will be suprised how much mathematical text can be reformulated
+  in plain English or can just be omitted. Naturally, if some
+  mathematical argument is what you are actually talking about, as in
+  a math lecture, make use of \TeX's typesetting capabilities to your
+  heart's content. 
 \end{itemize}
 
+Guidelines on structuring individual frames are given in
+Section~\ref{section-guidelines-local}. 
 
 
 
@@ -146,11 +161,11 @@ a series of slides. You create a frame using the command
 |\frame| or the environment |frame|, which do the same. The command
 takes one parameter, namely the contents of the frame. All of the
 text that is not tagged by overlay specifications is shown on all
-slides of the frame. The concept of overlay specifications is explain
-in more detail in later subjections. For the moment, let's just say
+slides of the frame. (Overlay specifications is explain
+in more detail in later subsections. For the moment, let's just say
 that an overlay specification is a list of number or number ranges in
 pointed brackets that is put after certain commands as in
-|\uncover<1,2>{Text}|. If a frame contains commands that have an
+|\uncover<1,2>{Text}|.) If a frame contains commands that have an
 overlay specification, the frame will contain multiple slides;
 otherwise it contains only one slide.
 
@@ -164,7 +179,7 @@ otherwise it contains only one slide.
   Section~\ref{section-verbatim}. 
  
   The normal \LaTeX\ command |\frame| is available \emph{inside}
-  frames with its usual meaning. Bot outside and inside frames it is
+  frames with its usual meaning. Both outside and inside frames it is
   always available as {\color{red!75!black}|\framelatex|}. 
  
   \example
@@ -184,8 +199,8 @@ otherwise it contains only one slide.
 \end{verbatim}
 
   Normally, the complete \meta{environment contents} is put on a slide. If
-  the text does not fit on a slide being too high, it will be
-  squeezed as much as possible, a warning issued, and the text
+  the text does not fit on a slide, being too high, it will be
+  squeezed as much as possible, a warning will be issued, and the text
   just extends unpleasantly over the bottom. You can use the option
   |allowframebreaks| to cause the \meta{frame text} to be split among several
   slides, though you cannot use overlays then. See the explanation of
@@ -245,7 +260,7 @@ otherwise it contains only one slide.
   \item
     \declare{|allowframebreaks|}\opt{|=|\meta{fraction}}. When this option is
     given, the frame will be automatically broken up into several
-    frames, if is does not fit on a single slide. In detail, when this
+    frames if the text does not fit on a single slide. In detail, when this
     option is given, the following things happen:
     \begin{enumerate}
     \item
@@ -258,7 +273,7 @@ otherwise it contains only one slide.
       Any notes for the frame created using the |\note| command will
       be inserted after the first page of the frame.
     \item
-      Any footnotes for the frame will be inserted at the last page of
+      Any footnotes for the frame will be inserted on the last page of
       the frame.
     \item
       If there is a frame title, each of the pages will have this
@@ -346,8 +361,7 @@ otherwise it contains only one slide.
     \declare{|label=|\meta{name}} causes the frame's contents to
     be stored under the name \meta{name} for later resumption using
     the command |\againframe|. If this option is given, you cannot
-    include verbatim text in the frame, even if you specify an overlay
-    specification like |<1>|. The frame is still rendered
+    directly include verbatim text in the frame. The frame is still rendered
     normally. See also |\againframe|.
 
     Furthermore, on each slide of the frame a label with the name
@@ -376,7 +390,7 @@ otherwise it contains only one slide.
   by two graphics.
 \begin{verbatim}
 \usetitlepagetemplate{
-  \beamerline{\pgfuseimage{toptitle}}
+  \pgfuseimage{toptitle}
   \vskip0pt plus 1filll
 
   \begin{centering}
@@ -386,7 +400,7 @@ otherwise it contains only one slide.
   \end{centering}
 
   \vskip0pt plus 1filll
-  \beamerline{\pgfuseimage{bottomtitle}}
+  \pgfuseimage{bottomtitle}
 }
 \begin{frame}[plain]
   \titlepage
@@ -412,7 +426,7 @@ otherwise it contains only one slide.
     \beamer\ knows this, it can increase the horizontal width
     proportionally such that the shrunken text once more fills the
     entire frame. If, however, the percentage is not enough, the text
-    will be shrunken as needed and you will be punished by a warning
+    will be shrunken as needed and you will be punished with a warning
     message.
 
     The best way to use this option is to identify frames that are
@@ -423,7 +437,7 @@ otherwise it contains only one slide.
 
     Using this option is \emph{very evil}. It will
     result in changes of the font size from slide to slide, which is a
-    typographic nightmare. Its usage can always be avoided by
+    typographic nightmare. Its usage can \emph{always} be avoided by
     restructuring and simplifying frames, which will result in a
     better presentation.
 
@@ -451,14 +465,14 @@ otherwise it contains only one slide.
   \lyxnote
   You can pass options and an overlay specification to a frame by
   giving these in \TeX-mode as the first thing in the frame
-  title. (Some magic is performed to extract them in \LyX\ mode from
+  title. (Some magic is performed to extract them in \LyX-mode from
   there.)
 
   \lyxnote
   The style ``BeginPlainFrame'' is included as a convenience. It
   passes the |plain| option to the frame. To pass further options to a
   plain frame, you should use the normal ``BeginFrame'' style and
-  specify all options (include |plain|).
+  specify all options (including |plain|).
 
   \lyxnote
   In \LyX, you can insert verbatim text directly even in overlayed
@@ -636,6 +650,42 @@ change this using the following class options:
 
 
 
+\subsubsection{Margin Sizes}
+
+The ``paper size'' of a \beamer\ presentation is fixed to 128mm times
+96mm. The aspect ratio of this size is 4:3, which is exactly what most
+beamers offer these days. It is the job of the
+presentation program (like |acroread| or |xpdf|) to display the slides
+at full screen size. The main advantage of using a small ``paper size''
+is that you can use all your normal fonts at their natural sizes. In
+particular, inserting a graphic with 11pt labels will result in
+reasonably sized labels during the presentation.
+
+You should refrain from changing the ``paper size.'' However, you
+\emph{can} change the size of the left and right margins, which
+default to 1cm. To change them, you should use the following two
+commands:
+
+\begin{command}{\beamersetleftmargin\marg{left margin dimension}}
+  Sets a new left margin. This excludes the left sidebar. Thus, it is
+  the distance between the right edge of the left sidebar and the left
+  edge of the text. This command can only be used in the preamble
+  (before the |document| environment is used).
+  \example |\beamersetleftmargin{1cm}|
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+\begin{command}{\beamersetrightmargin\marg{left margin dimension}}
+  Like |\beamersetleftmargin|, only for the right margin.
+\end{command}
+
+For more information on sidebars, see
+Section~\ref{section-sidebar-templates}. 
+
+
+
 \subsubsection{Restricting the Slides of a Frame}
 \label{subsection-restriction}
 
@@ -748,6 +798,13 @@ done using two special commands:
     does this), then you do \emph{not} want the verbatim text to
     inherit its color from the ``outside.'' In this case, you should
     give the |colored| option.
+  \item
+    \declare{|width=|\meta{dimension}} sets the width of the verbatim
+    box. The default is the text width at the moment when the
+    |\defverbatim| command is used; but this will be too large if
+    the box is used inside a |columns| environment later on. In such a
+    case you can use this option to specify the width the box will
+    later need to have.
   \end{itemize}  
 
   \example
@@ -1006,10 +1063,10 @@ special:
   command has a \emph{different} effect inside an |overprint|
   environment, see the description of |overprint|.
 
-  If the \meta{modifier} |+| is given, hidden text will not be treated
+  If the \meta{modifier} is |+|, hidden text will not be treated
   as covered, but as invisible. The difference is the same as the
   difference between |\uncover| and |\visible|. The modifier |*| may
-  not be given if not \meta{text} argument is present.
+  not be given if no \meta{text} argument is present.
   
   \example
 \begin{verbatim}
@@ -1078,7 +1135,7 @@ special:
   shown (``uncovered'') only on the specified slides. On other slides, the
   text still occupies space and it is still typeset, but it is not
   shown or only shown as if transparent. For details on how to specify
-  whether the text is invisible or just transparent, see
+  whether the text is invisible or just transparent see
   Section~\ref{section-transparent}. 
   \example |\uncover<3->{Text shown from slide 3 on.}|
 
@@ -1089,7 +1146,7 @@ special:
 \begin{command}{\visible\sarg{overlay specification}\marg{text}}
   This command does almost the same as |\uncover|. The only difference
   is that if the text is not shown, it is never shown in a transparent
-  way, but rather it is not shown at all. Thus for this command the
+  way, but rather it is not shown at all. Thus, for this command the
   transparency settings have no effect.
   
   \example |\visible<2->{Text shown from slide 2 on.}|
@@ -1138,7 +1195,7 @@ special:
   \example
 \begin{verbatim}
 \def\colorize<#1>{%
-  \temporal<#1>{\color{structure!50}}{\color{black}}{\color{black!50}}}
+  \temporal<#1>{\color{red!50}}{\color{black}}{\color{black!50}}}
 
 \begin{frame}
   \begin{itemize}
