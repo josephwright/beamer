@@ -1,0 +1,74 @@
+\ProvidesPackage{beamerthemeAntibes}[2004/05/24 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2004 by Manuel Carro.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\mode<presentation>
+
+\usetheme[footheight=6pt,headheight=6pt]{boxes}
+
+\newif\ifbeamer@secheader
+\beamer@secheaderfalse
+
+\DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\ProcessOptionsBeamer
+
+
+
+
+\addfootboxtemplate%
+    {\color{structure}}%
+    {\color{averagebackgroundcolor}\hfill\tiny\raisebox{-2pt}{\insertshortauthor~~(\insertshortinstitute)}\hfill}
+\addfootboxtemplate%
+    {\color{structure!70!averagebackgroundcolor}}%
+    {\color{averagebackgroundcolor}\hfill\tiny\raisebox{-2pt}{\insertshorttitle}\hfill}
+\addfootboxtemplate%
+    {\color{structure!50!averagebackgroundcolor}}%
+    {\color{black!50!structure}\hfill\tiny\raisebox{-2pt}{\insertdate{}
+        \hspace*{2em} \insertframenumber{} /
+        \inserttotalframenumber}\hspace*{1ex}} 
+
+\ifbeamer@secheader
+\addheadboxtemplate%
+    {\color{beamerstructure!70!averagebackgroundcolor}}%
+    {\color{white}\hfill\tiny\raisebox{-2pt}{\insertsection}\hfill}
+\addheadboxtemplate%
+    {\color{beamerstructure!30!averagebackgroundcolor}}%
+    {\color{white}\hfill\tiny\raisebox{-2pt}{\hfill\insertsubsection}\hfill}
+\else
+{}
+\fi
+
+% The boxes look nice.  I only wanted to have some less gaudi ones.
+\beamertemplateshadowblocks
+
+\newcommand{\beamertemplateupperlogorightsidenavigation}{
+  \userightsidebartemplate{0cm}{%
+    \vskip2pt%
+    \llap{\insertlogo\hskip0.1cm}%
+    \vfill%
+    \vskip2pt%
+    \llap{\insertnavigationsymbols\hskip0.1cm}%
+    \vskip2pt}
+}
+
+\beamertemplateballitem
+\beamertemplatelargepartpage
+\beamertemplatelargetitlepage
+\beamertemplatenumberedballsectiontoc
+\beamertemplateshadingbackground{yellow!10}{structure!10}
+\beamertemplatetransparentcovereddynamic
+\beamertemplateupperlogorightsidenavigation
+
+\usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
+\usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\bigstar$}}
+
+\beamersetleftmargin{1em}
+
+
+\mode
+<all>
