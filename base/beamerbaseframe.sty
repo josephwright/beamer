@@ -22,6 +22,10 @@
 
 \newbox\beamer@framebox
 \newbox\beamer@frametitlebox
+\newbox\beamer@zoombox
+\newcount\beamer@zoomcount
+\newcount\beamer@zoomframecount
+\newdimen\beamer@frametextheight
 
 \mode
 <all>
@@ -64,14 +68,14 @@
   \xdef\beamer@frameendpage{\the\c@page}% every time
   \beamer@setuplinks%
   \beamer@displaybreak%
+  \global\setbox\beamer@zoombox=\box\voidb@x%
+  \def\beamer@zoomer{}%
+  \gdef\insertframetitle{}%
+  \gdef\insertframesubtitle{}%
+  \gdef\beamer@frametitle{}%
+  \gdef\beamer@shortframetitle{}%
+  \gdef\beamer@framesubtitle{}%
   \let\beamer@startcomment=\beamer@startcommentinframe%
-  % Insert labels if necessary:
-  \ifx\beamer@againname\@empty\else%
-    \label<\the\beamer@slideinframe>{\beamer@againname<\the\beamer@slideinframe>}%
-    \ifnum\beamer@slideinframe=1\relax%
-      \label<1>{\beamer@againname}%
-    \fi%
-  \fi%
   % Start slide:
   \beamer@framenotesbegin%
     \global\setbox\beamer@framebox=\vbox\bgroup%
@@ -83,8 +87,17 @@
         \textwidth=\beamer@shrinkfactorinv\textwidth%
         \linewidth=\beamer@shrinkfactorinv\linewidth%
       \fi%
+      % Insert labels if necessary:
+      \ifx\beamer@againname\@empty\else%
+        \nointerlineskip\vbox to0pt{\vss%
+        \label<\the\beamer@slideinframe>{\beamer@againname<\the\beamer@slideinframe>}%
+        \ifnum\beamer@slideinframe=1\relax%
+          \label<1>{\beamer@againname}%
+        \fi%
+        }\nointerlineskip%
+      \fi%
       \vbox{}}%
-  {\end{beamer@framepauses}%
+    {\end{beamer@framepauses}%
   \egroup%
   \ifx\beamer@frametitle\@empty%
     \setbox\beamer@frametitlebox=\box\voidb@x%
@@ -94,18 +107,31 @@
       \beamer@headrenderer%
     }%
   \fi%
+  \ifbeamer@plainframe%
+    \beamer@frametextheight=\paperheight%
+  \else%
+    \beamer@frametextheight=\textheight%
+  \fi%
+  \advance\beamer@frametextheight by-\ht\beamer@frametitlebox%
+  \advance\beamer@frametextheight by-\dp\beamer@frametitlebox%
   \ifbeamer@shrink%
     \beamer@shrinkframebox%
   \fi%
-  \setbox\beamer@framebox=\vbox{%
-    \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
-    \nointerlineskip\unvbox\beamer@frametitlebox%
-    \nobreak\beamer@frametopskip\nobreak%
-    \unvbox\beamer@framebox%
-    % bottom skip is added in autobreakframebox
+  \ifx\beamer@zoomer\@empty  
+    \setbox\beamer@framebox=\vbox{%
+      \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+      \nointerlineskip\unvbox\beamer@frametitlebox%
+      \nobreak%
+      \nointerlineskip\box\beamer@zoombox\nointerlineskip%
+      \nobreak\beamer@frametopskip\nobreak%
+      \unvbox\beamer@framebox%
+      % bottom skip is added in autobreakframebox
     }%
+    \beamer@autobreakframebox%
+  \else%
+    \beamer@zoomer%
+  \fi%
   \beamer@undolabels%
-  \beamer@autobreakframebox%
   \beamer@framenotesend%
   \box\beamer@framebox}
 
@@ -132,6 +158,7 @@
 \resetcounteronoverlays{mpfootnote}
 \resetcounteronoverlays{figure}
 \resetcounteronoverlays{table}
+\resetcountonoverlays{beamer@zoomframecount}
 
 \def\beamer@savecounter#1{%
   \@ifundefined{#1}{}%
@@ -165,9 +192,11 @@
 \define@key{beamerframe}{relabel}{\def\beamer@againname{#1}%
   \def\beamer@undolabels{{\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}}%
 }
-\define@key{beamerframe}{plain}[true]{\def\beamer@frametemplate{\beamer@frametemplate@plain}}
-\define@key{beamerframe}{template}{%
-  \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
+\define@key{beamerframe}{plain}[true]{%
+  \beamer@plainframetrue%
+  \def\beamer@frametemplate{\beamer@frametemplate@plain}}
+%\define@key{beamerframe}{template}{%
+%  \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
 \define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
 \define@key{beamerframe}{c}[true]{% centered
   \def\beamer@frametopskip{\vfill}%
@@ -204,6 +233,7 @@
 \newif\ifbeamer@containsverbatim
 \newif\ifbeamer@autobreak
 \newif\ifbeamer@shrink
+\newif\ifbeamer@plainframe
 
 % Check for old version:
 
@@ -244,19 +274,17 @@
   \def\beamer@cramped{}%
   \def\beamer@displaybreak{}%
   \beamer@autobreakcount=0\relax%
+  \beamer@zoomcount=0\relax%
   \beamer@containsverbatimfalse%
   \beamer@autobreakfalse%
   \beamer@shrinkfalse%
+  \beamer@plainframefalse%
   \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
   \refstepcounter{framenumber}%
+  \advance\beamer@zoomframecount by1\relax%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
-  \gdef\insertframetitle{}%
-  \gdef\insertframesubtitle{}%
-  \gdef\beamer@frametitle{}%
-  \gdef\beamer@shortframetitle{}%
-  \gdef\beamer@framesubtitle{}%
   \gdef\beamer@framestartpage{}%
   \gdef\beamer@whichframes{#1}%
   \ifx\beamer@framerestriction\@undefined\else% restriction stuff
@@ -363,6 +391,110 @@
 
 
 
+%
+% Zoom stuff
+%
+
+\define@key{beamerzoom}{border}[1]{\def\beamer@zoomborderwidth{#1}}
+
+\def\framezoom<#1><#2>{\@ifnextchar[{\beamer@framezoom<#1><#2>}{\beamer@framezoom<#1><#2>[]}}
+\def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){%
+  \advance\beamer@zoomcount by1\relax%
+  \def\beamer@zoomborderwidth{0}%
+  \edef\beamer@labelzoomed{beamer@labelzoomed@\the\beamer@zoomframecount @\the\beamer@zoomcount}%
+  \setkeys{beamerzoom}{#3}%
+  \only<#1>{%
+    {\hypersetup{pdfhighlight={/P},pdfborder={0 0 \beamer@zoomborderwidth}}%
+    \global\setbox\@tempboxa=\vbox{\hyperlink{\beamer@labelzoomed}{\vbox to #7{\hbox
+          to#6{\hfil}\vfil}}}}%
+    \ht\@tempboxa=0pt%
+    \wd\@tempboxa=0pt%
+    \dp\@tempboxa=0pt%
+    \setbox\@tempboxa=\vbox{\moveright#4\hbox{\lower#5\vbox{\box\@tempboxa}}}%
+    \ht\@tempboxa=0pt%
+    \wd\@tempboxa=0pt%
+    \dp\@tempboxa=0pt%
+    \global\setbox\beamer@zoombox=\vbox to0pt{\unvbox\beamer@zoombox\box\@tempboxa}%
+  }%
+  \only<#2>{%
+    \@ifundefined{\beamer@labelzoomed}%
+    {%
+      \hypertarget{\beamer@labelzoomed}{}%
+      \expandafter\gdef\csname\beamer@labelzoomed\endcsname{}%
+    }{}%
+    \gdef\beamer@zoomer{%
+      \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
+        \nointerlineskip\beamer@frametopskip\nobreak\nointerlineskip%
+        \unvbox\beamer@framebox\nobreak\nointerlineskip%
+        \beamer@framebottomskip\vfil%
+        \ifvoid\beamer@footins%
+        \else%
+          \normalcolor%
+          \footnoterule%
+          \unvbox \beamer@footins%
+          \global\setbox\beamer@footins=\box\voidb@x%
+        \fi%
+      }%
+      % compute zoom factor
+      \@tempdima=\beamer@frametextheight%
+      \@tempdimb=#7\relax%
+      \@tempcnta=\@tempdimb%
+      \divide\@tempcnta by4096\relax%
+      \multiply\@tempdima by16\relax%
+      \divide\@tempdima by\@tempcnta%
+      \@tempdimb=\paperwidth%
+      \ifbeamer@plainframe%
+      \else%
+        \advance\@tempdimb by-\beamer@leftsidebar%
+        \advance\@tempdimb by-\beamer@rightsidebar\relax%
+      \fi%
+      \@tempdimc=#6\relax%
+      \@tempcntb=\@tempdimc%
+      \divide\@tempcntb by4096\relax%
+      \multiply\@tempdimb by16\relax%
+      \divide\@tempdimb by\@tempcntb%
+      \ifdim\@tempdimb<\@tempdima%
+        \@tempdima=\@tempdimb%
+      \fi%
+      \edef\beamer@temp{\strip@pt\@tempdima}%  
+      \@tempdimc=\beamer@frametextheight%
+      \advance\@tempdimc by4pt%
+      \@tempdimb=\paperwidth%
+      \ifbeamer@plainframe%
+      \else%
+        \advance\@tempdimb by-\beamer@leftsidebar%
+        \advance\@tempdimb by-\beamer@rightsidebar\relax%
+      \fi%
+      \setbox\@tempboxa=\vbox{\hsize=\@tempdimb\Acrobatmenu{GoBack}{\vbox to
+          \beamer@frametextheight{\hbox to\@tempdimb{\hfil}\vfil}}}%
+      \ht\@tempboxa=0pt%
+      \wd\@tempboxa=0pt%
+      \dp\@tempboxa=0pt%
+      \setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
+          \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
+          \begin{pgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
+            \pgfbox[left,top]{\box\@tempboxa}
+            \pgfrect[clip]{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
+            \begin{pgfmagnify}{\beamer@temp}{\beamer@temp}
+              \@tempdima=#4\relax%
+              \@tempdimb=#5\relax%
+              \pgftranslateto{\pgfpoint{-\@tempdima}{\@tempdimb}}
+              \pgfbox[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}
+            \end{pgfmagnify}
+          \end{pgfpicture}%
+        }}%
+      \setbox\beamer@framebox=\vbox{%
+        \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+        \nointerlineskip\unvbox\beamer@frametitlebox%
+        \nobreak%
+        \box\beamer@framebox%
+        \nobreak%
+        \beamer@exitcode%
+      }%
+    }%
+  }%
+}
+
 
 %
 % Auto break stuff
@@ -392,23 +524,22 @@
 \def\beamer@autobreakframebox{%
   \global\setbox\beamer@splitbox=\box\voidb@x%
   \ifbeamer@autobreak%
-%    \@tempdima=\ht\beamer@framebox%
-%    \ifdim\@tempdima>\textheight%
-      % Ok, frame was overful -> split it!
-      \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
-      \global\setbox\beamer@splitbox=\box\beamer@framebox%
-      \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa\beamer@framebottomskip\vfil%
-        \ifvoid\beamer@splitbox%
-          \ifvoid\beamer@footins%
-          \else%
-            \normalcolor%
-            \footnoterule%
-            \unvbox \beamer@footins%
-            \global\setbox\beamer@footins=\box\voidb@x%
-          \fi%
-        \fi%       
-        \beamer@exitcode%
-      }%
+    % Ok, frame was overful -> split it!
+    \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
+    \global\setbox\beamer@splitbox=\box\beamer@framebox%
+    \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa%
+      \beamer@framebottomskip\vfil%
+      \ifvoid\beamer@splitbox%
+        \ifvoid\beamer@footins%
+        \else%
+          \normalcolor%
+          \footnoterule%
+          \unvbox \beamer@footins%
+          \global\setbox\beamer@footins=\box\voidb@x%
+        \fi%
+      \fi%       
+      \beamer@exitcode%
+    }%
   \else%
     \setbox\beamer@framebox=\vbox to\textheight{\unvbox\beamer@framebox%
       \beamer@framebottomskip%
@@ -417,6 +548,7 @@
         \normalcolor%
         \footnoterule%
         \unvbox \beamer@footins%
+        \global\setbox\beamer@footins=\box\voidb@x%
       \fi%
       \beamer@exitcode}%
     \global\setbox\beamer@footins=\box\voidb@x%
@@ -443,13 +575,10 @@
 
 \def\beamer@shrinkframebox{%
   \@tempdima=\ht\beamer@framebox%
-  \@tempdimb=\textheight%
-  \advance\@tempdimb by-\ht\beamer@frametitlebox%
-  \advance\@tempdimb by-\dp\beamer@frametitlebox%
-  \ifdim\@tempdima>\@tempdimb%
+  \ifdim\@tempdima>\beamer@frametextheight%
     \@tempcnta=\@tempdima%
     \divide\@tempcnta by 65536\relax%
-    \@tempdimc=\@tempdimb%
+    \@tempdimc=\beamer@frametextheight%
     \divide\@tempdimc by\@tempcnta\relax%
     \ifdim\@tempdimc>\beamer@shrinkfactor pt%
       \@tempdimc=\beamer@shrinkfactor pt%
@@ -461,8 +590,8 @@
       \beamer@shrinkpercentage\space percent}%
     \fi%
     \edef\beamer@factortemp{\strip@pt\@tempdimc}%
-    \setbox\beamer@framebox=\vbox to\@tempdimb{%
-      \begin{pgfpicture}{0pt}{-\@tempdimb}{0pt}{0pt}
+    \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
+      \begin{pgfpicture}{0pt}{-\beamer@frametextheight}{0pt}{0pt}
         \begin{pgfmagnify}{\beamer@factortemp}{\beamer@factortemp}
           \pgfbox[left,top]{\box\beamer@framebox}
         \end{pgfmagnify}

@@ -1574,7 +1574,13 @@ contain multiple slides; otherwise it contains only one slide.
 
   \example A frame with a picture completely filling the frame:  
 \begin{verbatim}
-\frame[plain]{\hfill\pgfimage[height=9.6cm]{bigimagefilename}\hfill}
+\frame[plain]{%
+  \nointerlineskip%
+  \begin{centering}%
+    \pgfimage[height=\paperheight]{somebigimagefile}%
+    \par%
+  \end{centering}%
+}
 \end{verbatim}
   
   \example A title page, in which the head- and footlines are replaced
@@ -1689,87 +1695,6 @@ specification. If so, it is assumed to be an overlay specification.
 Note that there is \emph{no} environment for creating frames. The
 reason is that I simply have not been able to come up with an idea of
 how to implement it in the presence of multiple overlays.
-
-
-\begin{command}{\againframe\sarg{overlay
-      specification}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\marg{name}}
-  \beamernote
-  Resumes a frame that was previously created using |\frame|
-  with the option |label=|\meta{name}. You must have used this option,
-  just placing a label inside a frame ``by hand'' is not enough. You
-  can use this command to ``continue'' a frame that has been
-  interrupted by another frame. The effect of this command is to call
-  the |\frame| command with the given \meta{overlay specification},
-  \meta{default overlay specification} (if present), and
-  \meta{options} (if present) and with the original frame's contents. 
-
-  \example
-\begin{verbatim}
-\frame<1-2>[label=myframe]
-{
-  \begin{itemize}
-  \item<alert@1> First subject.
-  \item<alert@2> Second subject.
-  \item<alert@3> Third subject.
-  \end{itemize}
-}
-
-\frame
-{
-  Some stuff explaining more on the second matter.
-}
-
-\againframe<3>{myframe}
-\end{verbatim}
-  The effect of the above code is to create four slides. In the first
-  two, the items 1 and~2 are hilighted. The third slide contains the
-  text ``Some stuff explaining more on the second matter.'' The fourth
-  slide is identical to the first two slides, except that the third
-  point is now hilighted.
-
-  \example
-\begin{verbatim}
-\frame<1>[label=Cantor]
-{
-  \frametitle{Main Theorem}
-
-  \begin{Theorem}
-    $\alpha < 2^\alpha$ for all ordinals~$\alpha$.
-  \end{Theorem}
-
-  \begin{overprint}
-  \onslide<1>
-    \hyperlink{Cantor<2>}{\beamergotobutton{Proof details}}
-
-  \onslide<2->
-    % this is only shown in the appendix, where this frame is resumed.
-    \begin{proof}
-      As shown by Cantor, ...
-    \end{proof}
-
-    \hfill\hyperlink{Cantor<1>}{\beamerreturnbutton{Return}}
-  \end{overprint}
-}
-
-...
-\appendix
-
-\againframe<2>{Cantor}
-\end{verbatim}
-  In this example, the proof details are deferred to a slide in the
-  appendix. Hyperlinks are setup, so that one can jump to the proof
-  and go back.
-
-  \articlenote
-  This command is ignored.
-
-  \lyxnote
-  Use the style ``AgainFrame'' to insert an |\againframe| command. The
-  \meta{label name} is the text on following the style name
-  and is \emph{not} put in \TeX-mode. However, an overlay specification
-  must be given in \TeX-mode and it must preceed the label name.
-\end{command}
-
 
 
 
@@ -2695,64 +2620,18 @@ been invoked.
 
 \section{Structuring a Presentation}
 
-\subsection{Global Structure of Presentations}
 
-Ideally, during most presentations you would like to present your
-slides in a perfectly linear fashion, presumably by pressing the
-page-down-key once for each slide. However, there are different
-reasons why you might have to deviate from this linear order:
-\begin{itemize}
-\item
-  Your presentation may contain ``different levels of detail'' that
-  may or may not be skipped or expanded, depending on the audience's
-  reaction.
-\item
-  You are asked questions and wish to show supplementary slides.
-\item
-  You are asked questions about an earlier slide, which forces you to 
-  find and then jump to that slide.
-\end{itemize}
-You cannot really prepare against the last kind of questions. In this
-case, you can use the navigation bars and symbols to find the slide
-you are interested in, see \ref{section-navigation-bars}.
+\subsection{Creating the Static Global Structure}
 
-Concerning the first two kinds of deviations, the \beamer\ class
-offers several ways of preparing such ``planned detours'' or ``planned
-short cuts''.
-\begin{itemize}
-\item
-  You can easily add predefined ``skip buttons.'' When such a button
-  is pressed, you jump over a well-defined part of your talk. Skip
-  button have two advantages over just pressing the forward key
-  is rapid succession: first, you immediately end up at the correct
-  position and, second, the button's label can give the audience a
-  visual feedback of what exactly will be skipped. For example, when
-  you press a skip button labeled ``Skip proof'' nobody will start
-  puzzling over what he or she has missed.
-\item
-  You can add an appendix to your talk. The appendix is kept
-  ``perfectly separated'' from the main talk. Only once you ``enter''
-  the appendix part (presumably by hyperjumping into it), does the
-  appendix structure become visible. You can put all frames that you
-  do not intend to show during the normal course of your talk, but
-  which you would like to have handy in case someone asks, into this
-  appendix.
-\item
-  You can add ``goto buttons'' and ``return buttons'' to create
-  detours. Pressing a goto button will jump to a certain part of the
-  presentation where extra details can be shown. In this part, there
-  is a return button present on each slide that will jump back to the
-  place where the goto button was pressed.
-\item
-  You can use the |\againframe| command to ``continue'' frames that
-  you previously started somewhere, but where certain details have
-  been suppressed. You can use the |\againframe| command at a
-  much later point, for example only in the appendix to show
-  additional slides there.
-\end{itemize}
-
-
-\subsection{Commands for Creating the Global Structure}
+This section lists the commands that are used for structuring a
+presentation ``globally'' using commands like |\section| or
+|\part|. These commands are use to create a \emph{static} structure,
+meaning that the resulting presenation is normally presented one slide
+after the other in the order the slides occur. 
+Section~\ref{section-nonlinear} explains which commands can be used to
+create the \emph{interactive} structure. For the interactive structure,
+you must interact with the presenation program, typically by clicking
+on hyperlinks, to advance the presentation. 
 
 \subsubsection{Adding a Title Page}
 
@@ -3417,6 +3296,69 @@ talk.
 
 
 
+\subsection{Creating the Interactive Global Structure}
+
+\label{section-nonlinear}
+
+Ideally, during most presentations you would like to present your
+slides in a perfectly linear fashion, presumably by pressing the
+page-down-key once for each slide. However, there are different
+reasons why you might have to deviate from this linear order:
+\begin{itemize}
+\item
+  Your presentation may contain ``different levels of detail'' that
+  may or may not be skipped or expanded, depending on the audience's
+  reaction.
+\item
+  You present a complicated picture and you have to ``zoom out''
+  different parts to explain details.
+\item
+  You are asked questions and wish to show supplementary slides.
+\item
+  You are asked questions about an earlier slide, which forces you to 
+  find and then jump to that slide.
+\end{itemize}
+You cannot really prepare against the last kind of questions. In this
+case, you can use the navigation bars and symbols to find the slide
+you are interested in, see \ref{section-navigation-bars}.
+
+Concerning the first two kinds of deviations, the \beamer\ class
+offers several ways of preparing such ``planned detours'' or ``planned
+short cuts''.
+\begin{itemize}
+\item
+  You can easily add predefined ``skip buttons.'' When such a button
+  is pressed, you jump over a well-defined part of your talk. Skip
+  button have two advantages over just pressing the forward key
+  is rapid succession: first, you immediately end up at the correct
+  position and, second, the button's label can give the audience a
+  visual feedback of what exactly will be skipped. For example, when
+  you press a skip button labeled ``Skip proof'' nobody will start
+  puzzling over what he or she has missed.
+\item
+  You can add an appendix to your talk. The appendix is kept
+  ``perfectly separated'' from the main talk. Only once you ``enter''
+  the appendix part (presumably by hyperjumping into it), does the
+  appendix structure become visible. You can put all frames that you
+  do not intend to show during the normal course of your talk, but
+  which you would like to have handy in case someone asks, into this
+  appendix.
+\item
+  You can add ``goto buttons'' and ``return buttons'' to create
+  detours. Pressing a goto button will jump to a certain part of the
+  presentation where extra details can be shown. In this part, there
+  is a return button present on each slide that will jump back to the
+  place where the goto button was pressed.
+\item
+  You can use the |\againframe| command to ``continue'' frames that
+  you previously started somewhere, but where certain details have
+  been suppressed. You can use the |\againframe| command at a
+  much later point, for example only in the appendix to show
+  additional slides there.
+\end{itemize}
+
+
+
 
 \subsubsection{Adding Hyperlinks and Buttons}
 
@@ -3638,20 +3580,222 @@ by ``|section|''.
 
 
 
+\subsubsection{Resuming a Frame at a Later Point}
 
-\subsection{Navigation Bars and Symbols}
+Sometimes you may wish some slides of a frame to be shown in your main
+talk, but wish some ``supplementary'' slides of the frame to be shown
+only in the the appendix. In this case, the |\againframe| commands is
+useful. 
+
+
+\begin{command}{\againframe\sarg{overlay
+      specification}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\marg{name}}
+  \beamernote
+  Resumes a frame that was previously created using |\frame|
+  with the option |label=|\meta{name}. You must have used this option,
+  just placing a label inside a frame ``by hand'' is not enough. You
+  can use this command to ``continue'' a frame that has been
+  interrupted by another frame. The effect of this command is to call
+  the |\frame| command with the given \meta{overlay specification},
+  \meta{default overlay specification} (if present), and
+  \meta{options} (if present) and with the original frame's contents. 
+
+  \example
+\begin{verbatim}
+\frame<1-2>[label=myframe]
+{
+  \begin{itemize}
+  \item<alert@1> First subject.
+  \item<alert@2> Second subject.
+  \item<alert@3> Third subject.
+  \end{itemize}
+}
+
+\frame
+{
+  Some stuff explaining more on the second matter.
+}
+
+\againframe<3>{myframe}
+\end{verbatim}
+  The effect of the above code is to create four slides. In the first
+  two, the items 1 and~2 are hilighted. The third slide contains the
+  text ``Some stuff explaining more on the second matter.'' The fourth
+  slide is identical to the first two slides, except that the third
+  point is now hilighted.
+
+  \example
+\begin{verbatim}
+\frame<1>[label=Cantor]
+{
+  \frametitle{Main Theorem}
+
+  \begin{Theorem}
+    $\alpha < 2^\alpha$ for all ordinals~$\alpha$.
+  \end{Theorem}
+
+  \begin{overprint}
+  \onslide<1>
+    \hyperlink{Cantor<2>}{\beamergotobutton{Proof details}}
+
+  \onslide<2->
+    % this is only shown in the appendix, where this frame is resumed.
+    \begin{proof}
+      As shown by Cantor, ...
+    \end{proof}
+
+    \hfill\hyperlink{Cantor<1>}{\beamerreturnbutton{Return}}
+  \end{overprint}
+}
+
+...
+\appendix
+
+\againframe<2>{Cantor}
+\end{verbatim}
+  In this example, the proof details are deferred to a slide in the
+  appendix. Hyperlinks are setup, so that one can jump to the proof
+  and go back.
+
+  \articlenote
+  This command is ignored in |article| mode.
+
+  \lyxnote
+  Use the style ``AgainFrame'' to insert an |\againframe| command. The
+  \meta{label name} is the text on following the style name
+  and is \emph{not} put in \TeX-mode. However, an overlay specification
+  must be given in \TeX-mode and it must preceed the label name.
+\end{command}
+
+
+
+\subsubsection{Adding Anticipated Zooming}
+
+When you present a graphic during a presentation, you should explain
+everything that is shown in the graphic. When graphics are imported
+from other context, they typically contain far too much information
+and should be radically simplified.
+
+Sometimes hwever, the complexity of a graphic is intensional and you
+are willing to spend much time explaining the graphic in great
+detail. In this case, you will often run into the problem that fine
+details of the graphic cannot be seenn by the audience. To solve the
+problem, you can use the command |\framezoom|. This command allows you
+to specify that clicking on a certain part of a frame should zoom out
+this frame. You can then explain the details. Clicking on the zoomed
+out picture will take you back to the original one.
+
+\begin{command}{\framezoom\ssarg{button overlay
+      specification}\ssarg{zoomed overlay
+      specification}\oarg{options}\\|(|\meta{upper left x}|,|\meta{upper
+      left y}|)(|\meta{zoom area width}|,|\meta{zoom area depth}|)|}
+  This command should be given somewhere at the beginning of a
+  frame. When given, two different things will happen, depending on
+  whether the \meta{button overlay specification} applies to the
+  current slide of the frame or whether the \meta{zoomed overlay
+    specification} applies. These overlay specifications should not
+  overlap.
+
+  If the \meta{button overlay specification} applies, a clickable are
+  is created inside the frame. The size of this area is given by
+  \meta{zoom area width} and \meta{zoom area depth}, which are two
+  normal \TeX\ dimensions (like |1cm| or |20pt|). The upper left
+  corner of this area is given by \meta{upper left x} and \meta{upper
+  left y}, which are also \TeX\ dimensions. They are measures
+  \emph{relative to the place where the first normal text of a
+    frame would go}. Thus, the location |(0pt,0pt)| is just below the
+  frame title (if existent, otherwise just below that headline) and
+  horizontally at the left text border (not at the left page border).
+
+  By default, the button is clickable, but it will not be indicated in
+  any special way. You can draw a border around the button by using
+  the following \meta{options}:
+  \begin{itemize}
+  \item \declare{|border|}\opt{|=|\meta{width in pixels}} will draw
+    a border around the specified button area. The color of this
+    button is the |linkbordercolor| of |hyperref|. \beamer\ sets this
+    color to a 50\% gray by default. To change this, you can use the
+    command
+    |\hypersetup{linkbordercolor={|\meta{red}| |\meta{green}| |\meta{blue}|}}|, 
+    where \meta{red}, \meta{green}, and \meta{blue} are values between
+    0 and 1.
+  \end{itemize}
+
+  When you press the button created in this way, the reader will jump
+  to the first of the frames specified by the \meta{zoomed overlay
+    specification}. For the slides to which this overlay specification
+  applies, the following happens:
+
+  The exact same area as the one specified before is ``zoomed out'' to
+  fill the whole normal text area of the frame. Everything else,
+  including the sidebars, the headlines and footlines, and even the
+  frame title retain their normal size. The zooming is performed in
+  such a way that the whole specified area is completely shown. The
+  aspect ratio is kept correct and the zoomed area will possibly show
+  more than just the specified area if the aspect ratio of this area
+  and the aspect ratio of the available text area do not agree.
+
+  Behind the whole text area (which contains the zoomed area) a big
+  invisible ``Back'' button is put. Thus clicking anywhere on the text
+  area will jump back to the original (unzoomed) picture.
+
+  You can specify several zoom areas for a single frame. In this case,
+  you should specify different \meta{zoomed overlay specification},
+  but you can specify the same \meta{button overlay
+  specification}. You cannot nest zoomings in the sense that you
+  cannot have a zoom button on a slide that is in some \meta{zoomed
+  overlay specification}. However, you can have overlapping and even
+  nested \meta{button overlay specification}. When clicking on an area
+  that belongs to several buttons, the one given last will ``win'' (it
+  should hence be the smallest one).
+
+  If you do not wish to have the frame title shown on a zoomed slide,
+  you can add an overlay specification to the |\frametitle| command
+  that simply suppresses the title for the slide. Also, by using the
+  |plain| option, you can have the zoomed slide fill the whole page. 
+
+  \example A simple case
+\begin{verbatim}
+\frame
+{
+  \frametitle{A Complicated Picture}
+
+  \framezoom<1><2>(0cm,0cm)(2cm,1.5cm)
+  \framezoom<1><3>(1cm,3cm)(2cm,1.5cm)
+  \framezoom<1><4>(3cm,2cm)(3cm,2cm)
+
+  \pgfimage[height=8cm]{complicatedimagefilename}
+}
+\end{verbatim}
+
+  \example A more complicate case in which the zoomed parts completely
+  fill the frames.
+\begin{verbatim}
+\frame<1>[label=zooms]
+{
+  \frametitle<1>{A Complicated Picture}
+
+  \framezoom<1><2>(0cm,0cm)(2cm,1.5cm)
+  \framezoom<1><3>(1cm,3cm)(2cm,1.5cm)
+  \framezoom<1><4>(3cm,2cm)(3cm,2cm)
+
+  \pgfimage[height=8cm]{complicatedimagefilename}
+}
+\againframe<2->[plain]{zooms}
+\end{verbatim}
+\end{command}
+
+
+
+\subsubsection{Using the Navigation Bars}
 \label{section-navigation-bars}
 
 Navigation bars and symbols are two independent concepts that can be
 used to navigate through a presentation. They are created
-automatically.
-
-
-\subsubsection{Using the Navigation Bars}
-
-Most themes that come along with the \beamer\ class show some kind of
-navigation bar during your talk. Although these navigation bars take
-up quite a bit of space, they are often useful for two reasons:
+automatically. Most themes that come along with the \beamer\ class
+show some kind of navigation bar during your talk. Although these
+navigation bars take up quite a bit of space, they are often useful
+for two reasons: 
 
 \begin{itemize}
 \item
@@ -3809,7 +3953,7 @@ Section~\ref{section-navigation-symbols-template}.
 
 
 
-\subsection{Commands for Creating the Local Structure}
+\subsection{Creating the Local Structure}
 
 Just like your whole presentation, each frame should also be
 structured. A frame that is solely filled with some long text is very

@@ -274,7 +274,11 @@
 
 
 
-\PassOptionsToPackage{bookmarks=true,bookmarksopen=true,pdfborder={0 0 0},pdfhighlight={/N}}{hyperref}
+\PassOptionsToPackage{bookmarks=true,%
+  bookmarksopen=true,%
+  pdfborder={0 0 0},%
+  pdfhighlight={/N},%
+  linkbordercolor={.5 .5 .5}}{hyperref}
   
 \DeclareOptionBeamer{pgf}{\PassOptionsToPackage{#1}{pgf}}
 \DeclareOptionBeamer{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
