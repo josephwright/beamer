@@ -23,7 +23,7 @@ of a presentation.
 
 \subsection{Font Themes}
 
-\beamer\ comes with a set of font themes. When you use such a thme,
+\beamer\ comes with a set of font themes. When you use such a theme,
 certain fonts are changed as described below. You can use several font
 themes in concert. For historical reasons, you cannot change all
 aspects of the fonts used using font themes---in same cases special
@@ -342,7 +342,7 @@ things.''
 
 While a \beamer-color has a certain foreground and a certain
 background, either of which may be empty, a \beamer-font has a size, a
-shape, a series, and a family, each of which may be emtpy. The
+shape, a series, and a family, each of which may be empty. The
 inheritance relation among \beamer-fonts is not necessarily the same
 as between \beamer-colors, though I have tried to match them whenever
 possible. 
@@ -367,7 +367,7 @@ seldomly have to use this command.
 \begin{command}{\usebeamerfont\opt{|*|}\marg{beamer-font name}}
   This command changes the current font to the font specified by the
   \meta{beamer-font name}. The \meta{beamer-font name} can be a
-  not-too-fancyful text and may contain spaces. Typical exmaples are
+  not-too-fancyful text and may contain spaces. Typical examples are
   |frametitle| or |section in toc| or |My Font 1|. \beamer-fonts can
   have (and should) have the same name as \beamer-templates and
   \beamer-colors.
@@ -399,7 +399,7 @@ changing \beamer-fonts.
       name}\marg{attributes}}
   This command sets or resets certain attributes of the \beamer-font
   \meta{beamer-font name}. In the unstarred version, this command just
-  adds those attribuates that have not been mentioned in a previous
+  adds those attributes that have not been mentioned in a previous
   call and overwrites those that have been mentioned. Thus, the
   following two command blocks have the same effect:
 
@@ -428,7 +428,7 @@ changing \beamer-fonts.
 
     Note that there is a different between
     specifying and empty command and specifying |\normalsize|: Making
-    the size attribuate ``empty'' means that the font size should not
+    the size attribute ``empty'' means that the font size should not
     be changed when this font is used, while specifying |\normalsize|
     means that the size should be set to the normal size whenever this
     font is used.
@@ -445,14 +445,14 @@ changing \beamer-fonts.
     attribute of the font. The command should be command like
     |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
   \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets
-    the shape attribute of the font using the \LaTeX's abbriviations
-    for attribuates. This command has the same effect as
-    |shape={\fontshape|\marg{shape attribuates abbreviation}|}|.  
+    the shape attribute of the font using the \LaTeX's abbreviations
+    for attributes. This command has the same effect as
+    |shape={\fontshape|\marg{shape attributes abbreviation}|}|.  
   \item \declare{|series=|\meta{series command}} sets the ``series''
     attribute of the font. The command should be command like
     |\bfseries|.
   \item \declare{|series*=|\marg{series attribute abbreviation}} has
-    the same effect as |series={\fontseries|\marg{series attribuates
+    the same effect as |series={\fontseries|\marg{series attributes
         abbreviation}|}|.
   \item \declare{|family=|\meta{family command}} sets the font family
     attribute. The command should be a \LaTeX-font command like
@@ -464,7 +464,7 @@ changing \beamer-fonts.
     of a font family name that installed somewhere on the system. For
     example, the \meta{family name} for Times happens to be
     |ptm|. No one can remember these names, so its perfectly normal if
-    you have to look them up laborously.
+    you have to look them up laboriously.
   \item \declare{|parent=|\marg{parent list}} specifies a list of
     parent fonts. When the \beamer-font is used, the parents are used
     first. Thus, any font attributes set by one of the parents is

@@ -409,7 +409,7 @@ in the same way as |\item|.
   slide. This is typically the desired behaviour since it does not
   really matter on which slide the label is inserted, \emph{except} if
   you use an |\only| command and \emph{except} if you wish to use that
-  lable as a hyperjump target. Then you need to specifiy a slide.
+  label as a hyperjump target. Then you need to specify a slide.
 
   Labels can be used as target of hyperjumps. A convenient way of
   labelling a frame is to use the |label=|\meta{name} option of the
@@ -556,7 +556,7 @@ but less user-friendly.
   depth of the area are chosen large enough to accommodate the largest
   contents of the area. The overlay specifications of the
   |\onslide| commands must be disjoint. This may be a problem for
-  handouts, since, there, all overlay specifications defaul to |1|. If
+  handouts, since, there, all overlay specifications default to |1|. If
   you use the option |handout|, you can disable all but one
   |\onslide| by setting the others to |0|.
   \example
@@ -653,7 +653,7 @@ class.
     \oarg{argument number}\oarg{default optional value}\marg{text}}
   Declares the new command named \meta{command name}. The \meta{text}
   should contain the body of this command and it may contain
-  occurences of parameters like |#|\meta{number}. Here \meta{number}
+  occurrences of parameters like |#|\meta{number}. Here \meta{number}
   may be between 1 and $\mbox{\meta{argument number}}+1$. The
   additionally allowed argument is the overlay specification.
 
@@ -893,7 +893,7 @@ By default, the following actions are available:
 \item \declare{|visible|} causes the text to become visible only on
   the specified slides (the difference between |uncover| and
   |visible| is the same as between |\uncover| and |\visible|).
-\item \declare{|invisible|} causes the text to become invisble on the
+\item \declare{|invisible|} causes the text to become invisible on the
   specified slides.
 \end{itemize}
 
@@ -926,7 +926,7 @@ The whole action mechanism is base on the following environment:
   This environment extracts all actions from the \meta{action
     specification} for the current mode. For each action of the form
   \meta{action}|@|\meta{slide numbers}, it inserts the following text:
-  |\begin{|\meta{action}|env}<|\meta{slide number}|>| and the
+  |\begin{|\meta{action}|env}<|\meta{slide number}|>| at the
   beginning of the environment and the text |\end{|\meta{action}|env}|
   at the end. If there are several action specifications, several
   environments are opened (and closed in the appropriate order). An

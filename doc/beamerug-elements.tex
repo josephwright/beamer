@@ -36,7 +36,7 @@ elements are typeset:
 \item Title and part pages.
 \item Itemize environments.
 \item Enumerate environments.
-\item Descrition environments.
+\item Description environments.
 \item Block environments.
 \item Theorem and proof environments.
 \item Figures and tables.
@@ -53,7 +53,7 @@ theme, all of the large rectangular areas are transparent.
 
 \begin{innerthemeexample}{default}
   The default element theme is quite sober. The only extravagance is
-  the fact that a little trianlge is used in |itemize| environments
+  the fact that a little triangle is used in |itemize| environments
   instead of the usual dot.
 
   In some cases the theme will honour background color specifications
@@ -175,7 +175,7 @@ color theme.
     and the title in the footline.
   \item \declare{|footline=authorinstitutetitle|} shows the author's
     name, the institute, and the title in the footline.
-  \item \declare{|subsection=|\meta{true or false}} shows or supresses
+  \item \declare{|subsection=|\meta{true or false}} shows or suppresses
     line showing the subsection in the headline. It is shown by
     default.
   \end{itemize}  
@@ -192,7 +192,7 @@ color theme.
 
   The following \meta{options} can be given:
   \begin{itemize}
-  \item \declare{|subsection=|\meta{true or false}} shows or supresses
+  \item \declare{|subsection=|\meta{true or false}} shows or suppresses
     line showing the subsection in the headline. It is shown by
     default.
   \end{itemize}  
@@ -235,11 +235,11 @@ color theme.
     two-line frame title plus a one-line subtitle.
   \item
     \declare{|hideothersubsections|} causes all subsections except
-    those of the current section to be supressed in the table of
+    those of the current section to be suppressed in the table of
     contents. This is useful if you have lot's of subsections.
   \item
     \declare{|hideallsubsections|} causes all subsections to be
-    supressed in the table of contents.
+    suppressed in the table of contents.
   \item
     \declare{|left|} puts the sidebar on the left side. Note that in a
     left-to-right reading culture this is side people look first. Note
@@ -250,7 +250,7 @@ color theme.
     \declare{|right|} puts the sidebar of the right side.
   \item
     \declare{|width=|\meta{dimension}} specifies the width of the
-    sidebar. If it is set to 0pt, it is completely supressed. The
+    sidebar. If it is set to 0pt, it is completely suppressed. The
     default is 2.5 base line heights of the frame title font.
   \end{itemize}
 \end{outerthemeexample}
@@ -419,7 +419,7 @@ template:
   code often takes care of some things that you may not yet have
   thought about. The default inner and outer themes might be useful 
   starting points. Also, the file |beamerbaseauxtemplates.sty|
-  contains interesting ``auxilliary'' templaets.
+  contains interesting ``auxilliary'' templates.
 \item
   When copying code from another template and when inserting this code
   in the preamble of your document (not in another style file), you may
@@ -491,7 +491,7 @@ Your answer is \usebeamertemplate{my template}.
   the |\setbeamerfont*| command. This causes the font used for the
   template also to be reset to normal text, unless the \beamer-font
   \meta{element name} specifies things differently. This three-star
-  version is the ``most protected'' version avialable.
+  version is the ``most protected'' version available.
 \end{command}
 
 \begin{command}{\ifbeamertemplateempty\marg{beamer template
@@ -673,7 +673,7 @@ Your answer is \usebeamertemplate*{answer}.
   Normally, this command has no effect in |article| mode. However, if
   a \meta{mode specification} is given, this command is applied for
   the specified modes. Thus, this command behaves like the |\\|
-  command, which also gets the implicit mode speicification
+  command, which also gets the implicit mode specification
   |<presentation>| if no other specification is given.
 
   \example |\defbeamertemplate{my template}{default}{something}| has no effect
@@ -708,7 +708,7 @@ slightly different.
 
 The \beamer-template mechanism implements a simple form of inheritance
 via \emph{parent templates}. In element descriptions, parent templates
-are indicated via a check mark in parantheses.
+are indicated via a check mark in parentheses.
 
 \begin{command}{\defbeamertemplateparent\marg{parent template
 name}\oarg{predefined option name}\marg{child template
