@@ -18,7 +18,10 @@
   \fi
   \edef\@tempa{%
     \noexpand\setkeys{\@currname}{\@tempa\@ptionlist{\@currname.\@currext}}}%
+  \let\beamer@origkverr\KV@err%
+  \ifx\@currext\@clsextension\let\KV@errx=\@gobble\fi% never mind
   \@tempa%
+  \let\KV@err\bemaer@origkverr%
   \AtEndOfPackage{\let\@unprocessedoptions\relax}}
 
 \def\ExecuteOptionsBeamer#1{%

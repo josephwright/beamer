@@ -40,7 +40,7 @@
         {averagebackgroundcolor}%
         \xdef\beamer@colorhook{!##2!beamer@freeze%
           \the\beamer@coveringdepth\beamer@colorhook}%
-        \def\beamer@pgfextension{!##2opaque}%
+        \gdef\beamer@pgfextension{!##2opaque}%
         \color{.}%
       }%
       {%
@@ -140,24 +140,10 @@
 \def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{\beamer@origitem}}
 \long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{\beamer@origitem[#1]}}
 \long\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[#1]}
-\def\beamer@parseitem<#1>{\@ifnextchar<{\beamer@parseitemalert<#1>}{\beamer@itemcheckoptb<#1>}}
-\def\beamer@itemcheckoptb<#1>{\@ifnextchar[{\beamer@itemcheckoptc<#1>}{\beamer@itemuncover<#1>}}
-\long\def\beamer@itemcheckoptc<#1>[#2]{\@ifnextchar<{\beamer@itemreversea<#1>[#2]}{\beamer@itemuncover<#1>[#2]}}
-\def\beamer@itemreversea<#1>[#2]<#3>{\beamer@parseitemalert<#1><#3>[#2]}
 
-\def\beamer@closeitem{}
-\def\beamer@parseitemalert<#1><#2>{%
-  \alt<#1>{%
-    \alt<#2>{\begin{alertenv}\gdef\beamer@closeitem{\end{alertenv}}}%
-    {\gdef\beamer@closeitem{}}%
-    \beamer@origitem}%
-  {\beamer@startcovered\gdef\beamer@closeitem{\beamer@endcovered}\beamer@origitem}%
-  }
-\def\beamer@itemuncover<#1>{%
-  \alt<#1>{%
-    \gdef\beamer@closeitem{}\beamer@origitem}%
-  {\beamer@startcovered\gdef\beamer@closeitem{\beamer@endcovered}\beamer@origitem}%
-}
+\def\beamer@parseitem<#1>{%
+  \gdef\beamer@closeitem{\end{actionenv}}%
+  \begin{actionenv}<#1>\beamer@origitem}
 
 
 \newcount\beamer@trivlistdepth
@@ -249,6 +235,8 @@
 \newoverlaycommand{\uncover}{\@firstofone}{\makeinvisible}
 \newoverlaycommand{\visible}{\@firstofone}{\beamer@reallymakeinvisible}
 \newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\@firstofone}
+\newoverlayenvironment{visibleenv}{}{}{\pgfsys@begininvisible}{\pgfsys@endinvisible}
+\newoverlayenvironment{invisibleenv}{\pgfsys@begininvisible}{\pgfsys@endinvisible}{}{}
 \newoverlayenvironment{uncoverenv}{}{}{\beamer@startcovered}{\beamer@endcovered}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
 \renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}
@@ -260,6 +248,8 @@
   \newoverlaycommand{\invisible}{\@gobble}{\@firstofone}
   \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
   \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
+  \newoverlayenvironment{visibleenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
+  \newoverlayenvironment{invisibleenv}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}{}{}
 
   \AtBeginDocument{
     % These have to be done late...
@@ -375,12 +365,11 @@
 \define@key{beamertrans}{direction}{\def\beamer@transdir{ /Di #1 }}
 \define@key{beamertrans}{duration}{\def\beamer@dur{ /D #1 }}
 
-\def\beamer@dotrans#1{\@ifnextchar[{\beamer@@dotrans{#1}}{\beamer@@dotrans{#1}[]}}
-\def\beamer@@dotrans#1[#2]{%
+\newcommand\beamer@dotrans[2][]{%
   \def\beamer@transdir{}%
   \def\beamer@dur{}%
-  \setkeys{beamertrans}{#2}%
-  \edef\beamer@temp{{pdfpagetransition={#1 \beamer@transdir\space\beamer@dur}}}
+  \setkeys{beamertrans}{#1}%
+  \edef\beamer@temp{{pdfpagetransition={#2 \beamer@transdir\space\beamer@dur}}}
   \expandafter\hypersetup\beamer@temp}
 
 \article
@@ -391,29 +380,28 @@
 
 \common
 {
-  \newoverlaycommand{\transblindshorizontal}{\beamer@dotrans{Blinds /Dm /H}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transblindsvertical}{\beamer@dotrans{Blinds /Dm /V}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transboxin}{\beamer@dotrans{Box /M /I}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transboxout}{\beamer@dotrans{Box /M /O}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transcover}{\beamer@dotrans{Cover}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transdissolve}{\beamer@dotrans{Dissolve}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transfade}{\beamer@dotrans{Fade}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transglitter}{\beamer@dotrans{Glitter}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transpush}{\beamer@dotrans{Push}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transsplitverticalin}{\beamer@dotrans{Split /Dm /V /M /I}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transsplitverticalout}{\beamer@dotrans{Split /Dm /V /M /O}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transsplithorizontalin}{\beamer@dotrans{Split /Dm /H /M /I}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transsplithorizontalout}{\beamer@dotrans{Split /Dm /H /M /O}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transuncover}{\beamer@dotrans{Uncover}}{\beamer@ignoreoptional}
-  \newoverlaycommand{\transwipe}{\beamer@dotrans{Wipe}}{\beamer@ignoreoptional}
+  \newcommand<>{\transblindshorizontal}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /H}}}
+  \newcommand<>{\transblindsvertical}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /V}}}
+  \newcommand<>{\transboxin}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /I}}}
+  \newcommand<>{\transboxout}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /O}}}
+  \newcommand<>{\transcover}[1][]{\only#2{\beamer@dotrans[#1]{Cover}}}
+  \newcommand<>{\transdissolve}[1][]{\only#2{\beamer@dotrans[#1]{Dissolve}}}
+  \newcommand<>{\transfade}[1][]{\only#2{\beamer@dotrans[#1]{Fade}}}
+  \newcommand<>{\transglitter}[1][]{\only#2{\beamer@dotrans[#1]{Glitter}}}
+  \newcommand<>{\transpush}[1][]{\only#2{\beamer@dotrans[#1]{Push}}}
+  \newcommand<>{\transsplitverticalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /I}}}
+  \newcommand<>{\transsplitverticalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /O}}}
+  \newcommand<>{\transsplithorizontalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /I}}}
+  \newcommand<>{\transsplithorizontalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /O}}}
+  \newcommand<>{\transuncover}[1][]{\only#2{\beamer@dotrans[#1]{Uncover}}}
+  \newcommand<>{\transwipe}[1][]{\only#2{\beamer@dotrans[#1]{Wipe}}}
 }
 
-\newoverlaycommand{\transduration}{\beamer@transdur}{\@gobble}
-\def\beamer@transdur#1{\hypersetup{pdfpageduration=#1}}
+\newcommand<>{\transduration}[1]{\only#2{\hypersetup{pdfpageduration=#1}}}
 
 \article
 {
-  \newoverlaycommand{\transduration}{\@gobble}{\@gobble}
+  \newcommand<>{\transduration}[1]{}
 }
 
 

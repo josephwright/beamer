@@ -60,11 +60,8 @@
   \beamer@templatestartstructure}
   {\beamer@templateendstructure}{}{}
 
-\newoverlaycommand{\alert}{\beamer@alert}{}
-\def\beamer@alert#1{\begin{alertenv}#1\end{alertenv}}
-
-\newoverlaycommand{\structure}{\beamer@structure}{}
-\def\beamer@structure#1{\begin{structureenv}#1\end{structureenv}}
+\newcommand<>{\alert}[1]{\begin{alertenv}#2#1\end{alertenv}}
+\newcommand<>{\structure}[1]{\begin{structureenv}#2#1\end{structureenv}}
 
 \long\def\usealerttemplate#1#2{%
   \def\beamer@templatestartalert{#1}\def\beamer@templateendalert{#2}}
@@ -109,54 +106,38 @@
   \long\def\useexampleblocktemplate#1#2{%
     \def\beamer@beginexampleblocktemplate{#1}
     \def\beamer@endexampleblocktemplate{#2}}
+
+\newenvironment<>{block}[1]{%
+  \begin{actionenv}#2%
+    \def\insertblockname{#1}%
+    \par%
+    \beamer@beginblocktemplate}
+  {\par%
+    \beamer@endblocktemplate%
+  \end{actionenv}}
+
+\newenvironment<>{alertblock}[1]{%
+  \begin{actionenv}#2%
+    \def\insertblockname{#1}%
+    \par%
+    \beamer@beginalertblocktemplate}
+  {\par%
+    \beamer@endalertblocktemplate%
+  \end{actionenv}}
+
+\newenvironment<>{exampleblock}[1]{%
+  \begin{actionenv}#2%
+    \def\insertblockname{#1}%
+    \par%
+    \beamer@beginexampleblocktemplate}
+  {\par%
+    \beamer@endexampleblocktemplate%
+  \end{actionenv}}
 }
-\newoverlayenvironment{block}[1]{%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate}%
-  {\beamer@startcovered%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate\beamer@endcovered}
 
-\newoverlayenvironment{alertblock}[1]{%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate}%
-  {\beamer@startcovered%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate\beamer@endcovered}
-
-\newoverlayenvironment{exampleblock}[1]{%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate}%
-  {\beamer@startcovered%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate\beamer@endcovered}
 
 \article
 {
-  \newoverlayenvironment{block}[1]{%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate}%
-  {\def\insertblockname{#1}\begin{onlyenv}<all:0>}{\end{onlyenv}}
-
-  \newoverlayenvironment{alertblock}[1]{%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate}%
-  {\def\insertblockname{#1}\begin{onlyenv}<all:0>}{\end{onlyenv}}
-
-  \newoverlayenvironment{exampleblock}[1]{%
-  \def\insertblockname{#1}%
-  \par%
-  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate}%
-  {\def\insertblockname{#1}\begin{onlyenv}<all:0>}{\end{onlyenv}}
-
   \useblocktemplate{\par\medskip{\noindent\textbf{\insertblockname}}\par\noindent\ignorespaces}{\medskip}
   \usealertblocktemplate{\par\medskip{\noindent\textbf{\emph{\insertblockname}}}\par\noindent\ignorespaces}{\medskip}
   \useexampleblocktemplate{\par\medskip{\noindent\emph{\insertblockname}}\par\noindent\ignorespaces}{\medskip}
@@ -345,10 +326,8 @@
 % Abstract command
 %
 
-\newoverlayenvironment{abstract}%
-{\beamer@templateabstractstart}{\beamer@templateabstractend}
-{\beamer@startcovered\beamer@templateabstractstart}{\beamer@templateabstractend\beamer@endcovered}
-
+\newenvironment<>{abstract}%
+{\begin{actionenv}#1\beamer@templateabstractstart}{\beamer@templateabstractend\end{actionenv}}
 
 \newcommand\usetemplateabstract[2]{\def\beamer@templateabstractstart{#1}\def\beamer@templateabstractend{#2}}
 
@@ -366,8 +345,8 @@
 % Verse, quotation, quote environments
 %
     
-\newoverlayenvironment{verse}
-               {\let\\\@centercr
+\newenvironment<>{verse}
+               {\begin{actionenv}#1\let\\\@centercr
                 \list{}{\itemsep      \z@
                         \itemindent   -1.5em%
                         \listparindent\itemindent
@@ -375,42 +354,25 @@
                         \advance\leftmargin 1.5em
                         \parsep       .75em plus .25em minus.25em}%
                 \item\relax\beamer@templateversestart}
-               {\beamer@templateverseend\endlist}
-               {\beamer@startcovered\let\\\@centercr
-                \list{}{\itemsep      \z@
-                        \itemindent   -1.5em%
-                        \listparindent\itemindent
-                        \rightmargin  \leftmargin
-                        \advance\leftmargin 1.5em
-                        \parsep       .75em plus .25em minus.25em}%
-                \item\relax\beamer@templateversestart}
-               {\beamer@templateverseend\endlist\beamer@endcovered}
+               {\beamer@templateverseend\endlist\end{actionenv}}
 
 \newcommand\usetemplateverse[2]{\def\beamer@templateversestart{#1}\def\beamer@templateverseend{#2}}
 \usetemplateverse{\rmfamily\itshape}{}
                
-\newoverlayenvironment{quotation}
-               {\list{}{\listparindent 1.5em%
+\newenvironment<>{quotation}
+               {\begin{actionenv}#1\list{}{\listparindent 1.5em%
                         \itemindent    \listparindent
                         \rightmargin   \leftmargin
                         \parsep        \z@ \@plus\p@}%
                 \item\relax\beamer@templatequotationstart}
-               {\beamer@templatequotationend\endlist}
-               {\beamer@startcovered\list{}{\listparindent 1.5em%
-                        \itemindent    \listparindent
-                        \rightmargin   \leftmargin
-                        \parsep        \z@ \@plus\p@}%
-                \item\relax\beamer@templatequotationstart}
-               {\beamer@templatequotationend\endlist\beamer@endcovered}
+               {\beamer@templatequotationend\endlist\end{actionenv}}
 
-\newoverlayenvironment{quote}
-               {\list{}{\rightmargin\leftmargin}%
+\newenvironment<>{quote}
+               {\begin{actionenv}#1\list{}{\rightmargin\leftmargin}%
                 \item\relax\beamer@templatequotationstart}
-               {\beamer@templatequotationend\endlist}
-               {\beamer@startcovered\list{}{\rightmargin\leftmargin}%
-                \item\relax\beamer@templatequotationstart}
-               {\beamer@templatequotationend\endlist\beamer@endcovered}
+               {\beamer@templatequotationend\endlist\end{actionenv}}
 
+             
 % applies both to quote and quotation
 \newcommand\usetemplatequotation[2]{\def\beamer@templatequotationstart{#1}\def\beamer@templatequotationend{#2}}
 \usetemplatequotation{\itshape}{}

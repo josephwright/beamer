@@ -29,6 +29,8 @@
 
 \def\beamer@decode{%
   \global\beamer@minimum=10000\relax%
+  \gdef\beamer@decaction{}%
+  \gdef\beamer@decactionrev{}%
   \gdef\beamer@decodefound{+}%
   \beamer@@decodefind}
 \def\beamer@@decodefind#1| {%
@@ -74,11 +76,14 @@
     \fi%
     \let\beamer@next=\beamer@@decodefind%
   \fi%
-  \beamer@next}
+ \beamer@next}
 
 \def\beamer@@decodefound{%
-  \ifx\beamer@action\beamer@currentaction%
+  \ifx\beamer@action\beamer@default%
     \expandafter\gdef\expandafter\beamer@decodefound\expandafter{\beamer@spec}%
+  \else
+    \xdef\beamer@decaction{\beamer@decaction{\beamer@action<\beamer@spec>}}
+    \xdef\beamer@decactionrev{{\beamer@action}\beamer@decactionrev}
   \fi}
 \def\beamer@currentaction{default}
 
@@ -176,11 +181,12 @@
 %
 
 \def\beamer@parsebr#1{\@ifnextchar<{\beamer@@parsebr#1}{#1}}
+\def\beamer@parsebropt#1{\@ifnextchar<{\beamer@@parsebr#1}{#1<+>}}
 \def\beamer@@parsebr#1{\begingroup\catcode`:=12\catcode`|=12\beamer@parseinner{#1}}%
 \def\beamer@parseinner#1<#2>{\endgroup\edef\beamer@spec{<#2>}%
   \expandafter#1\beamer@spec}
 
-\def\alt{\beamer@parsebr\@alt}
+\def\alt{\beamer@parsebropt\@alt}
 \long\def\@alt<#1>#2#3{%
   \def\beamer@doifnotinframe{#3}\def\beamer@doifinframe{#2}%
   {\setbox0=\hbox{\beamer@decode#1| stop:0| }}\beamer@donow}
@@ -188,34 +194,57 @@
 
 \def\beamer@plus{+}
 
-\def\action{\beamer@parsebr\beamer@parsedaction}
+\def\action{\beamer@parsebropt\beamer@parsedaction}
 \long\def\beamer@parsedaction<#1>#2{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
-  \gdef\beamer@todo{#2}%
-  {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
-    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\uncover\fi}%
-  {\def\beamer@currentaction{alert}%
-    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
-    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\alert\fi}%
-  {\def\beamer@currentaction{only}%
-    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
-    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\only\fi}%
-  {\def\beamer@currentaction{visible}%
-    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
-    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\visible\fi}%
-  {\def\beamer@currentaction{invisible}%
-    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
-    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\invisible\fi}%
-  {\def\beamer@currentaction{uncover}%
-    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
-    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\uncover\fi}%
+  {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}}%
+  \ifx\beamer@decodefound\beamer@plus%
+    \long\def\beamer@todo{#2}%
+  \else%
+    \expandafter\long\expandafter\def\expandafter\beamer@todo%
+    \expandafter{\expandafter\uncover\expandafter<\beamer@decodefound>{#2}}%
+  \fi%
+  \expandafter\beamer@processactions\beamer@decaction{}%
   \beamer@todo}
 
-\def\beamer@actionadd#1{%
-  \expandafter\beamer@toarg\expandafter{\beamer@todo}{#1}}
-\long\def\beamer@toarg#1#2{%
-  \expandafter\long\expandafter\gdef\expandafter\beamer@todo%
-  \expandafter{\expandafter#2\expandafter<\beamer@decodefound>{#1}}}
+\def\beamer@processactions#1{%
+  \beamer@ifempty{#1}{}{%
+    \expandafter\beamer@@processactions\expandafter{\beamer@todo}#1}}
+\long\def\beamer@@processactions#1#2<#3>{%
+  \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{%
+    \csname#2\endcsname<#3>{#1}}%
+  \beamer@processactions}
+
+\def\actionenv{\beamer@parsebropt\beamer@parsedactionenv}
+\def\beamer@parsedactionenv<#1>{%
+  \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
+  {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}}%
+  \ifx\beamer@decodefound\beamer@plus%
+    \def\beamer@todobegin{}%
+    \def\beamer@todoend{}%
+  \else%
+    \edef\beamer@todobegin{\noexpand\begin{uncoverenv}<\beamer@decodefound>}%
+    \def\beamer@todoend{\end{uncoverenv}}
+  \fi%
+  \expandafter\beamer@processactionsbegin\beamer@decaction{}%
+  \expandafter\beamer@processactionsend\beamer@decaction{}%
+  \beamer@todobegin}
+\def\endactionenv{\beamer@todoend}
+
+\def\beamer@processactionsbegin#1{%
+  \beamer@ifempty{#1}{}{%
+    \expandafter\beamer@@processactionsbegin\expandafter{\beamer@todobegin}#1}}
+\long\def\beamer@@processactionsbegin#1#2<#3>{%
+  \def\beamer@todobegin{\begin{#2env}<#3>#1}%
+  \beamer@processactionsbegin}
+
+
+\def\beamer@processactionsend#1{%
+  \beamer@ifempty{#1}{}{%
+    \expandafter\beamer@@processactionsend\expandafter{\beamer@todoend}#1}}
+\long\def\beamer@@processactionsend#1#2<#3>{%
+  \def\beamer@todoend{#1\end{#2env}}%
+  \beamer@processactionsend}
 
 
 
@@ -278,6 +307,119 @@
       \expandafter\def\csname end#1\endcsname{#3}#2}}%
 }
 
+
+
+\newcount\beamer@argscount
+
+%
+% newenvironment extension
+%
+\let\beamer@orignewenvironment=\newenvironment
+
+\def\newenvironment{\@ifnextchar<{\beamer@newenv}{\beamer@orignewenvironment}}
+\def\beamer@newenv<>{\@star@or@long\beamer@new@environment}
+\def\beamer@new@environment#1{\@ifnextchar[{\beamer@@newenv{#1}}{\beamer@newenvnoopt{#1}{0}}}
+\def\beamer@@newenv#1[#2]{\@ifnextchar[{\beamer@newenvopt{#1}{#2}}{\beamer@newenvnoopt{#1}{#2}}}
+\long\def\beamer@newenvnoopt#1#2#3#4{%
+  \expandafter\def\csname#1\endcsname{\beamer@sort{#2}{\csname beamerx@#1\endcsname}}%
+  \expandafter\long\expandafter\def\csname end#1\endcsname{#4}%
+  \beamer@argscount=#2\relax%
+  \advance\beamer@argscount by 1\relax%
+  \expandafter\newcommand\expandafter*\csname beamerx@#1\endcsname[\beamer@argscount]{#3}%
+}
+\long\def\beamer@newenvopt#1#2[#3]#4#5{%
+  \expandafter\def\csname#1\endcsname{\beamer@presort{#2}{\csname beamerx@#1\endcsname}{#3}}%
+  \expandafter\long\expandafter\def\csname end#1\endcsname{#5}%
+  \beamer@argscount=#2\relax%
+  \advance\beamer@argscount by 1\relax%
+  \expandafter\newcommand\expandafter*\csname beamerx@#1\endcsname[\beamer@argscount]{#4}%
+}
+
+
+\let\beamer@origrenewenvironment=\renewenvironment
+
+\def\renewenvironment{\@ifnextchar<{\beamer@renewenv}{\beamer@origrenewenvironment}}
+\def\beamer@renewenv<>#1{%
+  \edef\beamer@do{\csname original#1\endcsname=\expandafter\noexpand\csname#1\endcsname}
+  \expandafter\let\beamer@do%
+  \edef\beamer@do{\csname endoriginal#1\endcsname=\expandafter\noexpand\csname end#1\endcsname}
+  \expandafter\let\beamer@do%
+  \newenvironment<>{#1}}
+
+
+%
+% newcommand extension
+%
+\let\beamer@orignewcommand=\newcommand
+
+\def\newcommand{\@ifnextchar<{\beamer@newcom}{\beamer@orignewcommand}}
+\def\beamer@newcom<>{\@star@or@long\beamer@new@command}
+\def\beamer@new@command#1{\@ifnextchar[{\beamer@@newcom{#1}}{\beamer@newcomnoopt{#1}{0}}}
+\def\beamer@@newcom#1[#2]{\@ifnextchar[{\beamer@newcomopt{#1}{#2}}{\beamer@newcomnoopt{#1}{#2}}}
+\long\def\beamer@newcomnoopt#1#2#3{%
+  \def#1{\beamer@sort{#2}{\csname beamerx@\string#1\endcsname}}%
+  \beamer@argscount=#2\relax%
+  \advance\beamer@argscount by 1\relax%
+  \expandafter\newcommand\expandafter*\csname beamerx@\string#1\endcsname[\beamer@argscount]{#3}%
+}
+\long\def\beamer@newcomopt#1#2[#3]#4{%
+  \def#1{\beamer@presort{#2}{\csname beamerx@\string#1\endcsname}{#3}}%
+  \beamer@argscount=#2\relax%
+  \advance\beamer@argscount by 1\relax%
+  \expandafter\newcommand\expandafter*\csname beamerx@\string#1\endcsname[\beamer@argscount]{#4}%
+}
+
+\let\beamer@origrenewcommand=\renewcommand
+
+\def\renewcommand{\@ifnextchar<{\beamer@renewcom}{\beamer@origrenewcommand}}
+\def\beamer@renewcom<>#1{%
+  \expandafter\def\expandafter\@name\expandafter{\csname @orig@\string#1\endcsname}%
+  \expandafter\let\@name=#1\relax%
+  \newcommand<>#1}
+
+
+\def\beamer@presort#1#2#3{%
+  \long\def\beamer@todo{#2}%
+  \def\beamer@ospec{}%
+  \beamer@argscount=#1\relax%
+  \beamer@prechecka{#3}}
+\def\beamer@prechecka#1{\@ifnextchar<{\beamer@preget{#1}}{\beamer@precheckb{#1}}}
+\def\beamer@preget#1<#2>{\def\beamer@ospec{<#2>}\beamer@precheckb{#1}}
+\def\beamer@precheckb#1{\@ifnextchar[{\beamer@pregetb}{\beamer@pregetb[#1]}}
+\def\beamer@pregetb[#1]{%
+  \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
+  \advance\beamer@argscount by-1\relax%
+  \beamer@parseargs%
+} 
+
+\def\beamer@sort#1#2{%
+  \long\def\beamer@todo{#2}%
+  \def\beamer@ospec{}%
+  \beamer@argscount=#1\relax%
+  \beamer@parseargs}
+
+\def\beamer@parseargs{%
+  \ifnum\beamer@argscount=0%
+    \let\next=\beamer@finalargscheck%
+  \else%
+    \let\next=\beamer@lookforarg%
+  \fi%
+  \next}
+\def\beamer@lookforarg{%
+  \@ifnextchar<\beamer@foundspec\beamer@readarg}
+\def\beamer@foundspec<#1>{%
+  \def\beamer@ospec{<#1>}%
+  \beamer@lookforarg}
+\def\beamer@readarg#1{%
+  \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
+  \advance\beamer@argscount by-1\relax%
+  \beamer@parseargs%
+}
+
+\def\beamer@finalargscheck{\@ifnextchar<\beamer@finalspec\beamer@finalnospec}
+\def\beamer@finalspec<#1>{\def\beamer@ospec{<#1>}\beamer@finalnospec}
+\def\beamer@finalnospec{%
+  \expandafter\beamer@todo\expandafter{\beamer@ospec}}
 
 
 
