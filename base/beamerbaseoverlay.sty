@@ -585,16 +585,17 @@
 % Insert area
 %
 \newenvironment{overlayarea}[2]{%
-  \beamer@finalheight=#2\relax%
-  \advance\beamer@finalheight by-\baselineskip%
-  \setbox\beamer@areabox=\hbox\bgroup%
-  \begin{minipage}[t]{#1}%
+  \beamer@animht=#1\relax%
+  \beamer@animwd=#2\relax%
+  \setbox\beamer@areabox=\vbox to#2\bgroup%
+  \strut\begin{minipage}[t]{#1}%
   }
-  {
-  \end{minipage}%
+  {%
+  \end{minipage}\vfil%
   \egroup%
-  \ht\beamer@areabox=0pt%
-  \dp\beamer@areabox=\beamer@finalheight%
+  \wd\beamer@areabox=\beamer@animht%
+  \ht\beamer@areabox=\beamer@animwd%
+  \dp\beamer@areabox=0pt%
   \box\beamer@areabox%
 }
 

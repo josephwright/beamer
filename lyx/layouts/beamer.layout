@@ -1,4 +1,4 @@
- #% Do not delete the line below; configure depends on this
+#% Do not delete the line below; configure depends on this
 #  \DeclareLaTeXClass{Beamer Presentation Class}
 # Author : Till Tantau <tantau@users.sourceforge.net>
 
@@ -29,8 +29,7 @@ Style Standard
   ParSkip 		0.4
   Align 		Left
   AlignPossible 	Block, Left, Right, Center
-  LabelType 		No_Label
-  KeepEmpty		1
+  LabelType 		No_Label  
 End
 
 # Itemize style definition
@@ -914,6 +913,30 @@ Style Proof
   CopyStyle		Corollary
   LatexName	 	proof}%{
   LabelString		"Proof. " 
+End
+
+# Separator style definition
+Style Separator
+  LatexType 		Paragraph
+  LatexName 		dummy
+  ParIndent		MM
+  ParSkip 		0.4
+  Align 		Left
+  AlignPossible 	Block, Left, Right, Center
+  Margin                First_Dynamic
+  TopSep                0
+  BottomSep             0
+  ParSep                0
+  LabelType             Static
+  LabelBottomSep        0
+  LabelString           "___"
+  KeepEmpty             1
+
+  LabelFont 
+    Series          Medium
+    Size            Normal
+    Color           latex
+  EndFont
 End
 
 # Title style definition
