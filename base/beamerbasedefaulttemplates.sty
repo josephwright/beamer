@@ -92,7 +92,13 @@
 % Table of contents
 %
 
-\defbeamertemplategroup{table of contents}{section in toc,subsection in toc}
+\defbeamertemplateparent{table of contents}{section in toc,subsection in toc}
+{}
+
+\defbeamertemplateparent{table of contents shaded}{section in toc shaded,subsection in toc shaded}[1][20]
+{[#1]}
+
+
 
 
 % (sub-)section in toc: default
@@ -112,27 +118,19 @@
 \defbeamertemplate*{subsection in toc shaded}{default}[1][20]
 {\begin{colormixin}{#1!parent.bg}\usebeamertemplate{subsection in toc}\end{colormixin}\unskip}
 
-\defbeamertemplate{table of contents shaded}{default}[1][20]
-{}
-[action]
-{
-  \setbeamertemplate{section in toc shaded}[default][#1]
-  \setbeamertemplate{subsection in toc shaded}[default][#1]
-}
-
-
 
 %
 % Items
 %
 
-\defbeamertemplategroup{items}{itemize items,enumerate items}
+\defbeamertemplateparent{item}{itemize items,enumerate items}
+{}
 
-%
+
 % Itemize items
-%
 
-\defbeamertemplategroup{itemize items}{itemize item,itemize subitem,itemize subsubitem}
+\defbeamertemplateparent{itemize items}{itemize item,itemize subitem,itemize subsubitem}
+{}
 
 
 % Itemize items, default
@@ -140,6 +138,10 @@
 \defbeamertemplate*{itemize item}{default}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
 \defbeamertemplate*{itemize subitem}{default}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
 \defbeamertemplate*{itemize subsubitem}{default}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+
+
+\defbeamertemplateparent{enumerate items}{enumerate item,enumerate subitem,enumerate subsubitem,enumerate mini}
+{}
 
 
 \mode

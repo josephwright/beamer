@@ -39,31 +39,43 @@
   \ifbeamer@sbt\setbeamertemplate{#1}[#2]\relax\relax\relax\relax\relax\relax\relax\relax\relax\fi% 
 }
 
-\newcommand\defbeamertemplategroup[2]{%
-  \expandafter\def\csname beamer@@tmpgrp@#1\endcsname{#2}%
-}
 
-\newcommand\setbeamertemplate[1]{%
+\def\defbeamertemplateparent#1{\@ifnextchar[{\beamer@sbtoparo{#1}}{\beamer@sbtoparo{#1}[*]}}
+\def\beamer@sbtoparo#1[#2]#3{\@ifnextchar[{\beamer@sbtopar{#1}[#2]{#3}}{\beamer@sbtopar{#1}[#2]{#3}[0]}}
+\def\beamer@sbtopar#1[#2]#3[#4]{\@ifnextchar[
+  {\beamer@@sbtopar{#1}[#2]{#3}[#4]}
+  {\def\beamer@sbtotemp{}\beamer@@@sbtopar{#1}[#2]{#3}[#4]}}
+\long\def\beamer@@sbtopar#1[#2]#3[#4][#5]{\long\def\beamer@sbtotemp{[#5]}\beamer@@@sbtopar{#1}[#2]{#3}[#4]}
+\long\def\beamer@@@sbtopar#1[#2]#3[#4]#5{%
+  \expandafter\def\csname beamer@@tmpgrp@#1\endcsname{#3}%
+  \edef\beamer@@sbtoarg{\noexpand\newcommand\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[#4]}%
+  \expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
+    \def\beamer@sbtlist{#3}%
+    \@for\beamer@templ:=\beamer@sbtlist\do
+    {\expandafter\expandafter\expandafter\setbeamertemplate
+      \expandafter\expandafter\expandafter{\expandafter\beamer@templ\expandafter}\expandafter[\beamer@@sbt@option]#5}}}
+
+
+\def\setbeamertemplate#1{%
+  \@ifnextchar[{\beamer@sbtchoose{#1}}{\beamer@sbtexec{#1}}}
+\def\beamer@sbtexec#1#2{%
+  \expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname{#2}%
   \expandafter\ifx\csname beamer@@tmpgrp@#1\endcsname\relax%
-    \let\beamer@@next=\beamer@sbtn%
   \else%
-    \let\beamer@@next=\beamer@sbtg%
+    \expandafter\expandafter\expandafter\def
+    \expandafter\expandafter\expandafter\beamer@sbt@group
+    \expandafter\expandafter\expandafter{\csname beamer@@tmpgrp@#1\endcsname}%
+    \@for\beamer@templ:=\beamer@sbt@group\do{\expandafter\setbeamertemplate\expandafter{\beamer@templ}{#2}}%
   \fi%
-  \beamer@@next{#1}%
 }
-
-\def\beamer@sbtn#1{%
-  \@ifnextchar[{\beamer@sbtchoose{#1}}{\expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname}}
-\def\beamer@sbtchoose#1[#2]{\csname beamer@@tmpop@#1@#2\endcsname}
-
-\def\beamer@sbtg#1{%
-  \expandafter\expandafter\expandafter\def
-  \expandafter\expandafter\expandafter\beamer@sbt@group
-  \expandafter\expandafter\expandafter{\csname beamer@@tmpgrp@#1\endcsname}%
-  \@ifnextchar[{\beamer@sbtgchoose{#1}}{\beamer@sbtgset{#1}}}
-\def\beamer@sbtgchoose#1[#2]{\@for\beamer@templ:=\beamer@sbt@group\do{\expandafter\setbeamertemplate\expandafter{\beamer@templ}[#2]}}
-\def\beamer@sbtgset#1#2{\@for\beamer@templ:=\beamer@sbt@group\do{\expandafter\setbeamertemplate\expandafter{\beamer@templ}{#2}}}
-
+\def\beamer@sbtchoose#1[#2]{\def\beamer@@sbt@option{#2}%
+  \expandafter\ifx\csname beamer@@tmpop@#1@#2\endcsname\relax%
+    \expandafter\let\expandafter\beamer@@next\csname beamer@@tmpop@#1@*\endcsname%
+  \else%
+    \expandafter\let\expandafter\beamer@@next\csname beamer@@tmpop@#1@#2\endcsname%
+  \fi%
+  \beamer@@next%
+}
 
 \newcommand\addtobeamertemplate[3]{%
   \long\def\beamer@temp{#2}%
@@ -78,9 +90,6 @@
 
 
 
-%
-% load templates
-%
 
 \RequirePackage{beamerbasedefaulttemplates}
 \RequirePackage{beamerbaseauxtemplates}
