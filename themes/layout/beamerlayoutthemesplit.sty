@@ -12,17 +12,6 @@
 \ExecuteOptionsBeamer{shadecommand=relax}
 \ProcessOptionsBeamer
 
-
-\mode<presentation>
-
-\usesectionheadtemplate
-  {\hfill\color{white}\insertsectionhead}
-  {\hfill\color{white!50!black}\insertsectionhead}
-
-\usesubsectionheadtemplate
-  {\color{white}\insertsubsectionhead}
-  {\color{white!50!beamerstructure}\insertsubsectionhead}
-
 \AtBeginDocument{
   \pgfdeclareverticalshading{topshade}{\paperwidth}{%
     color(0pt)=(bg);
@@ -33,68 +22,65 @@
     color(\paperwidth)=(black)}
 }
 
+
+
+\mode<presentation>
+
+\usesectionheadtemplate
+  {\hfill\insertsectionhead}
+  {\hfill\color{fg!50!bg}\insertsectionhead}
+
                                 % Head
 \ifbeamer@compress
-\useheadtemplate{%
-  \vbox{%
-    \setbox\beamer@linebox=\hbox to\paperwidth{%
-      \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
-      \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}\hfil}%
-    \ht\beamer@linebox=2.625ex
-    \dp\beamer@linebox=0pt
-    \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
-    \hbox to\textwidth{%
-      {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth height\ht\beamer@linebox
-      \color{beamerstructure}\vrule width.5\paperwidth height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
-    \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin
-  }%
+
+\useheadtemplate*{%
+  \leavevmode%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex]{section in head/foot}%
+    \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex]{subsection in head/foot}%
+    \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}%
+  \end{beamercolorbox}%
   \beamer@blts@shader%
-  }%
 }
+
 \else
-\useheadtemplate{%
-  \vbox{%
-    \@tempdima=2.4375ex%
-    \ifnum\beamer@subsectionmax<\beamer@sectionmax%
-    \multiply\@tempdima by\beamer@sectionmax%
-    \else%
-    \multiply\@tempdima by\beamer@subsectionmax%
-    \fi%
-    \ifdim\@tempdima>0pt%
-      \advance\@tempdima by 1.125ex%
-      \setbox\beamer@linebox=\hbox to\paperwidth{%
-        \vbox to \@tempdima{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
-        \vbox to \@tempdima{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
-      \hbox to\textwidth{%
-        {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
-          height\ht\beamer@linebox\color{beamerstructure}\vrule width.5\paperwidth
-          height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
-        \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin%
-      }
-    \fi%
-    \beamer@blts@shader%
-  }%
+
+\useheadtemplate*{%
+  \leavevmode%
+  \@tempdimb=2.4375ex%
+  \ifnum\beamer@subsectionmax<\beamer@sectionmax%
+    \multiply\@tempdimb by\beamer@sectionmax%
+  \else%
+    \multiply\@tempdimb by\beamer@subsectionmax%
+  \fi%
+  \ifdim\@tempdimb>0pt%
+    \advance\@tempdimb by 1.125ex%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{section in head/foot}%
+      \vbox to\@tempdimb{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{subsection in head/foot}%
+      \vbox to\@tempdimb{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}%
+    \end{beamercolorbox}%
+  \fi%
+  \beamer@blts@shader%
 }
+
 \fi
-                                % Footline
-\usefoottemplate{%
-  \vbox{%
-  \hbox{%
-  \setbox\beamer@linebox=\hbox to\paperwidth{%
-    \hbox to.5\paperwidth{\hfill\color{white}\usebeamerfont{author in head/foot}\insertshortauthor\hskip.3cm}%
-    \hbox to.5\paperwidth{\hskip.3cm\color{white}\usebeamerfont{title in head/foot}\insertshorttitle\hfill}\hfill}%
-  \ht\beamer@linebox=2.625ex%
-  \dp\beamer@linebox=0pt%
-  \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
-  \color{black}%
-  \hskip-\Gm@lmargin%
-  \vrule width.5\paperwidth height\ht\beamer@linebox%
-  \color{beamerstructure}%
-  \vrule width.5\paperwidth height\ht\beamer@linebox%
-  \hskip-\paperwidth% 
-  \hbox{\box\beamer@linebox\hfill}\hfill\hskip-\Gm@rmargin}}}
 
 
+\usefoottemplate*{%
+  \leavevmode%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
+    \leavevmode%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \leavevmode%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \vskip1.125ex%
+}
 
 
 \mode

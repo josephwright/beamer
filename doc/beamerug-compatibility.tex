@@ -71,7 +71,7 @@ class, extra options or precautions may be necessary.
 
   \articlenote
   The |color| package is not loaded automatically if
-  |beamerbasearticle| is loaded with the |noxcolor| option.
+  |beamerarticle| is loaded with the |noxcolor| option.
 \end{package}
 
 \begin{package}{{CJK}}
@@ -191,6 +191,32 @@ class, extra options or precautions may be necessary.
   applies to pstricks also applies to |msc|.
 \end{package}
 
+\begin{package}{{pdfpages}}
+  Commands like |\includepdf| only work \emph{outside} frames as they
+  produce pages ``by themselves.'' You may also wish to say
+  |\usebackgroundtemplate{}| when you use such a command since the
+  background (even a white background) will otherwise be printed over
+  the image you try to include.
+
+  \example
+\begin{verbatim}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+{
+  \usebackgroundtemplate{}
+  \includepdf{somepdfimages.pdf}
+}
+
+\begin{frame}
+  A normal frame.
+\end{frame}
+\end{document}
+\end{verbatim}
+\end{package}
+
 \begin{package}{{\normalfont\meta{professional font package}}}
   \beamernote
   If you use a professional font package, \beamer's internal
@@ -252,7 +278,7 @@ class, extra options or precautions may be necessary.
 
   \articlenote
   The |color| package is not loaded automatically if
-  |beamerbasearticle| is loaded with the |noxcolor| option.
+  |beamerarticle| is loaded with the |noxcolor| option.
 \end{package}
 
 
@@ -446,9 +472,8 @@ My notes for these slides.
   the note. Certain commands, like |\LeftFoot|, are ignored. You can
   change the theme using the usual commands. You can also use all
   normal \beamer\ commands and concepts, like overlay-specifications,
-  in the file. You can also create an |article| version by adding the
-  class option |class=article| and including the package
-  |beamerbasearticle|.
+  in the file. You can also create an |article| version by using the
+  class |article| and including the package |beamerarticle|.
 \end{package}
 
 In the following, the effect of \prosper\ commands in \beamer\ are
@@ -828,8 +853,8 @@ article version.
 
   You can use all normal \beamer\ commands and concepts, like
   overlay-specifications, in the file. You can also create an
-  |article| version by adding the class option |class=article| and
-  including the package |beamerbasearticle|. 
+  |article| version by using the class |article| and
+  including the package |beamerarticle|. 
 \end{package}
 
 In the following, the effect of \seminar\ commands in \beamer\ are

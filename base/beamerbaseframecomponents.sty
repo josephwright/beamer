@@ -175,14 +175,56 @@
   \@colht\textheight%
   \@colroom\textheight%
   \vsize\textheight%  
+}
+
+
+ 
+  
+\def\usefoottemplate{\@ifstar{\beamer@usefoots}{\beamer@usefoot}}
+
+\newcommand{\beamer@usefoot}[1]{
+  \long\def\beamer@@foottemplate{#1}
+  \def\beamer@foottemplate{\offinterlineskip{\usebeamerfont*{footline}\def\\{,}\beamer@@foottemplate}}}%
+
+\newcommand{\beamer@usefoots}[1]{
+  \long\def\beamer@@foottemplate{#1}
+  \def\beamer@foottemplate{%
+    \offinterlineskip{%
+      \hbox{\hskip-\Gm@lmargin\hbox{\vbox{\hsize=\paperwidth\textwidth=\paperwidth%
+            \usebeamerfont*{footline}\def\\{,}\beamer@@foottemplate%
+            }}\hskip-\Gm@rmargin%
+    }}}}%
+
+\newcommand\addtofoottemplate[2]{%
+  \long\def\beamer@temp{#1}%
+  \def\beamer@@temp{\long\def\beamer@@foottemplate}
+  \expandafter\expandafter\expandafter\beamer@@temp\expandafter\expandafter\expandafter{\expandafter\beamer@temp\beamer@@foottemplate#2}
   }
 
-\long\def\usefoottemplate#1{%
-  \def\beamer@foottemplate{\offinterlineskip{\usebeamerfont*{footline}\def\\{,}#1}}}
-\def\insertpagenumber{\thepage}
 
-\long\def\useheadtemplate#1{%
-  \def\beamer@headtemplate{\offinterlineskip{\usebeamerfont*{headline}#1}}}%
+
+\def\useheadtemplate{\@ifstar{\beamer@useheads}{\beamer@usehead}}
+
+\newcommand{\beamer@usehead}[1]{
+  \long\def\beamer@@headtemplate{#1}
+  \def\beamer@headtemplate{\offinterlineskip{\usebeamerfont*{headline}\beamer@@headtemplate}}}%
+
+\newcommand{\beamer@useheads}[1]{
+  \long\def\beamer@@headtemplate{#1}
+  \def\beamer@headtemplate{%
+    \offinterlineskip{%
+      \hbox{\hskip-\Gm@lmargin\hbox{\vbox{\hsize=\paperwidth\textwidth=\paperwidth%
+            \usebeamerfont*{headline}\beamer@@headtemplate%
+            }}\hskip-\Gm@rmargin%
+    }}}}%
+
+\newcommand\addtoheadtemplate[2]{%
+  \long\def\beamer@temp{#1}%
+  \def\beamer@@temp{\long\def\beamer@@headtemplate}
+  \expandafter\expandafter\expandafter\beamer@@temp\expandafter\expandafter\expandafter{\expandafter\beamer@temp\beamer@@headtemplate#2}
+  }
+
+\def\insertpagenumber{\thepage}
 
 
 

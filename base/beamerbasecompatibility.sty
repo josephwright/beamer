@@ -36,9 +36,6 @@
 \def\document{%
   \beamer@firstminutepatches%
   \endgroup%
-%  \recalculatefoot%
-%  \recalculatehead%
-  %
   
   \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
     %
@@ -129,20 +126,20 @@
 
 %
 %
-% Fix for babel (will have an effect only, if babel is loaded)
+% Fix for babel 
 %
 %
-\def\textlatin{}
-\def\thesubsubsection{}
-\def\theparagraph{}
-\def\thesubparagraph{}
-\def\listoffigures{}
-\def\listoftables{}
-\def\l@part{}
-\def\l@chapter{}
+\providecommand\textlatin{}
+\providecommand\thesubsubsection{}
+\providecommand\theparagraph{}
+\providecommand\thesubparagraph{}
+\providecommand\listoffigures{}
+\providecommand\listoftables{}
+\providecommand\l@part{}
+\providecommand\l@chapter{}
 
 %
-% Bugfix of latex internals
+% ``Bugfix'' of latex internals
 %
 \def\smallskip{\vskip\smallskipamount}
 \def\medskip{\vskip\medskipamount}
@@ -228,6 +225,10 @@
 \define@key{beamertoc}{current}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}}
 \define@key{beamertoc}{hidesubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}}
 \define@key{beamertoc}{shadesubsections}[]{\beamer@toc@subsectionstyle{shaded}}
+
+\def\insertvrule#1#2{%
+  \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
+    height #1\hskip-\Gm@rmargin}}
 
 \mode
 <all>{\def\unpause{\onslide{}}}

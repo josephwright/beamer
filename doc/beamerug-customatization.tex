@@ -1058,6 +1058,21 @@ or
 \end{verbatim}
 \end{command}
 
+\begin{command}{\addtofoottemplate\marg{before}\marg{after}}
+  Prepends the text \meta{before} to the current foot template and
+  appends the text \meta{after}. This command is useful for adding
+  something to a foot template that is installed by some theme.
+  \example
+\begin{verbatim}
+\addtoheadtemplate
+  {\vbox\bgroup}
+  {%
+    \vskip-.5cm%
+    \includegraphics[height=.5cm]{myimage.pdf}%
+  \egroup}
+\end{verbatim}
+\end{command}
+
 
 \begin{command}{\useheadtemplate\marg{headline template}}
   See |\usefoottemplate|.
@@ -1073,6 +1088,9 @@ or
 \end{verbatim}
 \end{command}
 
+\begin{command}{\addtoheadtemplate\marg{before}\marg{after}}
+  See |\addtofoottemplate|.
+\end{command}
 
 
 \paragraph{Inserts for these Templates}\ 
