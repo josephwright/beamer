@@ -46,27 +46,27 @@
   \gdef\beamer@endexampleblocktemplate{#2}}
 
 \newoverlayenvironment{block}[1]{%
-  \def\insertblockname{#1}%
+  \beamer@spacingcover\def\insertblockname{#1}%
   \par%
-  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate}%
+  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate\beamer@spacingcover}%
   {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
   \beamer@beginblocktemplate}{\par\beamer@endblocktemplate\beamer@endcovered}
 
 \newoverlayenvironment{alertblock}[1]{%
-  \def\insertblockname{#1}%
+  \beamer@spacingcover\def\insertblockname{#1}%
   \par%
-  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate}%
+  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate\beamer@spacingcover}%
   {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
   \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate\beamer@endcovered}
 
 \newoverlayenvironment{exampleblock}[1]{%
-  \def\insertblockname{#1}%
+  \beamer@spacingcover\def\insertblockname{#1}%
   \par%
-  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate}%
+  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate\beamer@spacingcover}%
   {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
@@ -204,6 +204,12 @@
 \def\usedescriptionitemtemplate#1#2{\gdef\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
   \global\advance\beamer@descdefaulttemp by \labelsep}
 \usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}
+
+\def\usedescriptionitemofwidthas#1{%
+  \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
+  \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by
+  \labelsep%
+  \beamer@descdefaulttemp=\beamer@descdefault}
 
 \let\beamer@itemize\itemize
 

@@ -106,7 +106,8 @@
   \ifx\jobnamebeamerversion\@empty%
   \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
   \else%
-  \pgfimage[#1,page=\csname beamer@slide#2\endcsname]{\jobnamebeamerversion}
+  \edef\beamer@args{[#1,page=\csname beamer@slide#2\endcsname]{\jobnamebeamerversion}}
+  \expandafter\pgfimage\beamer@args%
   \fi}
 
 \def\setjobnamebeamerversion#1{%

@@ -126,13 +126,13 @@
   {\setbox0=\hbox{\beamer@localanotherslidefalse\beamer@decode#1| stop:|
       \ifbeamer@localanotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi}}\beamer@donow}
 
-\def\original#1{\csname @orig\string#1\endcsname}
+\def\beameroriginal#1{\csname @orig\string#1\endcsname}
 
 \long\def\newoverlaycommand#1#2#3{% In slides, #1 does #2, otherwise #3
   \def#1{\@ifnextchar<{\@overlayparse{#2}{#3}}{#2}}}
 
 \long\def\renewoverlaycommand#1#2#3{% In slides, #1 does #2, otherwise #3
-  \edef\@name{\original#1}
+  \edef\@name{\beameroriginal#1}
   \expandafter\let\@name=#1\relax%
   \def#1{\@ifnextchar<{\@overlayparse{#2}{#3}}{#2}}}
 
@@ -285,7 +285,10 @@
 \let\beamer@origitem=\item
 \def\item{%
   \beamer@closeitem\gdef\beamer@closeitem{}%
-  \@ifnextchar<{\beamer@parseitem}{\beamer@origitem}}
+  \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}
+\def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{\beamer@origitem}}
+\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{\beamer@origitem[#1]}}
+\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[#1]}
 \def\beamer@closeitem{}
 \def\beamer@parseitem<#1>{%
   \alt<#1>{\beamer@spacingcover%for spacing reasons
@@ -362,15 +365,15 @@
 \newoverlaycommand{\only}{}{\@gobble}
 \newoverlaycommand{\uncover}{\fakeinvisible}{\makeinvisible}
 \newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\fakeinvisible}
-\renewoverlaycommand{\textbf}{\original{\textbf}}{}
-\renewoverlaycommand{\textit}{\original{\textit}}{}
-\renewoverlaycommand{\textsl}{\original{\textsl}}{}
-\renewoverlaycommand{\textsf}{\original{\textsf}}{}
-\renewoverlaycommand{\textrm}{\original{\textrm}}{}
-\renewoverlaycommand{\color}{\original{\color}}{\beamer@gobbleoptional}
-\newoverlayenvironment{uncoverenv}{}{}{\beamer@startcovered}{\beamer@endcovered}
+\renewoverlaycommand{\textbf}{\beameroriginal{\textbf}}{}
+\renewoverlaycommand{\textit}{\beameroriginal{\textit}}{}
+\renewoverlaycommand{\textsl}{\beameroriginal{\textsl}}{}
+\renewoverlaycommand{\textsf}{\beameroriginal{\textsf}}{}
+\renewoverlaycommand{\textrm}{\beameroriginal{\textrm}}{}
+\renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptional}
+\newoverlayenvironment{uncoverenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
-\renewoverlaycommand{\hypertarget}{\original{\hypertarget}}{\@gobble}
+\renewoverlaycommand{\hypertarget}{\beameroriginal{\hypertarget}}{\@gobble}
 
 \newoverlaycommand{\emph}{\@emph}{}
 \def\@emph#1{{\itshape#1}}
@@ -499,18 +502,19 @@
 
 
 %
-% Label hackery (for using labels in overlays)
+% Labels in overlays
 %
 \AtBeginDocument{%
   \let\beamer@origlabel\label
   \def\label{\@ifnextchar<{\beamer@label}{\beamer@label<1>}}
-  \def\beamer@label<#1>#2{\alt<#1>{\beamer@origlabel{#2}}{}}
 
   \let\beamer@origlabel@in@display\label@in@display
   \def\label@in@display{\@ifnextchar<{\beamer@label@in@display}{\beamer@label@in@display<1>}}
-  \def\beamer@label@in@display<#1>#2{\alt<#1>{\beamer@origlabel@in@display{#2}}{}}  
 }
 
+
+\def\beamer@label<#1>#2{\alt<#1>{\beamer@origlabel{#2}\beamer@nameslide{#2}}{}}
+\def\beamer@label@in@display<#1>#2{\alt<#1>{\beamer@origlabel@in@display{#2}\beamer@nameslide{#2}}{}}  
 
 
 %%% Local Variables: 

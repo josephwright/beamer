@@ -114,19 +114,19 @@
 \AtEndDocument{%
   \clearpage
   \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
-  \immediate\write\@auxout{\string\@writefile{head}%
+  \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}}%
-  \immediate\write\@auxout{\string\@writefile{head}%
+  \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}}%
-  \immediate\write\@auxout{\string\@writefile{head}%
+  \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}}%
-  \immediate\write\@auxout{\string\@writefile{head}%
+  \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
-  \immediate\write\@auxout{\string\@writefile{head}%
+  \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\def\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
     \if@filesw
-      \newwrite\tf@head
-      \immediate\openout\tf@head\jobname.nav\relax
+      \newwrite\tf@nav
+      \immediate\openout\tf@nav\jobname.nav\relax
       \newwrite\tf@toc
       \immediate\openout\tf@toc\jobname.toc\relax
       \newwrite\tf@snm

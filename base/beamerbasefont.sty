@@ -127,8 +127,10 @@
 % supress for standard cm
 \ifx\beamer@fmdef\beamer@cmr\beamer@suppressreplacementstrue\fi
 
-% supress for mathtime serif
+% supress for mathtime serif and math minion serif
 \@ifpackageloaded{mathtime}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mathpmnt}{\if@sansmath\else\@suppressreplacementstrue\fi}{}
+
 \ifbeamer@suppressreplacements\else
   \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{m}{n}
   \DeclareSymbolFont{pureletters}{\encodingdefault}{\mathfamilydefault}{m}{it}

@@ -38,6 +38,9 @@
   \xdef\beamer@frameendpage{\thepage}% every time
   \beamer@setuplinks%
   \let\beamer@startcomment=\beamer@startcommentinframe%
+  \ifx\beamer@resumename\@empty\else%
+  \label<\the\beamer@slideinframe>{\beamer@resumename<\the\beamer@slideinframe>}%
+  \fi%
   \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
   {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
 
@@ -101,6 +104,7 @@
 %
 % Keys
 %
+\define@key{beamerframe}{label}{\def\beamer@resumename{#1}}
 \define@key{beamerframe}{plain}[true]{\def\beamer@frametheme{\beamer@frametheme@plain}}
 \define@key{beamerframe}{theme}{%
   \edef\beamer@frametheme{\expandafter\noexpand\csname beamer@frametheme@#1\endcsname}}
@@ -128,6 +132,7 @@
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
 \def\beamer@@@frame<#1>[#2]{%
   \def\beamer@frametheme{}%
+  \def\beamer@resumename{}%
   \setkeys{beamerframe}{#2}%
   \beamer@frametheme%
   \refstepcounter{framenumber}%
@@ -135,27 +140,31 @@
   \gdef\insertframetitle{}%
   \gdef\beamer@framestartpage{}%
   \gdef\beamer@whichframes{#1}%
-  \beamer@slideinframe=0\relax%
-  \beamer@anotherslidefalse%
-  {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
-  \ifbeamer@anotherslide%
-  \beamer@slideinframe=2\relax%
-  \def\beamer@doifnotinframe{}%
-  \def\beamer@doifinframe{\let\howtotreatframe\doseveralframes}%
-  \beamer@anotherslidefalse%
-  {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
-  \ifbeamer@anotherslide%
-  \let\howtotreatframe\doseveralframes\else%
-  \let\howtotreatframe\dosingleframe%
+  \ifx\beamer@resumename\@empty%
+    \beamer@slideinframe=0\relax%
+    \beamer@anotherslidefalse%
+    {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
+    \ifbeamer@anotherslide%
+      \beamer@slideinframe=2\relax%
+      \def\beamer@doifnotinframe{}%
+      \def\beamer@doifinframe{\let\beamer@howtotreatframe\beamer@doseveralframes}%
+      \beamer@anotherslidefalse%
+      {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
+      \ifbeamer@anotherslide%
+        \let\beamer@howtotreatframe\beamer@doseveralframes%
+      \else% single slide in frame
+        \let\beamer@howtotreatframe\beamer@dosingleframe%
+      \fi%
+      \beamer@donow%
+    \else% no slides in frame
+      \let\beamer@howtotreatframe\beamer@donoframe%
+    \fi%
+  \else% resume mode
+    \let\beamer@howtotreatframe\beamer@doseveralframes%
   \fi%
-  \beamer@donow%
-  \else%
-  \let\howtotreatframe\donoframe%
-  \fi%
-  \ifbeamer@notesnormals\else\let\howtotreatframe\donoframe\fi%
-  \howtotreatframe}
-\long\def\donoframe{%
-  \beamer@slideinframe=1\relax%
+  \ifbeamer@notesnormals\else\let\beamer@howtotreatframe\beamer@donoframe\fi%
+  \beamer@howtotreatframe}
+\long\def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
   \setbox\beamer@tempbox\vbox\bgroup\leavevmode\def\pause{}\afterassignment\beamer@checknoslide\let\beamer@next}
 \def\beamer@checknoslide{%
@@ -165,7 +174,11 @@
   \beamer@do}
 \def\beamer@noframesingletoken{\beamer@next\egroup\beamer@reseteecodes}
 
-\long\def\doseveralframes#1{%
+\long\def\beamer@doseveralframes#1{%
+  \ifx\beamer@resumename\@empty\else%
+    % Resume stuff
+    \expandafter \gdef\csname beamer@resume@\beamer@resumename\endcsname{{#1}}%
+  \fi%
   \beamer@slideinframe=1\relax%
   \loop%
   \beamer@anotherslidefalse%
@@ -173,7 +186,6 @@
   \def\beamer@doifinframe{\begin{beamer@frameslide}%
     #1%
   \end{beamer@frameslide}}%
-  \beamer@slideinframe=\beamer@slideinframe%
   {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
   \beamer@donow%
   \ifbeamer@anotherslide
@@ -182,7 +194,10 @@
   \beamer@writeslidentry%
   \beamer@reseteecodes}
 
-\def\dosingleframe{\begin{beamer@frameslide}\bgroup\aftergroup\beamer@endslide\afterassignment\beamer@checkslide\let\beamer@next}
+\def\beamer@dosingleframe{%
+  \beamer@slideinframe=1\relax%
+  \begin{beamer@frameslide}%
+    \bgroup\aftergroup\beamer@endslide\afterassignment\beamer@checkslide\let\beamer@next}
 \def\beamer@checkslide{%
   \ifcat\bgroup\noexpand\beamer@next%
   \let\beamer@do\relax%
@@ -194,21 +209,23 @@
 \def\beamer@writeslidentry{%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% nothing to do ...
   {%else
-    \addtocontents{head}%
+    \addtocontents{nav}%
       {\protect\headcommand{%
           \protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
           {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\thepart}}}%
-    \addtocontents{head}%
+    \addtocontents{nav}%
       {\protect\headcommand{% 
         \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
     \clearpage%
   }
 }
-
-
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}}
 
-\def\plainframe{\frame[plain]}%
+
+
+%
+% Plain frames
+%
 
 \def\beamer@frametheme@plain{%
   \def\beamer@entrycode{\vspace*{-\headheight}}%
@@ -216,15 +233,20 @@
 
 
 %
-% Names slides
+% Resume frame
 %
 
-\def\beamer@nameslide#1{%
-  \addtocontents{snm}{\protect\beamer@slide{#1}{\thepage}}%
-  \hypertarget{#1}{}}
-\def\beamer@slide#1#2{\expandafter\def\csname beamer@hyperlink#1\endcsname{%
-  \hyperlink{Navigation#2}}}
-
+\def\resumeframe{\@ifnextchar<{\begingroup\catcode`:=12\catcode`|=12\beamer@resumeframe}{\beginroup\beamer@resumeframe<+>}}
+\def\beamer@resumeframe<#1>{\endgroup\@ifnextchar[{\beamer@@resumeframe<#1>}{\beamer@@resumeframe<#1>[]}}
+\def\beamer@@resumeframe<#1>[#2]#3{%
+  \@ifundefined{beamer@resume@#3}%
+  {\ClassError{beamer}{No frame has been designated to resume under
+      the name "#3"}{}}%
+  {%
+  \def\beamer@temp{\frame<#1>[#2,label=#3]}%
+  \expandafter\let\expandafter\beamer@templet\csname beamer@resume@#3\endcsname%
+  \expandafter\beamer@temp\beamer@templet}%
+}
 
 %
 % Notes
