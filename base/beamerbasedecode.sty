@@ -76,6 +76,8 @@
 
 \def\beamer@default{default}
 \def\beamer@articlemode{article}
+\def\beamer@secondmode{second}
+\def\beamer@beamermode{beamer}
 \def\beamer@presentationmode{presentation}
 \def\beamer@modeall{all}
 \def\beamer@ovmodestop{stop}
@@ -97,8 +99,15 @@
         \beamer@@decodefound%
       \else%
         \ifx\beamer@ovmode\beamer@presentationmode%
-          \ifx\beamer@currentmode\beamer@articlemode\else%
+          \ifx\beamer@currentmode\beamer@articlemode%
+          \else%
             \beamer@@decodefound%
+          \fi%
+        \else%
+          \ifx\beamer@ovmode\beamer@beamermode%
+            \ifx\beamer@currentmode\beamer@secondmode%
+              \beamer@@decodefound%
+            \fi%
           \fi%
         \fi%
       \fi%

@@ -420,17 +420,17 @@
     \beamer@anotherslidefalse%
     {\beamer@masterdecode{\beamer@whichframes}}%
     \ifbeamer@anotherslide%
-      \beamer@slideinframe=2\relax%
-      \def\beamer@doifnotinframe{}%
-      \def\beamer@doifinframe{\let\beamer@howtotreatframe\beamer@doseveralframes}%
-      \beamer@anotherslidefalse%
-      {\beamer@masterdecode{\beamer@whichframes}}%
-      \ifbeamer@anotherslide%
+%%       \beamer@slideinframe=2\relax%
+%%       \def\beamer@doifnotinframe{}%
+%%       \def\beamer@doifinframe{\let\beamer@howtotreatframe\beamer@doseveralframes}%
+%%       \beamer@anotherslidefalse%
+%%       {\beamer@masterdecode{\beamer@whichframes}}%
+%%       \ifbeamer@anotherslide%
         \let\beamer@howtotreatframe\beamer@doseveralframes%
-      \else% single slide in frame
-        \let\beamer@howtotreatframe\beamer@dosingleframe%
-      \fi%
-      \beamer@donow%
+%%       \else% single slide in frame
+%%         \let\beamer@howtotreatframe\beamer@dosingleframe%
+%%       \fi%
+%%       \beamer@donow%
       \ifbeamer@containsverbatim%
         \let\beamer@howtotreatframe\beamer@dosingleframe%
       \fi%
@@ -481,6 +481,7 @@
   \end{beamer@frameslide}}%
   {\beamer@masterdecode{\beamer@whichframes}}%
   \beamer@donow%
+  \beamer@dosecondscreennow{#1}% two screen stuff
   \ifbeamer@anotherslide
   \advance\beamer@slideinframe by 1\relax
   \repeat%

@@ -8,17 +8,45 @@
 \mode
 <presentation>
 
-\newif\ifbeamer@twoscreens
+\newif\ifbeamer@twoscreensnotes
+\newif\ifbeamer@twoscreenstext
 
-\defbeameroption{notes on second screen}[]%
+\defbeameroption{notes on second screen}[right]%
 {
-  \pgfpagelayout{two screens with optional second}
-  \beamer@twoscreenstrue
+  \pgfpagelayout{two screens with optional second}[second #1]
+  \beamer@twoscreennotesstrue
+  \beamer@notestrue
+}
+
+\defbeameroption{previous slide on second screen}[right]%
+{
+  \pgfpagelayout{two screens with lagging second}[second #1]
+}
+
+\defbeameroption{second mode text on second screen}[right]%
+{
+  \pgfpagelayout{two screens with optional second}[second #1]
+  \beamer@twoscreenstexttrue
 }
 
 
-\mode
-<article>
+\def\beamer@dosecondscreennow#1{% called from \beamer@doseveralframes
+  \ifbeamer@twoscreenstext%
+  {%
+    \clearpage%
+    \def\beamer@currentmode{second}
+    \def\beamer@doifnotinframe{}%
+    \def\beamer@doifinframe{\begin{beamer@frameslide}%
+        #1%
+      \end{beamer@frameslide}%
+      \pgfcurrentpagewillbelogicalpage{2}%
+      \clearpage%
+    }%
+    {\beamer@masterdecode{\beamer@whichframes}}%
+    \beamer@donow%
+  }%
+  \fi%
+}
 
 
 \mode
