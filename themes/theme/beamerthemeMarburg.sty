@@ -7,9 +7,6 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\newif\ifbeamer@sidebartab
-\beamer@sidebartabfalse
-
 \PassOptionsToPackage{right}{beamerlayoutthemesidebar}
 \PassOptionsToPackage{width=2cm}{beamerlayoutthemesidebar}
 
@@ -19,27 +16,19 @@
 \DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{tab}[true]{\csname beamer@sidebartab#1\endcsname}
 \ProcessOptionsBeamer
+
+
 
 \mode<presentation>
 
-\usecolortheme{sidebardark}
-
-\ifbeamer@sidebartab
-  \setbeamercolor{section in sidebar current}{use=structure,bg=structure.fg!85}
-\else
-  \setbeamercolor{section in sidebar}{use=structure,fg=structure.fg!80}
-  \setbeamercolor*{section in sidebar current}{fg=white}
-
-  \setbeamercolor{subsection in sidebar}{fg=black!50}
-  \setbeamercolor*{subsection in sidebar current}{fg=white}
-\fi  
+\usecolortheme{whale}
 
 \setbeamercolor*{frametitle}{use=structure,fg=structure.fg}
 
-\setbeamercolor{sidebar top}{bg=black}
-\setbeamercolor{sidebar bottom}{use=structure,bg=structure.fg}
+\setbeamercolor{sidebar}{parent=palette primary}
+\setbeamercolor{sidebar top}{parent=palette fourth}
+\setbeamercolor{sidebar bottom}{parent=palette primary}
 
 \uselayouttheme[height=0pt]{sidebar}
 

@@ -17,9 +17,9 @@
 
 \mode<presentation>
 
-\setbeamercolor{frametitle}{parent=palette layout primary}
-\setbeamercolor{subsection in head/foot}{parent=palette layout secondary}
-\setbeamercolor{section in head/foot}{parent=palette layout fourth}
+\setbeamercolor{frametitle}{parent=palette primary}
+\setbeamercolor{subsection in head/foot}{parent=palette secondary}
+\setbeamercolor{section in head/foot}{parent=palette fourth}
 
 
 \beamer@compresstrue
@@ -92,12 +92,12 @@
 \useframetitletemplate{%
   \nointerlineskip%
   \usebeamerfont{headline}%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex]{empty}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex,vmode]{empty}
     \pgfuseshading{beamer@aboveframetitle}%
   \end{beamercolorbox}%
   \vskip-.5ex%
   \nointerlineskip%
-  \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil]{frametitle}
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil,vmode]{frametitle}
     \usebeamerfont*{frametitle}\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%

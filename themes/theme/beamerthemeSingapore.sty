@@ -10,6 +10,7 @@
 
 \mode<presentation>
 
+\setbeamercolor{palette secondary}{use=structure,bg=structure.fg!25!bg}
 
 \uselayouttheme[subsection=false]{miniframes}
 \beamertemplatedefaultframetitle[center]
@@ -18,14 +19,16 @@
   {
     \usebeamercolor{section in head/foot}
     \globalcolorstrue
-    \colorlet{section in head/foot.fg}{fg}
+    \colorlet{section in head/foot.bg}{bg}
   }
   
   \pgfdeclareverticalshading{beamer@headfade}{\paperwidth}
   {%
     color(0cm)=(bg);
-    color(1.25cm)=(section in head/foot.fg!25!bg)%
+    color(1.25cm)=(section in head/foot.bg)%
   }
+
+  \setbeamercolor{section in head/foot}{bg=}
 }
 
 \addtoheadtemplate{\pgfuseshading{beamer@headfade}\vskip-1.25cm}{}

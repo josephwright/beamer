@@ -70,7 +70,7 @@
 \fi
 
 \def\beamer@sidebarformat#1#2#3{%
-  \begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=1ex plus1fil]{#2}
+  \begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=1ex plus1fil,vmode]{#2}
     \vbox{}%
     #3\par%
     \vbox{}%
@@ -147,9 +147,9 @@
         {
           \usebeamercolor[bg]{sidebar}
           \globalcolorstrue
-          \colorlet{sidebar.bg}{bg}
+          \colorlet{@sidebar.bg}{bg}
         }
-        \beamertemplatesidebarcolor[\beamer@sidebarside]{sidebar.bg}
+        \beamertemplatesidebarcolor[\beamer@sidebarside]{@sidebar.bg}
       }
       }
       {

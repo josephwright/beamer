@@ -9,12 +9,12 @@
 
 \mode<presentation>
 
-\def\beamer@theme@col{treelined}
-\DeclareOptionBeamer{bars}{\def\beamer@theme@col{treedark}}
+\def\beamer@theme@col{\setbeamercolor{separation line}{use=structure,bg=structure.fg!50!bg}}
+\DeclareOptionBeamer{bars}{\def\beamer@theme@col{\usecolortheme{whale}}}
 \ProcessOptionsBeamer
 
 \usefonttheme[onlysmall]{bold}
-\usecolortheme{\beamer@theme@col}
+\beamer@theme@col
 \uselayouttheme{tree}
 
 \mode

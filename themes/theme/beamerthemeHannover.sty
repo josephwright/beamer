@@ -7,16 +7,22 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{width}
+{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
+
+\DeclareOptionBeamer{hideothersubsections}
+{\PassOptionsToPackage{hideothersubsections=#1}{beamerlayoutthemesidebar}}
+
+\DeclareOptionBeamer{hideallsubsections}
+{\PassOptionsToPackage{hideallsubsections=#1}{beamerlayoutthemesidebar}}
+
 \ProcessOptionsBeamer
+
+
 
 \mode<presentation>
 
 \uselayouttheme[height=0pt,left]{sidebar}
-
-\usecolortheme{sidebarmedium}
 
 \useelementtheme{circles}
 \beamertemplatedefaultframetitle[right]

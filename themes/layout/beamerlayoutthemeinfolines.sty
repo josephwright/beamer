@@ -1,0 +1,59 @@
+\ProvidesPackage{beamerlayoutthemeinfolines}[2004/05/24 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2004 by Till Tantau.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\mode<presentation>
+
+\setbeamercolor{author in head/foot}{parent=palette ternary}
+\setbeamercolor{title in head/foot}{parent=palette secondary}
+\setbeamercolor{date in head/foot}{parent=palette primary}
+
+\setbeamercolor{section in head/foot}{parent=palette ternary}
+\setbeamercolor{subdate in head/foot}{parent=palette primary}
+
+\usefoottemplate*{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor~~(\insertshortinstitute)
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+  }
+
+\useheadtemplate*{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
+    \usebeamerfont{section in head/foot}\insertsection\hspace*{2ex}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{subsection in head/foot}%
+    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsection
+  \end{beamercolorbox}}%
+  \vskip0pt%
+  }
+
+\userightsidebartemplate{0cm}{%
+  \vskip2pt%
+  \llap{\insertlogo\hskip0.1cm}%
+  \vfill%
+  \vskip2pt%
+  \llap{\insertnavigationsymbols\hskip0.1cm}%
+  \vskip2pt}
+
+\beamersetleftmargin{1em}
+
+
+\mode
+<all>

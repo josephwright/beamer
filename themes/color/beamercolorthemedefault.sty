@@ -6,13 +6,24 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\usecolorpalette{default}
-
 \mode<presentation>
 
-\setbeamercolor{normal text}{parent=palette normal}
-\setbeamercolor{alerted text}{parent=palette alerted}
-\setbeamercolor{example text}{parent=palette example}
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=red}
+\setbeamercolor{example text}{fg=green!50!black}
+
+\definecolor{beamer@blendedblue}{rgb}{0.2,0.2,0.7}
+\setbeamercolor{structure}{fg=beamer@blendedblue}
+
+\setbeamercolor{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette secondary}{use=structure,fg=structure.fg!75!black}
+\setbeamercolor{palette ternary}{use=structure,fg=structure.fg!50!black}
+\setbeamercolor{palette fourth}{fg=black}
+
+\setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette sidebar ternary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar fourth}{use=structure,fg=structure.fg}
 
 \setbeamercolor{math text}{}
 \setbeamercolor{math text inlined}{parent=math text}
@@ -20,29 +31,27 @@
 
 \setbeamercolor{normal text in math text}{parent=normal text}
 
-\setbeamercolor{structure}{parent=palette structure}
-
 \setbeamercolor{local structure}{parent=structure}
 
-\setbeamercolor{titlelike}{parent=palette layout primary}
+\setbeamercolor{titlelike}{parent=palette primary}
 
 \setbeamercolor{title}{parent=titlelike}
-\setbeamercolor{title in head/foot}{parent=palette layout fourth}
-\setbeamercolor{title in sidebar}{parent=structure}
+\setbeamercolor{title in head/foot}{parent=palette fourth}
+\setbeamercolor{title in sidebar}{parent=palette sidebar fourth}
 
 \setbeamercolor{subtitle}{parent=title}
 
 \setbeamercolor{author}{}
-\setbeamercolor{author in head/foot}{}
-\setbeamercolor{author in sidebar}{}
+\setbeamercolor{author in head/foot}{parent=palette primary}
+\setbeamercolor{author in sidebar}{use=palette sidebar ternary,fg=palette sidebar ternary.fg}
 
 \setbeamercolor{institute}{}
-\setbeamercolor{institute in head/foot}{}
-\setbeamercolor{institute in sidebar}{}
+\setbeamercolor{institute in head/foot}{parent=palette ternary}
+\setbeamercolor{institute in sidebar}{use=palette sidebar ternary,fg=palette sidebar ternary.fg}
 
 \setbeamercolor{date}{}
-\setbeamercolor{date in head/foot}{}
-\setbeamercolor{date in sidebar}{}
+\setbeamercolor{date in head/foot}{parent=palette secondary}
+\setbeamercolor{date in sidebar}{use=palette sidebar ternary,fg=palette sidebar ternary.fg}
 
 \setbeamercolor{titlegraphic}{}
 
@@ -50,26 +59,25 @@
 \setbeamercolor{part title}{parent=titlelike}
 
 \setbeamercolor{section in toc}{parent=structure}
-\setbeamercolor{section in head/foot}{parent=palette layout ternary}
-\setbeamercolor{section in sidebar}{parent=structure}
-\setbeamercolor{section in sidebar current}{parent=section in sidebar,use=structure,bg=structure.fg!50!bg}
+\setbeamercolor{section in head/foot}{parent=palette ternary}
+\setbeamercolor{section in sidebar current}{parent=palette sidebar secondary}
+\setbeamercolor{section in sidebar}{use=section in sidebar current,fg=section in sidebar current.fg!40!bg}
 \setbeamercolor{section number projected}{parent=item projected}
 
 \setbeamercolor{subsection in toc}{}
-\setbeamercolor{subsection in head/foot}{parent=palette layout secondary}
-\setbeamercolor{subsection in sidebar}{}
-\setbeamercolor{subsection in sidebar current}{parent=subsection in sidebar,%
-  use=section in sidebar current,bg=section in sidebar current.bg}
+\setbeamercolor{subsection in head/foot}{parent=palette secondary}
+\setbeamercolor{subsection in sidebar current}{parent=palette sidebar primary}
+\setbeamercolor{subsection in sidebar}{use=subsection in sidebar current,fg=subsection in sidebar current.fg!40!bg}
 \setbeamercolor{subsection number projected}{parent={subitem projected}}
 
 \setbeamercolor{headline}{}
 \setbeamercolor{footline}{}
 
-\setbeamercolor{sidebar}{}
+\setbeamercolor{sidebar}{use=structure,fg=black,bg=structure.fg!25!bg}
 \setbeamercolor{sidebar top}{}
 \setbeamercolor{sidebar bottom}{}
 
-\setbeamercolor{logo}{}
+\setbeamercolor{logo}{parent=palette secondary}
 
 \setbeamercolor{frametitle}{parent=structure}
 \setbeamercolor{framesubtitle}{parent=frametitle}
@@ -88,9 +96,9 @@
 \setbeamercolor{block body}{}
 \setbeamercolor{block body alerted}{}
 \setbeamercolor{block body example}{}
-\setbeamercolor{block title}{parent=palette normal block}
-\setbeamercolor{block title alerted}{parent=palette alerted block}
-\setbeamercolor{block title example}{parent=palette example block}
+\setbeamercolor{block title}{parent=structure}
+\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.bg}
+\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.bg}
 
 \setbeamercolor{item}{parent=local structure}
 \setbeamercolor{subitem}{parent=item}
