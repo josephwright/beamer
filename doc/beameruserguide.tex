@@ -87,7 +87,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 1.20\\
+\title{User's Guide to the Beamer Class, Version 1.21\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -808,7 +808,7 @@ slow machine. In this case, the |draft| class option is useful.
 \subsection{Step Five: Test Your Presentation}
 
 \emph{Always} test your presentation. For this, you should
-vocalize or subvocalize your talk in a quite environment. Typically,
+vocalize or subvocalize your talk in a quiet environment. Typically,
 this will show that your talk is too long. You should then remove
 parts of the presentation, such that it fits into the allotted time
 slot. Do \emph{not} attempt to talk faster in order to squeeze the
@@ -2685,14 +2685,14 @@ The \beamer\ class also defines an environment for creating boxes:
   upper part of the box in a different color, which also depends on
   the scheme. The following options can be given:
   \begin{itemize}
-  \item |scheme=|\meta{name} causes the color scheme \meta{name} to be
+  \item \declare{|scheme=|\meta{name}} causes the color scheme \meta{name} to be
     used. A color scheme must previously be defined using the command
     |\beamerboxesdeclarecolorscheme|.
-  \item |width=|\meta{dimension} causes the width of the text inside
+  \item \declare{|width=|\meta{dimension}} causes the width of the text inside
     the box to be the specified \meta{dimension}. By default, the
     |\textwidth| is used. Note that the box will protrude 4pt to the
     left and right.
-  \item |shadow=|\meta{true or false}. If set to |true|, a shadow will
+  \item \declare{|shadow=|\meta{true or false}}. If set to |true|, a shadow will
     be drawn.    
   \end{itemize}
   A color scheme dictates the background colors used in the head part
@@ -2755,34 +2755,90 @@ The main environment for creating columns is called
 |columns|. Inside this environment, you can place several
 |column| environments. Each will create a new column.
 
-\begin{environment}{{columns}}
+\begin{environment}{{columns}\oarg{options}}
   A multi-column area. Inside the environment you should place only
-  |column| environments.
+  |column| environments or |\column| commands (see below). The
+  following \meta{options} may be given: 
+  \begin{itemize}
+  \item
+    \declare{|b|} will cause the bottom lines of the columns to be
+    vertically aligned.
+  \item
+    \declare{|c|} will cause the columns to be centered vertically
+    relative to each other. Default, unless the global option
+    |slidestop| is used. 
+  \item
+    \declare{|onlytextwidth|} is the same as |totalwidth=\textwidth|.
+  \item
+    \declare{|t|} will cause the first lines of the columns to be
+    aligned. Default if global option |slidestop| is used.
+  \item
+    \declare{|totalwidth=|\meta{width}} will cause the columns to occupy
+    not the whole page width, but only \meta{width}, all told.
+  \end{itemize}
+    
   \example
 \begin{verbatim}
-\begin{columns}
+\begin{columns}[t]
   \begin{column}{5cm}
-    First column.
+    Two\\lines.
   \end{column}
   \begin{column}{5cm}
-    Second column.
+    One line (but aligned).
+  \end{column}
+\end{columns}
+\end{verbatim}
+  
+  \example
+\begin{verbatim}
+\begin{columns}[t]
+  \column{5cm}
+    Two\\lines.
+
+  \column{5cm}
+    One line (but aligned).
+\end{columns}
+\end{verbatim}
+\end{environment}
+
+To create a column, you can either use the |column| environment or the
+|\column| command. 
+
+\begin{environment}{{column}\oarg{placement}\marg{column width}}
+  Creates a single column of width \meta{column width}. The vertical
+  placement of the enclosing |columns| environment can be overruled by
+  specifying a specific \meta{placement} (|t| for top, |c| for
+  centered, and |b| for bottom). 
+
+  \example The following code has the same effect as the above examples:
+\begin{verbatim}
+\begin{columns}
+  \begin{column}[t]{5cm}
+    Two\\lines.
+  \end{column}
+  \begin{column}[t]{5cm}
+    One line (but aligned).
   \end{column}
 \end{columns}
 \end{verbatim}
 \end{environment}
 
-\begin{environment}{{columnsonlytextwidth}}
-  This command has the same effect as |columns|, except that the
-  columns will not occupy the whole page width, but only the text
-  width. 
-\end{environment}
+\begin{command}{{\column}\oarg{placement}\marg{column width}}
+  Starts a single column. The parameters and options are the same as
+  for the |column| environment. The column automatically ends with the
+  next occurence of |\column| or of a |column| environment or of the
+  end of the current |columns| environment.
 
-
-\begin{environment}{{column}\marg{column width}}
-  Creates a single column of width \meta{column width}. The column is
-  centered vertically relative to the other columns.
-\end{environment}
-
+  \example 
+\begin{verbatim}
+\begin{columns}
+  \column[t]{5cm}
+    Two\\lines.
+  \column[t]{5cm}
+    One line (but aligned).
+\end{columns}
+\end{verbatim}
+\end{command}
 
 
 

@@ -222,33 +222,63 @@
 % Columns
 %
 %
+\define@key{beamer@col}{onlytextwidth}[true]{%
+  \def\beamer@colentrycode{\hbox to\textwidth\bgroup\ignorespaces}%
+  \def\beamer@colexitcode{\unskip\egroup}}
+\define@key{beamer@col}{totalwidth}{%
+  \def\beamer@colentrycode{\hbox to#1\bgroup\ignorespaces}%
+  \def\beamer@colexitcode{\unskip\egroup}}
+\define@key{beamer@col}{c}[true]{\def\beamer@colalign{c}}
+\define@key{beamer@col}{t}[true]{\def\beamer@colalign{t}}
+\define@key{beamer@col}{b}[true]{\def\beamer@colalign{b}}
 
-\newenvironment{columns}{%
-  \leavevmode%
-  \hskip-\beamer@leftmargin%
-  \nobreak%
-  \beamer@tempdim=\textwidth%
-  \advance\beamer@tempdim by\beamer@leftmargin%
-  \advance\beamer@tempdim by\beamer@rightmargin%
-  \hbox to\beamer@tempdim\bgroup%
-  \hbox{}\hfill\ignorespaces}%
-  {\egroup%
+\newenvironment{columns}[1][]{%
+  \def\beamer@colentrycode{%
+    \hbox to\textwidth\bgroup%
+    \leavevmode%
+    \hskip-\beamer@leftmargin%
     \nobreak%
-    \hskip-\beamer@rightmargin}
+    \beamer@tempdim=\textwidth%
+    \advance\beamer@tempdim by\beamer@leftmargin%
+    \advance\beamer@tempdim by\beamer@rightmargin%
+    \hbox to\beamer@tempdim\bgroup%
+    \hbox{}\hfill\ignorespaces}%
+  \def\beamer@colexitcode{\egroup%
+    \nobreak%
+    \hskip-\beamer@rightmargin\egroup}%
+  \ifbeamer@centered\setkeys{beamer@col}{c}\else\setkeys{beamer@col}{t}\fi%
+  \setkeys{beamer@col}{#1}%
+  \par%
+  \beamer@colentrycode%
+  \def\beamer@colclose{}\ignorespaces}%
+  {\beamer@colclose\def\beamer@colclose{}\beamer@colexitcode}%
   
 \newenvironment{columnsonlytextwidth}%
-  {\leavevmode\hbox to\textwidth\bgroup\ignorespaces}
-  {\unskip\egroup}
+  {\begin{columns}[onlytextwidth]}{\end{columns}}
 
-\newenvironment{column}[1]{%
-  \ifbeamer@centered%    
-  \begin{minipage}[c]{#1}%
-  \else%
-  \begin{minipage}[t]{#1}%
-  \fi%
+
+\newenvironment{beamer@columnenv}[2][\beamer@colalign]{%
+  \beamer@colclose\def\beamer@colclose{}%
+  \begin{minipage}[#1]{#2}%
     \raggedright}
-  {\end{minipage}\hfill\ignorespaces}
+  {\end{minipage}\hfill\@ignoretrue}
+\let\endcolumn\endbeamer@columnenv
 
+\def\beamer@columnname{column}
+\def\column{%
+  \ifx\@currenvir\beamer@columnname%
+  \let\beamer@next=\beamer@columnenv%
+  \else%
+  \let\beamer@next=\beamer@columncom%
+  \fi%
+  \beamer@next}
+
+\newcommand\beamer@columncom[2][\beamer@colalign]{%
+  \beamer@colclose%
+  \def\beamer@colclose{\end{minipage}\hfill\ignorespaces}%
+  \begin{minipage}[#1]{#2}%
+    \raggedright}
+      
 
 %
 %

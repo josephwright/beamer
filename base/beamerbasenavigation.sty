@@ -512,11 +512,11 @@
           \else
             \beamer@sectionsidenohilight%
           \fi}}%
-      \currentsubsection=1\relax\fi}%
+      \beamer@currentsubsection=1\relax\fi}%
     \def\slideentry##1##2##3##4##5##6{%
       \ifnum##6=\c@part%
-      \ifnum##2=\currentsubsection%
-      \advance\currentsubsection by1%
+      \ifnum##2=\beamer@currentsubsection%
+      \advance\beamer@currentsubsection by1%
       \def\insertsubsectionhead{##5}%
       \hbox{\beamer@link(##4){%
           \ifnum\thesection=##1%
@@ -529,7 +529,7 @@
             \beamer@subsectionsidenohilight%
           \fi}}%
       \fi\fi}%
-    \currentsubsection=1\relax%
+    \beamer@currentsubsection=1\relax%
     \dohead%
   }}
 

@@ -487,27 +487,22 @@ Style Corollary
   EndFont
 End
 
-
 Style Column
-  KeepEmpty             1
-  Margin		First_Dynamic
-  LatexType		Environment
-  NextNoIndent		0
-  ParIndent		MM
+  Margin		Static
+  LatexType		Command
+  LatexName		column
+  ParSkip               0.5
+  TopSep                1
+  BottomSep             1
+  ParSep                0
   Align			Left
   LabelType		Static
   LabelSep              xx
+  LabelString		"start column of width: " 
+  OptionalArgs		1
+  LeftMargin        MMMMMMMMM
 
-  LatexName	 	column
-  LabelString		"column of width: " 
-
-  ParSkip           0.5
-  TopSep            1
-  BottomSep         1
-  ParSep            0
-
-  # font & label font definition
-
+  # standard font definition
   LabelFont 
     Family		Roman
     Color               latex
@@ -516,8 +511,9 @@ End
 
 
 Style Columns
+
   KeepEmpty             1
-  Margin		First_Dynamic
+  Margin		Static
   LatexType		Environment
   NextNoIndent		0
   ParIndent		MM
@@ -527,12 +523,74 @@ Style Columns
 
   LatexName	 	columns
   LabelString		"columns" 
+  LeftMargin        columns
 
   ParSkip           0.5
   TopSep            1
   BottomSep         1
   ParSep            0
 
+
+  # font & label font definition
+
+  LabelFont 
+    Family		Roman
+    Color               latex
+  EndFont
+End
+
+Style ColumnsCenterAligned
+  KeepEmpty             1
+  Margin		Static
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	centercolumns
+  LabelString		"columns (center aligned)" 
+  LeftMargin            "columns (center aligned)"
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  Preamble
+  \newenvironment{centercolumns}{\begin{columns}[c]}{\end{columns}}
+  EndPreamble
+  # font & label font definition
+
+  LabelFont 
+    Family		Roman
+    Color               latex
+  EndFont
+End
+
+Style ColumnsTopAligned
+  KeepEmpty             1
+  Margin		Static
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	topcolumns
+  LabelString		"columns (top aligned)" 
+  LeftMargin            "columns (top aligned)"
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  Preamble
+  \newenvironment{topcolumns}{\begin{columns}[t]}{\end{columns}}
+  EndPreamble
   # font & label font definition
 
   LabelFont 
