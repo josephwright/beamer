@@ -3,7 +3,7 @@ doc   = beameruserguide
 
 themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
   Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
-  Luebeck Malmoe Marburg Montpellier PaloAlto \
+  Luebeck Malmoe Madrid Marburg Montpellier PaloAlto \
   Pittsburgh Rochester Singapore Szeged Warsaw \
   default boxes
 
