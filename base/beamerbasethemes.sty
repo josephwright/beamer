@@ -33,6 +33,8 @@
 
 \mode<presentation>
 
+
+
 %
 % Font theme stuff
 %
@@ -78,6 +80,37 @@
   \csname beamer@thmfseries@#1\endcsname%
   \csname beamer@thmffamily@#1\endcsname%
   \selectfont}
+
+
+
+%
+% Color theme stuff
+%
+
+\define@key{beamerthc}{color}
+  {\expandafter\def\csname beamer@thccolor@\beamer@temp\endcsname{\color{#1}}}
+\define@key{beamerthc}{inheritsfrom}
+  {\expandafter\def\csname beamer@thcinherits@\beamer@temp\endcsname{%
+    \@for\@temp:={#1}\do{\expandafter\usebeamercolor\expandafter{\@temp}}}}
+
+\def\setbeamercolor{\@ifstar{\beamer@clearbeamercolor}{\beamer@setbeamercolor}}
+  
+\newcommand\beamer@clearbeamercolor[2]{%
+  \def\beamer@temp{#1}
+  \setkeys{beamerthc}{color={},inheritsfrom={}}
+  \setkeys{beamerthc}{#2}
+}
+\newcommand\beamer@setbeamercolor[2]{%
+  \def\beamer@temp{#1}
+  \setkeys{beamerthc}{#2}
+}
+
+\def\usebeamercolor{\@ifstar{\normalcolor\beamer@usebeamercolor}{\beamer@usebeamercolor}}
+
+\newcommand\beamer@usebeamercolor[1]{%
+  \csname beamer@thcinherits@#1\endcsname%
+  \csname beamer@thccolor@#1\endcsname}
+
 
 
 \mode

@@ -1,0 +1,85 @@
+\ProvidesPackage{beamerlayoutthemesmoothbars}[2003/11/07 ver 0.93]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\mode<presentation>
+
+\beamer@compresstrue
+
+\AtBeginDocument{
+  {
+    \usebeamerfont*{headline}
+    \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+      color(0ex)=(averagebackgroundcolor);%
+      color(1ex)=(beamerstructure!50!black);%
+      color(3.25ex)=(beamerstructure!50!black);%
+      color(4.25ex)=(black);%
+      color(9ex)=(black)%
+    }
+    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+      color(0ex)=(averagebackgroundcolor);%
+      color(1ex)=(beamerstructure)
+    }
+    \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+      color(0ex)=(beamerstructure);%
+      color(1ex)=(beamerstructure);%
+      color(2ex)=(beamerstructure!50!black)
+    }
+  }
+}
+
+\beamertemplatelightsectionheads
+\beamertemplatecircleminiframeinverted
+
+                                % Head
+\useheadtemplate{%
+  \vbox{%
+    \beamerline{\pgfuseshading{beamer@barshade}}%
+    \vskip-9ex%
+    {\setbox\beamer@linebox=\hbox
+      to\textwidth{\hskip-\Gm@lmargin\insertnavigation{\paperwidth}\hskip-\Gm@rmargin}%
+    \ht\beamer@linebox=2.25ex%
+    \dp\beamer@linebox=3ex%
+    \box\beamer@linebox}%
+    \beamer@fixedline{%
+        \color{white}{\usebeamerfont{subsection in
+            head/foot}\insertsubsection\hfil}%
+      }%
+    }%
+  }%
+
+
+\useframetitletemplate{%
+  \nointerlineskip%
+  \usebeamerfont{headline}%
+  \vskip-0.5ex%
+  \beamerline{\pgfuseshading{beamer@aboveframetitle}}%
+  \vskip-.5ex%
+  \nointerlineskip%
+  \beamer@colouredline{beamerstructure}{%
+    \begin{minipage}[b]{\paperwidth}%
+      \usebeamerfont*{frametitle}%
+      \vbox{}\vskip-.5ex%
+      \leftskip0.3cm%
+      \rightskip0.3cm plus1fil\leavevmode\color{white}\insertframetitle%
+      \ifx\insertframesubtitle\@empty%
+        \strut\par%
+      \else
+        \par{\usebeamerfont*{framesubtitle}{\insertframesubtitle}\strut\par}%
+      \fi%
+      \nointerlineskip
+      \vbox{}%
+    \end{minipage}}%
+  \nointerlineskip%
+  \vskip-0.5pt%
+  \beamerline{\pgfuseshading{beamer@belowframetitle}}%
+}
+  
+  
+\mode
+<all>
