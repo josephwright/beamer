@@ -141,16 +141,26 @@
 \DeclareOptionBeamer{leqno}{\input{leqno.clo}}
 \DeclareOptionBeamer{fleqn}{\input{fleqn.clo}}
 
-\def\beamer@currentmode{default}
+\def\beamer@currentmode{beamer}
 \DeclareOptionBeamer{handout}{\gdef\beamer@currentmode{handout}}
 \DeclareOptionBeamer{trans}{\gdef\beamer@currentmode{trans}}
 
 \DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
 
-\def\beamer@notesaction@hide{\beamer@notesfalse}
-\def\beamer@notesaction@show{\beamer@notestrue}
-\def\beamer@notesaction@only{\beamer@notestrue\beamer@notesnormalsfalse}
-\def\beamer@notesaction@frameswithnotes{\beamer@notestrue\beamer@frameswithnotesonlytrue}
+\def\beamer@notesaction@hide{%
+  \beamer@notesfalse}
+\def\beamer@notesaction@show{%
+  \beamer@notestrue}
+\def\beamer@notesaction@only{%
+  \beamer@notestrue
+  \beamer@notesnormalsfalse
+  \nofiles
+}
+\def\beamer@notesaction@onlyslideswithnotes{%
+  \beamer@notestrue%
+  \beamer@frameswithnotesonlytrue%
+  \nofiles
+}
 
 \DeclareOptionBeamer{sans}{%
   \def\familydefault{\sfdefault}

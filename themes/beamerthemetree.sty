@@ -14,20 +14,38 @@
 \beamertemplatelargeblocks
 \beamertemplaterightsidebarlogonavigation
 
+
+\newif\ifbeamer@treebar
+\beamer@treebarfalse
+
+\DeclareOptionBeamer{bars}{\beamer@treebartrue}
+
+\ProcessOptionsBeamer
+
   
                                 % Head
+\ifbeamer@treebar
 \useheadtemplate{%
-  \setbox\beamer@logobox=\hbox{\insertlogo}%
+  \vbox{%
+    \tinycolouredline{black}{\color{white}\textbf{\insertshorttitle}\hfill}%
+    \setbox\beamer@tempbox=\hbox{\insertsection}%
+    \tinycolouredline{structure}{\color{black}\ifdim\wd\beamer@tempbox>1pt{\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}\hskip1pt\color{white}\textbf{\insertsection}\fi\hfill}%
+    \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+    \tinycolouredline{structure!75}{\color{black}\ifdim\wd\beamer@tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}\hskip1pt\color{white}\textbf{\insertsubsection}\fi\hfill}%
+    }%
+  }
+\else
+\useheadtemplate{%
   \vbox{%
     \vskip3pt%
     \tinyline{\color{structure}\insertshorttitle\hfill}%
     \setbox\beamer@tempbox=\hbox{\insertsection}%
     \tinyline{\color{structure}\ifdim\wd\beamer@tempbox>1pt{\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}\hskip1pt\insertsection\fi\hfill}%
     \setbox\beamer@tempbox=\hbox{\insertsubsection}%
-    \tinyline{\color{structure}\ifdim\wd\beamer@tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}\hskip1pt\insertsubsection\fi\hfill\ht\beamer@logobox=0pt\box\beamer@logobox}%
+    \tinyline{\color{structure}\ifdim\wd\beamer@tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}\hskip1pt\insertsubsection\fi\hfill}%
     \insertvrule{3pt}{structure!50!averagebackgroundcolor}%
     }}%
-
+\fi
 
                                 % Footline
 \usefoottemplate{}

@@ -48,7 +48,7 @@
 %
 %
 
-\def\useleftsidebartemplate#1#2{% #1 = size, #2 = text
+\long\def\useleftsidebartemplate#1#2{% #1 = size, #2 = text
   \beamer@leftsidebar=#1\relax%
   % Reset left margin now
   \beamer@tempdim=\beamer@leftmargin%
@@ -61,7 +61,7 @@
   }}
 \useleftsidebartemplate{0cm}{}
   
-\def\userightsidebartemplate#1#2{% #1 = size, #2 = text
+\long\def\userightsidebartemplate#1#2{% #1 = size, #2 = text
   \beamer@rightsidebar=#1\relax%
   % Reset right margin now
   \beamer@tempdim=\beamer@rightmargin%

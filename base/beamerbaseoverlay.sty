@@ -16,7 +16,8 @@
 %
 \def\beamer@actions#1#2{%
   \gdef\beamer@do{#1%
-  \expandafter\gdef\csname beamer@doafter\the\beamer@coveringdepth\endcsname{#2}}\ignorespaces}
+    \expandafter\gdef\csname beamer@doafter%
+    \the\beamer@coveringdepth\endcsname{#2}}\ignorespaces}
   
 \def\beamer@startcovered{%
   \global\advance\beamer@coveringdepth by 1\relax%
@@ -29,17 +30,24 @@
   \def\opaqueness<##1>##2{%
     \only<##1>{%
       \beamer@actions{%
-        \expandafter\xdef\csname beamer@oldcolorhook\the\beamer@coveringdepth\endcsname{\beamer@colorhook}%
-        \expandafter\xdef\csname beamer@oldpgfextension\the\beamer@coveringdepth\endcsname{\beamer@pgfextension}%
-        \expandafter\xdef\csname beamer@oldcurrent\the\beamer@coveringdepth\endcsname{\current@color}%
-        \globalcolorlet{beamer@freeze\the\beamer@coveringdepth}{averagebackgroundcolor}%
-        \xdef\beamer@colorhook{!##2!beamer@freeze\the\beamer@coveringdepth\beamer@colorhook}%
+        \expandafter\xdef\csname beamer@oldcolorhook%
+        \the\beamer@coveringdepth\endcsname{\beamer@colorhook}%
+        \expandafter\xdef\csname beamer@oldpgfextension%
+        \the\beamer@coveringdepth\endcsname{\beamer@pgfextension}%
+        \expandafter\xdef\csname beamer@oldcurrent%
+        \the\beamer@coveringdepth\endcsname{\current@color}%
+        \globalcolorlet{beamer@freeze\the\beamer@coveringdepth}%
+        {averagebackgroundcolor}%
+        \xdef\beamer@colorhook{!##2!beamer@freeze%
+          \the\beamer@coveringdepth\beamer@colorhook}%
         \def\beamer@pgfextension{!##2opaque}%
         \color{.}%
       }%
       {%
-        \xdef\beamer@colorhook{\csname beamer@oldcolorhook\the\beamer@coveringdepth\endcsname}%
-        \xdef\beamer@pgfextension{\csname beamer@oldpgfextension\the\beamer@coveringdepth\endcsname}%
+        \xdef\beamer@colorhook{\csname beamer@oldcolorhook%
+          \the\beamer@coveringdepth\endcsname}%
+        \xdef\beamer@pgfextension{\csname beamer@oldpgfextension%
+          \the\beamer@coveringdepth\endcsname}%
         \beamer@lastskip=\lastskip%
         \ifdim\beamer@lastskip=0pt\else\ifvmode\unskip\fi\fi%
         \color{.}%
@@ -226,6 +234,7 @@
 %
 % Overlay commands
 %
+
 
 \common
 {

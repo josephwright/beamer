@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[notes]{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
@@ -29,7 +29,7 @@
 \usepackage[english]{babel}
 
 %\usepackage{lmodern}
-%\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc} 
 
 %\usepackage{times}
 
@@ -204,6 +204,7 @@
   \begin{columns}
     
     \column{4.5cm}
+      \noteitem<1>{Point out that \$ is a marker symbol.}
       \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
         \only<1| trans:1>{
           \putmachine{\pgfxy(1.75,3)}{Turing machine}
@@ -256,13 +257,11 @@
         Input may be \alert{modified}
       \item
         Tape alphabet \alert{is larger than}\\ input alphabet
+        \noteitem<1>{Stress the larger tape alphabet.}
       \end{itemize}
       \end{block}
   \end{columns}
 } 
-\noteitems{
-\item Stress the large tape alphabet.    
-\item Point out that \$ is a marker symbol.}
 
 \frame
 {
@@ -278,15 +277,14 @@
     \pgfheaplabeledcentered{3.5cm}{3cm}{\raise10pt\hbox{}$\Class{DLINSPACE}$}
     \pgfheaplabeledcentered{5cm}{4cm}{\raise13pt\hbox{}$\Class{NLINSPACE} = \Class{CSL}$}
     \pgfheaplabeledcentered{6cm}{5cm}{$\Class{PSPACE}$}
-
+    \noteitem{Explain CSL.}
+    
     \pgfsetdash{{3pt}{3pt}}{0pt}
     \pgfheaplabeled{\pgfxy(0,3.3)}{\pgfxy(-5,6)}{\pgfxy(5,6)}{}%
     \pgfputat{\pgfxy(-4.6,5.75)}{\pgfbox[left,base]{$\Class{PSPACE}$-hard}}%      
   \end{pgfpicture}
+  \noteitem{Point out the connections to formal language theory.}
 }
-\noteitems{
-\item Explain CSL.
-\item Point out the connections to formal language theory.}
 
 
 \subsection[Our Model]{Our Model of Absolutely No Space Overhead}
@@ -355,8 +353,8 @@
         \end{alertblock}
       \end{overprint}
   \end{columns}
+  \noteitem<6>{Point out that no markers are used.}
 }
-\note{Point out that no markers are used.}
 
 \frame
 {
@@ -382,7 +380,8 @@
   \begin{Definition}
     A language $L \subseteq \Sigma^*$ is in
     \begin{description}
-    \item[\alert<1| handout:0| trans:0>{$\DOF$}]
+    \item[\alert<1| handout:0| trans:0>{$\DOF$}%
+      \noteitem<1>{Joke about German pronunciation}]
       if $L$ is accepted by a deterministic overhead-free machine with
       input alphabet~$\Sigma$,
       \pause
@@ -392,15 +391,13 @@
       \pause
     \item[\alert<3| handout:0| trans:0>{$\NOF$}]
       is the nondeterministic  version of $\DOF$,
+      \noteitem<3>{Stress meaning of D and N.}
       \pause
     \item[\alert<4| handout:0| trans:0>{$\NOFpoly$}]
       is the nondeterministic version of $\DOFpoly$. 
     \end{description}
   \end{Definition}
 }
-\noteitems{
-\item Joke about German pronunciation.
-\item Stress meaning of D and N.}
 
 \frame
 {
@@ -526,8 +523,8 @@
         
       \end{block}
   \end{columns}
+  \note<1>{Use 3 minutes.}
 }
-\note{Use 3 minutes.}
 
 \frame
 {
@@ -567,6 +564,7 @@
   \begin{Definition}<2->
     A grammar is \alert{deterministic} if\\ ``there is always only one
     rule that can be applied.''
+    \note<2>{Just explain intution.}
   \end{Definition}
 
   \begin{Example}<2->
@@ -575,7 +573,6 @@
     $G_2\colon S \to 0S10 \mid 0$ is \alert{not} deterministic.
   \end{Example} 
 }
-\note{Just explain intuition using the example.}
 
 \frame
 {
@@ -627,8 +624,8 @@
 
     \pgfputat{\pgfxy(0,0.6)}{\pgfbox[center,base]{linear}}
   \end{pgfpicture}
+  \noteitem{Skip next subsection if more than 18 minutes have passed.}
 }
-\note{Skip next subsection if more than 18 minutes have passed.}
 
 
 \subsection[Forbidden Subword]{Context-Free Languages with a Forbidden Subword}
@@ -856,10 +853,11 @@
       \alert{linear bounded automata with fixed alphabet} size.
     \end{itemize}
   \end{block}
+
+  \noteitem{Point out result concerning all context-free languages.}
+  \noteitem{Relationship to restart automata.}
 }
-\noteitems{
-\item Point out result concerning all context-free languages.
-\item Relationship to restart automata.}
+
 
 
 \subsection*{Further Reading}

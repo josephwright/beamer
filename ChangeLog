@@ -5,6 +5,8 @@
 	- Fixed bug with tabbing in beamerbaseboxes.
 	- Added work-around for problem with black background in older
 	  versions of acroread.
+	- Fixed problems with linebreak in short title and short author
+	  in sidebar themes. 
 
 	Added:
 	- Added placement options to columns and column commands.
@@ -28,7 +30,14 @@
 	  functionality in beamer.
 	- Added dark and tab options to beamerthemesidebar. Other sidebar
 	  themes no longer needed.
-
+	- Added \noteitem and \notes commands.
+	- Added templates for notes.
+	- Added notes=onlyframeswithnotes option for generating only
+	  frames that contain a note.
+	- Added options to all \insertshortxxx commands.
+	- Added option for passing arguments to color, xcolor, pgf, and
+	  hyperref. 
+	
 	Changed:
 	- Every frame is now put into a box internally. Slides will never
 	  be split over two pages.
@@ -46,7 +55,19 @@
 	- Renamed \original to \beameroriginal because of clash with
 	  lucidia font styles.
 	- "Streamlined" themes to use the same basic templates.
-
+	- \note command should be renamed to \notes outside frames (old
+	  behaviour tolerated)
+	- \nameslide command is now obsolete. Use the label= option
+	  instead.
+	- Removed notesonly option. Use notes=only.
+	- Themes beamerthemesidebartab, beamerthemesidebardark, and
+	  beamerthemesidebardarktab are now obsolete. Use
+	  beamerthesesidebar will appropriate options instead.
+	- Theme beamerthemetreebars obsolete. Use beamerthemetree with
+          option bars instead.
+	- Removed compressnotes option. Use \beamertemplatenotecompress
+	  instead. 
+	
 	Removed:
 	- Removed pauses environment (no longer needed).
 	- Improved pgf makes \pgfonly superfluous. Use \only instead.
@@ -55,12 +76,8 @@
 	- Removed \invisibleon command (was superfluous anyway).
 	- Removed \mixinon command (was not very useful and clashes with
 	  new \pause command; use \opaqueness instead).
-	- \nameslide command is now obsolete. Use the label= option
-	  instead.
-	- Themes beamerthemesidebartab, beamerthemesidebardark, and
-	  beamerthemesidebardarktab are no obsolete. Use
-	  beamerthesesidebar will appropriate options instead.
-
+	
+	
 	LyX:
 	- Added a big example file beamerlyxexample1.lyx.
 	- Changed \tableofcontents command so that options can be

@@ -118,17 +118,17 @@
 \AtEndDocument{%
   \clearpage
   \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
-  \immediate\write\@auxout{\string\@writefile{nav}%
-    {\noexpand\headcommand{\noexpand\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}}%
-  \immediate\write\@auxout{\string\@writefile{nav}%
-    {\noexpand\headcommand{\noexpand\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}}%
-  \immediate\write\@auxout{\string\@writefile{nav}%
-    {\noexpand\headcommand{\noexpand\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}}%
-  \immediate\write\@auxout{\string\@writefile{nav}%
-    {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
-  \immediate\write\@auxout{\string\@writefile{nav}%
-    {\noexpand\headcommand{\noexpand\def\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
-    \if@filesw
+  \if@filesw
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}}%
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}}%
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}}%
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\def\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
       \newwrite\tf@nav
       \immediate\openout\tf@nav\jobname.nav\relax
       \newwrite\tf@toc
@@ -165,6 +165,36 @@
   }
 \def\beamerline#1{%
   \hbox{\hskip-\Gm@lmargin#1\hskip-\Gm@rmargin}}
+
+%
+% Managing short inserts
+%
+
+
+\define@key{beamerst}{respectlinebreaks}[true]{%
+  \def\beamer@stlinebreakrule{}}
+\define@key{beamerst}{width}{%
+  \def\beamer@ststart{%
+    \begin{minipage}[t]{#1}%
+      \raggedright%
+      \beamer@stalign%
+      \beamer@stlinebreakrule%
+    }%
+  \def\beamer@stend{\end{minipage}}}
+\define@key{beamerst}{center}[true]{%
+  \def\beamer@stalign{\centering}}
+\define@key{beamerst}{spill}[true]{%
+  \def\beamer@stalign{\parshape...}}%
+\newcommand{\beamer@setupshort}[1]{%
+  \def\beamer@stlinebreakrule{\def\\{}}%
+  \def\beamer@stalign{}%
+  \def\beamer@ststart{\hbox\bgroup\def\\{}}%
+  \def\beamer@stend{\egroup}%
+  \setkeys{beamerst}{#1}}%
+\newcommand{\beamer@insertshort}[1]{%
+  \beamer@ststart#1\beamer@stend%
+}
+
 
 
 \common

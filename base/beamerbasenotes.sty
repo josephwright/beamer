@@ -10,11 +10,13 @@
 
 \presentation
 
+\newbox\beamer@frameboxcopy
+
 %
 % Notes
 %
 
-\long\def\note#1{%
+\long\def\notes#1{%
   \ifbeamer@notes
   \begingroup
     \useitemizeitemtemplate{\textbullet}
@@ -25,23 +27,35 @@
     \def\@oddfoot{}
     \let\@evenhead\@oddhead
     \let\@evenfoot\@oddfoot
-    \def\beamer@backgroundtemplate{}
-    \vbox to\textheight{%
+    \def\beamer@backgroundtemplate{}%
+    \nointerlineskip
+    \hbox{\hskip-\Gm@lmargin\hskip1cm\vbox to\textheight{%
+        %pretend to have in a ``standard'' margins
+        \def\Gm@lmargin{1cm}\def\Gm@rmargin{1cm}%
+      \textwidth=10.8cm\hsize=\textwidth%
       \vskip-\headheight%
       \def\insertnote{\vbox{}#1}%
       \beamer@notetemplate%
+      \vfil%
       \vskip-4pt% foot separator
-      \vskip-\footheight}%
+      \vskip-\footheight}\hskip-\Gm@lmargin\hskip1cm}%
     \clearpage
   \endgroup
   \fi}
 
-\long\def\noteitems#1{\note{\begin{enumerate}#1\end{enumerate}}}
-
+\long\def\noteitems#1{\notes{\begin{enumerate}\itemsep=0pt\parskip=0pt#1\end{enumerate}}}
 
 %
 % Notes in frames
 %
+
+\newoverlaycommand{\note}{\beamer@note}{\@gobble}
+\def\beamer@note#1{%
+  \expandafter\gdef\expandafter\beamer@notes\expandafter{\beamer@notes%
+    #1}}
+
+\let\beamer@noteorig=\note% will be reset at beginning of frame
+\def\note{\ClassWarning{beamer}{\noexpand\note should not be used outside frames. Use \noexpand\notes instead}\notes}
 
 \newoverlaycommand{\noteitem}{\beamer@noteitem}{\@gobble}
 \def\beamer@noteitem#1{%
@@ -50,17 +64,24 @@
 
 \def\beamer@framenotesbegin{% at beginning of slide
   \gdef\beamer@noteitems{}%
+  \gdef\beamer@notes{}%
+  \let\note\beamer@noteorig%
 }
 \def\beamer@framenotesend
 {% at end of slide
+  \global\setbox\beamer@frameboxcopy=\copy\beamer@framebox%
   \ifx\beamer@noteitems\@empty%
-    % possibly suppress this slide
-    \ifbeamer@frameswithnotesonly
-      % suppress frame
-      \setbox\beamer@framebox=\box\voidb@x%
-    \fi%
-  \else
-    \gdef\beamer@notesactions{\noteitems{\beamer@noteitems}\gdef\beamer@notesactions{}}
+    \ifx\beamer@notes\@empty% 
+      % possibly suppress this slide
+      \ifbeamer@frameswithnotesonly
+        % suppress frame
+        \setbox\beamer@framebox=\box\voidb@x%
+      \fi%
+    \else%
+      \beamer@setupnote%
+    \fi
+  \else%
+    \beamer@setupnote%
   \fi
   \ifbeamer@notesnormals%
   \else%
@@ -68,7 +89,43 @@
   \fi%
 }
 
+\def\beamer@setupnote{%
+  \gdef\beamer@notesactions{%
+    \notes{%
+      \beamer@notes%
+      \ifx\beamer@noteitems\@empty\else
+      \begin{enumerate}\itemsep=0pt\parskip=0pt%
+        \beamer@noteitems%
+      \end{enumerate}%
+      \fi
+    }%
+    \gdef\beamer@notesactions{}%
+  }
+}
+
+  
+
 \def\beamer@notesactions{}  
+
+
+
+
+%
+% Note frame insert
+%
+
+\newcommand{\insertslideintonotes}[1]{%
+  \begin{pgfpicture}{0cm}{0cm}{#1\paperwidth}{#1\paperheight}
+    \begin{pgfmagnify}{#1}{#1}
+      \color[gray]{0.8}
+      \pgfrect[fill]{\pgforigin}{\pgfpoint{\paperwidth}{\paperheight}}
+      \normalcolor
+      \pgfputat{\pgfpoint{\Gm@lmargin}{\footheight}}{\pgfbox[left,bottom]{\copy\beamer@frameboxcopy}}
+    \end{pgfmagnify}
+  \end{pgfpicture}%
+  }
+
+
 
 %
 % Note templates
@@ -77,12 +134,14 @@
 \newcommand{\usetemplatenote}[1]{\def\beamer@notetemplate{#1}}
 
 % Default:
-\usetemplatenote{\small
-  \let\\=\relax%
-  \insertvrule{6.75em}{white!90!black}
-  \vskip-6.75em
+\usetemplatenote{\scriptsize
+  \insertvrule{.25\paperheight}{white!90!black}
+  \vskip-.25\paperheight
   \nointerlineskip
   \vbox{
+    \hfill\insertslideintonotes{0.25}\hskip-\Gm@rmargin\hskip0pt%
+    \vskip-0.25\paperheight%
+    \nointerlineskip
   \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
     \begin{pgfrotateby}{\pgfdegree{90}}
       \pgfputat{\pgfpoint{-2cm}{0.2cm}}%
@@ -90,34 +149,35 @@
     \end{pgfrotateby}
   \end{pgfpicture}}
   \nointerlineskip
-  \vbox to 6.75em{\vskip0.5em
-  \hbox{\begin{minipage}[t]{10cm}\insertshorttitle\end{minipage}}%
+  \vbox to .25\paperheight{\vskip0.5em
+  \hbox{\insertshorttitle[width=8cm]}%
   \setbox\beamer@tempbox=\hbox{\insertsection}%
   \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip4pt\raise3pt\hbox{\vrule
         width0.4pt height7pt\vrule width 9pt
-        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{10cm}\let\\=\space\insertsection\end{minipage}}\fi%
+        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{7.5cm}\def\breakhere{}\insertsection\end{minipage}}\fi%
   }%
   \setbox\beamer@tempbox=\hbox{\insertsubsection}%
   \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip17.4pt\raise3pt\hbox{\vrule
         width0.4pt height7pt\vrule width 9pt
-        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{10cm}\let\\=\space\insertsubsection\end{minipage}}\fi%
+        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{7.5cm}\def\breakhere{}\insertsubsection\end{minipage}}\fi%
   }%
-  \setbox\beamer@tempbox=\hbox{\insertframetitle}%
+  \setbox\beamer@tempbox=\hbox{\insertshortframetitle}%
   \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip30.8pt\raise3pt\hbox{\vrule
         width0.4pt height7pt\vrule width 9pt
-        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{10cm}\let\\=\space\insertframetitle\end{minipage}}\fi%
+        height0.4pt}}\hskip1pt\hbox{\insertshortframetitle[width=7cm]}\fi%
   }%
-  \vfil}
+  \vfil}%
+  \small
   \vskip.25em
   \nointerlineskip
   \insertnote
-  \vfill
 }
 
 
 \article
 {
   \long\def\note#1{}
+  \long\def\notes#1{}
   \long\def\noteitems#1{}
   \long\def\noteitem#1{}
 }

@@ -785,16 +785,19 @@
 % Note templates
 %
 
-\newcommand{\beamertemplatenoteempty}{
+\newcommand{\beamertemplatenoteplain}{
   \usetemplatenote{\small\insertnote}}
 
 \newcommand{\beamertemplatenotecompress}{
-\usetemplatenote{
+\usetemplatenote{\tiny
   \let\\=\relax%
-  \insertvrule{2.5em}{white!90!black}%
-  \vskip-2.25em
+  \insertvrule{0.125\paperheight}{white!90!black}%
+  \vskip-0.125\paperheight
   \nointerlineskip
-  \tiny
+  \vbox{\hfill\insertslideintonotes{0.125}\hskip-\Gm@rmargin\hskip0pt%
+    \vskip-0.125\paperheight\nointerlineskip}%
+  \nointerlineskip
+  \vbox to .125\paperheight{
   \setbox\beamer@tempbox=\hbox{\hbox{\insertsection}}%
   \ht\beamer@tempbox=1em
   \box\beamer@tempbox
@@ -803,10 +806,11 @@
   \ht\beamer@tempbox=1em
   \box\beamer@tempbox
   \nointerlineskip
-  \setbox\beamer@tempbox=\hbox{\hbox{\quad\quad\insertframetitle}}%
+  \setbox\beamer@tempbox=\hbox{\hbox{\quad\quad\insertshortframetitle}}%
   \ht\beamer@tempbox=1em
   \box\beamer@tempbox
-  \vskip1em
+  \vfil
+  }\vskip0.5em
   \small
   \nointerlineskip
   \insertnote

@@ -40,15 +40,19 @@
   \def\insertsubsection{}%
   \def\lastsubsection{}%
   \def\insertpart{\expandafter\hyperlink\partlink}%
-  \def\insertshortpart{\expandafter\hyperlink\partlinkshort}%
   \beamer@atbeginpart%
   \beamer@resumemode}%
 \def\insertpart{}
-\def\insertshortpart{}
+\def\partlinkshort{{Navigation1}{}}
 
 \def\insertromanpartnumber{\@Roman\c@part}
 \def\insertpartnumber{\@arabic\c@part}
 
+\newcommand\insertshortpart[1][]{%
+  {%
+    \beamer@setupshort{#1}%
+    \beamer@insertshort{\expandafter\hyperlink\partlinkshort}%
+  }}
 
 \common
 {

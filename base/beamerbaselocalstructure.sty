@@ -18,10 +18,12 @@
 % The \frametitle command
 %
 %
-\long\def\frametitle#1{%
-  \beamer@ifempty{#1}{}{%
+\newcommand*\frametitle{\@dblarg\beamer@frametitle}
+\long\def\beamer@frametitle[#1]#2{%
+  \beamer@ifempty{#2}{}{%
   \vskip0pt plus -1fill%
-  {\gdef\insertframetitle{#1}\beamer@headrenderer}
+  {\gdef\insertframetitle{#2}\beamer@headrenderer}
+  \gdef\beamer@shortframetitle{#1}%
   \vskip0.25em%
   \ifbeamer@centered
   \vfill%
@@ -30,10 +32,16 @@
 
 \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
 
+\newcommand\insertshortframetitle[1][]{%
+  {%
+    \beamer@setupshort{#1}%
+    \beamer@insertshort{\beamer@shortframetitle}%
+  }}
+
 
 \article
 {
-  \long\def\frametitle#1{\gdef\insertframetitle{#1}\beamer@headrenderer}
+  \newcommand*\frametitle[2][]{\gdef\insertframetitle{#2}\beamer@headrenderer}
   \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
   \useframetitletemplate{\paragraph{\insertframetitle}\ \par}
 }

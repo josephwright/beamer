@@ -44,18 +44,22 @@
 % The \title command
 %
 %
-\def\title{\@ifnextchar[{\beamer@title}{\beamer@title@}}
-\def\beamer@title@#1{\beamer@title[#1]{#1}}
-\def\beamer@title[#1]#2{%
+\renewcommand*{\title}{\@dblarg\beamer@title}
+\long\def\beamer@title[#1]#2{%
   \def\inserttitle{#2}%
-  \def\insertshorttitle{\def\\{}%
-    \ifnum\c@page=1%
-    \hyperlinkpresentationend{#1}%
-    \else%
-    \hyperlinkpresentationstart{#1}%
-    \fi}
+  \def\beamer@shorttitle{#1}%
   }
 \title{}
+
+\newcommand\insertshorttitle[1][]{%
+  \beamer@setupshort{#1}%
+  \ifnum\c@page=1%
+    \hyperlinkpresentationend{\beamer@insertshort{\beamer@shorttitle}}%
+  \else%
+    \hyperlinkpresentationstart{\beamer@insertshort{\beamer@shorttitle}}%
+  \fi}
+
+
 
 \article
 {
@@ -69,13 +73,20 @@
 % The \date command
 %
 %
-\def\date{\@ifnextchar[{\beamer@date}{\beamer@date@}}
-\def\beamer@date@#1{\beamer@date[#1]{#1}}
-\def\beamer@date[#1]#2{%
+\def\date{\@dblarg\beamer@date}
+\long\def\beamer@date[#1]#2{%
   \def\insertdate{#2}%
-  \def\insertshortdate{#1}%
+  \def\beamer@shortdate{#1}%
   }
 \date{\today}
+
+
+\newcommand\insertshortdate[1][]{%
+  {%
+    \beamer@setupshort{#1}%
+    \beamer@insertshort{\beamer@shortdate}%
+  }}
+
 
 \article
 {
@@ -88,11 +99,11 @@
 % The \author command
 %
 %
-\def\author{\@ifnextchar[{\beamer@author}{\beamer@author@}}
-\def\beamer@author@#1{\beamer@author[#1]{#1}}
+\def\author{\@dblarg\beamer@author}
 \def\beamer@author[#1]#2{%
   \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}#2}%
-  \def\insertshortauthor{\def\inst{\beamer@instother}\def\and{\beamer@andother}#1}}
+  \def\beamer@shortauthor{#1}%
+}
 \author{}
 
 % Aux commands for \author
@@ -100,6 +111,14 @@
 \def\beamer@andtitle{\quad}
 \def\beamer@instother#1{}
 \def\beamer@andother{\unskip, }
+
+\newcommand\insertshortauthor[1][]{%
+  {%
+    \def\inst{\beamer@instother}\def\and{\beamer@andother}%
+    \beamer@setupshort{#1}%
+    \beamer@insertshort{\beamer@shortauthor}%
+  }}
+
 
 \article
 {
@@ -123,15 +142,22 @@
 % The \institute command
 %
 %
-\def\institute{\@ifnextchar[{\beamer@institute}{\beamer@institute@}}
-\def\beamer@institute@#1{\beamer@institute[#1]{#1}}
-\def\beamer@institute[#1]#2{%
+\def\institute{\@dblarg\beamer@institute}
+\long\def\beamer@institute[#1]#2{%
   \def\insertinstitute{\def\inst{\beamer@instinst}\def\and{\beamer@andinst}#2}%
-  \def\insertshortinstitute{\def\inst{\beamer@instother}\def\and{\beamer@andother}#1}}
+ \def\beamer@shortinstitute{#1}}
 \institute{}
 
 \def\beamer@instinst#1{$^{#1}$\ignorespaces}
 \def\beamer@andinst{\\[1em]}
+
+\newcommand\insertshortinstitute[1][]{%
+  {%
+    \def\inst{\beamer@instother}\def\and{\beamer@andother}%
+    \beamer@setupshort{#1}%
+    \beamer@insertshort{\beamer@shortinstitute}%
+  }}
+
 
 
 \article

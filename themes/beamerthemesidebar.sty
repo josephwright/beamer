@@ -146,24 +146,22 @@
 \userightsidebartemplate{\beamer@sidebarwidth}{%
   \vskip1em
   \beamer@tempdim=\beamer@sidebarwidth%
-  \advance\beamer@tempdim by -3pt%
-  \hbox{%
-    \hskip 3pt%
-    \begin{minipage}{\beamer@tempdim}
-      \leftskip0pt plus1fill%
-      \rightskip0pt plus1fill%
-      \tiny
-      \ifbeamer@sidebardark
-        \color{white}\bfseries\insertshorttitle%
-        \vskip.5em
-        \color{structure!50}\insertshortauthor
-      \else%
-        \color{structure}\insertshorttitle%
-        \vskip.5em
-        \color{black!75}\insertshortauthor
-      \fi%
-    \end{minipage}}%
-  \vskip1em
+  \advance\beamer@tempdim by -6pt%
+  \tiny
+  \ifbeamer@sidebardark
+    \hskip3pt\color{white}\bfseries\insertshorttitle%
+      [width=\beamer@tempdim,center,respectlinebreaks]\par%
+    \vskip1.5em
+    \hskip3pt\color{structure!50}\insertshortauthor%
+      [width=\beamer@tempdim,center,respectlinebreaks]\par
+  \else%
+    \hskip3pt\color{structure}\insertshorttitle%
+      [width=\beamer@tempdim,center,respectlinebreaks]\par%
+    \vskip1.5em
+    \hskip3pt\color{black!75}\insertshortauthor%
+      [width=\beamer@tempdim,center,respectlinebreaks]\par
+  \fi
+  \vskip1.5em
   \insertverticalnavigation{\beamer@sidebarwidth}%
   \vfill
   \hbox to \beamer@sidebarwidth{\hfil\insertnavigationsymbols\hskip3pt}

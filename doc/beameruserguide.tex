@@ -2009,7 +2009,8 @@ bars.
 
 In order to create a line break in the table of contents (usually not
 a good idea), you can use the command |\breakhere|. Note that the
-standard command |\\| does not work.
+standard command |\\| does not work (actually, I do not really know
+why; comments would be appreciated).
 
 \begin{command}{\section\oarg{short section name}\marg{section name}}
   Starts a section. No heading is created. The \meta{section name}
@@ -3975,55 +3976,88 @@ handout, and the transparencies can be found in the file
 
 \subsection{Adding Notes}
 
-You can add notes to your slides using the command |\note|. A
-note is a reminder to yourself of what you should say or should keep in
-mind when presenting a frame. The |\note| command should be given
-after the frame to which the note applies. Here is a typical example.
+A \emph{note} is a small piece of paper that is intended as a reminder
+to yourself of what you should say or should keep in 
+mind when presenting a slide.
+
+\subsubsection{Specifying Note Contents}
+
+There are four commands for specifying what should be put on a note:
+ |\note|, |\noteitem|, |\notes|, and |\noteitems|. The first two
+commands can only be used \emph{inside} a frame, the last two only
+\emph{outside}.
+
+The effect of |\note|\meta{text} is the following: When you use it
+somewhere inside the frame on a specific slide, a note page is created
+after the slide, containing the \meta{text}. Since you can add an
+overlay specification to the |\note| command, you can specify after
+which slide the note should be shown. If you use multiple |\note|
+commands on one slide, they ``accumulate'' and are all shown on the
+same note.
+
+To make the accumulation of notes more convenient, you can use the
+|\noteitem| command. It does the same as the |\note| command, but all
+notes added using |\noteitem| are accumulated in a list that follows
+any text inserted using |\note|. Usually, it is better not to mix
+|\noteitem| and |\note| on a slide, but it is certainly possible.
+
+The following example will produce one note page that follows the
+second slide and has two entries. 
+
 \begin{verbatim}
 \frame{
   \begin{itemize}
   \item<1-> Eggs
   \item<2-> Plants
+    \noteitem<2>{Tell joke about plants.}
+    \noteitem<2>{Make it short.}
   \item<3-> Animals
   \end{itemize}
 }
-\note{Tell joke about eggs.}
 \end{verbatim}
-The note command will create a new page that contains your text plus
-some information that should make it easier to match the note to the
-frame while talking. 
 
-Since you normally do not wish the notes to be part of your
-presentation, you must explicitly specify the class option
-|notes| to include notes. If this option is not specified, notes
-are suppressed. If you specify |notesonly| instead of
-|notes|, only notes will be included and all normal frames are
-parsed, but not displayed. This is useful for printing the notes.
+\begin{command}{\note\sarg{overlay specification}\marg{note text}}
+  Addends to \meta{note text} to the note that follows the current
+  slide. Multiple uses of this command on a slide accumulate. If you
+  do not specify an \meta{overlay specification}, the 
+  note will be added to \emph{all} slides of the current frame. This
+  often not what you want, so adding a specification like |<1>| is
+  usually a good idea.
+  
+  \example|\note<2>{Do not talk longer than 2 minutes about this.}|
+\end{command}
 
-By default, you can fit only little on each note (they are only
-intended to be reminders after all). Using the class option
-|compressnotes| will allow you to squeeze much more on each note
-card. 
+\begin{command}{\noteitem\sarg{overlay specification}\marg{note text}}
+  Appends an item in a list of note items with the given \meta{note
+  text} to the note following the current slide. If uses of |\note|
+  and |\noteitem| are mixed on a slide, the notes come first, followed
+  by the list of note items.
+  
+  \example|\noteitem<2>{Stress this.}|  
+\end{command}
 
-\begin{classoption}{notes}
-  Include notes in the output file. Normally, notes are not included.
-\end{classoption}
+The commands |\notes| and |\noteitems| should be used outside
+frames. They create a single note page when they are used. They are
+``independent'' of any usage of the |\note| or |\noteitem| commands
+inside the previous frame. If you say |\note| inside a frame and
+|\notes| right after it, \emph{two} note pages are created.
 
-\begin{classoption}{notesonly}
-  Include only the notes in the output file. Useful for printing them.
-\end{classoption}
-
-\begin{classoption}{compressnotes}
-  Squeezes as much text as possible on each note card.
-\end{classoption}
+The only difference between |\notes| and |\noteitems| is that the
+latter commands installs an enumerate environment.
 
 \begin{command}{\note\marg{note text}}
-  Creates a note page. Should be given right after a frame.
-  \example|\note{Talk no more than 1 minute.}|
+  Creates a note page. Must be used outside frames. This command is
+  \emph{not} affected by the |notes=onlyframeswithnotes| option, see
+  below.
+  \example
+\begin{verbatim}
+\frame{some text}
+\note{Talk no more than 1 minute.}
+\end{verbatim}
 \end{command}
 
 \begin{command}{\noteitems\marg{list of item commands}}
-  Just like the |\note| command, except that an |itemize|
+  Just like the |\note| command, except that an |enumerate|
   environment is setup inside the note.
   \example
 \begin{verbatim}
@@ -4034,6 +4068,74 @@ card.
 }
 \end{verbatim}
 \end{command}
+
+
+
+\subsubsection{Specifying Which Notes and Frames Are Shown}
+
+Since you normally do not wish the notes to be part of your
+presentation, you must explicitly specify the class option
+|notes| to include notes. If this option is not specified, notes
+are suppressed.
+
+The |notes| class option takes several parameters whose effects are
+explained in the following.
+
+
+If you specify |notesonly| instead of
+|notes|, only notes will be included and all normal frames are
+parsed, but not displayed. This is useful for printing the notes.
+
+By default, you can fit only little on each note (they are only
+intended to be reminders after all). Using the class option
+|compressnotes| will allow you to squeeze much more on each note
+card. 
+
+\begin{classoption}{notes=hide}
+  Notes are not shown. This is the default in a presentation.
+\end{classoption}
+
+\begin{classoption}{notes=show}
+  Include notes in the output file. Normal slides are also included. 
+\end{classoption}
+
+\begin{classoption}{notes=only}
+  Include only the notes in the output file and suppresses all
+  frames. Useful for printing them. If you specify this command, the
+  |.aux| and |.toc| files are \emph{not} updated. So, if you add a
+  section and re\TeX\ your presentation, this will not be reflected in
+  the navigation bars (which you do not see anyway since only notes
+  are output).
+\end{classoption}
+
+\begin{classoption}{notes=onlyslideswithnotes}
+  This includes all notes and those slides that contain a |\note| or a
+  |\noteitem| command. Frames that are just ``followed'' by a |\notes|
+  or a |\noteitems| command will not be included.
+
+  If you use only |\note| and |\noteitem| commands, this option will
+  cause the frames and the notes that apply to them to be nicely
+  paired. This is useful for printing.
+\end{classoption}
+
+
+
+
+\subsubsection{Changing the Appearance of Notes}
+
+By default, notes are put on a page that contains your text,
+some information that should make it easier to match the note to the
+frame while talking, and a little ``mini version'' of the slide coming
+before the note (this mini version contains only the body of the
+frame, the head line, foot line, and sidebars are not shown). 
+
+You can change this appearance by specifying a different template for
+note rendering, see Section~\ref{section-note-templates} for
+details. In most cases it will be sufficient to say either
+|\beamertemplatenoteplain| in your preamble, which will give you
+``plain'' notes without anything on them but your text, or
+|\beamertemplatenotecompress|, which will give you notes with more
+space on them.
 
 
 
@@ -4652,7 +4754,7 @@ the standard |\usepackage| command.
 \end{smallpackage}
 
 
-\begin{smallpackage}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
+\begin{package}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
         width}|,dark,tab]|}}
   The option |width| sets the width of the sidebar to \meta{sidebar
     width}. The option |dark| makes the side bar and the whole theme
@@ -4675,7 +4777,7 @@ the standard |\usepackage| command.
   \example |\usepackage[dark,tab]{beamersidebar}|
 
   \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
-\end{smallpackage}
+\end{package}
 
 
 \begin{smallpackage}{{beamerthemeshadow}}
@@ -4697,7 +4799,7 @@ the standard |\usepackage| command.
 \end{smallpackage}
 
 
-\begin{smallpackage}{{beamerthemetreebars}}
+\begin{smallpackage}{{beamerthemetree}\declare{|[bar]|}}
   \example
 
   \pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}
@@ -5318,24 +5420,46 @@ or
 \end{verbatim}
 \end{command}
 
-\begin{command}{\insertshortauthor}
-  Inserts the short version of the author into a template.
+\begin{command}{\insertshortauthor\oarg{options}}
+  Inserts the short version of the author into a template. The text
+  will be printed in one long line, line breaks introduced using the
+  |\\| command are suppressed.  The
+  following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|width=|\meta{width}}
+    causes the text to be put into a multi-line minipage of the given
+    size. Line breaks are still suppressed by default.
+  \item
+    \declare{|center|}
+    centers the text inside the minipage created using the |width|
+    option, rather than having it left aligned.
+  \item
+    \declare{|respectlinebreaks|}
+    causes line breaks introduced by the |\\| command to be honoured.    
+  \end{itemize}
+
+  \example |\insertauthor[width={3cm},center,respectlinebreaks]|
 \end{command}
 
-\begin{command}{\insertshortdate}
-  Inserts the short version of the date into a template.
+\begin{command}{\insertshortdate\oarg{options}}
+  Inserts the short version of the date into a template. The same
+  options as for |\insertshortauthor| may ge given. 
 \end{command}
 
-\begin{command}{\insertshortinstitute}
-  Inserts the short version of the institute into a template.
+\begin{command}{\insertshortinstitute\oarg{options}}
+  Inserts the short version of the institute into a template. The same
+  options as for |\insertshortauthor| may ge given. 
 \end{command}
 
-\begin{command}{\insertshortpart}
-  Inserts the short version of the part name into a template.
+\begin{command}{\insertshortpart\oarg{options}}
+  Inserts the short version of the part name into a template. The same
+  options as for |\insertshortauthor| may ge given. 
 \end{command}
 
-\begin{command}{\insertshorttitle}
-  Inserts the short version of the document title into a template.
+\begin{command}{\insertshorttitle\oarg{options}}
+  Inserts the short version of the document title into a template. Same
+  options as for |\insertshortauthor| may ge given. 
 \end{command}
 
 
@@ -5813,7 +5937,7 @@ The following inserts are useful for the navigation symbols template:
 
 
 \paragraph{Inserts for these Templates}\
-
+ 
 \begin{command}{\insertcaption}
   Inserts the text of the current caption into a template.
 \end{command}
@@ -6094,6 +6218,54 @@ The following inserts are useful for the navigation symbols template:
   margins are not setup in these templates and cannot be changed.
   
   \example |\usetemplatequotation{\itshape}{}|
+\end{command}
+
+
+
+
+\subsubsection{Typesetting Notes}
+
+\label{section-note-templates}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplatenoteplain}
+  Causes all note pages to contain only the note text.
+\end{command}
+
+\begin{command}{\beamertemplatenotecompress}
+  Causes the ``routing information'' at the top of a note to be
+  smaller. 
+\end{command}
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usetemplatenote\marg{note template}}
+  Each note is typeset by inserting the \meta{note template}. The
+  template should contain a mentioning of the insert |\insertnote|,
+  which will contain the note text.
+  
+  \example |\usetemplatenote{\tiny\insertnote}|
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertnote}
+  Inserts the text of the current note into the template.
+\end{command}
+
+
+\begin{command}{\insertslideintonotes\marg{magnification}}
+  Inserts a ``mini picture'' of the last slide into the current
+  note. The slide will be scaled by the given magnification.
+
+  \example |\insertslideintonotes{0.25}|
+
+  This will give a mini slide whose width and height are one fourth of
+  the usual size.
 \end{command}
 
 

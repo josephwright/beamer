@@ -27,33 +27,86 @@
 % As a side effect, \@another is called whenever the there is a number
 % in the list that is larger than the current serialnumber
 
-\def\beamer@decode{\global\beamer@minimum=10000\relax\gdef\beamer@decodefound{+}\beamer@@decodefind}
-\def\beamer@@decodefind{\futurelet\beamer@next\beamer@decodeinsertdefault}
-\def\beamer@decodeinsertdefault{\ifcat\beamer@next a%
-  \gdef\beamer@next{}%
-  \else%
-  \gdef\beamer@next{default:}%
-  \fi%
-  \expandafter\beamer@decodefind\beamer@next}
+\def\beamer@decode{%
+  \global\beamer@minimum=10000\relax%
+  \gdef\beamer@decodefound{+}%
+  \beamer@@decodefind}
+\def\beamer@@decodefind#1| {%
+  \beamer@@@decodefind#1:|}
+\def\beamer@@@decodefind#1:#2|{%
+  \beamer@ifempty{#2}%
+  {\beamer@decodefind beamer:#1:}%
+  {\beamer@decodefind #1:#2}}
 
+%
+%{\futurelet\beamer@next\beamer@decodeinsertdefault}
+%\def\beamer@decodeinsertdefault{\ifcat\beamer@next a%
+%  \gdef\beamer@next{}%
+%  \else%
+%  \gdef\beamer@next{beamer:}%
+%  \fi%
+%  \expandafter\beamer@decodefind\beamer@next}
+
+\def\beamer@default{default}
+\def\beamer@articlemode{article}
+\def\beamer@presentationmode{presentation}
 \def\beamer@modestop{stop}
 \def\beamer@modeall{all}
-\def\beamer@decodefind#1:#2| {%
+\def\beamer@decodefind#1:#2:{%
   \def\beamer@mode{#1}%
+  \beameratdecodeaction{#2}%
   \ifx\beamer@mode\beamer@modestop%
     \expandafter\beamer@@decode\beamer@decodefound,!%
     \let\beamer@next=\relax%
   \else
     \ifx\beamer@mode\beamer@currentmode%
-      \gdef\beamer@decodefound{#2}%
+      \beamer@@decodefound%
     \else%
       \ifx\beamer@mode\beamer@modeall%
-        \gdef\beamer@decodefound{#2}%
+        \beamer@@decodefound%
+      \else%
+        \ifx\beamer@mode\beamer@presentationmode%
+          \ifx\beamer@currentmode\beamer@articlemode\else%
+            \beamer@@decodefound%
+          \fi%
+        \fi%
       \fi%
     \fi%
     \let\beamer@next=\beamer@@decodefind%
   \fi%
   \beamer@next}
+
+\def\beamer@@decodefound{%
+  \ifx\beamer@action\beamer@currentaction%
+    \expandafter\gdef\expandafter\beamer@decodefound\expandafter{\beamer@spec}%
+  \fi}
+\def\beamer@currentaction{default}
+
+{
+\makeatother
+\gdef\beameratdecodeaction#1{%
+  \beameratdecodeactionb#1@:}
+\gdef\beameratdecodeactionb#1@#2:{%
+  \beameratdecodeactionc{#1}{#2}}
+\gdef\beameratgetridofat#1@{%
+  \gdef\beameratspec{#1}%
+}
+}
+
+\def\beameratdecodeactionc#1#2{%
+  \gdef\beamer@spec{#2}%
+  \ifx\beamer@spec\@empty%
+    \gdef\beamer@spec{#1}%
+    \gdef\beamer@action{default}%
+  \else%
+    \gdef\beamer@action{#1}%
+    \beameratgetridofat#2%
+    \expandafter\gdef\expandafter\beamer@spec\expandafter{\beameratspec}
+  \fi%
+}
+
+
+
 
 \def\beamer@doifnotinframe{}
 \def\beamer@@decode{%
@@ -130,12 +183,46 @@
 \def\alt{\beamer@parsebr\@alt}
 \long\def\@alt<#1>#2#3{%
   \def\beamer@doifnotinframe{#3}\def\beamer@doifinframe{#2}%
-  {\setbox0=\hbox{\beamer@decode#1| stop:| }}\beamer@donow}
+  {\setbox0=\hbox{\beamer@decode#1| stop:0| }}\beamer@donow}
+
+
+\def\beamer@plus{+}
+
+\def\action{\beamer@parsebr\beamer@parsedaction}
+\long\def\beamer@parsedaction<#1>#2{%
+  \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
+  \gdef\beamer@todo{#2}%
+  {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
+    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\uncover\fi}%
+  {\def\beamer@currentaction{alert}%
+    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
+    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\alert\fi}%
+  {\def\beamer@currentaction{only}%
+    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
+    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\only\fi}%
+  {\def\beamer@currentaction{visible}%
+    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
+    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\visible\fi}%
+  {\def\beamer@currentaction{invisible}%
+    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
+    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\invisible\fi}%
+  {\def\beamer@currentaction{uncover}%
+    {\setbox0=\hbox{\beamer@decode#1| stop:0| }}%
+    \ifx\beamer@decodefound\beamer@plus\else\beamer@actionadd\uncover\fi}%
+  \beamer@todo}
+
+\def\beamer@actionadd#1{%
+  \expandafter\beamer@toarg\expandafter{\beamer@todo}{#1}}
+\long\def\beamer@toarg#1#2{%
+  \expandafter\long\expandafter\gdef\expandafter\beamer@todo%
+  \expandafter{\expandafter#2\expandafter<\beamer@decodefound>{#1}}}
+
+
 
 \def\temporal{\beamer@parsebr\@temporal}
 \long\def\@temporal<#1>#2#3#4{% past, present, future
   \def\beamer@doifnotinframe{\beamer@picked}\def\beamer@doifinframe{#3}%
-  {\setbox0=\hbox{\beamer@localanotherslidefalse\beamer@decode#1| stop:|
+  {\setbox0=\hbox{\beamer@localanotherslidefalse\beamer@decode#1| stop:0|
       \ifbeamer@localanotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi}}\beamer@donow}
 
 \def\beameroriginal#1{\csname @orig\string#1\endcsname}
