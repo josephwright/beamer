@@ -17,18 +17,16 @@
 
 \mode<presentation>
 
-\setbeamercolor{section in head/foot}{use=structure,bg=structure.fg,fg=white}
-\setbeamercolor{subsection in head/foot}{use=structure,bg=structure.fg!75!bg,fg=white}
-\setbeamercolor{author in head/foot}{use=structure,bg=structure.fg!75!bg,fg=white}
-\setbeamercolor{title in head/foot}{use=structure,bg=structure.fg,fg=white}
-
                                 % Head
 \useheadtemplate{%
   \vbox{%
-    \beamercolorbox[wd=\paperwidth]%
-      {section in head/foot}{\vskip2pt\insertnavigation{\paperwidth}\vskip2pt}%
-    \beamercolorbox[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=.3cm,rightskip=.3cm plus1fil]%
-      {subsection in head/foot}{\usebeamerfont{subsection in head/foot}\insertsubsection}%
+    \begin{beamercolorbox}[wd=\paperwidth]{section in head/foot}
+      \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}\insertsubsection
+    \end{beamercolorbox}%
   }%
 }
 
@@ -36,16 +34,19 @@
                                 % Footline
   \usefoottemplate{%
     \vbox{%
-      \beamercolorbox[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=.3cm,rightskip=.3cm plus1fil]%
-      {author in head/foot}{%
+      \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+        leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
         \leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
         \hfill%
         {\usebeamerfont{institute in head/foot}\insertshortinstitute}%
-      }%
-      \beamercolorbox[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=.3cm,rightskip=.3cm plus1fil]%
-      {title in head/foot}{{\usebeamerfont{title in head/foot}\insertshorttitle}}%
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+        leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+        {\usebeamerfont{title in head/foot}\insertshorttitle}%
+      \end{beamercolorbox}%
       \vskip1ex
-    }}
+    }%
+  }
 
 \fi
 

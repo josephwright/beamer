@@ -7,62 +7,59 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
+\newif\ifbeamer@tree@showhooks
+\beamer@tree@showhookstrue
+
+\DeclareOptionBeamer{hooks}[true]{\csname beamer@tree@showhooks#1\endcsname}
+\ProcessOptionsBeamer
+
 \mode<presentation>
 
-\DeclareOptionBeamer{lines}{%
-  \useheadtemplate{%
+
+\setbeamercolor{upper separation line}{}
+\setbeamercolor{lower separation line}{parent=upper separation line}
+
+\useheadtemplate{%
   \vbox{%
-    \insertvrule{3pt}{beamerstructure!50!averagebackgroundcolor}%
-    \beamer@fixedline{%
-      \color{beamerstructure}%
-      \usebeamerfont{title in head/foot}%
-      \insertshorttitle\hfill%
-    }%
-    \setbox\beamer@tempbox=\hbox{\insertsection}%
-    \beamer@fixedline{%
-      \color{beamerstructure}%
-      \ifdim\wd\beamer@tempbox>1pt%
-        {\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}%
-        \hskip1pt\usebeamerfont{section in head/foot}\insertsection%
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{upper separation line}
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
+      \usebeamerfont{section in head/foot}%
+      \ifbeamer@tree@showhooks
+        \setbox\beamer@tempbox=\hbox{\insertsection}%
+        \ifdim\wd\beamer@tempbox>1pt%
+          \hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
+          \hskip1pt%
+        \fi%
+      \else%  
+        \hskip6pt%
       \fi%
-      \hfill}%
-    \setbox\beamer@tempbox=\hbox{\insertsubsection}%
-    \beamer@fixedline{%
-      \color{black}%
-      \ifdim\wd\beamer@tempbox>1pt%
-        {\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}%
-        \hskip1pt%
-        \usebeamerfont{section in head/foot}\insertsubsection%
-      \fi\hfill}%
-    \insertvrule{3pt}{beamerstructure!50!averagebackgroundcolor}%
-    }}%
+      \insertsection
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}%
+      \ifbeamer@tree@showhooks
+        \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+        \ifdim\wd\beamer@tempbox>1pt%
+          \hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
+          \hskip1pt%
+        \fi%
+      \else%  
+        \hskip12pt%
+      \fi%
+      \insertsubsection
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{lower separation line}
+    \end{beamercolorbox}
+  }%
 }
 
-\DeclareOptionBeamer{bars}{
-  \useheadtemplate{%
-   \vbox{%
-     \beamer@fixedcolouredline{black}{%
-       \color{white}%
-       {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill%
-     }%
-     \setbox\beamer@tempbox=\hbox{\insertsection}%
-     \beamer@fixedcolouredline{beamerstructure}{%
-       \color{black}%
-       \ifdim\wd\beamer@tempbox>1pt%
-         \hskip6pt%
-         \color{white}{\usebeamerfont{section in head/foot}\insertsection}%
-       \fi\hfill}%
-     \setbox\beamer@tempbox=\hbox{\insertsubsection}%
-     \beamer@fixedcolouredline{beamerstructure!75!averagebackgroundcolor}{%
-       \color{black}%
-       \ifdim\wd\beamer@tempbox>1pt%
-         \hskip12pt%
-         \color{white}{\usebeamerfont{subsection in head/foot}\insertsubsection}%
-       \fi\hfill}%
-     }%
-   }
-}
- 
 \ProcessOptionsBeamer
 
 

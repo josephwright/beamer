@@ -72,6 +72,7 @@
 
 \newcommand{\beamertemplatedefaultframetitle}[1][left]{%
   \useframetitletemplate{%
+    \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
     \@tempdima=\textwidth%
     \advance\@tempdima by\beamer@leftmargin%
     \advance\@tempdima by\beamer@rightmargin%
@@ -85,8 +86,8 @@
         \fi
       }%
       \if@tempswa\else\vskip-.3cm\fi%
-    \end{beamercolorbox}
-  }
+    \end{beamercolorbox}%
+  }%
 }
 \@onlypreamble\beamertemplatedefaultframetitle
 
