@@ -70,6 +70,7 @@
   \beamer@framenotesbegin%
     \setbox\beamer@framebox=\vbox to\textheight\bgroup\vbox{}\par%
     \beamer@inframetrue%
+    \let\frame=\framelatex% inside frames, use LaTeX's \frame command
     \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
     \vfill}%
   {\beamer@exitcode\vskip0pt plus 1.5fill%
@@ -130,6 +131,9 @@
 \newif\ifbeamer@containsverbatim
 
 % Check for old version:
+
+% Save!
+\let\framelatex=\frame
 
 \def\frame{%
   \def\beamer@defaultospec{<*>}%

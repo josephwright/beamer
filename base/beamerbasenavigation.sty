@@ -314,34 +314,6 @@
   \hyperlinksectionend{\beamer@linkspace{5pt}}%
   \hyperlinksectionstartnext{\beamer@linkspace{5pt}}}
 
-\ifx\beamer@startpageofappendix\@empty
-% no appendix
-\pgfdefobject{beamerdocnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
-{\pgfsetlinewidth{0.6pt}
-  \pgfqmoveto{8}{4}
-  \pgfqlineto{11}{4}
-  \pgfstroke
-  \pgfqmoveto{9}{3}
-  \pgfqlineto{12}{3}
-  \pgfstroke
-  \pgfqmoveto{9}{2}
-  \pgfqlineto{12}{2}
-  \pgfstroke
-  \pgfqmoveto{7}{1}
-  \pgfqlineto{11}{1}
-  \pgfstroke
-  \pgfqmoveto{9}{0}
-  \pgfqlineto{12}{0}
-  \pgfstroke}
-
-\def\insertdocnavigationsymbol{%
-  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \color{\beamernavigationcolorstrong}%
-    \pgfuseobject{beamerdocnavstrong}%
-  \end{pgfpicture}\kern-20pt%
-  \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
-  \hyperlinkpresentationend{\beamer@linkspace{11pt}}}
-\else
 \pgfdefobject{beamerdocnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
 {\pgfqmoveto{10}{-.5}
   \pgfqlineto{10}{4.5}
@@ -376,18 +348,44 @@
   \pgfstroke
 }
 
+\pgfdefobject{beamerdocnavstrongsingle}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{\pgfsetlinewidth{0.6pt}
+  \pgfqmoveto{8}{4}
+  \pgfqlineto{11}{4}
+  \pgfstroke
+  \pgfqmoveto{9}{3}
+  \pgfqlineto{12}{3}
+  \pgfstroke
+  \pgfqmoveto{9}{2}
+  \pgfqlineto{12}{2}
+  \pgfstroke
+  \pgfqmoveto{7}{1}
+  \pgfqlineto{11}{1}
+  \pgfstroke
+  \pgfqmoveto{9}{0}
+  \pgfqlineto{12}{0}
+  \pgfstroke}
+
 \def\insertdocnavigationsymbol{%
-  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \color{\beamernavigationcolorlight}%
-    \pgfuseobject{beamerdocnavlight}%
-    \color{\beamernavigationcolorstrong}%
-    \pgfuseobject{beamerdocnavstrong}%
-  \end{pgfpicture}\kern-20pt%
-  \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
-  \hyperlinkpresentationend{\beamer@linkspace{5pt}}%
-  \hyperlinkappendixstart{\beamer@linkspace{3.5pt}}%
-  \hyperlinkappendixend{\beamer@linkspace{6.5pt}}}
-\fi
+  \ifx\beamer@startpageofappendix\@empty%
+    \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+      \color{\beamernavigationcolorstrong}%
+      \pgfuseobject{beamerdocnavstrongsingle}%
+    \end{pgfpicture}\kern-20pt%
+    \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
+    \hyperlinkpresentationend{\beamer@linkspace{11pt}}%
+  \else%
+    \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+      \color{\beamernavigationcolorlight}%
+      \pgfuseobject{beamerdocnavlight}%
+      \color{\beamernavigationcolorstrong}%
+      \pgfuseobject{beamerdocnavstrong}%
+    \end{pgfpicture}\kern-20pt%
+    \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
+    \hyperlinkpresentationend{\beamer@linkspace{5pt}}%
+    \hyperlinkappendixstart{\beamer@linkspace{3.5pt}}%
+    \hyperlinkappendixend{\beamer@linkspace{6.5pt}}%
+  \fi}
 
 \pgfdefobject{beamerbackfindforwardnav}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
 {
