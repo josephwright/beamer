@@ -5,7 +5,7 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\def\version{2.20}
+\def\version{2.20-cvs}
 
 \usepackage{pgf,xcolor}
 \usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
@@ -140,6 +140,9 @@ as follows:
   |dvips|, and |ps2pdf|).
 \end{enumerate}
 
+To get jump-started try opening one of the |.tex| files in the
+|solutions| directory.
+
 The \beamer\ class has several useful features: You don't need any
 external programs to use it other than |pdflatex|, but it works
 also with |dvips|. You can easily and intuitively create
@@ -158,15 +161,17 @@ the class.
 
 \begin{document}
 
-\frame{\titlepage}
+\begin{frame}
+  \titlepage
+\end{frame}
 
 \section*{Outline}
 \frame{\tableofcontents}
 
 \section{Introduction}
 \subsection{Overview of the Beamer Class}
-\frame
-{
+
+\begin{frame}
   \frametitle{Features of the Beamer Class}
 
   \begin{itemize}
@@ -174,7 +179,7 @@ the class.
   \item<2-> Easy overlays.
   \item<3-> No external programs needed.      
   \end{itemize}
-}
+\end{frame}
 \end{document}
 \end{verbatim}
 
@@ -184,10 +189,9 @@ presentation. You can also, alternatively, use |dvips|; see
 Section~\ref{section-postscript} for details.
 
 As can be seen, the text looks almost like a normal \LaTeX\ text. The
-main difference is the usage of the |\frame| command. This
-command takes one parameter, which is the text that should be shown on
-the frame. Typically, the contents of a frame is shown on a single
-slide. However, in case you use overlay commands inside a frame, a
+main difference is the usage of the |frame| environment. This
+environment will typically show its contents on a single
+slide. However, in case you use overlay commands inside a frame, a 
 single frame command may produce several slides. An example is the
 last frame in the above example. There, the |\item| commands
 are followed by \emph{overlay specifications} like |<1->|,
@@ -221,8 +225,7 @@ as follows:
   $\rangle$ Preamble.
 \item
   Typeset the author and date the usual way, using the styles Author
-  and Date. The title page will then
-  be created automatically.
+  and Date. The title page will then be created automatically.
 \item
   To insert the sections and subsections, use the usual Section and
   Subsection styles.
@@ -587,7 +590,10 @@ might  look like this:
 
 \begin{document}
 
-\frame{\titlepage}
+\begin{frame}
+  \titlepage
+\end{frame}
+
 
 \section*{Outline}
 \frame{\tableofcontents}
@@ -947,7 +953,7 @@ Second, you can use the following command:
   The \meta{frame label list} is a comma-separated list (without
   spaces) of the names of frames that have been labeled. To label a
   frame, you must pass the option |label=|\meta{name} to the |\frame|
-  command.
+  command or |frame| environment.
 
   \example
 \begin{verbatim}
@@ -1049,12 +1055,11 @@ mentioned in the specification. What exactly ``having an effect''
 means, depends on the command. Consider the following example.
 
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \textbf{This line is bold on all three slides.}
   \textbf<2>{This line is bold only on the second slide.}
   \textbf<3>{This line is bold only on the third slide.}
-}
+\end{frame}
 \end{verbatim}
 
 For the command |\textbf|, the overlay specification causes the
@@ -1063,11 +1068,10 @@ slides, the text is set in a normal font.
 
 For a second example, consider the following frame:
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \only<1>{This line is inserted only on slide 1.}
   \only<2>{This line is inserted only on slide 2.}
-}
+\end{frame}
 \end{verbatim}
 
 The command |\only|, which is introduced by \beamer, normally simply
@@ -1247,8 +1251,7 @@ The whole action mechanism is base on the following environment:
   \example 
 
 \begin{verbatim} 
-\frame 
-{
+\begin{frame }
   \begin{actionenv}<2-| alert@3-4,6>
     This text is shown the same way as the text below.
   \end{actionenv}
@@ -1258,7 +1261,7 @@ The whole action mechanism is base on the following environment:
       This text is shown the same way as the text above.
     \end{alertenv}
   \end{uncoverenv}
-}
+\end{frame}
 \end{verbatim}
                                 %\begin{verbatim}
 \end{environment} 
@@ -1279,9 +1282,9 @@ The whole action mechanism is base on the following environment:
   \verb/<+-| alert@+>/, see Section~\ref{section-incremental}.
 
   Usually, the default overlay specification is installed
-  automatically by the optional arguments to |\frame|, |itemize|,
-  |enumerate|, and |description|. You will only have to use this
-  command if you wish to do funny things.
+  automatically by the optional arguments to |\frame|, |frame|,
+  |itemize|, |enumerate|, and |description|. You will only have to use
+  this command if you wish to do funny things.
 
   \example |\beamerdefaultoverlayspecification{<+->}|
 
@@ -1381,40 +1384,43 @@ round brackets. This offset will be added to the value of
 
 A presentation consists of a series of frames. Each frame consists of
 a series of slides. You create a frame using the command
-|\frame|. This command takes one parameter, namely the
-contents of the frame. All of this text that is not tagged by overlay
-specifications is shown on all slides of the frame. If a frame
-contains commands that have an overlay specification, the frame will
-contain multiple slides; otherwise it contains only one slide.
+|\frame| or the environment |frame|, which do the same. The command
+takes one parameter, namely the contents of the frame. All of the
+text that is not tagged by overlay specifications is shown on all
+slides of the frame. If a frame contains commands that have an overlay
+specification, the frame will contain multiple slides; otherwise it
+contains only one slide.
 
-\begin{command}{\frame\sarg{overlay specification}%
-    \opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\marg{frame text}}
+\begin{environment}{{frame}\sarg{overlay specification}%
+    \opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}}
   The \meta{overlay specification} dictates which slides of a frame are
   to be shown. If left out, the number is calculated automatically.
-  The \meta{frame text} can be normal \LaTeX\ text, but may not contain
+  The \meta{environment contents} can be normal \LaTeX\ text, but may not contain
   |\verb| commands or |verbatim| environments, unless the
   |containsverbatim| options is given, see also
   Section~\ref{section-verbatim}. 
-  
+ 
+  The normal \LaTeX\ command |\frame| is available \emph{inside}
+  frames with its usual meaning. Bot outside and inside frames it is
+  always available as {\color{red!75!black}|\framelatex|}. 
+ 
   \example
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \frametitle{A title}
   Some content.
-}
+\end{frame}
 \end{verbatim}
   
   \example
 \begin{verbatim}
-\frame<beamer>  % frame is only shown in beamer mode
-{
+\begin{frame}<beamer>  % frame is only shown in beamer mode
   \frametitle{Outline}
   \tabelofcontent[current]
-}
+\end{frame}
 \end{verbatim}
 
-  Normally, the complete \meta{frame text} is put on a slide. If
+  Normally, the complete \meta{environment contents} is put on a slide. If
   the text does not fit on a slide being too high, it will be
   squeezed as much as possible, a warning issued, and the text
   just extends unpleasantly over the bottom. You can use the option
@@ -1426,8 +1432,8 @@ contain multiple slides; otherwise it contains only one slide.
   that is ``detected'' according to the following rule: If the first
   optional argument in square brackets starts with a |<|, then this
   argument is a \meta{default overlay specification}, otherwise it is
-  a normal \meta{options} argument. Thus |\frame[<+->][plain]| would
-  be legal, but also |\frame[plain]|.
+  a normal \meta{options} argument. Thus |\begin{frame}[<+->][plain]| would
+  be legal, but also |\begin{frame}[plain]|.
 
   The effect of the \meta{default overlay specification} is the
   following: Every command or environment \emph{inside the frame} that
@@ -1440,7 +1446,7 @@ contain multiple slides; otherwise it contains only one slide.
   specification like |<+->|, see Section~\ref{section-incremental},
   this will essentially cause all blocks and all enumerations to be
   uncovered piece-wise (blocks internally employ action
-  specifications). 
+  specifications).
   
   \example In this frame, the theorem is shown from the first slide
   on, the proof from the second slide on, with the first two itemize
@@ -1448,8 +1454,7 @@ contain multiple slides; otherwise it contains only one slide.
   together with the first one. In total, this frame will contain four
   slides.
 \begin{verbatim}
-\frame[<+->]
-{
+\begin{frame}[<+->]
   \begin{theorem}
     $A = B$.
   \end{theorem}
@@ -1460,7 +1465,7 @@ contain multiple slides; otherwise it contains only one slide.
     \item<3-> Thus $A = B$.
     \end{itemize}
   \end{proof}
-}
+\end{frame}
 \end{verbatim}
  
   The following \meta{options} may be given:
@@ -1481,11 +1486,11 @@ contain multiple slides; otherwise it contains only one slide.
     option is given, the following things happen:
     \begin{enumerate}
     \item
-      The option |containsverbatim| is automatically selected, as a
-      side-effect. Thus, frames with this option set may contain
-      verbatim text.
+      Overlays are not supported.
     \item
-      Consequently, overlays are not supported.
+      If your frame contains verbatim text, you can and must specify the
+      option |containsverbatim|. Since overlays are not supported
+      anyway, specifying this option never hurts.
     \item
       Any notes for the frame created using the |\note| command will
       be inserted after the first page of the frame.
@@ -1535,8 +1540,7 @@ contain multiple slides; otherwise it contains only one slide.
 
     \example
 \begin{verbatim}
-\frame[allowframebreaks]
-{
+\begin{frame}[allowframebreaks]
   \frametitle{References}
 
   \begin{thebibliography}{XX}
@@ -1546,12 +1550,11 @@ contain multiple slides; otherwise it contains only one slide.
     ...
   \bibitem...
   \end{thebibliography}
-}
+\end{frame}
 \end{verbatim}
     \example
 \begin{verbatim}
-\frame[allowframebreaks,allowdisplaybreaks]
-{
+\begin{frame}[allowframebreaks,allowdisplaybreaks]
   \frametitle{A Long Equation}
 
   \begin{align}
@@ -1560,7 +1563,7 @@ contain multiple slides; otherwise it contains only one slide.
     ...
     &= \pi^2/6.
   \end{align}
-}
+\end{frame}
 \end{verbatim}
   \item
     \declare{|b|}, \declare{|c|}, \declare{|t|} will cause the frame
@@ -1598,12 +1601,12 @@ contain multiple slides; otherwise it contains only one slide.
 
   \example A frame with a picture completely filling the frame:  
 \begin{verbatim}
-\frame[plain]{%
+\begin{frame}[plain]
   \begin{centering}%
     \pgfimage[height=\paperheight]{somebigimagefile}%
     \par%
   \end{centering}%
-}
+\end{frame}
 \end{verbatim}
   
   \example A title page, in which the head- and footlines are replaced
@@ -1622,7 +1625,9 @@ contain multiple slides; otherwise it contains only one slide.
   \vskip0pt plus 1filll
   \beamerline{\pgfuseimage{bottomtitle}}
 }
-\frame[plain]{\titlepage}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
 \end{verbatim}
   \item
     \declare{|shrink|}\opt{|=|\meta{minimum shrink percentage}}. This
@@ -1661,10 +1666,9 @@ contain multiple slides; otherwise it contains only one slide.
 
     \example
 \begin{verbatim}
-\frame[shrink=5]
-{
+\begin{frame}[shrink=5]
   Some evil endless slide that is 5\% too large.
-}
+\end{frame}
 \end{verbatim}
   \item
     \declare{|squeeze|} causes all vertical spaces in the text to be
@@ -1699,14 +1703,42 @@ contain multiple slides; otherwise it contains only one slide.
   for typesetting verbatim text, that is easier to handle for \beamer.
 
   \articlenote
-  In |article| mode, the |\frame| command does not create any visual
+  In |article| mode, the |frame| environment does not create any visual
   reference to the original frame (no frame is drawn). Rather, the
   frame text is inserted into the normal text. To change this, you can
   modify the frame template, see
   Section~\ref{section-frame-template}. To suppress a frame in
   |article| mode, you can, for example, specify |<presentation>| as
   overlay specification. 
+\end{environment}
+
+\begin{command}{\frame\sarg{overlay specification}%
+    \opt{|[<|\meta{default overlay
+        specification}|>]|}\oarg{options}\marg{contents}}
+  This command does the same as putting the \meta{contents} in a
+  |frame| environment called.
+
+  Internally, the |\frame| command is what is actually executed. The
+  |frame| environment just collects its environment contents and then
+  calls the |\frame| command; except if the option |containsverbatim|
+  is specified, in which case the contents is not collected, but
+  control is nevertheless passed on the |\frame| (the internals are a
+  it obscure).
+
+  If, for whatever reason, the |frame| environment has a problem with
+  some contents, it \emph{might} help to try using the |\frame|
+  command instead.
+
+  \example The following two frame will be identical:
+\begin{verbatim}
+\frame{Hi!}
+
+\begin{frame}
+  Hi!
+\end{frame}
+\end{verbatim}
 \end{command}
+
 
 
 For compatibility with earlier versions, you can also give an overlay
@@ -1770,12 +1802,12 @@ be specified with the following command:
 
   \example
 \begin{verbatim}
-\frame{
+\begin{frame}
   \frametitle{A Frame Title is Important.}
   \framesubtitle{Subtitles are not so important.}
 
   Frame contents.
-}
+\end{frame}
 \end{verbatim}
 
   If you are using the |allowframebreaks| option with the current frame,
@@ -1812,12 +1844,12 @@ be specified with the following command:
   
   \example
 \begin{verbatim}
-\frame{
+\begin{frame}
   \frametitle<presentation>{Frame Title Should Be in Uppercase.}
   \framesubtitle{Subtitles can be in lowercase if they are full sentences.}
 
   Frame contents.
-}
+\end{frame}
 \end{verbatim}
 
   \articlenote
@@ -1856,11 +1888,10 @@ frame will contain only the slides specified in this
 argument. Consider the following example. 
 
 \begin{verbatim}
-\frame<1-2,4->
-{
+\begin{frame}<1-2,4->
   This is slide number \only<1>{1}\only<2>{2}\only<3>{3}%
   \only<4>{4}\only<5>{5}.
-}
+\end{frame}
 \end{verbatim}
 This command will create a frame containing four slides. The first
 will contain the text ``This is slide number~1,'' the second ``This is
@@ -1868,7 +1899,7 @@ slide number~2,'' the third ``This is slide number~4,'' and the fourth
 ``This is slide number~5.''
 
 A useful specification is just |<0>|, which causes the frame to
-have to no slides at all. For example, |\frame<handout:0>| causes
+have to no slides at all. For example, |\begin{frame}<handout:0>| causes
 the frame to be suppressed in the handout version, but to be shown
 normally in all other versions. Another useful specification is
 |<beamer>|, which causes the frame to be shown normally in |beamer|
@@ -1885,8 +1916,7 @@ frames that contain a single slide or that are suppressed
 altogether. Furthermore, you must explicitly specify that the frame
 contains verbatim text using the |containsverbatim| commans:
 \begin{verbatim}
-\frame[containsverbatim]
-{
+\begin{frame}[containsverbatim]
   \frametitle{Our Search Procedure}
 
 \begin{verbatim}
@@ -1900,7 +1930,7 @@ contains verbatim text using the |containsverbatim| commans:
 \unskip{\MacroFont|\end{verbatim}|}
                                 %\begin{verbatim}
 \begin{verbatim}
-}
+\end{frame}
 \end{verbatim}
 
 You may \emph{not} use the |label=|\meta{label name} option if you
@@ -1925,14 +1955,13 @@ done using two special commands:
 \defverb\mytext!int main (void) { ...!
 \defverb\mytextspaces*!int  main  (void ){  ...!
 
-\frame
-{
+\begin{frame}
   \begin{itemize}
   \item<1-> In C you need a main function.
   \item<2-> It is declare like this: \mytext
   \item<3-> Spaces are not important: \mytextspaces
   \end{itemize}
-}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -1982,18 +2011,16 @@ int main (void)
 \end{lstlisting}
 }
 
-\frame
-{
+\begin{frame}
   Our algorithm:
   \alert<1>{\algorithmA}
   \uncover<2>{Note the return value.}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   Same algorithm typeset using the lstlisting environment:
   \algorithmB
-}
+\end{frame}
 \end{verbatim}
 %\begin{verbatim}
 \end{command}
@@ -2023,7 +2050,7 @@ The effect of |\pause| lasts till the next |\pause|, |\onslide|, or
 the end of the frame.   
 
 \begin{verbatim}
-\frame{
+\begin{frame}
   \begin{itemize}
   \item
     Shown from first slide on.
@@ -2054,7 +2081,7 @@ the end of the frame.
   \item
     Shown from fifth slide on.
   \end{itemize}
-}
+\end{frame}
 \end{verbatim}
 
 \begin{command}{\pause\oarg{number}}
@@ -2068,8 +2095,7 @@ the end of the frame.
 
   \example
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \begin{itemize}
   \item
     A    
@@ -2080,7 +2106,7 @@ the end of the frame.
   \item
     C
   \end{itemize}
-}
+\end{frame}
 \end{verbatim}
 
   \articlenote
@@ -2111,10 +2137,9 @@ specification: |\textbf|, |\textit|, |\textsl|,
 |\color|, the specification should directly follow the command as in
 the following example (but there are exceptions to this rule):
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \color<2-3>[rgb]{1,0,0} This text is red on slides 2 and 3, otherwise black.
-}
+\end{frame}
 \end{verbatim}
 
 For the following commands, the effect of an overlay specification is
@@ -2131,8 +2156,7 @@ special:
   
   \example
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   Shown on first slide.
   \onslide<2-3>
   Shown on second and third slide.
@@ -2146,7 +2170,7 @@ special:
   Shown from slide 4 on.
   \onslide
   Shown on all slides.
-}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -2167,10 +2191,9 @@ special:
   \example
 \begin{verbatim}
 \newcommand{\myblue}{\only{\color{blue}}}
-\frame
-{
+\begin{frame}
   \myblue<2> This text is blue only on slide 2.
-}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -2242,14 +2265,14 @@ special:
 \def\colorize<#1>{%
   \temporal<#1>{\color{structure!50}}{\color{black}}{\color{black!50}}}
 
-\frame{
+\begin{frame}
   \begin{itemize}
     \colorize<1> \item First item.
     \colorize<2> \item Second item.
     \colorize<3> \item Third item.
     \colorize<4> \item Fourth item.
   \end{itemize}
-}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -2263,24 +2286,22 @@ special:
   
   \example
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \begin{itemize}
   \item<1-> First point, shown on all slides.
   \item<2-> Second point, shown on slide 2 and later.
   \item<2-> Third point, also shown on slide 2 and later.
   \item<3-> Fourth point, shown on slide 3.
   \end{itemize}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \begin{enumerate}
   \item<3-| alert@3>[0.] A zeroth point, shown at the very end.
   \item<1-| alert@1> The first an main point.
   \item<2-| alert@2> The second point.
   \end{enumerate}
-}
+\end{frame}
 \end{verbatim}
 
   \articlenote
@@ -2307,13 +2328,12 @@ in the same way as |\item|.
 
   Labels can be used as target of hyperjumps. A convenient way of
   labelling a frame is to use the |label=|\meta{name} option of the
-  |\frame| command. However, this will cause the whole frame to be
+  |frame| environment. However, this will cause the whole frame to be
   kept in memory till the end of the compilation, which may pose a
   problem. 
   \example
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \begin{align}
     a &= b + c   \label{first}\\ % no specification needed
     c &= d + e   \label{second}\\% no specification needed
@@ -2322,7 +2342,7 @@ in the same way as |\item|.
   Blah blah, \uncover<2>{more blah blah.}
 
   \only<3>{Specification is needed now.\label<3>{mylabel}}
-}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -2337,8 +2357,7 @@ uncovered only on the specified slides. This is useful for showing
 things incrementally as in the following example.
 
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \frametitle{A Theorem on Infinite Sets}
 
   \begin{theorem}<1->
@@ -2352,7 +2371,7 @@ things incrementally as in the following example.
   \begin{example}<2->
     The set of natural numbers is infinite.
   \end{example}
-}
+\end{frame}
 \end{verbatim}
 In the example, the first slide only contains the theorem, on the
 second slide an example is added, and on the third slide the proof is
@@ -2374,13 +2393,12 @@ and |onlyenv|, these environments do the same as the commands.
   would not.
   \example
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   This line is always shown.
   \begin{onlyenv}<2>
     This line is inserted on slide 2.
   \end{onlyenv}
-}
+\end{frame}
 \end{verbatim}
 \end{environment}
 
@@ -2396,14 +2414,13 @@ text}\sarg{overlay specification}}
   
   \example
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   This 
   \begin{altenv}<2>{(}{)}{[}{]}
     word
   \end{uncoverenv}
   is in round brackets on slide 2 and in square brackets on slide 1.
-}
+\end{frame}
 \end{verbatim}
 \end{environment}
 
@@ -2567,12 +2584,11 @@ class.
   {\par%
   \end{actionenv}}
 
-\frame
-{
+\begin{frame}
   \begin{myboldblock}<2>
     This theorem is shown only on the second slide.
   \end{myboldblock}
-}
+\end{frame}
 \end{verbatim}
 
   \example Text in the following environment is normally bold and
@@ -2882,11 +2898,10 @@ following two commands.
 \begin{verbatim}
 \AtBeginSection[] % Do nothing for \section*
 {
-  \frame<beamer>
-  {
+  \begin{frame}<beamer>
     \frametitle{Outline}
     \tableofcontents[current]
-  }
+  \end{frame}
 }
 \end{verbatim}
 
@@ -2908,11 +2923,10 @@ following two commands.
 \begin{verbatim}
 \AtBeginSubsection[] % Do nothing for \subsection*
 {
-  \frame<beamer>
-  {
+  \begin{frame}<beamer>
     \frametitle{Outline}
     \tableofcontents[current,currentsubsection]
-  }
+  \end{frame}
 }
 \end{verbatim}
 \end{command}
@@ -3043,8 +3057,8 @@ insert, say, a title page at the beginning of (each) lecture.
 \end{command}
 
 \begin{command}{\includeonlylecture\meta{lecture label}}
-  Causes all |\frame|, |\section|, |\subsection|, and |\part| commands
-  following a |\lecture| command to be suppressed, except if the
+  Causes all |\frame|, |frame|, |\section|, |\subsection|, and |\part|
+  commands following a |\lecture| command to be suppressed, except if the
   lecture's label matches the \meta{lecture label}. Frames before any
   |\lecture| commands are always included. This command should be
   given in the preamble.
@@ -3229,7 +3243,7 @@ entries.
   references. 
   \example
 \begin{verbatim}
-\frame{
+\begin{frame}
   \frametitle{For Further Reading}
 
   \begin{thebibliography}{Dijkstra, 1982}
@@ -3243,7 +3257,7 @@ entries.
     \newblock Smoothsort, an alternative for sorting in situ.
     \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
   \end{thebibliography}
- }
+\end{frame}
 \end{verbatim}
 \end{environment}
 
@@ -3419,7 +3433,7 @@ three-step process:
   that you have defined the same target on different slides).
   \example
 \begin{verbatim}
-\frame{
+\begin{frame}
   \begin{itemize}
   \item<1-> First item.
   \item<2-> Second item.
@@ -3428,7 +3442,7 @@ three-step process:
 
   \hyperlink{jumptosecond}{\beamergotobutton{Jump to second slide}}
   \hypertarget<2>{jumptosecond}{}
-}
+\end{frame}
 \end{verbatim}
 
   \articlenote
@@ -3442,7 +3456,7 @@ named \meta{name}|<|\meta{slide number}|>| for each slide of the frame
 as a side-effect. Thus the above example could be written more easily
 as: 
 \begin{verbatim}
-\frame[label=threeitems]{
+\begin{frame}[label=threeitems]
   \begin{itemize}
   \item<1-> First item.
   \item<2-> Second item.
@@ -3450,7 +3464,7 @@ as:
   \end{itemize}
 
   \hyperlink{threeitems<2>}{\beamergotobutton{Jump to second slide}}
-}
+\end{frame}
 \end{verbatim}
 
 
@@ -3783,8 +3797,7 @@ on the zoomed out picture will take you back to the original one.
 
   \example A simple case
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \frametitle{A Complicated Picture}
 
   \framezoom<1><2>(0cm,0cm)(2cm,1.5cm)
@@ -3792,14 +3805,13 @@ on the zoomed out picture will take you back to the original one.
   \framezoom<1><4>(3cm,2cm)(3cm,2cm)
 
   \pgfimage[height=8cm]{complicatedimagefilename}
-}
+\end{frame}
 \end{verbatim}
 
   \example A more complicate case in which the zoomed parts completely
   fill the frames.
 \begin{verbatim}
-\frame<1>[label=zooms]
-{
+\begin{frame}<1>[label=zooms]
   \frametitle<1>{A Complicated Picture}
 
   \framezoom<1><2>[border](0cm,0cm)(2cm,1.5cm)
@@ -3807,7 +3819,7 @@ on the zoomed out picture will take you back to the original one.
   \framezoom<1><4>[border](3cm,2cm)(3cm,2cm)
 
   \pgfimage[height=8cm]{complicatedimagefilename}
-}
+\end{frame}
 \againframe<2->[plain]{zooms}
 \end{verbatim}
 \end{command}
@@ -4014,8 +4026,7 @@ the overlay specification can either come first as in |\item<1>[Cat]|
 or come last as in |\item[Cat]<1>|.
 
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   There are three important points:
   \begin{enumerate}
   \item<1-> A first one,
@@ -4027,7 +4038,7 @@ or come last as in |\item[Cat]<1>|.
     \end{itemize}
   \item<5-> and a third one.
   \end{enumerate}
-}
+\end{frame}
 \end{verbatim}
 
 
@@ -4348,8 +4359,7 @@ block environments are also predefined: |Problem|, |Loesung|,
 Here is a typical example on how to use them:
 
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \frametitle{A Theorem on Infinite Sets}
 
   \begin{theorem}<1->
@@ -4363,7 +4373,7 @@ Here is a typical example on how to use them:
   \begin{example}<3->[Natural Numbers]
     The set of natural numbers is infinite.
   \end{example}
-}
+\end{frame}
 \end{verbatim}
 
 In the following, only the English versions are discussed. The German
@@ -4620,7 +4630,7 @@ additional frames or use the |allowframebreaks| option.
 
 \example
 \begin{verbatim}
-\frame{
+\begin{frame}
   \begin{figure}
     \pgfuseimage{myfigure}
     \caption{This caption is placed below the figure.}
@@ -4630,7 +4640,7 @@ additional frames or use the |allowframebreaks| option.
     \caption{This caption is placed above the figure.}
     \pgfuseimage{myotherfigure}
   \end{figure}
-}
+\end{frame}
 \end{verbatim}
 
 You can adjust how the figure and table captions are typeset by
@@ -5175,11 +5185,11 @@ a simple animation where each picture of the animation resides in a
 different file:
 
 \begin{verbatim}
-\frame{
+\begin{frame}
   \includegraphics<1>[height=2cm]{step1.pdf}
   \includegraphics<2>[height=2cm]{step2.pdf}
   \includegraphics<3>[height=2cm]{step3.pdf}
-}
+\end{frame}
 \end{verbatim}
 
 
@@ -5523,7 +5533,7 @@ following commands can be used: |\animate| and |\animatevalue|.
   only as shortly as  possible.
 \example
 \begin{verbatim}
-\frame{
+\begin{frame}
   \frametitle{A Five Slide Animation}
   \animate<2-4>
 
@@ -5533,7 +5543,7 @@ following commands can be used: |\animate| and |\animatevalue|.
   slide is shown.
 
   ... code for creating an animation with five slides ...
-}
+\end{frame}
 \end{verbatim}
 
   \articlenote
@@ -5552,7 +5562,7 @@ following commands can be used: |\animate| and |\animatevalue|.
   \example
 \begin{verbatim}
 \newcount\opaqueness
-\frame{
+\begin{frame}
   \animate<2-10>
   \animatevalue<1-10>{\opaqueness}{100}{0}
   \begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
@@ -5562,11 +5572,11 @@ following commands can be used: |\animate| and |\animatevalue|.
     second slide is shown. This even works with
     {\color{green!90!black}colored} \alert{text}.
   \end{colormixin}
-}
+\end{frame}
 
 \newcount\opaqueness
 \newdimen\offset
-\frame{
+\begin{frame}
   \frametitle{Flying Theorems (You Really Shouldn't!)}
 
   \animate<2-14>
@@ -5592,7 +5602,7 @@ following commands can be used: |\animate| and |\animatevalue|.
       \end{theorem}
     \end{minipage}
   \end{colormixin}
-}
+\end{frame}
 \end{verbatim}
 
   \articlenote
@@ -5805,9 +5815,7 @@ should be used when the current slide is presented. Consider the
 following example:
 
 \begin{verbatim}
-\frame{
-  \pgfuseimage{youngboy}
-}
+\frame{\pgfuseimage{youngboy}}
 \frame{
   \transdissolve
   \pgfuseimage{man}
@@ -5821,11 +5829,11 @@ could have placed the command anywhere on the frame.
 The transition commands are overlay-specification-aware. We could
 collapse the two frames into one frame like this:
 \begin{verbatim}
-\frame{
+\begin{frame}
   \only<1>{\pgfuseimage{youngboy}}
   \only<2>{\pgfuseimage{man}}
   \transdissolve<2>
-}
+\end{frame}
 \end{verbatim}
 This states that on the first slide the young boy should be shown, on
 the second slide the old man should be shown, and when the second
@@ -6036,10 +6044,7 @@ transparency version, and not at all in the handout.
 If you wish to give the same specification in all versions, you can do
 so by specifying |all:| as the version. For example,
 \begin{verbatim}
-\frame<all:1-2>
-{
-  blah...
-}
+\frame<all:1-2>{blah...}
 \end{verbatim}
 ensures that the frame has two slides in all versions. 
 
@@ -6118,7 +6123,7 @@ The following example will produce one note page that follows the
 second slide and has two entries. 
 
 \begin{verbatim}
-\frame{
+\begin{frame}
   \begin{itemize}
   \item<1-> Eggs
   \item<2-> Plants
@@ -6126,7 +6131,7 @@ second slide and has two entries.
     \note[item]<2>{Make it short.}
   \item<3-> Animals
   \end{itemize}
-}
+\end{frame}
 \end{verbatim}
 
 
@@ -6394,13 +6399,13 @@ The following example shows a simple usage of the |article| mode:
 This is the introduction text. This text is not shown in the
 presentation, but will be part of the article.
 
-\frame{
+\begin{frame}
   \begin{figure}
     % In the article, this is a floating figure,
     % In the presentation, this figure is shown in the first frame
     \pgfuseimage{myimage}
   \end{figure}
-}
+\end{frame}
 
 This text is once more not shown in the presentation.
 
@@ -6415,7 +6420,7 @@ We can add a subsection that is only part of the article like this:
 
 With some more text.
 
-\frame{
+\begin{frame}
   This text is part both of the article and of the presentation.
   \begin{itemize}
   \item This stuff is also shown in both version.
@@ -6424,7 +6429,7 @@ With some more text.
       of the article version.}
   \item<presentation:only@0> This text is also only part of the article.
   \end{itemize}
-}
+\end{frame}
 \end{document}
 \end{verbatim}
 
@@ -6717,8 +6722,8 @@ The last flavor of the mode command behaves quite differently.
   is now read token-wise, not line-wise. The text is gobbled token by
   token until one of the following tokens is found: |\mode|, |\frame|,
   |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|,
-  |\note|, and |\end{document}| (this is not really a
-  token, but it is recognized anyway).
+  |\note|, |\begin{frame}|, and |\end{document}| (the last two are
+  really tokens, but they are recognized anyway).
 
   Once one of these commands is encountered, the gobbling stops and
   the command is executed. However, all of these commands restore the
@@ -6744,10 +6749,9 @@ The last flavor of the mode command behaves quite differently.
 
 This text is not shown in the presentation.
 
-\frame
-{
+\begin{frame}
   This text is shown both in article and presentation mode.
-}
+\end{frame}
 
 this text is not shown in the presentation again.
 
@@ -6783,10 +6787,9 @@ Back to star mode
 \mode*
 \section{First section}
 Extra text in article version.
-\frame
-{
+\begin{frame}
   Some text.
-}
+\end{frame}
 \mode<all>
 \end{verbatim}  
 \end{command}
@@ -7234,8 +7237,7 @@ For example, suppose we would like to have the frame title typeset in
 red, centered, and boldface. If we were to typeset a single frame
 title by hand, it might be done like this:
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \begin{centering}
     \color{red}
     \textbf{The Title of This Frame.}
@@ -7243,7 +7245,7 @@ title by hand, it might be done like this:
   \end{centering}
 
   Blah, blah.
-}
+\end{frame}
 \end{verbatim}
 
 In order to typeset the frame title in this way on all slides, we can
@@ -7260,12 +7262,11 @@ change the frame title template as follows:
 
 We can then use the following code to get the desired effect:
 \begin{verbatim}
-\frame
-{
+\begin{frame}
   \frametitle{The Title of This Frame.}
 
   Blah, blah.
-}
+\end{frame}
 \end{verbatim}
 
 When rendering the frame, the \beamer\ class will use the code of the
@@ -9657,16 +9658,15 @@ problems:
 
 \section{Second Section}
 \subsection{A subsection}
-\frame
-{
-  \frametitle{A frame created using the \texttt{frame} command.}
+\begin{frame}
+  \frametitle{A frame created using the \texttt{frame} environment.}
 
   \begin{itemize}[<+->]
   \item You can still use the original beamer syntax.
   \item The emulation is intended only to make recycling slides
     easier, not to install a whole new syntax for beamer.
   \end{itemize}
-}
+\end{frame}
 
 \begin{notes}{Notes for these slides}
 My notes for these slides.
@@ -9736,12 +9736,11 @@ listed.
 
 \begin{verbatim}
 \subsection{short} % omitted, if framesassubsections is not specified
-\frame[containsverbatim]
-{
+\begin{frame}[containsverbatim]
   \transglitter
   \frametitle{A Title}
   Hi!
-}
+\end{frame}
 \end{verbatim}
 \end{environment}
 
@@ -9768,14 +9767,13 @@ listed.
 
 \begin{verbatim}
 \subsection{A Title} % omitted, if framesassubsections is not specified
-\frame
-{
+\begin{frame}
   \frametitle{A Title}
   \begin{itemstep}
   \item Hi!
   \item Ho!
   \end{itemstep}
-}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -9934,10 +9932,10 @@ package to \beamer. As for \prosper, the emulation cannot be
 perfect. For example, no portrait slides are supported, no
 automatic page breaking, the framing of slides is not
 emulated. Unfortunately, for all frames (|slide| environments) that
-contain overlays, you have to put the environment into a |\frame| ``by
-hand'' and must remove all occurences of |\newslide| inside the
-environment by closing the slide and opening a new one (and them
-putting these into |\frame| commands).
+contain overlays, you have to put the environment into a |frame|
+environment ``by hand'' and must remove all occurences of |\newslide|
+inside the environment by closing the slide and opening a new one (and
+then putting these into |frame| environments).
 
 The workflow for the migration is the following:
 \begin{enumerate}
@@ -9948,7 +9946,7 @@ The workflow for the migration is the following:
 \item
   If you copy parts of a presentation that is mixed with normal text,
   add the |ignorenonframetext| option and place \emph{every} |slide|
-  environment inside a |\frame| since \beamer\ will not recognize the 
+  environment inside a |frame| since \beamer\ will not recognize the 
   |\begin{slide}| as the beginning of a frame.
 \item
   Add a |\usepackage{beamerseminar}| to start the emulation. Add the
@@ -9965,8 +9963,9 @@ The workflow for the migration is the following:
   by a closing |\end{slide}| and an opening |\begin{slide}|. 
 \item
   Next, for each |slide| or |slide*| environment that contains an
-  overlay, you must place a |\frame| command around it. You can remove
-  the environment, unless you use the |accumulate| option.
+  overlay, you must place a |frame| environment around it. You can
+  remove the |slide| environment (and hence effectively replace it by
+  |frame|), unless you use the |accumulate| option. 
 \item
   If you use |\section| or |\subsection| commands inside slides, you
   will have to move them \emph{outside} the frames. It may then be
@@ -10036,15 +10035,14 @@ problems:
 
 \begin{document}
 
-\frame{
-\maketitle         
-}
+\begin{frame}
+  \maketitle
+\end{frame}
 
 This is some text outside any frame. It will only be shown in the
 article version.
 
-\frame
-{
+\begin{frame}
   \begin{slide}
     \heading{This is a frame title.}
 
@@ -10056,8 +10054,8 @@ article version.
         }
       }
     \end{enumerate}
-\end{slide}
-}
+  \end{slide}
+\end{frame}
 \end{document}
 \end{verbatim}
 
@@ -10081,18 +10079,18 @@ listed.
 
   \example
 \begin{verbatim}
-\frame{
-\begin{slide}
-  This is shown from the first slide on.
-  {\overlay{2}
-    This is shown from the third slide on.
-    {\overlay{1}
-      This is shown from the second slide on.
+\begin{frame}
+  \begin{slide}
+    This is shown from the first slide on.
+    {\overlay{2}
+      This is shown from the third slide on.
+      {\overlay{1}
+        This is shown from the second slide on.
+      }
+      This is shown once more from the third slide on.
     }
-    This is shown once more from the third slide on.
-  }
-\end{slide}
-}
+  \end{slide}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -10186,13 +10184,13 @@ The workflow for the migration is the following:
 \item
   Possibly add commands to install themes and templates.
 \item
-  If the command |\foilhead| is used inside a |\frame| command, it
-  behaves like |\frametitle|. If it used outside a frame, it will
-  start a new frame (with the |allowframebreaks| option, thus no
-  overlays are allowed). This frame will persist till the next occurence
-  of |\foilhead| or of the new command |\endfoil|. Note that a
-  |\frame| command will \emph{not} end a frame started using
-  |\foilhead|. 
+  If the command |\foilhead| is used inside a |\frame| command or
+  |frame| environment, it behaves like |\frametitle|. If it used
+  outside a frame, it will start a new frame (with the
+  |allowframebreaks| option, thus no overlays are allowed). This frame
+  will persist till the next occurrence of |\foilhead| or of the new
+  command |\endfoil|. Note that a |\frame| command will \emph{not} end
+  a frame started using |\foilhead|. 
 \item
   If you rely on automatic frame creation based on |\foilhead|, you
   will need to insert an |\endfoil| before the end of the document to
@@ -10279,11 +10277,12 @@ listed.
 \end{command}
 
 \begin{command}{\foilhead\oarg{dimension}\marg{frame title}}
-  If used inside a |\frame| command, this is mapped to
-  |\frametitle{|\meta{frame title}|}|. If used outside any frames, a
-  new frame is started with the option |allowframebreaks|. If a frame was
-  previously started using this command, it will be closed before the
-  next frame is started. The \meta{dimension} is ignored.
+  If used inside a |\frame| command or |frame| environment, this is
+  mapped to |\frametitle{|\meta{frame title}|}|. If used outside any
+  frames, a new frame is started with the option
+  |allowframebreaks|. If a frame was previously started using this
+  command, it will be closed before the next frame is started. The
+  \meta{dimension} is ignored. 
 \end{command}
 
 \begin{command}{\rotatefoilhead\oarg{dimension}\marg{frame title}}
