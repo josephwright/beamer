@@ -15,16 +15,16 @@
                                 % Footline
 \usefoottemplate{%
   \vbox{%
-    \insertvrule{3pt}{structure!50!averagebackgroundcolor}%
+    \insertvrule{3pt}{beamerstructure!50!averagebackgroundcolor}%
     \vskip1.5pt
     \setbox\beamer@tempbox=\hbox{\tiny\insertshortauthor: \insertshorttitle\hskip1.5cm\insertshortinstitute}%
     \ifdim\wd\beamer@tempbox>\paperwidth%
-      \tinyline{\color{structure}\insertshortauthor:\hfill\insertshortinstitute}%
-      \tinyline{\color{structure}\insertshorttitle\hfill\lower1pt\hbox{\insertnavigationsymbols}}%
+      \tinyline{\color{beamerstructure}\insertshortauthor:\hfill\insertshortinstitute}%
+      \tinyline{\color{beamerstructure}\insertshorttitle\hfill\lower1pt\hbox{\insertnavigationsymbols}}%
     \else%
-      \tinyline{\color{structure}\insertshortauthor: \insertshorttitle\hfill\insertshortinstitute}%
+      \tinyline{\color{beamerstructure}\insertshortauthor: \insertshorttitle\hfill\insertshortinstitute}%
     \fi%
-    \insertvrule{3pt}{structure!50!averagebackgroundcolor}%
+    \insertvrule{3pt}{beamerstructure!50!averagebackgroundcolor}%
     }%
   }
 

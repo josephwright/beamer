@@ -1,0 +1,89 @@
+\ProvidesPackage{beamerlayoutthemesmoothtree}[2003/11/07 ver 0.93]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\mode<presentation>
+
+\AtBeginDocument{
+  {
+    \usebeamerfont*{headline}
+    \pgfdeclareverticalshading{beamer@treeshade}{\the\paperwidth}{%
+      color(0ex)=(averagebackgroundcolor);%
+      color(1ex)=(beamerstructure!75!black);%
+      color(3.25ex)=(beamerstructure!75!black);%
+      color(4.25ex)=(beamerstructure!50!black);%
+      color(6.5ex)=(beamerstructure!50!black);%
+      color(7.5ex)=(black);%
+      color(10.25ex)=(black)%
+    }
+    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+      color(0ex)=(averagebackgroundcolor);%
+      color(1ex)=(beamerstructure)
+    }
+    \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+      color(0ex)=(beamerstructure);%
+      color(1ex)=(beamerstructure);%
+      color(2ex)=(beamerstructure!75!black)
+    }
+  }
+}
+
+\useheadtemplate{%
+  \vbox{%
+    \beamerline{\pgfuseshading{beamer@treeshade}}%
+    \vskip-10.25ex%
+    \beamer@fixedline{%
+      \color{white}%
+      {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill%
+    }%
+    \setbox\beamer@tempbox=\hbox{\insertsection}%
+    \beamer@fixedline{%
+      \ifdim\wd\beamer@tempbox>1pt%
+        \hskip6pt%
+        \color{white}{\usebeamerfont{section in head/foot}\insertsection}%
+      \fi\hfill}%
+    \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+    \beamer@fixedline{%
+      \ifdim\wd\beamer@tempbox>1pt%
+        \hskip12pt%
+        \color{white}{\usebeamerfont{subsection in head/foot}\insertsubsection}%
+      \fi\hfill}%
+    }%
+  }
+
+
+\useframetitletemplate{%
+  \nointerlineskip%
+  \usebeamerfont{headline}%
+  \vskip-0.5ex%
+  \beamerline{\pgfuseshading{beamer@aboveframetitle}}%
+  \vskip-.5ex%
+  \nointerlineskip%
+  \beamer@colouredline{beamerstructure}{%
+    \begin{minipage}[b]{\paperwidth}%
+      \usebeamerfont*{frametitle}%
+      \vbox{}\vskip-1ex%
+      \leftskip0.3cm%
+      \advance\leftskip by18pt%
+      \rightskip18pt plus1fil\leavevmode\color{white}\insertframetitle%
+      \ifx\insertframesubtitle\@empty%
+        \strut\par%
+      \else
+        \par{\usebeamerfont*{framesubtitle}{\insertframesubtitle}\strut\par}%
+      \fi%
+      \nointerlineskip
+      \vbox{}%
+    \end{minipage}}%
+  \nointerlineskip%
+  \vskip-0.2pt%
+  \beamerline{\pgfuseshading{beamer@belowframetitle}}%
+}
+  
+  
+\mode
+<all>

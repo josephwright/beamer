@@ -1,0 +1,71 @@
+\ProvidesPackage{beamerlayoutthemetree}[2003/11/07 ver 0.93]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\mode<presentation>
+
+\DeclareOptionBeamer{lines}{%
+  \useheadtemplate{%
+  \vbox{%
+    \insertvrule{3pt}{beamerstructure!50!averagebackgroundcolor}%
+    \beamer@fixedline{%
+      \color{beamerstructure}%
+      \usebeamerfont{title in head/foot}%
+      \insertshorttitle\hfill%
+    }%
+    \setbox\beamer@tempbox=\hbox{\insertsection}%
+    \beamer@fixedline{%
+      \color{beamerstructure}%
+      \ifdim\wd\beamer@tempbox>1pt%
+        {\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}%
+        \hskip1pt\usebeamerfont{section in head/foot}\insertsection%
+      \fi%
+      \hfill}%
+    \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+    \beamer@fixedline{%
+      \color{black}%
+      \ifdim\wd\beamer@tempbox>1pt%
+        {\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}}%
+        \hskip1pt%
+        \usebeamerfont{section in head/foot}\insertsubsection%
+      \fi\hfill}%
+    \insertvrule{3pt}{beamerstructure!50!averagebackgroundcolor}%
+    }}%
+}
+
+\DeclareOptionBeamer{bars}{
+  \useheadtemplate{%
+   \vbox{%
+     \beamer@fixedcolouredline{black}{%
+       \color{white}%
+       {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill%
+     }%
+     \setbox\beamer@tempbox=\hbox{\insertsection}%
+     \beamer@fixedcolouredline{beamerstructure}{%
+       \color{black}%
+       \ifdim\wd\beamer@tempbox>1pt%
+         \hskip6pt%
+         \color{white}{\usebeamerfont{section in head/foot}\insertsection}%
+       \fi\hfill}%
+     \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+     \beamer@fixedcolouredline{beamerstructure!75!averagebackgroundcolor}{%
+       \color{black}%
+       \ifdim\wd\beamer@tempbox>1pt%
+         \hskip12pt%
+         \color{white}{\usebeamerfont{subsection in head/foot}\insertsubsection}%
+       \fi\hfill}%
+     }%
+   }
+}
+ 
+\ProcessOptionsBeamer
+
+
+  
+\mode
+<all>

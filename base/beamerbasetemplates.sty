@@ -178,6 +178,7 @@
 
 
 \newcommand{\beamertemplatenumberedballsectiontoc}{
+  \AtBeginDocument{
   \setbeamerfont{section number projected}{size=\scriptsize}
   \normalsize
   
@@ -238,7 +239,7 @@
     color(1.3ex)=(averagebackgroundcolor)}
   \end{colormixin}
   \pgfaliasshading{tocsphere.!2opaque}{tocsphereshaded}
-
+  }
   
   \usetemplatetocsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=1em\color{beamerstructure}%

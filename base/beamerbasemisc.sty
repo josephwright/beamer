@@ -140,6 +140,28 @@
     \fi
 }
 
+\def\beamer@fixedline#1{%
+  {\setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
+  \ht\beamer@linebox=2.125ex%
+  \dp\beamer@linebox=1.125ex%
+  \box\beamer@linebox}}
+\def\beamer@fixedcolouredline#1#2{%
+  \hbox{%
+    \setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
+    \ht\beamer@linebox=2.625ex%
+    \dp\beamer@linebox=0pt%
+    \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
+\long\def\beamer@colouredline#1#2{%
+  \hbox{%
+    \setbox\beamer@linebox=\vbox{\hbox to\textwidth{\hskip-\Gm@lmargin{#2}\hskip-\Gm@rmargin}}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
 
 \def\tinyline#1{%
   {\tiny\setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
