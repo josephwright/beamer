@@ -227,6 +227,27 @@ why; comments would be appreciated).
 \section<presentation>[Results]{Results on the Main Problem}
 \section<article>{Results on the Main Problem}
 \end{verbatim}
+
+  \begin{template}{section in toc}
+    This template is used when a section entry is to be typeset. For
+    the permissible \meta{options} see the parent template
+    |table of contents|.
+
+    \begin{templateinserts}
+      \iteminsert{\inserttocsection}
+      inserts the table of contents version of the current section name.
+
+      \iteminsert{\inserttocsectionnumber}
+      inserts the number of the current section (in the table of contents).
+    \end{templateinserts}
+  \end{template}
+
+  \begin{template}{section in toc shaded}
+    This template is used instead of the previous one if the section
+    should be shown in a shaded way, because it is not the current
+    section.  For the permissible \meta{options} see the parent
+    template |table of contents|.
+  \end{template}
 \end{command}
 
 \begin{command}{\section\sarg{mode specification}\declare{|*|}\marg{section name}}
@@ -241,6 +262,24 @@ why; comments would be appreciated).
   subsection name}\marg{subsection name}} 
   This command works the same way as the |\section| command.
   \example|\subsection[Applications]{Applications to the Reduction of Pollution}|
+
+  \begin{template}{subsection in toc}
+    Like |section in toc|, only for subsection.
+
+    \begin{templateinserts}
+      \iteminsert{\inserttocsubsection}
+      inserts the table of contents version of the current subsection
+      name.
+
+      \iteminsert{\inserttocsubsectionnumber}
+      inserts the number of the current subsection (in the table of contents).
+    \end{templateinserts}
+    The inserts for the |section in toc| template are also available.
+  \end{template}
+
+  \begin{template}{subsection in toc shaded}
+    Like |section in toc shaded|, only for subsections.
+  \end{template}
 \end{command}
 
 \begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsection name}} 
@@ -620,7 +659,70 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
   You can give options to the |\tableofcontents| command by 
   inserting a \TeX-mode text with the options in square brackets
   directly after the table of contents.
+
+  \begin{template}{table of contents}
+    This template is a parent template, whose children are
+    |section in toc| and |subsection in toc|. This means that if you
+    use the |\setbeamertemplate| command on this template, the command
+    is instead called for both of these children (with the same arguments).
+
+    \begin{templateoptions}
+      \itemoption{default}{}
+      In the default setting, the sections and subsections are typeset
+      using the fonts and colors |section in toc| and
+      |subsection in toc|, though the background colors are ignored. The
+      subsections are indented.
+      \itemoption{sections numbered}{}
+      Similar to the default setting, but the section numbers are also
+      shown. The subsections are not numbered.
+      \itemoption{subsections numbered}{}
+      This time, the subsections are numbered, but not the
+      sections. Nevertheless, since the subsections are ``fully
+      numbered'' as in ``1.2'' or ``3.2,'' if every section has at least
+      one subsection, the section numbered will not really be missed.
+      \itemoption{circle}{}
+      Draws little circles before the sections. Inside
+      the circles the section number is shown. The \beamer-font and
+      color |section number projected| is used for typesetting the
+      circles, that is, the circle gets the background color and the
+      text inside the circle the foreground color.
+      \itemoption{square}{}
+      Similar to the |circle| option, except that small squares are
+      used instead of circles. Small, unnumbered squares are shown in
+      front of the subsections.
+      \itemoption{ball}{}
+      Like |square|, the only difference being the balls are used
+      instead of squares.
+      \itemoption{ball unnumbered}{}
+      Similar to |ball|, except that no numbering is used. This option
+      makes the table of contents look more like an |itemize|.
+    \end{templateoptions}
+
+    If none of the above options suits you, you have to change the
+    templates |section in toc| and |subsection in toc| directly.
+  \end{template}
+
+  \begin{template}{table of contents shaded}
+    A parent template with children
+    |section in toc shaded| and |subsection in toc shaded|. These two
+    templates are used to render section and subsection entries when
+    they are currently shaded; like all non-current subsections in
+    |\tableofcontents[currentsubsection]|. 
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{opaquness}}
+      In the default setting, the templates |section in toc shaded| and
+      |subsection in toc shaded| just show whatever the nonshaded
+      versions of these templates show, but only \meta{opaquness}\%
+      opaque. The default is 20\%.
+
+      \example |\setbeamertemplate{table of contents shaded}[default][50]|
+      makes dimmed entries 50\% transparent. 
+    \end{templateoptions}
+  \end{template}
 \end{command}
+
+
 
 
 

@@ -8,9 +8,6 @@
 % archives in directory macros/latex/base/lppl.txt.
 
 
-\mode<presentation>
-
-
 
 %
 % Template Installation Commands
@@ -25,10 +22,23 @@
 \def\beamer@usebeamertemplatedosss#1{{{\usebeamerfont*{#1}\usebeamercolor*[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
 
 
+\mode<article>
+{
+  % the following do the same in article mode:
+  \let\beamer@usebeamertemplatedosss=\beamer@usebeamertemplatedo
+  \let\beamer@usebeamertemplatedoss=\beamer@usebeamertemplatedo
+  \let\beamer@usebeamertemplatedos=\beamer@usebeamertemplatedo
+}
+
+
 \newif\ifbeamer@sbt
 \newtoks\beamer@sbttoks
 
-\def\defbeamertemplate{\@ifstar{\beamer@sbttrue\beamer@sbtoo}{\beamer@sbtfalse\beamer@sbtoo}}
+\newcommand<>\defbeamertemplate{
+  \beamer@ifempty{#1}
+  {\def\beamer@@oar{<presentation>}}
+  {\def\beamer@@oar{#1}}\beamer@defbeamertemplate}
+\def\beamer@defbeamertemplate{\@ifstar{\beamer@sbttrue\beamer@sbtoo}{\beamer@sbtfalse\beamer@sbtoo}}
 \def\beamer@sbtoo#1#2{\@ifnextchar[{\beamer@sbto{#1}{#2}}{\beamer@sbto{#1}{#2}[0]}}
 \def\beamer@sbto#1#2[#3]{\@ifnextchar[{\beamer@@sbto{#1}{#2}[#3]}{\def\beamer@sbtotemp{}\beamer@@@sbto{#1}{#2}[#3]}}
 \long\def\beamer@@sbto#1#2[#3][#4]{\long\def\beamer@sbtotemp{[#4]}\beamer@@@sbto{#1}{#2}[#3]}
@@ -37,10 +47,16 @@
   \@ifnextchar[{\the\beamer@sbttoks}{\the\beamer@sbttoks[action]{}}%
 }
 \long\def\beamer@@@@sbto#1#2[#3]#4[#5]#6{%
-  \edef\beamer@@sbtoarg{\noexpand\newcommand\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[#3]}%
-  \expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
+  \edef\beamer@@sbtoarg{\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[#3]}%
+  \expandafter\expandafter\expandafter\newcommand\expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
     \expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname{#4}#6}%
+  \let\beamer@@next=\beamer@resetsbtoarg%
+  \expandafter\mode\beamer@@oar{\let\beamer@@next=\relax}%
+  \beamer@@next%
   \ifbeamer@sbt\setbeamertemplate{#1}[#2]\relax\relax\relax\relax\relax\relax\relax\relax\relax\fi% 
+}
+\def\beamer@resetsbtoarg{%
+  \expandafter\expandafter\expandafter\renewcommand\expandafter\beamer@@sbtoarg\beamer@sbtotemp{}
 }
 
 

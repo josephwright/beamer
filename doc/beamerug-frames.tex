@@ -524,6 +524,31 @@ change this using the following class options:
     |right|. As a special case, the |right| option causes the left
     border of the frame title to be somewhat larger than normal so that
     the frame title is more in the middle of the frame.
+    
+    \itemoption{shadow theme}{}
+    This option is available if the layout theme |shadow| is
+    loaded. It draws the frame title on top of a horizontal shading
+    between the background colors of |frametitle| and
+    |frametitle right|. A subtitle is, if present, also put on this
+    bar. Below the bar, a ``shadow'' is drawn.
+    
+    \itemoption{sidebar theme}{}
+    This option is available if the layout theme |sidebar| is loaded
+    and if the headline height is not set to 0pt (which can be done
+    using and option of the |sidebar| theme). With this option, the
+    frame title is put inside a rectangular area that is part of the
+    headline (some ``negative space'' is used to raise the frame title
+    into this area). The background of the color |frametitle| is not
+    used, this is the job of the headline template in this case.
+
+    \itemoption{smoothbars theme}{}
+    This option is available if the layout theme |smoothbars| is
+    loaded. It typesets the frametitle on a colored bar with the
+    background color of |frametitle|. The top and bottom of the bar
+    smoothly blend over to backgrounds above and below.
+
+    \itemoption{smoothtree theme}{}
+    Like |smoothbars theme|, only for the |smoothtree| theme.
   \end{templateoptions}
 
   \begin{templateinserts}

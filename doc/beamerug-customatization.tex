@@ -469,102 +469,102 @@ template:
 
 
 
-\subsection{Table of Contents}
+%% \subsection{Table of Contents}
 
-\label{section-toc-templates}
+%% \label{section-toc-templates}
 
-\paragraph{Predefined Templates}\ 
+%% %% \paragraph{Predefined Templates}\ 
 
-\begin{command}{\beamertemplateplaintoc}
-  Installs a simple table of contents template with indented subsections. 
-\end{command}
+%% %% \begin{command}{\beamertemplateplaintoc}
+%% %%   Installs a simple table of contents template with indented subsections. 
+%% %% \end{command}
 
-\begin{command}{\beamertemplateballtoc}
-  Installs a table of contents template in which small balls are shown
-  before each section and subsection.
-\end{command}
+%% %% \begin{command}{\beamertemplateballtoc}
+%% %%   Installs a table of contents template in which small balls are shown
+%% %%   before each section and subsection.
+%% %% \end{command}
 
-\begin{command}{\beamertemplatenumberedsectiontoc}
-  Installs a table of contents template in which the sections are
-  numbered. 
-\end{command}
+%% %% \begin{command}{\beamertemplatenumberedsectiontoc}
+%% %%   Installs a table of contents template in which the sections are
+%% %%   numbered. 
+%% %% \end{command}
 
-\begin{command}{\beamertemplatenumberedcirclesectiontoc}
-  Installs a table of contents template in which the sections are
-  numbered and the numbers are drawn on a small circle. 
-\end{command}
+%% %% \begin{command}{\beamertemplatenumberedcirclesectiontoc}
+%% %%   Installs a table of contents template in which the sections are
+%% %%   numbered and the numbers are drawn on a small circle. 
+%% %% \end{command}
 
-\begin{command}{\beamertemplatenumberedballsectiontoc}
-  Installs a table of contents template in which the sections are
-  numbered and the numbers are drawn on a small ball. 
-\end{command}
+%% %% \begin{command}{\beamertemplatenumberedballsectiontoc}
+%% %%   Installs a table of contents template in which the sections are
+%% %%   numbered and the numbers are drawn on a small ball. 
+%% %% \end{command}
 
-\begin{command}{\beamertemplatenumberedsubsectiontoc}
-  Installs a table of contents template in which the subsections are
-  numbered. 
-\end{command}
-
-
-
-\paragraph{Template Installation Commands}\ 
-
-\begin{command}{\usetemplatetocsection\oarg{mix-in specification}%
-    \marg{template}\opt{\marg{grayed template}}}
-  Installs a \meta{template} for rendering sections in the table of
-  contents. If the \meta{mix-in specification} is present, the
-  \meta{grayed template} may not be present and the grayed sections
-  names are obtained by mixing in the  \meta{mix-in specification}. 
-  If \meta{mix-in specification} is not present,  \meta{grayed
-    template} must be present and is used to render grayed section
-  names. 
-  \example
-\begin{verbatim}
-\usetemplatetocsection
-{\color{structure}\inserttocsection}
-{\color{structure!50}\inserttocsection}
-
-\usetemplatetocsection[50!averagebackgroundcolor]
-{\color{structure}\inserttocsection}
-\end{verbatim}
-\end{command}
-
-\begin{command}{\usetemplatetocsubsection\oarg{mix-in specification}%
-    \marg{template}\opt{\marg{grayed template}}}
-  See |\usetemplatetocsection|.
-  \example
-\begin{verbatim}
-\usetemplatetocsubsection
-{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-{\leavevmode\leftskip=1.5em\color{black!50!white}\inserttocsubsection\par}
-
-\usetemplatetocsection[50!averagebackgroundcolor]
-{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-\end{verbatim}
-\end{command}
+%% %% \begin{command}{\beamertemplatenumberedsubsectiontoc}
+%% %%   Installs a table of contents template in which the subsections are
+%% %%   numbered. 
+%% %% \end{command}
 
 
 
-\paragraph{Inserts for these Templates}\ 
+%% \paragraph{Template Installation Commands}\ 
 
-\begin{command}{\inserttocsection}
-  Inserts the table of contents version of the current section name
-  into a template.
-\end{command}
+%% \begin{command}{\usetemplatetocsection\oarg{mix-in specification}%
+%%     \marg{template}\opt{\marg{grayed template}}}
+%%   Installs a \meta{template} for rendering sections in the table of
+%%   contents. If the \meta{mix-in specification} is present, the
+%%   \meta{grayed template} may not be present and the grayed sections
+%%   names are obtained by mixing in the  \meta{mix-in specification}. 
+%%   If \meta{mix-in specification} is not present,  \meta{grayed
+%%     template} must be present and is used to render grayed section
+%%   names. 
+%%   \example
+%% \begin{verbatim}
+%% \usetemplatetocsection
+%% {\color{structure}\inserttocsection}
+%% {\color{structure!50}\inserttocsection}
 
-\begin{command}{\inserttocsectionnumber}
-  Inserts the number of the current section (in the table of contents)
-  into a template. 
-\end{command}
+%% \usetemplatetocsection[50!averagebackgroundcolor]
+%% {\color{structure}\inserttocsection}
+%% \end{verbatim}
+%% \end{command}
 
-\begin{command}{\inserttocsubsection}
-  Inserts the table of contents version of the current subsection name
-  into a template. 
-\end{command}
+%% \begin{command}{\usetemplatetocsubsection\oarg{mix-in specification}%
+%%     \marg{template}\opt{\marg{grayed template}}}
+%%   See |\usetemplatetocsection|.
+%%   \example
+%% \begin{verbatim}
+%% \usetemplatetocsubsection
+%% {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+%% {\leavevmode\leftskip=1.5em\color{black!50!white}\inserttocsubsection\par}
 
-\begin{command}{\inserttocsubsectionnumber}
-  Inserts the number of the current subsection (in the table of
-  contents) into a template. 
-\end{command}
+%% \usetemplatetocsection[50!averagebackgroundcolor]
+%% {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+%% \end{verbatim}
+%% \end{command}
+
+
+
+%% \paragraph{Inserts for these Templates}\ 
+
+%% \begin{command}{\inserttocsection}
+%%   Inserts the table of contents version of the current section name
+%%   into a template.
+%% \end{command}
+
+%% \begin{command}{\inserttocsectionnumber}
+%%   Inserts the number of the current section (in the table of contents)
+%%   into a template. 
+%% \end{command}
+
+%% \begin{command}{\inserttocsubsection}
+%%   Inserts the table of contents version of the current subsection name
+%%   into a template. 
+%% \end{command}
+
+%% \begin{command}{\inserttocsubsectionnumber}
+%%   Inserts the number of the current subsection (in the table of
+%%   contents) into a template. 
+%% \end{command}
 
 
 
@@ -649,13 +649,13 @@ template:
 
 \paragraph{Predefined Templates}\
 
-\begin{command}{\beamertemplateboldcenterframetitle}
-  Typesets the frame title using a bold face and centers it.
-\end{command}
+%% \begin{command}{\beamertemplateboldcenterframetitle}
+%%   Typesets the frame title using a bold face and centers it.
+%% \end{command}
 
-\begin{command}{\beamertemplatelargeframetitle}
-  Typesets the frame title using a large face and flushes it left.
-\end{command}
+%% \begin{command}{\beamertemplatelargeframetitle}
+%%   Typesets the frame title using a large face and flushes it left.
+%% \end{command}
 
 \begin{command}{\beamertemplatecontinuationroman}
   Causes the text in the frame title informing that the
@@ -677,26 +677,26 @@ template:
 \end{command}
 
 
-\paragraph{Template Installation Commands}\ 
+%% \paragraph{Template Installation Commands}\ 
 
-\begin{command}{\useframetitletemplate\marg{frame title template}}
-  \example
-\begin{verbatim}
-\useframetitletemplate{%
-  \begin{centering}
-    \structure{\textbf{\insertframetitle}}
-    \par
-    \small\structure{\textbf{\insertframesubtitle}}}
-    \par
-  \end{centering}
-}
-\end{verbatim}
+%% \begin{command}{\useframetitletemplate\marg{frame title template}}
+%%   \example
+%% \begin{verbatim}
+%% \useframetitletemplate{%
+%%   \begin{centering}
+%%     \structure{\textbf{\insertframetitle}}
+%%     \par
+%%     \small\structure{\textbf{\insertframesubtitle}}}
+%%     \par
+%%   \end{centering}
+%% }
+%% \end{verbatim}
 
-  \articlenote
-  This command is also available in |article| mode. By default, a new
-  paragraph is created. You may wish to install a template that will
-  simply suppress the frame title.
-\end{command}
+%%   \articlenote
+%%   This command is also available in |article| mode. By default, a new
+%%   paragraph is created. You may wish to install a template that will
+%%   simply suppress the frame title.
+%% \end{command}
 
 
 
@@ -714,16 +714,16 @@ template:
 
 \paragraph{Inserts for these Templates}\ 
 
-\begin{command}{\insertframetitle}
-  Inserts the current frame title into a template. If the current
-  frame has the option |allowframebreaks| set, at the end of this insert the
-  template that has been set using |\usecontinuationtemplate| will be
-  appended.
-\end{command}
+%% \begin{command}{\insertframetitle}
+%%   Inserts the current frame title into a template. If the current
+%%   frame has the option |allowframebreaks| set, at the end of this insert the
+%%   template that has been set using |\usecontinuationtemplate| will be
+%%   appended.
+%% \end{command}
 
-\begin{command}{\insertframesubtitle}
-  Inserts the current frame subtitle into a template.
-\end{command}
+%% \begin{command}{\insertframesubtitle}
+%%   Inserts the current frame subtitle into a template.
+%% \end{command}
 
 \begin{command}{\insertcontinuationtext}
   Inserts the text ``(cont.)'' into a template. Redefine this insert

@@ -117,13 +117,6 @@
   \fi\fi%
 }
 
-\def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
-\long\def\@@usetemplatetocsection[#1]#2{
-  \@usetemplatetocsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}
-\long\def\@usetemplatetocsection#1#2{
-  \gdef\sectiontemplate{\def\beamer@breakhere{\\}#1}
-  \gdef\sectiontemplateshaded{\def\beamer@breakhere{\\}#2}}
-
 \def\subsectionintoc{}
 \long\def\beamer@subsectionintoc#1#2#3#4#5#6{%
   \ifnum\c@tocdepth>1%
@@ -151,14 +144,6 @@
   \beamer@todo%
   \fi\fi%
 }
-
-\def\usetemplatetocsubsection{\@ifnextchar[\@@usetemplatetocsubsection\@usetemplatetocsubsection}
-\long\def\@@usetemplatetocsubsection[#1]#2{
-  \@usetemplatetocsubsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}
-\long\def\@usetemplatetocsubsection#1#2{
-  \gdef\beamer@subsectiontemplate{\def\beamer@breakhere{\\}#1}
-  \gdef\beamer@subsectiontemplateshaded{\def\beamer@breakhere{\\}#2}}
-
 
 \mode
 <article>

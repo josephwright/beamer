@@ -14,33 +14,32 @@
 \AtBeginDocument{
   {
     \usebeamerfont*{headline}
-    \colorlet{global.bg}{bg}
 
+    \usebeamercolor{normal text}
     \usebeamercolor{title in head/foot}
-    \colorlet{title.bg}{bg}
     \usebeamercolor{subsection in head/foot}
-    \colorlet{ssec.bg}{bg}
     \usebeamercolor{section in head/foot}
+    \usebeamercolor{frametitle}
+
     \pgfdeclareverticalshading{beamer@treeshade}{\the\paperwidth}{%
-      color(0ex)=(global.bg);%
-      color(1ex)=(ssec.bg);%
-      color(3.25ex)=(ssec.bg);%
-      color(4.25ex)=(bg);%
-      color(6.5ex)=(bg);%
-      color(7.5ex)=(title.bg);%
-      color(10.25ex)=(title.bg)%
+      color(0ex)=(normal text.bg);%
+      color(1ex)=(subsection in head/foot.bg);%
+      color(3.25ex)=(subsection in head/foot.bg);%
+      color(4.25ex)=(section in head/foot.bg);%
+      color(6.5ex)=(section in head/foot.bg);%
+      color(7.5ex)=(title in head/foot.bg);%
+      color(10.25ex)=(title in head/foot.bg)%
     }
     
-    \usebeamercolor{frametitle}
     \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
-      color(0ex)=(bg);%
-      color(1ex)=(bg);%
-      color(2ex)=(ssec.bg)
+      color(0ex)=(frametitle.bg);%
+      color(1ex)=(frametitle.bg);%
+      color(2ex)=(subsection in head/foot.bg)
     }
 
     \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
-      color(0ex)=(global.bg);%
-      color(1ex)=(bg)
+      color(0ex)=(normal text.bg);%
+      color(1ex)=(frametitle.bg)
     }
   }
 }
@@ -64,7 +63,8 @@
   \end{beamercolorbox}
 }
 
-\useframetitletemplate{%
+\defbeamertemplate*{frametitle}{smoothtree theme}
+{%
   \nointerlineskip%
   \usebeamerfont{headline}%
   \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex]{empty}
