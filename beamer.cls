@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/10/01 v0.90-dev Class for Typesetting a Beamer Presentation]
+[2003/10/23 v0.91 Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -19,7 +19,7 @@
 % For all sorts of things...
 
 \RequirePackage{color}
-% For color management. Will move to xcolor some day
+% For color management.
 
 \RequirePackage{amssymb}
 % For \blacktriangleright
@@ -214,14 +214,14 @@
 \DeclareOption{mathsans}{\def\mathfamilydefault{\sfdefault}\@sansmathtrue}
 \DeclareOption{mathserif}{\def\mathfamilydefault{\rmdefault}\@sansmathfalse}
 
-\DeclareOption{pdftex}{\PassOptionsToPackage{pdftex}{hyperref}}
-\DeclareOption{nativepdf}{\PassOptionsToPackage{nativepdf}{hyperref}}
-\DeclareOption{pdfmark}{\PassOptionsToPackage{pdfmark}{hyperref}}
-\DeclareOption{dvips}{\PassOptionsToPackage{dvips}{hyperref}}
-\DeclareOption{dviwindo}{\PassOptionsToPackage{dviwindo}{hyperref}}
-\DeclareOption{dvipsone}{\PassOptionsToPackage{dvipsone}{hyperref}}
-\DeclareOption{vtex}{\PassOptionsToPackage{vtex}{hyperref}}
-\DeclareOption{ps2pdf}{\PassOptionsToPackage{ps2pdf}{hyperref}}
+\DeclareOption{pdftex}{}% Used by hyperref
+\DeclareOption{nativepdf}{}% Used by hyperref
+\DeclareOption{pdfmark}{}% Used by hyperref
+\DeclareOption{dvips}{}% Used by hyperref
+\DeclareOption{dviwindo}{}% Used by hyperref
+\DeclareOption{dvipsone}{}% Used by hyperref
+\DeclareOption{vtex}{}% Used by hyperref
+\DeclareOption{ps2pdf}{}% Used by hyperref
 
 \def\beamer@size{{size11.clo}}
 \DeclareOption{bigger}{\def\beamer@size{{size12.clo}}}
@@ -237,7 +237,6 @@
 \ProcessOptions
 
 \expandafter\input\beamer@size
-
 
 %
 %
@@ -411,8 +410,18 @@
 \definecolor{blockstructure}{rgb}{0.2,0.2,0.7}
 \definecolor{lightgray}{gray}{0.9}
 
+
 %
-% Page where the appendix start.
+%
+% Empty test
+%
+%
+\long\def\@ifempty#1#2#3{\def\@shouldbeempty{#1}\ifx\@shouldbeempty\@empty#2\else#3\fi}
+
+
+
+%
+% Page where the appendix start. (Updated later)
 %
 \def\beamer@appendixstart{1}
 
@@ -495,6 +504,14 @@
 \def\smallskip{\vskip\smallskipamount}
 \def\medskip{\vskip\medskipamount}
 \def\bigskip{\vskip\bigskipamount}
+
+
+
+
+
+
+
+
 
 
 %
@@ -593,14 +610,6 @@
 \logo{}
 
 
-%
-%
-% Empty test
-%
-%
-\def\@isempty{}
-\long\def\@ifempty#1#2#3{\def\@shouldbeempty{#1}\ifx\@shouldbeempty\@isempty#2\else#3\fi}
-
 
 %
 % Section Definitions
@@ -677,16 +686,20 @@
 
 \newenvironment{frameslide}[1][1]{%
   {\let\@elt\@restorecounter\@overlaycounterresets}
-  \hypersetup{pdfpagetransition=R}%
   \serialnumber=#1\relax%
   \expandafter\@ifempty\expandafter{\beamer@framestartpage}{%
     \refstepcounter{subsectionslide}%
     \xdef\beamer@framestartpage{\thepage}% only first time
-  }{\clearpage% cleanup from previous slide
-  }%
+  }{\clearpage}% cleanup from previous slide
+  \hypersetup{pdfpagetransition=R}%
+  \hypersetup{pdfpageduration=}%
   \xdef\beamer@frameendpage{\thepage}% every time
   \beamer@entrycode\vspace*{-\baselineskip}\vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill}
+  {\beamer@exitcode\vskip0pt plus 1.5fill%
+  % ``Globalize'' pdfpagetransition and pdfpageduration
+  \expandafter\gdef\expandafter\@pdfpagetransition\expandafter{\@pdfpagetransition}%
+  \expandafter\gdef\expandafter\@pdfpageduration\expandafter{\@pdfpageduration}%
+  }
 
 \def\frametitle#1{%
   \vskip0pt plus -1fill%
@@ -846,6 +859,16 @@
 
   
 %
+% Uncovering management
+%
+\def\beamer@spacingcover{\pgfsys@begininvisible\pgfsys@endinvisible}%for spacing reasons
+\def\beamer@startcovered{\pgfsys@begininvisible}
+\def\beamer@endcovered{\pgfsys@endinvisible}
+
+\definecolor{back}{rgb}{0.95,0.9,0.95}
+
+  
+%
 % Make item overlays
 %
 
@@ -855,9 +878,9 @@
   \@ifnextchar<{\@parseitem}{\@origitem}}
 \def\@closeitem{}
 \def\@parseitem<#1>{%
-  \alt<#1>{\pgfsys@begininvisible\pgfsys@endinvisible%for spacing reasons
-    \gdef\@closeitem{\pgfsys@begininvisible\pgfsys@endinvisible}\@origitem}%
-  {\pgfsys@begininvisible\gdef\@closeitem{\pgfsys@endinvisible}\@origitem}%
+  \alt<#1>{\beamer@spacingcover%for spacing reasons
+    \gdef\@closeitem{\beamer@spacingcover}\@origitem}%
+  {\beamer@startcovered\gdef\@closeitem{\beamer@endcovered}\@origitem}%
   }
 
 \let\@origendtrivlist=\endtrivlist
@@ -958,7 +981,7 @@
 }
 
 
-\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\pagestyle{navigation}\thispagestyle{navigation}}
+\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}}
 
 \def\plainframe{%
   \def\beamer@entrycode{\vspace*{-\headheight}}%
@@ -1053,9 +1076,8 @@
 \long\def\@insp#1{\ignorespaces#1\ignorespaces}
 \long\def\@gobbleis#1{\ignorespaces}
 
-\long\def\makeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
-\long\def\fakeinvisible#1{\pgfsys@begininvisible\pgfsys@endinvisible#1\pgfsys@begininvisible\pgfsys@endinvisible}
-
+\long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
+\long\def\fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
 
 
 %
@@ -1071,7 +1093,7 @@
 \renewoverlaycommand{\textsf}{\original{\textsf}}{}
 \renewoverlaycommand{\textrm}{\original{\textrm}}{}
 \renewoverlaycommand{\color}{\original{\color}}{\gobbleoptional}
-\newoverlayenvironment{uncoverenv}{}{}{\pgfsys@begininvisible}{\pgfsys@endinvisible}
+\newoverlayenvironment{uncoverenv}{}{}{\beamer@startcovered}{\beamer@endcovered}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
 \renewoverlaycommand{\hypertarget}{\original{\hypertarget}}{\gobble}
 
@@ -1272,7 +1294,8 @@
 
 \let\@mkboth\@gobbletwo
 \def\ps@navigation{
-  \def\@oddhead{\setbox\tempbox=\hbox{\@backgroundtemplate\hyper@pagetransition\hyper@pageduration}%
+  \def\@oddhead{%
+    \setbox\tempbox=\hbox{\@backgroundtemplate\hyper@pagetransition\hyper@pageduration}%
     \tempheight=\ht\tempbox%
     \setbox\tempbox=\hbox{\lower\tempheight\hbox{\box\tempbox}}\wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
     \vbox{\hbox{\hskip-\Gm@lmargin\box\tempbox}%
@@ -1300,7 +1323,8 @@
           \box\tempbox%
         }%
         \@headtemplate\hfil%
-        }\hfil}}
+      }%
+      \hfil}}
   \def\@oddfoot{\@foottemplate\hypertarget{Navigation\thepage}{}\hfil}
   \let\@evenhead\@oddhead
   \let\@evenfoot\@oddfoot}
@@ -1623,28 +1647,28 @@
   \def\insertblockname{#1}%
   \par%
   \@beginblocktemplate}{\par\@endblocktemplate}%
-  {\pgfsys@begininvisible%
+  {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
-  \@beginblocktemplate}{\par\@endblocktemplate\pgfsys@endinvisible}
+  \@beginblocktemplate}{\par\@endblocktemplate\beamer@endcovered}
 
 \newoverlayenvironment{alertblock}[1]{%
   \def\insertblockname{#1}%
   \par%
   \@beginalertblocktemplate}{\par\@endalertblocktemplate}%
-  {\pgfsys@begininvisible%
+  {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
-  \@beginalertblocktemplate}{\par\@endalertblocktemplate\pgfsys@endinvisible}
+  \@beginalertblocktemplate}{\par\@endalertblocktemplate\beamer@endcovered}
 
 \newoverlayenvironment{exampleblock}[1]{%
   \def\insertblockname{#1}%
   \par%
   \@beginexampleblocktemplate}{\par\@endexampleblocktemplate}%
-  {\pgfsys@begininvisible%
+  {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
-  \@beginexampleblocktemplate}{\par\@endexampleblocktemplate\pgfsys@endinvisible}
+  \@beginexampleblocktemplate}{\par\@endexampleblocktemplate\beamer@endcovered}
 
 \newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
 \newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}

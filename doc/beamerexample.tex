@@ -1,4 +1,4 @@
-\documentclass[red]{beamer}
+\documentclass{beamer}
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red] and see what happens!
 
@@ -135,21 +135,19 @@
 % Try this:
 \beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
 
-
-
 \begin{document}
 
 \frame{\titlepage}
 
-
 \section[Outline]{}
 
-\frame{\tableofcontents}
+\makeatletter
+\frame{\transdissolve\tableofcontents}
 \note{At most 1 minute for the outline.}
 
 \section[Models]{The Model of Overhead-Free Computation}
 
-\frame{\tableofcontentscurrent}
+\frame[handout:0]{\tableofcontentscurrent}
 
 \subsection[Standard Model]{The Standard Model of Linear Space}
 
@@ -286,7 +284,7 @@
     \end{column}
     \begin{column}{6cm}
       \begin{overprint}
-      \onslide<1-6| trans:1-3>
+      \onslide<1-6| trans:1-3| handout:1>
         \begin{block}{Characteristics}
           \begin{itemize}
           \item
@@ -298,7 +296,7 @@
             input alphabet
           \end{itemize}
         \end{block}
-      \onslide<7-| trans:4>
+      \onslide<7-| trans:4| handout:2>
         \begin{block}{Intuition}
           \begin{itemize}
           \item
@@ -376,7 +374,7 @@
 
 \section[Power of the Model]{The Power of Overhead-Free Computation}
 
-\frame{\tableofcontentscurrent}
+\frame[handout:0]{\tableofcontentscurrent}
 
 \subsection{Palindromes}
 
@@ -694,7 +692,7 @@
 
 \section[Limitations of the Model]{Limitations of Overhead-Free Computation}
 
-\frame{\tableofcontentscurrent}
+\frame[handout:0]{\tableofcontentscurrent}
 
 \subsection[Strict Inclusion]{Linear Space is Strictly More Powerful}
 
