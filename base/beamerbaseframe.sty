@@ -72,7 +72,13 @@
     \beamer@inframetrue%
     \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
     \vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill\end{beamer@framepauses}%
+  {\beamer@exitcode\vskip0pt plus 1.5fill%
+  \ifvoid\footins\else%
+    \normalcolor%
+    \footnoterule%
+    \unvbox \footins%
+  \fi%
+  \end{beamer@framepauses}%
   \egroup%
   \beamer@framenotesend%  
   \box\beamer@framebox}
@@ -351,7 +357,7 @@
   \def\beamer@breaker<#1>{\only<#1>{\beamer@origbreak}}
   \def\beamer@@breaker{\ifbeamer@inframe\else\expandafter\beamer@origbreak\fi}
 
-  \let\beamer@origbreamcenter=\@centercr
+  \let\beamer@origbreakcenter=\@centercr
   \def\@centercr{\beamer@ifnextcharospec{\beamer@breakercenter}{\beamer@@breakercenter}}
   \def\beamer@breakercenter<#1>{\only<#1>{\beamer@origbreakcenter}}
   \def\beamer@@breakercenter{\ifbeamer@inframe\else\expandafter\beamer@origbreakcenter\fi}

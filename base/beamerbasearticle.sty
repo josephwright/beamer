@@ -9,8 +9,12 @@
 \newif\ifbeamer@articlexcolor
 \beamer@articlexcolortrue
 
+\newif\ifbeamer@articleactive
+\beamer@articleactivefalse
+
 \DeclareOption{noxcolor}{\beamer@articlexcolorfalse}
 \DeclareOption{nodefaultblocks}{\beamer@blocksfalse}
+\DeclareOption{activeospeccharacters}{\beamer@articleactivetrue}
 
 \ProcessOptions
 

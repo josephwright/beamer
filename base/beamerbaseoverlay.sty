@@ -119,7 +119,7 @@
 %
 % \temporal
 %
-\def\@temporal<#1>#2#3#4{% past, present, future
+\long\def\temporal<#1>#2#3#4{% past, present, future
   \def\beamer@doifnotinframe{\beamer@picked}\def\beamer@doifinframe{#3}%
   {\setbox0=\hbox{\beamer@localanotherslidefalse\beamer@decode#1| stop:0|
       \ifbeamer@localanotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi}}\beamer@donow}

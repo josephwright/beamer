@@ -1,3 +1,23 @@
+2004-02-23 Till Tantau <tantau@users.sourceforge.net>
+
+	Bugfixes:
+	- Fixed bug with class options containing braces
+	- Fixed bug in beamerbasecolor.sty
+	- Fixed bug that caused footnotes not to be shown.
+	- Fixed bug that caused \normalcolor to ignore mixins. 
+	- Fixed bug with french and spanish babel in article mode.
+	- Fixed bugs in \cite and \bibitem commands. Will now correctly
+	  handle spaces in conjunction with babel.
+	- Fixed bugs in beamerpresentation.lyx.
+	- Fixed bug with \@centercr in article mode.
+
+	Changed:
+	- \beamertemplateballitems will now also project mini templates on
+	  balls. Write
+	  \useenumerateitemminitemplate{\color{beamercolor}\insertenumlabel}
+	  to get the old behaviour.
+	- \footnote now takes an extra optional argument.
+
 2004-02-18 Till Tantau <tantau@users.sourceforge.net>
 
 	Version 2.00

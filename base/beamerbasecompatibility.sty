@@ -59,7 +59,7 @@
     \let\itemize\beamer@itemize
     \let\list\beamer@list
     \let\@trivlist\beamer@@trivlist%
-    \catcode`:=12\catcode`|=12}
+    \catcode`:=12\catcode`|=12\catcode`!=12}
   
   \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
     %
@@ -79,10 +79,19 @@
   \def\document{%
     \beamer@origdocument%
     \beamer@lastminutepatches}
+
+  \g@addto@macro\beamer@lastminutepatches{%
+    \ifbeamer@articleactive
+    \else
+      \catcode`:=12\catcode`!=12\catcode`|=12\catcode`<=12\catcode`>=12   
+    \fi    
+    }
 }
 
 
 \AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize 
+
+
 
 
 %

@@ -163,9 +163,9 @@
     \beamer@ifempty{#2}%
     {\long\def\secname{#1}}%
     {\advance\beamer@tocsectionnumber by 1\relax%
-      \long\def\secname{#2}\addtocontents{toc}{\protect\beamer@sectionintoc{\the\c@section}{#2}{\thepage}{\the\c@part}%
+      \long\def\secname{#2}\addtocontents{toc}{\protect\beamer@sectionintoc{\the\c@section}{#2}{\the\c@page}{\the\c@part}%
         {\the\beamer@tocsectionnumber}}}%
-    \addtocontents{nav}{\protect\headcommand{\protect\sectionentry{\the\c@section}{#1}{\thepage}{\secname}{\the\c@part}}}%
+    \addtocontents{nav}{\protect\headcommand{\protect\sectionentry{\the\c@section}{#1}{\the\c@page}{\secname}{\the\c@part}}}%
     {\let\\=\relax\xdef\sectionlink{{Navigation\the\c@page}{\noexpand\secname}}}%
     \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
     \addtocontents{nav}{\protect\headcommand{\protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
@@ -227,7 +227,7 @@
     {%
       \long\def\subsecname{#2}%
       \long\def\lastsubsection{#1}%
-      \addtocontents{toc}{\protect\beamer@subsectionintoc{\the\c@section}{\the\c@subsection}{#2}{\thepage}{\the\c@part}{\the\beamer@tocsectionnumber}}%
+      \addtocontents{toc}{\protect\beamer@subsectionintoc{\the\c@section}{\the\c@subsection}{#2}{\the\c@page}{\the\c@part}{\the\beamer@tocsectionnumber}}%
     }%
     \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
     \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
