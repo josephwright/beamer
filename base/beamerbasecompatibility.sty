@@ -33,23 +33,23 @@
   \fi%
 }
 
-
-
 %
 % Fixes right before the start of the document.
 %
-
 \let\beamer@origdocument\document
 \def\document{%
   \endgroup%
   \recalculatefoot%
   \recalculatehead%
-  \AtBeginDocument{
-    %
-    % Fix french.ldf's meddling with \itemize and \trivlist
-    %
-    \ifx\bbl@nonfrenchitemize\@undefined\else\bbl@nonfrenchitemize\fi%
-    \ifx\bbl@nonfrenchlistspacing\@undefined\else\bbl@nonfrenchlistspacing\fi}%
+  %
+
+  \AtBeginDocument{% fix frenchb.ldf's meddling with itemize
+    \let\labelitemi\beamer@labelitemi
+    \let\labelitemii\beamer@labelitemii
+    \let\itemize\beamer@itemize
+    \let\list\beamer@list
+    \let\@trivlist\beamer@@trivlist}
+  
   \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
     %
     % Fix spanish.ldf's meddling with < and > 
@@ -110,6 +110,14 @@
 %
 %
 \def\textlatin{}
+
+
+%
+% Bugfix of latex internals
+%
+\def\smallskip{\vskip\smallskipamount}
+\def\medskip{\vskip\medskipamount}
+\def\bigskip{\vskip\bigskipamount}
 
 
 %%% Local Variables: 

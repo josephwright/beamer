@@ -1,0 +1,68 @@
+\ProvidesPackage{beamerbasecolor}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+%
+% Average background color management
+%
+\def\beamersetaveragebackground#1{%
+  \colorlet{averagebackgroundcolor}{#1}}
+
+\beamersetaveragebackground{white}
+
+
+%
+% This needs to be managed differently in the future...
+%
+\definecolor{alert}{rgb}{1,0,0}
+
+
+
+%
+% Allow mixins to survive groups:
+%
+
+\let\beamerorig@set@color=\set@color
+\let\beamerorig@reset@color=\reset@color
+
+\def\bemaer@current@colorhook{}
+
+\def\set@color{%
+  \edef\beamer@current@colorhook{\beamer@colorhook}%
+  \beamerorig@set@color}
+\def\reset@color{%
+  \ifx\beamer@current@colorhook\beamer@colorhook%
+  \beamerorig@reset@color%
+  \else% mixin changed -> recalculate
+  \colorlet{@hookcolor}{.}%
+  \XC@logcolor2{@hookcolor}%  
+  \colorhook%
+  \expandafter\let\expandafter\current@color%
+    \csname\string\color @@hookcolor\endcsname%
+  \beamerorig@reset@color%
+  \beamer@postscriptcolorhack%  
+  \fi%
+}
+
+\ifx\pdftexversion\@undefined
+  \def\beamer@postscriptcolorhack{%
+    \edef\beamer@pscolor{\expandafter\expandafter\expandafter%
+      \c@lor@to@ps\csname\string\color @@hookcolor\endcsname\@@}%
+    \special{ps: \beamer@pscolor}}
+\else
+  \def\beamer@postscriptcolorhack{}%
+\fi
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

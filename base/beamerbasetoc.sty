@@ -7,12 +7,23 @@
 % of the GNU Public License, version 2.
 
 %
+% Local counters/ifs/dimensions
+%
+\newif\ifbeamer@onlycurrent
+\newif\ifbeamer@onlycurrentsubsection
+\newif\ifbeamer@pausesections
+\newif\ifbeamer@pausesubsections
+\newif\ifbeamer@subsectionshide
+\newif\ifbeamer@subsectionsshaded
+
+%
 %
 % Table of Contents Format
 %
 %
 
 \define@key{beamertoc}{current}[true]{\beamer@onlycurrenttrue}
+\define@key{beamertoc}{currentsubsection}[true]{\beamer@onlycurrentsubsectiontrue}
 \define@key{beamertoc}{pausesections}[true]{\beamer@pausesectionstrue}
 \define@key{beamertoc}{pausesubsections}[true]{\beamer@pausesubsectionstrue}
 \define@key{beamertoc}{hidesubsections}[true]{\beamer@subsectionshidetrue}
@@ -28,6 +39,7 @@
 \def\@tableofcontents[#1]{%
   \beamer@showpartnumber=\c@part%
   \beamer@onlycurrentfalse%
+  \beamer@onlycurrentsubsectionfalse%
   \beamer@pausesectionsfalse%
   \beamer@pausesubsectionsfalse%
   \beamer@subsectionshidefalse%
@@ -106,7 +118,15 @@
       \else
         \ifbeamer@onlycurrent
           \ifnum\thesection=#1
-            {\beamer@subsectiontemplate}
+            \ifbeamer@onlycurrentsubsection
+              \ifnum\thesubsection=#2
+                {\beamer@subsectiontemplate}
+              \else
+                {\beamer@subsectiontemplateshaded}
+              \fi
+            \else 
+              {\beamer@subsectiontemplate}
+            \fi
           \else
             {\beamer@subsectiontemplateshaded}
           \fi
@@ -114,7 +134,19 @@
           \ifbeamer@subsectionsshaded
             {\beamer@subsectiontemplateshaded}
           \else
-            {\beamer@subsectiontemplate}
+            \ifbeamer@onlycurrentsubsection
+              \ifnum\thesection=#1
+                \ifnum\thesubsection=#2
+                  {\beamer@subsectiontemplate}
+                \else
+                  {\beamer@subsectiontemplateshaded}
+                \fi
+              \else
+                {\beamer@subsectiontemplateshaded}
+              \fi
+            \else 
+              {\beamer@subsectiontemplate}
+            \fi
           \fi
         \fi
       \fi%

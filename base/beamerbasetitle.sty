@@ -1,0 +1,116 @@
+\ProvidesPackage{beamerbasetitle}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+%
+%
+% The \titlepage and \usetitlepagetemplate command
+%
+%
+\def\titlepage{{\beamer@titlepagetemplate}}
+\long\def\usetitlepagetemplate#1{\def\beamer@titlepagetemplate{#1}}
+
+%
+%
+% The \partpage and \usepartpagetemplate command
+%
+%
+\def\partpage{{\beamer@partpagetemplate}}
+\long\def\usepartpagetemplate#1{\def\beamer@partpagetemplate{#1}}
+
+%
+%
+% The \title command
+%
+%
+\def\title{\@ifnextchar[{\beamer@title}{\beamer@title@}}
+\def\beamer@title@#1{\beamer@title[#1]{#1}}
+\def\beamer@title[#1]#2{%
+  \def\inserttitle{#2}%
+  \def\insertshorttitle{\def\\{}%
+    \ifnum\thepage=1%
+    \hyperlinkpresentationend{#1}%
+    \else%
+    \hyperlinkpresentationstart{#1}%
+    \fi}
+  }
+\title{}
+
+
+%
+%
+% The \date command
+%
+%
+\def\date{\@ifnextchar[{\beamer@date}{\beamer@date@}}
+\def\beamer@date@#1{\beamer@date[#1]{#1}}
+\def\beamer@date[#1]#2{%
+  \def\insertdate{#2}%
+  \def\insertshortdate{#1}%
+  }
+\date{\today}
+
+
+%
+%
+% The \author command
+%
+%
+\def\author{\@ifnextchar[{\beamer@author}{\beamer@author@}}
+\def\beamer@author@#1{\beamer@author[#1]{#1}}
+\def\beamer@author[#1]#2{%
+  \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}#2}%
+  \def\insertshortauthor{\def\inst{\beamer@instother}\def\and{\beamer@andother}#1}}
+\author{}
+
+% Aux commands for \author
+\def\beamer@insttitle#1{$^{#1}$}
+\def\beamer@andtitle{\quad}
+\def\beamer@instother#1{}
+\def\beamer@andother{\unskip, }
+
+
+%
+%
+% The \titlegraphic command
+%
+%
+\def\titlegraphic#1{\def\inserttitlegraphic{#1}}
+\titlegraphic{}
+
+
+%
+%
+% The \institute command
+%
+%
+\def\institute{\@ifnextchar[{\beamer@institute}{\beamer@institute@}}
+\def\beamer@institute@#1{\beamer@institute[#1]{#1}}
+\def\beamer@institute[#1]#2{%
+  \def\insertinstitute{\def\inst{\beamer@instinst}\def\and{\beamer@andinst}#2}%
+  \def\insertshortinstitute{\def\inst{\beamer@instother}\def\and{\beamer@andother}#1}}
+\institute{}
+
+\def\beamer@instinst#1{$^{#1}$\ignorespaces}
+\def\beamer@andinst{\\[1em]}
+
+
+%
+%
+% The \logo command
+%
+%
+\def\logo#1{\def\insertlogo{#1}}
+\logo{}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

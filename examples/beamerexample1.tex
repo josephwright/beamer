@@ -20,11 +20,12 @@
 \usepackage[latin1]{inputenc}
 \usepackage{colortbl}
 \usepackage[english]{babel}
+%\usepackage{lmodern}
+%\usepackage[T1]{fontenc}
 %\usepackage{times}
 
 % Use some nice templates
 \beamertemplatetransparentcovereddynamic
-\beamertemplatenumberedsectiontoc
 
 %
 % The following defintions are peculiar to this particular
@@ -163,19 +164,27 @@
 
 \frame{\titlepage}
 
-\section[Outline]{}
+\section*{Outline}
 
-\frame{\frametitle{Outline}\tableofcontents[part=1,pausesections]}
+\frame
+{
+  \frametitle{Outline}
+  \tableofcontents[part=1,pausesections]
+}
 
 
 \part{Main Talk}
 
 \section[Models]{The Model of Overhead-Free Computation}
 
-\frame[handout:0]{\frametitle{Outline}\tableofcontents[current]}
-
 
 \subsection[Standard Model]{The Standard Model of Linear Space}
+
+\frame<handout:0>
+{
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+}
 
 \frame
 {
@@ -270,6 +279,12 @@
 
 
 \subsection[Our Model]{Our Model of Absolutely No Space Overhead}
+
+\frame<handout:0>
+{
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+}
 
 \frame
 {
@@ -404,10 +419,14 @@
 
 \section[Power of the Model]{The Power of Overhead-Free Computation}
 
-\frame[handout:0]{\frametitle{Outline}\tableofcontents[current]}
-
 
 \subsection{Palindromes}
+
+\frame<handout:0>
+{
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+}
 
 \frame
 {
@@ -533,6 +552,12 @@
 
 \subsection{Linear Languages}
 
+\frame<handout:0>
+{
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+}
+
 \frame
 {
   \frametitle{A Review of Linear Grammars}
@@ -615,6 +640,13 @@
 
 \subsection[Forbidden Subword]{Context-Free Languages with a Forbidden Subword}
 
+\frame<handout:0>
+{
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+}
+
+
 \frame
 {
   \frametitle{Definition of Almost-Overhead-Free Computations}
@@ -680,6 +712,13 @@
 
 \subsection[Complete Languages]{Languages Complete for Polynomial Space}
 
+\frame<handout:0>
+{
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+}
+
+
 \frame
 {
   \frametitle{Some PSPACE-complete Languages\\ Can Be
@@ -719,10 +758,15 @@
 
 \section[Limitations of the Model]{Limitations of Overhead-Free Computation}
 
-\frame[handout:0]{\frametitle{Outline}\tableofcontents[current]}
-
 
 \subsection[Strict Inclusion]{Linear Space is Strictly More Powerful}
+
+\frame<handout:0>
+{
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+}
+
 
 \frame
 {
@@ -791,9 +835,9 @@
 }
 
 
-\section[Summary]{}
+\section*{Summary}
 
-\subsection[Summary]{}
+\subsection*{Summary}
 
 \frame
 {
@@ -822,7 +866,8 @@
 \item Point out result concerning all context-free languages.
 \item Relationship to restart automata.}
 
-\subsection[Further Reading]{}
+
+\subsection*{Further Reading}
 
 \frame{
   \frametitle{For Further Reading}
@@ -923,11 +968,12 @@
 
 \subsection{Abbreviations}
 
-\frame{
+\frame
+{
   \frametitle{Explanation of Different Abbreviations}
 
   \begin{table}
-    \rowcolors[]{1}{structure!25!averagebackgroundcolor}{structure!10!averagebackgroundcolor}
+%    \rowcolors[]{1}{structure!25!averagebackgroundcolor}{structure!10!averagebackgroundcolor}
     \begin{tabular}{ll}
       \structure{$\DOF$} & \structure{D}eterministic \structure{O}verhead-\structure{F}ree.\\
       \structure{$\NOF$} & \structure{N}ondeterministic \structure{O}verhead-\structure{F}ree.\\

@@ -30,6 +30,7 @@ Style Standard
   Align 		Left
   AlignPossible 	Block, Left, Right, Center
   LabelType 		No_Label
+  KeepEmpty		1
 End
 
 # Itemize style definition
@@ -124,7 +125,7 @@ End
 Style BeginPlainFrame
   KeepEmpty	1
   LatexType	Command
-  LatexName	plainframe{
+  LatexName	frame[plain]{
   Margin            First_Dynamic
   NextNoIndent      1
   ParSkip           0
@@ -153,7 +154,7 @@ End
 Style BeginNohandoutFrame
   KeepEmpty	1
   LatexType	Command
-  LatexName	frame[handout:0]{\frametitle
+  LatexName	frame<handout:0>{\frametitle
   Margin            First_Dynamic
   NextNoIndent      1
   ParSkip           0
@@ -187,7 +188,7 @@ Style EndFrame
   NextNoIndent      1
   ParSkip           0
   TopSep            0
-  BottomSep         1.5
+  BottomSep         3
   ParSep            0
   Align             Center
   AlignPossible     Center
@@ -288,6 +289,15 @@ Style Section
   EndFont
 End
 
+# Section* style definition
+Style Section*
+  CopyStyle		Section
+  Margin		Static
+  LatexName		section*
+  LabelType		No_Label
+  OptionalArgs		0
+End
+
 # Subsection style definition
 Style Subsection
   Margin		First_Dynamic
@@ -316,6 +326,15 @@ Style Subsection
   LabelFont 
     Color           latex
   EndFont
+End
+
+# Subsection* style definition
+Style Subsection*
+  CopyStyle		Subsection
+  Margin		Static
+  LatexName		subsection*
+  LabelType		No_Label
+  OptionalArgs		0
 End
 
 Style AlertBlock

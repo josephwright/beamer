@@ -99,27 +99,123 @@
 %
 
 \newcommand{\beamertemplateplaintoc}{
-  \usetemplatetocsection[50!averagebackgroundcolor]
+  \usetemplatetocsection[20!averagebackgroundcolor]
     {\color{structure}\inserttocsection}
 
-  \usetemplatetocsubsection[50!averagebackgroundcolor]
+  \usetemplatetocsubsection[20!averagebackgroundcolor]
     {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
 }
 
 \newcommand{\beamertemplatenumberedsubsectiontoc}{
-  \usetemplatetocsection[50!averagebackgroundcolor]
+  \usetemplatetocsection[20!averagebackgroundcolor]
     {\leavevmode\leftskip=2em\color{structure}\inserttocsection}
 
-  \usetemplatetocsubsection[50!averagebackgroundcolor]
+  \usetemplatetocsubsection[20!averagebackgroundcolor]
     {\leavevmode\leftskip=2em\color{black}\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
 }
 
 \newcommand{\beamertemplatenumberedsectiontoc}{
-  \usetemplatetocsection[50!averagebackgroundcolor]
-    {\leavevmode\color{structure}\inserttocsectionnumber. \inserttocsection}
+  \usetemplatetocsection[20!averagebackgroundcolor]
+  {\leavevmode\color{structure}\inserttocsectionnumber. \inserttocsection\par}
 
-  \usetemplatetocsubsection[50!averagebackgroundcolor]
-    {\leavevmode\leftskip=2.5em\color{black}\inserttocsubsection\par}
+  \usetemplatetocsubsection[20!averagebackgroundcolor]
+  {\leavevmode\leftskip=2.5em\color{black}\inserttocsubsection\par}
+}
+
+\newcommand{\beamertemplatenumberedcirclesectiontoc}{
+  \usetemplatetocsection[20!averagebackgroundcolor]
+  {\leavevmode\leftskip=.5em\color{structure}%
+    \llap{\begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+      \color{structure!50!averagebackgroundcolor}
+      \pgfcircle[fill]{\pgfpoint{0ex}{.75ex}}{1.2ex}
+      \pgfbox[center,base]{\color{white}\inserttocsectionnumber}
+    \end{pgfpicture}\kern1ex}\inserttocsection\par}
+
+  \usetemplatetocsubsection[20!averagebackgroundcolor]
+  {\leavevmode\leftskip=2em\color{black}\inserttocsubsection\par}
+}
+
+
+\newcommand{\beamertemplatenumberedballsectiontoc}{
+  \pgfdeclareradialshading{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
+  {color(0cm)=(structure!35!white);
+    color(0.44ex)=(structure!75!white);
+    color(0.88ex)=(structure!70!black!90!averagebackgroundcolor);
+    color(1.2ex)=(structure!50!black!90!averagebackgroundcolor);
+    color(1.3ex)=(averagebackgroundcolor)}
+
+  \begin{colormixin}{20!averagebackgroundcolor}
+  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
+  {color(0cm)=(structure!35!white);
+    color(0.44ex)=(structure!75!white);
+    color(0.88ex)=(structure!70!black!90!averagebackgroundcolor);
+    color(1.2ex)=(structure!50!black!90!averagebackgroundcolor);
+    color(1.3ex)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{tocsphere.!20opaque}{tocsphereshaded}
+  \pgfaliasshading{tocsphere.!20!averagebackgroundcolor}{tocsphereshaded}
+
+  \begin{colormixin}{15!averagebackgroundcolor}
+  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
+  {color(0cm)=(structure!35!white);
+    color(0.44ex)=(structure!75!white);
+    color(0.88ex)=(structure!70!black!90!averagebackgroundcolor);
+    color(1.2ex)=(structure!50!black!90!averagebackgroundcolor);
+    color(1.3ex)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{tocsphere.!15opaque}{tocsphereshaded}
+
+  \begin{colormixin}{10!averagebackgroundcolor}
+  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
+  {color(0cm)=(structure!35!white);
+    color(0.44ex)=(structure!75!white);
+    color(0.88ex)=(structure!70!black!90!averagebackgroundcolor);
+    color(1.2ex)=(structure!50!black!90!averagebackgroundcolor);
+    color(1.3ex)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{tocsphere.!10opaque}{tocsphereshaded}
+
+  \begin{colormixin}{5!averagebackgroundcolor}
+  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
+  {color(0cm)=(structure!35!white);
+    color(0.44ex)=(structure!75!white);
+    color(0.88ex)=(structure!70!black!90!averagebackgroundcolor);
+    color(1.2ex)=(structure!50!black!90!averagebackgroundcolor);
+    color(1.3ex)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{tocsphere.!5opaque}{tocsphereshaded}
+
+  \begin{colormixin}{2!averagebackgroundcolor}
+  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
+  {color(0cm)=(structure!35!white);
+    color(0.44ex)=(structure!75!white);
+    color(0.88ex)=(structure!70!black!90!averagebackgroundcolor);
+    color(1.2ex)=(structure!50!black!90!averagebackgroundcolor);
+    color(1.3ex)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{tocsphere.!2opaque}{tocsphereshaded}
+
+  
+  \usetemplatetocsection[20!averagebackgroundcolor]
+  {\leavevmode\leftskip=1em\color{structure}%
+    \llap{%
+      \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
+        \pgfbox[center,center]{\pgfuseshading{tocsphere}}
+        \pgfbox[center,center]{\color{white!90!structure}\scriptsize\textbf{\inserttocsectionnumber}}
+      \end{pgfpicture}%
+      \kern1ex}%
+    \inserttocsection\par}
+  
+  \usetemplatetocsubsection[20!averagebackgroundcolor]
+    {\leavevmode\leftskip=2em\color{black}\llap{\raise0.2ex\hbox{\pgfuseshading{smallsphere}}\ }\inserttocsubsection\par}
+}
+
+\newcommand{\beamertemplateballtoc}{
+  \usetemplatetocsection[20!averagebackgroundcolor]
+    {\leavevmode\color{structure}\raise0.1ex\hbox{\pgfuseshading{bigsphere}}\ \inserttocsection\par}
+
+  \usetemplatetocsubsection[20!averagebackgroundcolor]
+    {\leavevmode\leftskip=1.5em\color{black}\raise0.2ex\hbox{\pgfuseshading{smallsphere}}\ \inserttocsubsection\par}
 }
 
 
@@ -160,8 +256,10 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.20opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.20opaque}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.!20opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.!20opaque}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.!20!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.!20!averagebackgroundcolor}{smallsphereshaded}
   
   \begin{colormixin}{15!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -177,8 +275,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.15opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.15opaque}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.!15opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.!15opaque}{smallsphereshaded}
   
   \begin{colormixin}{10!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -194,8 +292,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.10opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.10opaque}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.!10opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.!10opaque}{smallsphereshaded}
   
   \begin{colormixin}{5!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -211,8 +309,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.5opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.5opaque}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.!5opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.!5opaque}{smallsphereshaded}
   
   \begin{colormixin}{2!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
@@ -228,8 +326,8 @@
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
-  \pgfaliasshading{bigsphere.2opaque}{bigsphereshaded}
-  \pgfaliasshading{smallsphere.2opaque}{smallsphereshaded}
+  \pgfaliasshading{bigsphere.!2opaque}{bigsphereshaded}
+  \pgfaliasshading{smallsphere.!2opaque}{smallsphereshaded}
   
   \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bigsphere}}}
   \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{smallsphere}}}
@@ -478,18 +576,18 @@
 
 \pgfdeclareimage[width=14pt,height=12pt]{beamericonbook}{beamericonbook}
 \pgfdeclareimage[width=14pt,height=12pt]{beamericonbookshaded}{beamericonbook.20}
-\pgfaliasimage{beamericonbook.20opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.15opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.10opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.5opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.2opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.!20opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.!15opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.!10opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.!5opaque}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook.!2opaque}{beamericonbookshaded}
 \pgfdeclareimage[width=11pt,height=14pt]{beamericonarticle}{beamericonarticle}
 \pgfdeclareimage[width=11pt,height=14pt]{beamericonarticleshaded}{beamericonarticle.20}
-\pgfaliasimage{beamericonarticle.20opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.15opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.10opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.5opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.2opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.!20opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.!15opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.!10opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.!5opaque}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle.!2opaque}{beamericonarticleshaded}
 
 \newcommand{\beamertemplatebookbibitems}{
   \usebibitemtemplate{\lower2pt\hbox{\pgfuseimage{beamericonbook}}}

@@ -1,0 +1,186 @@
+\ProvidesPackage{beamerbasemisc}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+%
+%
+% Empty test
+%
+%
+\long\def\beamer@ifempty#1{\beamer@xifempty#1@@..\@nil}
+\long\def\beamer@xifempty#1#2@#3#4#5\@nil{%
+  \ifx#3#4\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
+
+
+% Calculate maximum number of sections/subsections per part
+\beamer@subsectionmax=0\relax
+\beamer@sectionmax=0\relax
+\beamer@sectioncount=0\relax
+
+\def\headcommand#1{\global\advance\beamer@totalheads by1\relax%
+  \expandafter\gdef\csname @@head\the\beamer@totalheads\endcsname{#1}}
+\beamer@activecjk
+\@input{\jobname.nav}
+\def\dohead{\beamer@headcounter=0\loop\ifnum\beamer@headcounter<\beamer@totalheads%
+  \advance\beamer@headcounter by1\relax%
+  \csname @@head\the\beamer@headcounter\endcsname\repeat}
+
+\def\beamer@startpageofframe{1}
+\def\beamer@endpageofframe{1}
+\def\beamer@startpageofsubsection{1}
+\def\beamer@endpageofsubsection{1}
+\def\beamer@startpageofsection{1}
+\def\beamer@endpageofsection{1}
+\def\beamer@startpageofpart{1}
+\def\beamer@endpageofpart{1}
+\def\beamer@endpageofdocument{1}
+\def\beamer@startpageofappendix{}
+\def\inserttotalframenumber{1}
+
+\def\partentry#1#2{\beamer@sectioncount=0}
+\def\sectionentry#1#2#3#4#5{\advance\beamer@sectioncount by1\relax%
+  \ifnum\beamer@sectionmax<\beamer@sectioncount\beamer@sectionmax=\beamer@sectioncount\fi}
+\def\slideentry#1#2#3#4#5#6{\ifnum\beamer@subsectionmax<#2\relax\beamer@subsectionmax=#2\fi}
+\def\beamer@framepages#1#2{}
+\def\beamer@subsectionpages#1#2{}
+\def\beamer@sectionpages#1#2{}
+\def\beamer@partpages#1#2{}
+\def\beamer@appendixpages#1{\gdef\beamer@startpageofappendix{#1}}
+\def\beamer@documentpages#1{\gdef\beamer@endpageofdocument{#1}}
+\dohead
+\setlength\lineskip{1\p@}
+\setlength\normallineskip{1\p@}
+\renewcommand\baselinestretch{}
+
+\setlength\parskip{0\p@}% \@plus \p@}
+\@lowpenalty   51
+\@medpenalty  151
+\@highpenalty 301
+\setcounter{topnumber}{2}
+\renewcommand\topfraction{.7}
+\setcounter{bottomnumber}{1}
+\renewcommand\bottomfraction{.3}
+\setcounter{totalnumber}{3}
+\renewcommand\textfraction{.9}%.2}
+\renewcommand\floatpagefraction{.1}%5}
+\setcounter{dbltopnumber}{2}
+\renewcommand\dbltopfraction{.7}
+\renewcommand\dblfloatpagefraction{.5}
+\setlength\leftmargini  {2em}
+\setlength\leftmarginii  {2em}
+\setlength  \labelsep  {.5em}
+\setlength  \labelwidth{\leftmargini}
+\addtolength\labelwidth{-\labelsep}
+\@beginparpenalty -\@lowpenalty
+\@endparpenalty   -\@lowpenalty
+\@itempenalty     -\@lowpenalty
+
+\setcounter{tocdepth}{2}
+
+\renewcommand\theenumi{\@arabic\c@enumi}
+\renewcommand\theenumii{\@arabic\c@enumii}
+
+\def\@listi{\leftmargin\leftmargini
+            \topsep 4\p@ \@plus2\p@ \@minus\p@
+            \parsep 0\p@
+            \itemsep4\p@ \@plus2\p@ \@minus2\p@}
+\let\@listI\@listi
+\def\@listii {\leftmargin\leftmarginii
+              \topsep    2\p@ \@plus2\p@ \@minus\p@
+              \parsep    0\p@   \@plus\p@  \@minus\p@
+              \itemsep   \parsep}
+
+\setlength\arraycolsep{5\p@}
+\setlength\tabcolsep{6\p@}
+\setlength\arrayrulewidth{.4\p@}
+\setlength\doublerulesep{2\p@}
+\setlength\tabbingsep{\labelsep}
+\skip\@mpfootins = \skip\footins
+\setlength\fboxsep{3\p@}
+\setlength\fboxrule{.4\p@}
+
+  
+\newcommand\contentsname{Contents}
+\newcommand\listfigurename{List of Figures}
+\newcommand\listtablename{List of Tables}
+\newcommand\bibname{Bibliography}
+\newcommand\indexname{Index}
+\newcommand\figurename{Figure}
+\newcommand\algorithmname{Algorithm}
+\newcommand\tablename{Table}
+\newcommand\partname{Part}
+\newcommand\chaptername{Chapter}
+\newcommand\appendixname{Appendix}
+\newcommand\abstractname{Abstract}
+\newcommand\today{}
+\edef\today{\ifcase\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space\number\day, \number\year}
+\setlength\columnsep{10\p@}
+\setlength\columnseprule{0\p@}
+\pagenumbering{arabic}
+\onecolumn
+
+\parindent0pt
+
+\AtEndDocument{%
+  \clearpage
+  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}}%
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}}%
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}}%
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\def\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
+    \if@filesw
+      \newwrite\tf@head
+      \immediate\openout\tf@head\jobname.nav\relax
+      \newwrite\tf@toc
+      \immediate\openout\tf@toc\jobname.toc\relax
+      \newwrite\tf@snm
+      \immediate\openout\tf@snm\jobname.snm\relax
+    \fi
+}
+
+
+\def\tinyline#1{%
+  {\tiny\setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
+  \ht\beamer@linebox=2.06ex%
+  \dp\beamer@linebox=0pt%
+  \box\beamer@linebox%
+  \vskip1.125ex}}
+\def\tinycolouredline#1#2{%
+  \hbox{\tiny%
+    \setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
+    \ht\beamer@linebox=2.625ex%
+    \dp\beamer@linebox=0pt%
+    \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
+\def\colouredline#1#2{%
+  \hbox{%
+    \setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
+    \setbox\beamer@linebox=\vbox{\vskip2pt\box\beamer@linebox\vskip2pt}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
+\def\beamerline#1{%
+  \hbox{\hskip-\Gm@lmargin#1\hskip-\Gm@rmargin}}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

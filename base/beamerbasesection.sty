@@ -53,7 +53,9 @@
 \beamer@tocsectionnumber=0\relax
 
 \def\section{\@ifnextchar[\@section\@@section}
-\long\def\@@section#1{\@section[#1]{#1}}
+\def\@@section{\@ifnextchar*\@@ssection\@@@section}
+\long\def\@@ssection*#1{\@section[#1]{}}
+\long\def\@@@section#1{\@section[#1]{#1}}
 \long\def\@section[#1]#2{%
   \refstepcounter{section}%
   \beamer@ifempty{#2}%
@@ -90,8 +92,9 @@
 \beamer@subsectionstartpage=1
 
 \def\subsection{\@ifnextchar[\@subsection\@@subsection}
-\def\@@subsection#1{\@subsection[#1]{#1}}
-
+\def\@@subsection{\@ifnextchar*\@@ssubsection\@@@subsection}
+\long\def\@@ssubsection*#1{\@subsection[#1]{}}
+\def\@@@subsection#1{\@subsection[#1]{#1}}
 \def\@subsection[#1]#2{%
   \refstepcounter{subsection}%
   \beamer@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}

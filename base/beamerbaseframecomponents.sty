@@ -1,0 +1,275 @@
+\ProvidesPackage{beamerbaseframecomponents}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+%
+% Setting the left and right margin
+%
+%
+\beamer@leftmargin=1cm
+\beamer@rightmargin=1cm
+
+\def\beamersetleftmargin#1{%
+  \beamer@leftmargin=#1\relax%
+  % Reset left margin now
+  \beamer@tempdim=\beamer@leftmargin%
+  \advance\beamer@tempdim by\beamer@leftsidebar%
+  \geometry{left=\the\beamer@tempdim}%
+  }
+\def\beamersetrightmargin#1{%
+  \beamer@rightmargin=#1\relax%
+  % Reset right margin now
+  \beamer@tempdim=\beamer@rightmargin%
+  \advance\beamer@tempdim by\beamer@rightsidebar%
+  \geometry{right=\the\beamer@tempdim}%
+  }
+
+
+%
+%
+% Sidebars
+%
+%
+
+\def\useleftsidebartemplate#1#2{% #1 = size, #2 = text
+  \beamer@leftsidebar=#1\relax%
+  % Reset left margin now
+  \beamer@tempdim=\beamer@leftmargin%
+  \advance\beamer@tempdim by\beamer@leftsidebar%
+  \geometry{left=\the\beamer@tempdim}%
+  \gdef\beamer@leftsidebartemplate{%
+    \vbox to \sidebarheight{%
+      #2\vfil%
+    }%
+  }}
+\useleftsidebartemplate{0cm}{}
+  
+\def\userightsidebartemplate#1#2{% #1 = size, #2 = text
+  \beamer@rightsidebar=#1\relax%
+  % Reset right margin now
+  \beamer@tempdim=\beamer@rightmargin%
+  \advance\beamer@tempdim by\beamer@rightsidebar%
+  \geometry{right=\the\beamer@tempdim}%
+  \gdef\beamer@rightsidebartemplate{%
+    \vbox to \sidebarheight{%
+      #2\vfil%
+    }%
+  }}
+\userightsidebartemplate{0cm}{}
+  
+\def\useleftsidebarbackgroundtemplate#1{
+  \def\beamer@leftsidebarbackground{%
+    \vbox to \sidebarheight{%
+      #1\vfil%
+    }}}
+\useleftsidebarbackgroundtemplate{}
+
+% Sets the background of the side bar to a monotone color
+\def\useleftsidebarcolortemplate#1{
+  \useleftsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@leftsidebar}}
+
+% Sets the background of the side bar to a vertical shading ranging
+% between the parameter colors.
+\def\useleftsidebarverticalshadingtemplate#1#2{%
+  \pgfdeclareverticalshading{beamer@leftsidebar}{\beamer@leftsidebar}{color(0cm)=(#1); color(\paperheight)=(#2)}%
+  \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
+
+% Sets the background of the side bar to a horizontal shading ranging
+% between the parameter colors.
+\def\useleftsidebarhorizontalshadingtemplate#1#2{%
+  \pgfdeclarehorizontalshading{beamer@leftsidebar}{\textheight}{color(0cm)=(#1); color(\beamer@leftsidebar)=(#2)}%
+  \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
+
+
+\def\userightsidebarbackgroundtemplate#1{
+  \gdef\beamer@rightsidebarbackground{%
+    \vbox to \sidebarheight{%
+      #1\vfil%
+    }}}
+\userightsidebarbackgroundtemplate{}
+
+% Sets the background of the side bar to a monotone color
+% Usage: usesidebarcolortemplate{\color{red}}
+\def\userightsidebarcolortemplate#1{
+  \userightsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@rightsidebar}}
+
+% Sets the background of the side bar to a vertical shading ranging
+% between the parameter colors.
+\def\userightsidebarverticalshadingtemplate#1#2{%
+  \pgfdeclareverticalshading{beamer@rightsidebar}{\beamer@rightsidebar}{color(0cm)=(#1); color(\paperheight)=(#2)}%
+  \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
+
+% Sets the background of the side bar to a horizontal shading ranging
+% between the parameter colors.
+\def\userightsidebarhorizontalshadingtemplate#1#2{%
+  \pgfdeclarehorizontalshading{beamer@rightsidebar}{\textheight}{color(0cm)=(#1); color(\beamer@rightsidebar)=(#2)}%
+  \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
+
+
+%
+%
+% Background management
+%
+%
+\long\def\usebackgroundtemplate#1{%
+  \gdef\beamer@backgroundtemplate{#1}}
+
+
+
+%
+%
+% Head lines and foot lines
+%
+%
+
+\let\@mkboth\@gobbletwo
+\def\ps@navigation{
+  \def\@oddhead{%
+    \setbox\beamer@tempbox=\hbox{\beamer@backgroundtemplate\hyper@pagetransition\hyper@pageduration}%
+    \beamer@tempdim=\ht\beamer@tempbox%
+    \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
+    \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+    \vbox{\hbox{\hskip-\Gm@lmargin\box\beamer@tempbox}%
+      \hbox{%
+        {%
+          \setbox\beamer@tempbox=\hbox{\hskip-\Gm@lmargin%
+            {\setbox\beamer@tempbox=\hbox{\beamer@leftsidebarbackground}%
+              \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+              \box\beamer@tempbox}%
+            \beamer@leftsidebartemplate}%
+          \beamer@tempdim=\ht\beamer@tempbox%
+          \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
+          \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+          \box\beamer@tempbox%
+        }%        
+        {% print right sidebar first, since it should be overwritten by headline
+          \setbox\beamer@tempbox=\hbox{\hskip\textwidth\hskip\beamer@rightmargin%
+            {\setbox\beamer@tempbox=\hbox{\beamer@rightsidebarbackground}%
+              \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+              \box\beamer@tempbox}%
+            \beamer@rightsidebartemplate}%
+          \beamer@tempdim=\ht\beamer@tempbox%
+          \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
+          \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+          \box\beamer@tempbox%
+        }%
+        \beamer@headtemplate\hfil%
+      }%
+      \hfil}}
+  \def\@oddfoot{\beamer@foottemplate\hypertarget{Navigation\thepage}{}\hfil}
+  \let\@evenhead\@oddhead
+  \let\@evenfoot\@oddfoot}
+\pagestyle{navigation}
+
+%
+% Patch empty page style, so that transitions and navigation still works
+%
+\def\ps@empty{%
+  \let\@mkboth\@gobbletwo%
+  \def\@oddhead{\setbox\beamer@tempbox=\hbox{\beamer@backgroundtemplate\hyper@pagetransition\hyper@pageduration}%
+    \beamer@tempdim=\ht\beamer@tempbox%
+    \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
+    \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+    \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox}\hfil}}
+  \def\@oddfoot{\hypertarget{Navigation\thepage}{}\hfil}
+  \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
+
+\def\recalculatefoot{%
+  \beamer@activecjk%
+  \setbox\beamer@tempbox=\hbox{\beamer@foottemplate}%
+  \footheight=\ht\beamer@tempbox%
+  \advance\footheight by \dp\beamer@tempbox%
+  \advance\footheight by 4pt%
+  \geometry{foot=\the\footheight}%
+  \advance\footheight by -4pt%
+  \sidebarheight=\paperheight%
+  \advance\sidebarheight by-\headheight%
+  \advance\sidebarheight by\headdp%
+  \advance\sidebarheight by-\footheight}
+\def\recalculatehead{%
+  \beamer@activecjk%
+  \setbox\beamer@tempbox=\hbox{\beamer@headtemplate}%
+  \headheight=\ht\beamer@tempbox%
+  \headdp=\dp\beamer@tempbox%
+  \advance\headheight by\headdp%
+  \geometry{head=\the\headheight}%
+  \sidebarheight=\paperheight%
+  \advance\sidebarheight by-\headheight%
+  \advance\sidebarheight by\headdp%
+  \advance\sidebarheight by-\footheight}%
+
+\long\def\usefoottemplate#1{%
+  \gdef\beamer@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}%
+  \recalculatefoot}
+\def\insertpagenumber{\thepage}
+
+\long\def\useheadtemplate#1{%
+  \gdef\beamer@headtemplate{\offinterlineskip\reset@font#1}%
+  \recalculatehead} 
+
+\def\insertvrule#1#2{%
+  \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
+    height #1\hskip-\Gm@rmargin}}
+
+
+%
+%
+% Columns
+%
+%
+
+\newenvironment{columns}{%
+  \leavevmode%
+  \hskip-\beamer@leftmargin%
+  \nobreak%
+  \beamer@tempdim=\textwidth%
+  \advance\beamer@tempdim by\beamer@leftmargin%
+  \advance\beamer@tempdim by\beamer@rightmargin%
+  \hbox to\beamer@tempdim\bgroup%
+  \hbox{}\hfill\ignorespaces}%
+  {\egroup%
+    \nobreak%
+    \hskip-\beamer@rightmargin}
+  
+\newenvironment{columnsonlytextwidth}%
+  {\leavevmode\hbox to\textwidth\bgroup\ignorespaces}
+  {\unskip\egroup}
+
+\newenvironment{column}[1]{%
+  \ifbeamer@centered%    
+  \begin{minipage}[c]{#1}%
+  \else%
+  \begin{minipage}[t]{#1}%
+  \fi%
+    \raggedright}
+  {\end{minipage}\hfill\ignorespaces}
+
+
+%
+%
+% Footnotes
+%
+%
+
+\def\@makefntext#1{%
+  \def\insertfootnotetext{#1}%
+  \def\insertfootnotemark{\@makefnmark}%
+  \footnotetemplate}
+\def\usefootnotetemplate#1{%
+  \gdef\footnotetemplate{#1}}
+
+\usefootnotetemplate{
+  \parindent 1em\noindent%
+  \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

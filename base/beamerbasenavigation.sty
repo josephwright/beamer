@@ -464,6 +464,203 @@
   \beamer@buttontemplate}%
 
 
+%
+% Inserting navigation bars
+%
+
+\def\insertnavigation#1{%
+  \vbox{\tiny%
+    \beamer@xpos=0\relax%
+    \beamer@ypos=1\relax%
+    \hbox to #1{\hskip.3cm\setbox\beamer@sectionbox=\hbox{\kern1sp}%
+      \ht\beamer@sectionbox=1.875ex%
+      \dp\beamer@sectionbox=0.75ex%
+        \hskip-1.875ex plus-1fill\dohead%
+      \box\beamer@sectionbox\hfil\hskip.3cm}%
+  }}
+
+\def\sectionentry#1#2#3#4#5{% section name, section title, page
+  \ifnum#5=\c@part%
+  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
+  \beamer@xpos=0\relax%
+  \beamer@ypos=1\relax%
+  \setbox\beamer@sectionbox=
+  \hbox{\def\insertsectionhead{#2}%
+    \ifnum\thesection=#1%
+    \hyperlink{Navigation#3}{\beamer@sectionheadhilight}\else%
+    \hyperlink{Navigation#3}{\beamer@sectionheadnohilight}\fi}%
+  \ht\beamer@sectionbox=1.875ex%
+  \dp\beamer@sectionbox=0.75ex%
+  \fi\ignorespaces}
+
+\def\usesectionheadtemplate#1#2{\gdef\beamer@sectionheadhilight{#1}\gdef\beamer@sectionheadnohilight{#2}}
+\def\usesectionsidetemplate#1#2{\gdef\beamer@sectionsidehilight{#1}\gdef\beamer@sectionsidenohilight{#2}}
+
+
+\def\insertverticalnavigation#1{%
+  \vbox{%
+    \def\sectionentry##1##2##3##4##5{%
+      \ifnum##5=\c@part%
+      \def\insertsectionhead{##2}%
+      \hbox{\hyperlink{Navigation##3}{%
+          \ifnum\thesection=##1%
+            \ifnum\thesubsection=0\relax%
+              \beamer@sectionsidehilight%
+            \else%
+              \beamer@sectionsidenohilight%
+            \fi%
+          \else
+            \beamer@sectionsidenohilight%
+          \fi}}%
+      \currentsubsection=1\relax\fi}%
+    \def\slideentry##1##2##3##4##5##6{%
+      \ifnum##6=\c@part%
+      \ifnum##2=\currentsubsection%
+      \advance\currentsubsection by1%
+      \def\insertsubsectionhead{##5}%
+      \hbox{\beamer@link(##4){%
+          \ifnum\thesection=##1%
+            \ifnum\thesubsection=##2%
+              \beamer@subsectionsidehilight%
+            \else%
+              \beamer@subsectionsidenohilight%
+            \fi%
+          \else%
+            \beamer@subsectionsidenohilight%
+          \fi}}%
+      \fi\fi}%
+    \currentsubsection=1\relax%
+    \dohead%
+  }}
+
+\def\slideentry#1#2#3#4#5#6{%
+  %section number, subsection number, slide number, first/last frame, page number, part number
+  \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
+  \ifbeamer@compress%
+  \advance\beamer@xpos by1\relax%
+  \else
+  \beamer@xpos=#3\relax%
+  \beamer@ypos=#2\relax%
+  \fi
+  \hbox to 0pt{%
+    \beamer@tempdim=-\beamer@vboxoffset%
+    \advance\beamer@tempdim by-\beamer@boxsize%
+    \multiply\beamer@tempdim by\beamer@ypos%
+    \advance\beamer@tempdim by -.05cm%
+    \raise\beamer@tempdim\hbox{%
+      \beamer@tempdim=\beamer@boxsize%
+      \multiply\beamer@tempdim by\beamer@xpos%
+      \advance\beamer@tempdim by -\beamer@boxsize%
+      \advance\beamer@tempdim by 1pt%
+      \kern\beamer@tempdim\hbox{\beamer@link(#4){%
+        \ifnum\thesection=#1\ifnum\thesubsection=#2\ifnum\thesubsectionslide=#3%
+        \beamer@minislidehilight\else\beamer@minisliderowhilight\fi\else\beamer@minislide\fi\else\beamer@minislide\fi%
+        }}}\hskip-10cm plus 1fil
+  }\fi\fi%
+  \else%
+  \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
+  \fi\ignorespaces}
+
+\def\fakeslideentry#1#2#3#4#5#6{%
+  \ifnum#2>0\ifnum#3>0%
+  \ifbeamer@compress%
+  \advance\beamer@xpos by1\relax%
+  \else%
+  \beamer@xpos=#3\relax%
+  \beamer@ypos=#2\relax%
+  \fi%
+  \hbox to 0pt{\beamer@tempdim=-\beamer@vboxoffset%
+    \advance\beamer@tempdim by -\beamer@boxsize%
+    \multiply\beamer@tempdim by\beamer@ypos%
+    \advance\beamer@tempdim by -.05cm%
+    \raise\beamer@tempdim\hbox{}}\fi\fi\ignorespaces}
+  
+
+\def\beamer@link(#1/#2){%
+  \def\beamer@goto{{Navigation#1}}% default: first slide of frame
+  \ifnum\thepage<#2%
+  \ifnum\thepage<#1\else% go to last slide of frame, on all slides of
+                                % the frame, except for the last one
+  \def\beamer@goto{{Navigation#2}}% jump to last slide of frame
+  \fi\fi%
+  \expandafter\hyperlink\beamer@goto}
+
+
+\def\useminislidetemplate#1#2#3#4#5{%
+  \gdef\beamer@minislidehilight{#1}%
+  \gdef\beamer@minisliderowhilight{#2}%
+  \gdef\beamer@minislide{#3}%
+  \beamer@boxsize=#4%
+  \beamer@vboxoffset=#5}
+
+\def\insertsectionnavigation#1{%
+  \hbox to #1{%
+    \vbox{\tiny%
+     \vskip0.5625ex%
+     \def\slideentry##1##2##3##4##5##6{}%
+     \def\sectionentry##1##2##3##4##5{%
+       \ifnum##5=\c@part%
+       \def\insertsectionhead{##2}%
+       \setbox\beamer@tempbox=\hbox{%
+         \hyperlink{Navigation##3}{\hbox to #1{%
+           \hskip0.3cm\ifnum\thesection=##1%
+           \beamer@sectionheadhilight\else\beamer@sectionheadnohilight\fi\hskip0.3cm}}}%
+       \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%        
+       \box\beamer@tempbox\fi}%
+     \dohead\vskip0.5625ex}\hfil}}
+
+\def\insertsectionnavigationhorizontal#1#2#3{%
+  \hbox to #1{%
+     \def\slideentry##1##2##3##4##5##6{}%
+     #2\hskip.3cm\tiny\setbox\beamer@sectionbox=\hbox{}%
+     \ht\beamer@sectionbox=1.875ex%
+     \dp\beamer@sectionbox=0.75ex%
+     \hskip-1.875ex plus-1fill\dohead%
+     \box\beamer@sectionbox\hfil\hskip.3cm%
+     #3}}
+
+\def\insertsubsectionnavigation#1{%
+  \hbox to #1{%
+    \vbox{\tiny%
+      \vskip0.5625ex%
+      \beamer@currentsubsection=1%
+      \def\sectionentry##1##2##3##4##5{}%
+      \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
+        \ifnum##2=\beamer@currentsubsection%
+        \advance\beamer@currentsubsection by1%
+        \def\insertsubsectionhead{##5}%
+        \setbox\beamer@tempbox=\hbox{\beamer@link(##4){%
+          \hbox to #1{\hskip0.3cm\ifnum\thesubsection=##2%
+          \beamer@subsectionheadhilight\else\beamer@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
+        \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%
+        \box\beamer@tempbox\fi\fi\fi}%
+      \dohead\vskip0.5625ex}\hfil}}
+
+\def\insertsubsectionnavigationhorizontal#1#2#3{%
+  \hbox to #1{\tiny%
+    \beamer@currentsubsection=1%
+    \def\sectionentry##1##2##3##4##5{}%
+    \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
+      \ifnum##2=\beamer@currentsubsection%
+      \advance\beamer@currentsubsection by1%
+      \box\beamer@sectionbox\hskip1.875ex plus1fill%
+      \setbox\beamer@sectionbox=
+      \hbox{\def\insertsubsectionhead{##5}%
+        \ifnum\thesubsection=##2%
+        \beamer@link(##4){\beamer@subsectionheadhilight}\else%
+        \beamer@link(##4){\beamer@subsectionheadnohilight}\fi}%
+      \ht\beamer@sectionbox=1.875ex%
+      \dp\beamer@sectionbox=0.75ex%
+      \fi\fi\fi\ignorespaces}%
+    #2\hskip.3cm\tiny\setbox\beamer@sectionbox=\hbox{}%
+    \hskip-1.875ex plus-1fill\dohead%
+    \box\beamer@sectionbox\hfil\hskip.3cm%
+    #3}}
+
+\def\usesubsectionheadtemplate#1#2{\gdef\beamer@subsectionheadhilight{#1}\gdef\beamer@subsectionheadnohilight{#2}}
+\def\usesubsectionsidetemplate#1#2{\gdef\beamer@subsectionsidehilight{#1}\gdef\beamer@subsectionsidenohilight{#2}}
+
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: ../examples/beamerexample1.tex

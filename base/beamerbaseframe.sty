@@ -1,0 +1,295 @@
+\ProvidesPackage{beamerbaseframe}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+
+%
+% Slide Definitions
+%
+
+\newcounter{subsectionslide}[subsection]
+\renewcommand\thesubsectionslide{\@arabic\c@subsectionslide}
+\def\beamer@entrycode{}
+\def\beamer@exitcode{}
+
+\def\beamer@setuplinks{%
+  {%
+    \def\sectionentry##1##2##3##4##5{}%
+    \def\slideentry##1##2##3##4##5##6{}%
+    \dohead%
+  }%
+}
+
+\newenvironment{beamer@frameslide}{%
+  {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
+  \global\beamer@pausecount=1\relax%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
+    \refstepcounter{subsectionslide}%
+    \xdef\beamer@framestartpage{\thepage}% only first time
+  }{\clearpage}% cleanup from previous slide
+  \hypersetup{pdfpagetransition=R}%
+  \hypersetup{pdfpageduration=}%
+  \xdef\beamer@frameendpage{\thepage}% every time
+  \beamer@setuplinks%
+  \let\beamer@startcomment=\beamer@startcommentinframe%
+  \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
+  {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
+
+
+%
+%
+% The \frametitle command
+%
+%
+\def\frametitle#1{%
+  \beamer@ifempty{#1}{}{%
+  \vskip0pt plus -1fill%
+  {\gdef\insertframetitle{#1}\beamer@headrenderer}
+  \vskip0.25em%
+  \ifbeamer@centered
+  \vfill%
+  \fi}%
+}
+
+\long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
+
+
+
+
+%
+% Resetting counters
+%  
+
+\def\resetcounteronoverlays#1{%
+  \@cons\beamer@overlaycounterresets{{c@#1}}%  
+}
+
+\def\resetcountonoverlays#1{%
+  \@cons\beamer@overlaycounterresets{{#1}}%  
+}
+
+\def\beamer@overlaycounterresets{}
+  
+\resetcounteronoverlays{equation}
+\resetcounteronoverlays{parentequation}
+\resetcounteronoverlays{footnote}
+\resetcounteronoverlays{mpfootnote}
+\resetcounteronoverlays{figure}
+\resetcounteronoverlays{table}
+
+\def\beamer@savecounter#1{%
+  \@ifundefined{#1}{}%
+  {\expandafter\xdef\csname saved@#1\endcsname%
+    {\expandafter\the\csname #1\endcsname}}%
+}
+\def\beamer@restorecounter#1{%
+  \@ifundefined{#1}{}%
+  {\edef\temp{\csname saved@#1\endcsname}%
+  \expandafter\global\csname #1\endcsname=\temp}%
+}
+
+
+\newcounter{framenumber}
+\def\insertframenumber{\@arabic\c@framenumber}
+
+%
+% Keys
+%
+\define@key{beamerframe}{plain}[true]{\def\beamer@frametheme{\beamer@frametheme@plain}}
+\define@key{beamerframe}{theme}{%
+  \edef\beamer@frametheme{\expandafter\noexpand\csname beamer@frametheme@#1\endcsname}}
+
+
+% Check for old version:
+
+\def\frame{\@ifnextchar<\beamer@frame\beamer@checkoldframe}
+\def\beamer@checkoldframe{\@ifnextchar[\beamer@@checkoldframe{\beamer@frame<+>}}
+\def\beamer@@checkoldframe[#1#2]{%
+  \let\beamer@next=\beamer@newframesyntax%
+  \ifcat#11% a number-like first letter in argument
+    \let\beamer@next=\beamer@oldframesyntax%
+  \else%
+    \beamer@checkforcolon#2:.%
+  \fi%
+  \beamer@next{#1#2}}
+\def\beamer@checkforcolon#1:#2.{%
+  \beamer@ifempty{#2}{}{\let\beamer@next=\beamer@oldframesyntax}}
+\def\beamer@newframesyntax#1{\beamer@@@frame<+>[#1]}
+\def\beamer@oldframesyntax#1{\beamer@@@frame<#1>[]}
+
+\def\beamer@frame{\begingroup\catcode`:=12\catcode`|=12\beamer@@frame}% Hackery for french style
+\def\beamer@@frame<#1>{\endgroup%
+  \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
+\def\beamer@@@frame<#1>[#2]{%
+  \def\beamer@frametheme{}%
+  \setkeys{beamerframe}{#2}%
+  \beamer@frametheme%
+  \refstepcounter{framenumber}%
+  {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
+  \gdef\insertframetitle{}%
+  \gdef\beamer@framestartpage{}%
+  \gdef\beamer@whichframes{#1}%
+  \beamer@slideinframe=0\relax%
+  \beamer@anotherslidefalse%
+  {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
+  \ifbeamer@anotherslide%
+  \beamer@slideinframe=2\relax%
+  \def\beamer@doifnotinframe{}%
+  \def\beamer@doifinframe{\let\howtotreatframe\doseveralframes}%
+  \beamer@anotherslidefalse%
+  {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
+  \ifbeamer@anotherslide%
+  \let\howtotreatframe\doseveralframes\else%
+  \let\howtotreatframe\dosingleframe%
+  \fi%
+  \beamer@donow%
+  \else%
+  \let\howtotreatframe\donoframe%
+  \fi%
+  \ifbeamer@notesnormals\else\let\howtotreatframe\donoframe\fi%
+  \howtotreatframe}
+\long\def\donoframe{%
+  \beamer@slideinframe=1\relax%
+  \beamer@slideinframe=1\relax%
+  \setbox\beamer@tempbox\vbox\bgroup\leavevmode\def\pause{}\afterassignment\beamer@checknoslide\let\beamer@next}
+\def\beamer@checknoslide{%
+  \ifcat\bgroup\noexpand\beamer@next%
+  \let\beamer@do\beamer@reseteecodes%
+  \else\let\beamer@do\beamer@noframesingletoken\fi%
+  \beamer@do}
+\def\beamer@noframesingletoken{\beamer@next\egroup\beamer@reseteecodes}
+
+\long\def\doseveralframes#1{%
+  \beamer@slideinframe=1\relax%
+  \loop%
+  \beamer@anotherslidefalse%
+  \def\beamer@doifnotinframe{}%
+  \def\beamer@doifinframe{\begin{beamer@frameslide}%
+    #1%
+  \end{beamer@frameslide}}%
+  \beamer@slideinframe=\beamer@slideinframe%
+  {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
+  \beamer@donow%
+  \ifbeamer@anotherslide
+  \advance\beamer@slideinframe by 1\relax
+  \repeat%
+  \beamer@writeslidentry%
+  \beamer@reseteecodes}
+
+\def\dosingleframe{\begin{beamer@frameslide}\bgroup\aftergroup\beamer@endslide\afterassignment\beamer@checkslide\let\beamer@next}
+\def\beamer@checkslide{%
+  \ifcat\bgroup\noexpand\beamer@next%
+  \let\beamer@do\relax%
+  \else\let\beamer@do\beamer@singletoken\fi%
+  \beamer@do}
+\def\beamer@endslide{\end{beamer@frameslide}\beamer@writeslidentry\beamer@reseteecodes}
+\def\beamer@singletoken{\beamer@next\egroup}
+
+\def\beamer@writeslidentry{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% nothing to do ...
+  {%else
+    \addtocontents{head}%
+      {\protect\headcommand{%
+          \protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
+          {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\thepart}}}%
+    \addtocontents{head}%
+      {\protect\headcommand{% 
+        \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
+    \clearpage%
+  }
+}
+
+
+\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}}
+
+\def\plainframe{\frame[plain]}%
+
+\def\beamer@frametheme@plain{%
+  \def\beamer@entrycode{\vspace*{-\headheight}}%
+  \def\beamer@exitcode{\vspace*{-\footheight}\thispagestyle{empty}}}
+
+
+%
+% Names slides
+%
+
+\def\beamer@nameslide#1{%
+  \addtocontents{snm}{\protect\beamer@slide{#1}{\thepage}}%
+  \hypertarget{#1}{}}
+\def\beamer@slide#1#2{\expandafter\def\csname beamer@hyperlink#1\endcsname{%
+  \hyperlink{Navigation#2}}}
+
+
+%
+% Notes
+%
+
+\long\def\note#1{%
+  \ifbeamer@notes
+  {
+  \def\@oddhead{}
+  \def\@oddfoot{}
+  \let\@evenhead\@oddhead
+  \let\@evenfoot\@oddfoot
+  \def\beamer@backgroundtemplate{}
+  \vbox{%
+    \vskip-\headheight%
+    \ifbeamer@compressnotes
+    \insertvrule{2.5em}{white!90!black}
+    \vskip2.5em
+    \nointerlineskip
+    \tiny
+    \setbox\beamer@tempbox=\hbox{\raise7em\hbox{\insertsection}}%
+    \ht\beamer@tempbox=0pt
+    \box\beamer@tempbox
+    \nointerlineskip
+    \setbox\beamer@tempbox=\hbox{\raise6em\hbox{\quad\insertsubsection}}%
+    \ht\beamer@tempbox=0pt
+    \box\beamer@tempbox
+    \nointerlineskip
+    \setbox\beamer@tempbox=\hbox{\raise5em\hbox{\quad\quad\insertframetitle}}%
+    \ht\beamer@tempbox=0pt
+    \box\beamer@tempbox
+    \nointerlineskip
+    \else    
+    \insertvrule{8em}{white!90!black}
+    \vskip-8.5em
+    \hbox{\vbox{
+    \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
+      \begin{pgfrotateby}{\pgfdegree{90}}
+        \pgfputat{\pgfpoint{-2cm}{0.25cm}}{\pgfbox[base,left]{\footnotesize\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
+      \end{pgfrotateby}
+    \end{pgfpicture}}}
+    \hbox{\vbox{\begin{minipage}[t]{8cm}\insertshorttitle\end{minipage}}}%
+    \setbox\beamer@tempbox=\hbox{\insertsection}%
+    \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertsection\end{minipage}}}\fi}%
+    \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+    \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip17.4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertsubsection\end{minipage}}}\fi}%
+    \setbox\beamer@tempbox=\hbox{\insertframetitle}%
+    \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip30.8pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertframetitle\end{minipage}}}\fi}%
+    \fi
+    }
+  \ifbeamer@compressnotes
+  \vskip-2em  
+  \else
+  \vskip2.5em
+  \fi
+  \small
+  #1%
+  \clearpage
+  }\fi}
+
+\long\def\noteitems#1{\note{\begin{itemize}#1\end{itemize}}}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

@@ -11,7 +11,6 @@
 % organize a lecture.
 %
 
-\usepackage{beamertemplates}
 \usepackage{beamerthemesplit}
 \usepackage[english]{babel}
 \usepackage[latin1]{inputenc}
@@ -21,7 +20,7 @@
 \beamertemplateshadingbackground{red!10}{structure!10}
 \beamertemplatetransparentcovereddynamic
 \beamertemplateballitem
-\beamertemplatesolidbuttons
+\beamertemplatenumberedballsectiontoc
 
 %
 % The following info should normally be given in you main file:
@@ -43,22 +42,23 @@
 \frame{\titlepage}
 
 
-\section[Outlines]{}
-
+\section*{Outlines}
 
 \subsection{Part I: Review of Previous Lecture}
 
 \frame{
   \nameslide{outline}
   \frametitle{Outline of Part I}
-  \tableofcontents[pausesections,part=1]}
+  \tableofcontents[pausesections,part=1]
+}
 
 
 \subsection{Part II: Today's Lecture}
 
 \frame{
   \frametitle{Outline of Part II}
-  \tableofcontents[pausesections,part=2]}
+  \tableofcontents[pausesections,part=2]
+}
 
 \note{At most 1 minute for the outline.}
 
@@ -107,7 +107,7 @@
 
 \section[Models]{The Model of Overhead-Free Computation}
 
-\frame[handout:0]{\tableofcontents[current]}
+\frame<handout:0>{\tableofcontents[current]}
 
 
 \subsection[Standard Model]{The Standard Model of Linear Space}
@@ -120,7 +120,7 @@
 
 \section[Limitations]{Limitations of Overhead-Free Computation}
 
-\frame[handout:0]{\tableofcontents[current]}
+\frame<handout:0>{\tableofcontents[current]}
 
 
 \subsection[Linear Space]{Linear Space versus Overhead-Free Computation}

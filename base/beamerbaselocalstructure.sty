@@ -1,0 +1,321 @@
+\ProvidesPackage{beamerbaselocalstructure}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+
+%
+% Alerting
+%
+
+\newoverlaycommand{\alert}{\@alert}{}
+\def\@alert#1{\def\insertalert{#1}\beamer@alerttemplate}
+
+\newoverlaycommand{\structure}{\@structure}{}
+\def\@structure#1{\def\insertstructure{#1}\beamer@structuretemplate}
+
+\long\def\usealerttemplate#1{%
+  \gdef\beamer@alerttemplate{#1}}
+\long\def\usestructuretemplate#1{%
+  \gdef\beamer@structuretemplate{#1}}
+
+\usealerttemplate{{\begin{colormixin}{15!alert}\insertalert\end{colormixin}}}
+\usestructuretemplate{{\color{structure}\insertstructure}}
+
+
+%
+%
+% Predefined Blocks
+%
+%
+
+\long\def\useblocktemplate#1#2{%
+  \gdef\beamer@beginblocktemplate{#1}
+  \gdef\beamer@endblocktemplate{#2}}
+
+\long\def\usealertblocktemplate#1#2{%
+  \gdef\beamer@beginalertblocktemplate{#1}
+  \gdef\beamer@endalertblocktemplate{#2}}
+
+\long\def\useexampleblocktemplate#1#2{%
+  \gdef\beamer@beginexampleblocktemplate{#1}
+  \gdef\beamer@endexampleblocktemplate{#2}}
+
+\newoverlayenvironment{block}[1]{%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate}%
+  {\beamer@startcovered%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate\beamer@endcovered}
+
+\newoverlayenvironment{alertblock}[1]{%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate}%
+  {\beamer@startcovered%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate\beamer@endcovered}
+
+\newoverlayenvironment{exampleblock}[1]{%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate}%
+  {\beamer@startcovered%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate\beamer@endcovered}
+
+\newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
+\newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}
+\newenvironment{Definition}{\begin{block}{Definition}}{\end{block}}
+\newenvironment{Satz}{\begin{block}{Satz}}{\end{block}}
+\newenvironment{Beweis}{\begin{block}{Beweis.}}{\end{block}}
+\newenvironment{Folgerung}{\begin{block}{Folgerung}}{\end{block}}
+\newenvironment{Lemma}{\begin{block}{Lemma}}{\end{block}}
+\newenvironment{Fakt}{\begin{block}{Fakt}}{\end{block}}
+\newenvironment{Beispiel}{\begin{exampleblock}{Beispiel}}{\end{exampleblock}}
+\newenvironment{Beispiele}{\begin{exampleblock}{Beispiele}}{\end{exampleblock}}
+
+\newenvironment{Theorem}{\begin{block}{Theorem}}{\end{block}}
+\newenvironment{Proof}{\begin{block}{Proof.}}{\end{block}}
+\newenvironment{Corollary}{\begin{block}{Corollary}}{\end{block}}
+\newenvironment{Fact}{\begin{block}{Fact}}{\end{block}}
+\newenvironment{Example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+\newenvironment{Examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+
+\newenvironment{definition}{\begin{block}{Definition}}{\end{block}}
+\newenvironment{definitions}{\begin{block}{Definitions}}{\end{block}}
+\newenvironment{theorem}{\begin{block}{Theorem}}{\end{block}}
+\newenvironment{proof}{\begin{block}{Proof.}}{\end{block}}
+\newenvironment{corollary}{\begin{block}{Corollary}}{\end{block}}
+\newenvironment{fact}{\begin{block}{Fact}}{\end{block}}
+\newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+\newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+
+\newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
+\newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
+
+%
+%
+% Enumerations
+%
+%
+
+\def\enumerate{%
+  \ifnum\@enumdepth>1\relax\@toodeep\else
+    \advance\@enumdepth\@ne
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \csname\@enumctr starttemplate\endcsname%
+      \expandafter
+      \list
+        \csname label\@enumctr\endcsname
+        {\usecounter\@enumctr%
+          \def\makelabel##1{{\hss\llap{##1}}}}%
+  \fi%
+  \begin{pauses}\raggedright}
+\def\endenumerate{\end{pauses}\endlist\csname\@enumctr endtemplate\endcsname}
+
+\def\itemize{%
+  \ifnum \@itemdepth >1\relax\@toodeep\else
+    \advance\@itemdepth\@ne
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \edef\@itemctr{item\romannumeral\the\@itemdepth}%
+    \csname\@itemctr starttemplate\endcsname%
+    \expandafter
+    \list
+      \csname\@itemitem\endcsname
+      {\def\makelabel##1{{\hss\llap{##1}}}}
+  \fi%
+  \begin{pauses}\raggedright}
+    
+\def\enditemize{\end{pauses}\endlist\csname\@itemctr endtemplate\endcsname}
+
+\def\useenumerateitemtemplate#1{% 
+  \gdef\labelenumi{\def\insertenumlabel{\theenumi}#1}}
+
+\def\useenumeratetemplate#1#2{% before and after
+  \gdef\enumistarttemplate{#1}%
+  \gdef\enumiendtemplate{#2}}
+
+\def\usesubenumerateitemtemplate#1{%
+  \gdef\labelenumii{\def\insertenumlabel{\theenumi}\def\insertsubenumlabel{\theenumii}#1}}
+
+\def\usesubenumeratetemplate#1#2{% before and after
+  \gdef\enumiistarttemplate{#1}%
+  \gdef\enumiiendtemplate{#2}}
+
+
+\def\useitemizeitemtemplate#1{%
+  \gdef\labelitemi{#1}\let\beamer@labelitemi\labelitemi}%itemilabeltemplate{#1}}
+
+\def\useitemizetemplate#1#2{% before and after
+  \gdef\itemistarttemplate{#1}%
+  \gdef\itemiendtemplate{#2}}
+
+\def\usesubitemizeitemtemplate#1{%
+  \gdef\labelitemii{#1}\let\beamer@labelitemii\labelitemii}%itemiilabeltemplate{#1}}
+
+\def\usesubitemizetemplate#1#2{% before and after
+  \gdef\itemiistarttemplate{#1}%
+  \gdef\itemiiendtemplate{#2}}
+
+
+\def\description{\@ifnextchar[{\@description}{\beamer@descdefault\beamer@descdefaulttemp\@@description}}
+\def\@description[#1]{\setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
+  \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
+\def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
+  \begin{pauses}\raggedright}
+\def\enddescription{\end{pauses}\endlist}
+\long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
+  \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
+
+\def\usedescriptionitemtemplate#1#2{\gdef\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
+  \global\advance\beamer@descdefaulttemp by \labelsep}
+\usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}
+
+\let\beamer@itemize\itemize
+
+    
+%
+% Bibliography code
+%
+\newenvironment{thebibliography}[1]
+{%\leavevmode\unskip%
+  \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\beamer@biblabeltemplate{\@biblabel{#1}}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \itemsep=0pt%
+            \partopsep=0pt%
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}
+            \let\makelabel\beamer@biblabeltemplate}%
+      \begin{pauses}%
+      \sloppy\raggedright
+      \clubpenalty10000
+      \@clubpenalty \clubpenalty
+      \widowpenalty10000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \end{pauses}\endlist}
+
+\long\def\beamer@biblabeltemplate#1{\def\insertbiblabel{#1}\biblabeltemplate\hfil}
+
+\def\bibitem{\@ifnextchar<{\beamer@bibitem@store}{\gdef\beamer@bibstore{}\beamer@plainbibitem}}
+\def\beamer@bibitem@store<#1>{\gdef\beamer@bibstore{<#1>}\beamer@plainbibitem}
+\def\beamer@plainbibitem{\@ifnextchar[\@lbibitem\@bibitem}
+\def\@lbibitem[#1]#2{\expandafter\item\beamer@bibstore[\@biblabel{#1}\hfill]%
+  \@ifundefined{beamerbib@#2@\the\c@framenumber}{\if@filesw
+    {\let\protect\noexpand
+      \immediate
+      \write\@auxout{\string\bibcite{#2}{#1}}}\fi%
+    \global\@namedef{beamerbib@#2@\the\c@framenumber}{\relax}}{}%
+  \def\newblock{\@newblock}\newblock\hbox{}\ignorespaces}
+\def\@bibitem#1{\expandafter\item\beamer@bibstore\@ifundefined{beamerbib@#1@\the\c@framenumber}%
+  {\if@filesw \immediate\write\@auxout
+    {\string\bibcite{#1}{\the\value{\@listctr}}}\fi\global\@namedef{beamerbib@#1@\the\c@framenumber}{\relax}}%
+  {}%
+  \def\newblock{\@newblock}\newblock\ignorespaces}
+
+\def\@newblock{\firstblocktemplate%
+  \def\newblock{\secondblocktemplate%
+    \def\newblock{\thirdblocktemplate%
+      \def\newblock{\otherblocktemplate}}}%
+  \setbox\beamer@tempbox=\hbox{\ }\hskip-\wd\beamer@tempbox\setbox\beamer@tempbox=\hbox{}\ht\beamer@tempbox=1.5em\box\beamer@tempbox}
+
+\long\def\usebibitemtemplate#1{%
+  \gdef\biblabeltemplate{#1}}
+
+\long\def\usebibliographyblocktemplate#1#2#3#4{%
+  \gdef\firstblocktemplate{#1}%
+  \gdef\secondblocktemplate{#2}%
+  \gdef\thirdblocktemplate{#3}%
+  \gdef\otherblocktemplate{#4}}
+
+\beamertemplatearticlebibitems
+\usebibliographyblocktemplate
+  {\color{structure}}
+  {\par\color{black}}
+  {\par\color{structure!65}}
+  {\par\color{structure!65}}
+
+
+%
+% Floats and tables
+%
+
+\def\figure{\@ifnextchar[{\@figure}{\@figure[]}}
+\def\@figure[#1]{% ignores placement specification!
+  \def\@captype{figure}%
+  \begin{center}}
+\def\endfigure{\end{center}}
+\newcounter{figure}
+\renewcommand\thefigure{\@arabic\c@figure}
+
+\def\table{\@ifnextchar[{\@table}{\@table[]}}
+\def\@table[#1]{% ignores placement specification!
+  \def\@captype{table}%
+  \begin{center}}
+\def\endtable{\end{center}}
+\newcounter{table}
+\renewcommand\thetable{\@arabic\c@table}
+
+\newlength\abovecaptionskip
+\newlength\belowcaptionskip
+\setlength\abovecaptionskip{7pt}
+\setlength\belowcaptionskip{7pt}
+
+\def\caption{
+  \ifx\@captype\@undefined
+    \@latex@error{\noexpand\caption outside figure or table}\@ehd
+    \expandafter\@gobble
+ \else
+   \refstepcounter\@captype
+   \expandafter\@firstofone
+ \fi
+ {\@dblarg{\@caption\@captype}}%
+}
+\long\def\@caption#1[#2]#3{% second argument ignored
+  \par
+  \begingroup
+    \@parboxrestore
+    \if@minipage
+      \@setminipage
+    \fi
+    \normalsize
+    \beamer@makecaption{#1}{\ignorespaces #3}\par
+    \endgroup}
+\long\def\beamer@makecaption#1#2{%
+  \def\insertcaptionname{\csname#1name\endcsname}%
+  \def\insertcaptionnumber{\csname the#1\endcsname}%
+  \def\insertcaption{#2}%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{\beamer@captiontemplate}%
+  \ifdim \wd\@tempboxa >\hsize
+    \beamer@captiontemplate\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\long\def\usecaptiontemplate#1{%
+  \gdef\beamer@captiontemplate{#1}}
+\usecaptiontemplate{%
+  {\small\structure{\insertcaptionname:} \insertcaption}}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

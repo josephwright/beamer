@@ -142,7 +142,7 @@ the class.
 
 \frame{\titlepage}
 
-\section[Outline]{}
+\section*{Outline}
 \frame{\tableofcontents}
 
 \section{Introduction}
@@ -195,8 +195,8 @@ Section~\ref{section-workflow} might be especially helpful. The later
 sections explain the basic usage of the |beamer| class as well as
 advanced features. If you wish to adjust the way your presentations
 look (for example, if you wish to add a default logo of your
-institution to every presentation in the future), please read the last
-section. 
+institution to every presentation in the future), please read the
+section on customization. 
 
 In this guide you will find the descriptions of all ``public''
 commands provided by the |beamer| class. In each such
@@ -235,30 +235,28 @@ the following: Obtain the latest source version (ending
 |.tar.gz|) of the \beamer\ package from 
 \href{http://sourceforge.net/projects/latex-beamer/}{|http://sourceforge.net/projects/latex-beamer/|}
 (most likely, you have already done this). Next, you also need at
-least version 0.40 of the \textsc{pgf} package, which can be found at
-the same place. Finally, you need at least version 1.03 of the
+least version 0.50 of the \textsc{pgf} package, which can be found at
+the same place. Finally, you need at least version 1.06 of the
 \textsc{xcolor} package, which can also be found at that place
 (although the version on CTAN might be newer).
 
 In all cases, the packages contain a bunch of files (for the \beamer\
 class, |beamer.cls| is one of these files and happens to be the
 most important one, for the \textsc{pgf} package |pgf.sty| is
-the most important file). 
-Place all files in three directories. For example,
-|/home/tantau/beamer/|, |/home/tantau/pgf/|, and
-|/home/tantau/xcolor/| would work fine for me. Then setup the
-environment variable called |TEXINPUTS| to be the following
-string (how exactly this is done depends on your operating system and
-shell): 
+the most important file). Place all files in three directories. For
+example, |~/beamer/|, |~/pgf/|, and |~/xcolor/| would work fine for
+me. Then setup the environment variable called |TEXINPUTS| to be the
+following string (how exactly this is done depends on your operating
+system and shell): 
 
 \begin{verbatim}
-.:/home/tantau/beamer:/home/tantau/pgf:/home/tantau/xcolor:
+.:~/beamer/base:~/beamer/art:~/beamer/themes:~/pgf:~/xcolor:
 \end{verbatim}
 
 Naturally, if the |TEXINPUTS| variable is already defined
-differently, you should \emph{add} the three directories to the list. Do
-not forget to place a colon at the end (corresponding to an empty
-path), which will include all standard directories.
+differently, you should \emph{add} the five directories to the
+list. Do not forget to place a colon at the end (corresponding to an
+empty path), which will include all standard directories.
 
 
 
@@ -320,22 +318,13 @@ However, note that the \beamer\ package does not come with a
 
 \subsection{Updating the Installation}
 
-To update your installation from a previous version, you should do two
-things:
-\begin{itemize}
-\item
-  Completely replace everything in the directories like
-  |texmf/tex/latex/beamer| with the files of the new version. The
-  easiest way to do this is to first delete the old version and then
-  proceed as described above.
-\item
-  When you run \TeX\ on a file like |main.tex|, \TeX\ produces
-  numerous extra files like |main.toc| or |main.head|. When you have
-  updated from an older version of \beamer, these files may confuse
-  the \beamer\ class resulting in hundreds of mysterious error
-  messages. Simply delete these files, they will automatically be
-  recreated (and, this time, correctly).
-\end{itemize}
+To update your installation from a previous version, simply replace
+everything in the directories like |texmf/tex/latex/beamer| with the
+files of the new version. The easiest way to do this is to first
+delete the old version and then proceed as described above. Sometimes,
+there are changes in the syntax of certain command from version to
+version. If things no longer work that used to work, you wish to have
+a look at the release notes and at the change log.
 
 
 \subsection{Testing the Installation}
@@ -379,7 +368,7 @@ options or precautions may be necessary.
 \end{package}
 
 \begin{package}{{fontenc}|[|\declare{|T1|}|]|}
-  Typically, you should \emph{not} use this option. Only bitmapped
+  Currently, you should \emph{not} use this option. Only bitmapped
   versions of the Computer Modern fonts are available in the T1~encoding
   in a standard installation. This option will result in very poor
   rendering of your presentation when viewed with \pdf\ viewer
@@ -452,7 +441,7 @@ presentation, you can call your main file |main.tex|.
 To create an initial |main.tex| file for your talk, copy an
 existing file (like the file |beamerexample1.tex| that comes along
 with the contribution) and delete everything that is not going to be
-part of your talk. Adjust the |\author{}| and other fields as 
+part of your talk. Adjust the |\author| and other fields as 
 appropriate. 
 
 If you wish your talk to reside in the same file as some different,
@@ -470,7 +459,7 @@ things you can reasonably talk about within the time available. Then
 categorize the inventory into sections and subsections. For very long
 talks (like a 90 minute lecture), you might also divide your talk into
 independent parts (like a ``review of the previous lecture part'' and
-a ``main part''). Put |\section{}| and |\subsection{}| commands into
+a ``main part''). Put |\section| and |\subsection| commands into
 the (more or less empty) main file. Do not create any frames until you
 have a first working version of a possible table of contents. Do not
 feel afraid to change it later on as you work on the talk.
@@ -526,7 +515,7 @@ might  look like this:
 
 \frame{\titlepage}
 
-\section[Outline]{}
+\section*{Outline}
 \frame{\tableofcontents}
 
 \section{Introduction}
@@ -857,32 +846,33 @@ contents of the frame. All of this text that is not tagged by overlay
 specifications (see Section~\ref{subsection-overlay}) is shown on all
 slides of the frame.  
 
-\begin{command}{\frame\oarg{overlay specification}\marg{frame text}}
+\begin{command}{\frame\sarg{overlay specification}\oarg{options}\marg{frame text}}
   The \meta{overlay specification} dictates which slides of a frame are
   to be shown, see Section~\ref{subsection-restriction} for details. 
   The \meta{frame text} can be normal \LaTeX\ text, but may not contain
   |\verb| commands or |verbatim| environments, unless special
   precautions are taken, see Section~\ref{section-verbatim}.
+  
   \example
   \begin{verbatim}
 \frame
 {
-  Some text...
-
-  Some more...
+  \frametitle{A title}
+  Some content.
 }
-  \end{verbatim}
-\end{command}
+\end{verbatim}
 
-\begin{command}{\plainframe\oarg{overlay specification}\marg{frame text}}
-  This command creates a frame in which the head lines, foot lines,
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|plain|} causes  the head lines, foot lines,
   and side bars are suppressed. This is useful for creating single
   frames with different head and foot lines or for creating frames
   showing big pictures that completely fill the frame.
 
   \example A frame with a picture completely filling the frame:  
 \begin{verbatim}
-\plainframe{\hfill\pgfimage[height=9.6cm]{bigimagefilename}\hfill}
+\frame[plain]{\hfill\pgfimage[height=9.6cm]{bigimagefilename}\hfill}
 \end{verbatim}
   
   \example A title page, in which the head and foot lines are replaced
@@ -901,11 +891,21 @@ slides of the frame.
   \vskip0pt plus 1filll
   \beamerline{\pgfuseimage{bottomtitle}}
 }
-
-\begin{document}
-\plainframe{\titlepage}
+\frame[plain]{\titlepage}
 \end{verbatim}
+  \end{itemize}
 \end{command}
+
+For compatibility with earlier versions, you can also give an overlay
+specification in square brackets. If the sole argument to the |\frame|
+command is an argument in square brackets, the \beamer\ class will try
+to check whether this argument ``looks like'' an overlay
+specification. If so, it is assumed to be an overlay specification.
+
+Note that there is \emph{no} environment for creating frames. The
+reason is that I have simply not been able to come up with any idea of
+how to implement it.
+
 
 
 
@@ -983,13 +983,12 @@ introduced (despite the fact that a specification like |<4->|
 might suggest that more than four slides would be possible).
 
 You can also specify the number of slides in the frame ``by hand.'' To
-do so, you pass an optional argument to the |\frame| command,
-given in \emph{square} brackets. This argument is also a 
-slide specification. The frame will contain only the slides
-specified in this argument. Consider the following example.
+do so, you pass an overlay specification the |\frame| command. The
+frame will contain only the slides specified in this
+argument. Consider the following example. 
 
 \begin{verbatim}
-\frame[1-2,4-]
+\frame<1-2,4->
 {
   This is slide number \only<1>{1}\only<2>{2}\only<3>{3}%
   \only<4>{4}\only<5>{5}.
@@ -1000,8 +999,8 @@ will contain the text ``This is slide number~1,'' the second ``This is
 slide number~2,'' the third ``This is slide number~4,'' and the fourth
 ``This is slide number~5.''
 
-A useful specification is just |[0]|, which causes the frame to
-have to no slides at all. For example, |\frame[handout:0]| causes
+A useful specification is just |<0>|, which causes the frame to
+have to no slides at all. For example, |\frame<handout:0>| causes
 the frame to be suppressed in the handout version, but to be shown
 normally in all other versions.
 
@@ -1016,7 +1015,7 @@ frames that contain a single slide or that are suppressed
 altogether. Furthermore, you must explicitly specify that the frame
 contains only one slide; like this:
 \begin{verbatim}
-\frame[all:1]
+\frame<all:1>
 {
   \frametitle{Our Search Procedure}
 
@@ -1033,12 +1032,12 @@ contains only one slide; like this:
 }
 \end{verbatim}
 
-Instead of |\frame[all:1]| you could also have specified
-|\frame[1]|, but this works only for the presentation version of
+Instead of |\frame<all:1>| you could also have specified
+|\frame<1>|, but this works only for the presentation version of
 the talk, not for the handout version. To make verbatim accessible
 also in the handout version, you would have to specify
-\verb!\frame[1| handout: 1]! and even more if you also have a
-transparencies version. The specification |\frame[all:1]| states
+\verb!\frame<1| handout: 1>! and even more if you also have a
+transparencies version. The specification |\frame<all:1>| states
 that the frame has just one slide in all versions.
 
 If you need to use verbatim commands in frames that contain several
@@ -1778,22 +1777,29 @@ a good idea), you can use the command |\breakhere|. Note that the
 standard command |\\| does not work.
 
 \begin{command}{\section\oarg{short section name}\marg{section name}}
-  Starts a section. No heading is created, but the \meta{section name}
-  is only shown in the table of contents and the \meta{short section name}
-  is only shown in the navigation bar. If the \meta{section name} is
-  empty, a navigation entry is created, but no entry in the table of
-  contents. This is useful for sections like a ``table of contents
-  section.''
-  \example|\section[Summary]{Summary of Main Results}| or
-  |\section[Outline]{}| 
+  Starts a section. No heading is created. The \meta{section name}
+  is shown in the table of contents and in the navigation bars, except
+  if \meta{short section name} is specified. In this case, \meta{short
+    section name} is used in the navigation bars instead.
+  \example|\section[Summary]{Summary of Main Results}|
 \end{command}
 
+\begin{command}{\section\declare{|*|}\marg{section name}}
+  Starts a section without an entry in the table of contents. No
+  heading is created, but the \meta{section name} is shown in the
+  navigation bar. 
+  \example|\section*{Outline}|
+\end{command}
 
 \begin{command}{\subsection\oarg{short subsection name}\marg{subsection name}}
   This command works the same way as the |\section| command.
-  \example|\subsection{Some Subsection}|
+  \example|\subsection[Applications]{Applications to the Reduction of Pollution}|
 \end{command}
 
+\begin{command}{\subsection\declare{|*|}\marg{subsection name}}
+  Like |\subsection*|, except for subsections.
+  \example|\subsection*{Further Reading}|
+\end{command}
 
 
 
@@ -1823,7 +1829,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
 \begin{document}
   \frame{\titlepage}
 
-  \section[Outlines]{}
+  \section*{Outlines}
   \subsection{Part I: Review of Previous Lecture}
   \frame{
     \frametitle{Outline of Part I}
@@ -1878,7 +1884,7 @@ that can be used to create certain special effects.
   templates, see Section~\ref{section-toc-templates}. 
   \example
 \begin{verbatim}
-\section[Outline]{}
+\section*{Outline}
 \frame{\tableofcontents}
 
 \section{Introduction}
@@ -1923,8 +1929,13 @@ that can be used to create certain special effects.
     show them, you must install a different table of contents
     templates.
   \item
-    \declare{|current|} causes all but the current section to be
-    shown in a semi-transparent way.
+    \declare{|current|} causes all sections but the current to
+    be shown in a semi-transparent way. Also, all subsections but
+    those in the current section are shown in the semi-transparent way.
+  \item
+    \declare{|currentsubsection|} causes all subsections but the
+    current subsection in the current section to be shown in a
+    semi-transparent way.
   \item
     \declare{|pausesections|} causes a |\pause| command to
     be issued before each section. This is useful if you wish to show
@@ -2080,11 +2091,11 @@ talk.
 \begin{verbatim}
 \begin{document}
 \frame{\titlepage}
-\section[Outline]{}
+\section*{Outline}
 \frame{\tableofcontents}
 \section{Main Text}
 \frame{Some text}
-\section[Summary]{}
+\section*{Summary}
 \frame{Summary text}
 
 \appendix
@@ -3432,19 +3443,19 @@ handout.
 You can also use an alternate overlay specification for the optional
 argument of the frame command as in the following example.
 \begin{verbatim}
-\frame[1-| handout:0]{Text...}
+\frame<1-| handout:0>{Text...}
 \end{verbatim}
 This causes the frame to be suppressed in the handout version. Also,
 you can restrict the presentation such that only specific slides of
 the frame are shown on the handout:
 \begin{verbatim}
-\frame[1-| handout:4-5]{Text...}
+\frame<1-| handout:4-5>{Text...}
 \end{verbatim}
 
 It is also possible to give only an alternate overlay
 specification. For example, |\alert<handout:0>{...}| causes the
 text to be always hilighted during the presentation, but never on the
-handout version. Likewise, |\frame[handout:0]{...}| causes the
+handout version. Likewise, |\frame<handout:0>{...}| causes the
 frame to be suppressed for the handout.
 
 Finally, note that it is possible to give more than one alternate
@@ -3459,7 +3470,7 @@ transparency version, and not at all in the handout.
 If you wish to give the same specification in all versions, you can do
 so by specifying |all:| as the version. For example,
 \begin{verbatim}
-\frame[all:1-2]
+\frame<all:1-2>
 {
   blah...
 }
@@ -4471,6 +4482,45 @@ If you wish to suppress the head and foot line in the title page, use
 
 \label{section-toc-templates}
 
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplateplaintoc}
+  Installs a simple table of contents template with indented subsections. 
+  \example |\beamertemplateplaintoc|
+\end{command}
+
+\begin{command}{\beamertemplateballsectiontoc}
+  Installs a table of contents template in which small balls are shown
+  before each section and subsection.
+  \example |\beamertemplatenumberedballsectiontoc|
+\end{command}
+
+\begin{command}{\beamertemplatenumberedsectiontoc}
+  Installs a table of contents template in which the sections are
+  numbered. 
+  \example |\beamertemplatenumberedsectiontoc|
+\end{command}
+
+\begin{command}{\beamertemplatenumberedcirclesectiontoc}
+  Installs a table of contents template in which the sections are
+  numbered and the numbers are drawn on a small circle. 
+  \example |\beamertemplatenumberedcirclesectiontoc|
+\end{command}
+
+\begin{command}{\beamertemplatenumberedballsectiontoc}
+  Installs a table of contents template in which the sections are
+  numbered and the numbers are drawn on a small ball. 
+  \example |\beamertemplatenumberedballsectiontoc|
+\end{command}
+
+\begin{command}{\beamertemplatenumberedsubsectiontoc}
+  Installs a table of contents template in which the subsections are
+  numbered. 
+  \example |\beamertemplatenumberedsubsectiontoc|
+\end{command}
+
+
+
 \paragraph{Template Installation Commands}\ 
 
 \begin{command}{\usetemplatetocsection\oarg{mix-in specification}%
@@ -4507,6 +4557,8 @@ If you wish to suppress the head and foot line in the title page, use
 \end{verbatim}
 \end{command}
 
+
+
 \paragraph{Inserts for this Template}\ 
 
 \begin{command}{\inserttocsection}
@@ -4514,9 +4566,19 @@ If you wish to suppress the head and foot line in the title page, use
   into a template.
 \end{command}
 
+\begin{command}{\inserttocsectionnumber}
+  Inserts the number of the current section (in the table of contents)
+  into a template. 
+\end{command}
+
 \begin{command}{\inserttocsubsection}
   Inserts the table of contents version of the current subsection name
   into a template. 
+\end{command}
+
+\begin{command}{\inserttocsubsectionnumber}
+  Inserts the number of the current subsection (in the table of
+  contents) into a template. 
 \end{command}
 
 
