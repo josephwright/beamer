@@ -51,34 +51,38 @@
                                 % Sections in headline
 \usesectionsidetemplate
 {%
-  \setbox\tempbox=\hbox{\color{black}\tiny{\kern3pt\insertsectionhead}}%
-  \ht\tempbox=8pt%
-  \dp\tempbox=2pt%
+  {\tiny
+  \setbox\tempbox=\hbox{\color{black}{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=3ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
 {%
-  \setbox\tempbox=\hbox{\color{structure!75}\tiny{\kern3pt\insertsectionhead}}%
-  \ht\tempbox=8pt%
-  \dp\tempbox=2pt%
+  {\tiny
+  \setbox\tempbox=\hbox{\color{structure!75}{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=3ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
 
 \usesubsectionsidetemplate
 {%
-  \setbox\tempbox=\hbox{\color{black}\tiny{\kern6pt\insertsubsectionhead}}%
-  \ht\tempbox=4.5pt%
-  \dp\tempbox=2pt%
+  {\tiny
+  \setbox\tempbox=\hbox{\color{black}{\kern6pt\insertsubsectionhead}}%
+  \ht\tempbox=1.6875ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
 {%
-  \setbox\tempbox=\hbox{\color{black!50}\tiny{\kern6pt\insertsubsectionhead}}%
-  \ht\tempbox=4.5pt%
-  \dp\tempbox=2pt%
+  {\tiny%
+  \setbox\tempbox=\hbox{\color{black!50}{\kern6pt\insertsubsectionhead}}%
+  \ht\tempbox=1.6875ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
 
                                 % Head

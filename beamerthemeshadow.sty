@@ -26,7 +26,7 @@
   }
   
 \useframetitletemplate{%
-  \nointerlineskip
+  \nointerlineskip{\tiny\vskip.35em}\vskip-2pt%
   \hbox{\leavevmode
     \advance\beamer@leftmargin by -12bp%
     \advance\beamer@rightmargin by -12bp%
@@ -95,12 +95,13 @@
 \ifbeamer@compress
 \useheadtemplate{%
   \vbox{%
+    \tiny%
     \setbox\linebox=\hbox to\paperwidth{%
       \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
       \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}\hfil}%
-    \ht\linebox=7pt
+    \ht\linebox=2.625ex
     \dp\linebox=0pt
-    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \setbox\linebox=\vbox{\box\linebox\vskip1.125ex}%
     \hbox to\textwidth{%
       {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth height\ht\linebox
       \color{structure}\vrule width.5\paperwidth height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
@@ -114,13 +115,14 @@
 \else
 \useheadtemplate{%
   \vbox{%
-    \tempdimen=6.5pt%
+    \tiny%
+    \tempdimen=2.4375ex%
     \ifnum\subsection@max<\section@max%
     \multiply\tempdimen by\section@max%
     \else%
     \multiply\tempdimen by\subsection@max%
     \fi%
-    \advance\tempdimen by 3pt%
+    \advance\tempdimen by 1.125ex%
     \setbox\linebox=\hbox to\paperwidth{%
       \vbox to \tempdimen{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
       \vbox to \tempdimen{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
@@ -128,7 +130,7 @@
       {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
         height\ht\linebox\color{structure}\vrule width.5\paperwidth
         height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
-    \hskip-\Gm@lmargin\box\linebox\hfill\hskip-\Gm@rmargin%
+      \hskip-\Gm@lmargin\box\linebox\hfill\hskip-\Gm@rmargin%
     }
     \vskip-0.1pt
     \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
@@ -138,7 +140,7 @@
 \fi
                                 % Footline
 \usefoottemplate{%
-  \vbox{%
+  \vbox{\tiny%
     \hbox to\textwidth{\hfill%
       \setbox\logobox=\hbox{\raise 10pt\hbox{\insertlogo}\llap{\insertnavigationsymbols}}\ht\logobox=0pt%
       \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
@@ -146,9 +148,9 @@
   \setbox\linebox=\hbox to\paperwidth{%
     \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
     \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
-  \ht\linebox=7pt%
+  \ht\linebox=2.625ex%
   \dp\linebox=0pt%
-  \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+  \setbox\linebox=\vbox{\box\linebox\vskip1.125ex}%
   \color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
   height\ht\linebox\color{structure}\vrule width.5\paperwidth
   height\ht\linebox\hskip-\paperwidth% 

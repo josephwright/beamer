@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/12/02 v1.04-dev Class for Typesetting a Beamer Presentation]
+[2003/12/11 v1.10 Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -354,6 +354,16 @@
 \DeclareOption{bigger}{\def\beamer@size{{size12.clo}}}
 \DeclareOption{smaller}{\def\beamer@size{{size10.clo}}}
 
+\DeclareOption{8pt}{\def\beamer@size{{size8.clo}}}
+\DeclareOption{9pt}{\def\beamer@size{{size9.clo}}}
+\DeclareOption{10pt}{\def\beamer@size{{size10.clo}}}
+\DeclareOption{11pt}{\def\beamer@size{{size11.clo}}}
+\DeclareOption{12pt}{\def\beamer@size{{size12.clo}}}
+\DeclareOption{14pt}{\def\beamer@size{{size14.clo}}}
+\DeclareOption{17pt}{\def\beamer@size{{size17.clo}}}
+\DeclareOption{20pt}{\def\beamer@size{{size20.clo}}}
+
+
 \DeclareOption{draft}{\beamer@draftmodetrue}
 \AtBeginDocument{
   \ifbeamer@draftmode
@@ -406,6 +416,105 @@
   
 \expandafter\input\beamer@size
 \geometry{headsep=0pt}
+
+
+%
+% Font size stuff
+%
+\def\EC@family#1#2#3#4#5{%
+  \DeclareFontShape{#1}{#2}{#3}{#4}%
+  {<5><6><7><8><9><10><10.95><12><14.4>%
+   <17.28><20.74><24.88><29.86><35.83><42.99><51.59>genb*#5}{}}
+\EC@family{T1}{cmr}{m}{n}{ecrm}
+\EC@family{T1}{cmr}{m}{sl}{ecsl}
+\EC@family{T1}{cmr}{m}{it}{ecti}
+\EC@family{T1}{cmr}{m}{sc}{eccc}
+\EC@family{T1}{cmr}{bx}{n}{ecbx}
+\EC@family{T1}{cmr}{b}{n}{ecrb}
+\EC@family{T1}{cmr}{bx}{it}{ecbi}
+\EC@family{T1}{cmr}{bx}{sl}{ecbl}
+\EC@family{T1}{cmr}{bx}{sc}{ecxc}
+\EC@family{T1}{cmr}{m}{ui}{ecui}
+\DeclareFontShape{OT1}{cmr}{m}{n}%
+     {<5><6><7><8><9><10><12>gen*cmr%
+      <10.95>cmr10%
+      <14.4>cmr12%
+      <17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmr17}{}
+\DeclareFontShape{OT1}{cmr}{m}{sl}%
+     {<5><6><7>cmsl8%
+      <8><9>gen*cmsl%
+      <10><10.95>cmsl10%
+      <12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmsl12%
+      }{}
+\DeclareFontShape{OT1}{cmr}{m}{it}%
+     {<5><6><7>cmti7%
+      <8>cmti8%
+      <9>cmti9%
+      <10><10.95>cmti10%
+      <12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmti12%
+      }{}
+\DeclareFontShape{OT1}{cmr}{m}{sc}%
+     {<5><6><7><8><9><10><10.95><12>%
+      <14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmcsc10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{m}{ui}
+   {<5><6><7><8><9><10><10.95><12>%
+      <14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmu10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{b}{n}
+     {<5><6><7><8><9><10><10.95><12>%
+      <14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmb10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{bx}{n}
+   {<5><6><7><8><9>gen*cmbx%
+      <10><10.95>cmbx10%
+      <12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmbx12%
+      }{}
+\DeclareFontShape{OT1}{cmr}{bx}{sl}
+      {<5><6><7><8><9>%
+      <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmbxsl10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{bx}{it}
+      {<5><6><7><8><9>%
+      <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmbxti10%
+    }{}
+\DeclareFontFamily{T1}{cmss}{}
+\EC@family{T1}{cmss}{m}{n}{ecss}
+\EC@family{T1}{cmss}{m}{sl}{ecsi}
+\EC@family{T1}{cmss}{m}{it}{ecsi}
+\EC@family{T1}{cmss}{bx}{n}{ecsx}
+\EC@family{T1}{cmss}{bx}{it}{ecso}
+\EC@family{T1}{cmss}{bx}{sl}{ecso}
+\DeclareFontShape{T1}{cmss}{sbc}{n}{%
+      <5><6><7><8><9><10><10.95><12><14.4><17.28>%
+      <20.74><24.88><29.86><35.83><42.99><51.59>%
+      ecssdc10
+       }{}
+\DeclareFontShape{OT1}{cmss}{m}{n}
+     {%
+      <5><6><7><8>cmss8%
+      <9>cmss9%
+      <10><10.95>cmss10%
+      <12><14.4>cmss12%
+      <17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmss17%
+      }{}
+\DeclareFontShape{OT1}{cmss}{m}{sl}
+    {%
+      <5><6><7><8>cmssi8<9>cmssi9%
+      <10><10.95>cmssi10%
+      <12><14.4>cmssi12%
+      <17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssi17%
+      }{}
+\DeclareFontShape{OT1}{cmss}{sbc}{n}
+     {%
+      <5><6><7><8><9>cmssdc10%
+       <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssdc10%
+       }{}
+\DeclareFontShape{OT1}{cmss}{bx}{n}
+     {%
+      <5><6><7><8><9>cmssbx10%
+      <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssbx10%
+      }{}
 
 %
 %
@@ -589,6 +698,9 @@
   \def\@plano@float@#1{\begin{table}}
   \def\end@plano@float@{\end{table}}
 }
+
+% Setup normal font (for calculation of head sizes)
+\normalfont
 
 %
 %
@@ -836,6 +948,7 @@
   \beamer@partstartpage=\c@page%
   \beamer@sectionstartpage=\c@page%
   \beamer@subsectionstartpage=\c@page%
+  \setcounter{subsection}{0}%
   \def\insertsection{}%
   \def\insertsubsection{}%
   \def\lastsubsection{}%
@@ -1720,19 +1833,19 @@
 \newcount\beamer@ypos
 
 \def\insertnavigation#1{%
-  \vbox{%
+  \vbox{\tiny%
     \beamer@xpos=0\relax%
     \beamer@ypos=1\relax%
-    \hbox to #1{\hskip.3cm\tiny\setbox\sectionbox=\hbox{\kern1sp}%
-      \ht\sectionbox=5pt%
-      \dp\sectionbox=2pt%
-        \hskip-5pt plus-1fill\dohead%
+    \hbox to #1{\hskip.3cm\setbox\sectionbox=\hbox{\kern1sp}%
+      \ht\sectionbox=1.875ex%
+      \dp\sectionbox=0.75ex%
+        \hskip-1.875ex plus-1fill\dohead%
       \box\sectionbox\hfil\hskip.3cm}%
   }}
 
 \def\sectionentry#1#2#3#4#5{% section name, section title, page
   \ifnum#5=\c@part%
-  \box\sectionbox\hskip5pt plus 1fill%
+  \box\sectionbox\hskip1.875ex plus 1fill%
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
   \setbox\sectionbox=
@@ -1740,8 +1853,8 @@
     \ifnum\thesection=#1%
     \hyperlink{Navigation#3}{\@sectionheadhilight}\else%
     \hyperlink{Navigation#3}{\@sectionheadnohilight}\fi}%
-  \ht\sectionbox=5pt%
-  \dp\sectionbox=2pt%
+  \ht\sectionbox=1.875ex%
+  \dp\sectionbox=0.75ex%
   \fi\ignorespaces}
 
 \def\usesectionheadtemplate#1#2{\gdef\@sectionheadhilight{#1}\gdef\@sectionheadnohilight{#2}}
@@ -1842,8 +1955,8 @@
 
 \def\insertsectionnavigation#1{%
   \hbox to #1{%
-    \vbox{%
-     \vskip1.5pt%
+    \vbox{\tiny%
+     \vskip0.5625ex%
      \def\slideentry##1##2##3##4##5##6{}%
      \def\sectionentry##1##2##3##4##5{%
        \ifnum##5=\c@part%
@@ -1852,25 +1965,25 @@
          \hyperlink{Navigation##3}{\hbox to #1{%
            \hskip0.3cm\ifnum\thesection=##1%
            \@sectionheadhilight\else\@sectionheadnohilight\fi\hskip0.3cm}}}%
-       \ht\tempbox=4.5pt\dp\tempbox=2pt%        
+       \ht\tempbox=1.6875ex\dp\tempbox=0.75ex%        
        \box\tempbox\fi}%
-     \dohead\vskip1.5pt}\hfil}}
+     \dohead\vskip0.5625ex}\hfil}}
 
 \def\insertsectionnavigationhorizontal#1#2#3{%
   \hbox to #1{%
      \def\slideentry##1##2##3##4##5##6{}%
      #2\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
-     \ht\sectionbox=5pt%
-     \dp\sectionbox=2pt%
-     \hskip-5pt plus-1fill\dohead%
+     \ht\sectionbox=1.875ex%
+     \dp\sectionbox=0.75ex%
+     \hskip-1.875ex plus-1fill\dohead%
      \box\sectionbox\hfil\hskip.3cm%
      #3}}
 
 \newcount\currentsubsection
 \def\insertsubsectionnavigation#1{%
   \hbox to #1{%
-    \vbox{%
-      \vskip1.5pt%
+    \vbox{\tiny%
+      \vskip0.5625ex%
       \currentsubsection=1%
       \def\sectionentry##1##2##3##4##5{}%
       \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
@@ -1880,28 +1993,28 @@
         \setbox\tempbox=\hbox{\beamer@link(##4){%
           \hbox to #1{\hskip0.3cm\ifnum\thesubsection=##2%
           \@subsectionheadhilight\else\@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
-        \ht\tempbox=4.5pt\dp\tempbox=2pt%
+        \ht\tempbox=1.6875ex\dp\tempbox=0.75ex%
         \box\tempbox\fi\fi\fi}%
-      \dohead\vskip1.5pt}\hfil}}
+      \dohead\vskip0.5625ex}\hfil}}
 
 \def\insertsubsectionnavigationhorizontal#1#2#3{%
-  \hbox to #1{%
+  \hbox to #1{\tiny%
     \currentsubsection=1%
     \def\sectionentry##1##2##3##4##5{}%
     \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
       \ifnum##2=\currentsubsection%
       \advance\currentsubsection by1%
-      \box\sectionbox\hskip5pt plus1fill%
+      \box\sectionbox\hskip1.875ex plus1fill%
       \setbox\sectionbox=
       \hbox{\def\insertsubsectionhead{##5}%
         \ifnum\thesubsection=##2%
         \beamer@link(##4){\@subsectionheadhilight}\else%
         \beamer@link(##4){\@subsectionheadnohilight}\fi}%
-      \ht\sectionbox=5pt%
-      \dp\sectionbox=2pt%
+      \ht\sectionbox=1.875ex%
+      \dp\sectionbox=0.75ex%
       \fi\fi\fi\ignorespaces}%
     #2\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
-    \hskip-5pt plus-1fill\dohead%
+    \hskip-1.875ex plus-1fill\dohead%
     \box\sectionbox\hfil\hskip.3cm%
     #3}}
 
@@ -2274,17 +2387,17 @@
 \raggedright
 
 \def\tinyline#1{%
-  \setbox\linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm\tiny{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
-  \ht\linebox=5.5pt%
+  {\tiny\setbox\linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
+  \ht\linebox=2.06ex%
   \dp\linebox=0pt%
   \box\linebox%
-  \vskip3pt}
+  \vskip1.125ex}}
 \def\tinycolouredline#1#2{%
-  \hbox{%
-    \setbox\linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm\tiny{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
-    \ht\linebox=7pt%
+  \hbox{\tiny%
+    \setbox\linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
+    \ht\linebox=2.625ex%
     \dp\linebox=0pt%
-    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \setbox\linebox=\vbox{\box\linebox\vskip1.125ex}%
     {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
       height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
     \box\linebox}%

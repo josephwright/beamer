@@ -2,11 +2,12 @@
 \lyxformat 221
 \textclass beamer
 \begin_preamble
-\beamertemplateshadingbackground{red!5}{structure!5}
+%\beamertemplateshadingbackground{red!5}{structure!5}
 
 \usepackage{beamerthemeshadow}
 
-\beamertemplatetransparentcovereddynamic
+%\beamertemplatetransparentcovereddynamic
+\beamertemplatetransparentcovered
 \end_preamble
 \language english
 \inputencoding auto
@@ -158,7 +159,7 @@ Outline
 \layout Section
 
 <First Section Name>
-\layout BeginFrame
+\layout BeginNohandoutFrame
 
 Outline
 \layout TableOfContentsCurrent
@@ -173,37 +174,21 @@ Outline
 <Frame Title>
 \layout Itemize
 
+Shown from first slide on.
+\begin_deeper 
+\layout Pause
 
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-<1->
-\end_inset 
-
- Shown from first slide on.
+\end_deeper 
 \layout Itemize
 
+Shown from second slide on.
+\begin_deeper 
+\layout Pause
 
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-<2->
-\end_inset 
-
- Shown from second slide on.
+\end_deeper 
 \layout Itemize
 
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-<3->
-\end_inset 
-
- Shown from third slide on.
+Shown from third slide on.
 \layout EndFrame
 
 \layout BeginFrame
@@ -228,17 +213,6 @@ Untitled block.
 
 Shown on all slides.
 \end_deeper 
-\layout Standard
-
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-
-\end_inset 
-
-
 \layout ExampleBlock
 
 
@@ -253,10 +227,18 @@ status Inlined
 \begin_deeper 
 \layout Itemize
 
-First point.
+
+\begin_inset Formula $e^{i\pi}=-1$
+\end_inset 
+
+.
 \layout Itemize
 
-Second point.
+
+\begin_inset Formula $e^{i\pi/2}=i$
+\end_inset 
+
+.
 \end_deeper 
 \layout EndFrame
 
@@ -307,6 +289,43 @@ status Collapsed
 \layout Theorem
 
 On first slide.
+\layout Pause
+
+\layout Corollary
+
+On second slide.
+\layout EndFrame
+
+\layout BeginFrame
+
+<Column Title>
+\layout Columns
+
+\begin_deeper 
+\layout Column
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{5cm}
+\end_inset 
+
+
+\begin_deeper 
+\layout Theorem
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+In left column.
+\end_deeper 
 \layout Standard
 
 
@@ -315,14 +334,34 @@ status Collapsed
 
 \layout Standard
 
-\backslash 
-pause
 \end_inset 
 
 
+\layout Column
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{5cm}
+\end_inset 
+
+
+\begin_deeper 
 \layout Corollary
 
-On second slide.
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+In right column.
+\end_deeper 
+\end_deeper 
 \layout EndFrame
 
 \layout Section
@@ -331,6 +370,23 @@ Summary
 \layout BeginFrame
 
 Summary
+\layout Itemize
+
+First point.
+\begin_deeper 
+\layout Pause
+
+\end_deeper 
+\layout Itemize
+
+Second point.
+\begin_deeper 
+\layout Pause
+
+\end_deeper 
+\layout Itemize
+
+Third point.
 \layout EndFrame
 
 \the_end

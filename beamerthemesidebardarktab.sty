@@ -49,11 +49,12 @@
   \end{centering}
 }
 
+{\tiny\global\beamer@tempdim=2.4375ex}
 
-\pgfdeclarehorizontalshading{beamer@tabmain}{6.5pt}
+\pgfdeclarehorizontalshading{beamer@tabmain}{\the\beamer@tempdim}
 {color(0pt)=(white);
   color(\beamer@sidebarwidth)=(structure!50!averagebackgroundcolor)}
-\pgfdeclarehorizontalshading{beamer@tab}{6.5pt}{%
+\pgfdeclarehorizontalshading{beamer@tab}{\the\beamer@tempdim}{%
   color(0pt)=(white);
   color(9pt)=(structure!50!averagebackgroundcolor);
   color(\beamer@sidebarwidth)=(structure)}
@@ -70,40 +71,40 @@
                                 % Sections in headline
 \usesectionsidetemplate
 {%
-  \setbox\tempbox=\hbox{%
-    \color[gray]{0.3}\lower1pt\hbox{\pgfuseshading{beamer@tab}}%\vrule width\beamer@sidebarwidth height 6.5pt}%
+  {\tiny\setbox\tempbox=\hbox{%
+    \color[gray]{0.3}\lower0.5ex\hbox{\pgfuseshading{beamer@tab}}%
     \hskip-\beamer@sidebarwidth%
-    \color{structure}\tiny{\kern3pt\bfseries\insertsectionhead}}%
-  \ht\tempbox=8pt%
-  \dp\tempbox=2pt%
+    \color{structure}{\kern3pt\bfseries\insertsectionhead}}%
+  \ht\tempbox=3ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
 {%
-  \setbox\tempbox=\hbox{\color{structure!50}\tiny{\kern3pt\bfseries\insertsectionhead}}%
-  \ht\tempbox=8pt%
-  \dp\tempbox=2pt%
+  {\tiny\setbox\tempbox=\hbox{\color{structure!50}{\kern3pt\bfseries\insertsectionhead}}%
+  \ht\tempbox=3ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
 
 \usesubsectionsidetemplate
 {%
-  \setbox\tempbox=\hbox{%
-    \color[gray]{0.3}\lower1pt\hbox{\pgfuseshading{beamer@tab}}%\vrule width\beamer@sidebarwidth height 6.5pt}%
+  {\tiny\setbox\tempbox=\hbox{%
+    \color[gray]{0.3}\lower0.5ex\hbox{\pgfuseshading{beamer@tab}}%
     \hskip-\beamer@sidebarwidth%
-    \color{white}\tiny{\kern6pt\bfseries\insertsubsectionhead}}%
-  \ht\tempbox=5pt%
-  \dp\tempbox=2pt%
+    \color{white}{\kern6pt\bfseries\insertsubsectionhead}}%
+  \ht\tempbox=1.6875ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
 {%
-  \setbox\tempbox=\hbox{\color{white}\tiny{\kern6pt\bfseries\insertsubsectionhead}}%
-  \ht\tempbox=5pt%
-  \dp\tempbox=2pt%
+  {\tiny\setbox\tempbox=\hbox{\color{white}{\kern6pt\bfseries\insertsubsectionhead}}%
+  \ht\tempbox=1.6875ex%
+  \dp\tempbox=0.75ex%
   \wd\tempbox=\beamer@sidebarwidth%
-  \box\tempbox%
+  \box\tempbox}%
 }
                                 % Entries in table of contents
 \usetemplatetocsection[50!averagebackgroundcolor]

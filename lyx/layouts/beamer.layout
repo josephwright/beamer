@@ -1,5 +1,5 @@
-#% Do not delete the line below; configure depends on this
-#  \DeclareLaTeXClass{beamer}
+ #% Do not delete the line below; configure depends on this
+#  \DeclareLaTeXClass{Beamer Presentation Class}
 # Author : Till Tantau <tantau@users.sourceforge.net>
 
 # General textclass parameters
@@ -8,6 +8,7 @@ Sides			1
 SecNumDepth		2
 TocDepth		2
 DefaultStyle 		Standard
+MaxCounter		Counter_Section
 
 # This is just to show how to declare the default font.
 # The defaults are exactly those shown here.
@@ -101,8 +102,8 @@ Style BeginFrame
   TopSep            2.5
   BottomSep         0.5
   ParSep            0
-  Align             Left
-  AlignPossible     Left
+  Align             Center
+  AlignPossible     Center
   LabelType         Static
   LabelBottomSep    0
   LeftMargin        M
@@ -110,13 +111,71 @@ Style BeginFrame
 
   Font
     Series          Bold
-    Size            Large
+    Size            Largest
     Color           Blue
   EndFont
 
   LabelFont 
     Family          Roman
-    Color           red
+    Color           latex
+  EndFont
+End
+
+Style BeginPlainFrame
+  KeepEmpty	1
+  LatexType	Command
+  LatexName	plainframe{
+  Margin            First_Dynamic
+  NextNoIndent      1
+  ParSkip           0
+  TopSep            2.5
+  BottomSep         0.5
+  ParSep            0
+  Align             Center
+  AlignPossible     center
+  LabelType         Static
+  LabelBottomSep    0
+  LeftMargin        M
+  LabelString       "Frame (no head/foot/sidebars)  "
+
+  Font
+    Series          Bold
+    Size            Largest
+    Color           Blue
+  EndFont
+
+  LabelFont 
+    Family          Roman
+    Color           latex
+  EndFont
+End
+
+Style BeginNohandoutFrame
+  KeepEmpty	1
+  LatexType	Command
+  LatexName	frame[handout:0]{\frametitle
+  Margin            First_Dynamic
+  NextNoIndent      1
+  ParSkip           0
+  TopSep            2.5
+  BottomSep         0.5
+  ParSep            0
+  Align             Center
+  AlignPossible     Center
+  LabelType         Static
+  LabelBottomSep    0
+  LeftMargin        M
+  LabelString       "Frame (not in handout)  "
+
+  Font
+    Series          Bold
+    Size            Largest
+    Color           Blue
+  EndFont
+
+  LabelFont 
+    Family          Roman
+    Color           latex
   EndFont
 End
 
@@ -130,20 +189,75 @@ Style EndFrame
   TopSep            0
   BottomSep         1.5
   ParSep            0
-  Align             Left
-  AlignPossible     Left
+  Align             Center
+  AlignPossible     Center
   LabelType         Static
   LabelBottomSep    0
   LeftMargin        MMMMM
-  LabelString       "___________________________________________"
+  LabelString       "________________________________" 
 
   LabelFont 
-    Family          Roman
+    Family          typewriter
     Series          Medium
     Size            Normal
-    Color           red
+    Color           latex
   EndFont
 End
+
+Style Pause
+  KeepEmpty	1
+  LatexType	Command
+  LatexName	pause
+  Margin            First_Dynamic
+  NextNoIndent      1
+  ParSkip           0
+  TopSep            0
+  BottomSep         0.25
+  ParSep            0
+  Align             Center
+  AlignPossible     Center
+  LabelType         Static
+  LabelBottomSep    0
+  LeftMargin        MMMMM
+  LabelString       "_ _ _ _ _ _ _ _ _ _ _ _ _ _"
+
+  LabelFont 
+    Family          typewriter
+    Series          Medium
+    Size            Normal
+    Color           latex
+  EndFont
+End
+
+Counter
+  Name                 section
+End
+
+Counter
+  Name                 subsection
+End
+
+Counter
+  Name                 bibitem
+End
+
+Counter
+  Name                 figure
+End
+
+Counter
+  Name                 table
+End
+
+Counter
+  Name                 enumi
+End
+
+Counter
+  Name                 enumii
+  Within               enumi
+End
+
 
 # Section style definition
 Style Section
@@ -159,8 +273,8 @@ Style Section
   ParSep		0.7
   Align			Left
   AlignPossible		Left
-  LabelType             Static
-  LabelString		"Section"
+  LabelType		Counter_Section
+  LabelString		"Section "
   OptionalArgs				1
 
   Font 
@@ -170,7 +284,7 @@ Style Section
   EndFont
 
   LabelFont 
-    Color           red
+    Color           latex
   EndFont
 End
 
@@ -188,19 +302,19 @@ Style Subsection
   ParSep		0.5
   Align			Left
   AlignPossible		Left
-  LabelType             Static
-  LabelString		"Subsection"
+  LabelType		Counter_Subsection
+  LabelString		"Subsection "
   OptionalArgs				1
 
   # standard font definition
   Font 
     Family              Roman
     Series 		Bold
-    Size		Larger
+    Size		larger
   EndFont
 
   LabelFont 
-    Color           red
+    Color           latex
   EndFont
 End
 
@@ -229,7 +343,7 @@ Style AlertBlock
 
   LabelFont 
     Family              Roman
-    Color               red
+    Color               latex
   EndFont
 End
 
@@ -303,7 +417,7 @@ Style Block
 
   LabelFont 
     Family              Roman
-    Color               red
+    Color               latex
   EndFont
 End
 
@@ -351,6 +465,60 @@ Style Corollary
     Series		Bold
     Color               Blue
     Size                Large
+  EndFont
+End
+
+
+Style Column
+  KeepEmpty             1
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	column
+  LabelString		"column of width: " 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  LabelFont 
+    Family		Roman
+    Color               latex
+  EndFont
+End
+
+
+Style Columns
+  KeepEmpty             1
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	columns
+  LabelString		"columns" 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  LabelFont 
+    Family		Roman
+    Color               latex
   EndFont
 End
 
@@ -432,7 +600,7 @@ Style ExampleBlock
 
   LabelFont 
     Family              Roman
-    Color               red
+    Color               latex
   EndFont
 End
 
@@ -523,7 +691,7 @@ Style Only
 
   LabelFont 
     Family		Roman		
-    Color               Red
+    Color               Latex
   EndFont
 End
 
@@ -552,7 +720,7 @@ Style Part
   EndFont
 
   LabelFont
-    Color               Red
+    Color               Latex
   EndFont
 End
   
@@ -569,10 +737,12 @@ Style TableOfContentsCurrent
   LatexName		tableofcontents[current]
   LabelString	        "  [Table of contents with current section hilighted]"
   LabelType		static
+  Align			Center         
+  Alignpossible         Center
 
   Font 
     Family  		Roman
-    Color               red
+    Color               latex
     Size		normal
   EndFont  
 End
@@ -628,7 +798,7 @@ Style Uncover
 
   LabelFont 
     Family		Roman		
-    Color               Red
+    Color               Latex
   EndFont
 End
 
@@ -664,7 +834,5 @@ TitleLaTeXName frame{\titlepage}
 SecNumDepth		2
 TocDepth		2
 
-
-Input stdcounters.inc
 
 

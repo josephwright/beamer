@@ -86,7 +86,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 1.04\\
+\title{User's Guide to the Beamer Class, Version 1.10\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -3831,17 +3831,59 @@ difficult to fit ``too much'' onto a slide. Also, it will ensure that
 your slides are readable even under bad conditions like a large
 room and a small only a small projection area. However, you may wish
 to enlarge or shrink the fonts a bit if you know this to be more
-appropriate in your presentation environment. You can use the
-following two options to achieve this:
+appropriate in your presentation environment.
 
-\begin{classoption}{bigger}
+The default font size is 11pt. This may seem surprisingly small, but
+the actual size of each frame is just 128mm times 96mm and the viewer
+application enlarges the font. By specifying a default font size
+smaller than 11pt you can put more onto each slide, by specifying a
+larger font size you can fit on less.
+
+To specify the the font size, you can use the following class options:
+
+\begin{classoption}{8pt}
+  This is way too small. Requires that the package |extsize|
+  is installed.
+\end{classoption}
+
+\begin{classoption}{9pt}
+  This is also too small. Requires that the package |extsize|
+  is installed.
+\end{classoption}
+
+\begin{classoption}{10pt}
+  If you really need to fit much onto each frame, use this
+  option. Works without |extsize|.
+\end{classoption}
+
+\begin{classoption}{smaller}
+  Same as the |10pt| option.
+\end{classoption}
+
+\begin{classoption}{11pt}
+  The default font size. You need not specify this option.
+\end{classoption}
+
+\begin{classoption}{12pt}
   Makes all fonts a little bigger, which makes the text more
   readable. The downside is that less fits onto each frame.
 \end{classoption}
 
-\begin{classoption}{smaller}
-  Makes all fonts a little smaller, which allows you to fit more onto
-  frames. Normally, this is not a good idea.
+\begin{classoption}{bigger}
+  Same as the |12pt| option.
+\end{classoption}
+
+\begin{classoption}{14pt}
+  Makes all fonts somewhat bigger. Requires |extsize| to be installed.
+\end{classoption}
+
+\begin{classoption}{17pt}
+  This is about the default size of PowerPoint. Requires |extsize| to
+  be installed. 
+\end{classoption}
+
+\begin{classoption}{20pt}
+  This is really huge. Requires |extsize| to be installed.
 \end{classoption}
 
 
