@@ -18,7 +18,7 @@
 % The \frametitle command
 %
 %
-\newcommand\frametitle{\@dblarg\beamer@frametitle}
+\newcommand<>\frametitle{\alt#1{\@dblarg\beamer@frametitle}{\beamer@gobbleoptional}}
 \long\def\beamer@frametitle[#1]#2{%
   \beamer@ifempty{#2}{}{%
   \vskip0pt plus -1fill%
@@ -42,9 +42,9 @@
 \mode
 <article>
 {
-  \newcommand\frametitle[2][]{\gdef\insertframetitle{#2}\beamer@headrenderer}
+  \newcommand<>\frametitle[2][]{\only#3{\gdef\insertframetitle{#2}\beamer@headrenderer}}
   \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
-  \useframetitletemplate{\paragraph{\insertframetitle}\ \par}
+  \useframetitletemplate{\paragraph*{\insertframetitle}\ \par}
 }
 
 
@@ -149,41 +149,106 @@
   \useexampleblocktemplate{\par\medskip{\noindent\emph{\insertblockname}}\par\noindent\ignorespaces}{\medskip}
 }
 
+\newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
+\newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}
+\newenvironment{Definition}{\begin{block}{Definition}}{\end{block}}
+\newenvironment{Satz}{\begin{block}{Satz}}{\end{block}}
+\newenvironment{Beweis}{\begin{block}{Beweis.}}{\end{block}}
+\newenvironment{Folgerung}{\begin{block}{Folgerung}}{\end{block}}
+\newenvironment{Lemma}{\begin{block}{Lemma}}{\end{block}}
+\newenvironment{Fakt}{\begin{block}{Fakt}}{\end{block}}
+\newenvironment{Beispiel}{\begin{exampleblock}{Beispiel}}{\end{exampleblock}}
+\newenvironment{Beispiele}{\begin{exampleblock}{Beispiele}}{\end{exampleblock}}
+
+\newenvironment{Theorem}{\begin{block}{Theorem}}{\end{block}}
+\newenvironment{Proof}{\begin{block}{Proof.}}{\end{block}}
+\newenvironment{Corollary}{\begin{block}{Corollary}}{\end{block}}
+\newenvironment{Fact}{\begin{block}{Fact}}{\end{block}}
+\newenvironment{Example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+\newenvironment{Examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+
+\newenvironment{definition}{\begin{block}{Definition}}{\end{block}}
+\newenvironment{definitions}{\begin{block}{Definitions}}{\end{block}}
+\newenvironment{theorem}{\begin{block}{Theorem}}{\end{block}}
+\newenvironment{proof}{\begin{block}{Proof.}}{\end{block}}
+\newenvironment{corollary}{\begin{block}{Corollary}}{\end{block}}
+\newenvironment{fact}{\begin{block}{Fact}}{\end{block}}
+\newenvironment{lemma}{\begin{block}{Lemma}}{\end{block}}
+\newenvironment{problem}{\begin{block}{Problem}}{\end{block}}
+\newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+\newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+
+\newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
+\newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
+
+
 \mode
-<all>
+<article>
 {
-
   \ifbeamer@blocks
-    \newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
-    \newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}
-    \newenvironment{Definition}{\begin{block}{Definition}}{\end{block}}
-    \newenvironment{Satz}{\begin{block}{Satz}}{\end{block}}
-    \newenvironment{Beweis}{\begin{block}{Beweis.}}{\end{block}}
-    \newenvironment{Folgerung}{\begin{block}{Folgerung}}{\end{block}}
-    \newenvironment{Lemma}{\begin{block}{Lemma}}{\end{block}}
-    \newenvironment{Fakt}{\begin{block}{Fakt}}{\end{block}}
-    \newenvironment{Beispiel}{\begin{exampleblock}{Beispiel}}{\end{exampleblock}}
-    \newenvironment{Beispiele}{\begin{exampleblock}{Beispiele}}{\end{exampleblock}}
+    \RequirePackage{amsthm}
+    \newtheorem{theorem}{Theorem}
+    \newtheorem{corollary}[theorem]{Corollary}
+    \newtheorem{fact}[theorem]{Fact}
+    \newtheorem{lemma}[theorem]{Lemma}
+    \newtheorem{problem}[theorem]{Problem}
+    \newtheorem{Loesung}[theorem]{L\"osung}
+    \newtheorem{Satz}[theorem]{Satz}
+    \newtheorem{Folgerung}[theorem]{Folgerung}
+    \newtheorem{Fakt}[theorem]{Fakt}
+    \theoremstyle{definition}
+    \newtheorem{definition}[theorem]{Definition}
+    \newtheorem{definitions}[theorem]{Definitions}
+    \theoremstyle{remark}
+    \newtheorem{Beispiel}[theorem]{Beispiel}
+    \newtheorem{Beispiele}[theorem]{Beispiele}
+    \newtheorem{example}[theorem]{Example}
+    \newtheorem{examples}[theorem]{Examples}
 
-    \newenvironment{Theorem}{\begin{block}{Theorem}}{\end{block}}
-    \newenvironment{Proof}{\begin{block}{Proof.}}{\end{block}}
-    \newenvironment{Corollary}{\begin{block}{Corollary}}{\end{block}}
-    \newenvironment{Fact}{\begin{block}{Fact}}{\end{block}}
-    \newenvironment{Example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
-    \newenvironment{Examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+    \newenvironment{Beweis}{\begin{proof}[Beweis.]}{\end{proof}}
+    \newenvironment{Lemma}{\begin{leamm}}{\end{lemma}}
+    \newenvironment{Proof}{\begin{proof}}{\end{proof}}
+    \newenvironment{Theorem}{\begin{theorem}}{\end{theorem}}
+    \newenvironment{Problem}{\begin{problem}}{\end{problem}}
+    \newenvironment{Corollary}{\begin{corollary}}{\end{corollary}}
+    \newenvironment{Example}{\begin{example}}{\end{example}}
+    \newenvironment{Examples}{\begin{examples}}{\end{examples}}
+    \newenvironment{Definition}{\begin{definition}}{\end{definition}}
 
-    \newenvironment{definition}{\begin{block}{Definition}}{\end{block}}
-    \newenvironment{definitions}{\begin{block}{Definitions}}{\end{block}}
-    \newenvironment{theorem}{\begin{block}{Theorem}}{\end{block}}
-    \newenvironment{proof}{\begin{block}{Proof.}}{\end{block}}
-    \newenvironment{corollary}{\begin{block}{Corollary}}{\end{block}}
-    \newenvironment{fact}{\begin{block}{Fact}}{\end{block}}
-    \newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
-    \newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+    \renewenvironment<>{theorem}%
+    {\begin{actionenv}#1\begin{originaltheorem}}{\end{originaltheorem}\end{actionenv}}
+    \renewenvironment<>{corollary}%
+    {\begin{actionenv}#1\begin{originalcorollary}}{\end{originalcorollary}\end{actionenv}}
+    \renewenvironment<>{fact}%
+    {\begin{actionenv}#1\begin{originalfact}}{\end{originalfact}\end{actionenv}}
+    \renewenvironment<>{lemma}%
+    {\begin{actionenv}#1\begin{originallemma}}{\end{originallemma}\end{actionenv}}
+    \renewenvironment<>{problem}%
+    {\begin{actionenv}#1\begin{originalproblem}}{\end{originalproblem}\end{actionenv}}
+    \renewenvironment<>{Loesung}%
+    {\begin{actionenv}#1\begin{originalLoesung}}{\end{originalLoesung}\end{actionenv}}
+    \renewenvironment<>{Satz}%
+    {\begin{actionenv}#1\begin{originalSatz}}{\end{originalSatz}\end{actionenv}}
+    \renewenvironment<>{Folgerung}%
+    {\begin{actionenv}#1\begin{originalFolgerung}}{\end{originalFolgerung}\end{actionenv}}
+    \renewenvironment<>{Fakt}%
+    {\begin{actionenv}#1\begin{originalFakt}}{\end{originalFakt}\end{actionenv}}
+    \renewenvironment<>{definition}%
+    {\begin{actionenv}#1\begin{originaldefinition}}{\end{originaldefinition}\end{actionenv}}
+    \renewenvironment<>{definitions}%
+    {\begin{actionenv}#1\begin{originaldefinitions}}{\end{originaldefinitions}\end{actionenv}}
+    \renewenvironment<>{Beispiel}%
+    {\begin{actionenv}#1\begin{originalBeispiel}}{\end{originalBeispiel}\end{actionenv}}
+    \renewenvironment<>{Beispiele}%
+    {\begin{actionenv}#1\begin{originalBeispiele}}{\end{originalBeispiele}\end{actionenv}}
+    \renewenvironment<>{example}%
+    {\begin{actionenv}#1\begin{originalexample}}{\end{originalexample}\end{actionenv}}
+    \renewenvironment<>{examples}%
+    {\begin{actionenv}#1\begin{originalexamples}}{\end{originalexamples}\end{actionenv}}
   \fi
 
-  \newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
-  \newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
+  \newcommand{\BeispielInline}[1]{Beispiel: \ignorespaces#1}
+  \newcommand{\ExampleInline}[1]{Example: \ignorespaces#1}
 }
 
 

@@ -22,6 +22,13 @@
 
 \newbox\beamer@framebox
 
+\mode
+<all>
+{
+  \newif\ifbeamer@inframe
+  \beamer@inframefalse
+}
+
 
 %
 % Slide Definitions
@@ -62,6 +69,7 @@
   % Start slide:
   \beamer@framenotesbegin%
     \setbox\beamer@framebox=\vbox to\textheight\bgroup\vbox{}\par%
+    \beamer@inframetrue%
     \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
     \vfill}%
   {\beamer@exitcode\vskip0pt plus 1.5fill\end{beamer@framepauses}%
@@ -116,7 +124,7 @@
 % Check for old version:
 
 \def\frame{\@ifnextchar<\beamer@frame\beamer@checkoldframe}
-\def\beamer@checkoldframe{\@ifnextchar[\beamer@@checkoldframe{\beamer@frame<+>}}
+\def\beamer@checkoldframe{\@ifnextchar[\beamer@@checkoldframe{\beamer@frame<*>}}
 \def\beamer@@checkoldframe[#1#2]{%
   \let\beamer@next=\beamer@newframesyntax%
   \ifcat#11% a number-like first letter in argument
@@ -127,7 +135,7 @@
   \beamer@next{#1#2}}
 \def\beamer@checkforcolon#1:#2.{%
   \beamer@ifempty{#2}{}{\let\beamer@next=\beamer@oldframesyntax}}
-\def\beamer@newframesyntax#1{\beamer@@@frame<+>[#1]}
+\def\beamer@newframesyntax#1{\beamer@@@frame<*>[#1]}
 \def\beamer@oldframesyntax#1{\beamer@@@frame<#1>[]}
 
 \def\beamer@frame{\begingroup\catcode`:=12\catcode`|=12\beamer@@frame}% Hackery for french style
@@ -179,6 +187,7 @@
 \long\def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
   \setbox\beamer@tempbox\vbox\bgroup%
+    \beamer@inframetrue%
     \leavevmode%
     \def\pause{}%
     \afterassignment\beamer@checknoslide\let\beamer@next}
@@ -259,7 +268,7 @@
 \mode
 <article>
 {
-  \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<+>}}
+  \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<*>}}
   \def\beamer@frame<#1>{\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
   \long\def\beamer@@frame<#1>[#2]{%
     \beamer@slideinframe=1\relax%
@@ -277,12 +286,14 @@
 
   \long\def\beamer@donoframe{%
     \setbox\beamer@tempbox\vbox\bgroup%
+    \beamer@inframetrue%
     \beamer@templateframestart%
     \bgroup%
     \aftergroup\beamer@endframe%
     \let\beamer@next}
   \def\beamer@dosingleframe{%
     \bgroup%
+    \beamer@inframetrue%
     \beamer@templateframestart%
     \bgroup\aftergroup\beamer@endframe%
     \let\beamer@next}
@@ -317,6 +328,22 @@
 
 
 %
+% Linebreak command
+%
+\renewcommand<>{\\}{\only#1{\beameroriginal\\}}
+
+\mode
+<article>
+{
+  \let\beamer@origbreak=\\
+  \def\\{\beamer@ifnextcharospec{\beamer@breaker}{\beamer@@breaker}}
+  \def\beamer@breaker<#1>{\only<#1>{\beamer@origbreak}}
+  \def\beamer@@breaker{\ifbeamer@inframe\else\expandafter\beamer@origbreak\fi}
+}
+
+
+
+%
 % Plain frames
 %
 
@@ -329,7 +356,7 @@
 % Again frame
 %
 
-\def\againframe{\@ifnextchar<{\begingroup\catcode`:=12\catcode`|=12\beamer@againframe}{\beginroup\beamer@againframe<+>}}
+\def\againframe{\@ifnextchar<{\begingroup\catcode`:=12\catcode`|=12\beamer@againframe}{\beginroup\beamer@againframe<*>}}
 \def\beamer@againframe<#1>{\endgroup\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
 \def\beamer@@againframe<#1>[#2]#3{%
   \@ifundefined{beamer@again@#3}%

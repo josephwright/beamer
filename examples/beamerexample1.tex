@@ -1,4 +1,4 @@
-\documentclass[class=article]{beamer}
+\documentclass{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
@@ -12,10 +12,11 @@
 % For a green structure color use:
 %\colorlet{structure}{green!50!black}
 
-\mode<article>
+\mode<article> % only for the article version
 {
   \usepackage{beamerbasearticle}
   \usepackage{fullpage}
+  \usepackage{hyperref}
 }
 
 \beamertemplateshadingbackground{red!10}{blue!10}
@@ -174,7 +175,7 @@
 
 \frame{\titlepage}
 
-\section*{Outline}
+\section<presentation>*{Outline}
 
 \frame
 {
@@ -191,7 +192,7 @@
   }
 }
 
-\part{Main Talk}
+\part<presentation>{Main Talk}
 
 \section[Models]{The Model of Overhead-Free Computation}
 
@@ -659,7 +660,7 @@
   \end{Theorem}
 
   \begin{overprint}
-  \onslide<1| handout:0| trans:0>
+  \onslide<1| handout:0| trans:0| article:0>
     \hfill\hyperlinkframestartnext{\beamerskipbutton{Skip proof}}
   \onslide<2| handout:1| trans:1>
     \begin{proof}
@@ -702,7 +703,7 @@
     $\Class{PSPACE}$. 
   \end{Theorem}
 
-  \only<1>
+  \only<1| article:0| trans:0| handout:0>
   {
     \vskip1em
 
@@ -727,7 +728,7 @@
       \end{enumerate}
     \end{proof}
 
-    \hfill\hyperlink{pspacecomplete<1>}{\beamerreturnbutton{Return}}
+    \only<beamer>{\hfill\hyperlink{pspacecomplete<1>}{\beamerreturnbutton{Return}}}
   }
 }
 
@@ -829,11 +830,11 @@
 
 \section*{Summary}
 
-\subsection*{Summary}
+\subsection<presentation>*{Summary}
 
 \frame
 {
-  \frametitle{Summary}
+  \frametitle<presentation>{Summary}
 
   \begin{block}{}
     \begin{itemize}
@@ -860,10 +861,10 @@
 
 
 
-\subsection*{Further Reading}
+\subsection<presentation>*{Further Reading}
 
 \frame{
-  \frametitle{For Further Reading}
+  \frametitle<presentation>{For Further Reading}
   
   \beamertemplatebookbibitems
   

@@ -129,6 +129,40 @@
 \def\hyperlinkdocumentstart{\hyperlink{Navigation1}}
 \def\hyperlinkdocumentend{\hyperlink{Navigation\beamer@endpageofdocument}}
 
+\mode
+<article>
+{
+  \newcommand<>\hyperlinkslideprev[1]{}
+  \newcommand<>\hyperlinkslidenext[1]{}
+  
+  \newcommand<>\hyperlinkframestart[1]{}
+  \newcommand<>\hyperlinkframeend[1]{}
+  \newcommand<>\hyperlinkframestartnext[1]{}
+  \newcommand<>\hyperlinkframeendprev[1]{}
+  
+  \newcommand<>\hyperlinksubsectionstart[1]{}
+  \newcommand<>\hyperlinksubsectionend[1]{}
+  \newcommand<>\hyperlinksubsectionstartnext[1]{}
+  \newcommand<>\hyperlinksubsectionendprev[1]{}
+  
+  \newcommand<>\hyperlinksectionstart[1]{}
+  \newcommand<>\hyperlinksectionend[1]{}
+  \newcommand<>\hyperlinksectionstartnext[1]{}
+  \newcommand<>\hyperlinksectionendprev[1]{}
+  
+  \newcommand<>\hyperlinkpartstart[1]{}
+  \newcommand<>\hyperlinkpartend[1]{}
+  \newcommand<>\hyperlinkpartstartnext[1]{}
+  \newcommand<>\hyperlinkpartendprev[1]{}
+  
+  \newcommand<>\hyperlinkpresentationstart[1]{}
+  \newcommand<>\hyperlinkpresentationend[1]{}
+  \newcommand<>\hyperlinkappendixstart[1]{}
+  \newcommand<>\hyperlinkappendixend[1]{}
+  
+  \newcommand<>\hyperlinkdocumentstart[1]{}
+  \newcommand<>\hyperlinkdocumentend[1]{}
+}
 
 
 %
@@ -464,6 +498,15 @@
 \def\beamerreturnbutton#1{%
   \def\insertbuttontext{\insertreturnsymbol#1}%
   \beamer@buttontemplate}%
+
+\mode
+<article>
+{
+  \let\beamerbutton=\@firstofone
+  \let\beamergotobutton=\beamerbutton
+  \let\beamerskipbutton=\beamerbutton
+  \let\beamerreturnbutton=\beamerbutton
+}
 
 
 %

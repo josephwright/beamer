@@ -118,48 +118,11 @@
   \fi%
   \next}
 
-\def\article{\beamer@closer\@ifnextchar\bgroup\beamer@articleinline\beamer@article}
-\long\def\beamer@articleinline#1{%
-  \gdef\beamer@closer{}%
-  \ifbeamer@inpresentation\let\beamer@next=\@gobble\else\let\beamer@next=\beamer@relax\fi%
-  \beamer@next{#1}%
-  \beamer@mode\par}
-\def\beamer@article{%
-  \gdef\beamer@mode{\article}%
-  \ifbeamer@inpresentation%
-    \let\next=\beamer@startcomment%
-    \gdef\beamer@closer{\endgroup}%
-  \else%
-    \let\next=\relax%
-    \gdef\beamer@closer{}%
-  \fi%
-  \next}
-\long\def\beamer@relax#1{#1}
 
-
-\def\presentation{\beamer@closer\@ifnextchar\bgroup\beamer@presentationinline\beamer@presentation}
-\long\def\beamer@presentationinline#1{%
-  \gdef\beamer@closer{}%
-  \ifbeamer@inpresentation\let\beamer@next=\beamer@relax\else\let\beamer@next=\@gobble\fi%
-  \beamer@next{#1}%
-  \beamer@mode\par}
-\def\beamer@presentation{%
-  \gdef\beamer@mode{\presentation}%
-  \ifbeamer@inpresentation%
-    \let\next=\relax%
-    \gdef\beamer@closer{}%
-  \else%
-    \let\next=\beamer@startcomment%
-    \gdef\beamer@closer{\endgroup}%
-  \fi%
-  \next}
-
-\def\common{\beamer@closer\gdef\beamer@closer{}%
-  \@ifnextchar\bgroup\beamer@commoninline\beamer@common}
-\long\def\beamer@commoninline#1{%
-  #1%
-  \beamer@mode\par}
-\def\beamer@common{\gdef\beamer@mode{\common}}
+%obsolete, do note use:
+\def\presentation{\mode<presentation>}
+\def\article{\mode<article>}
+\def\common{\mode<all>}
 
 %
 % Mode command

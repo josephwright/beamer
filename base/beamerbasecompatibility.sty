@@ -6,6 +6,8 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\mode<presentation>
+
 %
 %
 % Hyperlink fix for problem with empty test in pdfmark.def
@@ -33,6 +35,14 @@
   \fi%
 }
 
+
+\mode
+<all>
+{
+  % Things to be done at the beginning of the document
+  \def\beamer@lastminutepatches{}
+}
+
 %
 % Fixes right before the start of the document.
 %
@@ -57,9 +67,20 @@
     %
     \@ifundefined{deactivatequoting}{}{\deactivatequoting}}
   \begingroup\beamer@origdocument%
+  \beamer@lastminutepatches%
   \ifbeamer@ignorenonframe%
     \expandafter\mode\expandafter*%
   \fi}
+
+\mode
+<article>
+{
+  \let\beamer@origdocument\document
+  \def\document{%
+    \beamer@origdocument%
+    \beamer@lastminutepatches}
+}
+
 
 \AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize 
 
@@ -135,6 +156,11 @@
 \def\newoverlayenvironment#1#2#3#4#5{\newenvironment{#1}{\begin{altenv}{#2}{#3}{#4}{#5}}{\end{altenv}}}
 \newenvironment{columnsonlytextwidth}{\begin{columns}[onlytextwidth]}{\end{columns}}
 \def\untitledsubsection{\subsection*{}}
+
+
+
+\mode
+<all>
 
 %%% Local Variables: 
 %%% mode: latex

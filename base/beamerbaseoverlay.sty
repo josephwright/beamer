@@ -63,7 +63,7 @@
 %
 \def\beamer@plus{+}
 
-\def\action{\@ifnextchar<{\beamer@parsedaction}{\beamer@parsedaction<+>}}
+\def\action{\@ifnextchar<{\beamer@parsedaction}{\beamer@parsedaction<*>}}
 \long\def\beamer@parsedaction<#1>#2{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
   {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}}%
@@ -84,7 +84,7 @@
     \csname#2\endcsname<#3>{#1}}%
   \beamer@processactions}
 
-\def\actionenv{\beamer@ifnextcharospec{\beamer@parsedactionenv}{\beamer@parsedactionenv<+>}}
+\def\actionenv{\beamer@ifnextcharospec{\beamer@parsedactionenv}{\beamer@parsedactionenv<*>}}
 \def\beamer@parsedactionenv<#1>{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
   {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}}%
@@ -528,13 +528,15 @@
 }
 
 \renewcommand<>{\hypertarget}[2]{\only#3{\beameroriginal{\hypertarget}{#1}{#2}}}
+\renewcommand<>{\hyperlink}[2]{\only#3{\beameroriginal{\hyperlink}{#1}{#2}}}
 
 \mode
 <article>
 {
-  \AtBeginDocument{
+  \g@addto@macro\beamer@lastminutepatches{
     % These have to be done late...
     \renewcommand<>{\hypertarget}[2]{\only#3{\beameroriginal{\hypertarget}{#1}{#2}}}
+    \renewcommand<>{\hyperlink}[2]{\only#3{\beameroriginal{\hyperlink}{#1}{#2}}}
   }
 }
 
@@ -711,7 +713,7 @@
 %
 % Labels in overlays
 %
-\AtBeginDocument{%
+\g@addto@macro\beamer@lastminutepatches{%
   \let\beamer@origlabel\label
   \def\label{\@ifnextchar<{\beamer@label}{\beamer@label<1>}}
 
@@ -725,9 +727,9 @@
 \mode
 <article>
 {
-  \AtBeginDocument{
+  \g@addto@macro\beamer@lastminutepatches{
     % Has to be done late...
-    \newcommand<>{\label}{\alt#1{\beameroriginal{\label}}{\@gobble}}
+    \renewcommand<>{\label}{\alt#1{\beameroriginal{\label}}{\@gobble}}
   }
 }
 

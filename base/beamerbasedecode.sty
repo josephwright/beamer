@@ -34,11 +34,13 @@
 % As a side effect, \@another is called whenever the there is a number
 % in the list that is larger than the current serialnumber
 
+\def\beamer@allsign{*}
+
 \def\beamer@decode{%
   \global\beamer@minimum=10000\relax%
   \gdef\beamer@decaction{}%
   \gdef\beamer@decactionrev{}%
-  \gdef\beamer@decodefound{+}%
+  \global\let\beamer@decodefound=\beamer@allsign%
   \beamer@@decodefind}
 \def\beamer@@decodefind#1| {%
   \beamer@@@decodefind#1:|}
@@ -81,8 +83,10 @@
 \def\beamer@checkcat#1:{%
   \ifcat\next a%
     \gdef\beamer@ovmode{#1}%
-    \gdef\beamer@decodefound{0}%
-    \gdef\beamer@spec{+}%
+    \ifx\beamer@decodefound\beamer@allsign
+      \gdef\beamer@decodefound{0}%
+    \fi%
+    \gdef\beamer@spec{1-}%
   \fi%
   }
 
@@ -126,13 +130,13 @@
   \@ifnextchar!%
   {\beamer@decodeend}%
   {%
-    \@ifnextchar+%
+    \@ifnextchar*%
     {\beamer@decodeall}{%
       \@ifnextchar-%
       {\beamer@decodeuntil}%
       {\beamer@decodenumber}}}}
 \def\beamer@decodeend!{}
-\def\beamer@decodeall+,{%
+\def\beamer@decodeall*,{%
   \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
   \ifnum1>\beamer@slideinframe%
   \global\beamer@anotherslidetrue%
