@@ -53,10 +53,12 @@
 }
 
 \newenvironment{beamer@frameslide}{%
-  \ifx\beamer@againname\@empty
-    {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
-  \else%
-    {\let\@elt\beamer@labelrestorecounter\beamer@overlaycounterresets}%      
+  \ifbeamer@autobreak\else%
+    \ifx\beamer@againname\@empty%
+      {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
+    \else%
+      {\let\@elt\beamer@labelrestorecounter\beamer@overlaycounterresets}%      
+    \fi%
   \fi%
   \global\c@beamerpauses=1\relax%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%

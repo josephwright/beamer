@@ -462,6 +462,62 @@ be specified with the following command:
   \lyxnote
   The frame title is the text that follows on the line of the
   ``BeginFrame'' style.
+
+  \begin{template*}{frametitle}
+    When the frame title and subtitle are to be typeset, this template
+    is invoked with the \beamer\ color and font |frametitle| set. This
+    template is \emph{not} invoked when the commands |\frametitle| or
+    |\framesubtitle| are called. Rather, it is invoked when the whole
+    frame has been completely read. Till then, the frame title and frame
+    subtitle text are stored in a special place. This way, when the
+    template is invoked, both inserts are setup correctly. The resulting
+    \TeX-box is then magically put back to the top of the frame.
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{orientation}}
+      The frame is typeset using the \beamer-color |frametitle| and the
+      \beamer-font |frametitle|. The subtitle is put below using the
+      color and font |framesubtitle|. If the color |frametitle| has a
+      background, a background bar stretching the whole frame width is put
+      behind the title. A background color of the subtitle is ignored. The
+      \meta{orientation} is passed on to the |beamercolorbox|
+      environment. In particular, useful options are |left|, |center|, and
+      |right|. As a special case, the |right| option causes the left
+      border of the frame title to be somewhat larger than normal so that
+      the frame title is more in the middle of the frame.
+      
+      \itemoption{shadow theme}{}
+      This option is available if the layout theme |shadow| is
+      loaded. It draws the frame title on top of a horizontal shading
+      between the background colors of |frametitle| and
+      |frametitle right|. A subtitle is, if present, also put on this
+      bar. Below the bar, a ``shadow'' is drawn.
+      
+      \itemoption{sidebar theme}{}
+      This option is available if the layout theme |sidebar| is loaded
+      and if the headline height is not set to 0pt (which can be done
+      using and option of the |sidebar| theme). With this option, the
+      frame title is put inside a rectangular area that is part of the
+      headline (some ``negative space'' is used to raise the frame title
+      into this area). The background of the color |frametitle| is not
+      used, this is the job of the headline template in this case.
+
+      \itemoption{smoothbars theme}{}
+      This option is available if the layout theme |smoothbars| is
+      loaded. It typesets the frametitle on a colored bar with the
+      background color of |frametitle|. The top and bottom of the bar
+      smoothly blend over to backgrounds above and below.
+
+      \itemoption{smoothtree theme}{}
+      Like |smoothbars theme|, only for the |smoothtree| theme.
+    \end{templateoptions}
+
+    The following commands are useful for this template:
+    \begin{templateinserts}
+      \iteminsert{\insertframetitle} yields the frame title.
+      \iteminsert{\insertframesubtitle} yields the frame subtitle.
+    \end{templateinserts}
+  \end{template*}
 \end{command}
 
 
@@ -502,61 +558,6 @@ change this using the following class options:
 \end{classoption}
 
 
-\begin{template}{frametitle}
-  When the frame title and subtitle are to be typeset, this template
-  is invoked with the \beamer\ color and font |frametitle| set. This
-  template is \emph{not} invoked when the commands |\frametitle| or
-  |\framesubtitle| are called. Rather, it is invoked when the whole
-  frame has been completely read. Till then, the frame title and frame
-  subtitle text are stored in a special place. This way, when the
-  template is invoked, both inserts are setup correctly. The resulting
-  \TeX-box is then magically put back to the top of the frame.
-
-  \begin{templateoptions}
-    \itemoption{default}{\oarg{orientation}}
-    The frame is typeset using the \beamer-color |frametitle| and the
-    \beamer-font |frametitle|. The subtitle is put below using the
-    color and font |framesubtitle|. If the color |frametitle| has a
-    background, a background bar stretching the whole frame width is put
-    behind the title. A background color of the subtitle is ignored. The
-    \meta{orientation} is passed on to the |beamercolorbox|
-    environment. In particular, useful options are |left|, |center|, and
-    |right|. As a special case, the |right| option causes the left
-    border of the frame title to be somewhat larger than normal so that
-    the frame title is more in the middle of the frame.
-    
-    \itemoption{shadow theme}{}
-    This option is available if the layout theme |shadow| is
-    loaded. It draws the frame title on top of a horizontal shading
-    between the background colors of |frametitle| and
-    |frametitle right|. A subtitle is, if present, also put on this
-    bar. Below the bar, a ``shadow'' is drawn.
-    
-    \itemoption{sidebar theme}{}
-    This option is available if the layout theme |sidebar| is loaded
-    and if the headline height is not set to 0pt (which can be done
-    using and option of the |sidebar| theme). With this option, the
-    frame title is put inside a rectangular area that is part of the
-    headline (some ``negative space'' is used to raise the frame title
-    into this area). The background of the color |frametitle| is not
-    used, this is the job of the headline template in this case.
-
-    \itemoption{smoothbars theme}{}
-    This option is available if the layout theme |smoothbars| is
-    loaded. It typesets the frametitle on a colored bar with the
-    background color of |frametitle|. The top and bottom of the bar
-    smoothly blend over to backgrounds above and below.
-
-    \itemoption{smoothtree theme}{}
-    Like |smoothbars theme|, only for the |smoothtree| theme.
-  \end{templateoptions}
-
-  \begin{templateinserts}
-    \iteminsert{\insertframetitle} yields the frame title.
-    \iteminsert{\insertframesubtitle} yields the frame subtitle.
-  \end{templateinserts}
-\end{template}
-
 
 
 \subsection{Margin Sizes}
@@ -572,26 +573,31 @@ reasonably sized labels during the presentation.
 
 You should refrain from changing the ``paper size.'' However, you
 \emph{can} change the size of the left and right margins, which
-default to 1cm. To change them, you should use the following two
-commands:
+default to 1cm. To change them, you should use the following 
+command:
 
-\begin{command}{\beamersetleftmargin\marg{left margin dimension}}
-  Sets a new left margin. This excludes the left sidebar. Thus, it is
-  the distance between the right edge of the left sidebar and the left
-  edge of the text. This command can only be used in the preamble
-  (before the |document| environment is used).
-  \example |\beamersetleftmargin{1cm}|
+\begin{command}{\setbeamermargin\marg{options}}
+  This command can only be used in the preamble (before the |document|
+  environment is used).
+  
+  The following options can be given:
+  \begin{itemize}
+  \item
+    \declare{|left=|\meta{\TeX\ dimension}} sets a new left
+    margin. This excludes the left sidebar. Thus, it is the distance
+    between the right edge of the left sidebar and the left edge of
+    the text.
+  \item
+    \declare{|right=|\meta{\TeX\ dimension}} sets a new right
+    margin.
+  \end{itemize}
 
   \articlenote
   This command has no effect in |article| mode.
 \end{command}
 
-\begin{command}{\beamersetrightmargin\marg{left margin dimension}}
-  Like |\beamersetleftmargin|, only for the right margin.
-\end{command}
-
-For more information on sidebars, see
-Section~\ref{section-sidebar-templates}. 
+%For more information on sidebars, see
+%Section~\ref{section-sidebar-templates}. 
 
 
 

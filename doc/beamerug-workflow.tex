@@ -76,7 +76,9 @@ The file might look like this:
 
 
 \section*{Outline}
-\frame{\tableofcontents}
+\begin{frame}
+  \tableofcontents
+\end{frame}
 
 \section{Introduction}
 \subsection{Overview of the Beamer Class}
@@ -90,7 +92,8 @@ The file might look like this:
 \subsection{...}
 \subsection{...}
 
-\frame{} % to enforce entries in the table of contents
+\begin{frame}
+\end{frame} % to enforce entries in the table of contents
 
 \end{document}
 \end{verbatim}
@@ -98,7 +101,7 @@ The file might look like this:
 The empty frame at the end (which should be deleted later) ensures
 that the sections and subsections are actually part of the table of
 contents. This frame is necessary since a |\section| or |\subsection|
-command following the last page of a document have no effect.
+command following the last page of a document has no effect.
 
 
 

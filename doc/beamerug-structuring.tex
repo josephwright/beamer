@@ -37,7 +37,7 @@ affiliation, a title graphic, and a date.
   automatically inserted.
 
   
-  \begin{template}{title page}
+  \begin{template*}{title page}
     This template is invoked when the |\titlepage| command is used.
 
     \begin{templateoptions}
@@ -57,6 +57,7 @@ affiliation, a title graphic, and a date.
       by specifying |left| here.
     \end{templateoptions}
 
+    The following commands are useful for this template:
     \begin{templateinserts}
       \iteminsert{\insertauthor} inserts a version of the author's name
       that is useful for the title page.
@@ -69,7 +70,7 @@ affiliation, a title graphic, and a date.
       \iteminsert{\inserttitlegraphic} inserts the title graphic into a
       template. 
     \end{templateinserts}
-  \end{template}
+  \end{template*}
 \end{command}
 
 For compatibility with other classes, in |article| mode the following
@@ -228,11 +229,12 @@ why; comments would be appreciated).
 \section<article>{Results on the Main Problem}
 \end{verbatim}
 
-  \begin{template}{section in toc}
+  \begin{template*}{section in toc}
     This template is used when a section entry is to be typeset. For
     the permissible \meta{options} see the parent template
     |table of contents|.
 
+    The following commands are useful for this template:
     \begin{templateinserts}
       \iteminsert{\inserttocsection}
       inserts the table of contents version of the current section name.
@@ -240,7 +242,7 @@ why; comments would be appreciated).
       \iteminsert{\inserttocsectionnumber}
       inserts the number of the current section (in the table of contents).
     \end{templateinserts}
-  \end{template}
+  \end{template*}
 
   \begin{template}{section in toc shaded}
     This template is used instead of the previous one if the section
@@ -263,9 +265,11 @@ why; comments would be appreciated).
   This command works the same way as the |\section| command.
   \example|\subsection[Applications]{Applications to the Reduction of Pollution}|
 
-  \begin{template}{subsection in toc}
+  \begin{template*}{subsection in toc}
     Like |section in toc|, only for subsection.
 
+    In addition to the inserts for the |section in toc| template, the
+    following commands are available for this template: 
     \begin{templateinserts}
       \iteminsert{\inserttocsubsection}
       inserts the table of contents version of the current subsection
@@ -274,8 +278,7 @@ why; comments would be appreciated).
       \iteminsert{\inserttocsubsectionnumber}
       inserts the number of the current subsection (in the table of contents).
     \end{templateinserts}
-    The inserts for the |section in toc| template are also available.
-  \end{template}
+  \end{template*}
 
   \begin{template}{subsection in toc shaded}
     Like |section in toc shaded|, only for subsections.
@@ -426,7 +429,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
   presentation is ``advertised.''
   \example |\frame{\partpage}|
   
-  \begin{template}{part page}
+  \begin{template*}{part page}
     This template is invoked when the |\partpage| command is used.
 
     \begin{templateoptions}
@@ -438,6 +441,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
       \meta{orientation} option is passed on the |beamercolorbox|.
     \end{templateoptions}
 
+    The following commands are useful for this template:
     \begin{templateinserts}
       \iteminsert{\insertpart}
       inserts the current part name.
@@ -446,7 +450,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
       \iteminsert{\insertpartromannumber}
       inserts the current part number as a Roman number into a template.
     \end{templateinserts}
-  \end{template}
+  \end{template*}
 \end{command}
 
 \begin{command}{\AtBeginPart\marg{text}}
@@ -660,7 +664,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
   inserting a \TeX-mode text with the options in square brackets
   directly after the table of contents.
 
-  \begin{template}{table of contents}
+  \begin{template*}{table of contents}
     This template is a parent template, whose children are
     |section in toc| and |subsection in toc|. This means that if you
     use the |\setbeamertemplate| command on this template, the command
@@ -700,7 +704,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
 
     If none of the above options suits you, you have to change the
     templates |section in toc| and |subsection in toc| directly.
-  \end{template}
+  \end{template*}
 
   \begin{template}{table of contents shaded}
     A parent template with children
@@ -1495,9 +1499,8 @@ or come last as in |\item[Cat]<1>|.
 \begin{environment}{{itemize}\opt{|[<|\meta{default overlay specification}|>]|}}
   Used to display a list of items that do not have a special
   ordering. Inside the environment, use an |\item| command for
-  each topic. The appearance of the items can be changed using
-  templates, see Section~\ref{section-templates}.
-
+  each topic.
+  
   If the optional parameter \meta{default overlay specification} is
   given, in every occurrence of an |\item| command that does not have
   an overlay specification attached to it, the \meta{default overlay
@@ -1544,8 +1547,58 @@ or come last as in |\item[Cat]<1>|.
   Unfortunately, currently you cannot specify optional arguments with
   the |itemize| environment. You can, however, use the command
   |\beamerdefaultoverlayspecification| before the environment to get
-  the desired effect. 
+  the desired effect.
+
+  \appearancenote
+  The appearance of an |itemize| list is governed by several
+  templates. The first template concerns the way the little marker
+  introducing each item is typeset:  
+  \begin{template}{itemize items}
+    This template is a parent template, whose children are
+    |itemize item|, |itemize subitem|, and |itemize subsubitem|. This
+    means that if you use the |\setbeamertemplate| command on this
+    template, the command is instead called for all of these children
+    (with the same arguments). 
+
+    \begin{templateoptions}
+      \itemoption{default}{}
+      The default item marker is a small triangle having the
+      foreground color |itemize item| (or, for subitems, |itemize subitem|
+      etc.). Note that these colors will automatically change under
+      certain circumstances such as inside an example block or inside
+      an |alertenv| environment. 
+      \itemoption{circle}{}
+      Uses little circles (or dots) as item markers. 
+      \itemoption{square}{}
+      Uses little squares as item markers.
+      \itemoption{ball}{}
+      Uses little balls as item markers.
+    \end{templateoptions}
+  \end{template}
+
+  \begin{template}{itemize item}
+    This template (with |item| instead of |items|) governs how the
+    marker in front of a first-level item is typeset. ``First-level''
+    refers to the level of nesting. See the |itemize items| template
+    for the \meta{options} that may be given.
+
+    When the template is inserted, the \beamer-font and -color
+    |itemize item| is installed. Typically, the font is ignores by the
+    template as some special symbol is drawn anyway, by the font may
+    be important if an optional argument is given to the
+    |\item| command as in |\item[First]|.
+  \end{template}
+
+  \begin{template}{itemize subitem}
+    Like |itemize item|, only for second-level items. An
+    item of an itemize inside an enumerate counts a second-level item.
+  \end{template}
+
+  \begin{template}{itemize subsubitem}
+    Like |itemize item|, only for third-level items.
+  \end{template}
 \end{environment}
+
 
 
 \begin{environment}{{enumerate}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{mini template}} 
@@ -1605,9 +1658,112 @@ or come last as in |\item[Cat]<1>|.
 
   \lyxnote
   The same constraints as for |itemize| apply.
+  
+  \begin{template*}{enumerate items}
+    Similar to |itemize items|, this template is a parent template,
+    whose children are |enumerate item|, |enumerate subitem|,
+    |enumerate subsubitem|, and |enumerate mini template|. These
+    templates govern how the text (the number) of an enumeration is
+    typeset. 
+    
+    \begin{templateoptions}
+      \itemoption{default}{}
+      The default enumeration marker uses the scheme 1., 2., 3.\ for
+      the first level, 1.1, 1.2, 1.3 for the second level and 1.1.1,
+      1.1.2, 1.1.3 for the third level. 
+      \itemoption{circle}{}
+      Places the numbers inside little circles. The colors are taken
+      from |item projected| or |subitem projected| or
+      |subsubitem projected|.
+      \itemoption{square}{}
+      Places the numbers on little squares.
+      \itemoption{ball}{}
+      ``Projects'' the numbers onto little balls.
+    \end{templateoptions}
+  \end{template*}
+
+  \begin{template}{enumerate item}
+    This template governs how the number in front of a first-level
+    item is typeset. The level here refers to the level of enumeration
+    nesting only. Thus an enumerate inside an itemize is a first-level
+    enumerate (but it uses the second-level
+    |itemize/enumerate body|). 
+
+    When the template is inserted, the \beamer-font and -color
+    |enumerate item| are installed.
+
+    The following command is useful for this template:
+    \begin{templateinserts}
+      \iteminsert{\insertenumlabel}
+      inserts the current number of the top-level enumeration (as an
+      Arabic number). This insert is also available in the next two
+      templates. 
+    \end{templateinserts}
+  \end{template}
+
+  \begin{template}{enumerate subitem}
+    Like |enumerate item|, only for second-level items. 
+
+    \begin{templateinserts}
+      \iteminsert{\insertsubenumlabel}
+      inserts the current number of the second-level enumeration (as an
+      Arabic number). 
+    \end{templateinserts}
+
+    \example |\setbeamertemplate{enumerate subitem}{\insertenumlabel-\insertsubenumlabel}|
+  \end{template}
+
+  \begin{template}{enumerate subsubitem}
+    Like |enumerate item|, only for third-level items. 
+
+    \begin{templateinserts}
+      \iteminsert{\insertsubsubenumlabel}
+      inserts the current number of the second-level enumeration (as an
+      Arabic number). 
+    \end{templateinserts}
+  \end{template}
+
+  \begin{template}{enumerate mini template}
+    This template is used to typeset the number that arises from a
+    mini template.
+
+    \begin{templateinserts}
+      \iteminsert{\insertenumlabel}
+      inserts the current number rendered by this mini template. For
+      example, if the \meta{mini template} is |(i)| and this command
+      is used in the fourth item, |\insertenumlabel| would yield
+      |(iv)|.
+    \end{templateinserts}
+  \end{template}
 \end{environment}
 
+\appearancenote
+The following templates govern how the \emph{body} of an |itemize| or
+an |enumerate| is typeset.
+\begin{template}{itemize/enumerate body begin}
+  This template is inserted at the beginning of a first-level
+  |itemize| or |enumerate| environment. Furthermore, before this
+  template is inserted, the \beamer-font and -color
+  |itemize/enumerate body| is used.
+\end{template}
+\begin{template}{itemize/enumerate body end}
+  This template is inserted at the end of a first-level
+  |itemize| or |enumerate| environment.
+\end{template}
+There exist corresponding templates like
+|itemize/enumerate subbody being| from second- and third-level itemize
+or enumerates.
 
+\begin{template}{items}
+  This template is a parent template of |itemize items| and
+  |enumerate items|.
+  \example |\setbeamertemplate{items}[circle]| will cause all items in
+  |itemize| or |enumerate| environments to become circles (of the
+  appropriate size, color, and font).
+\end{template}
+
+
+  
 \begin{environment}{{description}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{long text}} 
   Like |itemize|, but used to display a list that explains or defines
   labels. The width of \meta{long text} is used to set the indent. Normally,

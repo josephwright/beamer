@@ -17,15 +17,14 @@
 \beamer@leftmargin=1cm
 \beamer@rightmargin=1cm
 
-\def\beamersetleftmargin#1{%
+\define@key{beamer@margin}{left}{%
   \beamer@leftmargin=#1\relax%
   % Reset left margin now
   \beamer@tempdim=\beamer@leftmargin%
   \advance\beamer@tempdim by\beamer@leftsidebar%
   \geometry{left=\the\beamer@tempdim}%
 }
-
-\def\beamersetrightmargin#1{%
+\define@key{beamer@margin}{right}{%
   \beamer@rightmargin=#1\relax%
   % Reset right margin now
   \beamer@tempdim=\beamer@rightmargin%
@@ -33,15 +32,23 @@
   \geometry{right=\the\beamer@tempdim}%
 }
 
+\newcommand{\setbeamermargin}[1]{\setkeys{beamer@margin}{#1}}
 
 \mode
 <article>
 {
-  \def\beamersetleftmargin#1{}
-  \def\beamersetrightmargin#1{}
+  \newcommand{\setbeamermargin}[1]{}
 }
 
-  
+
+\mode
+<all>
+{
+  \def\beamersetleftmargin#1{\setbeamermargin{left=#1}}
+  \def\beamersetrightmargin#1{\setbeamermargin{right=#1}}
+  \@onlypreamble\setbeamermargin
+}
+
 
 %
 %

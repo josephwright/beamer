@@ -63,6 +63,10 @@
 \def\template#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
 \item {\ttfamily\char`\\setbeamertemplate\char`\{\declare{#1}\char`\}}\oarg{options}\opt{\meta{args}}\par\topsep=0pt}
 \def\endtemplate{\endlist}
+\newenvironment{template*}[1]{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item \leavevmode\llap{\color{blue}\vtop
+    to0pt{\llap{\textsc{appear-\!}}\vskip-3pt\llap{\textsc{ance}}\vss}\ \ }{\ttfamily\char`\\setbeamertemplate\char`\{\declare{#1}\char`\}}\oarg{options}\opt{\meta{args}}\par\topsep=0pt}
+{\endlist}
 
 \def\templateoptions{\par
   If no \meta{options} are given, \meta{args} is used as template. The following \meta{options} are defined:
@@ -72,9 +76,7 @@
 \def\itemoption#1#2{\item {\texttt{[\declare{#1}]}}#2}
 
 
-\def\templateinserts{\par
-  The following inserts are useful for this template:
-  \begin{itemize}}
+\def\templateinserts{\begin{itemize}}
 \def\endtemplateinserts{\end{itemize}}
 
 \def\iteminsert#1{\item {\texttt{\declare{\string#1}}}}
@@ -87,9 +89,11 @@
 
 \providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
 
-\newcommand{\beamernote}{\par\noindent\llap{\color{blue}\textsc{beamer}\ \ }}
+\newcommand{\beamernote}{\par\smallskip\noindent\llap{\color{blue}\vtop to0pt{\llap{\textsc{presen-\!}}\vskip-3pt\llap{\textsc{tation}}\vss}\ \ }}
 \newcommand{\articlenote}{\par\smallskip\noindent\llap{\color{blue}\textsc{article}\ \ }}
 \newcommand{\lyxnote}{\par\smallskip\noindent\llap{\color{blue}\textsc{lyx}\ \ }}
+\newcommand{\appearancenote}{\par\smallskip\noindent\llap{\color{blue}\vtop
+    to0pt{\llap{\textsc{appear-\!}}\vskip-3pt\llap{\textsc{ance}}\vss}\ \ }}
 
 
 \newcommand{\genericthemeexample}[2][]{%

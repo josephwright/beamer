@@ -37,6 +37,7 @@
 	- Just like colors, you can individually change all fonts in
 	  minute detail without touching any templates.
 
+	
 	Documentation:
 	- Split documentation into multiple files.
 	- Reorganized and reworked large parts of the documention.
@@ -44,11 +45,13 @@
 	- Extracted all "guidelines" and "recommendations" and put them in
 	  a "guidelines" section. Also added lots of guidelines on fonts.
 
+	
 	Solutions:
 	- Added a solutions directory.
 	  It contains ready-to-use solutions for common problems (like
 	  a template for a conference talk).
 	- Help appreciated (see the documentation).
+
 	
 	Added:
 	- Added frame environment (finally!).
@@ -90,12 +93,16 @@
 	- Cleaned up lot's of internals.
 	- Slight changes to vertical spacing.
 	- slidestop is now called "t" and slidescentered is called "c".
+	- \beamersetleftmargin and \beamersetrightmargin obsolete. Use
+	  \setbeamermargin instead.
 	
 	Bugfixes:
 	- Fixed incompatibility with czech.sty.
 	- Fixed some spacing problems with \label.
 	- Fixed bug that could cause endless loop if more than two pages
 	  resulted from an allowframebreaks.
+	- Fixed bug that caused incorrect counter resets in conjunction
+	  with allowframebreaks.
 	- Fixed bug that caused footnotes of suppressed frames to spill
 	  over to the next frame.
 	- Fixed bug with \AtBeginSection + \lecture + \mode*

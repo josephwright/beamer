@@ -7,6 +7,7 @@
 
 \section{Templates}
 
+\label{section-customization}
 
 
 
@@ -1530,103 +1531,103 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\paragraph{Template Installation Commands}\
+%\paragraph{Template Installation Commands}\
 
-\begin{command}{\useenumerateitemtemplate\marg{template}}
-  The \meta{template} is used to render the default item in the top
-  level of an enumeration. 
-  \example |\useenumerateitemtemplate{\insertenumlabel}|
-\end{command}
-
-
-\begin{command}{\useitemizeitemtemplate\marg{template}}
-  The \meta{template} is used to render the default item in the top
-  level of an itemize list.
-  \example |\useitemizeitemtemplate{\pgfuseimage{mybullet}}|
-\end{command}
+%\begin{command}{\useenumerateitemtemplate\marg{template}}
+%  The \meta{template} is used to render the default item in the top
+%  level of an enumeration. 
+%  \example |\useenumerateitemtemplate{\insertenumlabel}|
+%\end{command}
 
 
-\begin{command}{\usesubitemizeitemtemplate\marg{template}}
-  The \meta{template} is used to render the default item in the
-  second level of an itemize list.
-  \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
-\end{command}
-
-\begin{command}{\usesubitemizeitemtemplate\marg{template}}
-  The \meta{template} is used to render the default item in the
-  third level of an itemize list.
-  \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
-\end{command}
-
-\begin{command}{\useitemizetemplate\marg{begin text}\marg{end text}}
-  The \meta{begin text} is inserted at the beginning of a top-level
-  itemize list, the \meta{end text} at its end.
-  \example |\useitemizetemplate{}{}|
-\end{command}
-
-\begin{command}{\usesubitemizetemplate\marg{begin text}\marg{end text}}
-  The \meta{begin text} is inserted at the beginning of a second-level
-  itemize list, the \meta{end text} at its end.
-  \example |\usesubitemizetemplate{\begin{small}}{\end{small}}|
-\end{command}
-
-\begin{command}{\usesubitemizetemplate\marg{begin text}\marg{end text}}
-  The \meta{begin text} is inserted at the beginning of a third-level
-  itemize list, the \meta{end text} at its end.
-  \example |\usesubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}|
-\end{command}
+%\begin{command}{\useitemizeitemtemplate\marg{template}}
+%  The \meta{template} is used to render the default item in the top
+%  level of an itemize list.
+%  \example |\useitemizeitemtemplate{\pgfuseimage{mybullet}}|
+%\end{command}
 
 
-\begin{command}{\useenumerateitemtemplate\marg{template}}
-  The \meta{template} is used to render the default item in the
-  top-level of an enumeration.  
-  \example
-  |\useenumerateitemtemplate{\insertenumlabel}|
-\end{command}
+%\begin{command}{\usesubitemizeitemtemplate\marg{template}}
+%  The \meta{template} is used to render the default item in the
+%  second level of an itemize list.
+%  \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
+%\end{command}
 
-\begin{command}{\useenumerateitemminitemplate\marg{template}}
-  The \meta{template} is used to render the items in an enumeration
-  where the optional argument \meta{mini template} is used (see
-  Section~\ref{section-enumerate}). 
-  \example
-  |\useenumerateitemminitemplate{\color{structure}\insertenumlabel}|
-\end{command}
+%\begin{command}{\usesubitemizeitemtemplate\marg{template}}
+%  The \meta{template} is used to render the default item in the
+%  third level of an itemize list.
+%  \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
+%\end{command}
 
-\begin{command}{\usesubenumerateitemtemplate\marg{template}}
-  The \meta{template} is used to render the default item in the second
-  level of an enumeration. 
-  \example
-  |\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}|
-\end{command}
+%\begin{command}{\useitemizetemplate\marg{begin text}\marg{end text}}
+%  The \meta{begin text} is inserted at the beginning of a top-level
+%  itemize list, the \meta{end text} at its end.
+%  \example |\useitemizetemplate{}{}|
+%\end{command}
 
-\begin{command}{\usesubenumerateitemtemplate\marg{template}}
-  The \meta{template} is used to render the default item in the third
-  level of an enumeration. 
-  \example
-\begin{verbatim}
-\usesubenumerateitemtemplate
-{\insertenumlabel-\insertsubenumlabel-\insertsubenumlabel}
-\end{verbatim}
-\end{command}
+%\begin{command}{\usesubitemizetemplate\marg{begin text}\marg{end text}}
+%  The \meta{begin text} is inserted at the beginning of a second-level
+%  itemize list, the \meta{end text} at its end.
+%  \example |\usesubitemizetemplate{\begin{small}}{\end{small}}|
+%\end{command}
+
+%\begin{command}{\usesubitemizetemplate\marg{begin text}\marg{end text}}
+%  The \meta{begin text} is inserted at the beginning of a third-level
+%  itemize list, the \meta{end text} at its end.
+%  \example |\usesubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}|
+%\end{command}
 
 
-\begin{command}{\useenumeratetemplate\marg{begin text}\marg{end text}}
-  The \meta{begin text} is inserted at the beginning of a top-level
-  enumeration, the \meta{end text} at its end.
-  \example |\useenumeratetemplate{}{}|
-\end{command}
+%\begin{command}{\useenumerateitemtemplate\marg{template}}
+%  The \meta{template} is used to render the default item in the
+%  top-level of an enumeration.  
+%  \example
+%  |\useenumerateitemtemplate{\insertenumlabel}|
+%\end{command}
 
-\begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
-  The \meta{begin text} is inserted at the beginning of a second-level
-  enumeration, the \meta{end text} at its end.
-  \example |\usesubenumeratetemplate{\begin{small}}{\end{small}}|
-\end{command}
+%\begin{command}{\useenumerateitemminitemplate\marg{template}}
+%  The \meta{template} is used to render the items in an enumeration
+%  where the optional argument \meta{mini template} is used (see
+%  Section~\ref{section-enumerate}). 
+%  \example
+%  |\useenumerateitemminitemplate{\color{structure}\insertenumlabel}|
+%\end{command}
 
-\begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
-  The \meta{begin text} is inserted at the beginning of a third-level
-  enumeration, the \meta{end text} at its end.
-  \example |\usesubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}|
-\end{command}
+%\begin{command}{\usesubenumerateitemtemplate\marg{template}}
+%  The \meta{template} is used to render the default item in the second
+%  level of an enumeration. 
+%  \example
+%  |\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}|
+%\end{command}
+
+%\begin{command}{\usesubenumerateitemtemplate\marg{template}}
+%  The \meta{template} is used to render the default item in the third
+%  level of an enumeration. 
+%  \example
+%\begin{verbatim}
+%\usesubenumerateitemtemplate
+%{\insertenumlabel-\insertsubenumlabel-\insertsubenumlabel}
+%\end{verbatim}
+%\end{command}
+
+
+%\begin{command}{\useenumeratetemplate\marg{begin text}\marg{end text}}
+%  The \meta{begin text} is inserted at the beginning of a top-level
+%  enumeration, the \meta{end text} at its end.
+%  \example |\useenumeratetemplate{}{}|
+%\end{command}
+
+%\begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
+%  The \meta{begin text} is inserted at the beginning of a second-level
+%  enumeration, the \meta{end text} at its end.
+%  \example |\usesubenumeratetemplate{\begin{small}}{\end{small}}|
+%\end{command}
+
+%\begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
+%  The \meta{begin text} is inserted at the beginning of a third-level
+%  enumeration, the \meta{end text} at its end.
+%  \example |\usesubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}|
+%\end{command}
 
 \begin{command}{\usedescriptiontemplate\marg{description
       template}\marg{default width}}
@@ -1638,32 +1639,32 @@ The following inserts are useful for the navigation symbols template:
 \end{command}
 
 
-\paragraph{Inserts for these Templates}\
+%\paragraph{Inserts for these Templates}\
 
 \begin{command}{\insertdescriptionitem}
   Inserts the current item of a |description| environment into a
   template.
 \end{command}
 
-\begin{command}{\insertenumlabel}
-  Normally, this command inserts the current number of the top-level
-  enumeration (as an Arabic number) into a template. However, in an
-  enumeration where the optional \meta{mini template} option is used,
-  this command inserts the current number rendered by this mini
-  template. For example, if the \meta{mini template} is |(i)| and this
-  command is used in the fourth item, |\insertenumlabel| would yield
-  |(iv)|. 
-\end{command}
+%\begin{command}{\insertenumlabel}
+%  Normally, this command inserts the current number of the top-level
+%  enumeration (as an Arabic number) into a template. However, in an
+%  enumeration where the optional \meta{mini template} option is used,
+%  this command inserts the current number rendered by this mini
+%  template. For example, if the \meta{mini template} is |(i)| and this
+%  command is used in the fourth item, |\insertenumlabel| would yield
+%  |(iv)|. 
+%\end{command}
 
-\begin{command}{\insertsubenumlabel}
-  Inserts the current number of the second-level enumeration (as an
-  Arabic number) into a template.
-\end{command}
+%\begin{command}{\insertsubenumlabel}
+%  Inserts the current number of the second-level enumeration (as an
+%  Arabic number) into a template.
+%\end{command}
 
-\begin{command}{\insertsubenumlabel}
-  Inserts the current number of the third-level enumeration (as an
-  Arabic number) into a template.
-\end{command}
+%\begin{command}{\insertsubenumlabel}
+%  Inserts the current number of the third-level enumeration (as an
+%  Arabic number) into a template.
+%\end{command}
 
 
 

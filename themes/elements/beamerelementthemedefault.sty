@@ -117,11 +117,12 @@
 
 
 
+
 %
 % Item
 %
 
-\defbeamertemplateparent{item}{itemize items,enumerate items}
+\defbeamertemplateparent{items}{itemize items,enumerate items}
 {}
 
 
@@ -153,6 +154,20 @@
 
 \defbeamertemplate*{description item}{default}{\insertdescriptionitem}
 \defbeamertemplate*{description item width}{default}[1][2cm]{}[action]{\beamersetdescriptionwidth{#1}}
+
+
+
+% Itemize/Enumerate body
+
+\defbeamertemplate*{itemize/enumerate body begin}{default}{}
+\defbeamertemplate*{itemize/enumerate body end}{default}{}
+
+\defbeamertemplate*{itemize/enumerate subbody begin}{default}{}
+\defbeamertemplate*{itemize/enumerate subbody end}{default}{}
+
+\defbeamertemplate*{itemize/enumerate subsubbody begin}{default}{}
+\defbeamertemplate*{itemize/enumerate subsubbody end}{default}{}
+
 
 
 \beamertemplatedefaultblocks
