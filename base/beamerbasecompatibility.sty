@@ -264,6 +264,7 @@
   \setbeamertemplate{bibliography entry title}{#2}%
   \setbeamertemplate{bibliography entry location}{#3}%
   \setbeamertemplate{bibliography entry note}{#4}}
+\def\usebuttontemplate{\setbeamertemplate{button}}
 
 
 
@@ -310,6 +311,10 @@
 \def\usecontinuationtemplate{\setbeamertemplate{frametitle continuation}}
 \def\beamertemplatecontinuationroman{\setbeamertemplate{frametitle continuation}[default]}
 \def\beamertemplatecontinuationtext{\setbeamertemplate{frametitle continuation}[from second]}
+\def\beamertemplateroundedbuttons{\setbeamertemplate{button}[default]}
+\def\beamertemplateoutlinebuttons{\setbeamercolor*{button border}{parent=structure,use=structure,fg=structure.fg!50!bg}}
+\def\beamertemplatesolidbuttons{\setbeamercolor*{button}{use=structure,bg=structure.fg!50!bg,fg=white}
+ \setbeamercolor*{button border}{use=structure,fg=structure.fg!50!bg}}
 
 \mode
 <all>

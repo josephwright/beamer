@@ -908,61 +908,61 @@ with ``left'' replaced by ``right'' everywhere.
 
 
 
-\subsection{Buttons}
-\label{section-navigation-buttons}
+%% \subsection{Buttons}
+%% \label{section-navigation-buttons}
 
-\paragraph{Predefined Templates}\ 
+%% \paragraph{Predefined Templates}\ 
 
-\begin{command}{\beamertemplateoutlinebuttons}
-  Renders buttons as rectangles with rounded left and right
-  border. Only the border (outline) is painted.
-\end{command}
+%% \begin{command}{\beamertemplateoutlinebuttons}
+%%   Renders buttons as rectangles with rounded left and right
+%%   border. Only the border (outline) is painted.
+%% \end{command}
 
-\begin{command}{\beamertemplatesolidbuttons}
-  Renders buttons as filled rectangles with rounded left and right
-  border.
-\end{command}
-
-
-\paragraph{Template Installation Commands}\ 
-
-\begin{command}{\usebuttontemplate\marg{button template}}
-  Installs a new button template. This template is invoked whenever a
-  button should be rendered.
-  \example
-\begin{verbatim}
-\usebuttontemplate{\color{structure}\insertbuttontext}
-\end{verbatim}
-\end{command}
+%% \begin{command}{\beamertemplatesolidbuttons}
+%%   Renders buttons as filled rectangles with rounded left and right
+%%   border.
+%% \end{command}
 
 
-\paragraph{Inserts}\ 
+%% \paragraph{Template Installation Commands}\ 
 
-Inside the button template, the button text can be accessed via the
-following command:
+%% \begin{command}{\usebuttontemplate\marg{button template}}
+%%   Installs a new button template. This template is invoked whenever a
+%%   button should be rendered.
+%%   \example
+%% \begin{verbatim}
+%% \usebuttontemplate{\color{structure}\insertbuttontext}
+%% \end{verbatim}
+%% \end{command}
 
-\begin{command}{\insertbuttontext}
-  Inserts the text of the current button into a template. When called
-  by  button creation commands, like |\beamerskipbutton|, the symbol
-  will be part of this text.
-\end{command}
 
-The button creation commands automatically add the following three
-inserts to the text to be rendered by |\insertbuttontext|:
+%% \paragraph{Inserts}\ 
 
-\begin{command}{\insertgotosymbol}
-  Inserts a small right-pointing arrow.
-\end{command}
+%% Inside the button template, the button text can be accessed via the
+%% following command:
 
-\begin{command}{\insertskipsymbol}
-  Inserts a double right-pointing arrow.
-\end{command}
+%% \begin{command}{\insertbuttontext}
+%%   Inserts the text of the current button into a template. When called
+%%   by  button creation commands, like |\beamerskipbutton|, the symbol
+%%   will be part of this text.
+%% \end{command}
 
-\begin{command}{\insertreturnsymbol}
-  Inserts a small left-pointing arrow.
-\end{command}
+%% The button creation commands automatically add the following three
+%% inserts to the text to be rendered by |\insertbuttontext|:
 
-You can redefine these commands to change these symbols.
+%% \begin{command}{\insertgotosymbol}
+%%   Inserts a small right-pointing arrow.
+%% \end{command}
+
+%% \begin{command}{\insertskipsymbol}
+%%   Inserts a double right-pointing arrow.
+%% \end{command}
+
+%% \begin{command}{\insertreturnsymbol}
+%%   Inserts a small left-pointing arrow.
+%% \end{command}
+
+%% You can redefine these commands to change these symbols.
 
 
 

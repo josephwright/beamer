@@ -505,21 +505,10 @@
   \end{pgfpicture}}
 
 
-\def\usebuttontemplate#1{%
-  \def\beamer@buttontemplate{#1}}
-
-\def\beamerbutton#1{%
-  \def\insertbuttontext{#1}%
-  {\beamer@buttontemplate}}
-\def\beamergotobutton#1{%
-  \def\insertbuttontext{\insertgotosymbol#1}%
-  {\beamer@buttontemplate}}%
-\def\beamerskipbutton#1{%
-  \def\insertbuttontext{\insertskipsymbol#1}%
-  {\beamer@buttontemplate}}%
-\def\beamerreturnbutton#1{%
-  \def\insertbuttontext{\insertreturnsymbol#1}%
-  {\beamer@buttontemplate}}%
+\def\beamerbutton#1{\def\insertbuttontext{#1}\usebeamertemplate**{button}}
+\def\beamergotobutton#1{\beamerbutton{\insertgotosymbol#1}}
+\def\beamerskipbutton#1{\beamerbutton{\insertskipsymbol#1}}
+\def\beamerreturnbutton#1{\beamerbutton{\insertreturnsymbol#1}}
 
 \mode
 <article>

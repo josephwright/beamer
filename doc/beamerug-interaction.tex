@@ -77,8 +77,7 @@ as:
 
 
 The following commands can be used to specify in an abstract way what
-a button will be used for. How exactly these buttons are rendered is
-governed by a template, see Section~\ref{section-navigation-buttons}.
+a button will be used for.
 
 \begin{command}{\beamerbutton\marg{button text}}
   Draws a button with the given \meta{button text}.
@@ -87,6 +86,44 @@ governed by a template, see Section~\ref{section-navigation-buttons}.
   \articlenote
   This command (and the following) just insert their argument in
   |article| mode.
+
+  \begin{element}{button}\yes\yes\yes
+    When the |\beamerbutton| command is called, this template is used
+    to render the button. Inside the template you can use the command
+    |\insertbuttontext| to insert the argument that was passed to
+    |\beamerbutton|.
+    \begin{templateoptions}
+      \itemoption{default}{}
+      Typesets the button with rounded corners. The fore- and
+      background of the \beamer-color |button| are used and also the
+      \beamer-font |button|. The border of the button gets the
+      foreground of the \beamer-color |button border|.
+    \end{templateoptions}
+    The following inserts are useful for this element:
+    \begin{itemize}
+      \iteminsert{\insertbuttontext} inserts the text of the current
+      button. Inside ``Goto-Buttons'' (see below) this text is
+      prefixed by the insert |\insertgotosymbol| and similarly for
+      skip and return buttons.
+
+      \iteminsert{\insertgotosymbol} This text is inserted at the
+      beginning of goto buttons. Redefine this command to change the
+      symbol.
+      \example
+      |\renewcommand{\insertgotosymbol}{\somearrowcommand}|
+
+      \iteminsert{\insertskipsymbol} This text is inserted at the
+      beginning of skip buttons.
+
+      \iteminsert{\insertreturnsymbol} This text is inserted at the
+      beginning of return buttons.
+    \end{itemize}
+  \end{element}
+
+  \begin{element}{button border}\no\yes\no
+    The foreground of this color is used to render the border of
+    buttons. 
+  \end{element}
 \end{command}
 
 \begin{command}{\beamergotobutton\marg{button text}}

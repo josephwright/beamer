@@ -128,8 +128,8 @@
 \def\templateinserts{\begin{itemize}}
 \def\endtemplateinserts{\end{itemize}}
 
-\def\iteminsert#1{\item {\texttt{\declare{\string#1}}}}
-  
+\def\iteminsert#1{\item {\texttt{\declare{\string#1}}}%
+  \index{Inserts!\stripcommand#1@\protect\myprintocmmand{\stripcommand#1}}}
 
 \newcommand\opt[1]{{\color{black!50!green}#1}}
 \renewcommand\oarg[1]{\opt{{\ttfamily[}\meta{#1}{\ttfamily]}}}

@@ -157,7 +157,7 @@
     \ifbeamer@colbox@ignorebg\@tempswafalse\fi%
     \def\beamer@colbox@color{#2}%
     \hsize=\beamer@colbox@wd%
-    \setbox\beamer@tempbox=\hbox\bgroup\vbox\bgroup\begingroup%
+    \setbox\beamer@tempbox=\hbox\bgroup\vbox\bgroup%
       \leftskip=\beamer@colbox@ls%
       \advance\leftskip by\beamer@colbox@sep%
       \rightskip=\beamer@colbox@rs%
@@ -180,7 +180,7 @@
       \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
       \if@tempswa\ifdim\beamer@colbox@colsep=0pt\else\vskip\beamer@colbox@colsep\fi\fi%
       \if@tempswa\ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi\fi%
-    \endgroup\egroup\egroup%
+    \egroup\egroup%
     \wd\beamer@tempbox=\hsize%
     \@tempdima=\wd\beamer@tempbox%
     \ifx\beamer@colbox@ht\@empty%
