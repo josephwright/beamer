@@ -8,6 +8,7 @@
 % of the GNU Public License, version 2.
 
 
+
 %
 % Global Declarations used by beamer in all modes
 %
@@ -18,29 +19,10 @@
 \beamer@blockstrue
 \beamer@amstrue
 \beamer@countsectfalse
-
 \newcount\beamer@tempcount
-
 \newcounter{beamerpauses}
 
 
-
-%
-% Versioning stuff
-%
-\newdimen\beamer@version
-\beamer@version=2.20pt % It is only fitting, that the version should
-                       % be given in points...
-\def\beamer@endinputifotherversion#1{%
-  \let\beamer@next=\relax%
-  \ifdim#1<\beamer@version%
-    \let\beamer@next=\endinput%
-  \else%
-    \ifdim#1>\beamer@version%
-      \let\beamer@next=\endinput%
-    \fi%
-  \fi%
-  \beamer@next}
 
 \RequirePackage{beamerbasemodes}
 % Setup modes and check for article option
@@ -100,6 +82,7 @@
 \newcount\beamer@coveringdepth
 \newcount\beamer@sectionadjust
 \newcount\beamer@tocsectionnumber
+
 
 \newif\ifbeamer@sansmath
 \newif\ifbeamer@altmode

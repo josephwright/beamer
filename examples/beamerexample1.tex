@@ -1,10 +1,12 @@
-\documentclass[notes]{beamer}
+%\documentclass[notes]{beamer}
+\documentclass{article}
+\usepackage[envcountsect]{beamerarticle}
 
 % Do NOT take this file as a template for your own talks. Use a file
 % in the directory solutions instead. They are much better suited.
 
 % Try the class options [notes], [notes=only], [trans], [handout],
-% [red], [compress], [draft], [class=article] and see what happens!
+% [red], [compress], [draft] and see what happens!
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -17,15 +19,18 @@
 
 \mode<article> % only for the article version
 {
-  \usepackage{beamerbasearticle}
   \usepackage{fullpage}
   \usepackage{hyperref}
 }
 
-\beamertemplateshadingbackground{red!10}{blue!10}
 
-\usetheme{Warsaw}
-\usefonttheme[onlytinystructure]{bold}
+\mode<presentation>
+{
+  \beamertemplateshadingbackground{red!10}{blue!10}
+
+  \usetheme{Warsaw}
+  \usefonttheme[onlytinystructure]{bold}
+}
 
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}

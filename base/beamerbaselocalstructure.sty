@@ -123,7 +123,7 @@
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
     \par%
-    \usebeamerfont*{block}%
+    \mode<presentation>{\usebeamerfont*{block}}%
     \beamer@beginblocktemplate}
   {\par%
     \beamer@endblocktemplate%
@@ -133,8 +133,8 @@
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
     \par%
-    \usebeamerfont*{block}%
-    \setbeamercolor{block structure}{parent=alerted text}%
+    \mode<presentation>{\usebeamerfont*{block}%
+    \setbeamercolor{block structure}{parent=alerted text}}%
     \beamer@beginalertblocktemplate}
   {\par%
     \beamer@endalertblocktemplate%
@@ -144,8 +144,8 @@
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
     \par%
-    \usebeamerfont*{block}%
-    \setbeamercolor{block structure}{parent=example text}%
+    \mode<presentation>{\usebeamerfont*{block}%
+    \setbeamercolor{block structure}{parent=example text}}%
     \beamer@beginexampleblocktemplate}
   {\par%
     \beamer@endexampleblocktemplate%
@@ -236,6 +236,15 @@
 \def\useenumerateitemminitemplate#1{%
   \def\beamer@autoenumtemplate{#1}}
 \useenumerateitemminitemplate{\color{beamerstructure}\insertenumlabel}
+
+\mode
+<article>
+{
+  \AtBeginDocument{
+    \let\beamer@origenumerate=\enumerate
+    \renewcommand{\enumerate}[1][]{\beamer@origenumerate}
+  }
+}
 
 
 %
@@ -355,6 +364,14 @@
 \let\beamer@itemize\itemize
 
 
+\mode
+<article>
+{
+  \AtBeginDocument{
+    \let\beamer@origdescription=\description
+    \renewcommand{\description}[1][]{\beamer@origdescription}
+  }
+}
 
 
 

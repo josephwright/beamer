@@ -16,6 +16,24 @@
 % package comment.sty by Victor Eijkhout
 %
 
+
+%
+% Versioning stuff
+%
+\newdimen\beamer@version
+\beamer@version=2.20pt % It is only fitting, that the version should
+                       % be given in points...
+\def\beamer@endinputifotherversion#1{%
+  \let\beamer@next=\relax%
+  \ifdim#1<\beamer@version%
+    \let\beamer@next=\endinput%
+  \else%
+    \ifdim#1>\beamer@version%
+      \let\beamer@next=\endinput%
+    \fi%
+  \fi%
+  \beamer@next}
+
 %
 % Comment stuff. This will also be needed, if we switch to another
 % class, so define it here already.

@@ -118,10 +118,6 @@
 
 \begin{document}
 
-Hi!
-
-\themeexample{themeAntibes}
-
 \title{User's Guide to the Beamer Class, Version \version\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
@@ -4769,7 +4765,7 @@ ones behave  analogously.
 
   If the option |envcountsect| is given either as class option in one
   of the |presentation| modes or as an option to the package
-  |beamerbasearticle| in |article| mode, then the numbering of the
+  |beamerarticle| in |article| mode, then the numbering of the
   theorems is local to each section with the section number prefixing
   the theorem number; otherwise they are numbered consecutively
   throughout the presentation or article. I recommend using this
@@ -4917,13 +4913,13 @@ environments:
 \end{classoption}
 
 The option is also available as a package option for
-|beamerbasearticle| and has the same effect.
+|beamerarticle| and has the same effect.
 
 \articlenote
 In the |article| version, the package |amsthm| sometimes clashes with
 the document class. In this case you can use the following option,
 which is once more available as a class option for \beamer\ and as a
-package option for |beamerbasearticle|, to switch off the loading of
+package option for |beamerarticle|, to switch off the loading of
 |amsthm| altogether. 
 
 \begin{classoption}{{noamsthm}}
@@ -6725,59 +6721,65 @@ of it (like a figure or a formula) with your presentation.
 
 \subsubsection{Starting the Article Mode}
 
-The class option |class=|\meta{class name}, where
-\meta{class name} is the name of another document class like
-|article| or |report|, causes the |beamer| class to transfer control
-almost immediately to the class named \meta{class name}. None of the
-normal commands defined by the \beamer\ class will be 
-defined, except for one: |\mode|. All
-class options passed to the \beamer\ class will be passed on to the
-class \meta{class name}, \emph{except}, naturally, for the option
-|class=|\meta{class name} itself.
+The article mode of a presentation is created by specifying |article|
+or |book| or some other class as the document class instead of
+|beamer| and by then loading the package |beamerarticle|.
 
-\begin{classoption}{class={\normalfont\meta{another class
-        name}}{\opt{,{\normalfont\meta{options for another class}}}}}
-  Transfer control to document class \meta{another class name} with
-  the options \meta{options for another class}.
+%The class option |class=|\meta{class name}, where
+%\meta{class name} is the name of another document class like
+%|article| or |report|, causes the |beamer| class to transfer control
+%almost immediately to the class named \meta{class name}. None of the
+%normal commands defined by the \beamer\ class will be 
+%defined, except for one: |\mode|. All
+%class options passed to the \beamer\ class will be passed on to the
+%class \meta{class name}, \emph{except}, naturally, for the option
+%|class=|\meta{class name} itself.
+
+%\begin{classoption}{class={\normalfont\meta{another class
+%        name}}{\opt{,{\normalfont\meta{options for another class}}}}}
+%  Transfer control to document class \meta{another class name} with
+%  the options \meta{options for another class}.
   
-  \example
-\begin{verbatim}
-\documentclass[class=article,a4paper]{beamer}
-\end{verbatim}
-  This will cause the rest of the text to be typeset using the
-  |article| class with the only class option being
-  |a4paper|.
-\end{classoption}
+%  \example
+%\begin{verbatim}
+%\documentclass[class=article,a4paper]{beamer}
+%\end{verbatim}
+%  This will cause the rest of the text to be typeset using the
+%  |article| class with the only class option being
+%  |a4paper|.
+%\end{classoption}
 
-Since \beamer\ gives over control to another class almost immediately,
-none of the usual commands like |\frame| and so on are defined in
-|article| mode initially. The only command that is guaranteed to be
-defined is |\mode|; which can be used to ``comment out'' all of
-\beamer's commands. For example, in your preamble you might write
-things like
-\begin{verbatim}
-\mode<presentation>{\usepackage{beamerthemeshadow}}
-\mode<article>{\usepackage{fullpage}}
-\mode<all>{
-  \usepackage{times}
-  \newcommand{\myfavoritecommand}{...}
-}
-\end{verbatim}
+%Since \beamer\ gives over control to another class almost immediately,
+%none of the usual commands like |\frame| and so on are defined in
+%|article| mode initially. The only command that is guaranteed to be
+%defined is |\mode|; which can be used to ``comment out'' all of
+%\beamer's commands. For example, in your preamble you might write
+%things like
+%\begin{verbatim}
+%\mode<presentation>{\usepackage{beamerthemeshadow}}
+%\mode<article>{\usepackage{fullpage}}
+%\mode<all>{
+%  \usepackage{times}
+%  \newcommand{\myfavoritecommand}{...}
+%}
+%\end{verbatim}
 
-However, for the main text this is very bothersome and there is a much
-better way: 
-You can include the package |beamerbasearticle|. This package will
-define virtually all of \beamer's commands in a way that is sensible
-for the |article| mode. Also, overlay specifications can be given to
-commands like |\textbf| or |\item| once |beamerbasearticle| has been
-loaded. Note that, except for |\item| these overlay specifications
+%However, for the main text this is very bothersome and there is a much
+%better way: 
+                                %You can include the package
+%|beamerbasearticle|.
+The package |beamerarticle| defines virtually all of \beamer's
+commands in a way that is sensible for the |article| mode. Also,
+overlay specifications can be given to commands like |\textbf| or
+|\item| once |beamerbasearticle| has been 
+loaded. Note that, except for |\item|, these overlay specifications
 also work: by writing |\section<presentation>{Name}| you will suppress
 this section command in the article version. For the exact effects
 overlay specifications have in |article| mode, please see the
 descriptions of the commands to which you wish to apply them.
 
-\begin{package}{{beamerbasearticle}\opt{|[|\meta{options}|]|}}
-  Makes most \beamer\ commands available for an article.
+\begin{package}{{beamerarticle}\opt{|[|\meta{options}|]|}}
+  Makes most \beamer\ commands available for another document class.
 
   The following \meta{options} may be given:
   \begin{itemize}
@@ -6806,6 +6808,20 @@ descriptions of the commands to which you wish to apply them.
     \declare{|noxcolor|} will suppress the loading of the |xcolor|
     package. No colors will be defined.
   \end{itemize}
+
+  \example
+\begin{verbatim}
+\documentclass{article}
+\usepackage{beamerarticle}
+\begin{document}
+\begin{frame}
+  \frametitle{A frame title}
+  \begin{itemize}
+  \item<1-> You can use overlay specifications.
+  \item<2-> This is useful.
+  \end{itemize}
+\end{frame}
+\end{document}
 \end{package}
 
 There is one remaining problem: While the |article| version can easily
@@ -6821,7 +6837,8 @@ insert a |\mode*| at the beginning of your presentation.
 The following example shows a simple usage of the |article| mode:
 
 \begin{verbatim}
-\documentclass[class=article,a4paper]{beamer}
+\documentclass[a4paper]{article}
+\usepackage{beamerarticle}
 %%\documentclass[ignorenonframetext,red]{beamer}
 
 \mode<article>{\usepackage{fullpage}}
@@ -6910,8 +6927,8 @@ creation of the article version.
   Create an extra file named, say, |main.article.tex| with the
   following content:
 \begin{verbatim}
-\documentclass[class=article]{beamer}
-\usepackage{beamerbasearticle}
+\documentclass{article}
+\usepackage{beamerarticle}
 \setjobnamebeamerversion{main.beamer}
 \input{main.tex}
 \end{verbatim}
