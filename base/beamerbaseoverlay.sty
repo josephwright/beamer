@@ -329,11 +329,32 @@
   }%
 }%
 
-\def\beamersetuncovermixins#1#2{%
-  \gdef\beamer@uncoverbeforeactions{\ignorespaces#1}%
-  \gdef\beamer@uncoverafteractions{\ignorespaces#2}}
 
-\beamersetuncovermixins{}{}
+\define@key{beamer@mixin}{still covered}{\gdef\beamer@uncoverbeforeactions{\ignorespaces#1}}
+\define@key{beamer@mixin}{again covered}{\gdef\beamer@uncoverafteractions{\ignorespaces#1}}
+
+\define@key{beamer@mixin}{invisible}[]{%
+  \gdef\beamer@uncoverbeforeactions{\ignorespaces}
+  \gdef\beamer@uncoverafteractions{\ignorespaces}}
+
+\define@key{beamer@mixin}{transparent}[15]{%
+  \gdef\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1->{#1}}
+  \gdef\beamer@uncoverafteractions{\ignorespaces\opaqueness<1->{#1}}}
+
+\define@key{beamer@mixin}{dynamic}[]{%
+  \gdef\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<2>{10}\opaqueness<3>{5}}
+  \gdef\beamer@uncoverafteractions{\ignorespaces\opaqueness<2>{10}\opaqueness<3>{5}}}
+
+\define@key{beamer@mixin}{highly dynamic}[]{%
+  \gdef\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}
+  \gdef\beamer@uncoverafteractions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}}
+
+
+\def\setbeamercovered#1{%
+  \setkeys{beamer@mixin}{invisible}%
+  \setkeys{beamer@mixin}{#1}}
+
+\setbeamercovered{invisible}
 
 \newcolormixin\beamer@colorhook
 
@@ -348,7 +369,7 @@
 \mode
 <article>
 {
-  \def\beamersetuncovermixins#1#2{}
+  \let\setbeamercovered=\@gobble
 }
 
 

@@ -212,10 +212,9 @@
 
 \def\insertslidenavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerslidenavstrong}%
     \usebeamercolor[fg]{navigation symbols dimmed}
     \pgfuseobject{beamerslidenavlight}%
-    \usebeamercolor[fg]{navigation symbols}
-    \pgfuseobject{beamerslidenavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinkslideprev{\beamer@linkspace{6pt}}%
   \Acrobatmenu{GoToPage}{\beamer@linkspace{8pt}}%
@@ -247,10 +246,9 @@
 
 \def\insertframenavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerframenavstrong}%
     \usebeamercolor[fg]{navigation symbols dimmed}
     \pgfuseobject{beamerframenavlight}%
-    \usebeamercolor[fg]{navigation symbols}
-    \pgfuseobject{beamerframenavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinkframeendprev{\beamer@linkspace{5pt}}%
   \hyperlinkframestart{\beamer@linkspace{5pt}}%
@@ -287,10 +285,9 @@
 
 \def\insertsubsectionnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamersubsectionnavstrong}%
     \usebeamercolor[fg]{navigation symbols dimmed}
     \pgfuseobject{beamersubsectionnavlight}%
-    \usebeamercolor[fg]{navigation symbols}
-    \pgfuseobject{beamersubsectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinksubsectionendprev{\beamer@linkspace{5pt}}%
   \hyperlinksubsectionstart{\beamer@linkspace{5pt}}%
@@ -328,10 +325,9 @@
 
 \def\insertsectionnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamersectionnavstrong}%
     \usebeamercolor[fg]{navigation symbols dimmed}
     \pgfuseobject{beamersectionnavlight}%
-    \usebeamercolor[fg]{navigation symbols}
-    \pgfuseobject{beamersectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinksectionendprev{\beamer@linkspace{5pt}}%
   \hyperlinksectionstart{\beamer@linkspace{5pt}}%
@@ -393,17 +389,15 @@
 \def\insertdocnavigationsymbol{%
   \ifx\beamer@startpageofappendix\@empty%
     \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-      \usebeamercolor[fg]{navigation symbols}
       \pgfuseobject{beamerdocnavstrongsingle}%
     \end{pgfpicture}\kern-20pt%
     \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
     \hyperlinkpresentationend{\beamer@linkspace{11pt}}%
   \else%
     \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+      \pgfuseobject{beamerdocnavstrong}%
       \usebeamercolor[fg]{navigation symbols dimmed}
       \pgfuseobject{beamerdocnavlight}%
-      \usebeamercolor[fg]{navigation symbols}
-      \pgfuseobject{beamerdocnavstrong}%
     \end{pgfpicture}\kern-20pt%
     \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
     \hyperlinkpresentationend{\beamer@linkspace{5pt}}%
@@ -445,16 +439,12 @@
 
 \def\insertbackfindforwardnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \usebeamercolor[fg]{navigation symbols}
     \pgfuseobject{beamerbackfindforwardnav}%
   \end{pgfpicture}\kern-20pt%
   \Acrobatmenu{GoBack}{\beamer@linkspace{7pt}}%
   \Acrobatmenu{Find}{\beamer@linkspace{6pt}}%
   \Acrobatmenu{GoForward}{\beamer@linkspace{7pt}}}
 
-
-\def\usenavigationsymbolstemplate#1{%
-  \def\insertnavigationsymbols{#1}}
 
 
 %

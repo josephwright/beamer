@@ -66,34 +66,19 @@
   \beamer@ifempty{#1}
   {\def\inserttheoremaddition{}}
   {\def\inserttheoremaddition{#1}}
-  \beamer@theorembegintemplate#2}
-\def\@endtheorem{\beamer@theoremendtemplate}
+  \usebeamertemplate{theorem begin}#2}
+\def\@endtheorem{\usebeamertemplate{theorem end}}
 
 \renewenvironment<>{proof}[1][\proofname]{%
   \par
   \def\insertproofname{#1\@addpunct{.}}%
   \pushQED{\qed}
-  \beamer@proofbegintemplate#2}
-{\popQED\beamer@proofendtemplate}
+  \usebeamertemplate{proof begin}#2}
+{\popQED\usebeamertemplate{proof end}}
 
 \fi
 
-\newcommand\usetheoremtemplate[2]{%
-  \long\def\beamer@theorembegintemplate{#1}%
-  \long\def\beamer@theoremendtemplate{#2}}
-
-\newcommand\useprooftemplate[2]{
-  \long\def\beamer@proofbegintemplate{#1}
-  \long\def\beamer@proofendtemplate{#2}}
-
-\useprooftemplate{\begin{block}{\insertproofname}}{\end{block}}
-
-\def\useqedsymboltemplate#1{\def\qedsymbol{\leavevmode\hbox{#1}}}
-%\useqedsymboltemplate{\color{beamerstructure}\vrule width1.5ex height1.5ex depth0pt}
-
-
-\newcommand{\BeispielInline}[1]{{\color{beamerexample}Beispiel: \ignorespaces#1}}
-\newcommand{\ExampleInline}[1]{{\color{beamerexample}Example: \ignorespaces#1}}
+\def\qedsymbol{\leavevmode\hbox{\usebeamertemplate*{qed symbol}}}
 
 
 \mode

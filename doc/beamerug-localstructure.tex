@@ -811,10 +811,10 @@ ones behave  analogously.
   word ``Theorem'' in rounded brackets (although this can be changed by
   the template).
 
-  The appearance of the theorem is governed by
-  templates, see Section~\ref{section-theorems-templates} for details
-  on how to change these. Every theorem is put into a |block|
-  environment, thus the templates for blocks also apply.
+  The appearance of the theorem is governed by the templates
+  |theorem begin| and |theorem end|, see their description later on
+  for details on how to change these. Every theorem is put into a
+  |block| environment, thus the templates for blocks also apply.
 
   The theorem style (a concept from |amsthm|) used for this
   environment is |plain|. In this style, the body of a theorem should
@@ -961,6 +961,117 @@ package option for |beamerarticle|, to switch off the loading of
   |theorem| or |proof| will not be available.
 \end{classoption}
 
+
+
+\begin{element}{theorems}\semiyes\no\no
+  This template is a parent of |theorem begin| and |theorem end|, see
+  the first for a detailed discussion of how the theorem templates are
+  set.
+
+  \example |\setbeamertemplate{theorem}[numbered]|
+  
+  \begin{templateoptions}
+    \itemoption{default}{}
+    By default, theorems are typeset as follows: The font specification for
+    the body is honored, the font specification for the head is
+    ignored. No theorem number is printed.
+    \itemoption{normal font}{}
+    Like the default, except all font specifications for the body are
+    ignored. Thus, the fonts are used that are normally used for
+    blocks.
+    \itemoption{numbered}{}
+    This option is like the default, except that the theorem
+    number is printed for environments that are numbered.
+    \itemoption{ams style}{}
+    This causes theorems to be put in a |block| or |exampleblock|, but
+    to be otherwise typeset as is normally done in |amsthm|. Thus the
+    head font and body font depend on the setting for the theorem to be
+    typeset and theorems are numbered.
+  \end{templateoptions}
+\end{element}
+
+
+\begin{element}{theorem begin}\yes\no\no
+  Whenever an environment declared using the command |\newtheorem| is
+  to be typeset, this template is inserted at the beginning and the
+  template |theorem end| at the end. If there is a overlay
+  specification when an environment like |theorem| is 
+  used, this overlay specification will directly follow the
+  \meta{block beginning template} upon invocation. This is even true
+  if there was an optional argument to the |theorem| environment. This
+  optional argument is available via the insert |\inserttheoremaddition|.
+
+  Numerous inserts are available in this template, see below.  
+
+  Before the template starts, the font is set to the body font
+  prescribed by the environment to be typeset.
+  
+  \example The following typesets theorems like |amsthm|:
+\begin{verbatim}
+\setbeamertemplate{theorem begin}
+{%
+  \begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremheadfont
+    \inserttheoremname
+    \inserttheoremnumber
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+    \inserttheorempunctuation
+  }%
+}
+\setbeamertemplate{theorem end}{\end{\inserttheoremblockenv}}
+\end{verbatim}
+
+  \example In the following example, all font ``suggestions'' for the
+  environment are suppressed or ignored; and the theorem number is
+  suppressed.
+\begin{verbatim}
+\setbeamertemplate{theorem begin}
+{%
+  \normalfont% ignore body font
+  \begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremname
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  }%
+}
+\setbeamertemplate{theorem end}{\end{\inserttheoremblockenv}}
+\end{verbatim}
+
+  The following inserts are available inside this template:
+  \begin{itemize}
+    \iteminsert{\inserttheoremblockenv}
+    This will normally expand to |block|, but if a theorem that has
+    theorem style |example| is typeset, it will expand to
+    |exampleblock|. Thus you can use this insert to decide which
+    environment should be used when typesetting the theorem.
+
+    \iteminsert{\inserttheoremheadfont}
+    This will expand to a font chainging command that switches to the
+    font to be used in the head of the theorem. By not inserting it, you
+    can ignore the head font.
+
+    \iteminsert{\inserttheoremname}
+    This will expand to the name of the environment to be typeset (like
+    ``Theorem'' or ``Corollary''). 
+
+    \iteminsert{\inserttheoremnumber}
+    This will expand to the number of the current theorem preceeded by a
+    space or to nothing, if the current theorem does not have a number.
+
+    \iteminsert{\inserttheoremaddition}
+    This will expand to the optional argument given to the environment
+    or will be empty, if there was no optional argument.
+
+    \iteminsert{\inserttheorempunctuation}
+    This will expand to the punctuation character for the current
+    environment. This is usually a period.
+  \end{itemize}
+\end{element}
+
+\begin{element}{theorem end}\yes\no\no
+  Inserted at the end of a theorem.
+\end{element}
 
 
 

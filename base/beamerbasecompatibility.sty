@@ -281,9 +281,18 @@
 \def\beamer@usefoots{\setbeamertemplate{footline}}
 \def\usecaptiontemplate{\setbeamertemplate{caption}}
 \def\insertblockname{\insertblocktitle}
-
-
-
+\newcommand\usetheoremtemplate[2]{%
+  \setbeamertemplate{theorem begin}{#1}
+  \setbeamertemplate{theorem end}{#2}}
+\newcommand\useprooftemplate[2]{
+  \setbeamertemplate{proof begin}{#1}
+  \setbeamertemplate{proof end}{#2}}
+\def\useqedsymboltemplate{\setbeamertemplate{qed symbol}}
+\newcommand{\BeispielInline}[1]{{\usebeamercolor[fg]{example text}Beispiel: \ignorespaces#1}}
+\newcommand{\ExampleInline}[1]{{\usebeamercolor[fg]{example text}Example: \ignorespaces#1}}
+\def\usenavigationsymbolstemplate{\setbeamertemplate{navigation symbols}}
+\def\insertnavigationsymbols{\usebeamertemplate***{navigation symbols}}
+\def\beamersetaveragebackground#1{\setbeamercolor{normal text}{bg=#1}}
 
 \def\beamertemplatedefaulttoc{\setbeamertemplate{table of contents}[default]}
 \def\beamertemplatenumberedsubsectiontoc{\setbeamertemplate{table of contents}[subsections numbered]}
@@ -341,7 +350,17 @@
 \def\beamertemplatefootpagenumber{\setbeamertemplate{footline}[page number]}
 \def\beamertemplatecaptionownline{\setbeamertemplate{caption}[caption name own line]}
 \def\beamertemplatecaptionnwithnumber{\setbeamertemplate{caption}[numbered]}
-\def\beamertemplateroundedblocks{\setbeamertemplate{blocks}{rounded}}
+\def\beamertemplateroundedblocks{\setbeamertemplate{blocks}[rounded]}
+\def\beamertemplatetheoremsunnumbered{\setbeamertemplate{theorems}[default]}
+\def\beamertemplatetheoremsnumbered{\setbeamertemplate{theorems}[numbered]}
+\def\beamertemplatetheoremsamslike{\setbeamertemplate{theorems}[ams style]}
+\def\beamertemplatetheoremssimple{\setbeamertemplate{theorems}[normal font]}
+\def\beamertemplatenavigationsymbolsempty{\setbeamertemplate{navigation symbols}{}}
+\def\beamertemplatenavigationsymbolsframe{\setbeamertemplate{navigation symbols}[only frame symbol]}
+\def\beamertemplatenavigationsymbolsvertical{\setbeamertemplate{navigation symbols}[vertical]}
+\def\beamertemplatenavigationsymbolshorizontal{\setbeamertemplate{navigation symbols}[horizontal]}
+
+
 
 \mode
 <all>
@@ -368,6 +387,14 @@
   \newcommand{\beamertemplatearticlebibitems}{\setbeamertemplate{bibliography item}[article]}
   \newcommand{\beamertemplatetextbibitems}{\setbeamertemplate{bibliography item}[text]}
   \newcommand{\beamertemplatearrowbibitems}{\setbeamertemplate{bibliography item}[triangle]}  
+
+  \def\beamertemplatetransparentcovereddynamic{\setbeamercovered{highly dynamic}}
+  \def\beamertemplatetransparentcovereddynamicmedium{\setbeamercovered{dynamic}}
+  \def\beamertemplatetransparentcovered{\setbeamercovered{transparent}}
+  \def\beamertemplatetransparentcoveredmedium{\setbeamercovered{transparent=10}}
+  \def\beamertemplatetransparentcoveredhigh{\setbeamercovered{transparent=5}}
+  \def\beamertemplatetransparentcoveredhighest{\setbeamercovered{transparent=2}}
+  \def\beamersetuncovermixins#1#2{\setbeamercovered{still covered={#1},again covered={#2}}}
 }
 
 \mode

@@ -52,9 +52,6 @@ with the outer theme |sidebar|.
   Use this theme for a no-nonsense presentation. Since this theme is
   loaded by default, you cannot ``reload'' it after having loaded
   another color theme.
-
-  For a detailed explanation of all the colors this theme installs by
-  default, see Section~\ref{section-color-listing}.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}[\oarg{options}]{structure}
@@ -783,10 +780,9 @@ would instead be mixed with the background behind it. Unfortunately,
 created by mixing the color of the object you want to show with the
 current background color (the color |bg|, which has hopefully been
 setup such that it is the average color of the background on which the
-object should be placed). To specify the ``degree of
-transparency'', you can use the special command
+object should be placed). To install this effect, you can use:
 \begin{verbatim}
-\beamersetuncovermixins{#1}{#2}
+\setbeamercovered{transparent}
 \end{verbatim}
 This commands allows you to specify in a quite general way how a
 covered item should be rendered. You can even specify different ways
@@ -796,51 +792,44 @@ more. The transparency effect will automatically apply to all colors,
 \emph{except} for the colors in images. For images there is a
 workaround, see the documentation of the \pgf\ package. 
 
-As a convenience, several commands install a predefined uncovering
-behavior.
+\begin{command}{\setbeamercovered\marg{options}}
+  This command offers several different options, the most important of
+  which is |transparent|. All options are internally mapped to the two
+  options |still covered| and |again covered|.
 
-\begin{command}{\beamertemplatetransparentcovered}
-  Makes all covered text quite transparent. 
-\end{command}
+  In detail, the following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|invisible|} is the default and causes covered text
+    to ``completely disappear.
+  \item \declare{|transparent|}\opt{|=|\meta{opaqueness}} causes
+    covered text to be typset in a ``transparent'' way. By default,
+    this means that 85\% of the background color is mixed into all
+    colors or that the \meta{opaqueness} of the text is 15\%. You can
+    specify a different \meta{percentage}, where |0| means ``totally
+    transparent'' and |100| means ``totally opaque.''
 
-\begin{command}{\beamertemplatetransparentcoveredmedium}
-  Makes all covered text even more transparent. 
-\end{command}
-
-\begin{command}{\beamertemplatetransparentcoveredhigh}
-  Makes all covered text highly transparent. 
-\end{command}
-
-\begin{command}{\beamertemplatetransparentcoveredhigh}
-  Makes all covered text extremely transparent, but not totally. 
-\end{command}
-
-\begin{command}{\beamertemplatetransparentcovereddynamic}
-  Makes all covered text quite transparent, but is a dynamic way. The
-  longer it will take till the text is uncovered, the stronger the
-  transparency. 
-\end{command}
-
-\begin{command}{\beamertemplatetransparentcovereddynamicmedium}
-  Like the previous command, only it the ``range'' of dynamics is
-  smaller. 
-\end{command}
-
-\begin{command}{\beamersetuncovermixins\marg{not yet list}%
-    \marg{once more list}}
-  The \meta{not yet list} specifies  how to render covered items that
-  have not  yet been uncovered. The \meta{once more list} specifies
-  how to render covered items that have once more been covered. 
-  If you leave one of the specifications empty, the corresponding
-  covered items are completely covered, that is, they are invisible.
-  \example
+    Unfortunately, this value is kind of ``specific'' to every
+    projector. What looks good on your screen need not look good
+    during a presentation.
+  \item \declare{|dynamic|} Makes all covered text quite transparent,
+    but in a dynamic way. The longer it will take till the text is
+    uncovered, the stronger the transparency. 
+  \item \declare{|highly dynamic|} Has the same effect as |dynamic|,
+    but the effect is stronger.
+  \item \declare{|still covered=|\meta{not yet list}} specifies  how
+    to render covered items that have not yet been uncovered. The
+    \meta{not yet lest} should be a list of |\opaqueness| commands,
+    see the description of that command, below.
+    \example
 \begin{verbatim}
-\beamersetuncovermixins
-  {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}
-  {\opaqueness<1->{15}}
+\setbeamercovered{%
+  still covered={\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}},
+  again covered={\opaqueness<1->{15}}}
 \end{verbatim}
-  The \meta{not yet list} and the  \meta{once more list} can
-  contain any number of |\opaqueness| commands.
+  \item \declare{|again covered=|\meta{once more list}} specifies how
+    to render covered items that have once more been covered, that is,
+    that had been shown before but are now covered again.
+  \end{itemize}
 \end{command}
 
 \begin{command}{\opaqueness\ssarg{overlay
@@ -860,15 +849,15 @@ behavior.
   transparent. Currently, since real transparency is not yet
   implemented, this command causes all colors to get a mixing of
   \meta{percentage of opaqueness} of the current
-  |averagebackgroundcolor|. At some future point this command might
-  result in real transparency.
+  |bg|. At some future point this command might result in real
+  transparency. 
 
   The alternate \pgf\ extension used inside an opaque area is
   \meta{percentage of opaqueness}|opaque|. In case of nested calls,
   only the innermost opaqueness specification is used. 
   \example
 \begin{verbatim}
-\beamersetuncovermixins{\opaqueness<1->{15}{\opaqueness<1->{15}}
+\setbeamercovered{still covered={\opaqueness<1->{15}},again covered={\opaqueness<1->{15}}}
 \pgfdeclareimage{book}{book}
 \pgfdeclareimage{book.!15opaque}{filenameforbooknearlytransparent}
 \end{verbatim}

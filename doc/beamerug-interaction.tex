@@ -624,8 +624,60 @@ Clicking \emph{on} any of these icons has different effects:
 \end{enumerate}
 
 You can reduce the number of icons that are shown or their layout by
-adjusting the navigation symbols template, see
-Section~\ref{section-navigation-symbols-template}. 
+adjusting the |navigation symbols| template.
+
+
+\begin{element}{navigation symbols}\yes\yes\yes
+  This template is invoked in ``three-star-mode'' by themes
+  at the place where the navigation symbols should be
+  shown. ``Three-star-mode'' means that the command
+  |\usebeamertemplate***| is used.
+
+  Note that, although it may \emph{look} like that the symbols are part of
+  the footline, they are more often part of an invisible right
+  sidebar.
+
+  \begin{templateoptions}
+    \itemoption{default}{}
+    Organizes the navigation symbols horizontally.
+    \itemoption{horizontal}{}
+    This is an alias for the default.
+    \itemoption{vertical}{}
+    Organizes the navigation symbols vertically.
+    \itemoption{only frame symbol}{}
+    Shows only the navigational symbol for navigating frames.
+  \end{templateoptions}
+
+  \example The following command suppresses all navigation symbols:
+\begin{verbatim}
+\setbeamertemplate{navigation symbols}{}
+\end{verbatim}
+
+  Inside this template, the following inserts are useful:
+  \begin{itemize}
+    \iteminsert{\insertslidenavigationsymbol}
+    Inserts the slide navigation symbols, that is, the slide symbols
+    (a rectangle) together with arrows to the left and right that are
+    hyperlinked.
+
+    \iteminsert{\insertframenavigationsymbol}
+    Inserts the frame navigation symbol.
+
+    \iteminsert{\insertsubsectionnavigationsymbol}
+    Inserts the subsection navigation symbol.
+
+    \iteminsert{\insertsectionnavigationsymbol}
+    Inserts the section navigation symbol.
+
+    \iteminsert{\insertdocnavigationsymbol}
+    Inserts the presentation navigation symbol and (if necessary) the
+    appendix navigation symbol.
+
+    \iteminsert{\insertbackfindforwardnavigationsymbol}
+    Inserts a back, a find, and a forward navigation symbol.
+  \end{itemize}
+\end{element}
+
 
 
 

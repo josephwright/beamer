@@ -136,7 +136,7 @@
     \ifx\beamer@sidebarside\beamer@lefttext%
     \else%
       \usebeamercolor{normal text}%
-      \llap{\insertnavigationsymbols\hskip0.1cm}%
+      \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
       \vskip2pt%
     \fi%
   }%
@@ -166,7 +166,7 @@
   \ifx\beamer@sidebarside\beamer@lefttext%
     \usesidebartemplate[right]{0cm}{%
       \vfill%
-      \llap{\insertnavigationsymbols\hskip0.1cm}%
+      \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
       \vskip2pt}
   \fi
                                 % Margins

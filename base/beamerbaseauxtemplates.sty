@@ -486,7 +486,7 @@
     \vfill%
     \llap{\normalcolor\insertlogo\hskip0.1cm}%
     \vskip2pt%
-    \llap{\insertnavigationsymbols\hskip0.1cm}%
+    \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
     \vskip2pt}
 }
 
@@ -606,53 +606,6 @@
 
 
 
-%
-% Commands for making covered items transparent
-%
-\newcommand{\beamertemplatetransparentcovereddynamic}{
-  \beamersetuncovermixins
-  {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}%
-  {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}}
-
-\newcommand{\beamertemplatetransparentcovereddynamicmedium}{
-  \beamersetuncovermixins
-  {\opaqueness<1>{10}\opaqueness<2->{5}}%
-  {\opaqueness<1>{10}\opaqueness<2>{5}}}
-
-\newcommand{\beamertemplatetransparentcovered}{
-  \beamersetuncovermixins%
-  {\opaqueness<1->{15}}
-  {\opaqueness<1->{15}}}
-
-\newcommand{\beamertemplatetransparentcoveredmedium}{
-  \beamersetuncovermixins%
-  {\opaqueness<1->{10}}
-  {\opaqueness<1->{10}}}
-
-\newcommand{\beamertemplatetransparentcoveredhigh}{
-  \beamersetuncovermixins%
-  {\opaqueness<1->{5}}
-  {\opaqueness<1->{5}}}
-
-\newcommand{\beamertemplatetransparentcoveredhighest}{
-  \beamersetuncovermixins%
-  {\opaqueness<1->{2}}
-  {\opaqueness<1->{2}}}
-
-
-\mode
-<article>
-{
-  \def\beamertemplatetransparentcovereddynamic{}
-  \def\beamertemplatetransparentcovereddynamicmedium{}
-  \def\beamertemplatetransparentcovered{}
-  \def\beamertemplatetransparentcoveredmedium{}
-  \def\beamertemplatetransparentcoveredhigh{}
-  \def\beamertemplatetransparentcoveredhighest{}
-}
-
-
-
 
 %
 % Buttons
@@ -661,31 +614,22 @@
 \newdimen\beamer@blockheadheight%
 
 
+\defbeamertemplate{navigation symbols}{only frame symbol}
+{\insertframenavigationsymbol}
 
-\newcommand{\beamertemplatenavigationsymbolsempty}{
-  \usenavigationsymbolstemplate{}}
-
-\newcommand{\beamertemplatenavigationsymbolsframe}{
-  \usenavigationsymbolstemplate{\insertframenavigationsymbol}}
-
-\newcommand{\beamertemplatenavigationsymbolsvertical}{%
-  \usenavigationsymbolstemplate{
+\defbeamertemplate{navigation symbols}{vertical}
+{%
   \vbox{%
   \hbox{\insertslidenavigationsymbol}
   \hbox{\insertframenavigationsymbol}
   \hbox{\insertsubsectionnavigationsymbol}
   \hbox{\insertsectionnavigationsymbol}
   \hbox{\insertdocnavigationsymbol}
-  \hbox{\insertbackfindforwardnavigationsymbol}}}}
+  \hbox{\insertbackfindforwardnavigationsymbol}}%
+}
 
-\newcommand{\beamertemplatenavigationsymbolshorizontal}{%
-  \usenavigationsymbolstemplate{\hbox{%
-  \hbox{\insertslidenavigationsymbol}
-  \hbox{\insertframenavigationsymbol}
-  \hbox{\insertsubsectionnavigationsymbol}
-  \hbox{\insertsectionnavigationsymbol}
-  \hbox{\insertdocnavigationsymbol}
-  \hbox{\insertbackfindforwardnavigationsymbol}}}}
+\defbeamertemplatealias{navigation symbols}{horizontal}{default}
+
 
 
 %
@@ -775,8 +719,9 @@
 % Theorem templates
 %
 
-\newcommand\beamertemplatetheoremsamslike{
-  \usetheoremtemplate{\begin{\inserttheoremblockenv}
+\defbeamertemplate{theorem begin}{ams style}
+{%
+  \begin{\inserttheoremblockenv}
     {%
       \inserttheoremheadfont
       \inserttheoremname
@@ -784,40 +729,38 @@
       \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
       \inserttheorempunctuation
     }%
-  }{\end{\inserttheoremblockenv}}
 }
 
-\newcommand\beamertemplatetheoremsnumbered{
-  \usetheoremtemplate{%
-    \begin{\inserttheoremblockenv}
+\defbeamertemplate{theorem end}{ams style}
+{\end{\inserttheoremblockenv}}
+
+
+\defbeamertemplate{theorem begin}{numbered}
+{%
+  \begin{\inserttheoremblockenv}
     {%
       \inserttheoremname
       \inserttheoremnumber
       \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
     }%
-  }{\end{\inserttheoremblockenv}}
-}
-\newcommand\beamertemplatetheoremsunnumbered{
-  \usetheoremtemplate{%
-    \begin{\inserttheoremblockenv}
-    {%
-      \inserttheoremname
-      \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
-    }%
-  }{\end{\inserttheoremblockenv}}
 }
 
-\newcommand\beamertemplatetheoremssimple{
-  \usetheoremtemplate{%
-    \normalfont
-    \begin{\inserttheoremblockenv}
-    {%
-      \inserttheoremname
-      \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
-    }%
-  }{\end{\inserttheoremblockenv}}
+\defbeamertemplate{theorem end}{numbered}
+{\end{\inserttheoremblockenv}}
+
+
+\defbeamertemplate{theorem begin}{normal font}
+{
+  \normalfont
+  \begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremname
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  }%
 }
 
+\defbeamertemplate{theorem end}{normal font}
+{\end{\inserttheoremblockenv}}
 
 
 
