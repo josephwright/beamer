@@ -10,6 +10,7 @@
 
 \newif\ifbeamer@twoscreensnotes
 \newif\ifbeamer@twoscreenstext
+\newif\ifbeamer@dosecondmode
 
 \defbeameroption{notes on second screen}[right]%
 {
@@ -29,22 +30,30 @@
   \beamer@twoscreenstexttrue
 }
 
+\defbeameroption{always typeset second mode}[true]%
+{
+  \def\beamer@defaultdosecondmode{#1}
+}
+\def\beamer@defaultdosecondmode{false}
+
 
 \def\beamer@dosecondscreennow#1{% called from \beamer@doseveralframes
   \ifbeamer@twoscreenstext%
-  {%
-    \clearpage%
-    \def\beamer@currentmode{second}
-    \def\beamer@doifnotinframe{}%
-    \def\beamer@doifinframe{\begin{beamer@frameslide}%
-        #1%
-      \end{beamer@frameslide}%
-      \pgfcurrentpagewillbelogicalpage{2}%
-      \clearpage%
-    }%
-    {\beamer@masterdecode{\beamer@whichframes}}%
-    \beamer@donow%
-  }%
+    \ifbeamer@dosecondmode%
+      {%
+        \clearpage%
+        \def\beamer@currentmode{second}
+        \def\beamer@doifnotinframe{}%
+        \def\beamer@doifinframe{\begin{beamer@frameslide}%
+            #1%
+          \end{beamer@frameslide}%
+          \pgfcurrentpagewillbelogicalpage{2}%
+          \clearpage%
+        }%
+        {\beamer@masterdecode{\beamer@whichframes}}%
+        \beamer@donow%
+      }%
+    \fi%
   \fi%
 }
 

@@ -249,6 +249,8 @@
 }
 \define@key{beamerframe}{environment}{\def\beamer@frameenvironmentsubst{#1}}
 
+\define@key{beamerframe}{typeset second}[true]{\csname beamer@dosecondmode#1\endcsname}
+
 \newif\ifbeamer@containsverbatim
 \newif\ifbeamer@isfragile
 \newif\ifbeamer@autobreak
@@ -399,6 +401,7 @@
   \beamer@autobreakfalse%
   \beamer@shrinkfalse%
   \beamer@plainframefalse%
+  \csname beamer@dosecondmode\beamer@defaultdosecondmode\endcsname%
   \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
   \setkeys{beamerframe}{environment=frame}%
   \setkeys{beamerframe}{#2}%
