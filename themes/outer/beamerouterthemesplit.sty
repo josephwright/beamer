@@ -19,8 +19,6 @@
 
 
 
-
-
 \usesectionheadtemplate
   {\hfill\insertsectionhead}
   {\hfill\color{fg!50!bg}\insertsectionhead}
@@ -28,7 +26,8 @@
                                 % Head
 \ifbeamer@compress
 
-\useheadtemplate*{%
+\defbeamertemplate*{headline}{split theme}
+{%
   \leavevmode%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex]{section in head/foot}%
     \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
@@ -40,7 +39,8 @@
 
 \else
 
-\useheadtemplate*{%
+\defbeamertemplate*{headline}{split theme}
+{%
   \leavevmode%
   \@tempdimb=2.4375ex%
   \ifnum\beamer@subsectionmax<\beamer@sectionmax%
@@ -62,7 +62,8 @@
 \fi
 
 
-\usefoottemplate*{%
+\defbeamertemplate*{footline}{split theme}
+{%
   \leavevmode%
   \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
     \usebeamerfont{author in head/foot}\insertshortauthor

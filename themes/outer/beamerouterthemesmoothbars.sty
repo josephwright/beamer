@@ -28,49 +28,46 @@
   {
     \usebeamerfont*{headline}
     \colorlet{global.bg}{bg}
+    \usebeamercolor{subsection in head/foot}
+    \usebeamercolor{section in head/foot}
+    \usebeamercolor{frametitle}
 
     \ifbeamer@sb@subsection
-      \usebeamercolor{subsection in head/foot}
-      \colorlet{ssec.bg}{bg}
-      \usebeamercolor{section in head/foot}
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
          color(0ex)=(global.bg);%
-         color(1ex)=(ssec.bg);%
-         color(3.25ex)=(ssec.bg);%
-         color(4.25ex)=(bg);%
-         color(9.75ex)=(bg)%
+         color(1ex)=(subsection in head/foot.bg);%
+         color(3.25ex)=(subsection in head/foot.bg);%
+         color(4.25ex)=(section in head/foot.bg);%
+         color(9.75ex)=(section in head/foot.bg)%
        }
-       \usebeamercolor{frametitle}
        \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
-         color(0ex)=(bg);%
-         color(1ex)=(bg);%
-         color(2ex)=(ssec.bg)
+         color(0ex)=(frametitle.bg);%
+         color(1ex)=(frametitle.bg);%
+         color(2ex)=(subsection in head/foot.bg)
        }
     \else
-      \usebeamercolor{section in head/foot}
-      \colorlet{sec.bg}{bg}
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
          color(0ex)=(global.bg);%
-         color(1ex)=(bg);%
-         color(7ex)=(bg)%
+         color(1ex)=(section in head/foot.bg);%
+         color(7ex)=(section in head/foot.bg)%
        }
-     \usebeamercolor{frametitle}
-       \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
-         color(0ex)=(bg);%
-         color(1ex)=(bg);%
-         color(2ex)=(sec.bg)
+     \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+         color(0ex)=(frametitle.bg);%
+         color(1ex)=(frametitle.bg);%
+         color(2ex)=(section in head/foot.bg)
        }
-     \fi  
+    \fi  
 
     \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
       color(0ex)=(global.bg);%
-      color(1ex)=(bg)
+      color(1ex)=(frametitle.bg)
     }
   }
 }
 
                                 % Head
-\useheadtemplate*{%
+\defbeamertemplate*{headline}{smoothbars theme}
+{%
   \pgfuseshading{beamer@barshade}%
   \ifbeamer@sb@subsection%
     \vskip-9.75ex%

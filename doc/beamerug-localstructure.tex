@@ -1258,10 +1258,10 @@ The |abstract| environment is overlay-specificiation-aware in \beamer:
 \begin{environment}{{abstract}\sarg{action specification}}
   You can use this environment to typeset an abstract.
 
-  \begin{element}{abstact}\no\yes\yes
+  \begin{element}{abstract}\no\yes\yes
     These \beamer-color and -font are used to typeset the abstract. If
     a background color is set, this background color is used as
-    background for the whole abstract.
+    background for the whole abstract by default.
   \end{element}
 
   \begin{element}{abstract title}\yes\yes\yes
@@ -1270,13 +1270,13 @@ The |abstract| environment is overlay-specificiation-aware in \beamer:
     the word |\abstractname|, centered. The background color is ignored.
   \end{element}
 
-  \begin{element}{abstract body begin}\yes\no\no
-    This template is inserted at the beginning of the abstract, after the
-    abstract title has been inserted, but before the \meta{environment
-    contents}.
+  \begin{element}{abstract begin}\yes\no\no
+    This template is inserted at the very beginning of the abstract,
+    before the abstract title and the \meta{environment
+    contents} is inserted.
   \end{element}
 
-  \begin{element}{abstract body end}\yes\no\no
+  \begin{element}{abstract end}\yes\no\no
     This template is inserted at the end of the abstract, after the
     \meta{environment contents}.
   \end{element}

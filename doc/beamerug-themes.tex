@@ -131,30 +131,45 @@ co-author of mine attended.
   For this theme, you can specify an arbitrary number of templates for
   the boxes in the headline and in the footline. You can add a
   template for another box by using the following commands.
+
+  \begin{command}{\addheadbox\marg{beamer color}\marg{box template}}
+    Each time this command is invoked, a new box is added to the head
+    line, with the first added box being shown on the left. All boxes
+    will have the same size.
+
+    The \meta{beamer color} will be used to setup the foreground and
+    background colors of the box.
+    \example
+\begin{verbatim}
+\addheadbox{section in head/foot}{\tiny\quad 1. Box}
+\addheadbox{structure}{\tiny\quad 2. Box}
+\end{verbatim}
+
+    A similar effect as the above commands can be achieved by directly
+    installing a head template that contains two |beamercolorbox|es:
+\begin{verbatim}
+\setbeamertemplate{headline}
+{\leavevmode
+\begin{beamercolorbox}[width=.5\paperwidth]{section in head/foot}
+  \tiny\quad 1. Box
+\end{beamercolorbox}%
+\begin{beamercolorbox}[width=.5\paperwidth]{structure}
+  \tiny\quad 2. Box
+\end{beamercolorbox}
+}
+\end{verbatim}
+    While being more complicated, the above commands offer more
+    flexibility.     
+  \end{command}
+
+  \begin{command}{\addfootbox\marg{beamer color}\marg{box template}}
+    \example
+\begin{verbatim}
+\addfootbox{section in head/foot}{\tiny\quad 1. Box}
+\addfootbox{structure}{\tiny\quad 2. Box}
+\end{verbatim}
+  \end{command}
 \end{themeexample}
-
-\begin{command}{\addheadboxtemplate%
-    \marg{background color command}\marg{box template}}
-  Each time this command is invoked, a new box is added to the head
-  line, with the first added box being shown on the left. All boxes
-  will have the same size.
-  \example
-\begin{verbatim}
-\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
-\addheadboxtemplate{\usebeamercolor[bg]{normal text}}
-  {\usebeamercolor[fg]{structure}\tiny\quad 2. Box}
-\end{verbatim}
-\end{command}
-
-\begin{command}{\addfootboxtemplate%
-    \marg{background color command}\marg{box template}}
-  \example
-\begin{verbatim}
-\addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
-\addheadboxtemplate{\usebeamercolor[bg]{normal text}}
-  {\usebeamercolor[fg]{structure}\tiny\quad 2. Box}
-\end{verbatim}
-\end{command}
 
 
 \begin{themeexample}[\oarg{options}]{Madrid}

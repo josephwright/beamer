@@ -17,14 +17,16 @@ innerthemes = default circles rectangles rounded
 
 all: $(doc).pdf
 
-beameruserguide.pdf: $(doc).tex \
+beameruserguide.ind: beameruserguide.idx 
+	makeindex $(doc).idx
+
+beameruserguide.pdf: $(doc).tex $(doc).ind \
  $(themes:%=beamerugtheme%.pdf) \
  $(fontthemes:%=beamerugfonttheme%.pdf) \
  $(colorthemes:%=beamerugcolortheme%.pdf) \
  $(innerthemes:%=beameruginnertheme%.pdf) \
  $(outerthemes:%=beamerugoutertheme%.pdf) 
 	pdflatex $(doc).tex
-	makeindex beameruserguide.idx
 	(egrep -q $(rerun) $(doc).log && pdflatex $(doc).tex) || true
 
 beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../themes/theme/beamertheme%.sty

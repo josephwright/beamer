@@ -36,7 +36,7 @@ affiliation, a title graphic, and a date.
     This template is invoked when the |\titlepage| command is used.
 
     \begin{templateoptions}
-      \itemoption{default}{\oarg{orientation}}
+      \itemoption{default}{\oarg{alignment}}
       The title page is typeset showing the title, followed by the
       author, his or her affiliation, the date, and a titlegraphic. If
       any of these are missing, they are not shown. Except for the
@@ -47,7 +47,7 @@ affiliation, a title graphic, and a date.
       spanning the text width. The corresponding \beamer-fonts are used
       for these entries.
 
-      The \meta{orientation} option is passed on the |beamercolorbox|
+      The \meta{alignment} option is passed on the |beamercolorbox|
       and can be used, for example, to flush the title page to the left
       by specifying |left| here.
     \end{templateoptions}
@@ -428,12 +428,12 @@ beginning of a new part. See |beamerexample3.tex| for an example.
     This template is invoked when the |\partpage| command is used.
 
     \begin{templateoptions}
-      \itemoption{default}{\oarg{orientation}}
+      \itemoption{default}{\oarg{alignment}}
       The part page is typeset showing the current part number and,
       below, the current part title. The \beamer-color and -font
       |part page| are used, including the background color of
       |part page|. As for the |title page| template, the
-      \meta{orientation} option is passed on the |beamercolorbox|.
+      \meta{alignment} option is passed on the |beamercolorbox|.
     \end{templateoptions}
 
     The following commands are useful for this template:

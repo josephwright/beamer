@@ -533,260 +533,260 @@ default \beamer\ themes are listed in alphabetical order.
 
 
 
-\subsection{Headlines and Footlines}
+%% \subsection{Headlines and Footlines}
 
-\label{section-head-templates}
+%% \label{section-head-templates}
 
-\paragraph{Predefined Templates}\ 
+%% \paragraph{Predefined Templates}\ 
 
-\begin{command}{\beamertemplateheadempty}
-  Makes the headline empty.
-\end{command}
+%% \begin{command}{\beamertemplateheadempty}
+%%   Makes the headline empty.
+%% \end{command}
 
-\begin{command}{\beamertemplatefootempty}
-  Makes the footline empty.
-\end{command}
+%% \begin{command}{\beamertemplatefootempty}
+%%   Makes the footline empty.
+%% \end{command}
 
-\begin{command}{\beamertemplatefootpagenumber}
-  Shows only the page number in the footline.
-\end{command}
-
-
-
-\paragraph{Template Installation Commands}\ 
-
-\begin{command}{\usefoottemplate\marg{footline template}}
-  The final height of the footline is calculated by invoking this
-  template just before the beginning of the document and by setting
-  the footline height to the height of the template.
-  \example
-\begin{verbatim}
-\usefoottemplate{\hfil\tiny{\color{black!50}\insertpagenumber}}
-\end{verbatim}
-or
-\begin{verbatim}
-\usefoottemplate{%
-  \vbox{%
-    \tinycolouredline{structure!75}%
-      {\color{white}\textbf{\insertshortauthor\hfill\insertshortinstitute}}%
-    \tinycolouredline{structure}%
-      {\color{white}\textbf{\insertshorttitle}\hfill}%
-    }}
-\end{verbatim}
-\end{command}
-
-\begin{command}{\addtofoottemplate\marg{before}\marg{after}}
-  Prepends the text \meta{before} to the current foot template and
-  appends the text \meta{after}. This command is useful for adding
-  something to a foot template that is installed by some theme.
-  \example
-\begin{verbatim}
-\addtoheadtemplate
-  {\vbox\bgroup}
-  {%
-    \vskip-.5cm%
-    \includegraphics[height=.5cm]{myimage.pdf}%
-  \egroup}
-\end{verbatim}
-\end{command}
+%% \begin{command}{\beamertemplatefootpagenumber}
+%%   Shows only the page number in the footline.
+%% \end{command}
 
 
-\begin{command}{\useheadtemplate\marg{headline template}}
-  See |\usefoottemplate|.
-  \example
-\begin{verbatim}
-\useheadtemplate{%
-  \vbox{%
-  \vskip3pt%
-  \beamerline{\insertnavigation{\paperwidth}}%
-  \vskip1.5pt%
-  \insertvrule{0.4pt}{structure!50}}%
-}
-\end{verbatim}
-\end{command}
 
-\begin{command}{\addtoheadtemplate\marg{before}\marg{after}}
-  See |\addtofoottemplate|.
-\end{command}
+%% \paragraph{Template Installation Commands}\ 
 
+%% \begin{command}{\usefoottemplate\marg{footline template}}
+%%   The final height of the footline is calculated by invoking this
+%%   template just before the beginning of the document and by setting
+%%   the footline height to the height of the template.
+%%   \example
+%% \begin{verbatim}
+%% \usefoottemplate{\hfil\tiny{\color{black!50}\insertpagenumber}}
+%% \end{verbatim}
+%% or
+%% \begin{verbatim}
+%% \usefoottemplate{%
+%%   \vbox{%
+%%     \tinycolouredline{structure!75}%
+%%       {\color{white}\textbf{\insertshortauthor\hfill\insertshortinstitute}}%
+%%     \tinycolouredline{structure}%
+%%       {\color{white}\textbf{\insertshorttitle}\hfill}%
+%%     }}
+%% \end{verbatim}
+%% \end{command}
 
-\paragraph{Inserts for these Templates}\ 
-
-\begin{command}{\insertframenumber}
-  Inserts the number of the current frame (not slide) into a template.
-\end{command}
-
-\begin{command}{\inserttotalframenumber}
-  Inserts the total number of the frames (not slides) into a
-  template. The number is only correct on the second run of \TeX\ on
-  your document.
-\end{command}
-
-\begin{command}{\insertlogo}
-  Inserts the logo(s) into a template.
-\end{command}
-
-\begin{command}{\insertnavigation\marg{width}}
-  Inserts a horizontal navigation bar of the given \meta{width} into a
-  template. The bar lists the sections and below them mini frames for
-  each frame in that section.
-\end{command}
-
-\begin{command}{\insertpagenumber}
-  Inserts the current page number into a template.
-\end{command}
-
-\begin{command}{\insertsection}
-  Inserts the current section into a template.
-\end{command}
-
-\begin{command}{\insertsectionnavigation\marg{width}}
-  Inserts a vertical navigation bar containing all sections, with the
-  current section hilighted.
-\end{command}
-
-\begin{command}{\insertsectionnavigationhorizontal\marg{width}%
-    \marg{left insert}\marg{right insert}}
-  Inserts a horizontal navigation bar containing all sections, with
-  the current section hilighted. The \meta{left insert} will be
-  inserted to the left of the sections, the \marg{right insert} to the
-  right. By inserting a triple fill (a
-  |filll|) you can flush the bar to the left or right.
-  \example
-\begin{verbatim}
-\insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
-\end{verbatim}
-\end{command}
-
-\begin{command}{\insertshortauthor\oarg{options}}
-  Inserts the short version of the author into a template. The text
-  will be printed in one long line, line breaks introduced using the
-  |\\| command are suppressed.  The
-  following \meta{options} may be given:
-  \begin{itemize}
-  \item
-    \declare{|width=|\meta{width}}
-    causes the text to be put into a multi-line minipage of the given
-    size. Line breaks are still suppressed by default.
-  \item
-    \declare{|center|}
-    centers the text inside the minipage created using the |width|
-    option, rather than having it left aligned.
-  \item
-    \declare{|respectlinebreaks|}
-    causes line breaks introduced by the |\\| command to be honored.    
-  \end{itemize}
-
-  \example |\insertauthor[width={3cm},center,respectlinebreaks]|
-\end{command}
-
-\begin{command}{\insertshortdate\oarg{options}}
-  Inserts the short version of the date into a template. The same
-  options as for |\insertshortauthor| may be given. 
-\end{command}
-
-\begin{command}{\insertshortinstitute\oarg{options}}
-  Inserts the short version of the institute into a template. The same
-  options as for |\insertshortauthor| may be given. 
-\end{command}
-
-\begin{command}{\insertshortpart\oarg{options}}
-  Inserts the short version of the part name into a template. The same
-  options as for |\insertshortauthor| may be given. 
-\end{command}
-
-\begin{command}{\insertshorttitle\oarg{options}}
-  Inserts the short version of the document title into a template. Same
-  options as for |\insertshortauthor| may be given. 
-\end{command}
-
-\begin{command}{\insertshortsubtitle\oarg{options}}
-  Inserts the short version of the document subtitle. Same
-  options as for |\insertshortauthor| may be given. 
-\end{command}
-
-\begin{command}{\insertsubsection}
-  Inserts the current subsection into a template.
-\end{command}
-
-\begin{command}{\insertsubsectionnavigation\marg{width}}
-  Inserts a vertical navigation bar containing all subsections of the
-  current section, with the current subsection hilighted.
-\end{command}
-
-\begin{command}{\insertsubsectionnavigationhorizontal\marg{width}%
-    \marg{left insert}\marg{right insert}}
-  See |\insertsectionnavigationhorizontal|.
-\end{command}
+%% \begin{command}{\addtofoottemplate\marg{before}\marg{after}}
+%%   Prepends the text \meta{before} to the current foot template and
+%%   appends the text \meta{after}. This command is useful for adding
+%%   something to a foot template that is installed by some theme.
+%%   \example
+%% \begin{verbatim}
+%% \addtoheadtemplate
+%%   {\vbox\bgroup}
+%%   {%
+%%     \vskip-.5cm%
+%%     \includegraphics[height=.5cm]{myimage.pdf}%
+%%   \egroup}
+%% \end{verbatim}
+%% \end{command}
 
 
-\begin{command}{\insertverticalnavigation\marg{width}}
-  Inserts a vertical navigation bar of the given \meta{width} into a
-  template. The bar shows a little table of contents. The individual
-  lines are typeset using the templates
-  |\usesectionsidetemplate| and |\usesubsectionsidetemplate|.
-\end{command}
+%% \begin{command}{\useheadtemplate\marg{headline template}}
+%%   See |\usefoottemplate|.
+%%   \example
+%% \begin{verbatim}
+%% \useheadtemplate{%
+%%   \vbox{%
+%%   \vskip3pt%
+%%   \beamerline{\insertnavigation{\paperwidth}}%
+%%   \vskip1.5pt%
+%%   \insertvrule{0.4pt}{structure!50}}%
+%% }
+%% \end{verbatim}
+%% \end{command}
 
-\begin{command}{\insertframestartpage}
-  Inserts the page number of the first page of the current frame.
-\end{command}
-
-\begin{command}{\insertframeendpage}
-  Inserts the page number of the last page of the current frame.
-\end{command}
-
-\begin{command}{\insertsubsectionstartpage}
-  Inserts the page number of the first page of the current subsection.
-\end{command}
-
-\begin{command}{\insertsubsectionendpage}
-  Inserts the page number of the last page of the current subsection.
-\end{command}
-
-\begin{command}{\insertsectionstartpage}
-  Inserts the page number of the first page of the current section.
-\end{command}
-
-\begin{command}{\insertsectionendpage}
-  Inserts the page number of the last page of the current section.
-\end{command}
-
-\begin{command}{\insertpartstartpage}
-  Inserts the page number of the first page of the current part.
-\end{command}
-
-\begin{command}{\insertpartendpage}
-  Inserts the page number of the last page of the current part.
-\end{command}
-
-\begin{command}{\insertpresentationstartpage}
-  Inserts the page number of the first page of the presentation.
-\end{command}
-
-\begin{command}{\insertpresentationendpage}
-  Inserts the page number of the last page of the presentation
-  (excluding the appendix).
-\end{command}
+%% \begin{command}{\addtoheadtemplate\marg{before}\marg{after}}
+%%   See |\addtofoottemplate|.
+%% \end{command}
 
 
-\begin{command}{\insertappendixstartpage}
-  Inserts the page number of the first page of the appendix. If there
-  is no appendix, this number is the last page of the document.
-\end{command}
+%% \paragraph{Inserts for these Templates}\ 
 
-\begin{command}{\insertappendixendpage}
-  Inserts the page number of the last page of the appendix. If there
-  is no appendix, this number is the last page of the document.
-\end{command}
+%% \begin{command}{\insertframenumber}
+%%   Inserts the number of the current frame (not slide) into a template.
+%% \end{command}
 
-\begin{command}{\insertdocumentstartpage}
-  Inserts 1.
-\end{command}
+%% \begin{command}{\inserttotalframenumber}
+%%   Inserts the total number of the frames (not slides) into a
+%%   template. The number is only correct on the second run of \TeX\ on
+%%   your document.
+%% \end{command}
 
-\begin{command}{\insertdocumentendpage}
-  Inserts the page number of the last page of the document (including
-  the appendix).
-\end{command}
+%% \begin{command}{\insertlogo}
+%%   Inserts the logo(s) into a template.
+%% \end{command}
+
+%% \begin{command}{\insertnavigation\marg{width}}
+%%   Inserts a horizontal navigation bar of the given \meta{width} into a
+%%   template. The bar lists the sections and below them mini frames for
+%%   each frame in that section.
+%% \end{command}
+
+%% \begin{command}{\insertpagenumber}
+%%   Inserts the current page number into a template.
+%% \end{command}
+
+%% \begin{command}{\insertsection}
+%%   Inserts the current section into a template.
+%% \end{command}
+
+%% \begin{command}{\insertsectionnavigation\marg{width}}
+%%   Inserts a vertical navigation bar containing all sections, with the
+%%   current section hilighted.
+%% \end{command}
+
+%% \begin{command}{\insertsectionnavigationhorizontal\marg{width}%
+%%     \marg{left insert}\marg{right insert}}
+%%   Inserts a horizontal navigation bar containing all sections, with
+%%   the current section hilighted. The \meta{left insert} will be
+%%   inserted to the left of the sections, the \marg{right insert} to the
+%%   right. By inserting a triple fill (a
+%%   |filll|) you can flush the bar to the left or right.
+%%   \example
+%% \begin{verbatim}
+%% \insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
+%% \end{verbatim}
+%% \end{command}
+
+%% \begin{command}{\insertshortauthor\oarg{options}}
+%%   Inserts the short version of the author into a template. The text
+%%   will be printed in one long line, line breaks introduced using the
+%%   |\\| command are suppressed.  The
+%%   following \meta{options} may be given:
+%%   \begin{itemize}
+%%   \item
+%%     \declare{|width=|\meta{width}}
+%%     causes the text to be put into a multi-line minipage of the given
+%%     size. Line breaks are still suppressed by default.
+%%   \item
+%%     \declare{|center|}
+%%     centers the text inside the minipage created using the |width|
+%%     option, rather than having it left aligned.
+%%   \item
+%%     \declare{|respectlinebreaks|}
+%%     causes line breaks introduced by the |\\| command to be honored.    
+%%   \end{itemize}
+
+%%   \example |\insertauthor[width={3cm},center,respectlinebreaks]|
+%% \end{command}
+
+%% \begin{command}{\insertshortdate\oarg{options}}
+%%   Inserts the short version of the date into a template. The same
+%%   options as for |\insertshortauthor| may be given. 
+%% \end{command}
+
+%% \begin{command}{\insertshortinstitute\oarg{options}}
+%%   Inserts the short version of the institute into a template. The same
+%%   options as for |\insertshortauthor| may be given. 
+%% \end{command}
+
+%% \begin{command}{\insertshortpart\oarg{options}}
+%%   Inserts the short version of the part name into a template. The same
+%%   options as for |\insertshortauthor| may be given. 
+%% \end{command}
+
+%% \begin{command}{\insertshorttitle\oarg{options}}
+%%   Inserts the short version of the document title into a template. Same
+%%   options as for |\insertshortauthor| may be given. 
+%% \end{command}
+
+%% \begin{command}{\insertshortsubtitle\oarg{options}}
+%%   Inserts the short version of the document subtitle. Same
+%%   options as for |\insertshortauthor| may be given. 
+%% \end{command}
+
+%% \begin{command}{\insertsubsection}
+%%   Inserts the current subsection into a template.
+%% \end{command}
+
+%% \begin{command}{\insertsubsectionnavigation\marg{width}}
+%%   Inserts a vertical navigation bar containing all subsections of the
+%%   current section, with the current subsection hilighted.
+%% \end{command}
+
+%% \begin{command}{\insertsubsectionnavigationhorizontal\marg{width}%
+%%     \marg{left insert}\marg{right insert}}
+%%   See |\insertsectionnavigationhorizontal|.
+%% \end{command}
+
+
+%% \begin{command}{\insertverticalnavigation\marg{width}}
+%%   Inserts a vertical navigation bar of the given \meta{width} into a
+%%   template. The bar shows a little table of contents. The individual
+%%   lines are typeset using the templates
+%%   |\usesectionsidetemplate| and |\usesubsectionsidetemplate|.
+%% \end{command}
+
+%% \begin{command}{\insertframestartpage}
+%%   Inserts the page number of the first page of the current frame.
+%% \end{command}
+
+%% \begin{command}{\insertframeendpage}
+%%   Inserts the page number of the last page of the current frame.
+%% \end{command}
+
+%% \begin{command}{\insertsubsectionstartpage}
+%%   Inserts the page number of the first page of the current subsection.
+%% \end{command}
+
+%% \begin{command}{\insertsubsectionendpage}
+%%   Inserts the page number of the last page of the current subsection.
+%% \end{command}
+
+%% \begin{command}{\insertsectionstartpage}
+%%   Inserts the page number of the first page of the current section.
+%% \end{command}
+
+%% \begin{command}{\insertsectionendpage}
+%%   Inserts the page number of the last page of the current section.
+%% \end{command}
+
+%% \begin{command}{\insertpartstartpage}
+%%   Inserts the page number of the first page of the current part.
+%% \end{command}
+
+%% \begin{command}{\insertpartendpage}
+%%   Inserts the page number of the last page of the current part.
+%% \end{command}
+
+%% \begin{command}{\insertpresentationstartpage}
+%%   Inserts the page number of the first page of the presentation.
+%% \end{command}
+
+%% \begin{command}{\insertpresentationendpage}
+%%   Inserts the page number of the last page of the presentation
+%%   (excluding the appendix).
+%% \end{command}
+
+
+%% \begin{command}{\insertappendixstartpage}
+%%   Inserts the page number of the first page of the appendix. If there
+%%   is no appendix, this number is the last page of the document.
+%% \end{command}
+
+%% \begin{command}{\insertappendixendpage}
+%%   Inserts the page number of the last page of the appendix. If there
+%%   is no appendix, this number is the last page of the document.
+%% \end{command}
+
+%% \begin{command}{\insertdocumentstartpage}
+%%   Inserts 1.
+%% \end{command}
+
+%% \begin{command}{\insertdocumentendpage}
+%%   Inserts the page number of the last page of the document (including
+%%   the appendix).
+%% \end{command}
 
 
 

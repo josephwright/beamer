@@ -276,17 +276,42 @@
 \defbeamertemplate*{abstract title}{default}
 {%
   \begin{center}%
-    \abstractname\vspace{-.5em}\vspace{0pt}%
+    \abstractname
   \end{center}%
 }
 
-\defbeamertemplate*{abstract body begin}{default}
-{\list{}{\rightmargin\leftmargin}\item\relax\usebeamerfont*{abstract}}
+\defbeamertemplate*{abstract begin}{default}
+{\beamercolorbox[vmode]{abstract}\leftskip2em\rightskip2em plus 1fill\usebeamerfont*{abstract}}
 
-\defbeamertemplate*{abstract body end}{default}
-{\endlist}
+\defbeamertemplate*{abstract end}{default}
+{\medskip\endbeamercolorbox}
 
 
+% Verse
+
+\defbeamertemplate*{verse begin}{default}
+{\beamercolorbox[vmode]{verse}}
+
+\defbeamertemplate*{verse end}{default}
+{\endbeamercolorbox}
+
+
+% Quotation
+
+\defbeamertemplate*{quotation begin}{default}
+{\beamercolorbox[vmode]{quotation}}
+
+\defbeamertemplate*{quotation end}{default}
+{\endbeamercolorbox}
+
+
+% Quote
+
+\defbeamertemplate*{quote begin}{default}
+{\beamercolorbox[vmode]{quote}}
+
+\defbeamertemplate*{quote end}{default}
+{\endbeamercolorbox}
 
 
 \beamertemplatedefaultblocks

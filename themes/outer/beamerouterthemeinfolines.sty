@@ -16,7 +16,8 @@
 \setbeamercolor*{section in head/foot}{parent=palette ternary}
 \setbeamercolor*{subsection in head/foot}{parent=palette primary}
 
-\usefoottemplate*{
+\defbeamertemplate*{footline}{infolines theme}
+{
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
@@ -30,9 +31,10 @@
     \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
   \end{beamercolorbox}}%
   \vskip0pt%
-  }
+}
 
-\useheadtemplate*{
+\defbeamertemplate*{headline}{infolines theme}
+{
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
@@ -42,7 +44,9 @@
     \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsection
   \end{beamercolorbox}}%
   \vskip0pt%
-  }
+}
+
+
 
 \usesidebartemplate[right]{0cm}{%
   \vskip2pt%
@@ -52,9 +56,7 @@
   \llap{\insertnavigationsymbols\hskip0.1cm}%
   \vskip2pt}
 
-\beamersetleftmargin{1em}
-\beamersetrightmargin{1em}
-
+\setbeamermargin{left=1em,right=1em}
 
 \mode
 <all>

@@ -271,6 +271,15 @@
   \setbeamertemplate{abstract body end}{#2}}
 \def\usetemplateverse#1#2{\setbeamertemplate{verse begin}{#1}\setbeamertemplate{verse end}{#2}}
 \def\usetemplatenote{\setbeamertemplate{note page}}
+\def\useheadtemplate{\@ifstar{\beamer@useheads}{\beamer@usehead}}
+\def\beamer@usehead{\setbeamertemplate{headline}[text line]}
+\def\beamer@useheads{\setbeamertemplate{headline}}
+\def\addtoheadtemplate{\addtobeamertemplate{headline}}
+\def\addtofoottemplate{\addtobeamertemplate{footline}}
+\def\usefoottemplate{\@ifstar{\beamer@usefoots}{\beamer@usefoot}}
+\def\beamer@usefoot{\setbeamertemplate{footline}[text line]}
+\def\beamer@usefoots{\setbeamertemplate{footline}}
+
 
 
 
@@ -326,10 +335,15 @@
   \setbeamertemplate{quote begin}{#1}
   \setbeamertemplate{quotation end}{#2}
   \setbeamertemplate{quote end}{#2}}
+\def\beamertemplateheadempty{\setbeamertemplate{headline}{}}
+\def\beamertemplatefootempty{\setbeamertemplate{fotoline}{}}
+\def\beamertemplatefootpagenumber{\setbeamertemplate{footline}[page number]}
 
 \mode
 <all>
 {
+  \def\beamersetleftmargin#1{\setbeamermargin{left=#1}}
+  \def\beamersetrightmargin#1{\setbeamermargin{right=#1}}
   \long\def\useframetemplate#1#2{\setbeamertemplate{frame begin}{#1}\setbeamertemplate{frame end}{#2}}
   \def\usebackgroundtemplate{\setbeamertemplate{background canvas}}
   \def\beamertemplatesolidbackgroundcolor#1{\setbeamercolor{normal text}{bg=#1}}

@@ -82,7 +82,7 @@
 
 \def\setbeamertemplate#1{%
   \@ifnextchar[{\beamer@sbtchoose{#1}}{\beamer@sbtexec{#1}}}
-\def\beamer@sbtexec#1#2{%
+\long\def\beamer@sbtexec#1#2{%
   \expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname{#2}%
   \expandafter\ifx\csname beamer@@tmpgrp@#1\endcsname\relax%
   \else%
@@ -92,7 +92,7 @@
     \@for\beamer@templ:=\beamer@sbt@group\do{\expandafter\setbeamertemplate\expandafter{\beamer@templ}{#2}}%
   \fi%
 }
-\def\beamer@sbtchoose#1[#2]{\def\beamer@@sbt@option{#2}%
+\long\def\beamer@sbtchoose#1[#2]{\def\beamer@@sbt@option{#2}%
   \expandafter\ifx\csname beamer@@tmpop@#1@#2\endcsname\relax%
     \expandafter\let\expandafter\beamer@@next\csname beamer@@tmpop@#1@*\endcsname%
   \else%

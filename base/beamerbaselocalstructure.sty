@@ -332,11 +332,11 @@
 
 \newenvironment<>{abstract}%
 {\actionenv#1%
-  \beamercolorbox[vmode]{abstract}%
+  \usebeamertemplate{abstract begin}%
   \usebeamerfont{abstract}%
-  \usebeamertemplate**{abstract title}%
-  \usebeamertemplate{abstract body begin}}%
-{\usebeamertemplate{abstract body end}\endbeamercolorbox\endactionenv}
+  \usebeamercolor{abstract}%
+  \usebeamertemplate**{abstract title}}%
+{\usebeamertemplate{abstract end}\endactionenv}
 
   
 %
@@ -345,8 +345,9 @@
 
 \newenvironment<>{verse}
 {\actionenv#1%
-  \beamercolorbox[vmode]{verse}%
+  \usebeamertemplate{verse begin}%
   \usebeamerfont{verse}%
+  \usebeamercolor{verse}%
   \let\\\@centercr%
   \list{}{\itemsep      \z@
     \itemindent   -1.5em%
@@ -354,31 +355,30 @@
     \rightmargin  \leftmargin
     \advance\leftmargin 1.5em
     \parsep       .75em plus .25em minus.25em}%
-\item\relax%
-  \usebeamertemplate{verse begin}}
-{\usebeamertemplate{verse end}\endlist\endbeamercolorbox\endactionenv}
+\item\relax}
+{\endlist\usebeamertemplate{verse end}\endactionenv}
 
                
 \newenvironment<>{quotation}
 {\actionenv#1%
-  \beamercolorbox[vmode]{quotation}%
+  \usebeamertemplate{quotation begin}
   \usebeamerfont{quotation}%
+  \usebeamercolor{quotation}%
   \list{}{\listparindent 1.5em%
     \itemindent    \listparindent
     \rightmargin   \leftmargin
     \parsep        \z@ \@plus\p@}%
-\item\relax%
-  \usebeamertemplate{quotation begin}}
-{\usebeamertemplate{quotation end}\endlist\endbeamercolorbox\endactionenv}
+\item\relax}
+{\endlist\usebeamertemplate{quotation end}\endactionenv}
       
 \newenvironment<>{quote}
 {\actionenv#1%
-  \beamercolorbox[vmode]{quote}%
+  \usebeamertemplate{quote begin}%
   \usebeamerfont{quote}%
+  \usebeamercolor{quote}%
   \list{}{\rightmargin   \leftmargin}
-\item\relax%
-  \usebeamertemplate{quote begin}}
-{\usebeamertemplate{quote end}\endlist\endbeamercolorbox\endactionenv}
+\item\relax}
+{\endlist\usebeamertemplate{quote end}\endactionenv}
 
 
 \mode

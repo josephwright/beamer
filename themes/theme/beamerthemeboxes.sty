@@ -42,37 +42,36 @@
   \divide\beamer@headboxsizes by\beamer@headboxes
 }
 
-\useheadtemplate{%
-  \vbox{%
-    \hbox{%
-      \hskip-\Gm@lmargin%
-    \hbox{%
-    \beamer@currentbox=0\relax%
-    \loop%
-    \ifnum\beamer@currentbox<\beamer@headboxes%
-    \hbox to\beamer@headboxsizes{%
-     % Background
-      {%
-        \csname beamer@headbg\the\beamer@currentbox\endcsname%
-        \vrule width\beamer@headboxsizes height\beamer@boxheadheight%
-        \hskip-\beamer@headboxsizes%
-      }%
-      % Box
-      {%
-        \setbox\beamer@tempbox=\hbox to\beamer@headboxsizes{%
-          \csname beamer@headbox\the\beamer@currentbox\endcsname\hfil}%
-        \dp\beamer@tempbox=0pt%
-        \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
-        \ht\beamer@tempbox=\beamer@boxheadheight%
-        \dp\beamer@tempbox=0pt%
-        \box\beamer@tempbox%
-      }}%
-    \advance\beamer@currentbox by 1%
-    \repeat%
+\def\addheadbox#1#2{\addheadboxtemplate{\usebeamercolor[bg]{#1}}{\usebeamercolor[fg]{#1}#2}}
+
+
+\defbeamertemplate*{headline}{boxes theme}
+{%
+  \leavevmode
+  \beamer@currentbox=0\relax%
+  \loop%
+  \ifnum\beamer@currentbox<\beamer@headboxes%
+  \hbox to\beamer@headboxsizes{%
+   % Background
+    {%
+      \csname beamer@headbg\the\beamer@currentbox\endcsname%
+      \vrule width\beamer@headboxsizes height\beamer@boxheadheight%
+      \hskip-\beamer@headboxsizes%
     }%
-    \hskip-\Gm@rmargin%
-    }%
-}}
+    % Box
+    {%
+      \setbox\beamer@tempbox=\hbox to\beamer@headboxsizes{%
+        \csname beamer@headbox\the\beamer@currentbox\endcsname\hfil}%
+      \dp\beamer@tempbox=0pt%
+      \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
+      \ht\beamer@tempbox=\beamer@boxheadheight%
+      \dp\beamer@tempbox=0pt%
+      \box\beamer@tempbox%
+    }}%
+  \advance\beamer@currentbox by 1%
+  \repeat%
+}%
+
 
                                 % Foot
 \newcount\beamer@footboxes
@@ -85,38 +84,35 @@
   \divide\beamer@footboxsizes by\beamer@footboxes
 }
 
-\usefoottemplate{%
-  \vbox{%
-    \hbox{%
-    \hskip-\Gm@lmargin%
-    \hbox{%
-    \beamer@currentbox=0\relax%
-    \loop%
-    \ifnum\beamer@currentbox<\beamer@footboxes%
-    \hbox to\beamer@footboxsizes{%
-       % Background
-      {%
-        \csname beamer@footbg\the\beamer@currentbox\endcsname%
-        \vrule width\beamer@footboxsizes height\beamer@boxfootheight%
-        \hskip-\beamer@footboxsizes%
-      }%
-      % Box
-      {%
-        \setbox\beamer@tempbox=\hbox to\beamer@footboxsizes{%
-          \csname beamer@footbox\the\beamer@currentbox\endcsname\hfil}%
-        \dp\beamer@tempbox=0pt%
-        \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
-        \ht\beamer@tempbox=\beamer@boxfootheight%
-        \dp\beamer@tempbox=0pt%
-        \box\beamer@tempbox%
-      }%
+\def\addfootbox#1#2{\addfootboxtemplate{\usebeamercolor[bg]{#1}}{\usebeamercolor[fg]{#1}#2}}
+
+\defbeamertemplate*{fotoline}{boxes theme}
+{%
+  \beamer@currentbox=0\relax%
+  \loop%
+  \ifnum\beamer@currentbox<\beamer@footboxes%
+  \hbox to\beamer@footboxsizes{%
+                                % Background
+    {%
+      \csname beamer@footbg\the\beamer@currentbox\endcsname%
+      \vrule width\beamer@footboxsizes height\beamer@boxfootheight%
+      \hskip-\beamer@footboxsizes%
     }%
-    \advance\beamer@currentbox by 1%
-    \repeat%
+                                % Box
+    {%
+      \setbox\beamer@tempbox=\hbox to\beamer@footboxsizes{%
+        \csname beamer@footbox\the\beamer@currentbox\endcsname\hfil}%
+      \dp\beamer@tempbox=0pt%
+      \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
+      \ht\beamer@tempbox=\beamer@boxfootheight%
+      \dp\beamer@tempbox=0pt%
+      \box\beamer@tempbox%
     }%
-    \hskip-\Gm@rmargin%
-    }%
-}}
+  }%
+  \advance\beamer@currentbox by 1%
+  \repeat%
+}%
+
 
 \mode
 <all>

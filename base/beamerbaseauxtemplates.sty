@@ -447,6 +447,34 @@
 
 
 
+% Headline
+
+\defbeamertemplate{headline}{text line}[1]
+{\hskip\Gm@lmargin\hbox to\@tempdima{\textwidth=\@tempdima\hsize=\textwidth\relax#1\hfil}\hskip\Gm@rmargin}
+
+
+% Footline
+
+\defbeamertemplate{footline}{text line}[1]
+{\hskip\Gm@lmargin\hbox to\@tempdima{\textwidth=\@tempdima\hsize=\textwidth\relax#1\hfil}\hskip\Gm@rmargin}
+
+\defbeamertemplate{footline}{page number}
+{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
+}
+
+\defbeamertemplate{footline}{frame number}
+{
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
+}
+
+
 
 
 %
@@ -478,13 +506,6 @@
 
 
 %
-% Head templates
-%
-
-\newcommand{\beamertemplateheadempty}{\useheadtemplate{}}
-
-
-%
 % Headline stuff
 %
 
@@ -493,17 +514,6 @@
   \usesectionheadtemplate{\insertsectionhead}{\color{fg!50!bg}\insertsectionhead}
   \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}
 }
-
-
-%
-% Foot templates
-%
-
-\newcommand{\beamertemplatefootempty}{\usefoottemplate{}}
-
-\newcommand{\beamertemplatefootpagenumber}{%
-  \usefoottemplate{%
-  \hfil{\color{.!50!bg}\insertpagenumber}}}
 
 
 \newcommand{\beamertemplatecircleminiframe}{

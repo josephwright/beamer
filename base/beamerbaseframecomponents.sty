@@ -22,18 +22,22 @@
   % Reset left margin now
   \beamer@tempdim=\beamer@leftmargin%
   \advance\beamer@tempdim by\beamer@leftsidebar%
-  \geometry{left=\the\beamer@tempdim}%
+  \edef\beamer@changegeometryleft{\noexpand\geometry{left=\the\beamer@tempdim}}%
 }
 \define@key{beamer@margin}{right}{%
   \beamer@rightmargin=#1\relax%
   % Reset right margin now
   \beamer@tempdim=\beamer@rightmargin%
   \advance\beamer@tempdim by\beamer@rightsidebar%
-  \geometry{right=\the\beamer@tempdim}%
+  \edef\beamer@changegeometryright{\noexpand\geometry{right=\the\beamer@tempdim}}%
 }
 
 
-\newcommand{\setbeamermargin}[1]{\setkeys{beamer@margin}{#1}}
+\newcommand{\setbeamermargin}[1]{
+  \setkeys{beamer@margin}{#1}%
+  \csname beamer@changegeometryleft\endcsname%
+  \csname beamer@changegeometryright\endcsname%
+}
 
 \mode
 <article>
@@ -41,13 +45,6 @@
   \newcommand{\setbeamermargin}[1]{}
 }
 
-
-\mode
-<all>
-{
-  \def\beamersetleftmargin#1{\setbeamermargin{left=#1}}
-  \def\beamersetrightmargin#1{\setbeamermargin{right=#1}}
-}
 
 
 %
@@ -126,16 +123,32 @@
           \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
           \box\beamer@tempbox%
         }%
-        \normalcolor{\beamer@headtemplate}\hfil%
+        \beamer@typesetheadorfoot{headline}%
       }%
       \hfil}%
     \endgroup}
-  \def\@oddfoot{\vbox{\offinterlineskip\hbox{\normalcolor{\beamer@foottemplate}%
+  \def\@oddfoot{\vbox{\offinterlineskip\hbox{\beamer@typesetheadorfoot{footline}%
         \hypertarget{Navigation\the\c@page}{}%
         \hypertarget{page.\the\c@page}{}\hfil}\hbox{}}\hfil}
   \let\@evenhead\@oddhead
   \let\@evenfoot\@oddfoot}
 \pagestyle{navigation}
+
+\def\beamer@typesetheadorfoot#1{% typeset the head or footline
+  {\parskip0pt\offinterlineskip%
+    \hbox{%
+      \hskip-\Gm@lmargin%
+      \hbox{%
+        \vbox{%
+          \@tempdima=\textwidth%
+          \textwidth=\paperwidth%
+          \hsize=\textwidth%
+          \def\\{,}%
+          \usebeamertemplate***{#1}%
+        }}%
+      \hskip-\Gm@rmargin%
+    }}\hfil%
+}
 
 %
 % Patch empty page style, so that transitions and navigation still works
@@ -143,11 +156,15 @@
 \def\ps@empty{%
   \let\@mkboth\@gobbletwo%
   \def\@oddhead{\begingroup%
-    \setbox\beamer@tempbox=\hbox{{\beamer@backgroundtemplate}\hyper@pagetransition\hyper@pageduration}%
+    \setbox\beamer@tempbox=\hbox{\usebeamertemplate***{background canvas}\hyper@pagetransition\hyper@pageduration}%
     \beamer@tempdim=\ht\beamer@tempbox%
     \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
     \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
-    \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox}\hfil}%
+    \setbox\@tempboxa=\hbox{\usebeamertemplate***{background}}%
+    \beamer@tempdim=\ht\@tempboxa%
+    \setbox\@tempboxa=\hbox{\lower\beamer@tempdim\hbox{\box\@tempboxa}}%
+    \wd\@tempboxa=0pt\ht\@tempboxa=0pt\dp\@tempboxa=0pt%
+    \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox\box\beamer@tempboxa}\hfil}%
     \endgroup%
   }
   \def\@oddfoot{\normalcolor{\hypertarget{Navigation\the\c@page}{}\hfil%
@@ -158,11 +175,11 @@
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
 \def\beamer@calculateheadfoot{%
-  \setbox\beamer@tempbox=\hbox{{\beamer@foottemplate}}%
+  \setbox\beamer@tempbox=\hbox{{\beamer@typesetheadorfoot{footline}}}%
   \footheight=\ht\beamer@tempbox%
   \advance\footheight by \dp\beamer@tempbox%
   \advance\footheight by 4pt%
-  \setbox\beamer@tempbox=\hbox{{\beamer@headtemplate}}%
+  \setbox\beamer@tempbox=\hbox{{\beamer@typesetheadorfoot{headline}}}%
   \headheight=\ht\beamer@tempbox%
   \headdp=\dp\beamer@tempbox%
   \advance\headheight by\headdp%
@@ -180,52 +197,6 @@
   \vsize\textheight%  
 }
 
-
- 
-  
-\def\usefoottemplate{\@ifstar{\beamer@usefoots}{\beamer@usefoot}}
-
-\newcommand{\beamer@usefoot}[1]{
-  \long\def\beamer@@foottemplate{#1}
-  \def\beamer@foottemplate{\parskip0pt\offinterlineskip{\usebeamerfont*{footline}\def\\{,}\beamer@@foottemplate}}}%
-
-\newcommand{\beamer@usefoots}[1]{
-  \long\def\beamer@@foottemplate{#1}
-  \def\beamer@foottemplate{%
-    \offinterlineskip{\parskip0pt%
-      \hbox{\hskip-\Gm@lmargin\hbox{\vbox{\hsize=\paperwidth\textwidth=\paperwidth%
-            \usebeamerfont*{footline}\def\\{,}\beamer@@foottemplate%
-            }}\hskip-\Gm@rmargin%
-    }}}}%
-
-\newcommand\addtofoottemplate[2]{%
-  \long\def\beamer@temp{#1}%
-  \def\beamer@@temp{\long\def\beamer@@foottemplate}
-  \expandafter\expandafter\expandafter\beamer@@temp\expandafter\expandafter\expandafter{\expandafter\beamer@temp\beamer@@foottemplate#2}
-  }
-
-
-
-\def\useheadtemplate{\@ifstar{\beamer@useheads}{\beamer@usehead}}
-
-\newcommand{\beamer@usehead}[1]{
-  \long\def\beamer@@headtemplate{#1}
-  \def\beamer@headtemplate{\offinterlineskip{\parskip0pt\usebeamerfont*{headline}\beamer@@headtemplate}}}%
-
-\newcommand{\beamer@useheads}[1]{
-  \long\def\beamer@@headtemplate{#1}
-  \def\beamer@headtemplate{%
-    \offinterlineskip{\parskip0pt%
-      \hbox{\hskip-\Gm@lmargin\hbox{\vbox{\hsize=\paperwidth\textwidth=\paperwidth%
-            \usebeamerfont*{headline}\beamer@@headtemplate%
-            }}\hskip-\Gm@rmargin%
-    }}}}%
-
-\newcommand\addtoheadtemplate[2]{%
-  \long\def\beamer@temp{#1}%
-  \def\beamer@@temp{\long\def\beamer@@headtemplate}
-  \expandafter\expandafter\expandafter\beamer@@temp\expandafter\expandafter\expandafter{\expandafter\beamer@temp\beamer@@headtemplate#2}
-  }
 
 \def\insertpagenumber{\thepage}
 

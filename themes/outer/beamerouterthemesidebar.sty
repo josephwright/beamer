@@ -53,7 +53,8 @@
     }%
   }
 
-  \useheadtemplate*{%
+  \defbeamertemplate*{headline}{sidebar theme}
+  {%
     \begin{beamercolorbox}[wd=\paperwidth]{frametitle}
       \ifx\beamer@sidebarside\beamer@lefttext%
       \else%
@@ -107,8 +108,6 @@
   \beamer@sidebarformat{5pt}{subsection in sidebar}{\insertsubsectionhead}%
 }
 
-                                % Foot
-\usefoottemplate{}
 
 
 \ifdim\beamer@sidebarwidth>0pt
@@ -158,9 +157,7 @@
       {
         {
           \usebeamercolor{sidebar top}
-%          {\globalcolorstrue\colorlet{sidebar top.bg}{bg}}
           \usebeamercolor{sidebar bottom}
-%          {\globalcolorstrue\colorlet{sidebar bottom.bg}{bg}}
         }
         \beamertemplatesidebarverticalshading[\beamer@sidebarside]{sidebar bottom.bg}{sidebar top.bg}
       }
@@ -173,8 +170,7 @@
       \vskip2pt}
   \fi
                                 % Margins
-  \beamersetleftmargin{0.5cm}
-  \beamersetrightmargin{0.5cm}
+  \setbeamermargin{left=0.5cm,right=0.5cm}
 \fi
 
 \mode

@@ -405,46 +405,26 @@ Users, themes, or whoever can now easily change the color or font of
 the frametitle without having to mess with the code used to typeset
 it.
 
-
-
-
-
-
-
-In the following subsections all commands for changing templates are
-listed, like the above-mentioned command
-|\useframetitletemplate|. Inside these commands, you should use
-the |\insertxxxx| commands, which are listed following the template
-changing commands. Although the |\insertxxxx| commands are listed
-alongside the templates for which they make the most sense, you can
-(usually) also use them in all other templates.
-
 \articlenote
 In |article| mode, most of the template mechanism is switched off and
 has no effect. However, a few templates are also available. If this is
 the case, it is specially indicated.
 \smallskip
 
-Some of the below subsections start with commands for using
-\emph{predefined} templates. Calling one of them will change a template in
-a predefined way, making it unnecessary to worry about how exactly one
-creates, say, these cute little balls in different sizes. Using them,
-you can use, for example, your favorite theme together with a
-shading background and a numbered table of contents.
-
-Here are a few hints that might be helpful when you wish to redefine a
+Here are a few hints that might be helpful when you wish to set a
 template: 
 \begin{itemize}
 \item
   Usually, you might wish to copy code from an existing template. The
   code often takes care of some things that you may not yet have
-  thought about. The file |beamerbasetemplates| might be useful
-  starting point.
+  thought about. The default inner and outer themes might be useful 
+  starting points. Also, the file |beamerbaseauxtemplates.sty|
+  contains interesting ``auxilliary'' templaets.
 \item
   When copying code from another template and when inserting this code
   in the preamble of your document (not in another style file), you may
   have to ``switch on'' the at-character (|@|). To do so, add the
-  command |\makeatletter| before the |\usexxxtemplate| command and the
+  command |\makeatletter| before the |\setbeamertemplate| command and the
   command |\makeatother| afterward.
 \item
   Most templates having to do with the frame components (headlines,
@@ -457,13 +437,6 @@ template:
   at the beginning of the document, \emph{after} all packages have
   been loaded and even \emph{after} these have executed their
   |\AtBeginDocument| initialization. 
-\item
-  The left and right margins of the head- and footline templates are
-  the same as of the normal text. In order to start the headline and
-  footline at the page margin, you must insert a negative
-  horizontal skip using |\hskip-\Gm@lmargin|. You may wish to add a
-  |\hskip-\Gm@rmargin| at the end to avoid having \TeX\ complain about
-  overfull boxes.
 \item
   Getting the boxes right inside any template is often a bit of a
   hassle. You may wish to consult the \TeX\ book for the glorious
