@@ -1,9 +1,9 @@
 % $Header$
 
 % $Source$
-% $Author$
-% $Date$
 % $Revision$
+% $Date$
+% $Author$
 % $Name$
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
