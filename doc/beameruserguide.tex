@@ -11,6 +11,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage[pdfborder={0 0 0}]{hyperref}
 
+
 \pgfdeclareimage[width=6.66666cm,height=5cm]{themebars}{themebars}
 \pgfdeclareimage[width=6.66666cm,height=5cm]{themebars2}{themebars2}
 \pgfdeclareimage[width=6.66666cm,height=5cm]{themeboxes}{themeboxes}
@@ -368,12 +369,24 @@ options or precautions may be necessary.
 \end{package}
 
 \begin{package}{{fontenc}|[|\declare{|T1|}|]|}
-  Currently, you should \emph{not} use this option. Only bitmapped
-  versions of the Computer Modern fonts are available in the T1~encoding
-  in a standard installation. This option will result in very poor
-  rendering of your presentation when viewed with \pdf\ viewer
-  applications like Acrobat or |xpdf|. See also
-  Section~\ref{section-font-encoding}. 
+  Use this option only with fonts that have outline fonts available in
+  the T1 encoding like Times or the lmodern fonts. In a standard
+  installation the standard Computer Modern fonts (the fonts Donald
+  Knuth orginally designed and which are used by default) are
+  \emph{not} available in the T1 encoding. Using this  option with
+  them will result in very poor rendering of your presentation when
+  viewed with \pdf\ viewer applications like Acrobat or |xpdf|. To use
+  the Computer Modern fonts with the T1 encoding, use the package
+  |lmodern|.  See also Section~\ref{section-font-encoding}.
+\end{package}
+
+\begin{package}{{fourier}}
+  The package switches to a T1~encoding, but it does not redefine all
+  fonts such that outline fonts (non-bitmapped fonts) are used by
+  default. For example, the sans-serif text and the typewriter text
+  are not replaced. To use outline fonts for these, write
+  |\usepackage{lmodern}| \emph{before} including the |fourier|
+  package. 
 \end{package}
 
 \begin{package}{{listings}}
@@ -3853,7 +3866,7 @@ of |pgf|. In essence, the following happens:
 
 \subsection{Fonts}
 
-\subsubsection{Serif Fonts and Sans Serif Fonts}
+\subsubsection{Serif Fonts and Sans-Serif Fonts}
 
 By default, the beamer class uses the Computer Modern sans-serif fonts
 for typesetting a presentation. The Computer Modern font family is the
@@ -3890,12 +3903,10 @@ While these reasons are pretty good, you still might wish to change the font:
   impression, which might be exactly what you wish to create.
 \end{itemize}
 
-You must decide whether the text should be typeset in sans serif or in
+You must decide whether the text should be typeset in sans-serif or in
 serif. To choose this, use either the class option |sans| or
 |serif|. By default, |sans| is selected, so you do not
-need to specify this. Furthermore, you can specify one of the two
-options |mathsans| or |mathserif|. These options
-override the overall sans-serif/serif choice for math text.
+need to specify this.
 
 \begin{classoption}{sans}
   Use a sans-serif font during the presentation. (Default.)
@@ -3905,6 +3916,26 @@ override the overall sans-serif/serif choice for math text.
   Use a serif font during the presentation.
 \end{classoption}
 
+
+
+
+\subsubsection{Fonts in Mathematical Text}
+
+By default, if a sans-serif font is used for the main text,
+mathematical formulas are also typeset using sans-serif letters. In
+most cases, this is visually the pleasing and easily readable way of
+typesetting mathematical formulas. However, in mathematical texts the
+font used to render, say, a variable is sometimes used to
+differentiate between different meanings of this variable. In such
+case, it may be necessary to typeset mathematical text using serif
+letters. Also, if you have a lot of mathematical text, the audience
+may be quicker to ``parse'' it, if it typeset in the way people
+usually read mathematical text: in a serif font.
+
+You can use the two options |mathsans| and |mathserif| to override the
+overall sans-serif/serif choice for math text. However, using the option
+|mathsans| in a |serif| environment makes little sense in my opinion.
+
 \begin{classoption}{mathsans}
   Override the math font to be a sans-serif font.
 \end{classoption}
@@ -3912,6 +3943,22 @@ override the overall sans-serif/serif choice for math text.
 \begin{classoption}{mathserif}
   Override the math font to be a serif font.
 \end{classoption}
+
+The command |\mathrm| will always produce upright (not slanted), serif
+text and the command |\mathsf| will always produce upright, sans-serif
+text. The command |\mathbf| will produce upright, bold-face,
+sans-serif or serif text, depending on whether |mathsans| or
+|mathserif| is used.
+
+To produce an upright, sans-serif or serif text, depending on
+whether |mathsans| or |mathserif| is used, you can use for instance
+the command |\operatorname| from the |amsmath| package. Using this
+command instead of |\mathrm| or |\mathsf| directly will  automatically
+adjust  upright mathematical text if you switch from sans-serif to
+serif or back.
+
+
+
 
 \subsubsection{Font Families}
 
@@ -4018,11 +4065,13 @@ Modern fonts are available in this encoding in a standard
 installation. For this reason, using the T1~encoding will produce
 \pdf\ files that render very poorly.
 
-I recommend that you use the standard OT1 encoding and remove
-|\usepackage[T1]{fontenc}| if present. Hyphenation should
-no occur in a presentation anyway. If you really have to hyphenate,
-you should do so by inserting a hyphenation point using the
-command~|\-| as for example in |haplo\-typing|.
+Most standard PostScript fonts are available in T1~encoding. For
+example, you can use Times in the T1~encoding. The package |lmodern|
+makes the standard Computer Modern fonts available in the
+T1~encoding. Furthermore, if you use |lmodern| several extra fonts
+become available (like a sans-serif boldface math) and extra symbols
+(like proper guillemots).
+
 
 
 \subsection{Margin Sizes}

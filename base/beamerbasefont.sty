@@ -8,7 +8,8 @@
 
 
 %
-% Font size stuff
+% Font size stuff - redefinition for oversized fonts. Not used if
+% other packages like lmodern kick in.
 %
 \def\EC@family#1#2#3#4#5{%
   \DeclareFontShape{#1}{#2}{#3}{#4}%
@@ -105,6 +106,9 @@
       <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssbx10%
       }{}
 
+
+
+      
 \ifbeamer@sansmath
   \SetSymbolFont{operators}{normal}{OT1}{cmss}{m}{n}
   \ifx\mv@bold\@undefined
@@ -125,13 +129,22 @@
 
 % supress for mathtime serif
 \@ifpackageloaded{mathtime}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-
 \ifbeamer@suppressreplacements\else
-  \DeclareSymbolFont{numbers}{OT1}{\mathfamilydefault}{m}{n}
-  \DeclareSymbolFont{pureletters}{OT1}{\mathfamilydefault}{m}{it}
+  \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{m}{n}
+  \DeclareSymbolFont{pureletters}{\encodingdefault}{\mathfamilydefault}{m}{it}
+  \DeclareMathAlphabet{\mathrm}{\encodingdefault}{\rmdefault}{m}{n}
+  \DeclareMathAlphabet{\mathbf}{\encodingdefault}{\mathfamilydefault}{bx}{n}
+  \DeclareMathAlphabet{\mathsf}{\encodingdefault}{\sfdefault}{m}{n}
+  \DeclareMathAlphabet{\mathit}{\encodingdefault}{\mathfamilydefault}{m}{it}
+  \DeclareMathAlphabet{\mathtt}{\encodingdefault}{\ttdefault}{m}{n}
   \ifx\mv@bold\@undefined\else
-  \SetSymbolFont{numbers}{bold}{OT1}{\mathfamilydefault}{bx}{n}
-  \SetSymbolFont{pureletters}{bold}{OT1}{\mathfamilydefault}{bx}{it}
+  \SetSymbolFont{numbers}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{n}
+  \SetSymbolFont{pureletters}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{it}
+  \SetMathAlphabet{\mathrm}{bold}{\encodingdefault}{\rmdefault}{bx}{n}
+  \SetMathAlphabet{\mathbf}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{n}
+  \SetMathAlphabet{\mathsf}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+  \SetMathAlphabet{\mathit}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{it}
+  \SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{bx}{n}
   \fi
 
   \def\operator@font{\mathgroup\symnumbers}

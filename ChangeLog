@@ -1,9 +1,13 @@
-2004-01-10 Till Tantau <tantau@users.sourceforge.net>
+2004-01-16 Till Tantau <tantau@users.sourceforge.net>
 
 	- Reorganzed directory structure: new directories base and themes
 	- Added some explanations in user guide on font encodings and
 	  graphic file formats.
-	- Uses version 1.06 of xcolor now.
+	- T1 encoding is fully supported now. 
+	- lmodern and fourier fonts are supported now.
+	- \mathrm will always produce roman text now.
+	- \mathbf will produced boldface serif or sans-serif text,
+	  depending on the math font selection.
 	- Added options to include only certain sections in the table of
 	  contents. 
 	- Added option to hilight only the current subsection in the table
@@ -16,14 +20,22 @@
 	  given in pointed brackets.
 	- Command \plainframe has been replaced by \frame[plain].
 	- Renamed beamerboxes to beamerbaseboxes and beamertemplates to
-	  beamerbasetemplate. They are included automatically.
+	  beamerbasetemplate. They are included automatically, so simply
+	  delete an inclusion of the old packages).
 	- Fixed bug in beamerbaseboxes.
-	- Uncover now also works in tables and alignments (once more...).
+	- Uncover now also works for whole lines or passages in tables and
+	  alignments, both for completely invisible covered and
+	  transparent covered text.
 	- Added versioning system for head and toc entries. Will no longer
 	  do weird things when left over files from an old version are
 	  encountered. (Makes updating a lot easier.)
-	- Changed LyX stuff to work together with the syntax changes.
+	- Slightly changed LyX stuff to work together with the syntax
+	  changes. Still no real documentation.
+	- Uses version 1.06 of xcolor now.
 	- Uses pgf 0.50 now.
+	- Mechanism for alternate selection of images and shading is
+	  slightly changed and incompatible with the old one. 
+	- pgf's cvs is now also on SourceForge next to the beamer class.
 
 2003-12-09 Till Tantau <tantau@users.sourceforge.net>
 
