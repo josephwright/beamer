@@ -370,11 +370,12 @@ round brackets. This offset will be added to the value of
 
 There is another special sign you can use in an overlay specification
 that behaves similarly to the |+|-sign: a dot. When you write |<.->|,
-the say thing as in |<+->| happens \emph{except that the counter
-  |beamerpauses| is not incremented}. Thus a dot, possibly followed by
-an offset, just expands to the current value of the counter
-|beamerpauses|, possibly offset. This dot notation can be useful in
-case like the following:
+a similar thing as in |<+->| happens \emph{except that the counter
+  |beamerpauses| is not incremented} and \emph{except that you get the
+  value of |beamerpauses| decreased by one}. Thus a dot, possibly
+followed by an offset, just expands to the current value of the
+counter |beamerpauses| minus one, possibly offset. This dot notation
+can be useful in case like the following:
 \begin{verbatim}
 \begin{itemize}[<+->]
 \item Apple
@@ -383,10 +384,19 @@ case like the following:
 \item Orange
 \end{itemize}
 \end{verbatim}
-In the example, the second item is shown at the same time as the third
+In the example, the second item is shown at the same time as the first
 one since it does not update the counter.
 
-
+In the following example, each time an item is uncovered, the
+specified text is alerted. When the next item is uncovered, this
+altering ends.
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item This is \alert<.>{important}.
+\item We want to \alert<.>{highlight} this and \alert<.>{this}.
+\item What is the \alert<.>{matrix}?
+\end{itemize}  
+\end{verbatim}
 
 \subsection{Frames}
 

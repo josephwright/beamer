@@ -178,6 +178,7 @@
 \def\beamer@relnumberdot(#1){%
   \beamer@tempcount=#1\relax
   \advance\beamer@tempcount by\c@beamerpauses\relax%
+  \advance\beamer@tempcount by-1\relax%
   \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
   \beamer@@decodedot}
 
