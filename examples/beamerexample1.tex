@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[red]{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
@@ -12,8 +12,9 @@
 % For a green structure color use:
 %\colorlet{structure}{green!50!black}
 
-\usepackage{beamertemplates}
-\usepackage{beamerthemesplit}
+\beamertemplateshadingbackground{red!10}{structure!10}
+
+\usepackage{beamerthemeshadow}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
 \usepackage[latin1]{inputenc}
@@ -22,12 +23,7 @@
 %\usepackage{times}
 
 % Use some nice templates
-
-\beamertemplateshadingbackground{red!20}{structure!20}
 \beamertemplatetransparentcovereddynamic
-\beamertemplateballitem
-\beamertemplatesolidbuttons
-\beamertemplateshadowblocks
 
 %
 % The following defintions are peculiar to this particular
@@ -88,7 +84,7 @@
   \pgfputat{\pgfxy(3.25,0.25)}{\pgfbox[center,center]{#8}}%
   \pgfputat{\pgfxy(3.75,0.25)}{\pgfbox[center,center]{#9}}%
   %
-  \pgfputat{\pgfxy(0,0.7)}{\pgfbox[left,base]{tape}}%
+  \pgfputat{\pgfxy(0,0.7)}{\pgfbox[left,base]{\structure{tape}}}%
   }%
   %
   \pgfnodecircle{n1}[virtual]{\pgfrelative{#1}{\pgfxy(0.25,0)}}{2pt}%
@@ -103,23 +99,23 @@
 
 \newcommand{\putmachine}[2]{%
   \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{computerimage}}}%
-  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{\structure{#2}}}%
   \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
 }
 \newcommand{\putmachineworking}[2]{%
   \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{computerworkingimage}}}%
-  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{\structure{#2}}}%
   \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
 }
 
 \newcommand{\putmachinea}[2]{%
   \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{apple}}}%
-  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{\structure{#2}}}%
   \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
 }
 \newcommand{\putmachineworkinga}[2]{%
   \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{appleworking}}}%
-  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{\structure{#2}}}%
   \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
 }
 
@@ -166,7 +162,6 @@
 \begin{document}
 
 \frame{\titlepage}
-
 
 \section[Outline]{}
 
@@ -278,7 +273,7 @@
 {
   \frametitle{Our Model of ``Absolutely No Space Overhead''}
 
-  \transdissolve<7>
+  \transdissolve<7>[duration=0.2]
   
   \begin{columns}
     \begin{column}{4.5cm}
