@@ -105,8 +105,6 @@
 
 \section{Introduction}
 
-\subsection{Overview}
-
 This user's guide explains the functionality of the \beamer\ class.
 It is a \LaTeX\ class that allows you to create a presentation with a
 projector. It can also be used to create slides. It behaves 
@@ -114,7 +112,10 @@ similarly to other packages like \textsc{prosper}, but has the
 advantage that it works together directly with |pdflatex|, but
 also with |dvips|.
 
-To use the \beamer\ class, proceed as follows:
+\subsection{Getting Started with the Beamer Class and \LaTeX/pdf\LaTeX}
+
+To use the \beamer\ class together with |latex| or |pdflatex|, proceed
+as follows: 
 \begin{enumerate}
 \item
   Specify |beamer| as document class instead of
@@ -193,6 +194,57 @@ To structure your text, you can use the commands |\section| and
 table of contents, but will also in the navigation bars.
 
 
+\subsection{Getting Started with the Beamer Class and \LyX}
+
+Once installed (see Section~\ref{section-installation}), using the
+\beamer\ class  together with \LyX\ is quite easy: You open a new file
+and choose |beamer| as the document class. It is often even easier to
+choose ``New from template'' and to pick a template from the directory
+|beamer/lyx/templates|. 
+
+To reproduce the example from the previous subsection in \LyX, proceed
+as follows:
+
+\begin{itemize}
+\item
+  The command |\usepackage{beamerthemesplit}| must be added to the
+  preamble. You can edit the preamble using Layout $\rangle$ Document
+  $\rangle$ Preamble.
+\item
+  Typeset the author and date the usual way, using the styles Author
+  and Date. The title page will then
+  be created automatically.
+\item
+  To insert the sections and subsections, use the usual Section and
+  Subsection styles.
+\item
+  To insert the frame containing the tabel of contents, insert a line
+  of style BeginFrame. Since this frame has no title, do not write
+  anything on the line with style BeginFrame. Next, insert a line of
+  Standard style and use Insert $\rangle$ Insert TOC to insert the
+  table of contents. Optionally, end the frame using a line of style
+  EndFrame (the ensuite Section style automatically closes the frame.
+\item
+  To create the last frame, start a new frame using the style
+  BeginFrame. Write the frame title on the line having this
+  style.
+\item
+  Use the Itemize style to create the itemized text.
+\item
+  Add the overlay specifications (the texts like |<1->|) to the items
+  by entering \TeX-mode (press on the little \TeX\ icon) and writing
+  |<1->|. This \TeX\ text should be placed right at the beginning of
+  the item.
+\item
+  You must end this frame using the style EndFrame (sadly, the end of
+  the document and also the beginning of the appendix do not
+  automatically end the last frame -- whereas the start of  a frames,
+  sections, parts, and subsections does).
+\end{itemize}
+
+Now use View $\rangle$ PDF to view the resulting presentation.  
+
+
 \subsection{How to Read this User's Guide}
 
 This user guide is both intended as a tutorial and as a reference
@@ -236,10 +288,12 @@ the files in the \beamer\ package. Which way you should choose depends
 on how permanently you intend to use the class.
 
 
-\subsection{Installing Debian and Red Hat Packages}
+\subsection{Installing Prebundled Packages Like Debian or Red Hat Packages}
 
-Currently, there are no out-of-the-box Debian or Red Hat packages of
-the beamer class available.
+Currently, I'm not producing prebundled packages of |beamer|. There
+are some out-of-the-box Debian packages and Mik\TeX\ packages around,
+but these are likely to be outdated. Once |beamer| stabilizes, there
+will hopefully also be easy-to-install packages. 
 
 
 
@@ -250,7 +304,7 @@ the following: Obtain the latest source version (ending
 |.tar.gz|) of the \beamer\ package from 
 \href{http://sourceforge.net/projects/latex-beamer/}{|http://sourceforge.net/projects/latex-beamer/|}
 (most likely, you have already done this). Next, you also need at
-least version 0.50 of the \textsc{pgf} package, which can be found at
+least version 0.51 of the \textsc{pgf} package, which can be found at
 the same place. Finally, you need at least version 1.06 of the
 \textsc{xcolor} package, which can also be found at that place
 (although the version on CTAN might be newer).
@@ -329,9 +383,9 @@ the same). In MikTeX, there is a menu option to do this.
 For usage of the \beamer\ class with \LyX, you have to do all of the
 above. Then you also have to make \LyX\ aware of the file
 |beamer/lyx/layouts/beamer.layout|. To do so, link (or, not
-so good in case of updates, copy) this file to the directory
+so good in case of later updates, copy) this file to the directory
 |.lyx/layouts| in your home directory. Then use \LyX's Reconfigure
-option to make it aware of this file.
+command to make \LyX\ aware of this file.
 
 \vskip1em
 For a more detailed explanation of the standard installation process
@@ -361,6 +415,11 @@ from the examples subdirectory to some place where you usually
 create presentations. Then run the command |pdflatex| several times on
 the file and check whether the resulting |beamerexample1.pdf|
 looks correct. If so, you are all set.
+
+\lyxnote
+To test the \LyX\ installation, try creating a new file from the
+template |beamerpresentation|, which is located in the directory
+|beamer/lyx/templates|.
 
 
 
@@ -1159,7 +1218,7 @@ on the first slide of a frame in |beamer| mode, but not at all in
 
 
 \subsubsection{Action Specifications}
-\label{section-alert-specifications}
+\label{section-action-specifications}
 
 
 Some overlay-specification-aware commands cannot only handle normal
@@ -1928,7 +1987,7 @@ special:
   \beamernote
   Only one \meta{alert specification} may be given. The effect of
   \meta{alert specification} is described in
-  Section~\ref{section-alert-specifications}. 
+  Section~\ref{section-action-specifications}. 
   
   \example
 \begin{verbatim}
@@ -2625,7 +2684,7 @@ it is often advisable for the start of a new part to use the command
 |\partpage| to insert some text into a frame that ``advertises'' the
 beginning of a new part. See |beamerexample3.tex| for an example.
 
-\begin{command}{\part\oarg{short part name}\marg{part name}}
+\begin{command}{\part\sarg{mode specification}\oarg{short part name}\marg{part name}}
   Starts a part. The \meta{part name} will be shown when the
   |\partpage| command is used. The \meta{shown part name} is not shown
   anywhere by default, but it is accessible via the command
@@ -2685,6 +2744,77 @@ beginning of a new part. See |beamerexample3.tex| for an example.
 \end{verbatim}
 \end{command}
 
+
+\subsubsection{Splitting a Course Into Lecutres}
+
+When using \beamer\ with the |article| mode, you may wish to have the
+lecture notes of a whole course reside in one file. In this case, only
+a few frames are actually part of any particular lecture.
+
+The |\lecture| command makes it easy to select only a certain set of
+frames from a file to be presented. This command takes (among other
+things) a label name. If you say |\includeonlylecture| with this label
+name, then only the frames following the |\lecture| command are
+shown. The frames following other |\lecture| commands are suppressed.
+
+By default, the |\lecture| command has no other effect. It does not
+create any frames or introduce entries in the table of
+contents. However, you can use |\AtBeginLecture| to have \beamer\
+insert, say, a title page at the beginning of (each) lecture.
+
+\begin{command}{\lecture\oarg{short lecture name}\marg{lecture
+  name}\marg{lecture label}} 
+  Starts a lecture. The \meta{lecture name} will be available via the
+  |\insertlecture| command. The \meta{short lecture name} is available
+  via the |\insertshortlecture| command.
+  
+  \example
+\begin{verbatim}
+\begin{document}
+\lecture{Vector Spaces}{week 1}
+
+\section{Introduction}
+...
+\section{Summary}
+
+\lecture{Scalar Products}{week 2}
+
+\section{Introduction}
+...
+\section{Summary}
+
+\end{document}
+\end{verbatim}
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+\begin{command}{\includeonlylecture\meta{lecture label}}
+  Causes all |\frame|, |\section|, |\subsection|, and |\part| commands
+  following a |\lecture| command to be suppressed, except if the
+  lecture's label matches the \meta{lecture label}. Frames before any
+  |\lecture| commands are always included. This command should be
+  given in the preamble.
+
+  \example |\includeonlylecture{week 1}|
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+\begin{command}{\AtBeginLecture\marg{text}}
+  The given text will be inserted at the beginning of every
+  lecture.
+  
+  \example
+\begin{verbatim}
+\AtBeginLecture{\frame{\Large Today's Lecture: \insertlecture}}
+\end{verbatim}
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
 
 
 \subsubsection{Adding a Table of Contents}
@@ -3524,14 +3654,17 @@ of a document by changing the theme.
   You need to use \TeX-mode to insert this command.
 \end{command}
 
-\begin{environment}{{block}\marg{block title}\sarg{overlay specification}}
+\begin{environment}{{block}\sarg{action specification}\marg{block
+      title}\sarg{action specification}}
+  Only one \meta{action specification} may be given.
   Inserts a block, like a definition or a theorem, with the title
-  \meta{block title}. If the \meta{overlay specification} is present,
-  the block is shown only on the specified slides. In the example, the
+  \meta{block title}. If the \meta{action specification} is present,
+  the given actions are taken on the specified slides, see
+  Section~\ref{section-action-specifications}. In the example, the 
   definition is shown only from slide 3 onward.
   \example
 \begin{verbatim}
-  \begin{block}{Definition}<3->
+  \begin{block}<3->{Definition}
     A \alert{set} consists of elements.
   \end{block}
 \end{verbatim}
@@ -3548,9 +3681,10 @@ of a document by changing the theme.
 \end{environment}
 
 
-\begin{environment}{{alertblock}\marg{block title}\sarg{overlay specification}}
-  Inserts a block whose title is hilighted.  If the \meta{overlay specification} is present,
-  the block is shown only on the specified slides.
+\begin{environment}{{alertblock}\sarg{action specification}\marg{block
+title}\sarg{action specification}} 
+  Inserts a block whose title is hilighted. Behaves like the |block|
+  environment otherwise.
   \example
 \begin{verbatim}
   \begin{alertblock}{Wrong Theorem}
@@ -3565,12 +3699,15 @@ of a document by changing the theme.
   Same applies as for |block|.
 \end{environment}
 
-\begin{environment}{{exampleblock}\marg{block title}\sarg{overlay specification}}
-  Inserts a block that is supposed to be an example. If the \meta{overlay specification} is present,
-  the block is shown only on the specified slides.
-  \example
+\begin{environment}{{exampleblock}\sarg{action
+specification}\marg{block title}\sarg{overlay specification}} 
+  Inserts a block that is supposed to be an example. Behaves like the
+  |block| environment otherwise.
+  
+  \example In the following example, the block is completely
+  suppressed on the first slide (it does not even occupy any space).
 \begin{verbatim}
-  \begin{exampleblock}{Example}
+  \begin{exampleblock}{Example}<only@2->
     The set $\{1,2,3,5\}$ has four elements.
   \end{exampleblock}
 \end{verbatim}
@@ -3583,9 +3720,9 @@ of a document by changing the theme.
 \end{environment}
   
 Predefined English block environments, that is, block environments
-with fixed title, are: |Theorem|, |Proof|, |Corollary|,
-|Fact|, |Example|, and |Examples|. You can also use these
-environments with a lowercase first letter, the result  is the
+with fixed title, are: |Theorem|, |Proof|, |Corollary|, |Definition|,
+|Definitions|, |Fact|, |Example|, and |Examples|. You can also use
+these environments with a lowercase first letter, the result  is the
 same. The following German block environments are also predefined:
 |Problem|, |Loesung|, |Definition|, |Satz|,
 |Beweis|, |Folgerung|, |Lemma|, |Fakt|,
@@ -4665,6 +4802,10 @@ There are four commands for specifying what should be put on a note:
 commands can only be used \emph{inside} a frame, the last two only
 \emph{outside}.
 
+\lyxnote
+In \LyX, only the most useful of these commands, namely |\noteitem| is
+avaiable in the form of the NoteItem style.
+
 The effect of |\note|\meta{text} is the following: When you use it
 somewhere inside the frame on a specific slide, a note page is created
 after the slide, containing the \meta{text}. Since you can add an
@@ -4703,6 +4844,9 @@ second slide and has two entries.
   usually a good idea.
   
   \example|\note<2>{Do not talk longer than 2 minutes about this.}|
+
+  \articlenote
+  Notes are ignored in |article| mode.
 \end{command}
 
 \begin{command}{\noteitem\sarg{overlay specification}\marg{note text}}
@@ -4711,7 +4855,13 @@ second slide and has two entries.
   and |\noteitem| are mixed on a slide, the notes come first, followed
   by the list of note items.
   
-  \example|\noteitem<2>{Stress this.}|  
+  \example|\noteitem<2>{Stress this.}|
+
+  \articlenote
+  Notes are ignored in |article| mode.
+
+  \lyxnote
+  Use the NoteItem style to insert a note item. 
 \end{command}
 
 The commands |\notes| and |\noteitems| should be used outside
@@ -4732,6 +4882,9 @@ latter commands installs an enumerate environment.
 \frame{some text}
 \note{Talk no more than 1 minute.}
 \end{verbatim}
+
+  \articlenote
+  Notes are ignored in |article| mode.
 \end{command}
 
 \begin{command}{\noteitems\marg{list of item commands}}
@@ -4745,6 +4898,9 @@ latter commands installs an enumerate environment.
 \item Use no more than 2 minutes.
 }
 \end{verbatim}
+
+  \articlenote
+  Notes are ignored in |article| mode.
 \end{command}
 
 
@@ -5017,6 +5173,14 @@ subdirectory for files starting with |beamerexample2|.
 
 \subsubsection{Including Slides from the Presentation Version in the
   Article Version}
+
+If you use the package |beamerbasearticle|, the |\frame| command
+becomes available in |article| mode. By adjusting the frame template,
+you can ``mimick'' the appearance of frames typeset by \beamer\ in
+your articles. However, sometimes you may wish to insert ``the real
+thing'' into the |article| version, that is, a precise ``screenshot''
+of a slide from the presentation. The commands introduced in the
+following help you do exactly this.
 
 In order to include a slide from your presentation in your article
 version, you must do two things: First, you must place a normal

@@ -86,6 +86,7 @@
 \def\beamer@outsidemode{\afterassignment\beamer@treat\let\beamer@nexttoken=}
 \def\beamer@treat{%
   \ifx\beamer@nexttoken\frame\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\lecture\let\next=\beamer@stopoutsidemode\fi%
   \ifx\beamer@nexttoken\notes\let\next=\beamer@stopoutsidemode\fi%
   \ifx\beamer@nexttoken\noteitems\let\next=\beamer@stopoutsidemode\fi%
   \ifx\beamer@nexttoken\appendix\let\next=\beamer@stopoutsidemode\fi%

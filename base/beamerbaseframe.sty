@@ -157,6 +157,10 @@
   \ifx\beamer@framerestriction\@undefined\else% restriction stuff
     \expandafter\beamer@checkifinlist\beamer@framerestriction\relax%
   \fi%
+  \ifbeamer@inlecture%
+  \else%
+    \gdef\beamer@whichframes{all:0}%
+  \fi%
   \ifx\beamer@againname\@empty%
     \beamer@slideinframe=0\relax%
     \beamer@anotherslidefalse%
@@ -300,9 +304,6 @@
   \def\beamer@endframe{%
     \beamer@templateframeend\egroup}
 
-  \long\def\useframetemplate#1#2{\gdef\beamer@templateframestart{#1}\gdef\beamer@templateframeend{#2}}
-  \useframetemplate{}{}
-
   \def\includeonlyframes#1{}% no effect
 }
 
@@ -311,6 +312,9 @@
 <all>
 {
   \beamer@slideinframe=1\relax%
+
+  \long\def\useframetemplate#1#2{\gdef\beamer@templateframestart{#1}\gdef\beamer@templateframeend{#2}}
+  \useframetemplate{}{}
 }
 
 
@@ -331,6 +335,7 @@
 % Linebreak command
 %
 \renewcommand<>{\\}{\only#1{\beameroriginal\\}}
+\renewcommand<>{\@centercr}{\only#1{\beameroriginal\@centercr}}
 
 \mode
 <article>
@@ -339,6 +344,11 @@
   \def\\{\beamer@ifnextcharospec{\beamer@breaker}{\beamer@@breaker}}
   \def\beamer@breaker<#1>{\only<#1>{\beamer@origbreak}}
   \def\beamer@@breaker{\ifbeamer@inframe\else\expandafter\beamer@origbreak\fi}
+
+  \let\beamer@origbreamcenter=\@centercr
+  \def\@centercr{\beamer@ifnextcharospec{\beamer@breakercenter}{\beamer@@breakercenter}}
+  \def\beamer@breakercenter<#1>{\only<#1>{\beamer@origbreakcenter}}
+  \def\beamer@@breakercenter{\ifbeamer@inframe\else\expandafter\beamer@origbreakcenter\fi}
 }
 
 
