@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/11/07 v0.93 Class for Typesetting a Beamer Presentation]
+[2003/11/08 v0.93-dev Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -98,6 +98,16 @@
 
 
 %
+% Stuff needed in both article and presentation version
+%
+\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
+\def\@includeslide[#1]#2#3{%
+  \edef\beamer@temp{#1 page \csname beamer@slide#2\endcsname}
+  \expandafter\pdfximage\beamer@temp{#3.pdf}\pdfrefximage\pdflastximage}
+
+
+
+%
 % Check whether we should initiate transfer to another class
 %
 
@@ -124,7 +134,12 @@
   \def\beamer@classoptions{#1}
   }
 
-\def\beamer@transfer{
+\def\beamer@transfer{%
+  % Prepare...
+  \def\beamer@slide##1##2{\expandafter\def\csname
+    beamer@slide##1\endcsname{##2}}
+  \@input{\jobname.snm}
+
   \beamer@inpresentationfalse
   \edef\beamer@classwhat{[\beamer@classoptions]{\beamer@classname}}
   \expandafter\LoadClass\beamer@classwhat
@@ -1348,6 +1363,14 @@
 \newoverlaycommand{\emph}{\@emph}{}
 \def\@emph#1{{\itshape#1}}
 
+\newoverlaycommand{\nameslide}{\@nameslide}{\gobble}
+
+\def\@nameslide#1{%
+  \addtocontents{snm}{\protect\beamer@slide{#1}{\thepage}}}
+\def\beamer@slide#1#2{\expandafter\def\csname hyperlink#1\endcsname{%
+  \hyperlink{Navigation#2}}}
+
+\@input{\jobname.snm}
 
 
 %
@@ -2284,6 +2307,8 @@
       \immediate\openout\tf@head\jobname.head\relax
       \newwrite\tf@toc
       \immediate\openout\tf@toc\jobname.toc\relax
+      \newwrite\tf@snm
+      \immediate\openout\tf@snm\jobname.snm\relax
     \fi
 }
 

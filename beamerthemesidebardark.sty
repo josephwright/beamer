@@ -40,6 +40,15 @@
   \vfill
 }
 
+                                % Part page  
+\usepartpagetemplate{
+  \begin{centering}
+    \Large\structure{\bfseries\partname~\@Roman\c@part}
+    \vskip1em\par
+    \bfseries\insertpart\par
+  \end{centering}
+}
+
                                 % Frametitles
 \useframetitletemplate{%
   {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%

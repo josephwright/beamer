@@ -1,4 +1,4 @@
-\documentclass[class=article]{beamer}
+\documentclass{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [class=article] and see what happens!
@@ -1023,14 +1023,14 @@ input bit will typically be unhelpful from a practical point of view.
 
 \begin{figure}
   \begin{centering}
-    \leavevmode\insertslide[]{outline}\par
+    \leavevmode\includeslide{outline}{beamerexample.presentation}\par
   \end{centering}
   \caption{The outline.}
 \end{figure}
 
 \begin{figure}
   \begin{centering}
-    \leavevmode\insertslide[]{backfromproofdetails}\par
+    \leavevmode\includeslide[height 5cm]{backfromproofdetails}{beamerexample.presentation}\par
   \end{centering}
   \caption{A jump back.}
 \end{figure}

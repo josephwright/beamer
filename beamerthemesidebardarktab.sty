@@ -40,6 +40,16 @@
   \vfill
 }
 
+                                % Part page  
+\usepartpagetemplate{
+  \begin{centering}
+    \Large\structure{\bfseries\partname~\@Roman\c@part}
+    \vskip1em\par
+    \bfseries\insertpart\par
+  \end{centering}
+}
+
+
 \pgfdeclarehorizontalshading{beamer@tabmain}{6.5pt}
 {color(0pt)=(white);
   color(\beamer@sidebarwidth)=(structure!50!averagebackgroundcolor)}
