@@ -7,7 +7,7 @@ themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
   Pittsburgh Rochester Singapore Szeged Warsaw \
   default boxes
 
-fontthemes = bold default italics smallcaps sansserifstructure serifstructure
+fontthemes = default serif structurebold structureitalicserif structuresmallcapsserif 
 
 colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily structure
 

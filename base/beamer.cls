@@ -111,11 +111,8 @@
 \DeclareOptionBeamer{compress}
 {\beamer@compresstrue}
 
-\DeclareOptionBeamer{slidescentered}
-{\beamer@centeredtrue}
-
-\DeclareOptionBeamer{slidestop}
-{\beamer@centeredfalse}
+\DeclareOptionBeamer{t}{\beamer@centeredfalse}
+\DeclareOptionBeamer{c}{\beamer@centeredtrue}
 
 
 \DeclareOptionBeamer{leqno}{\input{leqno.clo}}
@@ -141,22 +138,6 @@
   \beamer@frameswithnotesonlytrue%
   \nofiles
 }
-
-\DeclareOptionBeamer{sans}{%
-  \def\familydefault{\sfdefault}
-  \def\mathfamilydefault{\sfdefault}
-  \beamer@sansmathtrue
-}
-\DeclareOptionBeamer{serif}{%
-  \def\familydefault{\rmdefault}
-  \def\mathfamilydefault{\rmdefault}
-  \beamer@sansmathfalse
-}
-
-\DeclareOptionBeamer{mathsans}{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
-\DeclareOptionBeamer{mathserif}{\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
-
-\DeclareOptionBeamer{professionalfont}{\beamer@suppressreplacementstrue}
 
 \DeclareOptionBeamer{pdftex}{}% Used by hyperref
 \DeclareOptionBeamer{nativepdf}{}% Used by hyperref
@@ -248,6 +229,38 @@
 \DeclareOptionBeamer{brown}{
   \ClassWarning{beamer}{``brown'' is obsolete. Use color theme structure instead}
   \def\beamer@loadlater{\usecolortheme[rgb={0.66,0.4,0.166}]{structure}}}
+\DeclareOptionBeamer{slidescentered}{
+  \ClassWarning{beamer}{``slidescentered'' is obsolete. Use ``c'' instead}
+  \beamer@centeredtrue}
+\DeclareOptionBeamer{slidestop}{
+  \ClassWarning{beamer}{``slidestop'' is obsolete. Use ``t'' instead}
+  \beamer@centeredfalse}
+\DeclareOptionBeamer{sans}{%
+  \ClassWarning{beamer}{``sans'' is obsolete. Just remove this option}  
+  \def\familydefault{\sfdefault}
+  \def\mathfamilydefault{\sfdefault}
+  \beamer@sansmathtrue
+}
+\DeclareOptionBeamer{serif}{%
+  \ClassWarning{beamer}{``serif'' is obsolete. Use font theme ``serif'' instead}
+  \def\familydefault{\rmdefault}
+  \def\mathfamilydefault{\rmdefault}
+  \beamer@sansmathfalse
+}
+\DeclareOptionBeamer{mathsans}{
+  \ClassWarning{beamer}{``mathsans'' is obsolete. Use font theme ``serif'' with option ``butsansserifmath''}  
+  \def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
+\DeclareOptionBeamer{mathserif}{
+  \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}  
+  \def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
+\DeclareOptionBeamer{professionalfont}{
+  \ClassWarning{beamer}{``professinoalfont'' is obsolete. Use font theme ``professinoalfonts'' instead}
+  \beamer@suppressreplacementstrue}
+
+% has to be done here for compatibility
+\def\familydefault{\sfdefault}
+\def\mathfamilydefault{\sfdefault}
+\beamer@sansmathtrue
 
 
 
@@ -288,8 +301,7 @@
 % Process Options
 %
 
-\ExecuteOptionsBeamer{sans,slidescentered}
-
+\ExecuteOptionsBeamer{c}
 \ProcessOptionsBeamer
 
 % Filter class option list

@@ -292,18 +292,18 @@ talking about.
 You add a pause using the Pause style.
 
 Euclid finds that he can also add a |\pause| between the definition
-and the example. So, |\pause|'s seem to transcede environments, which
+and the example. So, |\pause|s seem to transcede environments, which
 Euclid finds quite useful. After some experimentation he finds that
 |\pause| only does not work in |align| environments. He immediately
 writes an email about this to \beamer's author, but recieves a polite
 answer stating that the implementation of |align| does wicked things
 and there is no fix for this. Also, Euclid is pointed to the last part
-of the \beamer's User's Guide, where a workaround is described. 
+of the user's guide, where a workaround is described. 
 
 
 \subsection{Using Overlay Specifications}
 
-The next frame is to show his main argument and is put the ``Results''
+The next frame is to show his main argument and is put in a ``Results''
 section. Euclid desires a more complicated overlay behavior for this
 frame: In an enumeration of four points he 
 wishes to uncover the points one-by-one, but he wishes the fourth
@@ -367,7 +367,7 @@ fourth slide. If the text is centered vertically, this will cause the
 text to ``wobble'' and thus |\uncover| should be used. However, you
 sometimes wish things to ``really disappear'' on some slides and then
 |\only| is useful. Euclid could also have used the class option
-|slidestop|, which causes the text in frames to be vertically flushed
+|t|, which causes the text in frames to be vertically flushed
 to the top. Then a differing text height does not cause
 wobbling. Vertical flushing can also be achieved for only a single
 frame be by giving the optional argument |[t]| like this to the
@@ -378,7 +378,7 @@ frame be by giving the optional argument |[t]| like this to the
   ...
 \end{frame}
 \end{verbatim}
-Vice versa, if the |slidestop| option is given, a frame can be
+Vice versa, if the |t| option is given, a frame can be
 vertically centered using the |[c]| option for the frame.
 
 It turns out that certain environments, including the |theorem| and
@@ -400,7 +400,7 @@ similar to the |theorem| environment, Euclid decides to use the
     How many primes are there?
   \end{block}
   \begin{block}{Open Questions}
-    How many primes $p$ are there such that $p+2$ is also prime?
+    Is every even number the sum of two primes?
   \end{block}
 \end{frame}
 \end{verbatim}
@@ -427,7 +427,7 @@ An alternative would be nested |itemize|:
     \end{itemize}
   \item Open Questions
     \begin{itemize}
-    \item How many primes $p$ are there such that $p+2$ is also prime?
+    \item Is every even number the sum of two primes?
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -453,7 +453,7 @@ environment, |\column| commands create new columns.
   \end{columns}
 \end{frame}
 \end{verbatim}
-Trying this, he is not quite satisfied with the result as the block on
+Trying this, he is not quite satisfied with the result if the block on
 the left has a different height as the one on the right. He thinks it
 would be nicer if they were vertically top-aligned. So he adds the
 |[t]| option to the |columns| environment. 
@@ -496,6 +496,46 @@ and he can then add a citation:
 
 
 
+
+
+\subsection{Verbatim Text}
+
+One another frame, Euclid would like to show a listing of an
+algorithm his friend Eratosthenes has send him (saying he came up with
+it while reorganizing his sieve collection). Euclid normally uses the
+|verbatim| environment and sometimes also similar environments like
+|lstlisting| to typeset listings. He can also use them in \beamer, but
+he must add the |containsverbatim| option to the frame and he cannot
+use overlays on frames typeset using this option:
+\begin{verbatim}
+\begin{frame}[containsverbatim]
+  \frametitle{An Algorithm For Finding Primes Numbers.}
+
+%\begin{verbatim} 
+int main (void)
+{
+  std::vector<bool> is_prime (100, true);
+  for (int i = 2; i < 100; i++)
+    if (is_prime[i])
+      {
+        std::cout << i << " ";
+        for (int j = i; j < 100; is_prime [j] = false, j+=i);
+      }
+  return 0;
+} 
+\end{verbatim}
+\unskip{\MacroFont|\end{verbatim}|}
+                                %\begin{verbatim}
+\begin{verbatim}
+\end{frame}
+\end{verbatim}
+Euclid is a bit alarmed that he cannot use verbatims together with
+overlays directly. Fortunately, there exists a slightly more
+complicated mechanism, where the verbatim text has to be ``declared''
+before the frame, for using verbatims together with overlays.
+
+
+
 \subsection{Changing the Way Things Look}
 
 With the contents of this talk fixed, Euclid decides to have a second
@@ -504,21 +544,21 @@ the line
 \begin{verbatim}
 \usetheme{Warsaw}
 \end{verbatim}
-By substituting other cities (he notices that the only thing these
-cities seem to have in common is that in most of them the same person
+By substituting other cities (he notices that these cities seem to
+have in common is that in most of them the same person 
 has attended some workshop or conference on theoretical computer
 science) Euclid can change the way his presentation is going to
 look. He decides to choose some theme that is reasonably simple but,
 since his talk is not too short, shows a bit of navigational
 information.
 
-He settles on the |Frankfurt| theme but decides that the whole thing
-is still too colorful. He adds
+He settles on the |Frankfurt| theme but decides that the light-dark
+contrast is too strong. He adds
 \begin{verbatim}
 \usecolortheme{seahorse}
 \usecolortheme{rose} 
 \end{verbatim}  
-The result seems some more subdued.
+The result seems some more subdued to him.
 
 Euclid decides that the font used for the titles is not quite
 classical enough (classical fonts are the latest chic in
@@ -531,7 +571,7 @@ Euclid notices that the small fonts in the navigation bars
 are a bit hard to read as they are so thin. Adding the following
 helps:
 \begin{verbatim}
-\usefonttheme[onlysmall]{bold}
+\usefonttheme[onlysmall]{structurebold}
 \end{verbatim}
 
 

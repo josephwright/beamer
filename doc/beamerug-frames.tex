@@ -200,7 +200,7 @@ otherwise it contains only one slide.
     \declare{|b|}, \declare{|c|}, \declare{|t|} will cause the frame
     to be vertically aligned at the bottom/center/top. This overrides
     the global placement policy, which is governed by the class
-    options |slidestop| and |slidescentered|.
+    options |t| and |c|.
   \item
     \declare{|containsverbatim|} tells \beamer\ that the frame
     contains verbatim commands. In this case, only one slide of
@@ -489,13 +489,13 @@ be specified with the following command:
 Be default, all material for a slide is vertically centered. You can
 change this using the following class options:
 
-\begin{classoption}{slidestop}
+\begin{classoption}{t}
   Place text of slides at the (vertical) top of the slides. This
   corresponds to a vertical ``flush.'' You can override this for
   individual frames using the |c| or |b| option.
 \end{classoption}
 
-\begin{classoption}{slidescentered}
+\begin{classoption}{c}
   Place text of slides at the (vertical) center of the slides. This is
   the default. You can override this for
   individual frames using the |t| or |b| option.

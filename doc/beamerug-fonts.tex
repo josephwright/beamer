@@ -46,15 +46,22 @@ aspects of the fonts used using font themes---in same cases special
 commands and options are needed, which are described in the next
 subsection.
 
-The followin font themes only change certain font attributes, they do
+The following font themes only change certain font attributes, they do
 not choose special font families (although that would also be possible
 and themes doing just that might be added in the future). Currently,
 to change the font family, you need to load special packages as
 explained in the next subsection.
 
 
+\begin{fontthemeexample}{default}
+  The default font theme installs a sans serif font for all text of
+  the presentation. The default theme installs different font sizes
+  for things like titles or head- and footlines, but does not use
+  boldface or italics for ``hilighting.''  
+\end{fontthemeexample}
 
-\begin{fontthemeexample}[\oarg{options}]{bold}
+
+\begin{fontthemeexample}[\oarg{options}]{structurebold}
   This font theme will cause titles and text in the headlines,
   footlines, and sidebars to be typeset in a bold font.
 
@@ -82,24 +89,25 @@ explained in the next subsection.
   compatibility themes to set also titles to a bold font. 
 \end{fontthemeexample}
 
-\begin{fontthemeexample}[\oarg{options}]{italics}
-  This theme is similarly as the |bold| font theme, but where |bold|
-  makes text bold, |italics| makes sets it italics \emph{and in a
-    serif font}. The same \meta{options} as for the |bold| theme are
-  supported. See Section~\ref{section-italics} for the pros and cons
+\begin{fontthemeexample}[\oarg{options}]{structureitalicserif}
+  This theme is similarly as the |structurebold| font theme, but where
+  |structurebold| makes text bold, this theme typesets it in italics and
+  in the standard serif font. The same \meta{options} as for the
+  |structurebold| theme are supported. See
+  Section~\ref{section-italics} for the pros and cons 
   of using italics.  
 \end{fontthemeexample}
 
-\begin{fontthemeexample}[\oarg{options}]{smallcaps}
-  Again, this theme does exactly the same as the |bold| font theme,
-  only this time text is set using small caps \emph{and a serif
-    font}. The same \meta{options} as for the |bold| theme are
+\begin{fontthemeexample}[\oarg{options}]{structuresmallcapsserif}
+  Again, this theme does exactly the same as the |structurebold| font theme,
+  only this time text is set using small caps and a serif
+    font. The same \meta{options} as for the |structurebold| theme are
   supported. See Section~\ref{section-smallcaps} for the pros and cons
   of using small caps.  
 \end{fontthemeexample}
 
-\begin{fontthemeexample}[\oarg{options}]{sansserifstructure}
-  Another theme that works like the |bold| theme and accepts the same
+\begin{fontthemeexample}[\oarg{options}]{structuresansserif}
+  Another theme that works like the |structurebold| theme and accepts the same
   options. Instead of making text set on bold, it causes text to be
   typeset using a sans-serif font. Naturally, using this theme makes
   only sense if you use the |serif| class option since otherwise is
@@ -109,14 +117,14 @@ explained in the next subsection.
   read at small sizes.
 \end{fontthemeexample}
 
-\begin{fontthemeexample}[\oarg{options}]{serifstructure}
-  Like |sansserifstructure|, except that the text is typeset using a serif
+\begin{fontthemeexample}[\oarg{options}]{structureserif}
+  Like |structuresansserif|, except that the text is typeset using a serif
   font instead of sans serif. Using serif text for small text is
   dangerous, but using a serif (possibly italic) title over a sans
   serif text creates an interesting visual effect. Naturally,
   ``interesting typographic effect'' can mean ``terrible typographic
   effect'' if you choose the wrong fonts combinations or sizes. You'll
-  need some typographic  experience to judge this correctly. If in
+  need some typographic experience to judge this correctly. If in
   doubt, try asking someone who should now.
 \end{fontthemeexample}
 
