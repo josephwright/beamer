@@ -9,21 +9,23 @@
 
 \mode<presentation>
 
-\colorlet{beamer@beetle}{beamer@blendedblue!50!white!50!black}
+\setbeamercolor{structure}{fg=black!70,bg=black!50}
 
-\setbeamercolor*{structure}{fg=beamer@beetle}
+\setbeamercolor{alerted text}{fg=red!85!black}
 
-\setbeamercolor*{palette primary}{use=structure,fg=black!5,bg=structure.fg}
-\setbeamercolor*{palette secondary}{use=structure,fg=black!10,bg=structure.fg!95}
-\setbeamercolor*{palette ternary}{use=structure,fg=black!15,bg=structure.fg!90}
-\setbeamercolor*{palette fourth}{use=structure,fg=black!20,bg=structure.fg!85}
+\setbeamercolor{item projected}{use=item,fg=white,bg=item.fg!75!black!75}
+
+\setbeamercolor*{palette primary}{use=structure,fg=black!5,bg=structure.bg}
+\setbeamercolor*{palette secondary}{use=structure,fg=black!10,bg=structure.bg!95}
+\setbeamercolor*{palette ternary}{use=structure,fg=black!15,bg=structure.bg!90}
+\setbeamercolor*{palette fourth}{use=structure,fg=black!20,bg=structure.bg!85}
 
 \setbeamercolor*{sidebar}{parent=palette primary}
 
-\setbeamercolor*{palette sidebar primary}{use=normal text,fg=normal text.fg}
-\setbeamercolor*{palette sidebar secondary}{use=structure,fg=structure.fg}
-\setbeamercolor*{palette sidebar ternary}{use=normal text,fg=normal text.fg}
-\setbeamercolor*{palette sidebar fourth}{use=structure,fg=structure.fg}
+\setbeamercolor*{palette sidebar primary}{fg=white}
+\setbeamercolor*{palette sidebar secondary}{fg=black}
+\setbeamercolor*{palette sidebar ternary}{fg=white}
+\setbeamercolor*{palette sidebar fourth}{fg=black}
 
 \setbeamercolor*{frametitle}{parent=palette primary,fg=white}
 \setbeamercolor*{framesubtitle}{parent=frametitle,fg=black}
@@ -32,12 +34,12 @@
 \setbeamercolor*{subtitle}{parent=frametitle,fg=black}
 
 \setbeamercolor*{block title}{parent=frametitle}
-\setbeamercolor*{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
-\setbeamercolor*{block title example}{use=example text,fg=white,bg=example text.fg!75!black}
+\setbeamercolor*{block title alerted}{use=alerted text,fg=white,bg=red!50!black!50}
+\setbeamercolor*{block title example}{use=example text,fg=white,bg=green!50!black!50}
 
-\setbeamercolor*{block body}{use=block title,fg=black,bg=block title.bg!20!bg}
-\setbeamercolor*{block body alerted}{use=block title alerted,fg=black,bg=block title alerted.bg!20!bg}
-\setbeamercolor*{block body example}{use=block title example,fg=black,bg=block title example.bg!20!bg}
+\setbeamercolor*{block body}{use=block title,fg=black,bg=block title.bg}
+\setbeamercolor*{block body alerted}{use=block title alerted,fg=black,bg=block title alerted.bg}
+\setbeamercolor*{block body example}{use=block title example,fg=black,bg=block title example.bg}
 
 \setbeamercolor*{separation line}{}
 \setbeamercolor*{fine separation line}{}

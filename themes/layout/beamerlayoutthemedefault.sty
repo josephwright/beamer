@@ -20,7 +20,10 @@
 {}
 
 \defbeamertemplate*{background canvas}{default}
-{\color{bg}\vrule width\paperwidth height\paperheight}
+{%
+  \ifbeamercolorempty[bg]{background canvas}{}{\color{bg}\vrule width\paperwidth height\paperheight}%
+}
+
 
 
 

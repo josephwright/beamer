@@ -12,6 +12,7 @@
 \uselayouttheme[height=0pt]{sidebar}
 
 \def\albatrossname{albatross}
+\def\albatrossname{fly}
 \def\structurename{structure}
 
 \ifx\themename\structurename
@@ -21,6 +22,12 @@
 \fi
 
 \ifx\themename\albatrossname
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
+\ifx\themename\flyname
   \makeatletter
   \let\beamertemplatesolidbackgroundcolor=\@gobble
   \makeatother

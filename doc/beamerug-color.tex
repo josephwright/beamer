@@ -26,6 +26,10 @@ mathematical text simply has to be typeset in a lovely pink.
 
 \subsection{Color Themes}
 
+In order to also show the effect of the different color themes on the
+sidebar, in the following examples the color themes are used together
+with the layout theme |sidebar|.
+
 \subsubsection{Default and Special-Purpose Color Themes}
 
 \begin{colorthemeexample}{default}
@@ -45,9 +49,12 @@ mathematical text simply has to be typeset in a lovely pink.
     |structure| is set to a light version of MidnightBlue
     (more precisely, 20\% red, 20\% green, and 70\% blue).  
   \end{itemize}
-  Use this theme for a no-nonsense presentation. Note, however, that
-  since this theme is loaded by default, you cannot ``reload'' it
-  after having loaded another color theme.
+  Use this theme for a no-nonsense presentation. Since this theme is
+  loaded by default, you cannot ``reload'' it after having loaded
+  another color theme.
+
+  For a detailed explanation of all the colors this theme installs by
+  default, see Section~\ref{section-color-listing}.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}[\oarg{options}]{structure}
@@ -106,7 +113,7 @@ mathematical text simply has to be typeset in a lovely pink.
 A ``complete'' color theme is a color theme that completely specifies
 all colors for all parts of a frame. It installs specific colors and
 does not derive the colors from, say, the |structure| \beamer-color.
-Complete complete themes happen to have bird names.
+Complete complete themes happen to have names of flying animals.
 
 \begin{colorthemeexample}{albatross}
   The color theme is a ``dark'' or ``inverted'' theme using yellow on
@@ -145,6 +152,25 @@ Complete complete themes happen to have bird names.
 \end{colorthemeexample}
 
 
+\begin{colorthemeexample}{beetle}
+  The main ``theme behing this theme'' is to use white and black text
+  on gray background. The white text is used for special emphasis, the
+  black text for normal text. The gray background is, however, only
+  used in ``special places'' like theorems or blocks. For a  more
+  consequent theme that uses a gray background throughout, see the
+  |fly| theme.
+
+  Great care must be taken with this theme since both the white/gray
+  and the black/gray contrasts are much lower than with other
+  themes. Make sure that the contrast is high enough for the actual
+  presentation.
+
+  You can change the ``grayish'' background color of structural
+  elements by changing the background of the \beamer-color |structure|.
+\end{colorthemeexample}
+
+
+
 \begin{colorthemeexample}{crane}
   This theme uses the colors of the Lufthansa, whose logo is a crane.
 \end{colorthemeexample}
@@ -160,6 +186,15 @@ Complete complete themes happen to have bird names.
   When using this theme, you should consider using the class option
   |gray|, which ensures that all colors are converted to
   grayscale. Also consider using the |structurebold| font theme.
+\end{colorthemeexample}
+
+
+\begin{colorthemeexample}{fly}
+  This theme is somewhat similar to the |beetle| theme, it is only
+  more consequent. The downside is the even smaller contrast when
+  compared to the |beetle| theme. To change the background gray,
+  adjust the normal background color, that is, the background of the
+  \beamer-color |normal text|.
 \end{colorthemeexample}
 
 
@@ -290,6 +325,9 @@ dynamically. This means that if one of the parent \beamer-colors
 changes during the presentation, the derived colors automatically also
 change.
 
+The default color theme, which is always loaded, installs numerous
+\beamer-colors and inheritance relations between them. See
+Section~\ref{section-color-listing} for details.
 
 \subsubsection{Using Beamer's Colors}
 
@@ -358,9 +396,42 @@ background, the colors |fg| or |bg| (or both) remain unchanged.
   all the time, at least not without a |\usebeamercolor{structure}|
   close by.
 
+  \example
+\begin{verbatim}
+  This text is {\usebeamercolor[fg]{alerted text} alerted}. The
+  following box uses the fore- and background of frametitles:
+  {
+    \usebeamercolor[fg]{frametitle}
+    \colorbox{bg}{Frame Title}
+  }
+\end{verbatim}
+  
   \articlenote
   This command has no effect in |article| mode.
 \end{command}
+
+
+\begin{command}{\ifbeamercolorempty\oarg{fg or bg}\marg{beamer-color
+      name}\marg{if undefined}\marg{if defined}}
+  This command can be used to check whether the foreground or
+  background of some \meta{beamer-color name} is non-empty. If the
+  foreground or background of \meta{beamer-color name} is defined,
+  \meta{if defined} will be executed, otherwise the \meta{if undefined} code.
+
+  \example
+\begin{verbatim}
+\ifbeamercolorempty[bg]{frametitle}
+{ % ``Transparent background''
+  \usebeamercolor[fg]{frametitle}
+  \insertframetitle
+}
+{ % Opaque background
+  \usebeamercolor[fg]{frametitle}
+  \colorbox{bg}{\insertframetitle}
+}
+\end{verbatim}
+\end{command}
+
 
 
 
@@ -375,6 +446,13 @@ To set or to change a \beamer-color, you can use the command
   punctuation symbols), but it may contain spaces. Thus, |normal text|
   is a valid \meta{beamer-color name} and so is |My Color Number 2|.
 
+  In the most simple case, you just specify a foreground by giving the
+  |fg=| option and, possibly, also a background using the |bg=|
+  option.
+
+  \example |\setbeamercolor{normal text}{fg=black,bg=mylightgrey}|
+  \example |\setbeamercolor{alerted text}{fg=red!80!black}|
+  
   The effect of this command is accumulative, thus the following two
   commands
 \begin{verbatim}
@@ -389,18 +467,97 @@ To set or to change a \beamer-color, you can use the command
   a different value overrides a previous call.
 
   The starred version first resets everything, thereby ``switching
-  off'' the accumulative effect. Use this starred version 
-  
+  off'' the accumulative effect. Use this starred version to
+  completely reset the definition of some \beamer-color.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|fg=|\meta{color}} sets the foreground color of
+    \meta{beamer-color name} to the given (normal)   \meta{color}. The
+    \meta{color} may also be a color expression like |red!50!black|,
+    see the manual of the \textsc{xcolor} package. If \meta{color}
+    is empty, the \meta{beamer-color name} ``has no special
+    foreground'' and when the color is used, the foreground
+    currently in force should not be changed.
+
+    Specifying a foreground this way will override any inherited
+    foreground color.
+  \item  \declare{|bg=|\meta{color}} does the same as the |fg|
+    option, but for the background.
+  \item \declare{|parent=|\meta{parent beamer-color(s)}} specifies
+    that \meta{beamer-color name} should inherit from the specified
+    \meta{parent beamer-color(s)}. Any foreground and/or background
+    color set by the parents will also be used when
+    \meta{beamer-color name} is used. If multiple parents specify
+    a foreground, the last one ``wins''; and likewise for the
+    backgrounds.
+
+    \example
+\begin{verbatim}
+\setbeamercolor{father}{fg=red}
+\setbeamercolor{mother}{bg=green}
+\setbeamercolor{child}{parent={father,mother}}
+\begin{beamercolorbox}{child}
+  Terrible red on green text.
+\end{beamercolorbox}
+
+\setbeamercolor{father}{fg=blue}
+\begin{beamercolorbox}{child}
+  Now terrible blue on green text, since parent was changed.
+\end{beamercolorbox}
+\end{verbatim}
+
+    Note that a change of the foreground or background of a parent
+    changes the corresponding foreground or background of the child
+    (unless it is overruled).
+
+    A \beamer-color cannot only have parents, but also grandparents
+    and so on.
+  \item \declare{|use=|\meta{another beamer-color}} is used to
+    make sure that another \beamer-color is setup correctly before the
+    foreground or background color specification are evaluated.
+
+    Suppose you wish the foreground of items to be a mixture
+    of 50\% of the foreground of structural elements and 50\% of the
+    normal foreground color. You could try
+\begin{verbatim}
+\setbeamercolor{item}{fg=structure.fg!50!normal text.fg}
+\end{verbatim}
+    However, this will not necessarily give the desired result: If
+    the \beamer-color |structure| changes, the (normal) color
+    |structure.fg| is not immediately updated. In order to ensure
+    that the normal color |structure.fg| is correct, use the
+    following:
+\begin{verbatim}
+\setbeamercolor{item}{use={structure,normal text},fg=structure.fg!50!normal text.fg}
+\end{verbatim}
+    This will guarantee that the colors |structure.fg| and
+    |normal text.fg| are setup correctly when the foreground of
+    |item| is computed.
+
+    To show the difference, consider the following example:
+\begin{verbatim}
+\setbeamercolor{grandfather}{fg=red}
+\setbeamercolor{grandmother}{bg=white}
+\setbeamercolor{father}{parent={grandfather,grandmother}}
+\setbeamercolor{mother}{fg=black}
+{
+  \usebeamercolor{father}\usebeamercolor{mother}
+  %% Defines father.fg and mother.fg globally
+}
+\setbeamercolor{my color A}{fg=father.fg!50!mother.fg}
+\setbeamercolor{my color B}{use={father,mother},fg=father.fg!50!mother.fg}
+
+{\usebeamercolor[fg]{my color A} dark red text}
+{\usebeamercolor[fg]{my color b} also dark red text}
+
+\setbeamercolor{grandfather}{fg=green}
+
+{\usebeamercolor[fg]{my color A} still dark red text}
+{\usebeamercolor[fg]{my color b} now dark green text}
+\end{verbatim}
+  \end{itemize}
 \end{command}
-
-
-
-
-
-
-
-
-
 
 
 

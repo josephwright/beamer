@@ -75,6 +75,17 @@
 
 \def\itemoption#1#2{\item {\texttt{[\declare{#1}]}}#2}
 
+\def\yes{\hbox to .5cm{\ding{51}\hfil}}
+\def\no{\hbox to .5cm{\ding{55}\hfil}}
+
+\def\choosecol#1{\ifx#1\yes\color{green!50!black}\else\color{red!50!black}\fi}
+
+\def\templatefontcolor#1#2#3#4{%
+  \item\declare{\texttt{#1}}\hfill%
+  {\choosecol#2Template #2} {\choosecol#3Color #3} {\choosecol#4Font #4}\par}
+
+\def\fontparents#1{Font parents: \texttt{#1}\par}
+\def\colorparents#1{Color parents: \texttt{#1}\par}
 
 \def\templateinserts{\begin{itemize}}
 \def\endtemplateinserts{\end{itemize}}
@@ -95,6 +106,9 @@
 \newcommand{\appearancenote}{\par\smallskip\noindent\llap{\color{blue}\vtop
     to0pt{\llap{\textsc{appear-\!}}\vskip-3pt\llap{\textsc{ance}}\vss}\ \ }}
 
+\newcommand{\templatenote}{\par\smallskip\noindent\llap{\color{blue}\textsc{template}\ \ }}
+\newcommand{\colornote}{\par\smallskip\noindent\llap{\color{blue}\textsc{color}\ \ }}
+\newcommand{\fontnote}{\par\smallskip\noindent\llap{\color{blue}\textsc{font}\ \ }}
 
 \newcommand{\genericthemeexample}[2][]{%
   \smallskip\par\noindent

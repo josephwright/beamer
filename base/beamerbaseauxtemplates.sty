@@ -76,9 +76,6 @@
   \end{pgfpicture}%    
 }
 
-\defbeamertemplate{background canvas}{transparent}
-{}
-
 
 \define@key{beamer@backgroundshade}{top}{\def\beamer@bgst{#1}}
 \define@key{beamer@backgroundshade}{bottom}{\def\beamer@bgsb{#1}}
@@ -750,7 +747,7 @@
       \usebeamerfont*{block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
-    \ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip}}%
+    \ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\vskip\smallskipamount}
   \usealertblocktemplate{%
@@ -759,7 +756,7 @@
       \usebeamerfont*{alerted block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
-    \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip}}%
+    \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip\vskip-0.5pt}}%
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\vskip\smallskipamount}
   \useexampleblocktemplate{%
@@ -768,7 +765,7 @@
       \usebeamerfont*{example block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
-    \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip}}%
+    \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip\vskip-0.5pt}}%
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\vskip\smallskipamount}
 }

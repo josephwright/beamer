@@ -647,6 +647,8 @@ change this using the following class options:
 
 
 \subsubsection{The Background}
+\label{section-canvas}
+\label{section-background}
 
 Each frame has a \emph{background}, which---as the name suggests---is
 ``behind everything.'' The background is a surprisingly complex
@@ -672,6 +674,11 @@ The canvas need not be monochrome. Instead, you can install a shading
 or even make it transparent. Making it transparent is a good idea if
 you wish to include your slides in some other document.
 
+\example The following command makes the background canvas transparent:
+\begin{verbatim}
+\setbeamercolor{background canvas}{bg=} 
+\end{verbatim}
+
 \begin{template*}{background canvas}
   The template is inserted ``behind everything.'' The template should
   typically be some \TeX\ commands that produce a rectangle of height
@@ -683,9 +690,6 @@ you wish to include your slides in some other document.
     this color inherits from |normal text|, you can change the
     background of the \beamer-color |normal text| to change the
     color of the default canvas.
-    \itemoption{transparent}{}
-    removes the canvas. This is useful if the slides are to be
-    inserted into another document.
     \itemoption{vertical shading}{\oarg{color options}}
     installs a vertically shaded background. \emph{Use with care:
       Background shadings are often distracting!} The following

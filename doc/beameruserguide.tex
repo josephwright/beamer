@@ -1,3 +1,4 @@
+
 \documentclass{ltxdoc}
 
 % Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
@@ -14,8 +15,11 @@
 \usepackage{amsmath,amssymb}
 \usepackage[pdfborder={0 0 0},bookmarksnumbered]{hyperref}
 \usepackage[latin1]{inputenc}
+\usepackage{pifont}
 
 \input{beamerug-macros}
+
+\includeonly{beamerug-customization}
 
 \begin{document}
 
@@ -28,30 +32,31 @@
 
 \tableofcontents
 
-\input{beamerug-introduction}
+
+\include{beamerug-introduction}
 
 \part{Getting Started}
-\input{beamerug-installation}
-\input{beamerug-tutorial}
-\input{beamerug-workflow}
-\input{beamerug-guidelines}
-\input{beamerug-solutions}
+\include{beamerug-installation}
+\include{beamerug-tutorial}
+\include{beamerug-workflow}
+\include{beamerug-guidelines}
+\include{beamerug-solutions}
 
 \part{Building a Presentation}
-\input{beamerug-frames}
-\input{beamerug-overlays}
-\input{beamerug-structuring}
-\input{beamerug-graphics}
-\input{beamerug-nonpresentation}
+\include{beamerug-frames}
+\include{beamerug-overlays}
+\include{beamerug-structuring}
+\include{beamerug-graphics}
+\include{beamerug-nonpresentation}
 
 \part{Changing the Way Things Look}
-\input{beamerug-themes}
-\input{beamerug-color}
-\input{beamerug-fonts}
-\input{beamerug-customatization}
+\include{beamerug-themes}
+\include{beamerug-color}
+\include{beamerug-fonts}
+\include{beamerug-customization}
 
 \part{Howtos}
-\input{beamerug-tricks}
-\input{beamerug-emulation}
+\include{beamerug-tricks}
+\include{beamerug-emulation}
 
 \end{document}
