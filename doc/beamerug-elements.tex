@@ -1,0 +1,478 @@
+
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\section{Element Themes, Layout Themes, and Templates}
+
+This section discusses the element and layout themes that are
+available in \beamer. These themes install certain \emph{templates}
+for different aspects of a presentation. The template mechanism is
+explained at the end of the section.
+
+Before we plunge into the details, let us agree on some terminology
+for this section. An \emph{element} is 
+
+In \beamer, the appearance of every element of a presentation (like
+frame titles, the author's name, the footnote sign, or whatever else
+you can think of) governed by a \emph{template} for this
+element. Appropriate templates are installed by element and layout
+themes. Element and layout themes both install element
+templates---element themes install templates for elements
+``inside the main text'' while layout themes install template for
+elements ``around the main text.'' Thus, from the templates's point of
+view, there is no real difference between element and layout themes.
+
+
+
+\subsection{Element Themes}
+
+An element theme installs templates that dictate how the following
+``elements'' are typeset:
+\begin{itemize}
+\item Title and part pages.
+\item Itemize environments.
+\item Enumerate environments.
+\item Descrition environments.
+\item Block environments.
+\item Theorem and proof environments.
+\item Figures and tables.
+\item Footnotes.
+\item Bibliography entries.
+\end{itemize}
+
+
+In the following examples, the color themes |seahorse| and |rose| are
+used to show where and how background colors are
+honoured. Furthermore, background colors have been specified for all
+elements the honour them in the default theme. In the default color
+theme, all of the large rectangular areas are transparent.
+
+\begin{elementthemeexample}{default}
+  The default element theme is quite sober. The only extravagance is
+  the fact that a little trianlge is used in |itemize| environments
+  instead of the usual dot.
+
+  In some cases the theme will honour background color specifications
+  for elements. For example, if you set the background color for block
+  titles to green, block titles will have a green background. The
+  background specifications are currently honoured for the following
+  elements: 
+  \begin{itemize}
+  \item Title, author, institute, and date fields in the title
+    page.
+  \item Block environments, both for the title and for the body.
+  \end{itemize}
+  This list may increase in the future.
+\end{elementthemeexample}
+
+\begin{elementthemeexample}{circles}
+  In this theme, |itemize| and |enumerate| items start with a small
+  circle. Likewise, entries in the table of contents start with
+  circles. 
+\end{elementthemeexample}
+
+\begin{elementthemeexample}{rectangles}
+  In this theme, |itemize| and |enumerate| items and table of contents
+  entries  start with small rectangles. 
+\end{elementthemeexample}
+
+\begin{elementthemeexample}[\oarg{options}]{rounded}
+  In this theme, |itemize| and |enumerate| items and table of contents
+  entries start with small balls. If a background is specified for
+  blocks, then the corners of the background rectangles will be
+  rounded off. The following \meta{options} may be given:
+
+  \begin{itemize}
+  \item \declare{|shadow|} adds a shadow to all blocks.
+  \end{itemize}
+\end{elementthemeexample}
+
+
+
+
+\subsection{Layout Themes}
+
+A layout theme dictates (roughly) the overall layout of frames. It
+specifies where any navigational elements should go (like a mini table
+of contents or navigational mini frames) and what they should look
+like. Typically, a layout theme specifies how the following parts of a
+frame are rendered:
+\begin{itemize}
+\item The head- and footline.
+\item The sidebars.
+\item The logo.
+\item The frame title.  
+\end{itemize}
+
+A layout theme will not specify how things like |itemize| environments
+should be rendered---that is the job an element theme.
+
+In the following examples the color theme |seahorse| is
+used. Since the default color theme leaves most backgrounds empty,
+most of the layout themes will look too unstructured with the default
+color theme. 
+
+
+\begin{layoutthemeexample}{default}
+  The default layout theme is the most sober and minimalistic theme
+  around. It will flush left the frame title and it will not install
+  any head- or footlines. However, even this theme honours the
+  background color specified for the frame title. If a color is
+  specified, a bar occupying the whole page width is put behind the
+  frame title. A background color the frame subtitle is ignored.
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{infolines}
+  This theme installs a headline showing the current section and the
+  current subsection. It installs a footline showing the author's
+  name, the institution, the presentation's title, the current date,
+  and a frame count. This theme uses only little space.
+
+  The colors used in the headline and footline are drawn from
+  |palette primary|, |palette secondary|, and |primary ternary| (see
+  Section~\ref{section-colors} for details on how to change these).
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{miniframes}
+  This theme installs a headline in which a horizontal navigational
+  bar is shown. This bar contains one entry for each section of the
+  presentation. Below each section entry, small circles are shown that
+  represent the different frames in the section. The frames are
+  arranged subsection-wise, that is, there is a line of frames for
+  each subsection. If the class  option |compress| is given, the
+  frames will instead be arranged in a single row for each
+  section. The navigation bars draws its color from
+  |section in head/foot|.
+
+  Below the navigation bar, a line is put showing the title of the
+  current subsection. The color is drawn from |subsection in head/foot|.
+
+  At the bottom, two lines are put that contain information such as
+  the author's name, the institution, or the paper's title. What is
+  shown exactly is influenced by the \meta{options} given. The colors
+  are drawn from the appropriate \beamer-colors like
+  |author in head/foot|.
+
+  At the top and bottom of both the head- and footline and between the
+  navigation bar and the subsection name, separation lines are drawn
+  \emph{if} the background color of |separation line| is set. This
+  separation line will have a height of 3pt. You can get even more
+  fine-grained control over the colors of the separation lines by
+  setting appropriate colors like |lower separation line head|.
+
+  The following \meta{options} can be given:
+  \begin{itemize}
+  \item \declare{|footline=empty|} suppressed the footline (default).
+  \item \declare{|footline=authorinstitute|} shows the author's name
+    and the institute in the footline.
+  \item \declare{|footline=authortitle|} shows the author's name
+    and the title in the footline.
+  \item \declare{|footline=institutetitle|} shows the institute
+    and the title in the footline.
+  \item \declare{|footline=authorinstitutetitle|} shows the author's
+    name, the institute, and the title in the footline.
+  \item \declare{|subsection=|\meta{true or false}} shows or supresses
+    line showing the subsection in the headline. It is shown by
+    default.
+  \end{itemize}  
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{smoothbars}
+  This theme behaves very much like the |miniframes| theme, at least
+  with respect to the headline. There, the only difference is the
+  smooth transitions are installed between the background colors of
+  the navigation bar, the (optional) bar for the subsection name, and
+  the background of the frame title. No footline is created. You can
+  get the footlines of the |miniframes| theme by first loading the
+  theme and then loading the |smoothbars| theme.
+
+  The following \meta{options} can be given:
+  \begin{itemize}
+  \item \declare{|subsection=|\meta{true or false}} shows or supresses
+    line showing the subsection in the headline. It is shown by
+    default.
+  \end{itemize}  
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{sidebar}
+  In this layout, a sidebar is shown that contains a small table of
+  contents with the current section or subsection is hilighted. The
+  frame title is vertically centered in a rectangular area at the top
+  that always occupies the same amount of space in all
+  frames. Finally, the logo is shown in the ``corner'' resulting from
+  the sidebar and the frame title rectangle.
+
+  There are several ways of modifying the layout using the
+  \meta{options}. If you set the width of the sidebar to 0pt, it is
+  not shown, giving you a layout in which the frame title does not
+  ``wobble'' since it always occupies the same amount of space on all
+  slides. Conversely, if you set the height of the frame title
+  rectangle to 0pt, the rectangular area is not used and the frame
+  title is inserted normally (occupying as much space as needed on
+  each slide).
+
+  The background color of the sidebar is taken from |sidebar|, the
+  background color of the frame title from |frametitle|, and the
+  background color of the logo corner from |logo|.
+
+  The colors of the entries in the table of contents are drawn from
+  the \beamer-color |section in sidebar| and |section in sidebar current| as well as the
+  corresponding \beamer-colors for subsections. If an entry does not
+  fit on a single line it is automatically ``linebroken.'' 
+
+  The following \meta{options} maybe given:
+  \begin{itemize}
+  \item
+    \declare{|height=|\meta{dimension}} specifies the height of the
+    frame title rectangle. If it is set to 0pt, no frame title
+    rectangle is created. Instead, the frame title is inserted
+    normally into the frame. The default is 2.5 base line heights of
+    the frame title font. Thus, there is about enough space for a
+    two-line frame title plus a one-line subtitle.
+  \item
+    \declare{|hideothersubsections|} causes all subsections except
+    those of the current section to be supressed in the table of
+    contents. This is useful if you have lot's of subsections.
+  \item
+    \declare{|hideallsubsections|} causes all subsections to be
+    supressed in the table of contents.
+  \item
+    \declare{|left|} puts the sidebar on the left side. Note that in a
+    left-to-right reading culture this is side people look first. Note
+    also that this table of contents is usually \emph{not} the most
+    important part of the frame, so you do not necessarily want people
+    to look at is first. Nevertheless, it is the default.
+  \item
+    \declare{|right|} puts the sidebar of the right side.
+  \item
+    \declare{|width=|\meta{dimension}} specifies the width of the
+    sidebar. If it is set to 0pt, it is completely supressed. The
+    default is 2.5 base line heights of the frame title font.
+  \end{itemize}
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{split}
+  This theme installs a headline in which, on the left, the sections
+  of the talk are shown and, on the right, the subsections of the
+  current section. If the class option |compress| has been given,
+  the sections and subsections will be put in one line; normally there
+  is one line per section or subsection.
+
+  The footline shows the author on the left and the talk's title on
+  the right.
+
+  The colors are taken from |palette primary| and |palette fourth|.
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{shadow}
+  This layout theme extends the |split| theme by putting a horizontal
+  shading behind the frame title and adding a little ``shadow'' at the
+  bottom of the headline.
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{tree}
+  In this layout, the headline contains three lines that show the
+  title of the current talk, the current section in this talk, and the
+  current subsection in the section. The colors are drawn from
+  |title in head/foot|, |section in head/foot|, and
+  |subsection in head/foot|.
+
+  In addition, separation lines of height 3pt are shown above and
+  below the three lines \emph{if} the background of |separation line|
+  is set. More fine-grained control of the colors of these lines can
+  be gained by setting |upper separation line head| and
+  |lower separation line head|.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|hooks|} causes little ``hooks'' to be drawn in front of
+    the section and subsection entries. These are supposed to increase
+    the tree-like appearance. 
+  \end{itemize}
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{smoothtree}
+  This layout is similar to the |tree| layout. The main difference is
+  that the background colors change smoothly.
+\end{layoutthemeexample}
+
+
+
+
+
+\subsection{Changing the Templates Used for Different Elements of a Presentation}
+
+This section explains how \beamer's template management works.
+
+
+
+\subsubsection{Overview of Beamer's Template Management}
+
+If you only wish to modify a single or few elements, you do not need
+to create a whole new theme. Instead, you can modify an appropriate
+template. 
+
+A template specifies how an element of a presentation is typeset. For 
+example, the |frametitle| template dictates where the frame title is
+put, which font is used, and so on.
+
+As the name suggests, you specify a template by writing the exact
+\LaTeX\ code you would also use when typesetting a single frame title
+by hand. Only, instead of the actual title, you use the command
+|\insertframetitle|.
+
+\example
+Suppose we would like to have the frame title typeset in
+red, centered, and boldface. If we were to typeset a single frame
+title by hand, it might be done like this:
+\begin{verbatim}
+\begin{frame}
+  \begin{centering}
+    \color{red}
+    \textbf{The Title of This Frame.}
+    \par
+  \end{centering}
+
+  Blah, blah.
+\end{frame}
+\end{verbatim}
+
+In order to typeset the frame title in this way on all slides, in the
+simplest case we can change the frame title template as follows:
+\begin{verbatim}
+\setbeamertemplate{frametitle}
+{
+  \begin{centering}
+    \color{red}
+    \textbf{\insertframetitle}
+    \par
+  \end{centering}
+}
+\end{verbatim}
+
+We can then use the following code to get the desired effect:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Title of This Frame.}
+
+  Blah, blah.
+\end{frame}
+\end{verbatim}
+When rendering the frame, \beamer\ will use the code of the
+frame title template to typeset the frame title and it will replace
+every occurrence of |\insertframetitle| by the current frame
+title.
+
+We can take this example a step further. It would be nicer if we did
+not have to ``hardwire'' the color of the frametitle, but if this
+color could be specified independently of the code for the
+template. This way, a color theme could change this color. Since this
+a problem that is common to most templates, \beamer\ will
+automatically setup the \beamer-color |frametitle| when the template
+|frametitle| is used. Thus, we can remove the |\color{red}| command if
+we set the \beamer-color |frametitle| to red at some point.
+\begin{verbatim}
+\setbeamercolor{frametitle}{fg=red}
+\setbeamertemplate{frametitle}
+{
+  \begin{centering}
+    \textbf{\insertframetitle}
+    \par
+  \end{centering}
+}
+\end{verbatim}
+Next, we can also make the font ``themable.'' Just like the color, the
+\beamer-font |frametitle| is installed before the |frametitle|
+template is typeset. Thus, we should rewrite the code as follows:
+\begin{verbatim}
+\setbeamercolor{frametitle}{fg=red}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamertemplate{frametitle}
+{
+  \begin{centering}
+    \insertframetitle\par
+  \end{centering}
+}
+\end{verbatim}
+Users, themes, or whoever can now easily change the color or font of
+the frametitle without having to mess with the code used to typeset
+it.
+
+
+
+
+In the following subsections all commands for changing templates are
+listed, like the above-mentioned command
+|\useframetitletemplate|. Inside these commands, you should use
+the |\insertxxxx| commands, which are listed following the template
+changing commands. Although the |\insertxxxx| commands are listed
+alongside the templates for which they make the most sense, you can
+(usually) also use them in all other templates.
+
+\articlenote
+In |article| mode, most of the template mechanism is switched off and
+has no effect. However, a few templates are also available. If this is
+the case, it is specially indicated.
+\smallskip
+
+Some of the below subsections start with commands for using
+\emph{predefined} templates. Calling one of them will change a template in
+a predefined way, making it unnecessary to worry about how exactly one
+creates, say, these cute little balls in different sizes. Using them,
+you can use, for example, your favorite theme together with a
+shading background and a numbered table of contents.
+
+Here are a few hints that might be helpful when you wish to redefine a
+template: 
+\begin{itemize}
+\item
+  Usually, you might wish to copy code from an existing template. The
+  code often takes care of some things that you may not yet have
+  thought about. The file |beamerbasetemplates| might be useful
+  starting point.
+\item
+  When copying code from another template and when inserting this code
+  in the preamble of your document (not in another style file), you may
+  have to ``switch on'' the at-character (|@|). To do so, add the
+  command |\makeatletter| before the |\usexxxtemplate| command and the
+  command |\makeatother| afterward.
+\item
+  Most templates having to do with the frame components (headlines,
+  sidebars, etc.)\ can only be changed in the preamble. Other
+  templates can be changed during the document.
+\item
+  The height of the headline and footline templates is calculated
+  automatically. This is done by typesetting the templates and then
+  ``having a look'' at their heights. This recalculation is done right
+  at the beginning of the document, \emph{after} all packages have
+  been loaded and even \emph{after} these have executed their
+  |\AtBeginDocument| initialization. 
+\item
+  The left and right margins of the head- and footline templates are
+  the same as of the normal text. In order to start the headline and
+  footline at the page margin, you must insert a negative
+  horizontal skip using |\hskip-\Gm@lmargin|. You may wish to add a
+  |\hskip-\Gm@rmargin| at the end to avoid having \TeX\ complain about
+  overfull boxes.
+\item
+  Getting the boxes right inside any template is often a bit of a
+  hassle. You may wish to consult the \TeX\ book for the glorious
+  details on ``Making Boxes.'' If your headline is simple, you might
+  also try putting everything into a |pgfpicture| environment, which
+  makes the placement easier.
+\end{itemize}
+
+\subsubsection{Using Beamer's Templates}
+
+\subsubsection{Setting Beamer's Templates}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

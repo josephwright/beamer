@@ -64,46 +64,42 @@ The different themes reside in the four subdirectories |theme|, |color|,
 file. However, to use a theme, the following special commands should
 be used:
 
-\begin{command}{\usetheme\oarg{options}\marg{name}}
+\begin{command}{\usetheme\oarg{options}\marg{name list}}
   Installs the presentation theme named \meta{name}. Currently, the
-  effect of this command is the same as saying |\usepackage| for the
-  style file named |beamertheme|\meta{name}|.sty|.
+  effect of this command is the same as saying |\usepackage| for the 
+  style file named |beamertheme|\meta{name}|.sty| for each \meta{name}
+  in the \meta{name list}.  
 \end{command}
 
 
-\begin{command}{\usecolortheme\oarg{options}\marg{name}}
-  Installs the color theme named \meta{name}. Currently, the effect of this
-  command is the same as saying |\usepackage| for the style file named
-  |beamercolortheme|\meta{name}|.sty|.
+\begin{command}{\usecolortheme\oarg{options}\marg{name list}}
+  Same as |\usetheme|, only for color themes. Color style files
+  are named |beamercolortheme|\meta{name}|.sty|.
 \end{command}
 
 \begin{command}{\usefonttheme\oarg{options}\marg{name}}
-  Installs the font theme named \meta{name}. Currently, the effect of this
-  command is the same as saying |\usepackage| for the style file named
-  |beamerfonttheme|\meta{name}|.sty|.
+  Same as |\usetheme|, only for font themes. Font style files
+  are named |beamerfonttheme|\meta{name}|.sty|.
 \end{command}
 
 \begin{command}{\useelementtheme\oarg{options}\marg{name}}
-  Installs the element theme named \meta{name}. Currently, the effect of this
-  command is the same as saying |\usepackage| for the style file named
-  |beamerelementtheme|\meta{name}|.sty|.
+  Same as |\usetheme|, only for element themes. Element style files
+  are named |beamerelementtheme|\meta{name}|.sty|.
 \end{command}
 
 \begin{command}{\uselayouttheme\oarg{options}\marg{name}}
-  Installs the layout theme named \meta{name}. Currently, the effect of this
-  command is the same as saying |\usepackage| for the style file named
-  |beamerlayouttheme|\meta{name}|.sty|.
+  Same as |\usetheme|, only for layout themes. Layout style files
+  are named |beamerlayouttheme|\meta{name}|.sty|.
 \end{command}
 
 If you do not use any of these commands, a sober \emph{default} theme
-is used for all of them. In the following, the presentation, element,
-and layout themes that come with the \beamer\ class are described. The
-color themes and font themes are discussed in the sections on colors
-and fonts, respectively.
+is used for all of them. In the following, the presentation themes
+that come with the \beamer\ class are described. The element, layout,
+color, and font themes  are presented in the following sections.
 
 
 
-\subsection{Presentation Themes}
+\subsection{Presentation Themes without Navigation Bars}
 
 A presentation theme dictates for every single detail
 of a presentation what it looks like. Normally, having chosen a
@@ -122,8 +118,6 @@ cities. These cities happen to be cities in which or near which there
 was a conference or workshop that I attended or that a
 co-author of mine attended. 
 
-
-\subsubsection{Presentation Themes without Navigation Bars}
 
 \begin{themeexample}{default}
   As the name suggests, this theme is installed by default. It is a
@@ -195,7 +189,7 @@ co-author of mine attended.
 
 
 
-\subsubsection{Presentation Themes with a Tree-Like Navigation Bar}
+\subsection{Presentation Themes with a Tree-Like Navigation Bar}
 
 \begin{themeexample}{Antibes}
   A dominant theme with a tree-like navigation at the top. The 
@@ -218,7 +212,7 @@ co-author of mine attended.
 
 
 
-\subsubsection{Presentation Themes with a Table of Contents Sidebar}
+\subsection{Presentation Themes with a Table of Contents Sidebar}
 
 \begin{themeexample}[\oarg{options}]{Berkeley}
   A dominant theme. If the navigation bar is on the left, it dominates
@@ -295,7 +289,7 @@ co-author of mine attended.
 
 
 
-\subsubsection{Presentation Themes with a Mini Frame Navigation}
+\subsection{Presentation Themes with a Mini Frame Navigation}
 
 \begin{themeexample}[\oarg{options}]{Berlin}
   A dominant theme with strong colors and dominating rectangular
@@ -346,7 +340,7 @@ co-author of mine attended.
 
 
 
-\subsubsection{Presentation Themes with Section and Subsection Tables}
+\subsection{Presentation Themes with Section and Subsection Tables}
 
 \begin{themeexample}{Copenhagen}
   A not-quite-too-dominant theme. This theme gives compressed
@@ -371,7 +365,7 @@ co-author of mine attended.
 \end{themeexample}
 
 
-\subsubsection{Presentation Themes Included For Compatibility}
+\subsection{Presentation Themes Included For Compatibility}
 
 Earlier versions of \beamer\ included some further themes. These
 themes are still available for compatibility, though they are now
@@ -397,285 +391,6 @@ the old themes. (When switching, you may want to use the font theme
   |tree| & Try |Montpellier| and, for the bars version, |Antibes| or
   |JuansLesPins|. 
 \end{tabular}
-\medskip
-
-
-
-
-
-
-\subsection{Element Themes}
-
-An element theme installs templates that dictate how the following
-``elements'' are typeset:
-\begin{itemize}
-\item Title and part pages.
-\item Itemize environments.
-\item Enumerate environments.
-\item Descrition environments.
-\item Block environments.
-\item Theorem and proof environments.
-\item Figures and tables.
-\item Footnotes.
-\item Bibliography entries.
-\end{itemize}
-
-
-In the following examples, the color themes |seahorse| and |rose| are
-used to show where and how background colors are
-honoured. Furthermore, background colors have been specified for all
-elements the honour them in the default theme. In the default color
-theme, all of the large rectangular areas are transparent.
-
-\begin{elementthemeexample}{default}
-  The default element theme is quite sober. The only extravagance is
-  the fact that a little trianlge is used in |itemize| environments
-  instead of the usual dot.
-
-  In some cases the theme will honour background color specifications
-  for elements. For example, if you set the background color for block
-  titles to green, block titles will have a green background. The
-  background specifications are currently honoured for the following
-  elements: 
-  \begin{itemize}
-  \item Title, author, institute, and date fields in the title
-    page.
-  \item Block environments, both for the title and for the body.
-  \end{itemize}
-  This list may increase in the future.
-\end{elementthemeexample}
-
-\begin{elementthemeexample}{circles}
-  In this theme, |itemize| and |enumerate| items start with a small
-  circle. Likewise, entries in the table of contents start with
-  circles. 
-\end{elementthemeexample}
-
-\begin{elementthemeexample}{rectangles}
-  In this theme, |itemize| and |enumerate| items and table of contents
-  entries  start with small rectangles. 
-\end{elementthemeexample}
-
-\begin{elementthemeexample}[\oarg{options}]{rounded}
-  In this theme, |itemize| and |enumerate| items and table of contents
-  entries start with small balls. If a background is specified for
-  blocks, then the corners of the background rectangles will be
-  rounded off. The following \meta{options} may be given:
-
-  \begin{itemize}
-  \item \declare{|shadow|} adds a shadow to all blocks.
-  \end{itemize}
-\end{elementthemeexample}
-
-
-
-
-\subsection{Layout Themes}
-
-A layout theme dictates (roughly) the overall layout of frames. It
-specifies where any navigational elements should go (like a mini table
-of contents or navigational mini frames) and what they should look
-like. Typically, a layout theme specifies how the following parts of a
-frame are rendered:
-\begin{itemize}
-\item The head- and footline.
-\item The sidebars.
-\item The logo.
-\item The frame title.  
-\end{itemize}
-
-A layout theme will not specify how things like |itemize| environments
-should be rendered---that is the job an element theme.
-
-In the following examples the color theme |seahorse| is
-used. Since the default color theme leaves most backgrounds empty,
-most of the layout themes will look too unstructured with the default
-color theme. 
-
-
-\begin{layoutthemeexample}{default}
-  The default layout theme is the most sober and minimalistic theme
-  around. It will flush left the frame title and it will not install
-  any head- or footlines. However, even this theme honours the
-  background color specified for the frame title. If a color is
-  specified, a bar occupying the whole page width is put behind the
-  frame title. A background color the frame subtitle is ignored.
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}{infolines}
-  This theme installs a headline showing the current section and the
-  current subsection. It installs a footline showing the author's
-  name, the institution, the presentation's title, the current date,
-  and a frame count. This theme uses only little space.
-
-  The colors used in the headline and footline are drawn from
-  |palette primary|, |palette secondary|, and |primary ternary| (see
-  Section~\ref{section-colors} for details on how to change these).
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}[\oarg{options}]{miniframes}
-  This theme installs a headline in which a horizontal navigational
-  bar is shown. This bar contains one entry for each section of the
-  presentation. Below each section entry, small circles are shown that
-  represent the different frames in the section. The frames are
-  arranged subsection-wise, that is, there is a line of frames for
-  each subsection. If the class  option |compress| is given, the
-  frames will instead be arranged in a single row for each
-  section. The navigation bars draws its color from
-  |section in head/foot|.
-
-  Below the navigation bar, a line is put showing the title of the
-  current subsection. The color is drawn from |subsection in head/foot|.
-
-  At the bottom, two lines are put that contain information such as
-  the author's name, the institution, or the paper's title. What is
-  shown exactly is influenced by the \meta{options} given. The colors
-  are drawn from the appropriate \beamer-colors like
-  |author in head/foot|.
-
-  At the top and bottom of both the head- and footline and between the
-  navigation bar and the subsection name, separation lines are drawn
-  \emph{if} the background color of |separation line| is set. This
-  separation line will have a height of 3pt. You can get even more
-  fine-grained control over the colors of the separation lines by
-  setting appropriate colors like |lower separation line head|.
-
-  The following \meta{options} can be given:
-  \begin{itemize}
-  \item \declare{|footline=empty|} suppressed the footline (default).
-  \item \declare{|footline=authorinstitute|} shows the author's name
-    and the institute in the footline.
-  \item \declare{|footline=authortitle|} shows the author's name
-    and the title in the footline.
-  \item \declare{|footline=institutetitle|} shows the institute
-    and the title in the footline.
-  \item \declare{|footline=authorinstitutetitle|} shows the author's
-    name, the institute, and the title in the footline.
-  \item \declare{|subsection=|\meta{true or false}} shows or supresses
-    line showing the subsection in the headline. It is shown by
-    default.
-  \end{itemize}  
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}[\oarg{options}]{smoothbars}
-  This theme behaves very much like the |miniframes| theme, at least
-  with respect to the headline. There, the only difference is the
-  smooth transitions are installed between the background colors of
-  the navigation bar, the (optional) bar for the subsection name, and
-  the background of the frame title. No footline is created. You can
-  get the footlines of the |miniframes| theme by first loading the
-  theme and then loading the |smoothbars| theme.
-
-  The following \meta{options} can be given:
-  \begin{itemize}
-  \item \declare{|subsection=|\meta{true or false}} shows or supresses
-    line showing the subsection in the headline. It is shown by
-    default.
-  \end{itemize}  
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}[\oarg{options}]{sidebar}
-  In this layout, a sidebar is shown that contains a small table of
-  contents with the current section or subsection is hilighted. The
-  frame title is vertically centered in a rectangular area at the top
-  that always occupies the same amount of space in all
-  frames. Finally, the logo is shown in the ``corner'' resulting from
-  the sidebar and the frame title rectangle.
-
-  There are several ways of modifying the layout using the
-  \meta{options}. If you set the width of the sidebar to 0pt, it is
-  not shown, giving you a layout in which the frame title does not
-  ``wobble'' since it always occupies the same amount of space on all
-  slides. Conversely, if you set the height of the frame title
-  rectangle to 0pt, the rectangular area is not used and the frame
-  title is inserted normally (occupying as much space as needed on
-  each slide).
-
-  The background color of the sidebar is taken from |sidebar|, the
-  background color of the frame title from |frametitle|, and the
-  background color of the logo corner from |logo|.
-
-  The colors of the entries in the table of contents are drawn from
-  the \beamer-color |section in sidebar| and |section in sidebar current| as well as the
-  corresponding \beamer-colors for subsections. If an entry does not
-  fit on a single line it is automatically ``linebroken.'' 
-
-  The following \meta{options} maybe given:
-  \begin{itemize}
-  \item
-    \declare{|height=|\meta{dimension}} specifies the height of the
-    frame title rectangle. If it is set to 0pt, no frame title
-    rectangle is created. Instead, the frame title is inserted
-    normally into the frame. The default is 2.5 base line heights of
-    the frame title font. Thus, there is about enough space for a
-    two-line frame title plus a one-line subtitle.
-  \item
-    \declare{|hideothersubsections|} causes all subsections except
-    those of the current section to be supressed in the table of
-    contents. This is useful if you have lot's of subsections.
-  \item
-    \declare{|hideallsubsections|} causes all subsections to be
-    supressed in the table of contents.
-  \item
-    \declare{|left|} puts the sidebar on the left side. Note that in a
-    left-to-right reading culture this is side people look first. Note
-    also that this table of contents is usually \emph{not} the most
-    important part of the frame, so you do not necessarily want people
-    to look at is first. Nevertheless, it is the default.
-  \item
-    \declare{|right|} puts the sidebar of the right side.
-  \item
-    \declare{|width=|\meta{dimension}} specifies the width of the
-    sidebar. If it is set to 0pt, it is completely supressed. The
-    default is 2.5 base line heights of the frame title font.
-  \end{itemize}
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}{split}
-  This theme installs a headline in which, on the left, the sections
-  of the talk are shown and, on the right, the subsections of the
-  current section. If the class option |compress| has been given,
-  the sections and subsections will be put in one line; normally there
-  is one line per section or subsection.
-
-  The footline shows the author on the left and the talk's title on
-  the right.
-
-  The colors are taken from |palette primary| and |palette fourth|.
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}{shadow}
-  This layout theme extends the |split| theme by putting a horizontal
-  shading behind the frame title and adding a little ``shadow'' at the
-  bottom of the headline.
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}[\oarg{options}]{tree}
-  In this layout, the headline contains three lines that show the
-  title of the current talk, the current section in this talk, and the
-  current subsection in the section. The colors are drawn from
-  |title in head/foot|, |section in head/foot|, and
-  |subsection in head/foot|.
-
-  In addition, separation lines of height 3pt are shown above and
-  below the three lines \emph{if} the background of |separation line|
-  is set. More fine-grained control of the colors of these lines can
-  be gained by setting |upper separation line head| and
-  |lower separation line head|.
-
-  The following \meta{options} may be given:
-  \begin{itemize}
-  \item
-    \declare{|hooks|} causes little ``hooks'' to be drawn in front of
-    the section and subsection entries. These are supposed to increase
-    the tree-like appearance. 
-  \end{itemize}
-\end{layoutthemeexample}
-
-\begin{layoutthemeexample}{smoothtree}
-  This layout is similar to the |tree| layout. The main difference is
-  that the background colors change smoothly.
-\end{layoutthemeexample}
 
 
 %%% Local Variables: 
