@@ -1,0 +1,285 @@
+\ProvidesPackage{beamerboxes}[2003/11/15 ver 0.10]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\RequirePackage{keyval}
+
+
+\def\beamerboxesdeclarecolorscheme#1#2#3{% scheme name, upper color, lower color
+  \pgfdeclareverticalshading{bmb@cs#1}{\paperwidth}{%
+    color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+  \begin{colormixin}{20!averagebackgroundcolor}
+    \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
+      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1!20!averagebackgroundcolor}{bmb@shaded}
+  \begin{colormixin}{15!averagebackgroundcolor}
+    \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
+      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1!15!averagebackgroundcolor}{bmb@shaded}
+  \begin{colormixin}{10!averagebackgroundcolor}
+    \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
+      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1!10!averagebackgroundcolor}{bmb@shaded}
+  \begin{colormixin}{5!averagebackgroundcolor}
+    \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
+      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1!5!averagebackgroundcolor}{bmb@shaded}
+  \begin{colormixin}{2!averagebackgroundcolor}
+    \pgfdeclareverticalshading{bmb@shaded}{\paperwidth}{%
+      color(0pt)=(#3); color(2pt)=(#3); color(4pt)=(#2)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@cs#1!2!averagebackgroundcolor}{bmb@shaded}
+  \colorlet{bmb@up#1}{#2}%
+  \colorlet{bmb@down#1}{#3}%
+}
+
+\define@key{beamerboxes}{scheme}{\edef\bmb@scheme{#1}}
+\define@key{beamerboxes}{width}{\edef\bmb@width{#1}}
+\define@key{beamerboxes}{shadow}[true]{\csname bmb@shadow#1\endcsname}
+
+\newif\ifbmb@shadow
+\newbox\bmb@box
+\newdimen\bmb@temp
+\newdimen\bmb@dima
+\newdimen\bmb@dimb
+\newdimen\bmb@prevheight
+
+\def\beamerboxesrounded{\@ifnextchar[{\@beamerboxesrounded}{\@beamerboxesrounded[]}}
+\def\@beamerboxesrounded[#1]#2{%
+  \setkeys{beamerboxes}{scheme=default,width=\textwidth,shadow=false}%
+  \setkeys{beamerboxes}{#1}%
+  \@ifundefined{@pgfshadingbmb@cs\bmb@scheme}{\PackageError{beamerboxes}{Undefined scheme "\bmb@scheme"}{}}{}%
+  %
+  % Typeset head
+  %
+  \vbox\bgroup%
+  \vskip4bp
+  \setbox\bmb@box=\hbox{\begin{minipage}[b]{\bmb@width}#2\end{minipage}}%
+  \ifdim\wd\bmb@box=0pt%
+    \setbox\bmb@box=\hbox{}%
+    \ht\bmb@box=1.5pt%
+    \bmb@prevheight=-4.5pt%
+  \else%    
+    \bmb@temp=\dp\bmb@box%
+    \ifdim\bmb@temp<1.5pt%
+      \bmb@temp=1.5pt%
+    \fi%
+    \setbox\bmb@box=\hbox{\raise\bmb@temp\hbox{\box\bmb@box}}%
+    \dp\bmb@box=0pt%
+    \bmb@prevheight=\ht\bmb@box%
+  \fi%
+  \bmb@temp=\bmb@width%
+  \bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
+  \bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
+  \hbox{%
+    \begin{pgfpicture}{0bp}{-\ht\bmb@box}{0bp}{-\ht\bmb@box}
+      \ifdim\wd\bmb@box=0pt%
+        \color{bmb@down\bmb@scheme}%
+      \else%        
+        \color{bmb@up\bmb@scheme}%
+      \fi%
+      \pgfqmoveto{-4}{-1}
+      \pgfqcurveto{-4}{1.2}{-2.2}{3}{0}{3}
+      \pgflineto{\pgfpoint{\bmb@temp}{3bp}}
+      \pgfcurveto%
+      {\pgfpoint{\bmb@dima}{3bp}}%
+      {\pgfpoint{\bmb@dimb}{1.2bp}}%
+      {\pgfpoint{\bmb@dimb}{-1bp}}%
+      \bmb@dima=-\ht\bmb@box%
+      \advance\bmb@dima by-2pt%
+      \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+      \pgflineto{\pgfpoint{-4bp}{\bmb@dima}}
+      \pgffill
+    \end{pgfpicture}%
+    \copy\bmb@box%
+  }%
+  \nointerlineskip%
+  \vskip-1pt%
+  \ifdim\wd\bmb@box=0pt%
+  \else%
+  \hbox{%
+    \begin{pgfpicture}{0pt}{0pt}{\bmb@width}{6pt}
+      \bmb@dima=\bmb@width%
+      \advance\bmb@dima by8bp%
+      \pgfrect[clip]{\pgfpoint{-4bp}{-1bp}}{\pgfpoint{\bmb@dima}{8bp}}
+      \pgfputat{\pgfpoint{-4bp}{0bp}}{\pgfbox[left,base]{\pgfuseshading{bmb@cs\bmb@scheme}}}%
+    \end{pgfpicture}%
+  }%
+  \nointerlineskip%
+  \fi%
+  \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
+  }
+
+\def\endbeamerboxesrounded{%
+  \end{minipage}\egroup%
+  \bmb@temp=\dp\bmb@box%
+  \advance\bmb@temp by.5pt%
+  \setbox\bmb@box=\hbox{\raise\bmb@temp\hbox{\box\bmb@box}}%
+  \dp\bmb@box=0pt%
+  \bmb@temp=\wd\bmb@box%
+  \bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
+  \bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
+  \hbox{%
+    \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
+      \ifbmb@shadow%
+      \pgfputat{\pgfpoint{4bp}{-3bp}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowball}}}
+      \begin{pgfscope}
+        {%
+        \advance\bmb@temp by-1bp%
+        \pgfrect[clip]{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
+        }%
+        \pgfputat{\pgfpoint{\bmb@temp}{1bp}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowballlarge}}}
+      \end{pgfscope}
+      \begin{pgfscope}
+        \advance\bmb@temp by-4bp%
+        \pgfrect[clip]{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
+        \pgfputat{\pgfpoint{4bp}{-7bp}}{\pgfbox[left,base]{\pgfuseshading{bmb@shadow}}}%
+      \end{pgfscope}
+      \begin{pgfscope}
+        \advance\bmb@temp by 4bp%
+        \bmb@dima=\ht\bmb@box%
+        \advance\bmb@dima by\bmb@prevheight%
+        \advance\bmb@dima by 4bp%
+        \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
+        \advance\bmb@dima by-4bp%
+        \pgfputat{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowball}}}
+        \advance\bmb@dima by-1bp%
+        \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
+        \advance\bmb@temp by4bp%
+        \pgfputat{\pgfpoint{\bmb@temp}{-3bp}}%
+        {\begin{pgfrotateby}{\pgfdegree{90}}\pgfbox[left,base]{\pgfuseshading{bmb@shadow}}\end{pgfrotateby}}%
+      \end{pgfscope}
+      \fi%
+      \color{bmb@down\bmb@scheme}%
+      \pgfqmoveto{-4}{1}
+      \pgfqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
+      \pgflineto{\pgfpoint{\the\bmb@temp}{-3bp}}
+      \pgfcurveto%
+      {\pgfpoint{\the\bmb@dima}{-3bp}}%
+      {\pgfpoint{\the\bmb@dimb}{-1.2bp}}%
+      {\pgfpoint{\the\bmb@dimb}{1bp}}%
+      \bmb@dima=\ht\bmb@box%
+      \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+      \pgflineto{\pgfpoint{-4bp}{\bmb@dima}}
+      \pgffill
+    \end{pgfpicture}%
+    \box\bmb@box%
+  }%
+  \ifbmb@shadow%
+    \vskip4bp minus 2bp%
+  \else%
+    \vskip2bp%
+  \fi%
+  \egroup% of \vbox\bgroup
+}
+
+
+  
+\newcommand{\beamerboxessetupshadows}{
+  \pgfdeclareradialshading{bmb@shadowball}{\pgforigin}{%
+    color(0bp)=(black!50!averagebackgroundcolor);
+    color(4bp)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{bmb@shadowballlarge}{\pgforigin}{%
+    color(0bp)=(black!50!averagebackgroundcolor);
+    color(4bp)=(black!50!averagebackgroundcolor);
+    color(8bp)=(averagebackgroundcolor)}
+  \pgfdeclareverticalshading{bmb@shadow}{\paperwidth}{%
+    color(0bp)=(averagebackgroundcolor);
+    color(4bp)=(black!50!averagebackgroundcolor);
+    color(8bp)=(black!50!averagebackgroundcolor)}
+
+  \begin{colormixin}{20!averagebackgroundcolor}
+    \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
+      color(0pt)=(black!50!averagebackgroundcolor);
+      color(4bp)=(averagebackgroundcolor)}
+    \pgfdeclareradialshading{bmb@shadowballlargeshaded}{\pgforigin}{%
+      color(0bp)=(black!50!averagebackgroundcolor);
+      color(4bp)=(black!50!averagebackgroundcolor);
+      color(8bp)=(averagebackgroundcolor)}
+    \pgfdeclareverticalshading{bmb@shadowshaded}{\paperwidth}{%
+      color(0pt)=(averagebackgroundcolor);
+      color(4pt)=(black!50!averagebackgroundcolor);
+      color(8pt)=(black!50!averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@shadow!20!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball!20!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge!20!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+
+  \begin{colormixin}{15!averagebackgroundcolor}
+    \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
+      color(0pt)=(black!50!averagebackgroundcolor);
+      color(4bp)=(averagebackgroundcolor)}
+    \pgfdeclareradialshading{bmb@shadowballlargeshaded}{\pgforigin}{%
+      color(0bp)=(black!50!averagebackgroundcolor);
+      color(4bp)=(black!50!averagebackgroundcolor);
+      color(8bp)=(averagebackgroundcolor)}
+    \pgfdeclareverticalshading{bmb@shadowshaded}{\paperwidth}{%
+      color(0pt)=(averagebackgroundcolor);
+      color(4pt)=(black!50!averagebackgroundcolor);
+      color(8pt)=(black!50!averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@shadow!15!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball!15!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge!15!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+
+  \begin{colormixin}{10!averagebackgroundcolor}
+    \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
+      color(0pt)=(black!50!averagebackgroundcolor);
+      color(4bp)=(averagebackgroundcolor)}
+    \pgfdeclareradialshading{bmb@shadowballlargeshaded}{\pgforigin}{%
+      color(0bp)=(black!50!averagebackgroundcolor);
+      color(4bp)=(black!50!averagebackgroundcolor);
+      color(8bp)=(averagebackgroundcolor)}
+    \pgfdeclareverticalshading{bmb@shadowshaded}{\paperwidth}{%
+      color(0pt)=(averagebackgroundcolor);
+      color(4pt)=(black!50!averagebackgroundcolor);
+      color(8pt)=(black!50!averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@shadow!10!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball!10!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge!10!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+
+  \begin{colormixin}{5!averagebackgroundcolor}
+    \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
+      color(0pt)=(black!50!averagebackgroundcolor);
+      color(4bp)=(averagebackgroundcolor)}
+    \pgfdeclareradialshading{bmb@shadowballlargeshaded}{\pgforigin}{%
+      color(0bp)=(black!50!averagebackgroundcolor);
+      color(4bp)=(black!50!averagebackgroundcolor);
+      color(8bp)=(averagebackgroundcolor)}
+    \pgfdeclareverticalshading{bmb@shadowshaded}{\paperwidth}{%
+      color(0pt)=(averagebackgroundcolor);
+      color(4pt)=(black!50!averagebackgroundcolor);
+      color(8pt)=(black!50!averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@shadow!5!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball!5!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge!5!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+
+  \begin{colormixin}{2!averagebackgroundcolor}
+    \pgfdeclareradialshading{bmb@shadowballshaded}{\pgforigin}{%
+      color(0pt)=(black!50!averagebackgroundcolor);
+      color(4bp)=(averagebackgroundcolor)}
+    \pgfdeclareradialshading{bmb@shadowballlargeshaded}{\pgforigin}{%
+      color(0bp)=(black!50!averagebackgroundcolor);
+      color(4bp)=(black!50!averagebackgroundcolor);
+      color(8bp)=(averagebackgroundcolor)}
+    \pgfdeclareverticalshading{bmb@shadowshaded}{\paperwidth}{%
+      color(0pt)=(averagebackgroundcolor);
+      color(4pt)=(black!50!averagebackgroundcolor);
+      color(8pt)=(black!50!averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{bmb@shadow!2!averagebackgroundcolor}{bmb@shadowshaded}
+  \pgfaliasshading{bmb@shadowball!2!averagebackgroundcolor}{bmb@shadowballshaded}
+  \pgfaliasshading{bmb@shadowballlarge!2!averagebackgroundcolor}{bmb@shadowballlargeshaded}
+
+}

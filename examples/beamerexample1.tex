@@ -1,4 +1,4 @@
-\documentclass[red]{beamer}
+\documentclass{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
@@ -14,6 +14,7 @@
 
 \beamertemplateshadingbackground{red!10}{structure!10}
 
+\usepackage{beamerboxes}
 \usepackage{beamerthemeshadow}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
@@ -157,7 +158,6 @@
 \pgfdeclareimage[mask=ur,width=1cm]{ur-logo}{ur-logo}
 
 \logo{\vbox{\hbox to 1cm{\hfil\pgfuseimage{tu-logo}}\vskip0.1cm\hbox{\pgfuseimage{ur-logo}}}}
-
 
 \begin{document}
 
@@ -541,9 +541,7 @@
   \end{Definition}
 
   \begin{Example}<1>
-    $G_1\colon S \to 00S0 \mid 1$.
-    
-    $G_2\colon S \to 0S10 \mid 0$.
+    $G_1\colon S \to 00S0 \mid 1$ and $G_2\colon S \to 0S10 \mid 0$.
   \end{Example}
 
   \begin{Definition}<2->
@@ -552,10 +550,10 @@
   \end{Definition}
 
   \begin{Example}<2->
-    $G_1$ is deterministic.
+    $G_1\colon S \to 00S0 \mid 1$ is deterministic.
     
-    $G_2$ is \alert{not} deterministic.
-  \end{Example}  
+    $G_2\colon S \to 0S10 \mid 0$ is \alert{not} deterministic.
+  \end{Example} 
 }
 \note{Just explain intuition using the example.}
 

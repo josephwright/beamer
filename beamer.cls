@@ -1049,7 +1049,7 @@
   \newenvironment{#1}{}{}%
   \expandafter\new@command\csname @in#1\endcsname[1]{#2}%
   \expandafter\new@command\csname @out#1\endcsname[1]{#4}%
-  \expandafter\def\csname #1\endcsname##1{%
+  \expandafter\long\expandafter\def\csname #1\endcsname##1{%
     \@ifnextchar<{\@parsebegin{#1}{\csname @in#1\endcsname{##1}}{#3}{\csname @out#1\endcsname{##1}}{#5}}{%
       \expandafter\def\csname end#1\endcsname{#3}#2}}%
 }
@@ -1358,9 +1358,11 @@
   \@decode}
                                 
 
-\long\def\gobble{\@gobble}
-\long\def\gobbleoptional{\@ifnextchar[{\@gobbleoptional}{\@gobbleoptional[]}}
-\long\def\@gobbleoptional[#1]#2{}
+\long\def\@gobbleoptional{\@ifnextchar[{\@@gobbleoptional}{\@@gobbleoptional[]}}
+\long\def\@@gobbleoptional[#1]#2{}
+
+\long\def\@ignoreoptional{\@ifnextchar[{\@@ignoreoptional}{}}
+\long\def\@@ignoreoptional[#1]{}
 
 \long\def\@insp#1{\ignorespaces#1\ignorespaces}
 \long\def\@gobbleis#1{\ignorespaces}
@@ -1374,7 +1376,7 @@
 %
 
 \newoverlaycommand{\pgfonly}{\@insp}{\@gobbleis}
-\newoverlaycommand{\only}{}{\gobble}
+\newoverlaycommand{\only}{}{\@gobble}
 \newoverlaycommand{\uncover}{\fakeinvisible}{\makeinvisible}
 \newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\fakeinvisible}
 \renewoverlaycommand{\textbf}{\original{\textbf}}{}
@@ -1382,15 +1384,15 @@
 \renewoverlaycommand{\textsl}{\original{\textsl}}{}
 \renewoverlaycommand{\textsf}{\original{\textsf}}{}
 \renewoverlaycommand{\textrm}{\original{\textrm}}{}
-\renewoverlaycommand{\color}{\original{\color}}{\gobbleoptional}
+\renewoverlaycommand{\color}{\original{\color}}{\@gobbleoptional}
 \newoverlayenvironment{uncoverenv}{}{}{\beamer@startcovered}{\beamer@endcovered}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
-\renewoverlaycommand{\hypertarget}{\original{\hypertarget}}{\gobble}
+\renewoverlaycommand{\hypertarget}{\original{\hypertarget}}{\@gobble}
 
 \newoverlaycommand{\emph}{\@emph}{}
 \def\@emph#1{{\itshape#1}}
 
-\newoverlaycommand{\nameslide}{\@nameslide}{\gobble}
+\newoverlaycommand{\nameslide}{\@nameslide}{\@gobble}
 
 
 
@@ -2371,22 +2373,35 @@
 % Transitions - DISTRACTING and to be used with CARE!!!! 
 %
 
-\newoverlaycommand{\transblindshorizontal}{\hypersetup{pdfpagetransition={Blinds /Dm /H}}}{}
-\newoverlaycommand{\transblindsvertical}{\hypersetup{pdfpagetransition={Blinds /Dm /V}}}{}
-\newoverlaycommand{\transboxin}{\hypersetup{pdfpagetransition={Box /M /I}}}{}
-\newoverlaycommand{\transboxout}{\hypersetup{pdfpagetransition={Box /M /O}}}{}
-\newoverlaycommand{\transdissolve}{\hypersetup{pdfpagetransition={Dissolve}}}{}
-\newoverlaycommand{\transglitter}{\@transglitter}{\gobble}
-\newoverlaycommand{\transsplitverticalin}{\hypersetup{pdfpagetransition={Split /Dm /V /M /I}}}{}
-\newoverlaycommand{\transsplitverticalout}{\hypersetup{pdfpagetransition={Split /Dm /V /M /O}}}{}
-\newoverlaycommand{\transsplithorizontalin}{\hypersetup{pdfpagetransition={Split /Dm /H /M /I}}}{}
-\newoverlaycommand{\transsplithorizontalout}{\hypersetup{pdfpagetransition={Split /Dm /H /M /O}}}{}
-\newoverlaycommand{\transwipe}{\@transwipe}{\gobble}
+\define@key{beamertrans}{direction}{\def\beamer@transdir{ /Di #1 }}
+\define@key{beamertrans}{duration}{\def\beamer@dur{ /D #1 }}
 
-\def\@transglitter#1{\hypersetup{pdfpagetransition={Glitter /Di #1}}}
-\def\@transwipe#1{\hypersetup{pdfpagetransition={Wipe /Di #1}}}
+\def\beamer@dotrans#1{\@ifnextchar[{\beamer@@dotrans{#1}}{\beamer@@dotrans{#1}[]}}
+\def\beamer@@dotrans#1[#2]{%
+  \def\beamer@transdir{}%
+  \def\beamer@dur{}%
+  \setkeys{beamertrans}{#2}%
+  \edef\beamer@temp{{pdfpagetransition={#1 \beamer@transdir\space\beamer@dur}}}
+  \expandafter\hypersetup\beamer@temp}
 
-\newoverlaycommand{\transduration}{\@transdur}{\gobble}
+\newoverlaycommand{\transblindshorizontal}{\beamer@dotrans{Blinds /Dm /H}}{\@ignoreoptional}
+\newoverlaycommand{\transblindsvertical}{\beamer@dotrans{Blinds /Dm /V}}{\@ignoreoptional}
+\newoverlaycommand{\transboxin}{\beamer@dotrans{Box /M /I}}{\@ignoreoptional}
+\newoverlaycommand{\transboxout}{\beamer@dotrans{Box /M /O}}{\@ignoreoptional}
+\newoverlaycommand{\transcover}{\beamer@dotrans{Cover}}{\@ignoreoptional}
+\newoverlaycommand{\transdissolve}{\beamer@dotrans{Dissolve}}{\@ignoreoptional}
+\newoverlaycommand{\transfade}{\beamer@dotrans{Fade}}{\@ignoreoptional}
+\newoverlaycommand{\transglitter}{\beamer@dotrans{Glitter}}{\@ignoreoptional}
+\newoverlaycommand{\transpush}{\beamer@dotrans{Push}}{\@ignoreoptional}
+\newoverlaycommand{\transsplitverticalin}{\beamer@dotrans{Split /Dm /V /M /I}}{\@ignoreoptional}
+\newoverlaycommand{\transsplitverticalout}{\beamer@dotrans{Split /Dm /V /M /O}}{\@ignoreoptional}
+\newoverlaycommand{\transsplithorizontalin}{\beamer@dotrans{Split /Dm /H /M /I}}{\@ignoreoptional}
+\newoverlaycommand{\transsplithorizontalout}{\beamer@dotrans{Split /Dm /H /M /O}}{\@ignoreoptional}
+\newoverlaycommand{\transuncover}{\beamer@dotrans{Uncover}}{\@ignoreoptional}
+\newoverlaycommand{\transwipe}{\beamer@dotrans{Wipe}}{\@ignoreoptional}
+
+
+\newoverlaycommand{\transduration}{\@transdur}{\@gobble}
 \def\@transdur#1{\hypersetup{pdfpageduration=#1}}
 
 

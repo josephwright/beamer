@@ -2,6 +2,9 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 \RequirePackage{pgfshade}
+\RequirePackage{beamerboxes}
+
+
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -482,369 +485,31 @@
 
 
 \newcommand{\beamertemplatesetupshadings}{
-\colorlet{beamerdarkgreen}{green!50!black}
-
-\pgfdeclareverticalshading{roundblock}{13cm}{%
-  color(0pt)=(structure!10!averagebackgroundcolor);
-  color(2pt)=(structure!10!averagebackgroundcolor);
-  color(4pt)=(structure!75!averagebackgroundcolor);
-  color(6pt)=(structure!75!averagebackgroundcolor)}
-\pgfdeclareverticalshading{roundalertblock}{13cm}{%
-  color(0pt)=(alert!10!averagebackgroundcolor);
-  color(2pt)=(alert!10!averagebackgroundcolor);
-  color(4pt)=(alert!75!averagebackgroundcolor);
-  color(6pt)=(alert!75!averagebackgroundcolor)}
-\pgfdeclareverticalshading{roundexampleblock}{13cm}{%
-  color(0pt)=(beamerdarkgreen!10!averagebackgroundcolor);
-  color(2pt)=(beamerdarkgreen!10!averagebackgroundcolor);
-  color(4pt)=(beamerdarkgreen!75!averagebackgroundcolor);
-  color(6pt)=(beamerdarkgreen!75!averagebackgroundcolor)}
-
-\pgfdeclareradialshading{shadowballblock}{\pgforigin}{%
-  color(0pt)=(black!60!averagebackgroundcolor);
-  color(4bp)=(averagebackgroundcolor)}
-\pgfdeclareverticalshading{shadowblock}{13cm}{%
-  color(0pt)=(averagebackgroundcolor);
-  color(4pt)=(black!60!averagebackgroundcolor);
-  color(8pt)=(black!60!averagebackgroundcolor)}
-
-\begin{colormixin}{16!averagebackgroundcolor}
-  \pgfdeclareverticalshading{roundblockshadeda}{13cm}{%
-    color(0pt)=(structure!10!averagebackgroundcolor);
-    color(2pt)=(structure!10!averagebackgroundcolor);
-    color(4pt)=(structure!75!averagebackgroundcolor);
-    color(6pt)=(structure!75!averagebackgroundcolor)}
-  \pgfdeclareverticalshading{roundalertblockshadeda}{13cm}{%
-    color(0pt)=(alert!10!averagebackgroundcolor);
-    color(2pt)=(alert!10!averagebackgroundcolor);
-    color(4pt)=(alert!75!averagebackgroundcolor);
-    color(6pt)=(alert!75!averagebackgroundcolor)}
-  \pgfdeclareverticalshading{roundexampleblockshadeda}{13cm}{%
-    color(0pt)=(beamerdarkgreen!10!averagebackgroundcolor);
-    color(2pt)=(beamerdarkgreen!10!averagebackgroundcolor);
-    color(4pt)=(beamerdarkgreen!75!averagebackgroundcolor);
-    color(6pt)=(beamerdarkgreen!75!averagebackgroundcolor)}
-  \pgfdeclareradialshading{shadowballblockshadeda}{\pgforigin}{%
-    color(0pt)=(black!60!averagebackgroundcolor);
-    color(4bp)=(averagebackgroundcolor)}
-  \pgfdeclareverticalshading{shadowblockshadeda}{13cm}{%
-    color(0pt)=(averagebackgroundcolor);
-    color(4pt)=(black!60!averagebackgroundcolor);
-    color(8pt)=(black!60!averagebackgroundcolor)}
-\end{colormixin}
-
-\begin{colormixin}{9!averagebackgroundcolor}
-  \pgfdeclareverticalshading{roundblockshadedb}{13cm}{%
-    color(0pt)=(structure!10!averagebackgroundcolor);
-    color(2pt)=(structure!10!averagebackgroundcolor);
-    color(4pt)=(structure!75!averagebackgroundcolor);
-    color(6pt)=(structure!75!averagebackgroundcolor)}
-  \pgfdeclareverticalshading{roundalertblockshadedb}{13cm}{%
-    color(0pt)=(alert!10!averagebackgroundcolor);
-    color(2pt)=(alert!10!averagebackgroundcolor);
-    color(4pt)=(alert!75!averagebackgroundcolor);
-    color(6pt)=(alert!75!averagebackgroundcolor)}
-  \pgfdeclareverticalshading{roundexampleblockshadedb}{13cm}{%
-    color(0pt)=(beamerdarkgreen!10!averagebackgroundcolor);
-    color(2pt)=(beamerdarkgreen!10!averagebackgroundcolor);
-    color(4pt)=(beamerdarkgreen!75!averagebackgroundcolor);
-    color(6pt)=(beamerdarkgreen!75!averagebackgroundcolor)}
-  \pgfdeclareradialshading{shadowballblockshadedb}{\pgforigin}{%
-    color(0pt)=(black!60!averagebackgroundcolor);
-    color(4bp)=(averagebackgroundcolor)}
-  \pgfdeclareverticalshading{shadowblockshadedb}{13cm}{%
-    color(0pt)=(averagebackgroundcolor);
-    color(4pt)=(black!60!averagebackgroundcolor);
-    color(8pt)=(black!60!averagebackgroundcolor)}
-\end{colormixin}
-
-\pgfaliasshading{roundblock!20!averagebackgroundcolor}{roundblockshadeda}
-\pgfaliasshading{roundblock!15!averagebackgroundcolor}{roundblockshadeda}
-\pgfaliasshading{roundblock!10!averagebackgroundcolor}{roundblockshadedb}
-\pgfaliasshading{roundblock!5!averagebackgroundcolor}{roundblockshadedb}
-\pgfaliasshading{roundblock!2!averagebackgroundcolor}{roundblockshadedb}  
-
-\pgfaliasshading{roundalertblock!20!averagebackgroundcolor}{roundalertblockshadeda}
-\pgfaliasshading{roundalertblock!15!averagebackgroundcolor}{roundalertblockshadeda}
-\pgfaliasshading{roundalertblock!10!averagebackgroundcolor}{roundalertblockshadedb}
-\pgfaliasshading{roundalertblock!5!averagebackgroundcolor}{roundalertblockshadedb}
-\pgfaliasshading{roundalertblock!2!averagebackgroundcolor}{roundalertblockshadedb}  
-
-\pgfaliasshading{roundexampleblock!20!averagebackgroundcolor}{roundexampleblockshadeda}
-\pgfaliasshading{roundexampleblock!15!averagebackgroundcolor}{roundexampleblockshadeda}
-\pgfaliasshading{roundexampleblock!10!averagebackgroundcolor}{roundexampleblockshadedb}
-\pgfaliasshading{roundexampleblock!5!averagebackgroundcolor}{roundexampleblockshadedb}
-\pgfaliasshading{roundexampleblock!2!averagebackgroundcolor}{roundexampleblockshadedb}  
-
-\pgfaliasshading{shadowblock!20!averagebackgroundcolor}{shadowblockshadeda}
-\pgfaliasshading{shadowblock!15!averagebackgroundcolor}{shadowblockshadeda}
-\pgfaliasshading{shadowblock!10!averagebackgroundcolor}{shadowblockshadedb}
-\pgfaliasshading{shadowblock!5!averagebackgroundcolor}{shadowblockshadedb}
-\pgfaliasshading{shadowblock!2!averagebackgroundcolor}{shadowblockshadedb}  
-
-\pgfaliasshading{shadowballblock!20!averagebackgroundcolor}{shadowballblockshadeda}
-\pgfaliasshading{shadowballblock!15!averagebackgroundcolor}{shadowballblockshadeda}
-\pgfaliasshading{shadowballblock!10!averagebackgroundcolor}{shadowballblockshadedb}
-\pgfaliasshading{shadowballblock!5!averagebackgroundcolor}{shadowballblockshadedb}
-\pgfaliasshading{shadowballblock!2!averagebackgroundcolor}{shadowballblockshadedb}  
+  \beamerboxessetupshadows
+  \colorlet{darkgreen}{green!50!black}
+  \beamerboxesdeclarecolorscheme{block}{structure!75!averagebackgroundcolor}{structure!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{alert}{alert!75!averagebackgroundcolor}{alert!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{example}{darkgreen!75!averagebackgroundcolor}{darkgreen!10!averagebackgroundcolor}
 }
 
 \newcommand{\beamertemplateroundedblocks}{
   \beamertemplatesetupshadings
-  
-  \def\beamertemplateroundblockhead##1{% background color
-    \beamer@tempdim=\dp\beamer@tempbox%
-    \ifdim\beamer@tempdim<1.5pt%
-    \beamer@tempdim=1.5pt\fi
-    \setbox\beamer@tempbox=\hbox{\raise\beamer@tempdim\hbox{\box\beamer@tempbox}}%
-    \dp\beamer@tempbox=0pt%
-    \beamer@tempdim=\wd\beamer@tempbox%
-    \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp%
-    \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp%
-    \hbox{\begin{pgfpicture}{0bp}{-\ht\beamer@tempbox}{0bp}{-\ht\beamer@tempbox}
-      \color{##1}
-      \pgfqmoveto{-4}{-1}
-      \pgfqcurveto{-4}{1.2}{-2.2}{3}{0}{3}
-      \pgflineto{\pgfpoint{\the\beamer@tempdim}{3bp}}
-      \pgfcurveto%
-      {\pgfpoint{\the\beamer@dima}{3bp}}%
-      {\pgfpoint{\the\beamer@dimb}{1.2bp}}%
-      {\pgfpoint{\the\beamer@dimb}{-1bp}}%
-      \beamer@dima=-\ht\beamer@tempbox%
-      \advance\beamer@dima by-1pt%
-      \pgflineto{\pgfpoint{\the\beamer@dimb}{\the\beamer@dima}}
-      \pgflineto{\pgfpoint{-4bp}{\the\beamer@dima}}
-      \pgffill
-    \end{pgfpicture}%
-    \box\beamer@tempbox}%
-    \nointerlineskip}
 
-  \def\beamertemplateroundmidshade##1{% shading
-    \hbox{\kern-4bp%
-      \beamer@dima=\textwidth%
-      \advance\beamer@dima by8bp%
-      \begin{pgfpicture}{0pt}{0pt}{\textwidth}{6pt}
-        \pgfqmoveto{-4}{-1}
-        \pgfqlineto{-4}{7}
-        \pgflineto{\pgfpoint{\beamer@dima}{7bp}}
-        \pgflineto{\pgfpoint{\beamer@dima}{-1bp}}
-        \pgfclip
-        \pgfbox[left,base]{\pgfuseshading{##1}}%
-      \end{pgfpicture}
-      }%
-    \nointerlineskip%
-    }
-
-  \def\beamertemplateroundblocktail##1{% background color
-    \setbox\beamer@tempbox=\hbox{\raise\dp\beamer@tempbox\hbox{\box\beamer@tempbox}}%
-    \dp\beamer@tempbox=0pt%
-    %\vskip6pt%
-    \beamer@tempdim=\wd\beamer@tempbox%
-    \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp%
-    \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp%
-    \hbox{\begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
-      \color{##1}
-      \pgfqmoveto{-4}{1}
-      \pgfqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
-      \pgflineto{\pgfpoint{\the\beamer@tempdim}{-3bp}}
-      \pgfcurveto%
-      {\pgfpoint{\the\beamer@dima}{-3bp}}%
-      {\pgfpoint{\the\beamer@dimb}{-1.2bp}}%
-      {\pgfpoint{\the\beamer@dimb}{1bp}}%
-      \beamer@dima=\ht\beamer@tempbox%
-      \advance\beamer@dima by1pt%
-      \pgflineto{\pgfpoint{\the\beamer@dimb}{\the\beamer@dima}}
-      \pgflineto{\pgfpoint{-4bp}{\the\beamer@dima}}
-      \pgffill
-    \end{pgfpicture}%
-    \box\beamer@tempbox}
-  }
-
-  \useblocktemplate{\medskip\vbox\bgroup%
-    \ifx\insertblockname\@empty%
-    \setbox\beamer@tempbox=\hbox{}%
-    \wd\beamer@tempbox=\textwidth%
-    \ht\beamer@tempbox=0pt%
-    \beamertemplateroundblockhead{structure!10!averagebackgroundcolor}%
-    \else%    
-    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
-    \beamertemplateroundblockhead{structure!75!averagebackgroundcolor}%
-    \beamertemplateroundmidshade{roundblock}%
-    \fi%
-    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
-    \beamertemplateroundblocktail{structure!10!averagebackgroundcolor}%
-    \egroup\medskip}
-  \usealertblocktemplate{\medskip\vbox\bgroup%
-    \ifx\insertblockname\@empty%
-    \setbox\beamer@tempbox=\hbox{}%
-    \wd\beamer@tempbox=\textwidth%
-    \ht\beamer@tempbox=0pt%
-    \beamertemplateroundblockhead{alert!10!averagebackgroundcolor}%
-    \else%    
-    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
-    \beamertemplateroundblockhead{alert!75!averagebackgroundcolor}%
-    \beamertemplateroundmidshade{roundalertblock}%
-    \fi%
-    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
-    \beamertemplateroundblocktail{alert!10!averagebackgroundcolor}%
-    \egroup\medskip}  
-  \useexampleblocktemplate{\medskip\vbox\bgroup%
-    \ifx\insertblockname\@empty%
-    \setbox\beamer@tempbox=\hbox{}%
-    \wd\beamer@tempbox=\textwidth%
-    \ht\beamer@tempbox=0pt%
-    \beamertemplateroundblockhead{beamerdarkgreen!10!averagebackgroundcolor}%
-    \else%    
-    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
-    \beamertemplateroundblockhead{beamerdarkgreen!75!averagebackgroundcolor}%
-    \beamertemplateroundmidshade{roundexampleblock}%
-    \fi%
-    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
-    \beamertemplateroundblocktail{beamerdarkgreen!10!averagebackgroundcolor}%
-    \egroup\medskip}  
+  \useblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=block]{\color{white}\insertblockname}}%
+    {\end{beamerboxesrounded}\smallskip}
+  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=alert]{\color{white}\insertblockname}}%
+    {\end{beamerboxesrounded}\smallskip}
+  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=example]{\color{white}\insertblockname}}%
+    {\end{beamerboxesrounded}\smallskip}
 }
-
 
 \newcommand{\beamertemplateshadowblocks}{
   \beamertemplatesetupshadings
 
-  \def\beamertemplateshadowblockhead##1{% background color
-    \beamer@tempdim=\dp\beamer@tempbox%
-    \ifdim\beamer@tempdim<1.5pt%
-    \beamer@tempdim=1.5pt\fi
-    \setbox\beamer@tempbox=\hbox{\raise\beamer@tempdim\hbox{\box\beamer@tempbox}}%
-    \dp\beamer@tempbox=0pt%
-    \beamer@blockheadheight=\ht\beamer@tempbox%
-    \beamer@tempdim=\wd\beamer@tempbox%
-    \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp%
-    \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp%
-    \hbox{%
-      \begin{pgfpicture}{0bp}{-\ht\beamer@tempbox}{0bp}{-\ht\beamer@tempbox}
-        \pgfputat{\pgfpoint{\the\beamer@dimb}{-5bp}}{\pgfbox[center,center]{\pgfuseshading{shadowballblock}}}
-        \color{##1}
-        \pgfqmoveto{-4}{-1}
-        \pgfqcurveto{-4}{1.2}{-2.2}{3}{0}{3}
-        \pgflineto{\pgfpoint{\the\beamer@tempdim}{3bp}}
-        \pgfcurveto%
-        {\pgfpoint{\the\beamer@dima}{3bp}}%
-        {\pgfpoint{\the\beamer@dimb}{1.2bp}}%
-        {\pgfpoint{\the\beamer@dimb}{-1bp}}%
-        \beamer@dima=-\ht\beamer@tempbox%
-        \advance\beamer@dima by-1pt%
-        \pgflineto{\pgfpoint{\the\beamer@dimb}{\the\beamer@dima}}
-        \pgflineto{\pgfpoint{-4bp}{\the\beamer@dima}}
-        \pgffill
-      \end{pgfpicture}%
-      \box\beamer@tempbox}%
-    \nointerlineskip}
-
-  \def\beamertemplateshadowmidshade##1{% shading
-    \hbox{\kern-4bp%
-      \beamer@dima=\textwidth%
-      \advance\beamer@dima by8bp%
-      \begin{pgfpicture}{0pt}{0pt}{\textwidth}{6pt}
-        \pgfqmoveto{-4}{-1}
-        \pgfqlineto{-4}{7}
-        \pgflineto{\pgfpoint{\beamer@dima}{7bp}}
-        \pgflineto{\pgfpoint{\beamer@dima}{-1bp}}
-        \pgfclip
-        \pgfbox[left,base]{\pgfuseshading{##1}}%
-      \end{pgfpicture}
-      }%
-    \nointerlineskip%
-    }
-
-  \def\beamertemplateshadowblocktail##1{% background color
-    \setbox\beamer@tempbox=\hbox{\raise\dp\beamer@tempbox\hbox{\box\beamer@tempbox}}%
-    \dp\beamer@tempbox=0pt%
-    %\vskip6pt%
-    \beamer@tempdim=\wd\beamer@tempbox%
-    \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp%
-    \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp%
-    \hbox{\begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
-      \pgfputat{\pgfpoint{4bp}{-3bp}}{\pgfbox[center,center]{\pgfuseshading{shadowballblock}}}
-      \pgfputat{\pgfpoint{\the\beamer@dimb}{-3bp}}{\pgfbox[center,center]{\pgfuseshading{shadowballblock}}}
-      \begin{pgfscope}
-        \pgfqmoveto{4}{1}
-        \pgfqlineto{4}{-7}
-        \pgflineto{\pgfpoint{\beamer@dimb}{-7bp}}
-        \pgflineto{\pgfpoint{\beamer@dimb}{1bp}}
-        \pgfclip
-        \pgfputat{\pgfpoint{4bp}{-7bp}}{\pgfbox[left,base]{\pgfuseshading{shadowblock}}}%
-      \end{pgfscope}
-      \begin{pgfscope}
-        \advance\beamer@tempdim by 4bp%
-        \pgfmoveto{\pgfpoint{\beamer@tempdim}{-3bp}}
-        \beamer@dima=\ht\beamer@tempbox%
-        \advance\beamer@dima by\beamer@blockheadheight%
-        \advance\beamer@dima by1bp%
-        \advance\beamer@dimb by4bp%
-        \pgflineto{\pgfpoint{\beamer@dimb}{-3bp}}
-        \pgflineto{\pgfpoint{\beamer@dimb}{\beamer@dima}}
-        \pgflineto{\pgfpoint{\beamer@tempdim}{\beamer@dima}}
-        \pgfclip
-        \advance\beamer@tempdim by4bp%
-        \pgfputat{\pgfpoint{\beamer@tempdim}{-3bp}}%
-        {\begin{pgfrotateby}{\pgfdegree{90}}\pgfbox[left,base]{\pgfuseshading{shadowblock}}\end{pgfrotateby}}%
-      \end{pgfscope}
-      \color{##1}
-      \pgfqmoveto{-4}{1}
-      \pgfqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
-      \pgflineto{\pgfpoint{\the\beamer@tempdim}{-3bp}}
-      \pgfcurveto%
-      {\pgfpoint{\the\beamer@dima}{-3bp}}%
-      {\pgfpoint{\the\beamer@dimb}{-1.2bp}}%
-      {\pgfpoint{\the\beamer@dimb}{1bp}}%
-      \beamer@dima=\ht\beamer@tempbox%
-      \advance\beamer@dima by1pt%
-      \pgflineto{\pgfpoint{\the\beamer@dimb}{\the\beamer@dima}}
-      \pgflineto{\pgfpoint{-4bp}{\the\beamer@dima}}
-      \pgffill
-    \end{pgfpicture}%
-    \box\beamer@tempbox}
-  }
-
-  \useblocktemplate{\medskip\vbox\bgroup%
-    \ifx\insertblockname\@empty%
-    \setbox\beamer@tempbox=\hbox{}%
-    \wd\beamer@tempbox=\textwidth%
-    \ht\beamer@tempbox=0pt%
-    \beamertemplateshadowblockhead{structure!10!averagebackgroundcolor}%
-    \beamer@blockheadheight=-4.5pt%
-    \else%    
-    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
-    \beamertemplateshadowblockhead{structure!75!averagebackgroundcolor}%
-    \beamertemplateshadowmidshade{roundblock}%
-    \fi%
-    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
-    \beamertemplateshadowblocktail{structure!10!averagebackgroundcolor}%
-    \egroup\medskip}
-  \usealertblocktemplate{\medskip\vbox\bgroup%
-    \ifx\insertblockname\@empty%
-    \setbox\beamer@tempbox=\hbox{}%
-    \wd\beamer@tempbox=\textwidth%
-    \ht\beamer@tempbox=0pt%
-    \beamertemplateshadowblockhead{alert!10!averagebackgroundcolor}%
-    \else%    
-    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
-    \beamertemplateshadowblockhead{alert!75!averagebackgroundcolor}%
-    \beamertemplateshadowmidshade{roundalertblock}%
-    \fi%
-    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
-    \beamertemplateshadowblocktail{alert!10!averagebackgroundcolor}%
-    \egroup\medskip}  
-  \useexampleblocktemplate{\medskip\vbox\bgroup%
-    \ifx\insertblockname\@empty%
-    \setbox\beamer@tempbox=\hbox{}%
-    \wd\beamer@tempbox=\textwidth%
-    \ht\beamer@tempbox=0pt%
-    \beamertemplateshadowblockhead{beamerdarkgreen!10!averagebackgroundcolor}%
-    \else%    
-    \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\textwidth}\color{white}\insertblockname\end{minipage}}%
-    \beamertemplateshadowblockhead{beamerdarkgreen!75!averagebackgroundcolor}%
-    \beamertemplateshadowmidshade{roundexampleblock}%
-    \fi%
-    \setbox\beamer@tempbox=\hbox\bgroup\begin{minipage}[b]{\textwidth}}{\end{minipage}\egroup%
-    \beamertemplateshadowblocktail{beamerdarkgreen!10!averagebackgroundcolor}%
-    \egroup\medskip}  
+  \useblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=block]{\color{white}\insertblockname}}%
+    {\end{beamerboxesrounded}}
+  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=alert]{\color{white}\insertblockname}}%
+    {\end{beamerboxesrounded}}
+  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=example]{\color{white}\insertblockname}}%
+    {\end{beamerboxesrounded}}
 }
