@@ -102,7 +102,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 2.10-CVS\\
+\title{User's Guide to the Beamer Class, Version 2.11\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -313,8 +313,8 @@ the following: Obtain the latest source version (ending
 |.tar.gz|) of the \beamer\ package from 
 \href{http://sourceforge.net/projects/latex-beamer/}{|http://sourceforge.net/projects/latex-beamer/|}
 (most likely, you have already done this). Next, you also need at
-least version 0.60 of the \textsc{pgf} package, which can be found at 
-the same place. Finally, you need at least version 1.06 of the
+least version 0.61 of the \textsc{pgf} package, which can be found at 
+the same place. Finally, you need at least version 1.10 of the
 \textsc{xcolor} package, which can also be found at that place
 (although the version on CTAN might be newer).
 
@@ -5768,6 +5768,11 @@ one argument. It behaves essentially the same way as |\only|.
   modes. Recall that a \meta{mode specification} is just an overlay
   specification in which no slides are mentioned.
 
+  The \meta{text} should not do anything fancy that involves mode
+  switches or including other files. In particular, you should not put
+  an |\include| command inside \meta{text}. Use the argument-free form
+  below, instead.
+
   \example
 \begin{verbatim}
 \mode<article>{Extra detail mentioned only in the article version.}
@@ -5780,7 +5785,7 @@ one argument. It behaves essentially the same way as |\only|.
 
 The second flavor of the |\mode| command takes no argument. ``No
 argument'' means that it is not followed by an opening brace, but any
-other symbol.
+other symbol. 
 
 \begin{command}{\mode\sarg{mode specification}}
   In the specified mode, this command actually has no effect. The
@@ -5789,7 +5794,11 @@ other symbol.
   state. It will now ignore all following lines until the next
   line that has a sole occurrence of one of the following commands:
   |\mode|, |\mode*|, |\begin{document}|, |\end{document}|. Even a comment on
-  this line will make \TeX\ skip it.
+  this line will make \TeX\ skip it. Note that the line with the
+  special commands that make \TeX\ stop gobbling may not directly
+  follow the line where the gobbling is started. Rather, there must
+  either be one non-empty line before the special command or at least
+  two empty lines.
 
   When \TeX\ encounters a single |\mode| command, it will execute this
   command. If the command is |\mode| command of the first flavor,
@@ -5798,18 +5807,21 @@ other symbol.
   command is of the second flavor, it takes over.
 
   Using this second flavor of |\mode| is less convenient than the
-  first, but there are two reasons why you might need to use it:
+  first, but there are different reasons why you might need to use it:
   \begin{itemize}
   \item
     The line-wise gobbling is much faster than the gobble of the third
     flavor, explained below.
   \item
     The first flavor reads its argument completely. This means, it
-    cannot contain any verbatim text.
+    cannot contain any verbatim text that contains unbalanced braces.
+  \item
+    The first flavor cannot cope with arguments that contain
+    |\include|. 
   \item
     If the text mainly belongs to one mode with only small amounts of
     text from another mode inserted, this second flavor is nice to
-    use. 
+    use.
   \end{itemize}
 
   \emph{Note:} When searching line-wise for a |\mode| command to shake
@@ -5898,7 +5910,36 @@ Back to article stuff again.
 { this frame is shown only in the presentation. }
 \end{document}
 \end{verbatim}
-  
+
+  \example The following example shows how you can include other files
+  in a main file. The contents of a |main.tex|:
+
+\begin{verbatim}
+\documentclass[ignorenonframetext]{beamer}
+\begin{document}
+This is star mode stuff.
+
+Let's include files:
+\mode<all>
+\include{a}
+\include{b}
+\mode*
+
+Back to star mode
+\end{document}
+\end{verbatim}
+
+  And |a.tex| (and likewise |b.tex|):
+\begin{verbatim}
+\mode*
+\section{First section}
+Extra text in article version.
+\frame
+{
+  Some text.
+}
+\mode<all>
+\end{verbatim}  
 \end{command}
 
 

@@ -397,6 +397,9 @@
 
 \let\beamer@origitem=\item
 \def\item{%
+  \ifhmode%
+    \unskip\unskip\par%
+  \fi%
   \beamer@closeitem\gdef\beamer@closeitem{}%
   \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}
 \def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{%
