@@ -94,7 +94,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 2.00-dev\\
+\title{User's Guide to the Beamer Class, Version 2.01\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -221,9 +221,9 @@ as follows:
   To insert the frame containing the table of contents, insert a line
   of style BeginFrame. Since this frame has no title, do not write
   anything on the line with style BeginFrame. Next, insert a line of
-  Standard style and use Insert $\rangle$ Insert TOC to insert the
+  style Standard and use Insert $\rangle$ Insert TOC to insert the
   table of contents. Optionally, end the frame using a line of style
-  EndFrame (the en suite Section style automatically closes the frame.
+  EndFrame (the following Section style automatically closes the frame).
 \item
   To create the last frame, start a new frame using the style
   BeginFrame. Write the frame title on the line having this
@@ -238,11 +238,13 @@ as follows:
 \item
   You must end this frame using the style EndFrame (sadly, the end of
   the document and also the beginning of the appendix do not
-  automatically end the last frame -- whereas the start of  a frames,
-  sections, parts, and subsections does).
+  automatically end the last frame -- whereas the start of a frame,
+  section, part, or subsection does).
 \end{itemize}
 
-Now use View $\rangle$ PDF to view the resulting presentation.  
+Now use View $\rangle$ PDF to view the resulting presentation. On a
+slow machine, this may take a while. See Section~\ref{section-speedup}
+for ways of speeding up the compilation.
 
 
 \subsection{How to Read this User's Guide}
@@ -310,8 +312,9 @@ the same place. Finally, you need at least version 1.06 of the
 (although the version on CTAN might be newer).
 
 \lyxnote
-For usage with \LyX,  version 1.3.3 of \LyX and higher are known to
-work (I have not tried earlier versions; they might also work). 
+For usage with \LyX,  version 1.3.3 of \LyX\ and higher are known to
+work. II have not tried earlier versions; they might also work.
+\smallskip
 
 In all cases, the packages contain a bunch of files (for the \beamer\
 class, |beamer.cls| is one of these files and happens to be the
@@ -367,9 +370,9 @@ Inside whatever |texmf| directory you have chosen, create
 the sub-sub-sub-directories
 \begin{itemize}
 \item
-  |texmf/tex/latex/beamer| and
+  |texmf/tex/latex/beamer|,
 \item
-  |texmf/tex/latex/pgf|
+  |texmf/tex/latex/pgf|, and
 \item
   |texmf/tex/latex/xcolor|
 \end{itemize}
@@ -377,7 +380,7 @@ and place all files in these three directories.
 
 Finally, you need to rebuild \TeX's filename database. This done by
 running the command  |texhash| or |mktexlsr| (they are
-the same). In MikTeX, there is a menu option to do this.
+the same). In Mik\TeX, there is a menu option to do this.
 
 \lyxnote
 For usage of the \beamer\ class with \LyX, you have to do all of the
@@ -424,7 +427,7 @@ template |beamerpresentation.lyx|, which is located in the directory
 
 
 
-\subsection{Compatibility}
+\subsection{Compatibility with Other Packages}
 
 When using certain packages together with the |beamer| class, extra
 options or precautions may be necessary.
@@ -433,20 +436,34 @@ options or precautions may be necessary.
   When using the French style, certain features that clash with the
   functionality of the beamer class will be turned off. For example,
   enumerations are still produced the way the theme dictates, not the
-  way the French style does. Also, the character |:| will not be an
-  active character. This means, that the little space the is inserted
-  before it in the |french| style is not inserted. You have to do this
-  ``by hand.''
+  way the French style does. Also, the characters |:| and |!| will not
+  be a active characters. This means, that the little space that is
+  inserted before them in the |french| style is not inserted. You have
+  to do this  ``by hand.''
+
+  \articlenote
+  To make the characters |:| and |!| active in |article| mode, pass
+  the option |activeospeccharacters| to the package
+  |beamerbasearticle|. However, this may lead to problems with overlay
+  specifications.
 \end{package}
 
 \begin{package}{{babel}|[|\declare{|spanish|}|]|}
+  \beamernote
   When using the Spanish style, certain features that clash with the
   functionality of the beamer class will be turned off. In particular,
   the special behaviour of the pointed brackets |<| and |>| is
   deactivated. 
+
+  \articlenote
+  To make the characters |<| and |>| active in |article| mode, pass
+  the option |activeospeccharacters| to the package
+  |beamerbasearticle|. As for the |french| package, this may lead to
+  problems with overlay specifications.
 \end{package}
 
 \begin{package}{{color}}
+  \beamernote
   The |color| package is automatically loaded by |beamer.cls|. This
   makes it impossible to pass options to |color| in the preamble of
   your document. To pass a \meta{list of options} to |color|, you must
@@ -457,22 +474,35 @@ options or precautions may be necessary.
     package. If the \meta{list of options} contains more than one
     option you must enclose it in curly brackets.
   \end{classoption}
+
+  \articlenote
+  The |color| package is not loaded automatically if
+  |beamerbasearticle| is loaded with the |noxcolor| option.
 \end{package}
 
 \begin{package}{{CJK}}
+  \beamernote
   When using the |CJK| package for using Asian fonts, you must use the
   class option \declare{|CJK|}. See |beamerexample4.tex| for an
   example. 
 \end{package}
 
 \begin{package}{{deluxetable}}
+  \beamernote
   The caption generation facilities of |deluxetable| are
   deactivated. Instead, the caption template is used.
 \end{package}
 
+\begin{package}{{enumerate}}
+  \articlenote
+  This package is loaded automatically in the |presentation| modes, but not
+  in the |article| mode. If you use its features, you have to load the
+  package ``by hand'' in the |article| mode.
+\end{package}
+
 \begin{package}{{fontenc}|[|\declare{|T1|}|]|}
   Use this option only with fonts that have outline fonts available in
-  the T1 encoding like Times or the lmodern fonts. In a standard
+  the T1 encoding like Times or the |lmodern| fonts. In a standard
   installation the standard Computer Modern fonts (the fonts Donald
   Knuth originally designed and which are used by default) are
   \emph{not} available in the T1 encoding. Using this  option with
@@ -492,6 +522,7 @@ options or precautions may be necessary.
 \end{package}
 
 \begin{package}{{hyperref}}
+  \beamernote
   The |hyperref| package is automatically loaded by |beamer.cls| and
   certain options are setup. In order pass additional options to
   |hyperref| or to override options, you can use the following class
@@ -505,9 +536,14 @@ options or precautions may be necessary.
   \end{classoption}
 
   Alternatively, you can also use the |\hypersetup| command.
+
+  \articlenote
+  In the |article| version, you must include |hyperref| manually if
+  you want to use it. It is not included automatically.
 \end{package}
 
 \begin{package}{{inputenc}|[|\declare{|utf8|}|]|}
+  \beamernote
   Currently, you cannot use utf8 encoded text in |\section| and
   |\subsection| commands, if that text uses characters outside the
   lower ASCII range. Thus you have to write |\section{\"Uberschrift}|
@@ -515,14 +551,15 @@ options or precautions may be necessary.
 \end{package}
 
 \begin{package}{{listings}}
+  \beamernote
   Note that you must treat |lstlisting| environments exactly the same
   way as you would treat |verbatim| environments. When using
   |\defverbatim| that contains a colored |lstlisting|, use the
   |colored| option of |\defverbatim|.
 \end{package}
 
-
 \begin{package}{{\normalfont\meta{professional font package}}}
+  \beamernote
   If you use a professional font package, \beamer's internal
   redefinition of how variables are typeset may interfere with the
   font package's superior way of typesetting them. In this case, you
@@ -531,8 +568,9 @@ options or precautions may be necessary.
 \end{package}
 
 \begin{package}{{textpos}}
+  \beamernote
   \beamer\ automatically installs a white background behind
-  everything, unless use install a different background
+  everything, unless you install a different background
   template. Because of this, you must use the |overlay| option when
   using |textpos|, so that it will place boxes \emph{before}
   everything. Alternatively, you can install an empty background
@@ -547,6 +585,7 @@ options or precautions may be necessary.
 
 
 \begin{package}{{xcolor}}
+  \beamernote
   The |xcolor| package is automatically loaded by |beamer.cls|. The
   same applies as to |color|.
 
@@ -554,6 +593,10 @@ options or precautions may be necessary.
     Causes the \meta{list of options} to be passed on to the |xcolor|
     package.
   \end{classoption}
+
+  \articlenote
+  The |color| package is not loaded automatically if
+  |beamerbasearticle| is loaded with the |noxcolor| option.
 \end{package}
 
 
@@ -750,10 +793,20 @@ because slides are only 128mm times 96mm.
 
 To put several slides onto one page (useful for the handout version)
 or to enlarge the slides, you can use the program |pdfnup|. Also, many
-commercial programs can perform this task.
+commercial programs can perform this task. If you put several slides
+on one page and if these slides normally have a white background, it
+may be useful to write the following in your preamble:
+
+\begin{verbatim}
+\mode<handout>{\beamertemplatesolidbackgroundcolor{black!5}}
+\end{verbatim}
+
+This will cause the slides of the the handout version to have a very
+light gray background. This makes it easy to discern the slides'
+border if several slides are put on one page.
 
 \lyxnote
-Chose ``View pdf'' to view your presentation.
+Choose ``View pdf'' to view your presentation.
 
 
 \subsubsection{Creating PostScript}
@@ -806,7 +859,9 @@ useful for printing), add the option |-m 1cm| to the options of
 To put two or four slides on one page, use |-2|, respectively
 |-4| instead of |-1| as the first parameter for
 |psnup|. In this case, you may wish to add the option
-|-b 1cm| to add a bit of space around the individual slides.
+|-b 1cm| to add a bit of space around the individual slides. The same
+trick as for the \pdf-version can be used to make the borders of
+slides more pronounced in the handout version.
 
 You can convert a PostScript file to a pdf file using
 
@@ -870,6 +925,14 @@ last frame before the appendix must be ended this way.
   Put a title on each frame. The title explains the contents of the
   frame to people who did not follow all details on the slide.
 \item
+  The title should really \emph{explain} things, not just give a
+  cryptic summary that cannot be understood unless one has understood
+  the whole slide. For example, a title like ``The Poset'' will have
+  everyone puzzled what this slide might be about. Titles like
+  ``Review of the Definition of Partially Ordered Sets (Posets)'' or
+  ``A Partial Ordering on the Columns of the Genotype Matrix'' are
+  \emph{much} more informative.
+\item
   Ideally, titles on consecutive frames should ``tell a story'' all by
   themselves.
 \item
@@ -885,8 +948,8 @@ last frame before the appendix must be ended this way.
   automatic line breaking. Break where there is a logical pause. For 
   example, good breaks in ``the tape alphabet is larger
   than the input alphabet'' are before ``is'' and before the second
-  ``the.'' Bad breaks are before either ``alphabet'' or before
-  ``larger.''  
+  ``the.'' Bad breaks are before either ``alphabet'' and before
+  ``larger.''
 \item
   Text and numbers in figures should have the \emph{same} size as
   normal text. Illegible numbers on axes usually ruin a chart and its
@@ -977,6 +1040,7 @@ Section~\ref{section-graphics}.
 
 
 \subsubsection{Ways of Improving Compilation Speed}
+\label{section-speedup}
 
 While working on your presentation, it may sometimes be useful to
 \TeX\ your |.tex| file quickly and have the presentation contain only
@@ -1060,7 +1124,8 @@ setup the article version can be found in
 Section~\ref{section-article}.  
 
 \lyxnote
-Creating an article version is not possible in \LyX.
+Creating an article version is not really possible in \LyX. You
+\emph{can} try it, but I would not advise it.
 
 
 
@@ -1406,8 +1471,8 @@ contain multiple slides; otherwise it contains only one slide.
     
   \item
     \declare{|containsverbatim|} tells \beamer\ that the frame
-    contains verbatim commands. In this case, only the first slide of
-    the frame is typeset (unless this slide is also suppressed by the
+    contains verbatim commands. In this case, only one slide of
+    the frame is typeset (unless all slides are suppressed by the
     \meta{overlay specification}). If you wish to use verbatim text in
     a frame with several slides, a more roundabout approach is
     necessary, see Section~\ref{section-verbatim}. This option cannot
@@ -1428,7 +1493,7 @@ contain multiple slides; otherwise it contains only one slide.
   The style ``BeginPlainFrame'' is included as a convenience. It
   passes the |plain| option to the frame. To pass further options to a
   plain frame, you should use the normal ``BeginFrame'' style and
-  specify all options (include |plain| at once).
+  specify all options (include |plain|).
 
   \lyxnote
   In \LyX, you can insert verbatim text directly even in overlayed
@@ -4014,6 +4079,36 @@ sans-serif depends on the standard document font). To change this, you
 can adjust the templates for these environments. 
 
 
+\subsubsection{Footnotes}
+
+First a word of warning: Using footnote is usually not a good
+idea. They disrupt the flow of reading.
+
+You can use the usual |\footnote| command. It has been augmented to
+take by an additional option, for placing footnotes at the frame
+bottom instead of at the bottom of the current minipage.
+
+\begin{command}{\footnote\oarg{options}\marg{text}}
+  Inserts a footnote into the current frame. Footnotes will always be
+  shown at the bottom of the current frame; they will never be
+  ``moved'' to other frames. As usual, one can give a number as
+  \meta{options}, which will cause the footnote to use that
+  number. The \beamer\ class adds one additional option:
+  \begin{itemize}
+  \item \declare{|frame|} causes the footnote to be shown at the
+    bottom of the frame. This is normally the default behavior anyway,
+    but in minipages and certain blocks it makes a difference. In a
+    minipage, the footnote is usually shown as part of the minipage
+    rather than as part of the frame.
+  \end{itemize}
+
+  \example |\footnote{On a fast machine.}|
+  \example |\footnote[frame,2]{Not proved.}|
+\end{command}
+
+You can change the way footnotes are typeset by changing the footnote
+templates, see Section~\ref{section-templates-footnotes}
+
 
 
 \section{Graphics, Colors, Animations, and Special Effects}
@@ -5076,6 +5171,15 @@ descriptions of the commands to which you wish to apply them.
   \item
     \declare{|noxcolor|} will suppress the loading of the |xcolor|
     package. No colors will be defined.
+  \item
+    \declare{|activeospeccharacters|} will leave the character code of
+    the characters used in overlay specifications as specified by
+    other packages. Normally, \beamer\ will turn off the special
+    behaviour of characters like |:| or |!| in styles like |french|
+    since they clash with the implementation of overlay
+    specifications. Using this option, you can reinstall the original
+    behaviour at the price of possible problems when using overlay
+    specifications in the |article| mode.
   \end{itemize}
 \end{package}
 
@@ -5961,6 +6065,7 @@ alongside the templates for which they make the most sense, you can
 In |article| mode, most of the template mechanism is switched off and
 has no effect. However, a few templates are also available. If this is
 the case, it is specially indicated.
+\smallskip
 
 Some of the below subsections start with commands for using
 \emph{predefined} templates. Calling one of them will change a template in
@@ -6992,6 +7097,8 @@ The following inserts are useful for the navigation symbols template:
 
 
 \subsubsection{Footnotes}
+
+\label{section-templates-footnotes}
 
 \paragraph{Template Installation Commands}\
 
