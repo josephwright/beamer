@@ -1,10 +1,9 @@
 \documentclass{ltxdoc}
 
-% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
-% of the LaTeX Project Public License Distributed from CTAN
-% archives in directory macros/latex/base/lppl.txt.
+% of the GNU Public License, version 2.
 
 \usepackage{pgf,xcolor}
 \usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
@@ -48,6 +47,7 @@
 \def\prosper{\textsc{prosper}}
 \def\seminar{\textsc{seminar}}
 \def\texpower{\textsc{texpower}}
+\def\foils{\textsc{foils}}
 
 \def\declare#1{{\color{red!75!black}#1}}
 
@@ -8349,6 +8349,11 @@ class, extra options or precautions may be necessary.
   package ``by hand'' in the |article| mode.
 \end{package}
 
+\begin{class}{{foils}}
+  If you wish to emulate the |foils| class using \beamer, please see
+  Section~\ref{section-foiltex}.
+\end{class}
+
 \begin{package}{{fontenc}|[|\declare{|T1|}|]|}
   Use this option only with fonts that have outline fonts available in
   the T1 encoding like Times or the |lmodern| fonts. In a standard
@@ -9173,6 +9178,186 @@ The following commands are parsed by \beamer, but have no effect:
 \item |\ptsize|.
 \end{itemize}
 
+
+\subsubsection{Foil\TeX}
+\label{section-foiltex}
+
+The package |beamerfoils| maps a subset of the commands of the \foils\
+package to \beamer. Since this package defines only few non-standard
+\TeX\ commands and since \beamer\ implements all the standard
+commands, the emulation layer is pretty simple. The main problem is
+the fact in foil\TeX\ page breaks are performed automatically, which
+is not the case in \beamer.
+
+A copyright notice: The Foil\TeX\ package has a restricted
+license. For this reason, no example from the \foils\ package is
+included in the \beamer\ class. The emulation itself does not use the
+code of the \foils\ package (rather, it just maps \foils\ commands to
+\beamer\ commands). For this reason, my understanding is that the
+\emph{emulation} offered by the \beamer\ class is ``free'' and legally
+so. IBM has a copyright on the \foils\ class, not on the effect the
+commands of this class have. (At least, that's my understanding of
+things.) 
+
+The workflow for the migration is the following:
+\begin{enumerate}
+\item
+  Replace the document class |foils| by |beamer|.
+\item
+  Add a |\usepackage{beamerfoils}| to start the emulation.
+\item
+  Possibly add commands to install themes and templates.
+\item
+  You may need to insert |\frame| commands to specify how the text
+  should be broken up into frames. If there is an automatic page break
+  in foil\TeX, you will have to manually insert a |\frame| for the
+  first frame and a second one for the second frame.
+\item
+  If the command |\foilhead| is used inside a |\frame| command, it
+  behaves like |\frametitle|. If it used outside a frame, it will
+  start a new frame (with the |containsverbatim| option, thus no
+  overlays are allowed). This frame will persist till the next occurence
+  of |\foilhead| or of the new command |\endfoil|. Note that a
+  |\frame| command will \emph{not} end a frame started using
+  |\foilhead|. 
+\item
+  If you rely on automatic frame creation based on |\foilhead|, you
+  will need to insert an |\endfoil| before the end of the document to
+  end the last frame.
+\item
+  If you use pdf\LaTeX\ to typeset the presentation, than you cannot
+  include PostScript files. You should convert them to |.pdf| or to
+  |.png| and adjust any usage of |\includegraphics| accordingly.
+\item
+  Sizes of objects are different in \beamer, since the scaling is done
+  by the viewer, not by the class. Thus a framebox of size 6 inches
+  will be way too big in a \beamer\ presentation. You will have to
+  manually adjust explicit dimension occuring in a foil\TeX\ presentation.
+\end{enumerate}
+
+\begin{package}{{beamerfoils}}
+  Include this package in a |beamer| presentation to get access to
+  \foils\ commands. Use |beamer| as the document class, not
+  |foils|.
+
+  \example In the following example, frames are automatically
+  created. The |\endfoil| at the end is needed to close the last
+  frame. 
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{beamerfoils}
+  
+\begin{document}
+
+\maketitle
+
+\foilhead{First Frame}
+
+This is on the first frame.
+
+\foilhead{Second Frame}
+
+This is on the second frame.
+
+\endfoil
+\end{document}
+\end{verbatim}
+  
+  \example In this example, frames are manually inserted. No
+  |\endfoil| is needed.
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{beamerfoils}
+  
+\begin{document}
+
+\frame{\maketitle}
+
+\frame{
+\foilhead{First Frame}
+This is on the first frame.
+}
+
+\frame{
+\foilhead{Second Frame}
+This is on the second frame.
+}
+\end{document}
+\end{verbatim}
+\end{package}
+
+
+In the following, the effect of \foils\ commands in \beamer\ are
+listed.
+
+\begin{command}{\MyLogo\marg{logo text}}
+  This is mapped to |\logo|, though the logo is internally stored,
+  such that it can be switched on and off using |\LogoOn| and |\LogoOff|.
+\end{command}
+
+\begin{command}{\LogoOn}
+  Makes the logo visible.
+\end{command}
+
+\begin{command}{\LogoOff}
+  Makes the logo invisible.
+\end{command}
+
+\begin{command}{\foilhead\oarg{dimension}\marg{frame title}}
+  If used inside a |\frame| command, this is mapped to
+  |\frametitle{|\meta{frame title}|}|. If used outside any frames, a
+  new frame is started. If a frame was previously started using this
+  command, it will be closed before the next frame is started. The
+  \meta{dimension} is ignored.
+\end{command}
+
+\begin{command}{\rotatefoilhead\oarg{dimension}\marg{frame title}}
+  This command has exactly the same effect as |\foilhead|.
+\end{command}
+
+\begin{command}{\endfoil}
+  This is a command that is \emph{not} available in \foils. In
+  \beamer, it can be used to end a frame that has automatically been
+  opened using |\foildhead|. This command must be given before the end
+  of the document if the last frame was opened using |\foildhead|.  
+\end{command}
+
+\begin{environment}{{boldequation\opt{|*|}}}
+  This is mapped to the |equation| or the |equation*| environment,
+  with |\boldmath| switched on.
+\end{environment}
+
+\begin{command}{\FoilTeX}
+  Typests the foil\TeX\ name as in the \foils\ package.
+\end{command}
+
+\begin{command}{\bm\marg{text}}
+  Implemented as in the \foils\ package.
+\end{command}
+
+\begin{command}{\bmstyle\marg{text}\marg{more text}}
+  Implemented as in the \foils\ package.
+\end{command}
+
+The following additional theorem-like environments are predefined:
+\begin{itemize}
+\item |Theorem*|,
+\item |Lemma*|,
+\item |Corollary*|,
+\item |Proposition*|,
+\item |Definition*|.
+\end{itemize}
+For example, the first is defined using |\newtheorem*{Theorem*}{Theorem}|. 
+
+The following commands are parsed by \beamer, but have not effect:
+\begin{itemize}
+\item |\leftheader|,
+\item |\rightheader|,
+\item |\leftfooter|,
+\item |\rightfooter|,
+\item |\Restriction|, and
+\item |\marginpar|.
+\end{itemize}
 
 
 \subsubsection{\TeX Power}

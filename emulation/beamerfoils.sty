@@ -28,9 +28,9 @@
 \newcommand\foilhead[2][]{%
   \beamerfoils@closer%
   \ifbeamer@inframe
-    \def\beamerfoils@closer{}%
+    \gdef\beamerfoils@closer{}%
   \else
-    \def\beamerfoils@closer{\egroup}%
+    \gdef\beamerfoils@closer{\egroup}%
     \beamerfoils@origframe[containsverbatim]\bgroup%
   \fi
   \frametitle{#2}%
@@ -38,17 +38,15 @@
 \let\rotatefoilhead=\foilhead
 
 \let\beamerfoils@origframe=\frame
-\def\frame{\beamerfoils@closer\def\beamerfoils@closer{}\beamerfoils@origframe}
+\def\frame{\endfoil\beamerfoils@origframe}
 
-\def\endfoil{\beamerfoils@closer\def\beamerfoils@closer{}}
+\def\endfoil{\beamerfoils@closer\gdef\beamerfoils@closer{}}
 
 
 \newenvironment{boldequation}{\boldmath\begin{equation}}{\end{equation}}
 \newenvironment{boldequation*}{\boldmath\begin{equation*}}{\end{equation*}}
 
-% Definition taken from foils.cls:
-\DeclareRobustCommand\FoilTeX{{\normalfont%
-   {\sffamily Foil}\kern-.03em{\rmfamily\TeX}}}
+\DeclareRobustCommand\FoilTeX{{\normalfont{\sffamily Foil}\kern-.03em{\rmfamily\TeX}}}
 \def\bm#1{\mathpalette\bmstyle{#1}}
 \def\bmstyle#1#2{\mbox{\boldmath$#1#2$}}
 
