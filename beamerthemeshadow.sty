@@ -1,0 +1,174 @@
+\ProvidesPackage{beamerthemeshadow}[2003/11/15 ver 1.00]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\beamerboxesdeclarecolorscheme{title}{structure!75!black}{structure!75!black}
+
+\usetitlepagetemplate{
+    \vbox{}
+    \vfill
+    \begin{centering}
+      \begin{beamerboxesrounded}[shadow=true,scheme=title]{}
+        \begin{centering}\Large\color{white}\inserttitle\par\end{centering}
+      \end{beamerboxesrounded}
+      \vskip1em\par
+      \normalsize\insertauthor\vskip1em\par
+      {\scriptsize\insertinstitute\par}\par\vskip1em
+      \insertdate\par\vskip1.5em
+      \inserttitlegraphic
+    \end{centering}
+    \vfill
+  }
+  
+\useframetitletemplate{%
+  \nointerlineskip
+  \hbox{\leavevmode
+    \advance\beamer@leftmargin by -12bp%
+    \advance\beamer@rightmargin by -12bp%
+    \beamer@tempdim=\textwidth%
+    \advance\beamer@tempdim by \beamer@leftmargin%
+    \advance\beamer@tempdim by \beamer@rightmargin%
+    \hskip-\Gm@lmargin\hbox{%
+      \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\paperwidth}%
+          \vskip2pt%
+          \leftskip0.3cm%
+          \rightskip0.3cm plus1fil\leavevmode
+          \color{structure}\Large\color{white}\insertframetitle\strut\par
+          \nointerlineskip
+          \vbox{}%
+          \end{minipage}}%
+      \color{structure!75!black}%
+      \beamer@tempdim=\ht\beamer@tempbox%
+      \advance\beamer@tempdim by 2pt%
+      \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{\beamer@tempdim}
+        \pgfrect[clip]{\pgforigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
+        \pgfbox[left,base]{\pgfuseshading{frametitleshade}}
+      \end{pgfpicture}
+      %\vrule width\paperwidth height \beamer@tempdim%
+      \hskip-\paperwidth%
+      \box\beamer@tempbox%
+    }%
+    \hskip-\Gm@rmargin%
+  }%
+  \nointerlineskip
+    \vskip-0.2pt
+    \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
+    \vskip-2pt
+}
+
+
+\beamertemplateballitem
+\beamertemplatesolidbuttons
+
+                                % Sections in headline
+\usesectionheadtemplate
+  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
+
+\usesubsectionheadtemplate
+  {\color{white}\tiny\textbf{\insertsubsectionhead}}
+  {\color{white!50!structure}\tiny\textbf{\insertsubsectionhead}}
+
+                                % Entries in table of contents
+\usetemplatetocsection[50!averagebackgroundcolor]
+{{\large\color{structure}\inserttocsection}}
+
+                                % Entries in table of contents
+\usetemplatetocsubsection[50!averagebackgroundcolor]
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+
+\pgfdeclareverticalshading{topshade}{\paperwidth}{%
+  color(0pt)=(averagebackgroundcolor);
+  color(4pt)=(black!50!averagebackgroundcolor)}
+
+\pgfdeclarehorizontalshading{frametitleshade}{\paperheight}{%
+  color(0pt)=(structure);
+  color(\paperwidth)=(black)}
+
+\newdimen\tempdimen
+                                % Head
+\ifbeamer@compress
+\useheadtemplate{%
+  \vbox{%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
+      \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}\hfil}%
+    \ht\linebox=7pt
+    \dp\linebox=0pt
+    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \hbox to\textwidth{%
+      {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth height\ht\linebox
+      \color{structure}\vrule width.5\paperwidth height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \hskip-\Gm@lmargin\box\linebox\hfill\hskip-\Gm@rmargin
+    }%
+    \vskip-0.1pt
+    \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
+    \vskip-2pt
+  }%
+}
+\else
+\useheadtemplate{%
+  \vbox{%
+    \tempdimen=6.5pt%
+    \ifnum\subsection@max<\section@max%
+    \multiply\tempdimen by\section@max%
+    \else%
+    \multiply\tempdimen by\subsection@max%
+    \fi%
+    \advance\tempdimen by 3pt%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \vbox to \tempdimen{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
+      \vbox to \tempdimen{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
+    \hbox to\textwidth{%
+      {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
+        height\ht\linebox\color{structure}\vrule width.5\paperwidth
+        height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \hskip-\Gm@lmargin\box\linebox\hfill\hskip-\Gm@rmargin%
+    }
+    \vskip-0.1pt
+    \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
+    \vskip-2pt
+  }%
+}
+\fi
+                                % Footline
+\usefoottemplate{%
+  \hbox{%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
+      \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
+    \ht\linebox=7pt%
+    \dp\linebox=0pt%
+    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
+    height\ht\linebox\color{structure}\vrule width.5\paperwidth
+    height\ht\linebox\hskip-\paperwidth% 
+    \hbox{\box\linebox\hfill}\hfill\hskip-\Gm@rmargin}}
+
+\def\logo#1{%
+  \def\insertlogo{#1}%
+  \usefoottemplate{%
+    \vbox{%
+      \hbox to\textwidth{\hfill%
+        \setbox\logobox=\hbox{\raise 10pt\hbox{\insertlogo}\llap{\insertnavigationsymbols}}\ht\logobox=0pt%
+        \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
+    \hbox{%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
+      \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
+    \ht\linebox=7pt%
+    \dp\linebox=0pt%
+    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
+    height\ht\linebox\color{structure}\vrule width.5\paperwidth
+    height\ht\linebox\hskip-\paperwidth% 
+    \hbox{\box\linebox\hfill}\hfill\hskip-\Gm@rmargin}}}}
+
+
+\beamertemplateshadowblocks
+\beamerboxesdeclarecolorscheme{block}{structure!75!black}{structure!10!averagebackgroundcolor}

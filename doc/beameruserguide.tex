@@ -86,7 +86,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 1.00-dev\\
+\title{User's Guide to the Beamer Class, Version 1.02\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -3097,72 +3097,87 @@ the second slide the old man should be shown, and when the second
 slide is shown, it should be  shown in a ``dissolved way.''
 
 In the following, the different commands for creating transitional
-effects are listed.
+effects are listed. All of them take an optional argument that may
+contain a list of \meta{key}|=|\meta{value} pairs. The following
+options are possible:
 
-\begin{command}{\transblindshorizontal}
+\begin{itemize}
+\item
+  |duration=|\meta{seconds}. Specifies the number of \meta{seconds}
+  the transition effect needs. Default is one second, but often a
+  shorter one (like 0.2 seconds) is more appropriate. Viewer
+  applications, especially Acrobat, may interprete this option in
+  slightly strange ways.
+\item
+  |direction=|\meta{degree}. For ``directed'' effects, this option
+  specifies the effect's direction. Allowed values are |0|, |90|,
+  |180|, |270|, and for the glitter effect also |315|.
+\end{itemize}
+
+
+\begin{command}{\transblindshorizontal\sarg{overlay specification}\oarg{options}}
   Show the slide as if horizontal blinds where pulled away.
   \example|\transblindshorizontal|
 \end{command}
   
-\begin{command}{\transblindsvertical}
+\begin{command}{\transblindsvertical\sarg{overlay specification}\oarg{options}}
   Show the slide as if vertical blinds where pulled away.
   \example|\transblindsvertical<2,3>|
 \end{command}
   
-\begin{command}{\transboxin}
+\begin{command}{\transboxin\sarg{overlay specification}\oarg{options}}
   Show the slide by moving to the center from all four sides.
   \example|\transboxin<1>|
 \end{command}
   
-\begin{command}{\transboxout}
+\begin{command}{\transboxout\sarg{overlay specification}\oarg{options}}
   Show the slide by showing more and more of a rectangular area that
   is centered on the slide center.
   \example|\transboxout|
 \end{command}
  
-\begin{command}{\transdissolve}
+\begin{command}{\transdissolve\sarg{overlay specification}\oarg{options}}
   Show the slide by slowly dissolving what was shown before.
-  \example|\transdissolve|
+  \example|\transdissolve[duration=0.2]|
 \end{command}
   
-\begin{command}{\transglitter\marg{degree}}
+\begin{command}{\transglitter\sarg{overlay specification}\oarg{options}}
   Show the slide with a glitter effect that sweeps in the specified
-  direction. The \meta{degree} must be a multiple of 90.
-  \example|\transglitter<2-3>{90}|
+  direction.
+  \example|\transglitter<2-3>[direction=90]|
 \end{command}
   
-\begin{command}{\transsplitverticalin}
+\begin{command}{\transsplitverticalin\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two vertical lines from the sides inward.
   \example|\transsplitverticalin|
 \end{command}
   
-\begin{command}{\transsplitverticalout}
+\begin{command}{\transsplitverticalout\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two vertical lines from the center outward.
   \example|\transsplitverticalout|
 \end{command}
   
-\begin{command}{\transsplithorizontalin}
+\begin{command}{\transsplithorizontalin\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two horizontal lines from the sides inward.
   \example|\transsplithorizontalin|
 \end{command}
   
-\begin{command}{\transsplithorizontalout}
+\begin{command}{\transsplithorizontalout\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two horizontal lines from the center outward.
   \example|\transsplithorizontalout|
 \end{command}
  
-\begin{command}{\transwipe\marg{degree}}
+\begin{command}{\transwipe\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping a single line in the specified direction,
-  thereby ``wiping out'' the previous contents. The \meta{degree} must be a multiple of 90.
-  \example|\transwipe{90}|
+  thereby ``wiping out'' the previous contents.
+  \example|\transwipe[direction=90]|
 \end{command}
-
 
 
 You can also specify how \emph{long} a given slide should be shown,
 using the following overlay-specification-aware command:
 
-\begin{command}{\transduration\marg{number of seconds}}
+\begin{command}{\transduration\sarg{overlay specification}\marg{number of seconds}}
   In full screen mode, show the slide for \meta{number of seconds}.
   In zero is specified, the slide is shown as short as possible. This
   can be used to create interesting pseudo-animations.
