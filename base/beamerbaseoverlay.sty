@@ -10,22 +10,36 @@
 
 \presentation
 
-  
+
+% commands for smuggling skips past
+
+\newskip\beamer@lastskipcover
+\def\beamer@zeropt{0.0pt}
+\def\beamer@smuggle#1{%
+  \beamer@lastskipcover=\lastskip%
+  \edef\beamer@lastskiptext{\the\lastskip}%
+  \ifx\beamer@lastskiptext\beamer@zeropt\else%
+  \ifvmode\unskip\fi\ifhmode\unskip\fi\fi%
+  #1%
+  \ifx\beamer@lastskiptext\beamer@zeropt\else%
+  \ifvmode\vskip\beamer@lastskipcover\fi\ifhmode\hskip\beamer@lastskipcover\fi\fi%
+}  
+
+
+
 %
 % Uncovering management
 %
 \def\beamer@actions#1#2{%
   \gdef\beamer@do{#1%
     \expandafter\gdef\csname beamer@doafter%
-    \the\beamer@coveringdepth\endcsname{#2}}\ignorespaces}
+    \the\beamer@coveringdepth\endcsname{#2}}}
   
 \def\beamer@startcovered{%
+  \beamer@smuggle{%
   \global\advance\beamer@coveringdepth by 1\relax%
   \beamer@actions{\pgfsys@begininvisible}{%
-     \beamer@lastskip=\lastskip%
-     \ifdim\beamer@lastskip=0pt\else\ifvmode\unskip\fi\fi%
      \pgfsys@endinvisible%
-     \ifdim\beamer@lastskip=0pt\else\ifvmode\vskip\beamer@lastskip\fi\fi%
      }%
   \def\opaqueness<##1>##2{%
     \only<##1>{%
@@ -48,10 +62,7 @@
           \the\beamer@coveringdepth\endcsname}%
         \xdef\beamer@pgfextension{\csname beamer@oldpgfextension%
           \the\beamer@coveringdepth\endcsname}%
-        \beamer@lastskip=\lastskip%
-        \ifdim\beamer@lastskip=0pt\else\ifvmode\unskip\fi\fi%
         \color{.}%
-        \ifdim\beamer@lastskip=0pt\else\ifvmode\vskip\beamer@lastskip\fi\fi%
       }}}%
   \ifnum\beamer@slideinframe<\beamer@minimum%ok, at beginning
   {%
@@ -69,10 +80,14 @@
     \beamer@restoreanother%
   }%
   \fi%
-  \beamer@do}
+  \beamer@do%
+  }%
+}
 \def\beamer@endcovered{%
+  \beamer@smuggle{%
   \csname beamer@doafter\the\beamer@coveringdepth\endcsname%
   \global\advance\beamer@coveringdepth by -1\relax%
+  }%
 }%
 
 \def\beamersetuncovermixins#1#2{%
@@ -376,24 +391,24 @@
 
 \common
 {
-  \newcommand{\transblindshorizontal}[1][]{\only{\beamer@dotrans[#1]{Blinds /Dm /H}}}
-  \newcommand{\transblindsvertical}[1][]{\only{\beamer@dotrans[#1]{Blinds /Dm /V}}}
-  \newcommand{\transboxin}[1][]{\only{\beamer@dotrans[#1]{Box /M /I}}}
-  \newcommand{\transboxout}[1][]{\only{\beamer@dotrans[#1]{Box /M /O}}}
-  \newcommand{\transcover}[1][]{\only{\beamer@dotrans[#1]{Cover}}}
-  \newcommand{\transdissolve}[1][]{\only{\beamer@dotrans[#1]{Dissolve}}}
-  \newcommand{\transfade}[1][]{\only{\beamer@dotrans[#1]{Fade}}}
-  \newcommand{\transglitter}[1][]{\only{\beamer@dotrans[#1]{Glitter}}}
-  \newcommand{\transpush}[1][]{\only{\beamer@dotrans[#1]{Push}}}
-  \newcommand{\transsplitverticalin}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /V /M /I}}}
-  \newcommand{\transsplitverticalout}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /V /M /O}}}
-  \newcommand{\transsplithorizontalin}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /H /M /I}}}
-  \newcommand{\transsplithorizontalout}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /H /M /O}}}
-  \newcommand{\transuncover}[1][]{\only{\beamer@dotrans[#1]{Uncover}}}
-  \newcommand{\transwipe}[1][]{\only{\beamer@dotrans[#1]{Wipe}}}
+  \newcommand<>{\transblindshorizontal}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /H}}}
+  \newcommand<>{\transblindsvertical}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /V}}}
+  \newcommand<>{\transboxin}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /I}}}
+  \newcommand<>{\transboxout}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /O}}}
+  \newcommand<>{\transcover}[1][]{\only#2{\beamer@dotrans[#1]{Cover}}}
+  \newcommand<>{\transdissolve}[1][]{\only#2{\beamer@dotrans[#1]{Dissolve}}}
+  \newcommand<>{\transfade}[1][]{\only#2{\beamer@dotrans[#1]{Fade}}}
+  \newcommand<>{\transglitter}[1][]{\only#2{\beamer@dotrans[#1]{Glitter}}}
+  \newcommand<>{\transpush}[1][]{\only#2{\beamer@dotrans[#1]{Push}}}
+  \newcommand<>{\transsplitverticalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /I}}}
+  \newcommand<>{\transsplitverticalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /O}}}
+  \newcommand<>{\transsplithorizontalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /I}}}
+  \newcommand<>{\transsplithorizontalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /O}}}
+  \newcommand<>{\transuncover}[1][]{\only#2{\beamer@dotrans[#1]{Uncover}}}
+  \newcommand<>{\transwipe}[1][]{\only#2{\beamer@dotrans[#1]{Wipe}}}
 }
 
-\newcommand{\transduration}[1]{\only{\hypersetup{pdfpageduration=#1}}}
+\newcommand<>{\transduration}[1]{\only#2{\hypersetup{pdfpageduration=#1}}}
 
 \article
 {

@@ -246,7 +246,8 @@
 \define@key{beamer@col}{t}[true]{\def\beamer@colalign{t}}
 \define@key{beamer@col}{b}[true]{\def\beamer@colalign{b}}
 
-\newenvironment{columns}[1][]{%
+\newenvironment<>{columns}[1][]{%
+  \begin{actionenv}#2%
   \def\beamer@colentrycode{%
     \hbox to\textwidth\bgroup%
     \leavevmode%
@@ -265,11 +266,8 @@
   \par%
   \beamer@colentrycode%
   \def\beamer@colclose{}\ignorespaces}%
-  {\beamer@colclose\def\beamer@colclose{}\beamer@colexitcode}%
+  {\beamer@colclose\def\beamer@colclose{}\beamer@colexitcode\end{actionenv}}%
   
-\newenvironment{columnsonlytextwidth}%
-  {\begin{columns}[onlytextwidth]}{\end{columns}}
-
 \article
 {
   % do sth. more intelligent in the future
@@ -297,16 +295,18 @@
   \beamer@next}
 }
 
-\newenvironment{beamer@columnenv}[2][\beamer@colalign]{%
+\newenvironment<>{beamer@columnenv}[2][\beamer@colalign]{%
   \beamer@colclose\def\beamer@colclose{}%
+  \begin{actionenv}#3%
   \begin{minipage}[#1]{#2}%
     \raggedright}
-  {\end{minipage}\hfill\@ignoretrue}
+  {\end{minipage}\hfill\end{actionenv}\@ignoretrue}
 \let\endcolumn\endbeamer@columnenv
 
-\newcommand\beamer@columncom[2][\beamer@colalign]{%
+\newcommand<>\beamer@columncom[2][\beamer@colalign]{%
   \beamer@colclose%
-  \def\beamer@colclose{\end{minipage}\hfill\ignorespaces}%
+  \def\beamer@colclose{\end{minipage}\hfill\end{actionenv}\ignorespaces}%
+  \begin{actionenv}#3%
   \begin{minipage}[#1]{#2}%
     \raggedright}
    

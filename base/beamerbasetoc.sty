@@ -94,7 +94,7 @@
 
 \def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
 \long\def\@@usetemplatetocsection[#1]#2{
-  \@usetemplatetocsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}}}
+  \@usetemplatetocsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}
 \long\def\@usetemplatetocsection#1#2{
   \gdef\sectiontemplate{\def\beamer@breakhere{\\}#1}
   \gdef\sectiontemplateshaded{\def\beamer@breakhere{\\}#2}}
@@ -161,7 +161,7 @@
 
 \def\usetemplatetocsubsection{\@ifnextchar[\@@usetemplatetocsubsection\@usetemplatetocsubsection}
 \long\def\@@usetemplatetocsubsection[#1]#2{
-  \@usetemplatetocsubsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}}}
+  \@usetemplatetocsubsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}
 \long\def\@usetemplatetocsubsection#1#2{
   \gdef\beamer@subsectiontemplate{\def\beamer@breakhere{\\}#1}
   \gdef\beamer@subsectiontemplateshaded{\def\beamer@breakhere{\\}#2}}

@@ -65,7 +65,8 @@
 \newdimen\beamer@vboxoffset
 \newdimen\beamer@descdefault
 \newdimen\beamer@descdefaulttemp
-\newdimen\beamer@lastskip
+
+\newskip\beamer@lastskip
 
 \newbox\beamer@areabox
 \newbox\beamer@animcurrent
@@ -320,6 +321,12 @@
 \RequirePackage{beamerbasemisc}
 % Miscellaneous commands
 
+\RequirePackage{beamerbasedecode}
+% Overlay stuff
+
+\RequirePackage{beamerbaseoverlay}
+% Overlay stuff
+
 \RequirePackage{beamerbasetitle}
 % Commands for constructing the title page
 
@@ -334,12 +341,6 @@
 
 \RequirePackage{beamerbasecolor}
 % Headlines, sidebars, columns
-
-\RequirePackage{beamerbasedecode}
-% Overlay stuff
-
-\RequirePackage{beamerbaseoverlay}
-% Overlay stuff
 
 \RequirePackage{beamerbasenotes}
 % Commands for adding notes

@@ -65,8 +65,10 @@
   \beamerorig@set@color}
 \def\reset@color{%
   \beamer@lastskip=\lastskip%
-  \ifdim\beamer@lastskip=0pt\else\ifvmode\unskip\fi\fi%
-  \ifx\beamer@current@colorhook\beamer@colorhook%
+  \edef\beamer@lastskiptexta{\the\lastskip}%
+  \ifx\beamer@lastskiptexta\beamer@zeropt\else%
+  \ifvmode\unskip\fi\ifhmode\unskip\fi\fi%
+   \ifx\beamer@current@colorhook\beamer@colorhook%
     \beamerorig@reset@color%
   \else% mixin changed -> recalculate
     \colorlet{@hookcolor}{.}%
@@ -77,7 +79,8 @@
     \beamerorig@reset@color%
     \beamer@postscriptcolorhack%  
   \fi%
-  \ifdim\beamer@lastskip=0pt\else\ifvmode\vskip\beamer@lastskip\fi\fi%
+  \ifx\beamer@lastskiptexta\beamer@zeropt\else%
+  \ifvmode\vskip\beamer@lastskip\fi\ifhmode\hskip\beamer@lastskip\fi\fi%
 }
 
 \ifx\pdftexversion\@undefined

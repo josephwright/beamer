@@ -40,14 +40,6 @@
   {\beamer@decodefind beamer:#1:}%
   {\beamer@decodefind #1:#2}}
 
-%
-%{\futurelet\beamer@next\beamer@decodeinsertdefault}
-%\def\beamer@decodeinsertdefault{\ifcat\beamer@next a%
-%  \gdef\beamer@next{}%
-%  \else%
-%  \gdef\beamer@next{beamer:}%
-%  \fi%
-%  \expandafter\beamer@decodefind\beamer@next}
 
 \def\beamer@default{default}
 \def\beamer@articlemode{article}
@@ -57,6 +49,7 @@
 \def\beamer@decodefind#1:#2:{%
   \def\beamer@mode{#1}%
   \beameratdecodeaction{#2}%
+  \expandafter\futurelet\expandafter\next\expandafter\beamer@checkcat\beamer@spec:%
   \ifx\beamer@mode\beamer@modestop%
     \expandafter\beamer@@decode\beamer@decodefound,!%
     \let\beamer@next=\relax%
@@ -77,6 +70,14 @@
     \let\beamer@next=\beamer@@decodefind%
   \fi%
  \beamer@next}
+
+\def\beamer@checkcat#1:{%
+  \ifcat\next a%
+    \gdef\beamer@mode{#1}%
+    \gdef\beamer@decodefound{0}%
+    \gdef\beamer@spec{+}%
+  \fi%
+  }
 
 \def\beamer@@decodefound{%
   \ifx\beamer@action\beamer@default%
@@ -101,12 +102,12 @@
 \def\beameratdecodeactionc#1#2{%
   \gdef\beamer@spec{#2}%
   \ifx\beamer@spec\@empty%
-    \gdef\beamer@spec{#1}%
+    \xdef\beamer@spec{#1}%
     \gdef\beamer@action{default}%
   \else%
-    \gdef\beamer@action{#1}%
+    \xdef\beamer@action{#1}%
     \beameratgetridofat#2%
-    \expandafter\gdef\expandafter\beamer@spec\expandafter{\beameratspec}
+    \xdef\beamer@spec{\beameratspec}
   \fi%
 }
 
@@ -180,6 +181,18 @@
 %
 %
 
+\long\def\beamer@ifnextcharospec#1#2{%
+  \def\reserved@a{#1}%
+  \def\reserved@b{#2}%
+  \futurelet\@let@token\beamer@ifnch}
+\def\beamer@ifnch{%
+  \ifx\@let@token<%
+    \let\reserved@c\reserved@a%
+  \else%
+    \let\reserved@c\reserved@b%
+  \fi%
+  \reserved@c}
+
 %
 % \only
 %
@@ -187,7 +200,7 @@
 \long\def\beamer@only<#1>#2{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{#2}%
   {\setbox0=\hbox{\beamer@decode#1| stop:0| }}\beamer@donow}
-\long\def\beamer@@only#1{\@ifnextchar<{\beamer@@@only{#1}}{#1}}
+\long\def\beamer@@only#1{\beamer@ifnextcharospec{\beamer@@@only{#1}}{#1}}
 \long\def\beamer@@@only#1<#2>{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{#1}%
   {\setbox0=\hbox{\beamer@decode#2| stop:0| }}\beamer@donow}
@@ -196,7 +209,7 @@
 % \alt and \altenv
 %
 \def\alt{\@ifnextchar<{\beamer@alt}{\beamer@alttwo}}
-\long\def\beamer@alttwo#1#2{\@ifnextchar<{\beamer@altget{#1}{#2}}{#1}}
+\long\def\beamer@alttwo#1#2{\beamer@ifnextcharospec{\beamer@altget{#1}{#2}}{#1}}
 \long\def\beamer@altget#1#2<#3>{%
   \def\beamer@doifnotinframe{#2}\def\beamer@doifinframe{#1}%
   {\setbox0=\hbox{\beamer@decode#3| stop:0| }}\beamer@donow}
@@ -207,7 +220,7 @@
 
 \def\altenv{\@ifnextchar<{\beamer@altenv}{\beamer@@@altenv}}
 \def\beamer@altenv<#1>{\beamer@@altenv{<#1>}}
-\long\def\beamer@@@altenv#1#2#3#4{\@ifnextchar<{\beamer@altenvsort{#1}{#2}{#3}{#4}}{\beamer@@altenv{}{#1}{#2}{#3}{#4}}}
+\long\def\beamer@@@altenv#1#2#3#4{\beamer@ifnextcharospec{\beamer@altenvsort{#1}{#2}{#3}{#4}}{\beamer@@altenv{}{#1}{#2}{#3}{#4}}}
 \long\def\beamer@altenvsort#1#2#3#4<#5>{\beamer@@altenv{<#5>}{#1}{#2}{#3}{#4}}
 \long\def\beamer@@altenv#1#2#3#4#5{\alt#1{\long\def\beamer@eoenv{#3}#2}{\long\def\beamer@eoenv{#5}#4}}
 \def\endaltenv{\beamer@eoenv}
@@ -238,7 +251,7 @@
     \csname#2\endcsname<#3>{#1}}%
   \beamer@processactions}
 
-\def\actionenv{\@ifnextchar<{\beamer@parsedactionenv}{\beamer@parsedactionenv<+>}}
+\def\actionenv{\beamer@ifnextcharospec{\beamer@parsedactionenv}{\beamer@parsedactionenv<+>}}
 \def\beamer@parsedactionenv<#1>{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
   {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}}%
@@ -283,59 +296,6 @@
 % \newoverlaycommand
 %
 \def\beameroriginal#1{\csname @orig\string#1\endcsname}
-
-
-%% \long\def\newoverlaycommand#1#2#3{% In slides, #1 does #2, otherwise #3
-%%   \def#1{\@ifnextchar<{\@overlayparse{#2}{#3}}{#2}}}
-
-%% \long\def\renewoverlaycommand#1#2#3{% In slides, #1 does #2, otherwise #3
-%%   \edef\beamer@name{\beameroriginal#1}
-%%   \expandafter\let\beamer@name=#1\relax%
-%%   \def#1{\@ifnextchar<{\@overlayparse{#2}{#3}}{#2}}}
-
-%% \long\def\@overlayparse#1#2<#3>{\alt<#3>{#1}{#2}}
-
-%% \def\newoverlayenvironment#1{%
-%%   \@ifnextchar[{\@@newoverlayenvironment{#1}}{\@newoverlayenvironment{#1}}}
-
-%% \long\def\@newoverlayenvironment#1#2#3#4#5{% In slides, #1 forms an
-%% % environment with begin #2 and end #3, otherwise an environment with 
-%% % begin #4 and end #5
-%%   \newenvironment{#1}{}{}%
-%%   \expandafter\def\csname #1\endcsname{%
-%%     \@ifnextchar<{\beamer@parsebegin{#1}{#2}{#3}{#4}{#5}}{%
-%%       \expandafter\def\csname end#1\endcsname{#3}#2}}%
-%%   }
-    
-%% \long\def\beamer@parsebegin#1#2#3#4#5<#6>{%
-%%   \alt<#6>{% In slide case
-%%     \expandafter\def\csname end#1\endcsname{#3}%
-%%     #2}{%
-%%     \expandafter\def\csname end#1\endcsname{#5}%
-%%     #4}}
-
-%% \long\def\renewoverlayenvironment#1#2#3#4#5{%
-%%   \edef\beamer@do{\csname original#1\endcsname=\expandafter\noexpand\csname#1\endcsname}
-%%   \expandafter\let\beamer@do
-%%   \edef\beamer@do{\csname endoriginal#1\endcsname=\expandafter\noexpand\csname end#1\endcsname}
-%%   \expandafter\let\beamer@do
-%%   \renewenvironment{#1}{}{}%
-%%   \expandafter\def\csname #1\endcsname{%
-%%     \@ifnextchar<{\beamer@parsebegin{#1}{#2}{#3}{#4}{#5}}{%
-%%       \expandafter\def\csname end#1\endcsname{#3}#2}%
-%%     }%
-%%   }
-
-%% \long\def\@@newoverlayenvironment#1[1]#2#3#4#5{% Currently, this works
-%% % only for a single argument
-%%   \newenvironment{#1}{}{}%
-%%   \expandafter\new@command\csname @in#1\endcsname[1]{#2}%
-%%   \expandafter\new@command\csname @out#1\endcsname[1]{#4}%
-%%   \expandafter\long\expandafter\def\csname #1\endcsname##1{%
-%%     \@ifnextchar<{\beamer@parsebegin{#1}{\csname @in#1\endcsname{##1}}{#3}{\csname @out#1\endcsname{##1}}{#5}}{%
-%%       \expandafter\def\csname end#1\endcsname{#3}#2}}%
-%% }
-
 
 
 \newcount\beamer@argscount
@@ -419,7 +379,7 @@
   \beamer@parseargs%
 } 
 
-\def\beamer@sortzero#1{\@ifnextchar<{\beamer@sortzeroread{#1}}{#1{}}}
+\def\beamer@sortzero#1{\beamer@ifnextcharospec{\beamer@sortzeroread{#1}}{#1{}}}
 \def\beamer@sortzeroread#1<#2>{#1{<#2>}}
 
 
@@ -447,7 +407,7 @@
   \beamer@parseargs%
 }
 
-\def\beamer@finalargscheck{\@ifnextchar<\beamer@finalspec\beamer@finalnospec}
+\def\beamer@finalargscheck{\beamer@ifnextcharospec\beamer@finalspec\beamer@finalnospec}
 \def\beamer@finalspec<#1>{\def\beamer@ospec{<#1>}\beamer@finalnospec}
 \def\beamer@finalnospec{%
   \expandafter\beamer@todo\expandafter{\beamer@ospec}}
