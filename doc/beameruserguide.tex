@@ -257,7 +257,7 @@ for ways of speeding up the compilation.
 
 \subsection{How to Read this User's Guide}
 
-This user guide is both intended as a tutorial and as a reference
+This user's guide is both intended as a tutorial and as a reference
 guide. If you have not yet installed the package, please read
 Section~\ref{section-installation} first. If you do not have much
 experience with preparing presentations, 
@@ -287,7 +287,7 @@ special when you use \LyX\ to prepare your presentation.
 
 \label{section-installation}
 
-To use the beamer class, you just need to put the files of the
+To use the \beamer\ class, you just need to put the files of the
 \beamer\ package in a directory that is read by \TeX. To uninstall the
 class, simply remove these files once more. The same is true of the
 \textsc{pgf} package, which you will also need.
@@ -300,7 +300,7 @@ on how permanently you intend to use the class.
 \subsection{Installing Prebundled Packages Like Debian or Red Hat Packages}
 
 Currently, I'm not producing prebundled packages of |beamer|. There
-are some out-of-the-box Debian packages and Mik\TeX\ packages around,
+are some out-of-the-box Debian packages and MiK\TeX\ packages around,
 but these are possibly outdated. Once |beamer| stabilizes, there
 will hopefully also be easy-to-install packages. 
 
@@ -308,7 +308,7 @@ will hopefully also be easy-to-install packages.
 
 \subsection{Temporary Installation}
 
-If you only wish to install the beamer class for a quick appraisal, do
+If you only wish to install the \beamer\ class for a quick appraisal, do
 the following: Obtain the latest source version (ending
 |.tar.gz|) of the \beamer\ package from 
 \href{http://sourceforge.net/projects/latex-beamer/}{|http://sourceforge.net/projects/latex-beamer/|}
@@ -320,7 +320,7 @@ the same place. Finally, you need at least version 1.10 of the
 
 \lyxnote
 For usage with \LyX,  version 1.3.3 of \LyX\ and higher are known to
-work. II have not tried earlier versions; they might also work.
+work. I have not tried earlier versions; they might also work.
 \smallskip
 
 In all cases, the packages contain a bunch of files (for the \beamer\
@@ -387,7 +387,7 @@ and place all files in these three directories.
 
 Finally, you need to rebuild \TeX's filename database. This done by
 running the command  |texhash| or |mktexlsr| (they are
-the same). In Mik\TeX, there is a menu option to do this.
+the same). In MiK\TeX, there is a menu option to do this.
 
 \lyxnote
 For usage of the \beamer\ class with \LyX, you have to do all of the
@@ -441,7 +441,7 @@ template |beamerpresentation.lyx|, which is located in the directory
 
 \label{section-workflow}
 
-This section presents a possible workflow for creating a beamer
+This section presents a possible workflow for creating a \beamer\ 
 presentation and possibly a handout to go along with it. Technical
 questions are addressed, like which programs to call with 
 which parameters, and hints are given on how to create a
@@ -491,7 +491,7 @@ presentation, you can call your main file |main.tex|.
 
 To create an initial |main.tex| file for your talk, copy an
 existing file (like the file |beamerexample1.tex| that comes along
-with the contribution) and delete everything that is not going to be
+with the distribution) and delete everything that is not going to be
 part of your talk. Adjust the |\author| and other fields as 
 appropriate. 
 
@@ -507,7 +507,7 @@ template from the directory |beamer/lyx/templates|.
 
 
 
-\subsection{Step Two: Structure You Presentation}
+\subsection{Step Two: Structure Your Presentation}
 
 With the time constraints in mind, make a mental inventory of the
 things you can reasonably talk about within the time available. Then
@@ -632,7 +632,7 @@ may be useful to write the following in your preamble:
 \mode<handout>{\beamertemplatesolidbackgroundcolor{black!5}}
 \end{verbatim}
 
-This will cause the slides of the the handout version to have a very
+This will cause the slides of the handout version to have a very
 light gray background. This makes it easy to discern the slides'
 border if several slides are put on one page.
 
@@ -710,7 +710,7 @@ Use ``View Postscript'' to view the PostScript version.
 Once the table of contents looks satisfactory, start creating frames
 for your presentation. In the following, some guidelines that I stick
 to are given on what to put on slides and what not to put. You can
-certainly ignore any of these guideline, but you should be aware of
+certainly ignore any of these guidelines, but you should be aware of
 it when you ignore a rule and you should be able to justify it to
 yourself. 
 
@@ -902,7 +902,7 @@ slow machine. In this case, you can do several things to speedup the
 compilation. First, you can use the |draft| class option.
 
 \begin{classoption}{{draft}}
-  Causes the head lines, foot lines, and sidebars to be replaced by
+  Causes the headlines, footlines, and sidebars to be replaced by
   gray rectangles (their sizes are still computed, though). Many
   other packages, including |pgf| and |hyperref|, also ``speedup''
   when this option is given.
@@ -989,7 +989,7 @@ can \emph{try}, but I would not advise it.
 \label{section-overlay}
 
 This section explains how you can create frames and overlays. It
-starts with a description of a general concept, calls \emph{overlay
+starts with a description of a general concept, called \emph{overlay
 specifications}. Nearly all of \beamer's commands for creating frames
 and overlays are based on this concept, except for the simple |\pause|
 command (though it is internally also mapped to this concept).
@@ -1012,7 +1012,7 @@ shown only from the second slide on.
 
 The \beamer\ class uses a different approach (though the
 abovementioned command is also available: |\onslide<2->| will have the
-same effect as |\FromSlide{2}|, expect that |\onslide| trancedes
+same effect as |\FromSlide{2}|, expect that |\onslide| transcends
 environments). The idea is to add \emph{overlay specifications} to
 certain commands. These specifications are always given in pointed
 brackets and follow the command ``as soon as possible,'' though in
@@ -1205,7 +1205,7 @@ The whole action mechanism is base on the following environment:
   \meta{action}|@|\meta{slide numbers}, it inserts the following text:
   |\begin{|\meta{action}|env}<|\meta{slide number}|>| and the
   beginning of the environment and the text |\end{|\meta{action}|env}|
-  at the end. If there several action specifications, several
+  at the end. If there are several action specifications, several
   environments are opened (and closed in the appropriate order). An
   \meta{overlay specification} without an action is promoted to
   |uncover@|\meta{overlay specification}.
@@ -1462,9 +1462,9 @@ contain multiple slides; otherwise it contains only one slide.
     to the same slide). Note that labels in general, and these labels
     in particular, can be used as targets for hyperlinks.
   \item
-    \declare{|plain|} causes  the head lines, foot lines,
-  and side bars to be suppressed. This is useful for creating single
-  frames with different head and foot lines or for creating frames
+    \declare{|plain|} causes  the headlines, footlines,
+  and sidebars to be suppressed. This is useful for creating single
+  frames with different head- and footlines or for creating frames
   showing big pictures that completely fill the frame.
 
   \example A frame with a picture completely filling the frame:  
@@ -1472,7 +1472,7 @@ contain multiple slides; otherwise it contains only one slide.
 \frame[plain]{\hfill\pgfimage[height=9.6cm]{bigimagefilename}\hfill}
 \end{verbatim}
   
-  \example A title page, in which the head and foot lines are replaced
+  \example A title page, in which the head- and footlines are replaced
   by two graphics.
 \begin{verbatim}
 \usetitlepagetemplate{
@@ -1624,10 +1624,10 @@ how to implement it in the presence of multiple overlays.
 
 Each frame consists of several components:
 \begin{enumerate}\itemsep=0pt\parskip=0pt
-\item a head line,
-\item a foot line,
-\item a left side bar,
-\item a right side bar,
+\item a headline,
+\item a footline,
+\item a left sidebar,
+\item a right sidebar,
 \item navigation symbols,
 \item a logo,
 \item a frame title, and
@@ -1637,8 +1637,8 @@ Each frame consists of several components:
 A frame need not have all of these components. Usually, the first six
 components are automatically setup by the theme you are
 using. To change them, you must install an appropriate template, see
-Section~\ref{section-head-templates} for the head and foot lines and
-Section~\ref{section-sidebar-templates} for the side bars. To install
+Section~\ref{section-head-templates} for the head- and footlines and
+Section~\ref{section-sidebar-templates} for the sidebars. To install
 a logo, invoke the following command in the preamble, \emph{after}
 having loaded the theme:
 
@@ -1987,7 +1987,7 @@ special:
   the specified slides. On non-specified slides, the text still
   occupies space. If no slides are specified, the following
   text is always shown. You need not call this command in the same
-  \TeX\ group, its effect transcedes block groups. However, this
+  \TeX\ group, its effect transcends block groups. However, this
   command has a \emph{different} effect inside an |overprint|
   environment, see the description of |overprint|.
   
@@ -2194,7 +2194,7 @@ in the same way as |\item|.
 
 Environments can also be equipped with overlay specifications. For
 most of the predefined environments, see Section~\ref{predefined},
-adding an overlay specifications causes the whole environment to be
+adding an overlay specification causes the whole environment to be
 uncovered only on the specified slides. This is useful for showing
 things incrementally as in the following example.
 
@@ -2411,7 +2411,7 @@ class.
     \oarg{argument number}\oarg{default optional value}\\\marg{begin
     text}\marg{end text}}
   Declares a new environment that is overlay-specification-aware. If
-  this environment encountered, the same algorithm as for
+  this environment is encountered, the same algorithm as for
   |\newcommand<>| is used to parse the arguments and the overlay
   specification.
 
@@ -2557,7 +2557,7 @@ short cuts''.
   You can use the |\againframe| command to ``continue'' frames that
   you previously started somewhere, but where certain details have
   been suppressed. You can use the |\againframe| command at a
-  much later point, for example only in the appendix to show to
+  much later point, for example only in the appendix to show
   additional slides there.
 \end{itemize}
 
@@ -2582,12 +2582,14 @@ affiliation, a title graphic, and a date.
   automatically inserted.
 \end{command}
 
-For compatibility with other classes in article mode, the following
+For compatibility with other classes, in |article| mode the following
 command is also provided: 
 
 \begin{command}{\maketitle}
   \beamernote
-  Same as |\titlepage|.
+  If used inside a frame, it has the same effect as |\titlepage|. If
+  used outside a frame, it has the same effect as
+  |\frame{\titlepage}|; in other words, a frame is added if necessary.
 \end{command}
 
 
@@ -2596,7 +2598,7 @@ elements you wish to be shown. This is done using the following
 commands: 
 
 \begin{command}{\title\oarg{short title}\marg{title}}
-  The \meta{short tile} is used in head lines and foot lines. Inside
+  The \meta{short tile} is used in headlines and footlines. Inside
   the \meta{title} line breaks can be inserted using the
   double-backslash command.
   \example
@@ -2682,7 +2684,7 @@ why; comments would be appreciated).
   \example|\section[Summary]{Summary of Main Results}|
 
   \articlenote
-  Then \meta{mode specification} allows you to provide an alternate
+  The \meta{mode specification} allows you to provide an alternate
   section command in |article| mode. This is necessary for example if
   the \meta{short section name} is unsuitable for the table of
   contents:
@@ -3064,7 +3066,7 @@ to keep in mind:
 Keeping the above warnings in mind, proceed as follows to create the
 bibliography: 
 
-For a beamer presentation, you will typically have to typeset your
+For a \beamer\ presentation, you will typically have to typeset your
 bibliography items partly ``by hand.'' Nevertheless, you \emph{can}
 use |bibtex| to create a ``first approximation'' of the
 bibliography. Copy the content of the file |main.bbl| into your
@@ -3193,7 +3195,7 @@ talk.
 
 \subsubsection{Adding Hyperlinks and Buttons}
 
-To create an anticipated nonlinear jumps in your talk structure, you
+To create anticipated nonlinear jumps in your talk structure, you
 can add hyperlinks to your presentation. A hyperlink is a text
 (usually rendered as a button) that, when you click on it, jumps the
 presentation to some other slide. Creating such a button is a
@@ -3306,7 +3308,7 @@ governed by a template, see Section~\ref{section-navigation-buttons}.
 \end{command}
 
 \begin{command}{\beamerreturnbutton\marg{button text}}
-  The symbol drawn for this button is usually a left pointing
+  The symbol drawn for this button is usually a left-pointing
   arrow. Use this button if pressing it will return from a detour. 
 
   \example
@@ -3509,13 +3511,13 @@ by default. The following symbols are shown:
   right of this symbol, a left and right arrow are shown.
 \item
   A frame icon, which is depicted as three slide icons ``stacked on top of
-  each other''. This symbols is framed by arrows.
+  each other''. This symbol is framed by arrows.
 \item
   A subsection icon, which is depicted as a highlighted subsection
   entry in a table of contents. This  symbols is framed by arrows.
 \item
   A section icon, which is depicted as a highlighted section entry
-  (together with all subsections) in a table of contents. This symbols
+  (together with all subsections) in a table of contents. This symbol
   is framed by arrows.
 \item
   A presentation icon, which is depicted as a completely highlighted
@@ -3523,7 +3525,7 @@ by default. The following symbols are shown:
 \item
   An appendix icon, which is depicted as a completely highlighted
   table of contents consisting of only one section. (This icon is only
-  shown if there is an appendix.
+  shown if there is an appendix.)
 \item
   Back and forward icons, depicted as circular arrows.
 \item
@@ -3582,7 +3584,7 @@ Section~\ref{section-navigation-symbols-template}.
 
 
 
-\subsection{Command for Creating the Local Structure}
+\subsection{Commands for Creating the Local Structure}
 
 Just like your whole presentation, each frame should also be
 structured. A frame that is solely filled with some long text is very
@@ -3593,7 +3595,7 @@ information is related, and so on.
 
 \LaTeX\ provides different commands for structuring text ``locally,''
 for example, via the |itemize| environment. These environments
-are also available in the beamer class, although their appearance has
+are also available in the \beamer\ class, although their appearance has
 been slightly changed. Furthermore, the \beamer\ class also defines
 some new commands and environments, see below, that may help you to
 structure your text.
@@ -3704,7 +3706,7 @@ or come last as in |\item[Cat]<1>|.
   if this argument does not start with |<|, then it is considered to
   be a \meta{mini template}. 
 
-  The syntex of the \meta{mini template} is the same as
+  The syntax of the \meta{mini template} is the same as
   the syntax of mini templates in the |enumerate| package (you do not
   need to include the 
   |enumerate| package, this is done automatically). Roughly spoken,
@@ -3750,7 +3752,7 @@ or come last as in |\item[Cat]<1>|.
 
 
 \begin{environment}{{description}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{long text}} 
-  Like |itemize|, but used to display an list that explains or defines
+  Like |itemize|, but used to display a list that explains or defines
   labels. The width of \meta{long text} is used to set the indent. Normally,
   you choose the widest label in the description and copy it here.
 
@@ -3811,7 +3813,7 @@ or come last as in |\item[Cat]<1>|.
 
 \subsubsection{Hilighting}
 
-The \beamer\ class predefines a commands and environments for
+The \beamer\ class predefines commands and environments for
 hlighting text. Using these commands makes is easy to change the
 appearance of a document by changing the theme. 
 
@@ -3975,7 +3977,7 @@ ones behave  analogously.
   specification}\oarg{additional text}\sarg{action specification}}
   Inserts a theorem. Only one \meta{action specification} may be
   given. If present, the \meta{additional text} is shown behind the
-  word ``Theorem'' is rounded brackets (although this can be changed by
+  word ``Theorem'' in rounded brackets (although this can be changed by
   the template).
 
   The appearance of the theorem is governed by
@@ -4010,8 +4012,8 @@ ones behave  analogously.
 \end{verbatim}
 
   \lyxnote
-  Is present, the optional argument and the action specification must
-  be given in \TeX\ mode at the beginning of the environment.
+  If present, the optional argument and the action specification must
+  be given in \TeX-mode at the beginning of the environment.
 \end{environment}
 
 The environments \declare{|corollary|}, \declare{|fact|}, and
@@ -4303,7 +4305,7 @@ create new columns.
   
   \lyxnote
   Use ``Columns'' or ``ColumnsTopAligned'' to create a |columns|
-  environment. To pass options, insert then in \TeX-mode right at the
+  environment. To pass options, insert them in \TeX-mode right at the
   beginning of the environment in square brackets.
 \end{environment}
 
@@ -4436,7 +4438,7 @@ Graphics often convey concepts or ideas much more efficiently than
 text: A picture can say more than a thousand words. (Although,
 sometimes a word can say more than a thousand pictures.) In the
 following, the advantages and disadvantages of different possible ways
-of creating graphics for beamer presentations are discussed.
+of creating graphics for \beamer\ presentations are discussed.
 
 
 
@@ -4488,21 +4490,29 @@ include:
 \item
   When using |latex| and |dvips|, you can only include external
   graphic files ending with the extension |.eps| (Encapsulated
-  PostScript). This is true both for the normal |graphics| package and
-  for |pgf|. When using |pgf|, do \emph{not} add the extension
-  |.eps|. When using |graphics|, do add the extension. If your graphic
-  file has a different format (like a |.jpg| file), you must first
-  convert it to an |.eps| file using some conversion program.
+  PostScript) or |.ps| (PostScript). This is true
+  both for the normal |graphics| package and for |pgf|. When using
+  |pgf|, do \emph{not} add the extension |.eps|. When using
+  |graphics|, do add the extension. If your graphic file has a
+  different format (like a |.jpg| file), you must first convert it to
+  an |.eps| file using some conversion program.
 \item
   When using |pdflatex|, you can only include external graphic files
   ending with one of the extensions |.pdf|, |.jpg|, |.jpeg|, or
   |.png|. As before, do not add these extension when using |pgf|, but
   do add them when using |graphics|. If your graphic file has a
   different format, you have to convert it.
+
+  You can \emph{also} include PostScript output from MetaPost when
+  using the |graphics| package, since it implements some filters to
+  convert such PostScript output to \pdf\ on-the-fly. This is a nifty
+  feature since it allows you to use MetaPost output for both \pdf\ and
+  PostScript. The extension of the file must be |.mps| for this to
+  work. 
 \end{itemize}
 
-Note that, most frustratingly, there is no graphic format that can be
-read by \emph{both} |pdflatex| \emph{and} |dvips|.
+Note that, frustratingly, most graphics format cannot be read by
+\emph{both} |pdflatex| \emph{and} |dvips|, except for |.mps|. 
 
 
 \lyxnote
@@ -5085,7 +5095,7 @@ using the following overlay-specification-aware command:
 \label{section-modes}
 
 The \beamer\ package offers different ways of creating special
-versions of your talk and adding material that are not shown during
+versions of your talk and adding material that is not shown during
 the presentation. You can create a \emph{handout} version of the
 presentation that can be distributed to the audience. You can also
 create a version that is more suitable for a presentation using an
@@ -5108,7 +5118,7 @@ file.
 A \emph{handout} is a version of a presentation in which the slides
 are printed on paper and handed out to the audience before or after
 the talk. (See Section~\ref{section-postscript} for how to place
-numerous frames on one pages, which is very useful for handouts.)  For
+numerous frames on one page, which is very useful for handouts.)  For
 the handout you typically want to produce as few slides as possible
 per frame. In particular, you do not want to print a new slide for
 each slide of a frame. Rather, only the ``last'' slide should be
@@ -5281,7 +5291,7 @@ second slide and has two entries.
 \end{verbatim}
 
 
-Outside frames, the command |\note|. It create a single note page. It
+Outside frames, the command |\note| creates a single note page. It
 is ``independent'' of any usage of the |\note| commands
 inside the previous frame. If you say |\note| inside a frame and
 |\note| right after it, \emph{two} note pages are created.
@@ -5291,14 +5301,14 @@ In the following, the syntax and effects of the |\note| command
 
 \begin{command}{\note\sarg{overlay
       specification}\oarg{options}\marg{note text}}
-  \emph{Effects inside frames:}
+  Effects \emph{inside} frames:
   
-  This command addends to \meta{note text} to
+  This command appends the \meta{note text} to
   the note that follows the current slide. Multiple uses of this
   command on a slide accumulate. If you 
   do not specify an \meta{overlay specification}, the 
   note will be added to \emph{all} slides of the current frame. This
-  often not what you want, so adding a specification like |<1>| is
+  is often not what you want, so adding a specification like |<1>| is
   usually a good idea.
 
   The following \meta{options} may be given:
@@ -5318,7 +5328,7 @@ In the following, the syntax and effects of the |\note| command
 
 
 Next, the syntax and effects of the |\note| command
-\emph{outside} frames is described:
+\emph{outside} frames are described:
 
 \begin{command}{\note\oarg{options}\marg{note text}}
   Outside frames, this command creates a note page. This command is  
@@ -5397,7 +5407,7 @@ By default, notes are put on a page that contains your text,
 some information that should make it easier to match the note to the
 frame while talking, and a little ``mini version'' of the slide coming
 before the note (this mini version contains only the body of the
-frame, the head line, foot line, and sidebars are not shown). 
+frame, the headline, footline, and sidebars are not shown). 
 
 You can change this appearance by specifying a different template for
 note rendering, see Section~\ref{section-note-templates} for
@@ -5432,9 +5442,9 @@ The class option |class=|\meta{class name}, where
 \meta{class name} is the name of another document class like
 |article| or |report|, causes the |beamer| class to transfer control
 almost immediately to the class named \meta{class name}. None of the
-normal commands defined by the beamer class will be 
+normal commands defined by the \beamer\ class will be 
 defined, except for one: |\mode|. All
-class options passed to the beamer class will be passed on to the
+class options passed to the \beamer\ class will be passed on to the
 class \meta{class name}, \emph{except}, naturally, for the option
 |class=|\meta{class name} itself.
 
@@ -5516,14 +5526,14 @@ descriptions of the commands to which you wish to apply them.
 There is one remaining problem: While the |article| version can easily
 \TeX\ the whole file, even in the presence of commands like
 |\frame<2>|, we do not want the special article text to be inserted
-into out original beamer presentations. That means, we would like all
+into our original \beamer\ presentation. That means, we would like all
 text \emph{between} frames to be suppressed. More precisely, we want
 all text except for commands like |\section| and so on to be
 suppressed. This behaviour can be enforced by specifying the option
 |ignorenonframetext| in the presentation version. The option will
 insert a |\mode*| at the beginning of your presentation. 
 
-The following example shows a simple usage of the article mode:
+The following example shows a simple usage of the |article| mode:
 
 \begin{verbatim}
 \documentclass[class=article,a4paper]{beamer}
@@ -5579,14 +5589,14 @@ With some more text.
 \end{document}
 \end{verbatim}
 
-There is one command, whose behaviour is a bit special in the article
+There is one command whose behaviour is a bit special in |article|
 mode: The line break command |\\|. Inside frames, this command has no
-effect in article mode, except if an overlay specification is
+effect in |article| mode, except if an overlay specification is
 present. Then it has the normal effect dictated by the
 specification. The reason for this behaviour is that you will
 typically inserts lots of |\\| commands in a presentation in order to
 get control over all line breaks. These line breaks are mostly
-superfluous in the article mode. If you really want a line break to
+superfluous in |article| mode. If you really want a line break to
 apply in all versions, say |\\<all>|. Note that the command |\\| is
 often redefined by certain environments, so it may not always be
 overlay-specification-aware. In such a case you have to write
@@ -5630,7 +5640,7 @@ to find the presentation version. This is necessary if you wish to include
 slides from the presentation version in an article as figures.
 
 \begin{command}{\setjobnamebeamerversion\marg{filename without extension}}
-  Tells the beamer class where to find the presentation version of the
+  Tells the \beamer\ class where to find the presentation version of the
   current file.  
 \end{command}
 
@@ -5837,8 +5847,8 @@ other symbol.
 \begin{verbatim}
 \mode<article>
 
-This text is typeset only in article mode.
-\verb!verabtim text is ok {!
+This text is typeset only in |article| mode.
+\verb!verbatim text is ok {!
 
 \mode
 <presentation>
@@ -5987,11 +5997,11 @@ While these reasons are pretty good, you still might wish to change the font:
   Other fonts, especially Times, are sometime rendered better since
   they seem to have better internal hinting.
 \item
-  A presentation typeset in a serif font creates a conservative
+  A presentation typeset in a serif font creates a more conservative
   impression, which might be exactly what you wish to create.
 \item
   On projections with a very high resolutions serif text is just as
-  readable as sans serif text.
+  readable as sans-serif text.
 \end{itemize}
 
 You must decide whether the text should be typeset in sans-serif or in
@@ -6014,13 +6024,13 @@ need to specify this.
 
 By default, if a sans-serif font is used for the main text,
 mathematical formulas are also typeset using sans-serif letters. In
-most cases, this is visually the pleasing and easily readable way of
+most cases, this is visually the most pleasing and easily readable way of
 typesetting mathematical formulas. However, in mathematical texts the
 font used to render, say, a variable is sometimes used to
 differentiate between different meanings of this variable. In such
 case, it may be necessary to typeset mathematical text using serif
 letters. Also, if you have a lot of mathematical text, the audience
-may be quicker to ``parse'' it, if it typeset in the way people
+may be quicker to ``parse'' it, if it is typeset the way people
 usually read mathematical text: in a serif font.
 
 You can use the two options |mathsans| and |mathserif| to override the
@@ -6113,7 +6123,7 @@ application enlarges the font. By specifying a default font size
 smaller than 11pt you can put more onto each slide, by specifying a
 larger font size you can fit on less.
 
-To specify the the font size, you can use the following class options:
+To specify the font size, you can use the following class options:
 
 \begin{classoption}{8pt}
   This is way too small. Requires that the package |extsize|
@@ -6196,7 +6206,7 @@ to get beautiful outline fonts and correct hyphenation.
 
 \subsection{Margin Sizes}
 
-The ``paper size'' of a beamer presentation is fixed to 128mm times
+The ``paper size'' of a \beamer\ presentation is fixed to 128mm times
 96mm. The aspect ratio of this size is 4:3, which is exactly what most
 beamers offer these days. It is the job of the
 presentation program (like |acroread|) to display the slides at
@@ -6211,8 +6221,8 @@ default to 1cm. To change them, you should use the following two
 commands:
 
 \begin{command}{\beamersetleftmargin\marg{left margin dimension}}
-  Sets a new left margin. This excludes the left side bar. Thus, it is
-  the distance between the right edge of the left side bar and the left
+  Sets a new left margin. This excludes the left sidebar. Thus, it is
+  the distance between the right edge of the left sidebar and the left
   edge of the text. This command can only be used in the preamble
   (before the |document| environment is used).
   \example |\beamersetleftmargin{1cm}|
@@ -6225,7 +6235,7 @@ commands:
   Like |\beamersetleftmargin|, only for the right margin.
 \end{command}
 
-For more information on side bars, see
+For more information on sidebars, see
 Section~\ref{section-sidebar-templates}. 
 
 
@@ -6262,7 +6272,7 @@ the standard |\usepackage| command.
 \end{verbatim}
 
   For this theme, you can specify an arbitrary number of templates for
-  the boxes in the head line and in the foot line. You can add a
+  the boxes in the headline and in the footline. You can add a
   template for another box by using the following commands.
 \end{package}
 
@@ -6313,7 +6323,7 @@ the standard |\usepackage| command.
 \begin{package}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
         width}|,dark,tab]|}}
   The option |width| sets the width of the sidebar to \meta{sidebar
-    width}. The option |dark| makes the side bar and the whole theme
+    width}. The option |dark| makes the sidebar and the whole theme
   darked. The option |tab| causes the current section or subsection to
   be hilighted by changing the background behind the entry, rather
   than hilighting the entry itself.
@@ -6460,20 +6470,20 @@ template:
   command |\makeatletter| before the |\usexxxtemplate| command and the
   command |\makeatother| afterward.
 \item
-  Most templates having to do with the frame components (head lines,
-  side bars, etc.)\ can only be changed in the preamble. Other
+  Most templates having to do with the frame components (headlines,
+  sidebars, etc.)\ can only be changed in the preamble. Other
   templates can be changed during the document.
 \item
-  The height of the head line and foot line templates is calculated
+  The height of the headline and footline templates is calculated
   automatically. This is done by typesetting the templates and then
   ``having a look'' at their heights. This recalculation is done right
   at the beginning of the document, \emph{after} all packages have
   been loaded and even \emph{after} these have executed their
   |\AtBeginDocument| initialization. 
 \item
-  The left and right margins of the head and foot line templates are
-  the same as of the normal text. In order to start the head line and
-  foot line at the page margin, you must insert a negative
+  The left and right margins of the head- and footline templates are
+  the same as of the normal text. In order to start the headline and
+  footline at the page margin, you must insert a negative
   horizontal skip using |\hskip-\Gm@lmargin|. You may wish to add a
   |\hskip-\Gm@rmargin| at the end to avoid having \TeX\ complain about
   overfull boxes.
@@ -6522,13 +6532,13 @@ template:
 \end{verbatim}
 \end{command}
 
-If you wish to suppress the head and foot line in the title page, use
+If you wish to suppress the head- and footline in the title page, use
 |\frame[plain]{\titlepage}|.
 
 
 
 
-\paragraph{Inserts for this Template}\ 
+\paragraph{Inserts for these Templates}\ 
 
 \begin{command}{\insertauthor}
   Inserts the author names into a template.
@@ -6584,7 +6594,7 @@ If you wish to suppress the head and foot line in the title page, use
 \end{command}
 
 
-\paragraph{Inserts for this Template}\ 
+\paragraph{Inserts for these Templates}\ 
 
 \begin{command}{\insertpart}
   Inserts the current part name.
@@ -6766,7 +6776,7 @@ If you wish to suppress the head and foot line in the title page, use
 
 
 
-\paragraph{Inserts for this Template}\ 
+\paragraph{Inserts for these Templates}\ 
 
 \begin{command}{\inserttocsection}
   Inserts the table of contents version of the current section name
@@ -6897,7 +6907,7 @@ If you wish to suppress the head and foot line in the title page, use
   simply suppress the frame title.
 \end{command}
 
-\paragraph{Inserts for this Template}\ 
+\paragraph{Inserts for these Templates}\ 
 
 \begin{command}{\insertframetitle}
   Inserts the current frame title into a template.
@@ -6906,32 +6916,32 @@ If you wish to suppress the head and foot line in the title page, use
 
 
 
-\subsubsection{Head Lines and Foot Lines}
+\subsubsection{Headlines and Footlines}
 
 \label{section-head-templates}
 
 \paragraph{Predefined Templates}\ 
 
 \begin{command}{\beamertemplateheadempty}
-  Makes the head line empty.
+  Makes the headline empty.
 \end{command}
 
 \begin{command}{\beamertemplatefootempty}
-  Makes the foot line empty.
+  Makes the footline empty.
 \end{command}
 
 \begin{command}{\beamertemplatefootpagenumber}
-  Shows only the page number in the foot line.
+  Shows only the page number in the footline.
 \end{command}
 
 
 
 \paragraph{Template Installation Commands}\ 
 
-\begin{command}{\usefoottemplate\marg{foot line template}}
-  The final height of the foot line is calculated by invoking this
+\begin{command}{\usefoottemplate\marg{footline template}}
+  The final height of the footline is calculated by invoking this
   template just before the beginning of the document and by setting
-  the foot line height to the height of the template.
+  the footline height to the height of the template.
   \example
 \begin{verbatim}
 \usefoottemplate{\hfil\tiny{\color{black!50}\insertpagenumber}}
@@ -6949,7 +6959,7 @@ or
 \end{command}
 
 
-\begin{command}{\useheadtemplate\marg{head line template}}
+\begin{command}{\useheadtemplate\marg{headline template}}
   See |\usefoottemplate|.
   \example
 \begin{verbatim}
@@ -7006,7 +7016,7 @@ or
   the current section hilighted. The \meta{left insert} will be
   inserted to the left of the sections, the \marg{right insert} to the
   right. By inserting a triple fill (a
-  |filll|) you can flush to bar to the left or right.
+  |filll|) you can flush the bar to the left or right.
   \example
 \begin{verbatim}
 \insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
@@ -7087,26 +7097,26 @@ or
 
 
 
-\subsubsection{Side Bars}
+\subsubsection{Sidebars}
 
 \label{section-sidebar-templates}
 
-Side bars are vertical areas that stretch from the lower end of the
-head line to the top of the foot line. There can be a side bar at the
-left and one at the right (or even both). Side bars can show a table
+Sidebars are vertical areas that stretch from the lower end of the
+headline to the top of the footline. There can be a sidebar at the
+left and one at the right (or even both). Sidebars can show a table
 of contents, but they could also be added for purely aesthetic
 reasons.
 
-When you install a side bar template, you must explicitly specify the
-horizontal size of the side bar. The vertical size is determined
-automatically. Each side bar can have its own background, which can be
+When you install a sidebar template, you must explicitly specify the
+horizontal size of the sidebar. The vertical size is determined
+automatically. Each sidebar can have its own background, which can be
 setup using special side background templates.
 
 Adding a sidebar of a certain size, say 1cm, will make the main text
 1cm narrower. The distance between the inner side of a side
 bar and the outer side of the text, as specified by
 the command |\beamersetleftmargin| and its counterpart for the
-right margin, is not changed when a side bar is installed.
+right margin, is not changed when a sidebar is installed.
 
 Internally, the sidebars are typeset by showing them as part of the
 headline. The \beamer\ class keeps track of six dimensions, three 
@@ -7118,20 +7128,20 @@ text, and the macros |\Gm@lmargin| and  |\Gm@rmargin| store
 the distance from the edge of the paper to the edge of the text. Thus
 the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
 exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
-next to the left side bar, you might write
+next to the left sidebar, you might write
 |\hskip-\beamer@leftmargin| to get there.
 
-In the following, only the commands for the left side bars are
-listed. Each of these commands also exists for the right side bar,
+In the following, only the commands for the left sidebars are
+listed. Each of these commands also exists for the right sidebar,
 with ``left'' replaced by ``right'' everywhere.
 
 
 \begin{command}{\useleftsidebartemplate\marg{horizontal size}\marg{template}}
-  When the side bar is typeset, the \meta{template} is invoked inside a
-  |\vbox| of the height of the side bar. Thus, the below example
-  will produce a side bar of half a centimeter width, in which the word
-  ``top'' is printed just below the head line and ``bottom'' is printed
-  just above the foot line.
+  When the sidebar is typeset, the \meta{template} is invoked inside a
+  |\vbox| of the height of the sidebar. Thus, the below example
+  will produce a sidebar of half a centimeter width, in which the word
+  ``top'' is printed just below the headline and ``bottom'' is printed
+  just above the footline.
   \example
 \begin{verbatim}
 \useleftsidebartemplate{1cm}{
@@ -7154,7 +7164,7 @@ with ``left'' replaced by ``right'' everywhere.
 
 
 \begin{command}{\useleftsidebarcolortemplate\marg{color expression}}
-  Uses the given color as background for the side bar.
+  Uses the given color as background for the sidebar.
   \example
 \begin{verbatim}
 \useleftsidebarcolortemplate{\color{red}}
@@ -7165,7 +7175,7 @@ with ``left'' replaced by ``right'' everywhere.
 \begin{command}{\useleftsidebarverticalshadingtemplate\marg{bottom
       color expression}\marg{top color expression}}
   Installs a smooth vertical transition between the given colors as
-  background for the side bar.
+  background for the sidebar.
   \example
 \begin{verbatim}
 \useleftsidebarverticalshadingtemplate{white}{red}
@@ -7176,7 +7186,7 @@ with ``left'' replaced by ``right'' everywhere.
 \begin{command}{\useleftsidebarhorizontalshadingtemplate\marg{left end
       color expression}\marg{right end color expression}}
   Installs a smooth horizontal transition between the given colors as
-  background for the side bar.
+  background for the sidebar.
   \example
 \begin{verbatim}
 \useleftsidebarhorizontalshadingtemplate{white}{red}
@@ -7310,12 +7320,12 @@ You can redefine these commands to change these symbols.
 
 \begin{command}{\beamertemplatesphereminiframe}
   Changes the symbols in a navigation bar used to represent
-  a frame to a small spheres.
+  a frame to a small sphere.
 \end{command}
 
 \begin{command}{\beamertemplatesphereminiframeinverted}
   Changes the symbols in a navigation bar used to represent
-  a frame to a small spheres, but with the colors inverted. Use this if
+  a frame to a small sphere, but with the colors inverted. Use this if
   the navigation bar is shown on a |structure| background.
 \end{command}
 
@@ -7463,7 +7473,7 @@ You can redefine these commands to change these symbols.
 \end{command}
 
 
-\paragraph{Inserts for this Template}\ 
+\paragraph{Inserts for these Templates}\ 
 
 The following inserts are useful for the navigation symbols template:
 
@@ -7727,7 +7737,7 @@ The following inserts are useful for the navigation symbols template:
 \paragraph{Inserts for these Templates}\
 
 \begin{command}{\insertdescriptionitem}
-  Inserts the current item of a description environment into a
+  Inserts the current item of a |description| environment into a
   template.
 \end{command}
 
@@ -7914,8 +7924,8 @@ The following inserts are useful for the navigation symbols template:
   Whenever an environment declared using the command |\newtheorem| is
   to be typeset, the \meta{block beginning template} is inserted at
   the beginning and the \meta{block end template} at the end. If there
-  is a overlay specifciation when an environment like |theorem| is
-  used, this overlay specifciation will directly follow the
+  is a overlay specification when an environment like |theorem| is
+  used, this overlay specification will directly follow the
   \meta{block beginning template} upon invocation. This is even true
   if there was an optional argument to the |theorem| environment. This
   optional argument is available via the insert |\inserttheoremaddition|.
@@ -8076,7 +8086,7 @@ The following inserts are useful for the navigation symbols template:
 \section{Tips and (Dirty) Tricks}
 
 The aim of this section is to collect some hints and tricks that make
-use of the basic \beamer-class concepts.
+use of the basic \beamer\ class concepts.
 
 
 
@@ -8105,7 +8115,7 @@ A disadvantage of the approach is that you will have to renumber
 everything if you add a new item. This is usually not such a big
 problem, but it can be a nuiseance.
 
-To automize the uncovering, you can use the following code:
+To automatize the uncovering, you can use the following code:
 
 \begin{verbatim}
 \begin{itemize}[<+->]
@@ -8172,7 +8182,7 @@ Note that this will draw the little item symbol also in red.
 \subsubsection{Changing Symbol Before an Enumeration}
 
 When uncovering a list of tasks or problems, you may desire that the
-symbol in front of the last uncovered symbol is, say, an ballot X,
+symbol in front of the last uncovered symbol is, say, a ballot~X,
 while for the previous items it is a check mark (you'll find these
 characters in some Dingbats fonts).
 
@@ -8241,7 +8251,7 @@ be a slide in which all three points are checked.
 
 \subsubsection{Uncovering Tagged Formulas Piecewise}
 
-Suppose you have a three line formula as the following:
+Suppose you have a three-line formula as the following:
 \begin{verbatim}
 \begin{align}
   A &= B \\
@@ -8318,7 +8328,7 @@ uncovering it columnwise.
 
 Once more, using the |colortbl| package offers a solution. In the
 following example, the |tabular| header is used to insert |\onslide|
-commands, one for each column, that cover the entries in the colomn
+commands, one for each column, that cover the entries in the column
 from a certain slide on. At the end of the last column, the |\onslide|
 without a specification ensures that the first column on the next row
 is once more shown normally.
@@ -8358,10 +8368,10 @@ class, extra options or precautions may be necessary.
 \end{package}
 
 \begin{package}{{babel}|[|\declare{|french|}|]|}
-  When using the French style, certain features that clash with the
-  functionality of the beamer class will be turned off. For example,
+  When using the |french| style, certain features that clash with the
+  functionality of the \beamer\ class will be turned off. For example,
   enumerations are still produced the way the theme dictates, not the
-  way the French style does. Also, the characters |:| and |!| will not
+  way the |french| style does. Also, the characters |:| and |!| will not
   be a active characters. This means, that the little space that is
   inserted before them in the |french| style is not inserted. You have
   to do this  ``by hand.''
@@ -8375,8 +8385,8 @@ class, extra options or precautions may be necessary.
 
 \begin{package}{{babel}|[|\declare{|spanish|}|]|}
   \beamernote
-  When using the Spanish style, certain features that clash with the
-  functionality of the beamer class will be turned off. In particular,
+  When using the |spanish| style, certain features that clash with the
+  functionality of the \beamer\ class will be turned off. In particular,
   the special behaviour of the pointed brackets |<| and |>| is
   deactivated. 
 
@@ -8614,7 +8624,7 @@ package, developped by Fr\'ed\'eric Goualard, to \beamer\
 commands. Also, some commands of the \textsc{ha}-\prosper\ package,
 developped by Hendri Adriaens, are mapped to \beamer\ commands. 
 \emph{These mappings cannot perfectly emulate all of Prosper!} Rather,
-these mappings are intended as an aide when porting parts of
+these mappings are intended as an aid when porting parts of
 presentations created using \prosper\ to \beamer. \emph{No styles are
   implemented that mimick Prosper styles.} Rather, the normal \beamer\
 themes must be used (although, one could implement \beamer\ themes
@@ -8660,7 +8670,7 @@ problems:
   In \beamer, the command |\PDForPS| will do exactly what the name
   suggests: insert the first argument when run by |pdflatex|, insert
   the second argument when run by |latex|. However, in \prosper, the
-  code inserted for the \pdf\ case is acutally PostScript code, which
+  code inserted for the \pdf\ case is actually PostScript code, which
   is only later converted to \pdf\ by some external program. You will
   need to adjust this PostScript code such that it works with
   |pdflatex| (which is not always possible).
@@ -8812,7 +8822,7 @@ listed.
   \item
     \declare{|toc=|\meta{entry}} overrides the subsection table of
     contents entry created by this slide by \meta{entry}. Note that a
-    subsection entry is create for a slide only if the
+    subsection entry is created for a slide only if the
     |framesassubsections| options is specified.
   \item
     \declare{|template|=\meta{text}} is ignored.
@@ -8952,7 +8962,7 @@ listed.
 
 
 \begin{command}{\tsection\opt{|*|}\marg{section name}}
-  Creates a section names \meta{section name}. The star, if present,
+  Creates a section named \meta{section name}. The star, if present,
   is ignored.
 \end{command}
 
@@ -8975,7 +8985,7 @@ listed.
 \end{command}
 
 \begin{command}{\PDForPS\marg{PostScript text}\marg{PDF text}}
-  Inserts eight the \meta{PostScript text} or the \meta{PDF text},
+  Inserts either the \meta{PostScript text} or the \meta{PDF text},
   depending on whether |latex| or |pdflatex| is used. When porting,
   the \meta{PDF text} will most likely be \emph{incorrect}, since in
   \prosper\ the \meta{PDF text} is actually PostScript text that is
@@ -9026,7 +9036,7 @@ The following commands are parsed by \beamer, but have no effect:
 The package |beamerseminar| maps a subset of the commands of the \seminar\
 package to \beamer. As for \prosper, the emulation cannot be
 perfect. For example, no portrait slides are supported, no
-automatic page braking, the framing of slides is not
+automatic page breaking, the framing of slides is not
 emulated. Unfortunately, for all frames (|slide| environments) that
 contain overlays, you have to put the environment into a |\frame| ``by
 hand'' and must remove all occurences of |\newslide| inside the
@@ -9066,12 +9076,12 @@ The workflow for the migration is the following:
   will have to move them \emph{outside} the frames. It may then be
   necessary to add a |\frametitle| command to the slide.
 \item
-  If you use pdf\LaTeX\ to typeset the presentation, than you cannot
+  If you use pdf\LaTeX\ to typeset the presentation, you cannot
   include PostScript files. You should convert them to |.pdf| or to
   |.png| and adjust any usage of |\includegraphics| accordingly.
 \item
   When starting to change things, you can use all of \beamer's
-  commands and even mix them with \prosper\ commands.
+  commands and even mix them with \seminar\ commands.
 \end{enumerate}
 
 An example can be found in the file |beamerexample-seminar.tex|.
@@ -9170,7 +9180,7 @@ listed.
   option is given, from that overlay on. Usages of this command may be
   nested (as in \seminar). If an |\overlay| command is given inside
   another, it temporarily ``overrules'' the outer one as demonstrated
-  in the following example, where it is assumed, that the |accumulate|
+  in the following example, where it is assumed that the |accumulate|
   option is given.
 
   \example
