@@ -30,8 +30,8 @@ otherwise it contains only one slide.
   to be shown. If left out, the number is calculated automatically.
   The \meta{environment contents} can be normal \LaTeX\ text, but may not contain
   |\verb| commands or |verbatim| environments or any environment that
-  changes the character codes, unless the |containsverbatim| options
-  is given, see also Section~\ref{section-verbatim}. 
+  changes the character codes, unless the |fragile| options
+  is given.
  
   The normal \LaTeX\ command |\frame| is available \emph{inside}
   frames with its usual meaning. Both outside and inside frames it is
@@ -121,8 +121,8 @@ otherwise it contains only one slide.
     \item
       Overlays are not supported.
     \item
-      If your frame contains verbatim text, you can and must specify the
-      option |containsverbatim|. Since overlays are not supported
+      If your frame contains verbatim text, you must specify the
+      option |fragile=singleslide|. Since overlays are not supported
       anyway, specifying this option never hurts.
     \item
       Any notes for the frame created using the |\note| command will
@@ -233,50 +233,46 @@ otherwise it contains only one slide.
     the global placement policy, which is governed by the class
     options |t| and |c|.
   \item
-    \declare{|containsverbatim|\opt{|=|\meta{mode}}} tells \beamer\
-    that the frame contains verbatim commands. In this case, different
-    internal mechanisms are used to typeset the frame to ensure that
-    inside the frame the character codes can be reset. The price of
-    switching to another internal mechanism is that either you cannot
-    use overlays or an external file needs to be written and read back
-    (which is not always desirable).
+    \declare{|fragile|\opt{|=singleslide|}} tells \beamer\
+    that the frame contents is ``fragile.'' This means that the frame
+    contains text that is not ``interpreted as usual.'' For example,
+    this applies to verbatim text, which is, obviously, interpreted
+    somewhat differently from normal text.
 
-    In detail, the following \meta{mode}s can be specified:
-    \begin{itemize}
-    \item
-      \declare{|false|} just means that no character code changes
-      occur in the frame. This is the default.
-    \item
-      \declare{|true|} indicates that character code changes (caused,
-      for example, by a |verbatim|) occur inside the frame. In this
-      case, only the first slide of the frame is typeset (unless all
-      slides are suppressed by the \meta{overlay specification}).
-    \item
-      \declare{|overlays|} indicates that the character codes change
-      (because of, say, a |verbatim|) and overlays are needed for this
-      frame. In this case, the contents of the frame is written to a
-      special file called \meta{jobname}|.vrb|. Then, the frame is
-      started anew and the content of this file is read back. Since,
-      upon reading of a file, the character codes can be modified,
-      this allows you to use both verbatim text and overlays.
+    If a frame contains fragile text, different internal mechanisms
+    are used to typeset the frame to ensure that inside the frame the
+    character codes can be reset. The price of switching to another
+    internal mechanism is that either you cannot use overlays or an
+    external file needs to be written and read back (which is not
+    always desirable).
 
-      The original \meta{options} are passed to the frame upon
-      reading from disk, except for the |containsverbatim| option, of
-      course.
-    \end{itemize}    
+    In detail, the following happens when this option is given: The
+    contents of the frame is scanned and then written to a 
+    special file named \meta{jobname}|.vrb|. Then, the frame is
+    started anew and the content of this file is read back. Since,
+    upon reading of a file, the character codes can be modified,
+    this allows you to use both verbatim text and overlays.
+
+    To determine the end of the frame, the following rule is used: The
+    first occurence of a single line containing exactlye |\end{frame}|
+    ends the frame. This special is needed since the frame contents
+    is, after all, not interpreted when it is gathered.
+
+    You can also add the optional information |=singleslide|. This
+    tells \beamer\ that the frame contains only a single slide. In
+    this case, the frame contents is \emph{not} written to a special
+    file, but interpreted directly, which is ``faster and cleaner.''
   \item
     \declare{|label=|\meta{name}} causes the frame's contents to
     be stored under the name \meta{name} for later resumption using
-    the command |\againframe|. If this option is given, you cannot
-    directly include verbatim text in the frame. The frame is still rendered
-    normally. See also |\againframe|.
-
-    Furthermore, on each slide of the frame a label with the name
-    \meta{name}|<|\meta{slide number}|>| is created. On the
+    the command |\againframe|. Furthermore, on each slide of the frame
+    a label with the name \meta{name}|<|\meta{slide number}|>| is created. On the
     \emph{first} slide, furthermore, a label with the name \meta{name}
     is created (so the labels \meta{name} and \meta{name}|<1>| point
     to the same slide). Note that labels in general, and these labels
     in particular, can be used as targets for hyperlinks.
+
+    You can use this option together with |fragile|.
   \item
     \declare{|plain|} causes  the headlines, footlines,
     and sidebars to be suppressed. This is useful for creating single
@@ -426,7 +422,7 @@ otherwise it contains only one slide.
 
 Internally, the |\frame| command is what is actually executed. The
 |frame| environment just collects its environment contents and then
-calls the |\frame| command; except if the option |containsverbatim|
+calls the |\frame| command; except if the option |fragile=singleslide|
 is specified, in which case the contents is not collected, but
 control is nevertheless passed on the |\frame| (the internals are a
 bit obscure). You \emph{can} use the |frame| environment inside other
@@ -1698,135 +1694,6 @@ the frame to be suppressed in the handout version, but to be shown
 normally in all other versions. Another useful specification is
 |<beamer>|, which causes the frame to be shown normally in |beamer|
 mode, but to be suppressed in all other versions.
-
-
-\subsection{Verbatim Commands and Listings inside Frames}
-\label{section-verbatim}
-
-The |\verb| command, the |verbatim| environment, the
-|lstlisting| environment, and related environments that allow
-you to typeset arbitrary text work only in
-frames that contain a single slide or that are suppressed
-altogether. Furthermore, you must explicitly specify that the frame
-contains verbatim text using the |containsverbatim| commands:
-\begin{verbatim}
-\begin{frame}[containsverbatim]
-  \frametitle{Our Search Procedure}
-
-\begin{verbatim}
-  int find(int* a, int n, int x)
-  {
-    for (int i = 0; i<n; i++)
-      if (a[i] == x)
-        return i;
-  }
-\end{verbatim}
-\unskip{\MacroFont|\end{verbatim}|}
-                                %\begin{verbatim}
-\begin{verbatim}
-\end{frame}
-\end{verbatim}
-
-You may \emph{not} use the |label=|\meta{label name} option if you
-have a verbatim text on a slide.
-
-If you need to use verbatim commands in frames that contain several
-slides or on a frame that uses the |label| option, you must
-\emph{declare} your verbatim texts before the frame starts. This is
-done using two special commands:
-
-
-\begin{command}{\defverb\marg{command name}\opt{|*|}%
-    \meta{delimiter symbol}\meta{verbatim text}\meta{delimiter symbol}}
-  Declares a verbatim text for later use. The declaration should be
-  done outside the frame. Once declared, the text can be used
-  in overlays like normal text. The one-line \meta{verbatim text} must
-  be delimited by a special \meta{delimiter symbol} (works like the
-  |\verb| command). Adding a star makes spaces visible.
-
-\example
-\begin{verbatim}
-\defverb\mytext!int main (void) { ...!
-\defverb\mytextspaces*!int  main  (void ){  ...!
-
-\begin{frame}
-  \begin{itemize}
-  \item<1-> In C you need a main function.
-  \item<2-> It is declare like this: \mytext
-  \item<3-> Spaces are not important: \mytextspaces
-  \end{itemize}
-\end{frame}
-\end{verbatim}
-\end{command}
-
-
-\begin{command}{\defverbatim\oarg{options}\marg{command name}\marg{text}}
-  The \meta{text} may contain a |verbatim|,  |verbatim*|,
-  |lstlisting|, or a related environment. The command \marg{command
-    name} can be used later inside frames. The declaration
-  should be done outside the frame. Once declared, the text can be
-  used in overlays like normal text.
-
-  The following \meta{options} may be given:
-  \begin{itemize}
-  \item
-    \declare{|colored|} declares that the verbatim text will have
-    its ``own'' colors. Normally, the verbatim text is typeset using
-    the current color, which allows you to use commands like |\alert|
-    to make verbatim text red on certain slides. However, if the
-    verbatim text has, say, a special background color or different
-    parts of it a colored differently (the |lstlisting| environment
-    does this), then you do \emph{not} want the verbatim text to
-    inherit its color from the ``outside.'' In this case, you should
-    give the |colored| option.
-  \item
-    \declare{|width=|\meta{dimension}} sets the width of the verbatim
-    box. The default is the text width at the moment when the
-    |\defverbatim| command is used; but this will be too large if
-    the box is used inside a |columns| environment later on. In such a
-    case you can use this option to specify the width the box will
-    later need to have.
-  \end{itemize}  
-
-  \example
-\begin{verbatim}
-\defverbatim\algorithmA{
-\begin{verbatim}
-int main (void)
-{
-  cout << "Hello world." << endl;
-  return 0;
-}
-\end{verbatim}
-\unskip{\MacroFont|\end{verbatim}|}
-\begin{verbatim}
-}
-
-\defverbatim[colored]\algorithmB{
-\begin{lstlisting}[language={C++},backgroundcolor=\color{yellow}]
-int main (void)
-{
-  cout << "Hello world." << endl;
-  return 0;
-}
-\end{lstlisting}
-}
-
-\begin{frame}
-  Our algorithm:
-  \alert<1>{\algorithmA}
-  \uncover<2>{Note the return value.}
-\end{frame}
-
-\begin{frame}
-  Same algorithm typeset using the lstlisting environment:
-  \algorithmB
-\end{frame}
-\end{verbatim}
-%\begin{verbatim}
-\end{command}
-
-
 
 
 

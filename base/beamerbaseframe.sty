@@ -196,11 +196,15 @@
 \define@key{beamerframe}{plain}[true]{%
   \beamer@plainframetrue%
   \def\beamer@frametemplate{\beamer@frametemplate@plain}}
-\define@key{beamerframe}{containsverbatim}[true]{%
+\define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
+\define@key{beamerframe}{fragile}[true]{%
   \beamer@containsverbatimfalse%
   \beamer@containsverbatimandoverlaysfalse%
-  \csname beamer@containsverbatim#1\endcsname}
-\def\beamer@containsverbatimoverlays{\beamer@containsverbatimandoverlaystrue}
+  \csname beamer@fragile#1\endcsname%
+}
+\def\beamer@fragilefalse{}
+\def\beamer@fragiletrue{\beamer@containsverbatimandoverlaystrue}
+\def\beamer@fragilesingleslide{\beamer@containsverbatimtrue}  
 \define@key{beamerframe}{c}[true]{% centered
   \beamer@frametopskip=0pt plus 1fill\relax%
   \beamer@framebottomskip=0pt plus 1.5fill\relax%
@@ -314,6 +318,13 @@
 
 \def\beamer@checkforverbatim#1containsverbatim#2\relax{%
   \beamer@ifempty{#2}%
+  {\beamer@checkforfragile#1fragile\relax}
+  {% contains verbatim
+    \endgroup% end environment
+    \expandafter\beamer@framecommand\beamer@frameoptions\bgroup}%
+}
+\def\beamer@checkforfragile#1fragile#2\relax{%
+  \beamer@ifempty{#2}%
   {\beamer@frameenv}% normal frame
   {% contains verbatim
     \endgroup% end environment
@@ -409,6 +420,9 @@
     \fi%
   \else% again mode
     \let\beamer@howtotreatframe\beamer@doseveralframes%
+    \ifbeamer@containsverbatimandoverlays%
+      \let\beamer@howtotreatframe\beamer@doexternalframe%
+    \fi%
   \fi%  
   \beamer@howtotreatframe}
 \long\def\beamer@donoframe{%
@@ -460,13 +474,23 @@
 \def\beamer@endslide{\end{beamer@frameslide}\beamer@writeslidentry\beamer@reseteecodes}
 \def\beamer@singletoken{\beamer@next\egroup}
 
-\def\beamer@doexternalframe{\expandafter\beamer@verbatimreadframe\@gobble}
-% will return to following command with frame contents written to \jobname.vrb
+\def\beamer@doexternalframe{%
+  \edef\beamer@verbfilename{\jobname\ifx\beamer@againname\@empty\else.\insertframenumber\fi.vrb}% .vrb for `verbatim'
+  \immediate\openout\beamer@verbatimfileout=\beamer@verbfilename%
+  \expandafter\beamer@verbatimreadframe\@gobble}
+% will return to following command with frame contents written to \beamer@verbfilename
 \def\beamer@afterexternalframe{%
-  \expandafter\beamer@stripframeoptions\beamer@frameoptions%
-  \expandafter\expandafter\expandafter\frame\expandafter\expandafter\expandafter<\expandafter\beamer@whichframes\expandafter>%
-  [\beamer@@frameoptions,containsverbatim=false]{\input\jobname.vrb}\beamer@reseteecodes}
-\def\beamer@stripframeoptions[#1]{\def\beamer@@frameoptions{#1}}
+  \expandafter\beamer@doframeinput\beamer@frameoptions\relax}
+
+\def\beamer@doframeinput{\@ifnextchar<{\beamer@frameinput}{\beamer@frameinput<*>}}
+\def\beamer@frameinput<#1>{\@ifnextchar[{\beamer@@frameinput<#1>}{\beamer@@frameinput<#1>[]}}
+\def\beamer@@frameinput<#1>[{\@ifnextchar<{\beamer@@@@frameinput<#1>[}{\beamer@@@frameinput<#1>[<*>][}}
+\def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[#2]}{\beamer@@@frameinput<#1>[#2][]}}
+\def\beamer@@@frameinput<#1>[#2][#3]{%
+  \def\beamer@temp{\frame<#1>[#2][#3,fragile=false]}%
+  \expandafter\beamer@temp\expandafter{\expandafter\input\expandafter{\beamer@verbfilename}}
+  \beamer@reseteecodes}
+
 
 \def\beamer@writeslidentry{%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally

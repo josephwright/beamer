@@ -507,10 +507,9 @@ algorithm his friend Eratosthenes has send him (saying he came up with
 it while reorganizing his sieve collection). Euclid normally uses the
 |verbatim| environment and sometimes also similar environments like
 |lstlisting| to typeset listings. He can also use them in \beamer, but
-he must add the |containsverbatim| option to the frame and he cannot
-use overlays on frames typeset using this option:
+he must add the |fragile| option to the frame:
 \begin{verbatim}
-\begin{frame}[containsverbatim]
+\begin{frame}[fragile]
   \frametitle{An Algorithm For Finding Primes Numbers.}
 
 %\begin{verbatim} 
@@ -529,14 +528,50 @@ int main (void)
 \unskip{\MacroFont|\end{verbatim}|}
                                 %\begin{verbatim}
 \begin{verbatim}
+  \begin{uncoverenv}<2>
+    Note the use of \verb|std::|.
+  \end{uncoverenv}
 \end{frame}
 \end{verbatim}
-Euclid is a bit alarmed that he cannot use verbatims together with
-overlays directly. Fortunately, there exists a slightly more
-complicated mechanism, where the verbatim text has to be ``declared''
-before the frame, for using verbatims together with overlays.
 
 
+On second thought, Euclid would prefer to uncover part of the
+algorithm stepwise and to add an emphasis on certain lines or parts of
+lines. He can use package like |alltt| for this, but in simple cases
+the environment |{semiverbatim}| defined by \beamer\ is more useful:
+It works like |{verbatim}|, except that |\|, |{|, and |}| retain their
+meaning (one can typeset them by using |\\|, |\{|, and |\}|). Euclid
+might now typeset his algorithm as follows:
+
+\begin{verbatim}
+\begin{frame}[fragile]
+  \frametitle{An Algorithm For Finding Primes Numbers.}
+
+\begin{semiverbatim}    
+\uncover<1->{\alert<0>{int main (void)}}
+\uncover<1->{\alert<0>{\{}}
+\uncover<1->{\alert<1>{  \alert<4>{std::}vector<bool> is_prime (100, true);}}
+\uncover<1->{\alert<1>{  for (int i = 2; i < 100; i++)}}
+\uncover<2->{\alert<2>{    if (is_prime[i])}}
+\uncover<2->{\alert<0>{      \{}}
+\uncover<3->{\alert<3>{        \alert<4>{std::}cout << i << " ";}}
+\uncover<3->{\alert<3>{        for (int j = i; j < 100;}}
+\uncover<3->{\alert<3>{             is_prime [j] = false, j+=i);}}
+\uncover<2->{\alert<0>{      \}}}
+\uncover<1->{\alert<0>{  return 0;}}
+\uncover<1->{\alert<0>{\}}}
+\end{semiverbatim}
+
+  \visible<4->{Note the use of \alert{\texttt{std::}}.}
+\end{frame}
+\end{verbatim}
+
+The |\visible| command does nearly the same as |\uncover|. A
+difference occurs if the command |\setbeamercovered{transparent}| has
+been used to make covered text ``transparent'' instead, |\visible| still makes the text
+completely ``invisible'' on non-specified slides. Euclid has
+the feeling that the naming convention is a bit strange, but cannot
+quite pinpoint the problem.
 
 \subsection{Changing the Way Things Look I: Theming}
 

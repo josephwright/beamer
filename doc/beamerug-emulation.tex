@@ -206,7 +206,7 @@ listed.
 \end{command}
 
 \begin{environment}{{slides}\oarg{options}\marg{frame title}}
-  Inserts a frame with the |containsverbatim| option set. The
+  Inserts a frame with the |fragile=singleslide| option set. The
   \meta{frame title} will be enclosed in a |\frametitle| command.
 
   The following \meta{options} may be given:
@@ -239,7 +239,7 @@ listed.
 
 \begin{verbatim}
 \subsection{short} % omitted, if framesassubsections is not specified
-\begin{frame}[containsverbatim]
+\begin{frame}[fragile=singleslide]
   \transglitter
   \frametitle{A Title}
   Hi!
@@ -250,7 +250,7 @@ listed.
 
 \begin{command}{\overlays\marg{number}\marg{slide environment}}
   This will put the \meta{slide environment} into a frame that does
-  not have the |containsverbatim| option and which can hence contain
+  not have the |fragile| option and which can hence contain
   overlayed text. The \meta{number} is ignored since the number of
   necessary overlays is computed automatically by \beamer.
 
@@ -608,7 +608,7 @@ listed.
   The starred version does the same as the nonstarred one.
 
   If this command is not issued inside a |\frame|, it sets up a frame
-  with the |containsverbatim| option set. Thus, this frame will
+  with the |fragile=singleframe| option set. Thus, this frame will
   contain only a single slide.
 
   \example

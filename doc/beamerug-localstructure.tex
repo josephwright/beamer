@@ -1483,6 +1483,43 @@ its documentation.
 
 
 
+\subsection{Verbatim and Fragile Text}
+
+If you wish to use a |{verbatim}| environment in a frame, you have to
+add the option |[fragile]| to the |{frame}| environment. In this case,
+you really have to use the |{frame}| environment (not the |\frame|
+command) and the |\end{frame}| must be alone on a single line. Using
+this option will cause the frame contents to be written to an external
+file and the read back. See the description of the |{frame}|
+environment for more details.
+
+You must also use the |[fragile]| option for frames that include any
+``fragile'' text, which is any text that is not ``interpreted the way
+text is usually interpreted by \TeX.'' For example, if you use a
+package that (locally) redefined the meaning of, say, the character
+|&|, you must use this option.
+
+Inside |{verbatim}| environments you obviously cannot use commands
+like |\alert<2>| to highlight part of code since the text is written
+in, well, verbatim. There are several good packages like |alltt| or
+|listings| that allow you to circumvent this problem. For simple
+cases, the following environment can be used, which is defined by
+\beamer:
+
+\begin{environment}{{semiverbatim}}
+  The text inside this environment is typeset like verbatim
+  text. However, the characters |\|, |{|, and |}| retain their
+  meaning. Thus, you can say things like
+\begin{verbatim}
+\alert<1->{std::cout << "AT&T likes 100% performance";}
+\end{verbatim}
+  To typeset the three characters |\|, |{|, and |}| you can use the
+  commands |\\| (which is redefined inside this environment---you do
+  not need it anyway), |\{|, and |\}|. Thus in order to get typeset
+  ``|\alert<1>{X}|'' you can write |\\alert<1>\{X\}|.
+\end{environment}
+
+
 \subsection{Abstract}
 
 The |abstract| environment is overlay-specificiation-aware in \beamer:

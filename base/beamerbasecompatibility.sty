@@ -149,6 +149,37 @@
 %
 % Obsolete commands from old versions of beamer
 %
+\mode
+<all>
+{
+  \let\beamer@verb@egroup=\verb@egroup
+
+  \def\beamer@setb{\setbox0=\copy}
+  \long\def\defverb#1{%
+    \expandafter\newbox\csname @verb\string#1\endcsname%
+    \def#1{{\expandafter\beamer@setb\csname
+        @verb\string#1\endcsname\unhbox0}}%
+    \def\verb@egroup{\global\let\verb@balance@group\@empty\egroup\egroup\let\verb@egroup=\beamer@verb@egroup}
+    \expandafter\setbox\csname @verb\string#1\endcsname=\hbox\bgroup
+    \verb}
+
+  \define@key{beamerverb}{colored}[true]{\def\beamer@colorsup{}}
+  \define@key{beamerverb}{width}{\def\beamer@verbwidth{#1}}
+  
+  \newcommand{\defverbatim}[2][]{%
+    \def\beamer@colorsup{\def\set@color{}\def\reset@color{}}%
+    \setkeys{beamerverb}{width=\textwidth}%
+    \setkeys{beamerverb}{#1}%
+    \expandafter\newbox\csname @verb\string#2\endcsname%
+    \def#2{{\expandafter\beamer@setb\csname @verb\string#2\endcsname%
+        \unvbox0}\color{.}}%
+    \expandafter\setbox\csname @verb\string#2\endcsname=\vbox\bgroup%
+    \beamer@colorsup%
+    \hsize=\beamer@verbwidth\textwidth=\beamer@verbwidth\linewidth=\beamer@verbwidth%
+    \vskip-\baselineskip\strut\bgroup\aftergroup\beamer@verbend%
+    \let\@next=}
+  \def\beamer@verbend{\vskip-\baselineskip\strut\egroup}
+}
 \def\tableofcontentscurrent{\tableofcontents[current]}
 \def\plainframe{\frame[plain]}%obsolete
 \def\pgfonly{\only}%obsolete

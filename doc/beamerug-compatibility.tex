@@ -14,13 +14,13 @@ class, extra options or precautions may be necessary.
   Graphics created using AlDraTex must be treated like verbatim
   text. The reason is that DraTex fiddles with catcodes and spaces
   much like verbatim does. So, in order to insert a picture, either
-  add the |containsverbatim| option to the frame or use the
+  add the |fragile| option to the frame or use the
   |\defverbatim| command to create a box containing the picture.
 \end{package}
 
 \begin{package}{{alltt}}
   Text in an |alltt| environment must be treated like verbatim
-  text. So add the |containsverbatim| option to frames containing this
+  text. So add the |fragile| option to frames containing this
   environment or use |\defverbatim|.
 \end{package}
 

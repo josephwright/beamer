@@ -11,13 +11,23 @@
 \newwrite\beamer@verbatimfileout
 
 \def\beamer@verbatimreadframe{%
-  \immediate\openout\beamer@verbatimfileout=\jobname.vrb%
   \begingroup%
   \let\do\beamer@makeinnocent\dospecials%
   \beamer@makeinnocent\^^L% and whatever other special cases
-  \endlinechar`\^^M \catcode`\^^M=12 \beamer@processframeline}
+  \endlinechar`\^^M \catcode`\^^M=12 \beamer@processframefirstline}
 
 {\catcode`\^^M=12\endlinechar=-1%
+  \long\gdef\beamer@processframefirstline#1^^M{%
+    \def\beamer@test{#1}%
+    \ifx\beamer@test\beamer@stopframefirst%
+      \let\next=\beamer@framewritten%
+    \else
+      \immediate\write\beamer@verbatimfileout{\string#1}% first token
+                                % has already been read, hence add \string
+      \let\next=\beamer@processframeline%
+    \fi%
+    \next%
+  }
   \long\gdef\beamer@processframeline#1^^M{%
     \def\beamer@test{#1}%
     \ifx\beamer@test\beamer@stopframe%
@@ -32,6 +42,7 @@
 
 {\escapechar=-1\relax%
   \xdef\beamer@stopframe{\string\\end\string\{frame\string\}}
+  \xdef\beamer@stopframefirst{\noexpand\end\string\{frame\string\}}
 }
 
 \def\beamer@framewritten{\endgroup%
@@ -41,46 +52,54 @@
 
 
 
-%
-%
-% Verbatim overlay support
-%
-%
+
+% The following code is partly adapted from code from the alltt package.
 
 \mode
 <all>
 {
-  \let\beamer@verb@egroup=\verb@egroup
-
-  \def\beamer@setb{\setbox0=\copy}
-  \long\def\defverb#1{%
-    \expandafter\newbox\csname @verb\string#1\endcsname%
-    \def#1{{\expandafter\beamer@setb\csname
-        @verb\string#1\endcsname\unhbox0}}%
-    \def\verb@egroup{\global\let\verb@balance@group\@empty\egroup\egroup\let\verb@egroup=\beamer@verb@egroup}
-    \expandafter\setbox\csname @verb\string#1\endcsname=\hbox\bgroup
-    \verb}
-
-  \define@key{beamerverb}{colored}[true]{\def\beamer@colorsup{}}
-  \define@key{beamerverb}{width}{\def\beamer@verbwidth{#1}}
-  
-  \newcommand{\defverbatim}[2][]{%
-    \def\beamer@colorsup{\def\set@color{}\def\reset@color{}}%
-    \setkeys{beamerverb}{width=\textwidth}%
-    \setkeys{beamerverb}{#1}%
-    \expandafter\newbox\csname @verb\string#2\endcsname%
-    \def#2{{\expandafter\beamer@setb\csname @verb\string#2\endcsname%
-        \unvbox0}\color{.}}%
-    \expandafter\setbox\csname @verb\string#2\endcsname=\vbox\bgroup%
-    \beamer@colorsup%
-    \hsize=\beamer@verbwidth\textwidth=\beamer@verbwidth\linewidth=\beamer@verbwidth%
-    \vskip-\baselineskip\strut\bgroup\aftergroup\beamer@verbend%
-    \let\@next=}
-  \def\beamer@verbend{\vskip-\baselineskip\strut\egroup}
+\begingroup
+\lccode`\~=`\'
+\lowercase{\endgroup
+\newenvironment{semiverbatim}{%
+  \trivlist
+  \item\relax
+    \if@minipage
+    \else
+      \vskip\parskip
+    \fi
+    \leftskip\@totalleftmargin
+    \rightskip\z@skip
+    \parindent\z@
+    \parfillskip\@flushglue
+    \parskip\z@skip
+    \@@par
+    \@tempswafalse
+    \def\par{%
+      \if@tempswa
+        \leavevmode\null\@@par\penalty\interlinepenalty
+    \else
+      \@tempswatrue
+      \ifhmode\@@par\penalty\interlinepenalty\fi
+    \fi}
+    \obeylines
+    \verbatim@font
+    \let\org@prime~%
+    \everymath\expandafter{\the\everymath
+      \catcode`\'=12 \let~\org@prime}
+    \everydisplay\expandafter{\the\everydisplay
+      \catcode`\'=12 \let~\org@prime}
+    \def\dospecials{\do\ \do\$\do\&%
+     \do\#\do\^\do\_\do\%\do\~\do\`\do\,\do\'\do\-}
+    \let\do\@makeother
+    \dospecials
+    \def\\{\char`\\}
+    \def\{{\char`\{}
+    \def\}{\char`\}}
+    \frenchspacing\@vobeyspaces
+    \everypar \expandafter{\the\everypar \unpenalty}}
+{\endtrivlist}}
 }
-
-
-
 
 \mode
 <all>
