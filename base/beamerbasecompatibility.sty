@@ -279,7 +279,8 @@
 \def\usefoottemplate{\@ifstar{\beamer@usefoots}{\beamer@usefoot}}
 \def\beamer@usefoot{\setbeamertemplate{footline}[text line]}
 \def\beamer@usefoots{\setbeamertemplate{footline}}
-
+\def\usecaptiontemplate{\setbeamertemplate{caption}}
+\def\insertblockname{\insertblocktitle}
 
 
 
@@ -300,7 +301,7 @@
 \def\beamertemplateenumeratesquare{\setbeamertemplate{enumerate items}[square]}
 \def\beamertemplatelargepartpage{\setbeamertemplate{part page}[default]}
 \def\beamertemplateboldpartpage{\setbeamerfont{part}{size=\large}%
-  \setbeamerfont{partname}{series=\bfseries}%
+  \setbeamerfont{part name}{series=\bfseries}%
   \setbeamertemplate{part page}[default]}
 \def\beamertemplatelargetitlepage{\setbeamertemplate{title page}[default]}
 \def\beamertemplateboldtitlepage{\setbeamerfont{title}{size=\large,series=\bfseries}%
@@ -312,9 +313,9 @@
   \setbeamerfont{framesubtitle}{series=\bfseries}
   \setbeamertemplate{frametitle}[default]}
 \def\beamertemplatelargeframetitle{\setbeamertemplate{frametitle}[default]}
-\def\beamertemplateboldblocks{\setbeamerfont{block title}{size={},series=\bfseries}\beamertemplatedefaultblocks}
-\def\beamertemplatelargeblocks{\beamertemplatedefaultblocks}
-\def\beamertemplateshadowblocks{\beamertemplateroundedblocks[shadow=true]}
+\def\beamertemplateboldblocks{\setbeamerfont{block title}{size={},series=\bfseries}\setbeamertemplate{blocks}[default]}
+\def\beamertemplatelargeblocks{\setbeamertemplate{blocks}[default]}
+\def\beamertemplateshadowblocks{\setbeamertemplate{blocks}[rounded][shadow=true]}
 \def\beamertemplateplaintoc{\beamertemplatedefaulttoc}
 \def\beamertemplatecircleminiframeinverted{\beamertemplatecircleminiframe%
   \usebeamercolor{mini frames}{use=structure,fg=white,bg=structure.bg}}
@@ -338,6 +339,9 @@
 \def\beamertemplateheadempty{\setbeamertemplate{headline}{}}
 \def\beamertemplatefootempty{\setbeamertemplate{fotoline}{}}
 \def\beamertemplatefootpagenumber{\setbeamertemplate{footline}[page number]}
+\def\beamertemplatecaptionownline{\setbeamertemplate{caption}[caption name own line]}
+\def\beamertemplatecaptionnwithnumber{\setbeamertemplate{caption}[numbered]}
+\def\beamertemplateroundedblocks{\setbeamertemplate{blocks}{rounded}}
 
 \mode
 <all>
@@ -347,6 +351,15 @@
   \long\def\useframetemplate#1#2{\setbeamertemplate{frame begin}{#1}\setbeamertemplate{frame end}{#2}}
   \def\usebackgroundtemplate{\setbeamertemplate{background canvas}}
   \def\beamertemplatesolidbackgroundcolor#1{\setbeamercolor{normal text}{bg=#1}}
+  \long\def\useblocktemplate#1#2{%
+    \setbeamertemplate{block begin}{#1}%
+    \setbeamertemplate{block end}{#2}}
+  \long\def\usealertblocktemplate#1#2{%
+    \setbeamertemplate{block alerted begin}{#1}%
+    \setbeamertemplate{block alerted end}{#2}}
+  \long\def\useexampleblocktemplate#1#2{%
+    \setbeamertemplate{block example begin}{#1}%
+    \setbeamertemplate{block example end}{#2}}
   \newcommand{\beamertemplategridbackground}[1][]{\setbeamertemplate{background}[grid][step=#1]}
   \newcommand{\beamertemplateshadingbackground}[2]{\setbeamertemplate{background canvas}[vertical shading][bottom=#1,top=#2]}
   \newcommand\usealerttemplate[2]{\setbeamertemplate{alerted text begin}{#1}\setbeamertemplate{alerted text end}{#2}}

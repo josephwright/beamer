@@ -9,16 +9,19 @@
 
 \mode<presentation>
 
-\setbeamercolor{structure}{fg=black!70,bg=black!50}
+\setbeamercolor{normal text}{fg=black,bg=black!40}
+\setbeamercolor{structure}{fg=white}
 
 \setbeamercolor{alerted text}{fg=red!85!black}
 
-\setbeamercolor{item projected}{use=item,fg=white,bg=item.fg!75!black!75}
+\setbeamercolor{item projected}{use=item,fg=black,bg=item.fg!75}
 
-\setbeamercolor*{palette primary}{use=structure,fg=black!5,bg=structure.bg}
-\setbeamercolor*{palette secondary}{use=structure,fg=black!10,bg=structure.bg!95}
-\setbeamercolor*{palette ternary}{use=structure,fg=black!15,bg=structure.bg!90}
-\setbeamercolor*{palette fourth}{use=structure,fg=black!20,bg=structure.bg!85}
+\definecolor{beetle@other}{RGB}{64,80,127}
+
+\setbeamercolor*{palette primary}{fg=white,bg=beetle@other}
+\setbeamercolor*{palette secondary}{parent=palette primary,use=palette primary,bg=palette primary.bg!95!black}
+\setbeamercolor*{palette ternary}{parent=palette primary,use=palette primary,bg=palette primary.bg!90!black}
+\setbeamercolor*{palette fourth}{parent=palette primary,use=palette primary,bg=palette primary.bg!85!black}
 
 \setbeamercolor*{sidebar}{parent=palette primary}
 
@@ -27,22 +30,20 @@
 \setbeamercolor*{palette sidebar ternary}{fg=white}
 \setbeamercolor*{palette sidebar fourth}{fg=black}
 
-\setbeamercolor*{frametitle}{parent=palette primary,fg=white}
-\setbeamercolor*{framesubtitle}{parent=frametitle,fg=black}
+\setbeamercolor{frametitle}{fg=white}
+\setbeamercolor{framesubtitle}{fg=black}
 
-\setbeamercolor*{title}{parent=palette primary,fg=white}
-\setbeamercolor*{subtitle}{parent=frametitle,fg=black}
+\setbeamercolor*{title}{fg=white}
+\setbeamercolor*{subtitle}{fg=black}
 
-\setbeamercolor*{block title}{parent=frametitle}
-\setbeamercolor*{block title alerted}{use=alerted text,fg=white,bg=red!50!black!50}
-\setbeamercolor*{block title example}{use=example text,fg=white,bg=green!50!black!50}
+\setbeamercolor*{block title}{parent=structure}
+\setbeamercolor*{block title alerted}{parent=alerted text}
+\setbeamercolor*{block title example}{parent=example text}
+\setbeamercolor*{block body}{}
+\setbeamercolor*{block body alerted}{}
+\setbeamercolor*{block body example}{}
 
-\setbeamercolor*{block body}{use=block title,fg=black,bg=block title.bg}
-\setbeamercolor*{block body alerted}{use=block title alerted,fg=black,bg=block title alerted.bg}
-\setbeamercolor*{block body example}{use=block title example,fg=black,bg=block title example.bg}
-
-\setbeamercolor*{separation line}{}
-\setbeamercolor*{fine separation line}{}
+\setbeamercolor*{titlelike}{parent=structure}
 
 \mode
 <all>

@@ -41,9 +41,10 @@
 
 \def\beamer@thc@usecolor#1{%
   {%
-    \def\beamer@thc@fg{fg}%
-    \def\beamer@thc@bg{bg}%
+    \beamer@thc@prepcolor%
     \beamer@thc@docolor{#1}%
+    \ifx\beamer@thc@fg\@empty\def\beamer@thc@fg{fg}\fi%
+    \ifx\beamer@thc@bg\@empty\def\beamer@thc@bg{bg}\fi%
     \global\let\beamer@thc@gfg\beamer@thc@fg%
     \global\let\beamer@thc@gbg\beamer@thc@bg%
     \globalcolorstrue%

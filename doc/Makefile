@@ -24,6 +24,7 @@ beameruserguide.pdf: $(doc).tex $(doc).ind \
  $(themes:%=beamerugtheme%.pdf) \
  $(fontthemes:%=beamerugfonttheme%.pdf) \
  $(colorthemes:%=beamerugcolortheme%.pdf) \
+ beamerugcolorthemealbatrossstylish.pdf \
  $(innerthemes:%=beameruginnertheme%.pdf) \
  $(outerthemes:%=beamerugoutertheme%.pdf) 
 	pdflatex $(doc).tex
@@ -36,6 +37,10 @@ beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../themes/
 beamerugfonttheme%.pdf: beamerfontthemeexample.tex beamerthemeexamplebase.tex ../themes/font/beamerfonttheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugfonttheme%.pdf=%)}\\input beamerfontthemeexample.tex;
 	mv beamerfontthemeexample.pdf $@
+
+beamerugcolorthemealbatrossstylish.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../themes/color/beamercolorthemealbatross.sty
+	pdflatex \\def\\themename{albatrossstylish}\\input beamercolorthemeexample.tex;
+	mv beamercolorthemeexample.pdf $@
 
 beamerugcolortheme%.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../themes/color/beamercolortheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugcolortheme%.pdf=%)}\\input beamercolorthemeexample.tex;

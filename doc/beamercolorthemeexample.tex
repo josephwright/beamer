@@ -13,15 +13,29 @@
 
 \def\albatrossname{albatross}
 \def\flyname{fly}
+\def\beetlename{beetle}
 \def\structurename{structure}
+
+\def\albatrossnamestylish{albatrossstylish}
 
 \ifx\themename\structurename
   \usecolortheme[cmyk={0.69,0,0.50,0}]{\themename}
 \else
-  \usecolortheme{\themename}
+  \ifx\themename\albatrossnamestylish
+    \usecolortheme[overlystylish]{albatross}
+    \usecolortheme{lily}
+  \else
+    \usecolortheme{\themename}
+  \fi
 \fi
 
 \ifx\themename\albatrossname
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
+\ifx\themename\albatrossnamestylish
   \makeatletter
   \let\beamertemplatesolidbackgroundcolor=\@gobble
   \makeatother
@@ -32,6 +46,13 @@
   \let\beamertemplatesolidbackgroundcolor=\@gobble
   \makeatother
 \fi
+
+\ifx\themename\beetlename
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
 
 
 

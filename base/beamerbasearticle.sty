@@ -92,6 +92,15 @@
 \defbeamertemplate<article>*{alerted text end}{default}{\ifmmode\else\end{itshape}\fi}
 \defbeamertemplate<article>*{structure begin}{default}{\ifmmode\else\begin{bfseries}\fi}
 \defbeamertemplate<article>*{structure end}{default}{\ifmmode\else\end{bfseries}\fi}
+\defbeamertemplate<article>*{block begin}
+  {\par\vskip\medskipamount{\noindent\textbf{\insertblockname}}\par\noindent\ignorespaces}
+\defbeamertemplate<article>*{block end}{\vskip\medskipamount}
+\defbeamertemplate<article>*{block alerted begin}
+  {\par\vskip\medskipamount{\noindent\textbf{\emph{\insertblockname}}}\par\noindent\ignorespaces}
+\defbeamertemplate<article>*{block alerted end}{\vskip\medskipamount}
+\defbeamertemplate<article>*{block example begin}
+  {\par\vskip\medskipamount{\noindent\emph{\insertblockname}}\par\noindent\ignorespaces}
+\defbeamertemplate<article>*{block example end}{\vskip\medskipamount}
 
 \mode
 <all>

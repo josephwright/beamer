@@ -144,38 +144,37 @@ Complete complete themes happen to have names of flying animals.
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item \declare{|overlystylish|} installs a background canvas that
-      is, in my opinion, way too stylish. But then, I do not want
-      to press my taste on other people. When using this option, it is
-      probably a very good idea to also use the |lily| color theme.      
+  \item \declare{|overlystylish|} installs a background canvas that
+    is, in my opinion, way too stylish. But then, I do not want
+    to press my taste on other people. When using this option, it is
+    probably a very good idea to also use the |lily| color theme.      
   \end{itemize}
+
+  \example The |overlystylish| option together with the |lily| color theme:
+  \genericthemeexample{colorthemealbatrossstylish}
 \end{colorthemeexample}
 
 
 \begin{colorthemeexample}{beetle}
   The main ``theme behing this theme'' is to use white and black text
   on gray background. The white text is used for special emphasis, the
-  black text for normal text. The gray background is, however, only
-  used in ``special places'' like theorems or blocks. For a  more
-  consequent theme that uses a gray background throughout, see the
-  |fly| theme.
-
+  black text for normal text. The ``outer stuff'' like the headline
+  and the footline use, however, a bluish color. To change this color,
+  change the background of |palette primary|.
+  
   Great care must be taken with this theme since both the white/gray
   and the black/gray contrasts are much lower than with other
   themes. Make sure that the contrast is high enough for the actual
   presentation.
 
-  You can change the ``grayish'' background color of structural
-  elements by changing the background of the \beamer-color |structure|.
+  You can change the ``grayish'' background by changing the background
+  of |normal text|.
 \end{colorthemeexample}
-
-
 
 \begin{colorthemeexample}{crane}
-  This theme uses the colors of the Lufthansa, whose logo is a crane.
+  This theme uses the colors of the Lufthansa, whose logo is a
+  crane. It is \emph{not} an official theme by that company, however. 
 \end{colorthemeexample}
-
-
 
 \begin{colorthemeexample}{dove}
   This theme is nearly a black and white theme and useful for creating
@@ -190,14 +189,10 @@ Complete complete themes happen to have names of flying animals.
 
 
 \begin{colorthemeexample}{fly}
-  This theme is somewhat similar to the |beetle| theme, it is only
-  more consequent. The downside is the even smaller contrast when
-  compared to the |beetle| theme. To change the background gray,
-  adjust the normal background color, that is, the background of the
-  \beamer-color |normal text|.
+  This theme is the ``consequent'' version  of |beetle| and uses
+  white/black/gray throughout. It does not go particularly well with
+  themes that use shadows.
 \end{colorthemeexample}
-
-
 
 \begin{colorthemeexample}{seagull}
   Like the |dove| color theme, this theme is useful for printing on a

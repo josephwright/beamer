@@ -70,7 +70,7 @@
 \defbeamertemplate*{part page}{default}[1][]
 {
   \begin{centering}
-    {\usebeamerfont{partname}\usebeamercolor[fg]{partname}\partname~\insertromanpartnumber}
+    {\usebeamerfont{part name}\usebeamercolor[fg]{part name}\partname~\insertromanpartnumber}
     \vskip1em\par
     \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
       \usebeamerfont{part title}\insertpart\par
@@ -324,7 +324,78 @@
 }
 
 
-\beamertemplatedefaultblocks
+% Captions
+
+\defbeamertemplate*{caption}{default}
+{%
+  \raggedright
+  {%
+    \usebeamercolor[fg]{caption name}%
+    \usebeamerfont*{caption name}%
+    \insertcaptionname:%
+  }
+  \insertcaption\par
+}
+
+
+% Blocks
+
+\defbeamertemplateparent{blocks}{block begin,block end,%
+  block alerted begin,block alerted end,%
+  block example begin,block example end}
+{}
+
+\defbeamertemplate*{block begin}{default}
+{
+  \par\vskip\medskipamount%
+  \begin{beamercolorbox}[colsep*=.75ex]{block title}
+    \usebeamerfont*{block title}\insertblockname%
+  \end{beamercolorbox}%
+  {\parskip0pt\par}%
+  \ifbeamercolorempty[bg]{block title}
+  {}
+  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\vskip-.75ex\vbox{}%
+}
+\defbeamertemplate*{block end}{default}  
+{\end{beamercolorbox}\vskip\smallskipamount}
+
+\defbeamertemplate*{block alerted begin}{default}
+{
+  \par\vskip\medskipamount%
+  \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
+    \usebeamerfont*{block title alerted}\insertblockname%
+  \end{beamercolorbox}%
+  {\parskip0pt\par}%
+  \ifbeamercolorempty[bg]{block title alerted}
+  {}
+  {\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body alerted}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}\vskip-.75ex\vbox{}%
+}
+
+\defbeamertemplate*{block alerted end}{default}
+{\end{beamercolorbox}\vskip\smallskipamount}
+
+
+\defbeamertemplate*{block example begin}{default}
+{
+  \par\vskip\medskipamount%
+  \begin{beamercolorbox}[colsep*=.75ex]{block title example}
+    \usebeamerfont*{block title example}\insertblockname%
+  \end{beamercolorbox}%
+  {\parskip0pt\par}%
+  \ifbeamercolorempty[bg]{block title example}
+  {}
+  {\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body example}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}\vskip-.75ex\vbox{}%
+}
+\defbeamertemplate*{block example end}{default}
+{\end{beamercolorbox}\vskip\smallskipamount}
+
+
 
                                 % Theorems
 \beamertemplatetheoremsunnumbered

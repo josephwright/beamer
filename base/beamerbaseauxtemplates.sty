@@ -579,18 +579,30 @@
 % Captions
 %
 
-\newcommand{\beamertemplatecaptionwithnumber}{
-\usecaptiontemplate{%
-  {{\usebeamercolor[fg]{caption name}\insertcaptionname~\insertcaptionnumber:}
-    \insertcaption}}}
-
-\newcommand{\beamertemplatecaptionownline}{
-\usecaptiontemplate{%
+\defbeamertemplate{caption}{numbered}
+{%
+  \raggedright
   {%
-    \begin{minipage}{\textwidth}
-      {\usebeamercolor[fg]{caption name}\insertcaptionname}\\
+    \usebeamercolor[fg]{caption name}%
+    \usebeamerfont*{caption name}%
+    \insertcaptionname~\insertcaptionnumber:%
+  }
+  \insertcaption\par
+}
+
+\defbeamertemplate{caption}{caption name own line}
+{%
+  \begin{minipage}{\textwidth}
+    \raggedright
+  {%
+    \usebeamercolor[fg]{caption name}%
+    \usebeamerfont*{caption name}%
+    \insertcaptionname%
+    }\\
       \insertcaption
-    \end{minipage}}}}
+    \end{minipage}
+}
+
 
 
 
@@ -680,61 +692,43 @@
 % Blocks
 %
 
+\defbeamertemplateparent{blocks}[rounded]{block begin,block end,%
+  block alerted begin,block alerted end,%
+  block example begin,block example end}[1][]
+{[#1]}
 
-\newcommand{\beamertemplatedefaultblocks}{
-  \useblocktemplate{%
-    \par\vskip\medskipamount%
-    \begin{beamercolorbox}[colsep*=.75ex]{block title}
-      \usebeamerfont*{block title}\insertblockname%
-    \end{beamercolorbox}%
-    {\parskip0pt\par}%
-    \ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
-    \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\vskip-.75ex\vbox{}%
-    }{\end{beamercolorbox}\vskip\smallskipamount}
-  \usealertblocktemplate{%
-    \par\vskip\medskipamount%
-    \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
-      \usebeamerfont*{alerted block title}\insertblockname%
-    \end{beamercolorbox}%
-    {\parskip0pt\par}%
-    \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip\vskip-0.5pt}}%
-    \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}\vskip-.75ex\vbox{}%
-    }{\end{beamercolorbox}\vskip\smallskipamount}
-  \useexampleblocktemplate{%
-    \par\vskip\medskipamount%
-    \begin{beamercolorbox}[colsep*=.75ex]{block title example}
-      \usebeamerfont*{example block title}\insertblockname%
-    \end{beamercolorbox}%
-    {\parskip0pt\par}%
-    \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip\vskip-0.5pt}}%
-    \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}\vskip-.75ex\vbox{}%
-    }{\end{beamercolorbox}\vskip\smallskipamount}
+\defbeamertemplate{block begin}{rounded}[1][shadow=false]
+{
+  \par\vskip\medskipamount%
+  \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
+    {\usebeamerfont*{block title}\insertblockname}%
+    \raggedright%
+    \usebeamerfont*{block body}%
 }
-\@onlypreamble\beamertemplatedefaultblocks
+\defbeamertemplate{block end}{rounded}[1][]
+{\end{beamerboxesrounded}\vskip\smallskipamount}
 
-\newcommand{\beamertemplateroundedblocks}[1][shadow=false]{
-  \useblocktemplate{%
-    \par\vskip\medskipamount%
-    \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
-      {\usebeamerfont*{block title}\insertblockname}%
-      \raggedright}%      
-    {\end{beamerboxesrounded}\vskip\smallskipamount}
-  \usealertblocktemplate{%
-    \par\vskip\medskipamount%
-    \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
-      {\usebeamerfont*{alerted block title}\insertblockname}%
-      \raggedright}%
-    {\end{beamerboxesrounded}\vskip\smallskipamount}
-  \useexampleblocktemplate{%
-    \par\vskip\medskipamount%
-    \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
-      {\usebeamerfont*{example block title}\insertblockname}%
-      \raggedright}%
-    {\end{beamerboxesrounded}\vskip\smallskipamount}
-}
-\@onlypreamble\beamertemplateboxesblocks
+\defbeamertemplate{block alerted begin}{rounded}[1][shadow=false]
+{
+  \par\vskip\medskipamount%
+  \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
+    {\usebeamerfont*{block title alerted}\insertblockname}%
+    \raggedright%
+    \usebeamerfont*{block body alerted}%
+}%
+\defbeamertemplate{block alerted end}{rounded}[1][]
+{\end{beamerboxesrounded}\vskip\smallskipamount}
 
-
+\defbeamertemplate{block example begin}{rounded}[1][shadow=false]
+{
+  \par\vskip\medskipamount%
+  \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
+    {\usebeamerfont*{block title example}\insertblockname}%
+    \raggedright%
+    \usebeamerfont*{block body alerted}%
+}%
+\defbeamertemplate{block example end}{rounded}[1][]
+{\end{beamerboxesrounded}\vskip\smallskipamount}
 
 
 

@@ -81,58 +81,36 @@
 \mode
 <all>
 {
-  \long\def\useblocktemplate#1#2{%
-    \def\beamer@beginblocktemplate{#1}
-    \def\beamer@endblocktemplate{#2}}
+  \newenvironment<>{block}[1]{%
+    \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \usebeamertemplate{block begin}}
+    {\par%
+      \usebeamertemplate{block end}%
+    \end{actionenv}}
 
-  \long\def\usealertblocktemplate#1#2{%
-    \def\beamer@beginalertblocktemplate{#1}
-    \def\beamer@endalertblocktemplate{#2}}
+  \newenvironment<>{alertblock}[1]{%
+    \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \mode<presentation>{%\usebeamerfont{block}%
+        \setbeamercolor{local structure}{parent=alerted text}}%
+      \usebeamertemplate{block alerted begin}}
+    {\par%
+      \usebeamertemplate{block alerted end}%
+    \end{actionenv}}
 
-  \long\def\useexampleblocktemplate#1#2{%
-    \def\beamer@beginexampleblocktemplate{#1}
-    \def\beamer@endexampleblocktemplate{#2}}
-
-\newenvironment<>{block}[1]{%
-  \begin{actionenv}#2%
-    \def\insertblockname{#1}%
-    \par%
-    \mode<presentation>{\usebeamerfont{block}}%
-    \beamer@beginblocktemplate}
-  {\par%
-    \beamer@endblocktemplate%
-  \end{actionenv}}
-
-\newenvironment<>{alertblock}[1]{%
-  \begin{actionenv}#2%
-    \def\insertblockname{#1}%
-    \par%
-    \mode<presentation>{\usebeamerfont{block}%
-    \setbeamercolor{local structure}{parent=alerted text}}%
-    \beamer@beginalertblocktemplate}
-  {\par%
-    \beamer@endalertblocktemplate%
-  \end{actionenv}}
-
-\newenvironment<>{exampleblock}[1]{%
-  \begin{actionenv}#2%
-    \def\insertblockname{#1}%
-    \par%
-    \mode<presentation>{\usebeamerfont{block}%
-    \setbeamercolor{local structure}{parent=example text}}%
-    \beamer@beginexampleblocktemplate}
-  {\par%
-    \beamer@endexampleblocktemplate%
-  \end{actionenv}}
-}
-
-
-\mode
-<article>
-{
-  \useblocktemplate{\par\vskip\medskipamount{\noindent\textbf{\insertblockname}}\par\noindent\ignorespaces}{\vskip\medskipamount}
-  \usealertblocktemplate{\par\vskip\medskipamount{\noindent\textbf{\emph{\insertblockname}}}\par\noindent\ignorespaces}{\vskip\medskipamount}
-  \useexampleblocktemplate{\par\vskip\medskipamount{\noindent\emph{\insertblockname}}\par\noindent\ignorespaces}{\vskip\medskipamount}
+  \newenvironment<>{exampleblock}[1]{%
+    \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \mode<presentation>{%\usebeamerfont{block}%
+        \setbeamercolor{local structure}{parent=example text}}%
+      \usebeamertemplate{block example begin}}
+    {\par%
+      \usebeamertemplate{block example end}%
+    \end{actionenv}}
 }
 
 
@@ -511,8 +489,6 @@
     \if@minipage
       \@setminipage
     \fi
-    \usebeamerfont*{caption}%
-    \usebeamercolor[fg]{caption}%
     \beamer@makecaption{#1}{\ignorespaces #3}\par\nobreak
     \endgroup}
 \long\def\beamer@makecaption#1#2{%
@@ -520,19 +496,14 @@
   \def\insertcaptionnumber{\csname the#1\endcsname}%
   \def\insertcaption{#2}%
   \nobreak\vskip\abovecaptionskip\nobreak
-  \sbox\@tempboxa{\beamer@captiontemplate}%
+  \sbox\@tempboxa{\usebeamertemplate**{caption}}%
   \ifdim \wd\@tempboxa >\hsize
-    \beamer@captiontemplate\par
+    \usebeamertemplate**{caption}\par
   \else
     \global \@minipagefalse
     \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
   \fi
   \nobreak\vskip\belowcaptionskip\nobreak}
-
-\long\def\usecaptiontemplate#1{%
-  \def\beamer@captiontemplate{#1}}
-\usecaptiontemplate{%
-  {\structure{\usebeamerfont{caption head}\insertcaptionname:} \insertcaption}}
 
 
 \mode

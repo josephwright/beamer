@@ -605,8 +605,31 @@ appearance of a document by changing the theme.
 \label{predefined}
 
 The \beamer\ class predefines an environment for typesetting a
-``block'' of text that has a heading. The appearence of the block is
-governed by a template.
+``block'' of text that has a heading. The appearence of blocks can
+easily be changed using the following template:
+
+\begin{element}{blocks}\semiyes\no\no
+  Changining this parent template changes the templates of normal
+  blocks, alerted blocks, and example blocks.
+
+  \example |\setbeamertemplate{blocks}[default]|
+  \example |\setbeamertemplate{blocks}[rounded][shadow=true]|
+
+  \begin{templateoptions}
+    \itemoption{default}{}
+    The default setting typesets the block title on its own line. If a
+    background is specified either for the |block title| or for the
+    |block body|, this background color is used as background of the
+    title or body, respectively. For alerted and example blocks, the
+    corresponding \beamer-colors and -fonts are used, instead.
+    \itemoption{rounded}{\oarg{shadow=true}}
+    Makes the blocks ``rounded.'' This means that the corners of the
+    backgrounds of the blocks are ``rounded off.'' If the
+    |shadow=true| option is given, a ``shadow'' is drawn behind the
+    block. 
+  \end{templateoptions}
+\end{element}
+
 
 \begin{environment}{{block}\sarg{action specification}\marg{block
       title}\sarg{action specification}}
@@ -632,6 +655,41 @@ governed by a template.
   \TeX-mode and a closing brace in \TeX-mode around it. The text
   in between can also be typeset using \LyX. I hope to get rid of this
   some day.
+
+  \begin{element}{block begin}\yes\no\no
+    This template is inserted at the beginning of a block before the
+    \meta{environment contents}. Inside this
+    template, the block title can be accessed via the following
+    insert:
+    \begin{itemize}
+      \iteminsert{\insertblocktitle}
+      Inserts the \meta{block title} into the template.
+    \end{itemize}
+
+    When the template starts, no special color or font is installed
+    (for somewhat complicated reasons). Thus, this template should
+    install the correct colors and fonts for the title and the body itself.
+  \end{element}
+
+  \begin{element}{block end}\yes\no\no
+    This template is inserted at the end of a block.
+  \end{element}
+
+  \begin{element}{block title}\no\yes\yes
+    This \beamer-color/-font should be used to typeset the title of
+    the block. Since neither the color nor the font are setup
+    automatically, the template |block begin| must do so itself.
+
+    The default block template and also the |rounded| version honor
+    the background of this color.
+  \end{element}
+
+  \begin{element}{block body}\no\yes\yes
+    This \beamer-color/-font should be used to typeset the body of the
+    block, that is, the \meta{environment contents}. As for
+    |block title|, the color and font must be setup by the template
+    |block begin|.
+  \end{element}
 \end{environment}
 
 
@@ -651,6 +709,22 @@ title}\sarg{action specification}}
 
   \lyxnote
   Same applies as for |block|.
+
+  \begin{element}{block alerted begin}\yes\no\no
+    Same applies as for normal blocks.
+  \end{element}
+
+  \begin{element}{block alerted end}\yes\no\no
+    Same applies as for normal blocks.
+  \end{element}
+
+  \begin{element}{block title alerted}\no\yes\yes
+    Same applies as for normal blocks.
+  \end{element}
+
+  \begin{element}{block body alerted}\no\yes\yes
+    Same applies as for normal blocks.
+  \end{element}
 \end{environment}
 
 \begin{environment}{{exampleblock}\sarg{action
@@ -671,6 +745,22 @@ specification}\marg{block title}\sarg{overlay specification}}
 
   \lyxnote
   Same applies as for |block|.
+
+  \begin{element}{block example begin}\yes\no\no
+    Same applies as for normal blocks.
+  \end{element}
+
+  \begin{element}{block example end}\yes\no\no
+    Same applies as for normal blocks.
+  \end{element}
+
+  \begin{element}{block title example}\no\yes\yes
+    Same applies as for normal blocks.
+  \end{element}
+
+  \begin{element}{block body example}\no\yes\yes
+    Same applies as for normal blocks.
+  \end{element}
 \end{environment}
 
 \lyxnote
@@ -1107,9 +1197,45 @@ additional frames or use the |allowframebreaks| option.
 \end{frame}
 \end{verbatim}
 
-You can adjust how the figure and table captions are typeset by
-changing the corresponding template, see
-Section~\ref{section-template-caption}. 
+\begin{element}{caption}\yes\yes\yes
+  This template is used to render the caption.
+  \begin{templateoptions}
+    \itemoption{default}{}
+    typesets the caption name (a word like ``Figure'' or ``Abbildung''
+    or ``Table,'' depending on whether a table or figure is typeset
+    and depending on the currently installed language) before the
+    caption text. No number is printed, since these make little sense
+    in a normal presentation.
+    \itemoption{numbered}{}
+    adds the figure or table number to the caption. Use this option
+    only if your audience has a printed handout or printed lecture
+    notes that follow the same numbering.
+    \itemoption{caption name own line}{}
+    As the name suggests, this options puts the caption name (like
+    ``Figure'') on its own line.
+  \end{templateoptions}
+
+  Inside the template, you can use the following inserts:
+  \begin{itemize}
+    \iteminsert{\insertcaption}
+    Inserts the text of the current caption.
+
+    \iteminsert{\insertcaptionname}
+    Inserts the name of the current caption. This word
+    is either ``Table'' or ``Figure'' or, if the |babel| package is
+    used, some translation thereof.
+
+    \iteminsert{\insertcaptionnumber}
+    Inserts the number of the current figure or table.
+  \end{itemize}
+\end{element}
+
+\begin{element}{caption name}\no\yes\yes
+  These \beamer-color and -font are used to typeset the caption name
+  (a word like ``Figure''). The |caption| template must directly
+  ``use'' them, they are not installed automatically by the
+  |\insertcaptionname| command.
+\end{element}
 
 
 
@@ -1394,9 +1520,9 @@ bottom instead of at the bottom of the current minipage.
     This template will be used to render the footnote. Inside this
     template, the following two inserts can be used:
     \begin{itemize}
-    \item{\insertfootnotetext}
+    \iteminsert{\insertfootnotetext}
       Inserts the current footnote text.
-    \item{\insertfootnotemark}
+    \iteminsert{\insertfootnotemark}
       Inserts the current footnote mark (like a raised number). This mark
       is computed automatically.
     \end{itemize}
