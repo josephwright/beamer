@@ -206,12 +206,12 @@
 \def\beamer@fragiletrue{\beamer@containsverbatimandoverlaystrue}
 \def\beamer@fragilesingleslide{\beamer@containsverbatimtrue}  
 \define@key{beamerframe}{c}[true]{% centered
-  \beamer@frametopskip=0pt plus 4cm\relax%
-  \beamer@framebottomskip=0pt plus 6cm\relax%
+  \beamer@frametopskip=0pt plus .4\paperheight\relax%
+  \beamer@framebottomskip=0pt plus .6\paperheight\relax%
   \def\beamer@initfirstlineunskip{}%
 }
 \define@key{beamerframe}{t}[true]{% top
-  \beamer@frametopskip=.2cm plus 3cm\relax%
+  \beamer@frametopskip=.2cm plus .5\paperheight\relax%
   \beamer@framebottomskip=0pt plus 1fill\relax%
   \def\beamer@initfirstlineunskip{%
     \def\beamer@firstlineitemizeunskip{%
