@@ -12,9 +12,13 @@
 
 \DeclareOption{overlystylish}
 {
-  \setbeamertemplate{background canvas}[vertical shading][bottom=black,top=black,middle=blue!25!black]
+  \def\beamer@cta@do{
+    \setbeamertemplate{background canvas}[vertical shading][bottom=black,top=black,middle=blue!50!black]
+  }
 }
 \ProcessOptions
+
+\@ifundefined{beamer@cta@do}{}{\beamer@cta@do}
 
 \mode<presentation>
 

@@ -17,6 +17,9 @@ innerthemes = default circles rectangles rounded
 
 all: $(doc).pdf
 
+beameruserguide.idx: 
+	touch beameruserguide.idx
+
 beameruserguide.ind: beameruserguide.idx 
 	makeindex $(doc).idx
 
