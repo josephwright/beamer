@@ -760,7 +760,11 @@
   }
 }
 
-
+\AtBeginDocument
+{
+  \let\beamer@origref=\ref
+  \long\def\ref#1{\hyperlink{#1}{\beamer@origref{#1}}}
+}
 
 \mode
 <all>
