@@ -76,27 +76,27 @@
     \gdef\beamer@endexampleblocktemplate{#2}}
 }
 \newoverlayenvironment{block}[1]{%
-  \beamer@spacingcover\def\insertblockname{#1}%
+  \def\insertblockname{#1}%
   \par%
-  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate\beamer@spacingcover}%
+  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate}%
   {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
   \beamer@beginblocktemplate}{\par\beamer@endblocktemplate\beamer@endcovered}
 
 \newoverlayenvironment{alertblock}[1]{%
-  \beamer@spacingcover\def\insertblockname{#1}%
+  \def\insertblockname{#1}%
   \par%
-  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate\beamer@spacingcover}%
+  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate}%
   {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
   \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate\beamer@endcovered}
 
 \newoverlayenvironment{exampleblock}[1]{%
-  \beamer@spacingcover\def\insertblockname{#1}%
+  \def\insertblockname{#1}%
   \par%
-  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate\beamer@spacingcover}%
+  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate}%
   {\beamer@startcovered%
   \def\insertblockname{#1}%
   \par%
@@ -221,8 +221,8 @@
       \csname label\@enumctr\endcsname
       {\usecounter\@enumctr%
         \def\makelabel##1{{\hss\llap{##1}}}}%
-  \begin{pauses}\raggedright}
-\def\endenumerate{\ifhmode\unskip\fi\end{pauses}\endlist\csname\@enumctr endtemplate\endcsname}
+  \raggedright}
+\def\endenumerate{\ifhmode\unskip\fi\endlist\csname\@enumctr endtemplate\endcsname}
 
 \def\useenumerateitemminitemplate#1{%
   \gdef\beamer@autoenumtemplate{#1}}
@@ -246,9 +246,9 @@
       \csname\@itemitem\endcsname
       {\def\makelabel##1{{\hss\llap{##1}}}}
   \fi%
-  \begin{pauses}\raggedright}
+  \raggedright}
     
-\def\enditemize{\ifhmode\unskip\fi\end{pauses}\endlist\csname\@itemctr endtemplate\endcsname}
+\def\enditemize{\ifhmode\unskip\fi\endlist\csname\@itemctr endtemplate\endcsname}
 
 \def\useenumerateitemtemplate#1{% 
   \gdef\labelenumi{\def\insertenumlabel{\theenumi}#1}}
@@ -284,8 +284,8 @@
 \def\@description[#1]{\setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
   \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
 \def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
-  \begin{pauses}\raggedright}
-\def\enddescription{\ifhmode\unskip\fi\end{pauses}\endlist}
+  \raggedright}
+\def\enddescription{\ifhmode\unskip\fi\endlist}
 \long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
 
@@ -300,6 +300,93 @@
   \beamer@descdefaulttemp=\beamer@descdefault}
 
 \let\beamer@itemize\itemize
+
+
+
+
+
+  
+%
+% Abstract command
+%
+
+\newoverlayenvironment{abstract}%
+{\beamer@templateabstractstart}{\beamer@templateabstractend}
+{\beamer@startcovered\beamer@templateabstractstart}{\beamer@templateabstractend\beamer@endcovered}
+
+
+\newcommand\usetemplateabstract[2]{\def\beamer@templateabstractstart{#1}\def\beamer@templateabstractend{#2}}
+
+\usetemplateabstract{
+  \begin{center}%
+    \structure{\abstractname}\vspace{-.5em}\vspace{0pt}%
+  \end{center}\small%
+  \begin{quote}}
+  {\end{quote}}
+
+
+
+  
+%
+% Verse, quotation, quote environments
+%
+    
+\newoverlayenvironment{verse}
+               {\let\\\@centercr
+                \list{}{\itemsep      \z@
+                        \itemindent   -1.5em%
+                        \listparindent\itemindent
+                        \rightmargin  \leftmargin
+                        \advance\leftmargin 1.5em
+                        \parsep       .75em plus .25em minus.25em}%
+                \item\relax\beamer@templateversestart}
+               {\beamer@templateverseend\endlist}
+               {\beamer@startcovered\let\\\@centercr
+                \list{}{\itemsep      \z@
+                        \itemindent   -1.5em%
+                        \listparindent\itemindent
+                        \rightmargin  \leftmargin
+                        \advance\leftmargin 1.5em
+                        \parsep       .75em plus .25em minus.25em}%
+                \item\relax\beamer@templateversestart}
+               {\beamer@templateverseend\endlist\beamer@endcovered}
+
+\newcommand\usetemplateverse[2]{\def\beamer@templateversestart{#1}\def\beamer@templateverseend{#2}}
+\usetemplateverse{\rmfamily\itshape}{}
+               
+\newoverlayenvironment{quotation}
+               {\list{}{\listparindent 1.5em%
+                        \itemindent    \listparindent
+                        \rightmargin   \leftmargin
+                        \parsep        \z@ \@plus\p@}%
+                \item\relax\beamer@templatequotationstart}
+               {\beamer@templatequotationend\endlist}
+               {\beamer@startcovered\list{}{\listparindent 1.5em%
+                        \itemindent    \listparindent
+                        \rightmargin   \leftmargin
+                        \parsep        \z@ \@plus\p@}%
+                \item\relax\beamer@templatequotationstart}
+               {\beamer@templatequotationend\endlist\beamer@endcovered}
+
+\newoverlayenvironment{quote}
+               {\list{}{\rightmargin\leftmargin}%
+                \item\relax\beamer@templatequotationstart}
+               {\beamer@templatequotationend\endlist}
+               {\beamer@startcovered\list{}{\rightmargin\leftmargin}%
+                \item\relax\beamer@templatequotationstart}
+               {\beamer@templatequotationend\endlist\beamer@endcovered}
+
+% applies both to quote and quotation
+\newcommand\usetemplatequotation[2]{\def\beamer@templatequotationstart{#1}\def\beamer@templatequotationend{#2}}
+\usetemplatequotation{\itshape}{}
+
+
+\article
+{
+  \renewoverlayenvironment{verse}{\begin{originalverse}}{\end{originalverse}}{\begin{onlyenv}<all:0>}{\end{onlyenv}}
+  \renewoverlayenvironment{quotation}{\begin{originalquotation}}{\end{originalquotation}}{\begin{onlyenv}<all:0>}{\end{onlyenv}}
+  \renewoverlayenvironment{quote}{\begin{originalquote}}{\end{originalquote}}{\begin{onlyenv}<all:0>}{\end{onlyenv}}
+}
 
     
 %
@@ -317,7 +404,6 @@
             \let\p@enumiv\@empty
             \renewcommand\theenumiv{\@arabic\c@enumiv}
             \let\makelabel\beamer@biblabeltemplate}%
-      \begin{pauses}%
       \sloppy\raggedright
       \clubpenalty10000
       \@clubpenalty \clubpenalty
@@ -325,7 +411,7 @@
       \sfcode`\.\@m}
      {\def\@noitemerr
        {\@latex@warning{Empty `thebibliography' environment}}%
-      \ifhmode\unskip\fi\end{pauses}\endlist}
+      \ifhmode\unskip\fi\endlist}
 
 \long\def\beamer@biblabeltemplate#1{\def\insertbiblabel{#1}\biblabeltemplate\hfil}
 

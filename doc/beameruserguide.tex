@@ -1290,84 +1290,66 @@ int main (void)
 
 \subsection{Overlays}
 
-\subsubsection{The Pauses Environment}
+\subsubsection{The Pause Command}
 
-The |pauses| environment offers an easy, but not very flexible
-way of creating frames that are uncovered piecewise. The environment
-itself does not have an immediate effect. But if you use the command
-|\pause| inside the environment, only the text of the environment
-up to the |\pause| command is shown on the first slide. On the
+The |pause| command offers an easy, but not very flexible
+way of creating frames that are uncovered piecewise. If you say
+|\pause| somewhere in a frame, only the text on the frame up to the
+|\pause| command is shown on the first slide. On the 
 second slide, everything is shown up to the second |\pause|, and
-so forth. Note that the |\pause| command can only be used on the 
-same level of nesting as the |pauses| environment.
+so forth. You can also use |\pause| inside environments; its effect
+will last after the environment. However, taking this to
+extremes and use |\pause| deeply within a nested environment may not
+have the desired result.
 
 A much more fine-grained control over what is shown on each slide can
 be attained using overlay specifications, see the next
 subsections. However, for many simple cases the |\pause|
 command is sufficient.
 
-If you use multiple  |pauses| environments on one frame, the
-slide counting for the second environment starts where the first one
-left off, see the following example. You can nest |pauses|
-environments, but this will not always have the effect you might
-expect. 
+Normally, the effect of |\pause| lasts till the end of the frame. You
+can use |\unpause| to temporarily stop its effect. All text following
+|\unpause| up to the next |\pause| is shown normally.
 
 \begin{verbatim}
 \frame{
-  \begin{pauses}
+  \begin{itemize}
+  \item
     Shown from first slide on.
-    \pause
+  \pause
+  \item
     Shown from second slide on.
+    \begin{itemize}
+    \item
+      Shown from second slide on.
     \pause
+    \item
+      Shown from third slide on.
+    \end{itemize}
+  \item
     Shown from third slide on.
-  \end{pauses}
-
-  Shown from first slide on (not affected by the environment).
-
-  \begin{pauses}
-    Shown from third slide on. (continued from above)
-    \pause
+  \pause
+  \item
     Shown from fourth slide on.
-  \end{pauses}
+  \end{itemize}
+
+  Shown from fourth slide on.
+
+  \begin{itemize}
+  \unpause
+  \item
+    Shown from first slide on.
+  \pause
+  \item
+    Shown from fifth slide on.
+  \end{itemize}
 }
 \end{verbatim}
 
-As a convenience, a |pauses| environment is automatically setup
-inside each frame, each |itemize|, each |description|,
-and each |enumerate|. Thus, by simply using the |\pause|
-command on the outermost level of any frame or after items in lists or
-descriptions, you uncover the rest of the frame or list only on the
-next slide.
-
-\begin{environment}{{pauses}\oarg{start slide number}}
-  The content of the environment is shown piecewise. Each
-  |\pause| command used inside uncovers a bit more of the
-  environment's text. The main use of \meta{start slide
-    number} is to set it to~0. The effect of this is that the first
-  |\pause| has no effect, which can be useful if the |pauses|
-  environment immediately starts with a |\pause| command. This happens 
-  sometimes when the environment's content is created automatically.
-
-\example
-\begin{verbatim}
-\frame
-{
-  \begin{pauses}
-    Shown from slide 1 onward.
-    \pause
-
-    Shown from slide 2 onward.
-  \end{pauses}
-}
-\end{verbatim}
-\end{environment}
-As mentioned above, in the above example the |pauses|
-environment could also have been omitted, as the |\frame| command
-inserts it automatically.
-
-\begin{command}\pause
-  When used inside a \texttt{pauses} environment, this command causes
-  the text following it to be shown only from the next slide on.
+\begin{command}{\pause\oarg{number}}
+  This command causes the text following it to be shown only from the
+  next slide on, or, if the optional \meta{number} is given,
+  from the slide with the number \meta{number}. 
 
   \example
 \begin{verbatim}
@@ -1376,10 +1358,10 @@ inserts it automatically.
   \begin{itemize}
   \item
     A    
-    \pause
+  \pause
   \item
     B
-    \pause
+  \pause
   \item
     C
   \end{itemize}
@@ -1446,11 +1428,6 @@ special:
   \example |\only<3->{Text inserted from slide 3 on.}|
 \end{command}
 
-There exists a variant of |\only|, namely |\pgfonly|, that
-should be used inside \pgf\ pictures instead of |\only|. The
-command |\pgfonly| inserts appropriate |\ignorespaces|
-commands that are needed by \pgf.
-
 \begin{command}{\uncover\sarg{overlay specification}\marg{text}}
   If the \meta{overlay specification} is present, the \meta{text} is
   shown (``uncovered'') only on the specified slides. On other slides, the
@@ -1461,13 +1438,18 @@ commands that are needed by \pgf.
   \example |\uncover<3->{Text shown from slide 3 on.}|
 \end{command}
 
+\begin{command}{\visible\sarg{overlay specification}\marg{text}}
+  This command does almost the same as |\uncover|. The only difference
+  is that if the text is not shown, it is never shown in a transparent
+  way, but rather it is not shown at all. Thus for this command the
+  transparency settings have no effect.
+  
+  \example |\visible<2->{Text shown from slide 2 on.}|
+\end{command}
+
 \begin{command}{\invisible\sarg{overlay specification}\marg{text}}
-  The \meta{text} occupies space and it is typeset, but it is not
-  shown. If the \meta{overlay specification} is given, this command takes
-  effect only on the specified slides. This command is a conter-part to
-  |\uncover|, but not quite: unlike |\uncover|, invisible 
-  text is never shown in a transparent way, but is guaranteed to
-  really be invisible.
+  This command is the opposite of |\visible|.
+  
   \example |\invisible<-2>{Text shown from slide 3 on.}|
 \end{command}
 
@@ -1969,7 +1951,6 @@ commands:
 \begin{command}{\date\oarg{short date}\marg{date}}
   \example|\date{\today}| or |\date[STACS 2003]{STACS Conference, 2003}|.
 \end{command}
-
 
 \begin{command}{\titlegraphic\marg{text}}
   The \meta{text} is shown as title graphic. Typically, a picture
@@ -3183,6 +3164,24 @@ To create a column, you can either use the |column| environment or the
 
 
 
+\subsubsection{Verse, Quotations, Quotes}
+
+\LaTeX\ defines three environments for typesetting quotations and
+verses: |verse|, |quotation|, and |quote|. These environments are also
+available in the \beamer\ class, where they are
+overlay-specification-aware. If an overlay specification is given, the
+verse or quotation is shown only on the specified slides and is
+covered otherwise. The difference between a |quotation| and a |quote|
+is that the first has paragraph indentation, whereas the second does
+not. 
+
+Unlike the standard \LaTeX\ environments, in \beamer\ these
+environments do not only change the left and right margins, but also
+the font: A verse is typeset using an italic serif font, quotations
+and quotes are typeset using an italic font (whether serif or
+sans-serif depends on the standard document font). To change this, you
+can adjust the templates for these environments. 
+
 
 
 
@@ -3323,14 +3322,15 @@ By default, the following colors are used in a presentation:
 \item
   All ``structural'' elements, like titles, navigation bars, block
   titles, and so on, are typeset using the color
-  |structure|. By default, this color is bluish. Using one of
+  |beamerstructure|. By default, this color is bluish. Using one of
   the class options |red|, |blackandwhite|, or |brown|
   changes this. You can also change this color simply be redefining
-  the color |structure|.
+  the color |beamerstructure|.
 \item
-  All ``alert'' text is typeset by mixing in 85\% of red. To change
-  this, you can either redefine the color |alert|, or you can
-  change the whole alert template.
+  All ``alert'' text is typeset by setting the default color and the
+  structure color to 85\% of red. To change this, you can either
+  redefine the color |beameralert|, or you can change the whole alert
+  template. 
 \item
   All examples are typeset using 50\% of green. To change this, you
   must change the example templates.
@@ -3350,6 +3350,8 @@ By default, the following colors are used in a presentation:
   Changes the main color of the navigation and title bars
   to monochrome.
 \end{classoption}
+
+
 
 \subsubsection{Average Background Color}
 
@@ -3449,7 +3451,6 @@ behavior.
   smaller. 
 \end{command}
 
-
 \begin{command}{\beamersetuncovermixins\marg{not yet list}%
     \marg{once more list}}
   The \meta{not yet list} specifies  how to render covered items that
@@ -3460,19 +3461,57 @@ behavior.
   \example
 \begin{verbatim}
 \beamersetuncovermixins
-  {\mixinon<1>{15!averagebackgroundcolor}
-    \mixinon<2>{10!averagebackgroundcolor}
-    \mixinon<3>{5!averagebackgroundcolor}
-    \mixinon<4->{2!averagebackgroundcolor}}
-  {\mixinon<1->{15!averagebackgroundcolor}}
+  {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}
+  {\opaqueness<1->{15}}
 \end{verbatim}
   The \meta{not yet list} and the  \meta{once more list} can
-  contain any number of the following two commands:
+  contain any number of |\opaqueness| commands.
 \end{command}
 
-\begin{command}{\mixinon\ssarg{overlay specification}\marg{mix-in specification}}
-  The \meta{overlay specification} specifies on which slides the
-  \meta{mix-in specification} should be applied to all colors. Unlike
+%\begin{command}{\mixinon\ssarg{overlay specification}\marg{mix-in specification}}
+%  The \meta{overlay specification} specifies on which slides the
+%  \meta{mix-in specification} should be applied to all colors. Unlike
+%  other overlay specifications, this \meta{overlay specification} is a
+%  ``relative'' overlay specification. For example, the specification
+%  ``3'' here means ``things that will be uncovered three slides
+%  ahead,'' respectively ``things that have once more been covered for
+%  three slides.'' More precisely, if an item is uncovered for more
+%  than one slide and then covered once more, only the ``first moment
+%  of uncovering'' is used for the calculation of how long the item has
+%  been covered once more.
+
+%  \emph{Mix-in} specifications are a concept introduced by the
+%  |xcolor| package. The \meta{mix-in specification} specifies how colors
+%  should be altered by adding another color to them. The specification
+%  consists of two parts, separated by an exclamation mark. The first
+%  part is a number between 0 and 100, where 0 means ``do not mix in the
+%  text color at all'' and 100 means ``use only the text color''. The
+%  second part is the color that should be mixed in. This second part may
+%  be omitted (along with the exclamation mark), in which case ``white''
+%  is used as mix-in color. Any color that has been defined using the
+%  |\definecolor| command is permissible as a mix-in color.
+
+%  The mix-in specifications is added to the \pgf\ alternate
+%  extension for shadings and images (see the \pgf\
+%  documentation). Nested uses of mix-in accumulate. 
+%  \example
+%\begin{verbatim}
+%\beamersetuncovermixins{\mixinon<1>{15!blue}{\mixinon<1->{15!white}}
+%\pgfdeclareimage{book}{book}
+%\pgfdeclareimage{book.!15!averagebackgroundcolor}{filenameforbooknearlyblue}
+%\pgfdeclareimage{book.!15!white}{filenameforbooknearlywhite}
+%\end{verbatim}
+%  For all items that become uncovered on the next slide or that have
+%  just been covered on the previous slide (depending on whether this
+% command is used as part of the first or second parameter of the command
+%  |\beamersetuncovermixins|), use only 15\% of the actual color and
+%  85\% of the average background color.
+%\end{command}
+
+\begin{command}{\opaqueness\ssarg{overlay
+      specification}\marg{percentage of opaqueness}}
+  The \meta{overlay specification} specifies on which slides covered
+  text should have which \meta{percentage of opaqueness}. Unlike
   other overlay specifications, this \meta{overlay specification} is a
   ``relative'' overlay specification. For example, the specification
   ``3'' here means ``things that will be uncovered three slides
@@ -3482,46 +3521,12 @@ behavior.
   of uncovering'' is used for the calculation of how long the item has
   been covered once more.
 
-  \emph{Mix-in} specifications are a concept introduced by the
-  |xcolor| package. The \meta{mix-in specification} specifies how colors
-  should be altered by adding another color to them. The specification
-  consists of two parts, separated by an exclamation mark. The first
-  part is a number between 0 and 100, where 0 means ``do not mix in the
-  text color at all'' and 100 means ``use only the text color''. The
-  second part is the color that should be mixed in. This second part may
-  be omitted (along with the exclamation mark), in which case ``white''
-  is used as mix-in color. Any color that has been defined using the
-  |\definecolor| command is permissible as a mix-in color.
-
-  The mix-in specifications is added to the \pgf\ alternate
-  extension for shadings and images (see the \pgf\
-  documentation). Nested uses of mix-in accumulate. 
-  \example
-\begin{verbatim}
-\beamersetuncovermixins{\mixinon<1>{15!blue}{\mixinon<1->{15!white}}
-\pgfdeclareimage{book}{book}
-\pgfdeclareimage{book.!15!averagebackgroundcolor}{filenameforbooknearlyblue}
-\pgfdeclareimage{book.!15!white}{filenameforbooknearlywhite}
-\end{verbatim}
-  For all items that become uncovered on the next slide or that have
-  just been covered on the previous slide (depending on whether this
- command is used as part of the first or second parameter of the command
-  |\beamersetuncovermixins|), use only 15\% of the actual color and
-  85\% of the average background color.
-\end{command}
-
-\begin{command}{\opaqueness\ssarg{overlay
-      specification}\marg{percentage of opaqueness}}
-  Text that is covered on the specified slides (once more,
-  relative to the current slide), is rendered with the specified
-  opaqueness, where 100 is fully opaque and 0 is fully
+  An opaqueness of 100 is fully opaque and 0 is fully
   transparent. Currently, since real transparency is not yet
-  implemented, this command does nearly the same as |\mixin|\ssarg{overlay
-    specification}|{|\meta{percentage of
-      opaqueness}|!averagebackgroundcolor}|. However, there are two 
-  differences: first, at some future point this command might result
-  in real transparency; second, the alternate |pgf| extension is
-  different.
+  implemented, this command causes all colors to get a mixing of
+  \meta{percentage of opaqueness} of the current
+  |averagebackgroundcolor|. At some future point this command might
+  result in real transparency.
 
   The alternate \pgf\ extension used inside an opaque area is
   \meta{percentage of opaqueness}|opaque|. In case of nested calls,
@@ -3535,13 +3540,6 @@ behavior.
   Makes everything that is uncovered in two slides only 15 percent
   opaque. 
 \end{command}
-
-\begin{command}{\invisibleon\ssarg{overlay specification}}
-  Text that is covered on the specified slides (once more,
-  relative to the current slide), is not shown at all.
-  \example |\invisibleon<2->|
-\end{command}
-
 
 
 
@@ -4925,8 +4923,8 @@ If you wish to suppress the head and foot line in the title page, use
     \marg{color expression page bottom}\marg{color expression page top}}
   Installs a vertically shaded background such that the
   specified bottom color changes smoothly to the specified top
-  color. \textbf{Use with care: Background shadings are often
-    distracting!} However, a very light shading with warm colors can
+  color. \emph{Use with care: Background shadings are often
+    distracting!} However, a very light shading with warm colors can 
   make a presentation more lively.
   \example
 \begin{verbatim}
@@ -4936,8 +4934,11 @@ If you wish to suppress the head and foot line in the title page, use
 \end{command}
 
 
-\begin{command}{\beamertemplategridbackground}
-  Installs a light grid as background.
+\begin{command}{\beamertemplategridbackground\oarg{spacing}}
+  Installs a light grid as background with lines spaced apart by
+  \meta{spacing}. Default is half a centimeter.
+
+  \example |\beamertemplategridbackground[0.2cm]|
 \end{command}
 
 
@@ -6034,6 +6035,33 @@ The following inserts are useful for the navigation symbols template:
 
 \begin{command}{\insertblockname}
   Inserts the name of the current block into a template.
+\end{command}
+
+
+
+\subsubsection{Verse, Quotation and Quote Environments}
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usetemplateverse\marg{block beginning
+      template}\marg{block end template}}
+  In a |verse| environment, the \meta{block beginning template} is
+  inserted before the verse, the \meta{block end template} after the
+  verse. The margins are not setup in these templates; this is done in
+  the |verse| environment and cannot be changed.
+  \example |\usetemplateverse{\rmfamily\itshape}{}|
+\end{command}
+
+
+\begin{command}{\usetemplatequotation\marg{block beginning
+      template}\marg{block end template}}
+  Both in |quotation| and in |quote| environments, the \meta{block
+    beginning template} is inserted before the quotation, the
+  \meta{block end template} after the quotation. As for verses, the
+  margins are not setup in these templates and cannot be changed.
+  
+  \example |\usetemplatequotation{\itshape}{}|
 \end{command}
 
 

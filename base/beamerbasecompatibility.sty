@@ -125,7 +125,8 @@
 %
 \def\plainframe{\frame[plain]}%obsolete
 \def\pgfonly{\only}%obsolete
-\newoverlaycommand{\nameslide}{\beamer@nameslide}{\@gobble}%obsolete
+\AtBeginDocument{\newoverlaycommand{\nameslide}{\beamer@nameslide}{\@gobble}}%obsolete
+\newenvironment{pauses}[1][\beamer@pausecount]{\global\beamer@pausecount=#1\relax}{}%obsolete
 
 
 %%% Local Variables: 

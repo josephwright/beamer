@@ -55,8 +55,8 @@
       \label<1>{\beamer@againname}%
     \fi%
   \fi%
-  \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
+  \beamer@entrycode\vspace*{-\baselineskip}\begin{beamer@framepauses}\vfill}%
+  {\beamer@exitcode\vskip0pt plus 1.5fill\end{beamer@framepauses}}
 
 
 %
@@ -363,40 +363,41 @@
   \let\@evenfoot\@oddfoot
   \def\beamer@backgroundtemplate{}
   \vbox{%
+    \let\\=\space%
     \vskip-\headheight%
     \ifbeamer@compressnotes
-    \insertvrule{2.5em}{white!90!black}
-    \vskip2.5em
-    \nointerlineskip
-    \tiny
-    \setbox\beamer@tempbox=\hbox{\raise7em\hbox{\insertsection}}%
-    \ht\beamer@tempbox=0pt
-    \box\beamer@tempbox
-    \nointerlineskip
-    \setbox\beamer@tempbox=\hbox{\raise6em\hbox{\quad\insertsubsection}}%
-    \ht\beamer@tempbox=0pt
-    \box\beamer@tempbox
-    \nointerlineskip
-    \setbox\beamer@tempbox=\hbox{\raise5em\hbox{\quad\quad\insertframetitle}}%
-    \ht\beamer@tempbox=0pt
-    \box\beamer@tempbox
-    \nointerlineskip
+      \insertvrule{2.5em}{white!90!black}
+      \vskip2.5em
+      \nointerlineskip
+      \tiny
+      \setbox\beamer@tempbox=\hbox{\raise7em\hbox{\insertsection}}%
+      \ht\beamer@tempbox=0pt
+      \box\beamer@tempbox
+      \nointerlineskip
+      \setbox\beamer@tempbox=\hbox{\raise6em\hbox{\quad\insertsubsection}}%
+      \ht\beamer@tempbox=0pt
+      \box\beamer@tempbox
+      \nointerlineskip
+      \setbox\beamer@tempbox=\hbox{\raise5em\hbox{\quad\quad\insertframetitle}}%
+      \ht\beamer@tempbox=0pt
+      \box\beamer@tempbox
+      \nointerlineskip
     \else    
-    \insertvrule{8em}{white!90!black}
-    \vskip-8.5em
-    \hbox{\vbox{
-    \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
-      \begin{pgfrotateby}{\pgfdegree{90}}
-        \pgfputat{\pgfpoint{-2cm}{0.25cm}}{\pgfbox[base,left]{\footnotesize\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
-      \end{pgfrotateby}
-    \end{pgfpicture}}}
-    \hbox{\vbox{\begin{minipage}[t]{8cm}\insertshorttitle\end{minipage}}}%
-    \setbox\beamer@tempbox=\hbox{\insertsection}%
-    \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertsection\end{minipage}}}\fi}%
-    \setbox\beamer@tempbox=\hbox{\insertsubsection}%
-    \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip17.4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertsubsection\end{minipage}}}\fi}%
-    \setbox\beamer@tempbox=\hbox{\insertframetitle}%
-    \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip30.8pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\insertframetitle\end{minipage}}}\fi}%
+      \insertvrule{8em}{white!90!black}
+      \vskip-8.5em
+      \hbox{\vbox{
+      \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
+        \begin{pgfrotateby}{\pgfdegree{90}}
+          \pgfputat{\pgfpoint{-2cm}{0.25cm}}{\pgfbox[base,left]{\footnotesize\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
+        \end{pgfrotateby}
+      \end{pgfpicture}}}
+      \hbox{\vbox{\begin{minipage}[t]{8cm}\insertshorttitle\end{minipage}}}%
+      \setbox\beamer@tempbox=\hbox{\insertsection}%
+      \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\let\\=\space\insertsection\end{minipage}}}\fi}%
+      \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+      \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip17.4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\let\\=\space\insertsubsection\end{minipage}}}\fi}%
+      \setbox\beamer@tempbox=\hbox{\insertframetitle}%
+      \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip30.8pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\let\\=\space\insertframetitle\end{minipage}}}\fi}%
     \fi
     }
   \ifbeamer@compressnotes

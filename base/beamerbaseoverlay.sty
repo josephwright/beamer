@@ -18,13 +18,14 @@
   \gdef\beamer@do{#1%
   \expandafter\gdef\csname beamer@doafter\the\beamer@coveringdepth\endcsname{#2}}\ignorespaces}
   
-\def\beamer@spacingcover{\pgfsys@begininvisible\pgfsys@endinvisible}%for spacing reasons
 \def\beamer@startcovered{%
   \global\advance\beamer@coveringdepth by 1\relax%
-  \beamer@actions{\pgfsys@begininvisible}{\pgfsys@endinvisible}%
-  \def\mixinon<##1>##2{%
-    \only<##1>{%
-      \beamer@actions{\begingroup\colormixin{##2}}{\endgroup}}}%
+  \beamer@actions{\pgfsys@begininvisible}{%
+     \beamer@lastskip=\lastskip%
+     \ifdim\beamer@lastskip=0pt\else\ifvmode\unskip\fi\fi%
+     \pgfsys@endinvisible%
+     \ifdim\beamer@lastskip=0pt\else\ifvmode\vskip\beamer@lastskip\fi\fi%
+     }%
   \def\opaqueness<##1>##2{%
     \only<##1>{%
       \beamer@actions{%
@@ -39,11 +40,11 @@
       {%
         \xdef\beamer@colorhook{\csname beamer@oldcolorhook\the\beamer@coveringdepth\endcsname}%
         \xdef\beamer@pgfextension{\csname beamer@oldpgfextension\the\beamer@coveringdepth\endcsname}%
+        \beamer@lastskip=\lastskip%
+        \ifdim\beamer@lastskip=0pt\else\ifvmode\unskip\fi\fi%
         \color{.}%
+        \ifdim\beamer@lastskip=0pt\else\ifvmode\vskip\beamer@lastskip\fi\fi%
       }}}%
-  \def\invisibleon<##1>{%
-    \only<##1>{%
-      \beamer@actions{\pgfsys@begininvisible}{\pgfsys@endinvisible}}}%
   \ifnum\beamer@slideinframe<\beamer@minimum%ok, at beginning
   {%
     \beamer@saveanother%
@@ -90,32 +91,31 @@
 
 
 %
-% Pausing environment
+% Pausing
 %
 
-\newenvironment{pauses}[1][\beamer@pausecount]%
+\newenvironment{beamer@framepauses}%internal
 {%
-  \global\beamer@pausecount=#1\relax%
-  \alt<\beamer@pausecount->%
-  {\beamer@spacingcover\def\beamer@endpause{\beamer@spacingcover}}%
-  {\beamer@startcovered\def\beamer@endpause{\beamer@endcovered}}%
+  \global\beamer@pausecount=1\relax%
+  \gdef\beamer@endpause{}%
 }
-{\beamer@closeitem\gdef\beamer@closeitem{}\beamer@endpause}
+{\beamer@endpause}
 
-\newcommand{\pause}{%
+\newcommand{\pause}[1][]{%
   \beamer@endpause%
-  \global\advance\beamer@pausecount by1\relax%
+  \beamer@ifempty{#1}%
+    {\global\advance\beamer@pausecount by1\relax}%
+    {\global\beamer@pausecount=#1\relax}%
   \alt<\beamer@pausecount->%
-  {\beamer@spacingcover\def\beamer@endpause{\beamer@spacingcover}}%
-  {\beamer@startcovered\def\beamer@endpause{\beamer@endcovered}}%
+  {\gdef\beamer@endpause{}}%
+  {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
 }
 
-
+\newcommand{\unpause}{\beamer@endpause\gdef\beamer@endpause{}}
 
 \article
 {
-  \def\pause{}
-  \newenvironment{pauses}[1][]{}{}%  
+  \newcommand\pause[1][]{}
 }
 
   
@@ -139,34 +139,37 @@
 
 \def\beamer@closeitem{}
 \def\beamer@parseitemalert<#1><#2>{%
-  \alt<#1>{\beamer@spacingcover%for spacing reasons
-    \alt<#2>{\begin{alertenv}\gdef\beamer@closeitem{\end{alertenv}\beamer@spacingcover}}%
-    {\gdef\beamer@closeitem{\beamer@spacingcover}}%
+  \alt<#1>{%
+    \alt<#2>{\begin{alertenv}\gdef\beamer@closeitem{\end{alertenv}}}%
+    {\gdef\beamer@closeitem{}}%
     \beamer@origitem}%
   {\beamer@startcovered\gdef\beamer@closeitem{\beamer@endcovered}\beamer@origitem}%
   }
 \def\beamer@itemuncover<#1>{%
-  \alt<#1>{\beamer@spacingcover%for spacing reasons
-    \gdef\beamer@closeitem{\beamer@spacingcover}\beamer@origitem}%
+  \alt<#1>{%
+    \gdef\beamer@closeitem{}\beamer@origitem}%
   {\beamer@startcovered\gdef\beamer@closeitem{\beamer@endcovered}\beamer@origitem}%
-  }
+}
 
-\let\beamer@origendtrivlist=\endtrivlist
-\def\endtrivlist{%
-  \beamer@closeitem%
-  \global\let\beamer@closeitem=\beamer@sci%
-  \global\let\beamer@sci=\beamer@ssci%
-  \global\let\beamer@ssci=\beamer@sssci%
-  \beamer@origendtrivlist}
 
+\newcount\beamer@trivlistdepth
+\beamer@trivlistdepth=0
+  
 \let\beamer@orig@trivlist=\@trivlist
 \def\@trivlist{%
-  \global\let\beamer@sssci=\beamer@ssci%
-  \global\let\beamer@ssci=\beamer@sci%
-  \global\let\beamer@sci=\beamer@closeitem%
+  \global\advance\beamer@trivlistdepth by1\relax%
+  \expandafter\global\expandafter\let\csname beamer@closeitem\the\beamer@trivlistdepth\endcsname=\beamer@closeitem%
   \gdef\beamer@closeitem{}%
   \beamer@orig@trivlist%
   }
+\let\beamer@origendtrivlist=\endtrivlist
+\def\endtrivlist{%
+  \beamer@closeitem%
+  \expandafter\global\expandafter\let\expandafter\beamer@closeitem\expandafter=\csname
+  beamer@closeitem\the\beamer@trivlistdepth\endcsname%
+  \global\advance\beamer@trivlistdepth by-1\relax%
+  \beamer@origendtrivlist}
+
 \def\beamer@closeitem{}
 
 \let\beamer@list=\list
@@ -232,20 +235,19 @@
 }
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
-\long\def\makeinvisibleinsp#1{\beamer@startcovered\ignorespaces#1\beamer@endcovered\ignorespaces}
-\long\def\fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
-\long\def\fakeinvisibleinsp#1{\beamer@spacingcover\ignorespaces#1\beamer@spacingcover\ignorespaces}
 \long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
 
-\newoverlaycommand{\uncover}{\fakeinvisible}{\makeinvisible}
-\newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\fakeinvisible}
-\newoverlayenvironment{uncoverenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}
+\newoverlaycommand{\uncover}{\@firstofone}{\makeinvisible}
+\newoverlaycommand{\visible}{\@firstofone}{\beamer@reallymakeinvisible}
+\newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\@firstofone}
+\newoverlayenvironment{uncoverenv}{}{}{\beamer@startcovered}{\beamer@endcovered}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
 \renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}
 
 \article
 {
   \newoverlaycommand{\uncover}{\@firstofone}{\@gobble}
+  \newoverlaycommand{\visible}{\@firstofone}{\@gobble}
   \newoverlaycommand{\invisible}{\@gobble}{\@firstofone}
   \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
   \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}

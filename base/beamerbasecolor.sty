@@ -58,23 +58,26 @@
 \let\beamerorig@set@color=\set@color
 \let\beamerorig@reset@color=\reset@color
 
-\def\bemaer@current@colorhook{}
+\def\beamer@current@colorhook{}
 
 \def\set@color{%
   \edef\beamer@current@colorhook{\beamer@colorhook}%
   \beamerorig@set@color}
 \def\reset@color{%
+  \beamer@lastskip=\lastskip%
+  \ifdim\beamer@lastskip=0pt\else\ifvmode\unskip\fi\fi%
   \ifx\beamer@current@colorhook\beamer@colorhook%
-  \beamerorig@reset@color%
+    \beamerorig@reset@color%
   \else% mixin changed -> recalculate
-  \colorlet{@hookcolor}{.}%
-  \XC@logcolor2{@hookcolor}%  
-  \colorhook%
-  \expandafter\let\expandafter\current@color%
-    \csname\string\color @@hookcolor\endcsname%
-  \beamerorig@reset@color%
-  \beamer@postscriptcolorhack%  
+    \colorlet{@hookcolor}{.}%
+    \XC@logcolor2{@hookcolor}%  
+    \colorhook%
+    \expandafter\let\expandafter\current@color%
+      \csname\string\color @@hookcolor\endcsname%
+    \beamerorig@reset@color%
+    \beamer@postscriptcolorhack%  
   \fi%
+  \ifdim\beamer@lastskip=0pt\else\ifvmode\vskip\beamer@lastskip\fi\fi%
 }
 
 \ifx\pdftexversion\@undefined

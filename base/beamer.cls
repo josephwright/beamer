@@ -65,6 +65,7 @@
 \newdimen\beamer@vboxoffset
 \newdimen\beamer@descdefault
 \newdimen\beamer@descdefaulttemp
+\newdimen\beamer@lastskip
 
 \newbox\beamer@areabox
 \newbox\beamer@animcurrent

@@ -251,7 +251,7 @@
       \begin{pgfmagnify}{1.4}{1.4}
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
-      \pgfputat{\pgfpoint{0pt}{0.2pt}}
+      \pgfputat{\pgfpoint{0pt}{0.1pt}}
       {\pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}}
     \end{pgfpicture}}
   \AtBeginDocument{\beamertemplatesetupshadings}
@@ -457,54 +457,11 @@
   \beamersetaveragebackground{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
   }
   
-\newcommand{\beamertemplategridbackground}{
-  \usebackgroundtemplate{
+\newcommand{\beamertemplategridbackground}[1][0.5cm]{
+  \usebackgroundtemplate{%
   \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
-    \color{lightgray}%
-    \pgfxyline(0.5,0)(0.5,10)
-    \pgfxyline(1,0)(1,10)
-    \pgfxyline(1.5,0)(1.5,10)
-    \pgfxyline(2,0)(2,10)
-    \pgfxyline(2.5,0)(2.5,10)
-    \pgfxyline(3,0)(3,10)
-    \pgfxyline(3.5,0)(3.5,10)
-    \pgfxyline(4,0)(4,10)
-    \pgfxyline(4.5,0)(4.5,10)
-    \pgfxyline(5,0)(5,10)
-    \pgfxyline(5.5,0)(5.5,10)
-    \pgfxyline(6,0)(6,10)
-    \pgfxyline(6.5,0)(6.5,10)
-    \pgfxyline(7,0)(7,10)
-    \pgfxyline(7.5,0)(7.5,10)
-    \pgfxyline(8,0)(8,10)
-    \pgfxyline(8.5,0)(8.5,10)
-    \pgfxyline(9,0)(9,10)
-    \pgfxyline(9.5,0)(9.5,10)
-    \pgfxyline(10,0)(10,10)
-    \pgfxyline(10.5,0)(10.5,10)
-    \pgfxyline(11,0)(11,10)
-    \pgfxyline(11.5,0)(11.5,10)
-    \pgfxyline(12,0)(12,10)
-    \pgfxyline(12.5,0)(12.5,10)
-    \pgfxyline(0,0.5)(13,0.5)
-    \pgfxyline(0,1)(13,1)
-    \pgfxyline(0,1.5)(13,1.5)
-    \pgfxyline(0,2)(13,2)
-    \pgfxyline(0,2.5)(13,2.5)
-    \pgfxyline(0,3)(13,3)
-    \pgfxyline(0,3.5)(13,3.5)
-    \pgfxyline(0,4)(13,4)
-    \pgfxyline(0,4.5)(13,4.5)
-    \pgfxyline(0,5)(13,5)
-    \pgfxyline(0,5.5)(13,5.5)
-    \pgfxyline(0,6)(13,6)
-    \pgfxyline(0,6.5)(13,6.5)
-    \pgfxyline(0,7)(13,7)
-    \pgfxyline(0,7.5)(13,7.5)
-    \pgfxyline(0,8)(13,8)
-    \pgfxyline(0,8.5)(13,8.5)
-    \pgfxyline(0,9)(13,9)
-    \pgfxyline(0,9.5)(13,9.5)
+    \color{black!10!white}
+    \pgfgrid[stepx=#1,stepy=#1]{\pgforigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
   \end{pgfpicture}%    
   }}
 
