@@ -14,8 +14,10 @@
 \newbox\beamer@tempbox
 \newif\ifbeamer@blocks
 \newif\ifbeamer@ams
+\newif\ifbeamer@countsect
 \beamer@blockstrue
 \beamer@amstrue
+\beamer@countsectfalse
 
 \newcount\beamer@tempcount
 
@@ -131,6 +133,7 @@
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
 
+\DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
 \DeclareOptionBeamer{notheorems}{\beamer@blocksfalse}
 \DeclareOptionBeamer{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}
 

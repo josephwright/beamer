@@ -95,7 +95,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 2.01-dev\\
+\title{User's Guide to the Beamer Class, Version 2.01-CVS\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -435,27 +435,12 @@ When using certain packages together with the |beamer| class, extra
 options or precautions may be necessary.
 
 \begin{package}{{amsthm}}
-  \beamernote
-  I do not recommend using this package since numbered theorems are
-  usually not a good idea in a presentation. If you wish to use this
-  package, use the class option |notheorems|. You must then
-  define the default block environments (like |theorem|) yourself, but
-  that's most likely what you want to do anyway, if you use
-  |amsthm|. If you define an environment like |theorem|, you should
-  also add the command |\resetcounteronoverlays{theorem}| after the
-  definition to ensure that the theorem number stays the same on all
-  slides of a frame.
-
-  \articlenote
-  In |article| mode, the package |amsthm| is automatically loaded,
-  \emph{unless} you say |notheorem|. If you say
-  |notheorems|, then, just as in the presentation modes, you have
-  to define the theorem-like environments yourself.
-
-  \begin{classoption}{{notheorems}}
-    Switches off the definition of default blocks like |Theorem| or
-    |proof|. 
-  \end{classoption}
+  This package is automatically loaded since \beamer\ uses it for
+  typesetting theorems. If you do not wish it to be loaded, which can
+  be necessary especially in |article| mode if the package is
+  incompatible with the document class, you can use the class option
+  |noamsthm| to suppress its loading. See
+  Section~\ref{section-theorems} for more details.
 \end{package}
 
 \begin{package}{{babel}|[|\declare{|french|}|]|}
@@ -2498,9 +2483,9 @@ int main (void)
 
 
 
-\subsection{Overlays}
+\subsection{Creating Overlays}
 
-\subsubsection{The Pause Command}
+\subsubsection{The Pause Commands}
 
 The |pause| command offers an easy, but not very flexible
 way of creating frames that are uncovered piecewise. If you say
@@ -2560,7 +2545,9 @@ the end of the frame.
   next slide on, or, if the optional \meta{number} is given,
   from the slide with the number \meta{number}. If the optional
   \meta{number} is given, the counter |beamerpauses| is set to this
-  number. This command uses the |\onslide| command, internally. 
+  number. This command uses the |\onslide| command, internally.
+  This command does \emph{not} work inside |amsmath| environments like
+  |align|, since these do really wicked things.
 
   \example
 \begin{verbatim}
@@ -2827,7 +2814,7 @@ in the same way as |\item|.
 \subsubsection{Environments with Overlay Specifications}
 
 Environments can also be equipped with overlay specifications. For
-most of the predefined environments, see subsection~\ref{predefined},
+most of the predefined environments, see Section~\ref{predefined},
 adding an overlay specifications causes the whole environment to be
 uncovered only on the specified slides. This is useful for showing
 things incrementally as in the following example.
@@ -2969,6 +2956,7 @@ but less user-friendly.
   environment. You have to use \TeX-mode to insert the |\onslide|
   commands. 
 \end{environment}
+
 
 
 
@@ -4442,13 +4430,11 @@ or come last as in |\item[Cat]<1>|.
 
 
 
-\subsubsection{Block Environments and Simple Structure Commands}
-\label{predefined}
+\subsubsection{Hilighting}
 
-The \beamer\ class predefines a number of useful environments and
-commands. Using these commands makes is easy to change the appearance
-of a document by changing the theme.
-
+The \beamer\ class predefines a commands and environments for
+hlighting text. Using these commands makes is easy to change the
+appearance of a document by changing the theme. 
 
 \begin{command}{\alert\sarg{overlay specification}\marg{hilighted text}}
   The given text is hilighted, typically be coloring the text red. If
@@ -4464,6 +4450,12 @@ of a document by changing the theme.
   You need to use \TeX-mode to insert this command.
 \end{command}
 
+\begin{environment}{{alertenv}\sarg{overlay specification}}
+  Environment version of the |\alert| command.
+\end{environment}
+
+
+
 \begin{command}{\structure\sarg{overlay specification}\marg{text}}
   The given text is marked as part of the structure, typically by
   coloring it in the |structure| color. If the \meta{overlay
@@ -4478,6 +4470,20 @@ of a document by changing the theme.
   \lyxnote
   You need to use \TeX-mode to insert this command.
 \end{command}
+
+\begin{environment}{{structureenv}\sarg{overlay specification}}
+  Environment version of the |\structure| command.
+\end{environment}
+
+
+
+
+\subsubsection{Block Environments}
+\label{predefined}
+
+The \beamer\ class predefines an environment for typesetting a
+``block'' of text that has a heading. The appearence of the block is
+governed by a template.
 
 \begin{environment}{{block}\sarg{action specification}\marg{block
       title}\sarg{action specification}}
@@ -4543,16 +4549,26 @@ specification}\marg{block title}\sarg{overlay specification}}
   \lyxnote
   Same applies as for |block|.
 \end{environment}
-  
-Predefined English block environments, that is, block environments
-with fixed title, are: |Theorem|, |Proof|, |Corollary|, |Definition|,
-|Definitions|, |Fact|, |Example|, and |Examples|. You can also use
-these environments with a lowercase first letter, the result  is the
-same. The following German block environments are also predefined:
-|Problem|, |Loesung|, |Definition|, |Satz|,
-|Beweis|, |Folgerung|, |Lemma|, |Fakt|,
-|Beispiel|, and |Beispiele|. See the following example for
-their usage. 
+
+\lyxnote
+Overlay specifications must be given right at the beginning of the
+environments and in \TeX-mode.
+
+
+
+\subsubsection{Theorem Environments}
+\label{section-theorems}
+
+The \beamer\ class predefines several environments, like |theorem| or
+|definition| or |proof|, that you can use to typeset things like,
+well, theorems, definitions, or proofs. The complete list is the
+following:  |theorem|, |corollary|, |definition|,
+|definitions|, |fact|, |example|, and |examples|. The following German
+block environments are also predefined: |Problem|, |Loesung|,
+|Definition|, |Satz|, |Beweis|, |Folgerung|, |Lemma|, |Fakt|,
+|Beispiel|, and |Beispiele|.
+
+Here is a typical example on how to use them:
 
 \begin{verbatim}
 \frame
@@ -4567,22 +4583,195 @@ their usage.
     This follows from the axiom of infinity.
   \end{proof}
 
-  \begin{example}<3->
+  \begin{example}<3->[Natural Numbers]
     The set of natural numbers is infinite.
   \end{example}
 }
 \end{verbatim}
 
+In the following, only the English versions are discussed. The German
+ones behave  analogously.
 
-\lyxnote
-Overlay specifications must be given right at the beginning of the
-environments and in \TeX-mode.
+\begin{environment}{{theorem}\sarg{action
+  specification}\oarg{additional text}\sarg{action specification}}
+  Inserts a theorem. Only one \meta{action specification} may be
+  given. If present, the \meta{additional text} is shown behind the
+  word ``Theorem'' is rounded brackets (although this can be changed by
+  the template).
+
+  The appearance of the theorem is governed by
+  templates, see Section~\ref{section-theorems-templates} for details
+  on how to change these. Every theorem is put into a |block|
+  environment, thus the templates for blocks also apply.
+
+  The theorem style (a concept from |amsthm|) used for this
+  environment is |plain|. In this style, the body of a theorem should
+  be typeset in italics. The head of the theorem should be typeset in
+  a bold font, but this is usually overruled by the templates.
+
+  If the option |envcountsect| is given either as class option in one
+  of the |presentation| modes or as an option to the package
+  |beamerbasearticle| in |article| mode, then the numbering of the
+  theorems is local to each section with the section number prefixing
+  the theorem number; otherwise they are numbered consecutively
+  throughout the presentation or article. I recommend using this
+  option in |article| mode.
+
+  By default, no theorem numbers are shown in the |presentation| modes.
+
+  \example
+\begin{verbatim}
+\begin{theorem}[Kummer, 1992]
+  If $\#^_A^n$ is $n$-enumerable, then $A$ is recursive.
+\end{theorem}
+
+\begin{theorem}<2->[Tantau, 2002]
+  If $\#_A^2$ is $2$-fa-enumerable, then $A$ is regular.
+\end{theorem}
+\end{verbatim}
+
+  \lyxnote
+  Is present, the optional argument and the action specification must
+  be given in \TeX\ mode at the beginning of the environment.
+\end{environment}
+
+The environments \declare{|corollary|}, \declare{|fact|}, and
+\declare{|lemma|} behave exactly the same way.
+
+\begin{classoption}{{envcountsect}}
+  Causes theorems, definitions, and so on to be numbered locally to
+  each section. Thus, the first theorem of the second section would be
+  Theorem~2.1 (assuming that there are no definitions, lemmas, or
+  corollaries earlier in the section).
+\end{classoption}
+
+\begin{environment}{{defintion}\sarg{action
+      specification}\oarg{additional text}\sarg{action specification}}
+  Behaves like the |theorem| environment, except that the theorem
+  style |definition| is used. In this style, the body of a theorem is
+  typeset in an upright font.
+\end{environment}
+
+The environment \declare{|definitions|} behaves exactly the same way.
+
+\begin{environment}{{example}\sarg{action
+      specification}\oarg{additional text}\sarg{action specification}}
+  Behaves like the |theorem| environment, except that the theorem
+  style |example| is used. A side-effect of using this theorem style
+  is that the \meta{environment contents} is put in an |exampleblock|
+  instead of a |block|.
+\end{environment}
+
+The environment \declare{|examples|} behaves exactly the same way.
+
+Some remarks on numbered theorems:
+
+\beamernote
+The default template for typesetting theorems suppresses the theorem
+number, even if this number is ``available'' for typesetting (which it
+is by default in all predefined environments; but if you define your
+own environment using |\newtheorem*| no number will be available). I would 
+like to discourage using numbered theorems in a presentation. The
+audience has no chance of remembering these numbers. \emph{Never} say
+things like ``now, by Theorem~2.5 that I showed you earlier, we have \dots''
+It would be much better to refer to, say, Kummer's
+Theorem instead of Theroem~2.5. If Theorem~2.5 is some obscure theorem
+that does not have its own name (like Kummer's Theorem or Main Theorem
+or Second Main Theorem or Key Lemma), then the audience will have
+forgotten about it anyway by the time you refer to it again.
+
+In my opinion, the only situtation in which numbered theorems make
+sense in a presentation is in a lecture, in which the students can read
+lecture notes in parallel to the lecture where the theorems are
+numbered in exactly the same way. 
 
 \articlenote
-The predefined environments are typeset using the package
-|amsthm| when using |beamerbasearticle|. For various reasons, you may
-wish to define them differently yourself. In this case, you can use
-the following option:
+In |article| mode, theorems are automatically numbered. By specifying
+the option |envcountsect|, theorems will be numbered locally to each
+section, which is usually a good idea, except for very short
+articles.
+
+The predefined environments number everything consecutively. Thus if
+there are one theorem, one lemma, and one definition, you would have
+Theorem~1, Lemma~2, and Definition~3. Some people prefer all three to
+be numbered~1. I would \emph{strongly} like to discourage this. The
+problem is that this makes it virtually impossible to find anything
+since Theorem~2 might come after Definition~10 or the other way
+round. Papers and, worse, books that have a Theorem~1 and a
+Definition~1 are a pain. Do not inflict pain on other people.
+
+\begin{environment}{{proof}\sarg{action specification}\oarg{proof
+name}\sarg{action specification}}
+  Typesets a proof. If the optional \meta{proof name} is given, it
+  completely replaces the word ``Proof.'' This is different from
+  normal theorems, where the optional argument is shown in brackets.
+
+  At the end of the theorem, a |\qed| symbol is shown, except if you
+  say |\qedhere| earlier in the proof (this is exactly as in
+  |amsthm|). The default |\qed| symbol is a filled rectangle. To
+  completely suppress the symbol, write |\def\qedsymbol{}| in 
+  your preamble. To get an open rectangle, say
+  |\def\qedsymbol{\openbox}|. Adding |\color{beamerstructure}| might
+  also be a good idea.
+
+  If you use |babel| and a different language, the text ``Proof'' is
+  replaced by whatever is appropriate in the selected language.
+
+  \example
+\begin{verbatim}
+\begin{proof}<2->[Sketch of proof]
+  Suppose ...
+\end{proof}
+\end{verbatim}
+\end{environment}
+
+You can define new environments using the following command:
+
+\begin{command}{\newtheorem\opt{|*|}\marg{environment name}\oarg{numbered same
+      as}\marg{head text}\oarg{number within}}
+  This command is used exactly the same way as in the |amsthm| package
+  (as a matter of fact, it is the command from that package), see its
+  documentation. The only difference is that environments declared using
+  this command are overlay-specification-aware in \beamer\ and that,
+  when typeset, are typeset according to \beamer's templates.
+
+  \articlenote
+  Environments declared using this command are also
+  overlay-specification-aware in |article| mode.
+
+  \example |\newtheorem{observation}[theorem]{Observation}|
+\end{command}
+
+You can also use |amsthm|'s command |\newtheoremstyle| to define new
+theorem styles. Note that the default template for theorems will
+ignore any head font setting, but will honor the body font setting.
+
+If you wish to define the environments like |theorem| differently (for
+example, have it numbered within each subsection), you can use the
+following class option to disable the definition of the predefined
+environments: 
+
+\begin{classoption}{{notheorems}}
+  Switches off the definition of default blocks like |theorem|, but
+  still loads |amsthm| and makes theorems  
+  overlay-specificiation-aware.
+\end{classoption}
+
+The option is also available as a package option for
+|beamerbasearticle| and has the same effect.
+
+\articlenote
+In the |article| version, the package |amsthm| sometimes clashes with
+the document class. In this case you can use the following option,
+which is once more available as a class option for \beamer\ and as a
+package option for |beamerbasearticle|, to switch off the loading of
+|amsthm| altogether. 
+
+\begin{classoption}{{noamsthm}}
+  Does not load |amsthm| and also not |amsmath|. Environments like
+  |theorem| or |proof| will not be available.
+\end{classoption}
+
 
 
 
@@ -5913,9 +6102,6 @@ descriptions of the commands to which you wish to apply them.
   The following \meta{options} may be given:
   \begin{itemize}
   \item
-    \declare{|noxcolor|} will suppress the loading of the |xcolor|
-    package. No colors will be defined.
-  \item
     \declare{|activeospeccharacters|} will leave the character code of
     the characters used in overlay specifications as specified by
     other packages. Normally, \beamer\ will turn off the special
@@ -5924,6 +6110,23 @@ descriptions of the commands to which you wish to apply them.
     specifications. Using this option, you can reinstall the original
     behaviour at the price of possible problems when using overlay
     specifications in the |article| mode.
+  \item
+    \declare{|noamsthm|} will suppress the loading of the |amsthm|
+    package. No theorems will be defined.
+  \item
+    \declare{|notheorem|} will suppress the definition of standard
+    environments like |theorem|, but |amsthm| is still loaded and the
+    |\newtheorem| command still makes the defined environments
+    overlay-specification-aware. Using this option allows you to
+    define the standard environments in whatever way you like while
+    retaining the power of the extensions to |amsthm|.    
+  \item
+    \declare{|envcountsect|} causes theorem, definitions and the like
+    to be numbered with each section. Thus instead of Theorem~1 you
+    get Theorem~1.1. I recommend using this option.
+  \item
+    \declare{|noxcolor|} will suppress the loading of the |xcolor|
+    package. No colors will be defined.
   \end{itemize}
 \end{package}
 
@@ -8212,6 +8415,129 @@ The following inserts are useful for the navigation symbols template:
 
 
 
+\subsubsection{Theorem Environments}
+
+\label{section-theorems-templates}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplatetheoremssimple}
+  Causes the theorem head and text to be directly passed to the
+  |block| or |exampleblock| environment. All font specifications for
+  theorems are ignored. 
+\end{command}
+
+\begin{command}{\beamertemplatetheoremsunnumbered}
+  Causes theorems to be typeset as follows: The font specification for
+  the body is honored, the font specification for the head is
+  ignored. No theorem number is printed. This is the default.
+\end{command}
+
+\begin{command}{\beamertemplatetheoremsnumbered}
+  Like |\beamertemplatetheoremsunnumbered|, except that the theorem
+  number is printed for environments that are numbered.
+\end{command}
+
+\begin{command}{\beamertemplatetheoremsamslike}
+  This causes theorems to be put in a |block| or |exampleblock|, but
+  to be otherwise typeset as is normally done in |amsthm|. Thus the
+  head font and body font depend on the setting for the theorem to be
+  typeset and theorems are numbered. 
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usetheoremtemplate\marg{block beginning
+      template}\marg{block end template}}
+  \beamernote
+  Whenever an environment declared using the command |\newtheorem| is
+  to be typeset, the \meta{block beginning template} is inserted at
+  the beginning and the \meta{block end template} at the end. If there
+  is a overlay specifciation when an environment like |theorem| is
+  used, this overlay specifciation will directly follow the
+  \meta{block beginning template} upon invocation. This is even true
+  if there was an optional argument to the |theorem| environment. This
+  optional argument is available via the insert |\inserttheoremaddition|.
+
+  Numerous inserts are available in this template, see below.  
+
+  Before the template starts, the font is set to the body font
+  prescribed by the environment to be typeset.
+  
+  \example The following typesets theorems like |amsthm|:
+\begin{verbatim}
+\usetheoremtemplate{\begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremheadfont
+    \inserttheoremname
+    \inserttheoremnumber
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+    \inserttheorempunctuation
+  }%
+}{\end{\inserttheoremblockenv}}
+\end{verbatim}
+
+  \example In the following example, all font ``suggestions'' for the
+  environment are suppressed or ignored; and the theorem number is
+  suppressed.
+\begin{verbatim}
+\usetheoremtemplate{%
+  \normalfont% ignore body font
+  \begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremname
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  }%
+}{\end{\inserttheoremblockenv}}
+\end{verbatim}
+  
+  \articlenote
+  This command is not available in |article| mode.
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\inserttheoremblockenv}
+  This will normally expand to |block|, but if a theorem that has
+  theorem style |example| is typeset, it will expand to
+  |exampleblock|. Thus you can use this insert to decide which
+  environment should be used when typesetting the theorem.
+\end{command}
+
+\begin{command}{\inserttheoremheadfont}
+  This will expand to a font chainging command that switches to the
+  font to be used in the head of the theorem. By not inserting it, you
+  can ignore the head font.
+\end{command}
+
+\begin{command}{\inserttheoremname}
+  This will expand to the name of the environment to be typeset (like
+  ``Theorem'' or ``Corollary''). 
+\end{command}
+
+
+\begin{command}{\inserttheoremnumber}
+  This will expand to the number of the current theorem preceeded by a
+  space or to nothing, if the current theorem does not have a number.
+\end{command}
+
+\begin{command}{\inserttheoremaddition}
+  This will expand to the optional argument given to the environment
+  or will be empty, if there was no optional argument.
+\end{command}
+
+\begin{command}{\inserttheorempunctuation}
+  This will expand to the punctuation character for the current
+  environment. This is usually a period.
+\end{command}
+
+
+
+
+
 \subsubsection{Verse, Quotation and Quote Environments}
 
 
@@ -8284,6 +8610,274 @@ The following inserts are useful for the navigation symbols template:
   This will give a mini slide whose width and height are one fourth of
   the usual size.
 \end{command}
+
+
+
+
+\section{Tips and (Dirty) Tricks}
+
+The aim of this section is to collect some hints and tricks that make
+use of the basic \beamer-class concepts.
+
+
+
+\subsection{Piecewise Uncovering}
+
+\subsubsection{Uncovering an Enumeration Piecewise}
+
+A common usage of overlays is to show a list of points in an
+enumeration in a piecewise fashion. The easiest and most flexible way
+to do this is the following:
+
+\begin{verbatim}
+\begin{itemize}
+\item<1-> First point.
+\item<2-> Second point.
+\item<3-> Third point.
+\end{itemize}
+\end{verbatim}
+
+The advantage of this approach is that you retain total control over
+the order in which items are shown. By chaning, for example, the last
+specification to |<2->|, you can have the last two points uncovered at
+the same time.
+
+A disadvantage of the approach is that you will have to renumber
+everything if you add a new item. This is usually not such a big
+problem, but it can be a nuiseance.
+
+To automize the uncovering, you can use the following code:
+
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+The effect of the |[<+->]| is to install a \emph{default overlay
+  specification}, see the definition of |itemize| for details.
+
+Now, suppose you wish the second and third point to be shown at the
+same time. You could achieve this by adding the specificaiton |<2->|
+to either the second or third |\item| command. However, then you still
+have to do some renumbering if you add a new item at the beginning. A
+better, though more cumbersome, approach is to decrease the counter
+|beamerpause| before the last item:
+
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item First point.
+\item Second point.
+  \addtocounter{beamerpause}{-1}
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+This does not look so nice, but it works. Also, you might wish to
+build your own macros based on these ideas (like an |itemstep|
+environment or a |\itemlikeprevious| command).
+
+
+
+\subsubsection{Hilighting the Current Point in an Enumeration}
+
+If you uncover an enumeration piecewise, it is sometimes a good idea
+to hilight the last uncovered point to draw the audience's attention
+to it. This is best achieved as follows:
+
+
+\begin{verbatim}
+\begin{itemize}
+\item<1-| alert@1> First point.
+\item<2-| alert@2> Second point.
+\item<3-| alert@3> Third point.
+\end{itemize}
+\end{verbatim}
+
+or
+
+\begin{verbatim}
+\begin{itemize}[<+-| alert@+>]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+Note that this will draw the little item symbol also in red.
+
+
+
+\subsubsection{Changing Symbol Before an Enumeration}
+
+When uncovering a list of tasks or problems, you may desire that the
+symbol in front of the last uncovered symbol is, say, an ballot X,
+while for the previous items it is a check mark (you'll find these
+characters in some Dingbats fonts).
+
+The best way to achieve this is to implement a new action
+environment. If this action is activated, it temporarily changes the
+item symbol template to the other symbol:
+
+\begin{verbatim}
+\newenvironment{ballotenv}
+{\only{%
+  \useitemizeitemtemplate{code for showing a ballot}%
+  \usesubitemizeitemtemplate{code for showing a smaller ballot}%
+  \usesubsubitemizeitemtemplate{code for showing a smaller ballot}}}
+{}
+
+\useitemizeitemtemplate{code for showing a check mark}
+\usesubitemizeitemtemplate{code for showing a smaller check mark}
+\usesubsubitemizeitemtemplate{code for showing a smaller check mark}
+\end{verbatim}
+
+The effect of the code is to install a check mark as the default
+template. If the action |ballot| is now requested for some item, this
+template will temporarily be replaced by the ballot templates.
+
+Note that the |ballotenv| is invoked with the overlay specification
+given for the action directly following it. This causes the |\only| to
+be invoked exactly for the specified overlays.
+
+Here are example usages:
+
+\begin{verbatim}
+\begin{itemize}
+\item<1-| ballot@1> First point.
+\item<2-| ballot@2> Second point.
+\item<3-| ballot@3> Third point.
+\end{itemize}
+\end{verbatim}
+
+and
+
+\begin{verbatim}
+\begin{itemize}[<+-| ballot@+>]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+In the following example, more and more items become ``checked'' from
+slide to slide:
+
+\begin{verbatim}
+\begin{itemize}[<ballot@+-| visible@1-,+(1)>]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+The important point is |ballot@+|. The funny |visible@1-,+(1)| has the
+following effect: Although it has no effect with respect to what is
+shown (after all, it applies to all slides), it ensures that in
+the enumeration the slide number 4 is mentioned. Thus there will also
+be a slide in which all three points are checked.
+
+
+\subsubsection{Uncovering Tagged Formulas Piecewise}
+
+Suppose you have a three line formula as the following:
+\begin{verbatim}
+\begin{align}
+  A &= B \\
+    &= C \\
+    &= D
+\end{align}
+\end{verbatim}
+
+Uncovering this formula line-by-line is a little tricky. A first idea
+is to use the |\pause| or |\onslide| commands. Unfortunately, these do
+not work since |align| internally reprocesses its input several times,
+which messes up the delicate internals of the commands. The next idea
+is the following, which works a little better:
+\begin{verbatim}
+\begin{align}
+  A &= B \\
+    \uncover<2->{&= C \\}
+    \uncover<3->{&= D}
+\end{align}
+\end{verbatim}
+Unfortunately, this does not work in the presence of tags (so it works
+for the |align*| environment). What happens is that the tag of the
+last line is shown on all slides. The problem here is that the tag is
+created when |\\| is encountered or when |\end{align}| is
+encountered. In the last line these are already ``behind'' the
+|\uncover|.
+
+To solve this problem, you can add an empty line without a tag and then
+insert a negative vertical skip to undo the last line:
+\begin{verbatim}
+\begin{align}
+  A &= B \\
+    \uncover<2->{&= C \\}
+    \uncover<3->{&= D \\}
+    \notag
+  \end{align}
+\vskip-1.5em
+\end{verbatim}
+
+
+\subsubsection{Uncovering a Table Linewise}
+
+When you wish to uncover a table line-by-line, you will run into all
+sorts of problems if there are vertical and horizontal lines in the
+table. The reason is that the first vertical line at the left end is
+drawn before the line is even read (and thus, in particular, before
+any |\onslide| command can be read). However, placing a |\pause| or
+|\uncover| at the end of the line before is also not helpful since it
+will then suppress the horizontal line below the last uncovered line.
+
+A possible way to solve this problem is not to use either horizontal
+or vertical lines. Instead, colouring the lines using the |colortbl|
+package is a good alternative to structure the table. Here is an
+optically pleasing example, where the table is uncovered line-wise:
+
+\begin{verbatim}
+\rowcolors[]{1}{blue!20}{blue!10}
+\begin{tabular}{l!{\vrule}cccc}
+  Class & A & B & C & D \\\hline
+  X     & 1 & 2 & 3 & 4 \pause\\
+  Y     & 3 & 4 & 5 & 6 \pause\\
+  Z     & 5 & 6 & 7 & 8
+\end{tabular}
+\end{verbatim}
+
+By using |\onslide| instead of |\pause|, you can get more fine-grained
+control over which line is shown on which slide.
+
+
+\subsubsection{Uncovering a Table Columnwise}
+
+The same problems as for uncovering a table linewise arise for
+uncovering it columnwise.
+
+Once more, using the |colortbl| package offers a solution. In the
+following example, the |tabular| header is used to insert |\onslide|
+commands, one for each column, that cover the entries in the colomn
+from a certain slide on. At the end of the last column, the |\onslide|
+without a specification ensures that the first column on the next row
+is once more shown normally.
+
+Inserting a horizontal line is tricky since it will protrude over the
+full width of the table also in the covered version. The best idea is
+just not to use horizontal bars.
+
+\begin{verbatim}
+\rowcolors[]{1}{blue!20}{blue!10}
+\begin{tabular}{l!{\vrule}c<{\onslide<2->}c<{\onslide<3->}c<{\onslide<4->}c<{\onslide}c}
+  Class & A & B & C & D \\
+  X     & 1 & 2 & 3 & 4 \\
+  Y     & 3 & 4 & 5 & 6 \\
+  Z     & 5 & 6 & 7 & 8
+\end{tabular}
+\end{verbatim}
+
 
 
 
