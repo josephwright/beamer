@@ -218,12 +218,12 @@ as follows:
   To insert the sections and subsections, use the usual Section and
   Subsection styles.
 \item
-  To insert the frame containing the tabel of contents, insert a line
+  To insert the frame containing the table of contents, insert a line
   of style BeginFrame. Since this frame has no title, do not write
   anything on the line with style BeginFrame. Next, insert a line of
   Standard style and use Insert $\rangle$ Insert TOC to insert the
   table of contents. Optionally, end the frame using a line of style
-  EndFrame (the ensuite Section style automatically closes the frame.
+  EndFrame (the en suite Section style automatically closes the frame.
 \item
   To create the last frame, start a new frame using the style
   BeginFrame. Write the frame title on the line having this
@@ -418,7 +418,7 @@ looks correct. If so, you are all set.
 
 \lyxnote
 To test the \LyX\ installation, try creating a new file from the
-template |beamerpresentation|, which is located in the directory
+template |beamerpresentation.lyx|, which is located in the directory
 |beamer/lyx/templates|.
 
 
@@ -718,7 +718,7 @@ might  look like this:
 \lyxnote
 Use ``View'' to check whether the presentation compiles fine. Note
 that you must put the table of contents inside a frame, but that the
-titlepage is created automatically.
+title page is created automatically.
 
 
 \subsubsection{Creating PDF}
@@ -2754,7 +2754,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
 \end{command}
 
 
-\subsubsection{Splitting a Course Into Lecutres}
+\subsubsection{Splitting a Course Into Lectures}
 
 When using \beamer\ with the |article| mode, you may wish to have the
 lecture notes of a whole course reside in one file. In this case, only
@@ -3231,7 +3231,7 @@ hyperlink commands that you can also use.
   |\hypertarget| command was used with the parameter \meta{target
     name}. If an \meta{overlay specification} is present, the
     hyperlink (including the \meta{link text}) is completely
-    suppressed on the non-specificed slides.
+    suppressed on the non-specified slides.
 \end{command}
 
 The following commands have a predefined target; otherwise they behave
@@ -3537,7 +3537,7 @@ or come last as in |\item[Cat]<1>|.
 \begin{environment}{{enumerate}\oarg{mini template}}
   Used to display a list of items that are ordered.  Inside the
   environment, use an |\item| command for each topic. By default,
-  before each item increasing arabic numbers  followed by a dot are
+  before each item increasing Arabic numbers  followed by a dot are
   printed (as in ``1.'' and ``2.''). This can be changed by specifying
   a different template,  see
   Section~\ref{section-template-enumerate}.
@@ -3547,8 +3547,8 @@ or come last as in |\item[Cat]<1>|.
   templates in the |enumerate| package (you do not need to include the
   |enumerate| package, this is done automatically). Roughly spoken,
   the text of the \meta{mini template} is printed before each item,
-  but any occurence of a |1| in the mini template is replaced by the
-  current item number, an occurence of the letter |A| is replaced by
+  but any occurrence of a |1| in the mini template is replaced by the
+  current item number, an occurrence of the letter |A| is replaced by
   the $i$th letter of the alphabet (in uppercase) for the $i$th item,
   and the letters |a|, |i|, and |I| are replaced by the corresponding
   lowercase letters, lowercase Roman letters, and uppercase Roman
@@ -3685,7 +3685,7 @@ of a document by changing the theme.
   The argument of the block must (currently) be given in
   \TeX-mode. More precisely, there must be an opening brace in
   \TeX-mode and a closing brace in \TeX-mode around it. The text
-  inbetween can also be typeset using \LyX. I hope to get rid of this
+  in between can also be typeset using \LyX. I hope to get rid of this
   some day.
 \end{environment}
 
@@ -3981,8 +3981,8 @@ To create a column, you can either use the |column| environment or the
 \subsubsection{Positioning Text and Graphics Absolutely}
 
 Normally, \beamer\ uses \TeX's normal typesetting mechanism to
-position text and graphics on the page. In certain situtation you may
-instead wish a certain text or graphi to appear at a
+position text and graphics on the page. In certain situation you may
+instead wish a certain text or graphic to appear at a
 page position that is specified \emph{absolutely}. This means that the
 position is specified relative to the upper left corner of the slide.
 
@@ -4138,7 +4138,7 @@ mind:
   |pstricks|, does not work together with |pdflatex| and
   this is a fundamental problem. Due to the fundamental differences
   between \textsc{pdf} and PostScript, it is not possible to write a
-  ``|pdflatex| backend for |pstricks|.''
+  ``|pdflatex| back-end for |pstricks|.''
 \end{itemize}
 
 A solution to the above problem (though not necessarily the best) is
@@ -4835,7 +4835,7 @@ commands issued inside frames profit from the class option
 
 \lyxnote
 In \LyX, only the inside-frame |\note| command with the option
-|[item]| is avaiable in the form of the NoteItem style. 
+|[item]| is available in the form of the NoteItem style. 
 
 Inside a frame, the effect of |\note|\meta{text} is the following:
 When you use it somewhere inside the frame on a specific slide, a note
@@ -4947,15 +4947,6 @@ The |notes| class option takes several parameters whose effects are
 explained in the following.
 
 
-If you specify |notesonly| instead of
-|notes|, only notes will be included and all normal frames are
-parsed, but not displayed. This is useful for printing the notes.
-
-By default, you can fit only little on each note (they are only
-intended to be reminders after all). Using the class option
-|compressnotes| will allow you to squeeze much more on each note
-card. 
-
 \begin{classoption}{notes=hide}
   Notes are not shown. This is the default in a presentation.
 \end{classoption}
@@ -4982,7 +4973,6 @@ card.
   and the notes that apply to them to be nicely paired. This is useful
   for printing.
 \end{classoption}
-
 
 
 
@@ -5158,7 +5148,7 @@ With some more text.
 There is one command, whose behaviour is a bit special in the article
 mode: The line break command |\\|. Inside frames, this command has no
 effect in article mode, except if an overlay specification is
-present. Then it has the normal effect dictaded by the
+present. Then it has the normal effect dictated by the
 specification. The reason for this behaviour is that you will
 typically inserts lots of |\\| commands in a presentation in order to
 get control over all line breaks. These line breaks are mostly
@@ -5220,7 +5210,7 @@ subdirectory for files starting with |beamerexample2|.
 
 If you use the package |beamerbasearticle|, the |\frame| command
 becomes available in |article| mode. By adjusting the frame template,
-you can ``mimick'' the appearance of frames typeset by \beamer\ in
+you can ``mimic'' the appearance of frames typeset by \beamer\ in
 your articles. However, sometimes you may wish to insert ``the real
 thing'' into the |article| version, that is, a precise ``screenshot''
 of a slide from the presentation. The commands introduced in the
@@ -5335,7 +5325,7 @@ some situations, you can use the |\only| command for this
 purpose. However, the command |\mode|, which is described in the
 following, is much more powerful than |\only|.
 
-The command actually comes in three ``flavours,'' which only slightly
+The command actually comes in three ``flavors,'' which only slightly
 differ in syntax. The first, and simplest, is the version that takes
 one argument. It behaves essentially the same way as |\only|.
 
@@ -5354,7 +5344,7 @@ one argument. It behaves essentially the same way as |\only|.
 \end{verbatim}
 \end{command}
 
-The second flavour of the |\mode| command takes no argument. ``No
+The second flavor of the |\mode| command takes no argument. ``No
 argument'' means that it is not followed by an opening brace, but any
 other symbol.
 
@@ -5363,35 +5353,35 @@ other symbol.
   interesting part is the effect in the non-specified modes: In these
   modes, the command causes \TeX\ to enter a kind of ``gobbling''
   state. It will now ignore all following lines until the next
-  line that has a sole occurence of one of the following commands:
+  line that has a sole occurrence of one of the following commands:
   |\mode|, |\mode*|, |\begin{document}|, |\end{document}|. Even a comment on
   this line will make \TeX\ skip it.
 
   When \TeX\ encounters a single |\mode| command, it will execute this
-  command. If the command is |\mode| command of the first flavour,
+  command. If the command is |\mode| command of the first flavor,
   \TeX\ will resume its ``gobbling'' state after having inserted (or
   not inserted) the argument of the |\mode| command. If the |\mode|
-  command is of the second flavour, it takes over.
+  command is of the second flavor, it takes over.
 
-  Using this second flavour of |\mode| is less convenient than the
+  Using this second flavor of |\mode| is less convenient than the
   first, but there are two reasons why you might need to use it:
   \begin{itemize}
   \item
     The line-wise gobbling is much faster than the gobble of the third
-    flavour, explained below.
+    flavor, explained below.
   \item
-    The first flavour reads its argument completely. This means, it
+    The first flavor reads its argument completely. This means, it
     cannot contain any verbatim text.
   \item
     If the text mainly belongs to one mode with only small amounts of
-    text from another mode inserted, this second flavour is nice to
+    text from another mode inserted, this second flavor is nice to
     use. 
   \end{itemize}
 
   \emph{Note:} When searching line-wise for a |\mode| command to shake
   it out of its gobbling state, \TeX\ will not recognize a |\mode|
   command if a mode specification follows on the same line. Thus, such
-  a specifiation must be given on the next line.
+  a specification must be given on the next line.
 
   \emph{Note:} When a \TeX\ file ends, \TeX\ must not be in the
   gobbling state. Switch this state off using |\mode| on one line and
@@ -5419,7 +5409,7 @@ This text is only inserted in presentation mode.
 \end{verbatim}
 \end{command}
 
-The last flavour of the mode command behaves quite differently.
+The last flavor of the mode command behaves quite differently.
 
 \begin{command}{\mode\declare{|*|}}
   The effect of this mode is to ignore all text outside frames in the
@@ -5428,7 +5418,7 @@ The last flavour of the mode command behaves quite differently.
   This mode should only be entered outside of frames. Once entered, if
   the current mode is a |presentation| mode, \TeX\ will enter a
   gobbling state similar to the gobbling state of the second
-  ``flavour'' of the |\mode| command. The difference is that the text
+  ``flavor'' of the |\mode| command. The difference is that the text
   is now read token-wise, not line-wise. The text is gobbled token by
   token until one of the following tokens is found: |\mode|, |\frame|,
   |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|,
@@ -5441,9 +5431,9 @@ The last flavour of the mode command behaves quite differently.
   finished, \TeX\ returns to its gobbling.
 
   Normally, |\mode*| is exactly what you want \TeX\ to do outside of
-  frames: ignore everything except for the abovementioned commands
+  frames: ignore everything except for the above-mentioned commands
   outside frames in |presentation| mode. However, there are  cases
-  in which you have to use the second flavour of the |\mode| command
+  in which you have to use the second flavor of the |\mode| command
   instead: If you have verbatim text that contains one of the commands,
   if you have very long text outside frames, or if you wish some text
   outside a frame (like a definition) to be executed also in
@@ -5582,7 +5572,6 @@ the command |\operatorname| from the |amsmath| package. Using this
 command instead of |\mathrm| or |\mathsf| directly will  automatically
 adjust  upright mathematical text if you switch from sans-serif to
 serif or back.
-
 
 
 
@@ -6564,7 +6553,7 @@ or
     option, rather than having it left aligned.
   \item
     \declare{|respectlinebreaks|}
-    causes line breaks introduced by the |\\| command to be honoured.    
+    causes line breaks introduced by the |\\| command to be honored.    
   \end{itemize}
 
   \example |\insertauthor[width={3cm},center,respectlinebreaks]|
@@ -6572,22 +6561,22 @@ or
 
 \begin{command}{\insertshortdate\oarg{options}}
   Inserts the short version of the date into a template. The same
-  options as for |\insertshortauthor| may ge given. 
+  options as for |\insertshortauthor| may be given. 
 \end{command}
 
 \begin{command}{\insertshortinstitute\oarg{options}}
   Inserts the short version of the institute into a template. The same
-  options as for |\insertshortauthor| may ge given. 
+  options as for |\insertshortauthor| may be given. 
 \end{command}
 
 \begin{command}{\insertshortpart\oarg{options}}
   Inserts the short version of the part name into a template. The same
-  options as for |\insertshortauthor| may ge given. 
+  options as for |\insertshortauthor| may be given. 
 \end{command}
 
 \begin{command}{\insertshorttitle\oarg{options}}
   Inserts the short version of the document title into a template. Same
-  options as for |\insertshortauthor| may ge given. 
+  options as for |\insertshortauthor| may be given. 
 \end{command}
 
 
