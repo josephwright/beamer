@@ -941,7 +941,7 @@
 
 \def\frametitle#1{%
   \vskip0pt plus -1fill%
-  {\gdef\insertframetitle{#1\par}\@headrenderer}
+  {\gdef\insertframetitle{#1}\@headrenderer}
   \vskip0.25em%
   \ifbeamer@centered
   \vfill%
@@ -2164,7 +2164,7 @@
         {\usecounter\@enumctr%
           \def\makelabel##1{{\hss\llap{##1}}}}%
   \fi%
-  \begin{pauses}}
+  \begin{pauses}\raggedright}
 \def\endenumerate{\end{pauses}\endlist\csname\@enumctr endtemplate\endcsname}
 
 \def\itemize{%
@@ -2178,7 +2178,7 @@
       \csname\@itemitem\endcsname
       {\def\makelabel##1{{\hss\llap{##1}}}}
   \fi%
-  \begin{pauses}}
+  \begin{pauses}\raggedright}
     
 \def\enditemize{\end{pauses}\endlist\csname\@itemctr endtemplate\endcsname}
 
@@ -2216,7 +2216,7 @@
 \def\@description[#1]{\setbox\tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
   \@descdefault\wd\tempbox\advance\@descdefault by \labelsep\@@description}
 \def\@@description{\list{}{\labelwidth\@descdefault\leftmargin\@descdefault\let\makelabel\@descriptionitem}%
-  \begin{pauses}}
+  \begin{pauses}\raggedright}
 \def\enddescription{\end{pauses}\endlist}
 \long\def\@descriptionitem#1{\def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
@@ -2312,7 +2312,7 @@
             \renewcommand\theenumiv{\@arabic\c@enumiv}
             \let\makelabel\@biblabeltemplate}%
       \begin{pauses}%
-      \sloppy
+      \sloppy\raggedright
       \clubpenalty10000
       \@clubpenalty \clubpenalty
       \widowpenalty10000%

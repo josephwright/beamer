@@ -136,6 +136,11 @@
   \pgfaliasshading{bigsphere!10!averagebackgroundcolor}{bigsphereshaded}
   \pgfaliasshading{bigsphere!5!averagebackgroundcolor}{bigsphereshaded}
   \pgfaliasshading{bigsphere!2!averagebackgroundcolor}{bigsphereshaded}  
+  \pgfaliasshading{bigsphere!20!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!15!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!10!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!5!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!2!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}  
   \pgfaliasshading{smallsphere!20!averagebackgroundcolor}{smallsphereshaded}
   \pgfaliasshading{smallsphere!15!averagebackgroundcolor}{smallsphereshaded}
   \pgfaliasshading{smallsphere!10!averagebackgroundcolor}{smallsphereshaded}
@@ -178,6 +183,30 @@
   {%
     \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
       \color{structure}
+      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
+    \end{pgfpicture}%
+  }
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+      \color{structure!50!averagebackgroundcolor}
+      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
+    \end{pgfpicture}%
+  }
+  {.14cm}{.03cm}
+}
+
+\newcommand{\beamertemplatesphereminiframeinverted}{
+  \def\beamer@sphereradius{0.05cm}
+  \useminislidetemplate
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+      \color{white}
+      \pgfcircle[fillstroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
+    \end{pgfpicture}%
+  }
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+      \color{white}
       \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
     \end{pgfpicture}%
   }
@@ -486,10 +515,10 @@
 
 \newcommand{\beamertemplatesetupshadings}{
   \beamerboxessetupshadows
-  \colorlet{darkgreen}{green!50!black}
+  \colorlet{beamerdarkgreen}{green!50!black}
   \beamerboxesdeclarecolorscheme{block}{structure!75!averagebackgroundcolor}{structure!10!averagebackgroundcolor}
   \beamerboxesdeclarecolorscheme{alert}{alert!75!averagebackgroundcolor}{alert!10!averagebackgroundcolor}
-  \beamerboxesdeclarecolorscheme{example}{darkgreen!75!averagebackgroundcolor}{darkgreen!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{example}{beamerdarkgreen!75!averagebackgroundcolor}{beamerdarkgreen!10!averagebackgroundcolor}
 }
 
 \newcommand{\beamertemplateroundedblocks}{

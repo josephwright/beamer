@@ -37,27 +37,8 @@
 {\color{white}\tiny\textbf{\insertsectionhead}}
 {\color{white!50!structure}\tiny\textbf{\insertsectionhead}}
 
-                                % Mini slides in headline
-\useminislidetemplate
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{white}
-    \pgfcircle[fillstroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }  
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{white}
-    \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{structure!50!averagebackgroundcolor}
-    \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }
-{.14cm}{.03cm}
+
+\beamertemplatesphereminiframeinverted
 
                                 % Entries in table of contents
 \usetemplatetocsection[50!averagebackgroundcolor]
