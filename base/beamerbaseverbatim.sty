@@ -9,10 +9,8 @@
 
 
 \newwrite\beamer@verbatimfileout
-\newtoks\beamer@verbatimtoks
 
 \def\beamer@verbatimreadframe{%
-  \global\beamer@verbatimtoks={}%
   \begingroup%
   \let\do\beamer@makeinnocent\dospecials%
   \count@=127%
@@ -29,12 +27,8 @@
     \ifx\beamer@test\beamer@stopframefirst%
       \let\next=\beamer@framewritten%
     \else
-      \ifx\scantokens\relax% check for etex
-        \@temptokena={#1}%
-        \immediate\write\beamer@verbatimfileout{\the\@temptokena}%
-      \else
-        \global\beamer@verbatimtoks={#1^^M}%
-      \fi%
+      \@temptokena={#1}%
+      \immediate\write\beamer@verbatimfileout{\the\@temptokena}%
       \let\next=\beamer@processframeline%
     \fi%
     \next%
@@ -44,11 +38,7 @@
     \ifx\beamer@test\beamer@stopframe%
       \let\next=\beamer@framewritten%
     \else
-      \ifx\scantokens\relax% check for etex
-        \immediate\write\beamer@verbatimfileout{#1}%
-      \else%
-        \global\beamer@verbatimtoks\expandafter{\the\beamer@verbatimtoks#1^^M}%
-      \fi%
+      \immediate\write\beamer@verbatimfileout{#1}%
       \let\next=\beamer@processframeline%
     \fi%
     \next%
