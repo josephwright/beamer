@@ -9,7 +9,7 @@ themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
 
 fontthemes = bold default italics romanum sansserifstructure serifstructure
 
-colorthemes = default darktitles
+colorthemes = default crane snowtiger
 
 layoutthemes = bars lined miniframestop shadow sidebar smoothbars smoothtree split tree
 
