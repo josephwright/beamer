@@ -5,6 +5,8 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\def\version{2.20}
+
 \usepackage{pgf,xcolor}
 \usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
 \usepackage{amsmath,amssymb}
@@ -101,7 +103,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 2.11-CVS\\
+\title{User's Guide to the Beamer Class, Version \version\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -296,6 +298,29 @@ the files in the \beamer\ package. Which way you should choose depends
 on how permanently you intend to use the class.
 
 
+\subsection{Versions}
+
+This documentation is part of version \version\ of the \beamer\
+class. \beamer\ needs a reasonably recent version of \LaTeX\ and of
+several standard packages to run. It also needs the following versions
+of rather special packages:
+\begin{enumerate}
+\item
+  |pgf| version 0.61 and
+\item
+  |xcolor| version 1.10.
+\end{enumerate}
+This version of \beamer\ should also work with more recent versions of
+|pgf| and |xcolor|, but I cannot guarantee this. In particular,
+|xcolor| is developped by Uwe Kern, not by me, and \beamer\ messes
+around with the |xcolor| internals in a not-so-friendly way. So
+whenever Uwe Kern changes |xcolor| internals (to which he is perfectly
+entitled), things can break down. We are working on removing
+|beamer|'s dependency on internals of |xcolor|, but that is still
+work-in-progress. 
+
+
+
 \subsection{Installing Prebundled Packages}
 
 I do not create or manage prebundled packages of \beamer, but,
@@ -328,14 +353,13 @@ package from
 http://sourceforge.net/projects/latex-beamer/
 \end{verbatim}
 (most likely, you have already done this). Next, you also need at
-least version 0.61 of the \textsc{pgf} package, which can be found at 
-the same place. Finally, you need at least version 1.10 of the
-\textsc{xcolor} package, which can also be found at that place
-(although the version on CTAN might be newer).
+the \textsc{pgf} package, which can be found at the same
+place. Finally, you need the  \textsc{xcolor} package, which can also
+be found at that place (although the version on CTAN might be newer).
 
 \lyxnote
-For usage with \LyX,  version 1.3.3 of \LyX\ and higher are known to
-work. I have not tried earlier versions; they might also work.
+For usage with \LyX,  version 1.3.3 of \LyX\ is known to work. I have
+not tried other versions; they might also work. 
 \smallskip
 
 In all cases, the packages contain a bunch of files (for the \beamer\
@@ -2755,7 +2779,7 @@ boxes as arguments to these commands. In this case, you might wish to
 switch off the automatic generation of these entries using the
 following class option:
 
-\begin{classoption}{nopdfinfo}
+\begin{classoption}{usepdftitle=false}
   Suppresses the automatic generation of title and author entries in
   the \pdf\ document information.
 \end{classoption}
@@ -3200,8 +3224,9 @@ entries.
   The environment must be placed inside a frame. If the bibliography
   does not fit on one frame, you should 
   split it (create a new frame and a second |thebibliography|
-  environment). Even better, you should reconsider whether it is a good
-  idea to present so many references.
+  environment) or use the |allowframebreaks| option. Even better, you
+  should reconsider whether it is a good idea to present so many
+  references. 
   \example
 \begin{verbatim}
 \frame{
@@ -3309,10 +3334,10 @@ reasons why you might have to deviate from this linear order:
   may or may not be skipped or expanded, depending on the audience's
   reaction.
 \item
+  You are asked questions and wish to show supplementary slides.
+\item
   You present a complicated picture and you have to ``zoom out''
   different parts to explain details.
-\item
-  You are asked questions and wish to show supplementary slides.
 \item
   You are asked questions about an earlier slide, which forces you to 
   find and then jump to that slide.
@@ -3321,7 +3346,7 @@ You cannot really prepare against the last kind of questions. In this
 case, you can use the navigation bars and symbols to find the slide
 you are interested in, see \ref{section-navigation-bars}.
 
-Concerning the first two kinds of deviations, the \beamer\ class
+Concerning the first three kinds of deviations, the \beamer\ class
 offers several ways of preparing such ``planned detours'' or ``planned
 short cuts''.
 \begin{itemize}
@@ -3354,6 +3379,9 @@ short cuts''.
   been suppressed. You can use the |\againframe| command at a
   much later point, for example only in the appendix to show
   additional slides there.
+\item
+  You can use the |\framezoom| command to create links to zoomed out
+  parts of a complicated slide.
 \end{itemize}
 
 
@@ -3579,7 +3607,7 @@ by ``|section|''.
 
 
 
-\subsubsection{Resuming a Frame at a Later Point}
+\subsubsection{Repeating a Frame at a Later Point}
 
 Sometimes you may wish some slides of a frame to be shown in your main
 talk, but wish some ``supplementary'' slides of the frame to be shown
@@ -3663,7 +3691,7 @@ useful.
   Use the style ``AgainFrame'' to insert an |\againframe| command. The
   \meta{label name} is the text on following the style name
   and is \emph{not} put in \TeX-mode. However, an overlay specification
-  must be given in \TeX-mode and it must preceed the label name.
+  must be given in \TeX-mode and it must precede the label name.
 \end{command}
 
 
@@ -3675,14 +3703,14 @@ everything that is shown in the graphic. When graphics are imported
 from other context, they typically contain far too much information
 and should be radically simplified.
 
-Sometimes hwever, the complexity of a graphic is intensional and you
+Sometimes however, the complexity of a graphic is intensional and you
 are willing to spend much time explaining the graphic in great
 detail. In this case, you will often run into the problem that fine
-details of the graphic cannot be seenn by the audience. To solve the
-problem, you can use the command |\framezoom|. This command allows you
-to specify that clicking on a certain part of a frame should zoom out
-this frame. You can then explain the details. Clicking on the zoomed
-out picture will take you back to the original one.
+details of the graphic are hard to discern for the audience. One way
+to solve this problem is to use the command |\framezoom|. This command
+allows you to specify that clicking on a certain area of a frame
+should zoom out this area. You can then explain the details. Clicking
+on the zoomed out picture will take you back to the original one.
 
 \begin{command}{\framezoom\ssarg{button overlay
       specification}\ssarg{zoomed overlay
@@ -3702,28 +3730,28 @@ out picture will take you back to the original one.
   corner of this area is given by \meta{upper left x} and \meta{upper
   left y}, which are also \TeX\ dimensions. They are measures
   \emph{relative to the place where the first normal text of a
-    frame would go}. Thus, the location |(0pt,0pt)| is just below the
-  frame title (if existent, otherwise just below that headline) and
-  horizontally at the left text border (not at the left page border).
+    frame would go}. Thus, the location |(0pt,0pt)| is at the
+  beginning of the normal text (which excludes the headline and also
+  the frame title).
 
   By default, the button is clickable, but it will not be indicated in
   any special way. You can draw a border around the button by using
-  the following \meta{options}:
+  the following \meta{option}:
   \begin{itemize}
   \item \declare{|border|}\opt{|=|\meta{width in pixels}} will draw
-    a border around the specified button area. The color of this
-    button is the |linkbordercolor| of |hyperref|. \beamer\ sets this
-    color to a 50\% gray by default. To change this, you can use the
-    command
+    a border around the specified button area. The default width is 1
+    pixel. The color of this  button is the |linkbordercolor| of
+    |hyperref|. \beamer\ sets this color to a 50\% gray by default. To
+    change this, you can use the command
     |\hypersetup{linkbordercolor={|\meta{red}| |\meta{green}| |\meta{blue}|}}|, 
     where \meta{red}, \meta{green}, and \meta{blue} are values between
     0 and 1.
   \end{itemize}
 
-  When you press the button created in this way, the reader will jump
-  to the first of the frames specified by the \meta{zoomed overlay
-    specification}. For the slides to which this overlay specification
-  applies, the following happens:
+  When you press the button created in this way, the viewer
+  application will hyperjump to the first of the frames specified by
+  the \meta{zoomed overlay specification}. For the slides to which
+  this overlay specification applies, the following happens:
 
   The exact same area as the one specified before is ``zoomed out'' to
   fill the whole normal text area of the frame. Everything else,
@@ -3774,9 +3802,9 @@ out picture will take you back to the original one.
 {
   \frametitle<1>{A Complicated Picture}
 
-  \framezoom<1><2>(0cm,0cm)(2cm,1.5cm)
-  \framezoom<1><3>(1cm,3cm)(2cm,1.5cm)
-  \framezoom<1><4>(3cm,2cm)(3cm,2cm)
+  \framezoom<1><2>[border](0cm,0cm)(2cm,1.5cm)
+  \framezoom<1><3>[border](1cm,3cm)(2cm,1.5cm)
+  \framezoom<1><4>[border](3cm,2cm)(3cm,2cm)
 
   \pgfimage[height=8cm]{complicatedimagefilename}
 }
@@ -4010,9 +4038,9 @@ or come last as in |\item[Cat]<1>|.
   templates, see Section~\ref{section-templates}.
 
   If the optional parameter \meta{default overlay specification} is
-  given, in every occurence of an |\item| command that does not have
+  given, in every occurrence of an |\item| command that does not have
   an overlay specification attached to it, the \meta{default overlay
-    specification} is used. By setting this specificaiton to be an
+    specification} is used. By setting this specification to be an
   incremental overlay specification, see
   Section~\ref{section-incremental}, you can implement, for example, a
   step-wise uncovering of the items. The \meta{default overlay
@@ -4182,7 +4210,7 @@ or come last as in |\item[Cat]<1>|.
 \subsubsection{Hilighting}
 
 The \beamer\ class predefines commands and environments for
-hlighting text. Using these commands makes is easy to change the
+hilighting text. Using these commands makes is easy to change the
 appearance of a document by changing the theme. 
 
 \begin{command}{\alert\sarg{overlay specification}\marg{hilighted text}}
@@ -4420,11 +4448,11 @@ The default template for typesetting theorems suppresses the theorem
 number, even if this number is ``available'' for typesetting (which it
 is by default in all predefined environments; but if you define your
 own environment using |\newtheorem*| no number will be available). I would 
-like to discourage using numbered theorems in a presentation. The
+like to discourage using numbered theorems in presentations. The
 audience has no chance of remembering these numbers. \emph{Never} say
 things like ``now, by Theorem~2.5 that I showed you earlier, we have \dots''
 It would be much better to refer to, say, Kummer's
-Theorem instead of Theroem~2.5. If Theorem~2.5 is some obscure theorem
+Theorem instead of Theorem~2.5. If Theorem~2.5 is some obscure theorem
 that does not have its own name (like Kummer's Theorem or Main Theorem
 or Second Main Theorem or Key Lemma), then the audience will have
 forgotten about it anyway by the time you refer to it again.
@@ -4436,7 +4464,7 @@ numbered in exactly the same way.
 
 \articlenote
 In |article| mode, theorems are automatically numbered. By specifying
-the option |envcountsect|, theorems will be numbered locally to each
+the class option |envcountsect|, theorems will be numbered locally to each
 section, which is usually a good idea, except for very short
 articles.
 
@@ -4528,7 +4556,9 @@ package option for |beamerbasearticle|, to switch off the loading of
 \subsubsection{Framed Text}
 
 In order to draw a frame (a rectangle) around some text, you can use
-\LaTeX s standard command |\fbox|. More frame types are offered by the
+\LaTeX s standard command |\fbox| and also |\frame| (inside a \beamer\
+frame, the |\frame| command changes its meaning to the normal \LaTeX\
+|\frame| command). More frame types are offered by the
 package |fancybox|, which defines the following commands:
 |\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult
 the \LaTeX\ Companion for details on how to use these commands.
@@ -4574,7 +4604,7 @@ The \beamer\ class also defines an environment for creating boxes:
   \example |\beamerboxesdeclarecolorscheme{alert}{red}{red!15!averagebackgroundcolor}|
 
   \articlenote
-  This environment is not available in |article| mode.
+  This command is not available in |article| mode.
 \end{command}
 
 
@@ -4586,7 +4616,7 @@ You can use the standard \LaTeX\ environments |figure| and
 any placement specification will be ignored. Figures and tables are
 immediately inserted where the environments start. If there are too
 many of them to fit on the frame, you must manually split them among
-additional frames.
+additional frames or use the |allowframebreaks| option.
 
 \example
 \begin{verbatim}
@@ -4605,7 +4635,7 @@ additional frames.
 
 You can adjust how the figure and table captions are typeset by
 changing the corresponding template, see
-Section~\ref{section-template-caption}.
+Section~\ref{section-template-caption}. 
 
 
 
@@ -4768,11 +4798,11 @@ can adjust the templates for these environments.
 
 \subsubsection{Footnotes}
 
-First a word of warning: Using footnote is usually not a good
+First a word of warning: Using footnotes is usually not a good
 idea. They disrupt the flow of reading.
 
 You can use the usual |\footnote| command. It has been augmented to
-take by an additional option, for placing footnotes at the frame
+take an additional option, for placing footnotes at the frame
 bottom instead of at the bottom of the current minipage.
 
 \begin{command}{\footnote\oarg{options}\marg{text}}
@@ -4812,6 +4842,9 @@ by the \beamer\ class, in order to pass options to these classes, you
 need to use the class options |color={|\meta{options for color}|}| or
 |xcolor={|\meta{options for xcolor}|}| to pass options to these
 classes.
+
+The whole color management will hopefully be much improved in the
+future. 
 
 \subsection{Colors of Main Text Elements}
 
@@ -5215,10 +5248,10 @@ this and even the Acrobat Reader does not support this feature on all
 platforms.
 
 To include an animation in a presentation, you can use, for example,
-the package |multimedia.sty|. You have to include this package
-explicitly. Despite being distributed as part of the \beamer\
-distribution, this package is perfectly self-sufficient and can be
-used independently of \beamer.
+the package |multimedia.sty| which is part of the \beamer\
+package. You have to include this package explicitly. Despite being
+distributed as part of the \beamer\ distribution, this package is
+perfectly self-sufficient and can be used independently of \beamer.
 
 \begin{package}{{multimedia}}
   A stand-alone package that implements several commands for including
@@ -5230,7 +5263,9 @@ used independently of \beamer.
   package. Since you will typically want to include |hyperref| only at
   the very end of the preamble, |multimedia| will not include
   |hyperref| itself. However, |multimedia| can be included both before
-  and after |hyperref|.
+  and after |hyperref|. Since \beamer\ includes |hyperref|
+  automatically, you need not worry about this when creating a
+  presentation using \beamer.
 \end{package}
 
 For including an animation in a \pdf\ file, you can use the command
@@ -5646,7 +5681,7 @@ using it:
   The supported sound formats depend on the viewer application. My
   version of the Acrobat Reader supports |.aif| and |.au|. I also need
   to specify information like the sampling rate, even though this
-  information could be extracted fromt he sound file and even though
+  information could be extracted from the sound file and even though
   the \pdf\ standard specifies that the viewer application should do
   so. In this regard, my version of the Acrobat Reader seems to be
   non-standard-conforming.
@@ -9651,11 +9686,6 @@ My notes for these slides.
 
 In the following, the effect of \prosper\ commands in \beamer\ are
 listed.
-
-\begin{command}{\subtitle\marg{title}}
-  Adds a subtitle by adding a new line to an existing title with the
-  given \meta{title} typeset in a smaller font. 
-\end{command}
 
 \begin{command}{\email\marg{text}}
   Simply typesets its argument in typewriter text. Should hence be

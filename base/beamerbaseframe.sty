@@ -569,7 +569,12 @@
 
 \def\beamer@continueautobreak{%
   \refstepcounter{framenumber}%
-  \beamer@autobreakframe{\unvbox\beamer@splitbox}%
+  \expandafter\def\expandafter\beamer@savedframetitle\expandafter{\beamer@frametitle}%
+  \expandafter\def\expandafter\beamer@savedshortframetitle\expandafter{\beamer@shortframetitle}%
+  \beamer@autobreakframe{%
+    \frametitle[\beamer@savedshortframetitle]{\beamer@savedframetitle}%
+    \expandafter\framesubtitle\expandafter{\insertframesubtitle}%
+    \unvbox\beamer@splitbox}%
 }
 
 

@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2004/04/07 v2.11 Class for Typesetting a Beamer Presentation]
+[2004/04/19 v2.20 Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -29,7 +29,7 @@
 % Versioning stuff
 %
 \newdimen\beamer@version
-\beamer@version=2.11pt % It is only fitting, that the version should
+\beamer@version=2.20pt % It is only fitting, that the version should
                        % be given in points...
 \def\beamer@endinputifotherversion#1{%
   \let\beamer@next=\relax%
@@ -134,7 +134,7 @@
 \beamer@ignorenonframefalse
 \beamer@autopdfinfotrue
 
-\DeclareOptionBeamer{nopdfinfo}{\beamer@autopdfinfofalse}
+\DeclareOptionBeamer{usepdftitle}[true]{\csname beamer@autopdfinfo#1\endcsname}
 \DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
 \DeclareOptionBeamer{notheorems}{\beamer@blocksfalse}
 \DeclareOptionBeamer{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}

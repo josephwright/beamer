@@ -34,17 +34,6 @@
   \def\institution#1{#1}
 }
 
-\mode<presentation>
-{
-\long\def\subtitle#1{%
-  \expandafter\def\expandafter\beamer@renewtitle\expandafter{\inserttitle\\{\small#1}}%
-  \expandafter\title\expandafter[\beamer@shorttitle]{\beamer@renewtitle}}
-}
-
-\mode<article>
-{
-  \def\subtitle#1{\expandafter\gdef\expandafter\@title\expandafter{\@title\\{\normalsize#1}}}
-}
 
 \newcommand\email[1]{\texttt{#1}}
 

@@ -54,6 +54,12 @@
 %  \recalculatefoot%
 %  \recalculatehead%
   %
+  
+  \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
+    %
+    % Fix spanish.ldf's meddling with < and > 
+    %
+    \@ifundefined{deactivatequoting}{}{\deactivatequoting}}
 
   \AtBeginDocument{% fix frenchb.ldf's meddling with itemize and :
     \let\labelitemi\beamer@labelitemi
@@ -61,13 +67,8 @@
     \let\itemize\beamer@itemize
     \let\list\beamer@list
     \let\@trivlist\beamer@@trivlist%
-    \catcode`:=12\catcode`|=12\catcode`!=12}
+    \catcode`:=12\catcode`|=12\catcode`!=12\catcode`<=12\catcode`>=12}
   
-  \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
-    %
-    % Fix spanish.ldf's meddling with < and > 
-    %
-    \@ifundefined{deactivatequoting}{}{\deactivatequoting}}
   \begingroup\beamer@origdocument%
   \beamer@lastminutepatches%
   \ifbeamer@ignorenonframe%

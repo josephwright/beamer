@@ -1,24 +1,37 @@
-2004-04-08 Till Tantau <tantau@users.sourceforge.net>
+2004-04-19 Till Tantau <tantau@users.sourceforge.net>
 
-	CVS
-	- Added style "Separator" in LyX. Empty lines in "Standard" style
-	  will no longer be kept, use an empty Separator line instead.
+	Version 2.20
+
+	Added:
+	- Added style "Separator" in LyX.
 	- Added multimedia.sty for movie and sound inclusion.
-	- Added evil autobreak option to frames for automatic frame breaking.
+	- Added evil allowframebreaks option to frames for automatic frame breaking.
 	- Added evil shrink option for automatic frame text shrinking.
 	- Added squeeze option to frames for squeezing more on a frame.
 	- Added \framesubtitle command.
 	- Added \subtitle command.
 	- Added \subject command.
-	- Added option nopdfinfo to suppress automatic generation of
+	- Added option usepdftitle=false to suppress automatic generation of
 	  author and title entries in pdf document info.
 	- Added \framezoom command.
 	- Added new version of beamer.el, due to Thomas Baumann.
+
+	Changes:
+	- FoilTeX emulation will now do automatic page breaking.
+	- Empty lines in "Standard" lyx style will no longer be kept, use
+	  an empty Separator line instead. 
+	- Changed the qed symbol to an open rectangle.
+	- The way frame titles are typeset is completely different now,
+	  internally. Under normal circumstance you should not notice any
+	  differences, but if you do wicked things with the frame titles,
+	  problems might arise.
+
+	Bugfixes:
 	- Fixed definition of overlayarea to give better spacing.
 	- Fixed problem with persisting background color and dvips.
-	- Fixed typos in the user's guide spotted by Xavier Noria and Uwe Stoer.
+	- Fixed zillions of typos in the user's guide spotted by 
+	  Xavier Noria and Uwe Stoer. 
 	- Fixed unrobust definition of \\.
-	- FoilTeX emulation will now do automatic page breaking.
 
 2004-04-07 Till Tantau <tantau@users.sourceforge.net>
 
