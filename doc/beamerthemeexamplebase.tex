@@ -1,0 +1,47 @@
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+
+\beamertemplatesolidbackgroundcolor{black!5}
+\beamertemplatetransparentcovered
+
+\usepackage{times}
+
+\title{There Is No Largest Prime Number}
+\subtitle{With an introduction to a new proof technique}
+
+\author{Euklid of Alexandria}
+\institute{Department of Mathematics\\ University of Alexandria}
+\date{27th International Symposium on Prime Numbers, --280}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \tableofcontents
+\end{frame}
+
+\section{Results}
+\subsection{Proof of the Main Theorem}
+
+\begin{frame}<1>
+  \frametitle{Proof That There Is No Largest Prime Number}
+  \framesubtitle{A proof using \textit{reductio ad absurdum}.}
+
+  \begin{theorem}
+    There is no largest prime number.
+  \end{theorem}
+  \begin{proof}
+    \begin{enumerate}
+    \item<1-> Suppose $p$ were the largest prime number.
+    \item<2-> Let $q := 1 + \prod_{i=1}^p i = 1+p!$.
+    \item<3-> Then $q$ is not divisible by any $p' \in \{1,\dots,p\}$.
+    \item<1-> Thus $q>p$ is also prime.\qedhere
+    \end{enumerate}      
+  \end{proof}
+\end{frame}
+
+\end{document}
+
+
