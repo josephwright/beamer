@@ -44,7 +44,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 0.83\\
+\title{User's Guide to the Beamer Class, Version 0.90\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -1344,16 +1344,24 @@ int main (void)
 
 \subsection{Commands and Environments for Creating Global Structure}
 
-\subsubsection{Title Page}
+
+\subsubsection{Adding a Title Page}
 
 You can use the \verb!\titlepage! command to insert a title page into
 a frame. 
 
 The \verb!\titlepage! command will arrange the following elements on
 the title page: the document title, the author(s)'s names, their
-affiliation, a title graphic, and a date. Before you invoke the title
-page command, you must specify all elements you wish to be shown. This
-is done using the following commands:
+affiliation, a title graphic, and a date.
+
+\Command{titlepage}
+\Description{Inserts the text of a title page into the current frame.}
+\Example \verb!\frame{\titlepage}!
+\vskip1em
+
+Before you invoke the title page command, you must specify all
+elements you wish to be shown. This is done using the following
+commands: 
 
 \Command{title}
 \Parameters{
@@ -1423,7 +1431,7 @@ is done using the following commands:
 
 
 
-\subsubsection{Table of Contents}
+\subsubsection{Adding Table of Contents}
 
 The two commands for creating a table of contents are
 \verb!\tableofcontents! and \verb!\tableofcontentscurrent!. The
@@ -1456,7 +1464,7 @@ example usage is given in the following example:
 
 
 
-\subsubsection{Sections and Subsections}
+\subsubsection{Adding Sections and Subsections}
 
 You can structure your text using the commands \verb!\section! and
 \verb!\subsection!. Unlike standard \LaTeX, these commands will not
@@ -1504,7 +1512,7 @@ standard command \verb!\\! does not work.
 
 
 
-\subsubsection{Bibliography}
+\subsubsection{Adding a Bibliography}
 
 You can use the bibliography environment and the \verb!\cite! commands
 of \LaTeX\ in a \beamer\ presentation. However, there are a few things
@@ -1622,8 +1630,63 @@ bevahior, see also Section~\ref{section-bib-templates}.
 
 
 
+\subsubsection{Adding an Appendix}
 
-\subsection{Using the Navigation Bars}
+You can add an appendix to your talk by using the \verb!\appendix!
+command. You should put frames and perhaps whole subsections into the
+appendix that you do not intend to show during your presentation, but
+which might be useful to answer a question. 
+
+The appendix acts like an additional section with subsections
+all of its own, but it is not shown in the normal table of contents or
+in the navigation bars. Thus, it is kept perfectly separate of your
+actual talk. However, once you ``enter'' the slides that make up the
+appendix (either by continuing past the last slide of the actual talk
+or by using a hyper-jump), the navigation bars show (only) the
+contents of the appendix and the table of contents commands (only)
+show the subsections of the appendix.
+
+Inside the appendix, you should not use the \verb!\section! command,
+but you can use the \verb!\subsection! command to structure the
+appendix. Use the \verb!\tableofcontents! command to insert a table of
+contents of the appendix into the current frame.
+
+\Command{appendix}
+\Description{
+  Starts the appendix. All frames and all \texttt{subsection} commands
+  used after this command will not be shown as part of the normal
+  navigation bars.
+}
+\Example
+
+\begin{verbatim}
+\begin{document}
+\frame{\titlepage}
+\section[Outline]{}
+\frame{\tableofcontents}
+\section{Main Text}
+\frame{Some text}
+\section[Summary]{}
+\frame{Summary text}
+
+\appendix
+\frame{\tableofcontents}
+\subsection{Additional material}
+\frame{Details}
+\frame{Text omitted in main talk.}
+\subsection{Even more additional material}
+\frame{More details}
+\end{document}
+\end{verbatim}
+
+
+
+
+
+
+
+
+\subsection{The Navigation Bars}
 
 Most themes that come along with the \beamer\ class show some kind of
 navigation bar during your talk. Although these navigation bars take
@@ -1644,6 +1707,9 @@ up quite a bit of space, they are often useful for two reasons:
   has asked about.
 \end{itemize}
 
+
+\subsubsection{Using the Navigation Bars to Navigate Between Frames}
+
 When you click on one of the icons representing a frame (by default
 this is icon is a small circle), the following happens:
 \begin{itemize}
@@ -1657,9 +1723,6 @@ this is icon is a small circle), the following happens:
 \item
   If you click on the current frame and you are on the last slide, you
   will jump to the first slide of the frame.
-\item
-  If you click on the document title, you will jump to the first slide
-  (usually the title page).
 \end{itemize}
 By the above rules you can:
 \begin{itemize}
@@ -1673,11 +1736,26 @@ By the above rules you can:
   Skip the rest of the current frame by clicking on it once.
 \end{itemize}
 
-I also considered tried making a jump to an already-visited slide jump
-automatically to the last slide. However, this turned out to be
-more confusing than helpful. With the current implementation a
-double-click always brings you to the end of a slide, regardless from
-where you ``come.''
+I also tried making a jump to an already-visited frame jump
+automatically to the last slide of this frame. However, this turned
+out to be more confusing than helpful. With the current implementation
+a double-click always brings you to the end of a slide, regardless
+from where you ``come.''
+
+
+\subsubsection{Using the Navigation Bars to Navigate Between Sections}
+
+By clicking on a section or subsection in the navigation bar, you will
+jump to that section. Clicking on a section is particularly useful if
+the section starts with a \verb!\tableofcontentscurrent!, since you
+can use it to jump to the different subsections.
+
+By clicking on the document title in a navigation bar (not all themes
+show it), you will jump to the first slide of your presentation
+(usually the title page) \emph{except} if you are already at the first
+slide. On the first slide, clicking on the document title will jump to
+the appendix, if there is one. Thus by \emph{double} clicking the
+document title in a navigation bar, you can jump to the appendix.
 
 
 

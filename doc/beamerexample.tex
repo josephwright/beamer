@@ -133,7 +133,7 @@
 
 
 % Try this:
-%\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
+\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
 
 \begin{document}
 
@@ -660,10 +660,9 @@
     $\Class{PSPACE}$. 
   \end{Theorem}
   \vskip1em
-  
-  The proof is based on the fact that for every $L \in
-  \Class{DLINSPACE}$ there exists an isometric homomorphism~$h$ such
-  that $h(L) \in \DOF$. 
+
+  \hyperlink{proofdetails}{Go to proof details.}
+  \hypertarget{backfromproofdetails}{}
 }
 
 
@@ -822,6 +821,64 @@
   \end{thebibliography}
 }
 
+
+
+
+%
+% The following appendix material is not shown in the normal course of
+% the presentation 
+%
+
+\appendix
+
+\frame{\tableofcontents}
+
+\subsection{Overhead Freeness and Completeness}
+
+\frame{
+  \frametitle{Overhead-Free Languages can be PSPACE-Complete}
+
+  \hypertarget{proofdetails}{}
+  \begin{Theorem}
+    $\DOF$ contains languages that are complete for
+    $\Class{PSPACE}$. 
+  \end{Theorem}
+
+  \begin{proof}
+    \begin{itemize}
+    \item
+      Let $A \in \Class{DLINSPACE}$ be $\Class{PSPACE}$-complete.\\
+      Such languages are known to exist.
+    \item
+      Let $M$ be a linear space machine that accepts~$A \subseteq
+      \Set{0,1}^*$ with tape alphabet~$\Gamma$.
+    \item
+      Let $h \colon \Gamma \to \Set{0,1}^*$ be an isometric, injective
+      homomorphism.
+    \item
+      Then $h(L)$ is in $\Class{DOF}$ and it is
+      $\Class{PSPACE}$-complete. 
+    \end{itemize}
+  \end{proof}
+
+  \hfill\hyperlink{backfromproofdetails}{return}
+}
+
+\subsection{Improvements for Context-Free Languages}
+
+\frame{
+  \frametitle{Improvements}
+
+  \begin{theorem}
+    \begin{enumerate}
+    \item
+      $\Class{DCFL} \subseteq \DOFpoly$.
+    \item
+      $\Class{CFL} \subseteq \NOFpoly$.
+    \end{enumerate}
+  \end{theorem}
+}
+  
 \end{document}
 
 
