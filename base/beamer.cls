@@ -406,7 +406,10 @@
 % Navigation buttons
 
 \RequirePackage{beamerbasetheorems}
-% Navigation buttons
+% Theorems
+
+\RequirePackage{beamerbasethemes}
+% Commands for including and building themes
 
 
 
@@ -416,12 +419,12 @@
 % Default Theme
 %
 %
- 
-                                % Title page
-\beamertemplatelargetitlepage
 
-                                % Part page
-\beamertemplatelargepartpage
+\usefonttheme{plain}
+
+                                % Part and title page
+\beamertemplatetitlepage
+\beamertemplatepartpage
 
                                 % Frame title
 \beamertemplateboldcenterframetitle

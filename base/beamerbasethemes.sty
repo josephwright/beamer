@@ -1,0 +1,60 @@
+\ProvidesPackage{beamerbasethemes}[2004/05/01 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+
+%
+% Basic commands for including themes
+%
+\mode<presentation>
+{
+  \newcommand\usetheme[2][]{\usepackage[#1]{beamertheme#2}}
+  \newcommand\usecolortheme[2][]{\usepackage[#1]{beamercolortheme#2}}
+  \newcommand\usefonttheme[2][]{\usepackage[#1]{beamerfonttheme#2}}
+  \newcommand\uselayouttheme[2][]{\usepackage[#1]{beamerlayouttheme#2}}
+  \newcommand\useelementtheme[2][]{\usepackage[#1]{beamerelementtheme#2}}
+}
+
+\mode<article>
+{
+  \newcommand\usetheme[2][]{}
+  \newcommand\usecolortheme[2][]{}
+  \newcommand\usefonttheme[2][]{}
+  \newcommand\uselayouttheme[2][]{}
+  \newcommand\useelementtheme[2][]{}
+}
+
+
+
+\mode<presentation>
+
+\define@key{beamerthm}{size}
+  {\expandafter\def\csname beamer@thmfsize@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{typeface}
+  {\expandafter\def\csname beamer@thmftypeface@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{font}
+  {\expandafter\def\csname beamer@thmffont@\beamer@temp\endcsname{#1}}
+
+\newcommand\setbeamerfont[2]{%
+  \def\beamer@temp{#1}
+  \setkeys{beamerthm}{#2}
+}
+
+\newcommand\usebeamerfont[1]{%
+  \csname beamer@thmfsize@#1\endcsname%
+  \csname beamer@thmffont@#1\endcsname%
+  \csname beamer@thmftypeface@#1\endcsname}
+
+\mode
+<all>
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

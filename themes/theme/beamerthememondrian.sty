@@ -9,6 +9,7 @@
 
 
 
+
 \newdimen\beamer@sidebarwidth
 \newdimen\beamer@headheight
 \Large
@@ -22,18 +23,13 @@
 \DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
 \DeclareOptionBeamer{left}{\ExecuteOptionsBeamer{side=left}}
 \DeclareOptionBeamer{right}{\ExecuteOptionsBeamer{side=right}}
-\DeclareOptionBeamer{side}{%
-  \def\beamer@sidebarside{#1}%
-  \edef\beamer@sidebarsideopposite{%
-    \ifx\beamer@sidebarside\beamer@lefttext right\else left\fi}%
-}
-\ExecuteOptionsBeamer{cornercolor=white,side=left}
+\DeclareOptionBeamer{side}{\def\beamer@sidebarside{#1}}
+\ExecuteOptionsBeamer{cornercolor=beamerstructure!75!black,side=left}
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
                                 % Standard templates
-\beamertemplatelargetitlepage
 \beamertemplatelargepartpage
 \beamertemplatelargeblocks
 \beamertemplatesquareitem
@@ -43,11 +39,40 @@
 \beamertemplatenumberedsquaresectiontoc
 \beamertemplaterectblocks
 
+
+\usetitlepagetemplate{
+    \vbox{}
+    \vfill
+    \begin{centering}
+      \fboxsep=8pt
+      \colorbox{beamerstructure!75!averagebackgroundcolor}{%
+        \@tempdima=\textwidth%
+        \advance\@tempdima by-20pt%
+        \begin{minipage}{\the\@tempdima}
+          \begin{centering}%
+            \color{white}%
+            {\usebeamerfont{title}\inserttitle\par}%
+            \ifx\insertsubtitle\@empty%
+            \else%
+            \vskip0.25em%
+            {\usebeamerfont{subtitle}\insertsubtitle\par}%
+            \fi%
+          \end{centering}
+        \end{minipage}
+        }
+      \vskip1em\par
+      {\usebeamerfont{author}\insertauthor\par}\vskip1em
+      {\usebeamerfont{institute}\insertinstitute\par}\vskip1em
+      {\usebeamerfont{date}\insertdate\par}\vskip1.5em
+      \inserttitlegraphic\par
+    \end{centering}
+    \vfill
+  }
+  
 \useframetitletemplate{%
   {%
     \nointerlineskip%
     \vskip-\beamer@headheight%
-    \Large%
     \vbox to \beamer@headheight{%
       \vfil
       \leftskip=-\beamer@leftmargin%
@@ -55,8 +80,8 @@
       \rightskip=-\beamer@rightmargin%
       \advance\rightskip by0.3cm plus1fil%
       \color{white}%
-      \insertframetitle%
-      \par\normalsize\insertframesubtitle\par%
+      {\usebeamerfont{frametitle}\insertframetitle\par}%
+      {\usebeamerfont{framesubtitle}\insertframesubtitle\par}%
       \vbox{}%
       \vskip-1em%
       \vfil
@@ -90,11 +115,9 @@
   }%
 }
 
-%\usetemplatetocsection[50!averagebackgroundcolor]
-%  {\color{beamerstructure}\textbf{\inserttocsection}}
 
-
-\def\beamer@colorbox#1#2{\hbox to \beamer@sidebarwidth{\fboxsep=0pt\colorbox{#1}{#2}}}%
+\def\beamer@colorbox#1#2{%
+  \hbox to \beamer@sidebarwidth{\fboxsep=0pt\colorbox{#1}{#2}}}%
 \def\beamer@buildsidebarbox#1#2#3{%
   \setbox#1=\hbox{%
     \vbox{%
@@ -113,14 +136,14 @@
                                 % Sections in sidebar
 \usesectionsidetemplate
 {%
-  {\Tiny
+  {\usebeamerfont{section in sidebar}%
     \vbox{\vskip1ex%
     \beamer@buildsidebarbox{\beamer@tempbox}{1.125ex}{\insertsectionhead}%
     \beamer@colorbox{beamerstructure!70!averagebackgroundcolor}{\box\beamer@tempbox}%
     }}%
 }
 {%
-  {\Tiny
+  {\usebeamerfont{section in sidebar}%
     \vbox{\vskip1ex%
     \beamer@buildsidebarbox{\beamer@tempbox}{1.125ex}{\insertsectionhead}%
     \beamer@colorbox{beamerstructure}{\box\beamer@tempbox}%
@@ -129,13 +152,13 @@
 
 \usesubsectionsidetemplate
 {%
-  {\Tiny
+  {\usebeamerfont{subsection in sidebar}%
     \beamer@buildsidebarbox{\beamer@tempbox}{2.25ex}{\color{white}\insertsubsectionhead}%
     \beamer@colorbox{beamerstructure!70!averagebackgroundcolor}{\box\beamer@tempbox}%
     }%
 }
 {%
-  {\Tiny
+  {\usebeamerfont{subsection in sidebar}%
     \beamer@buildsidebarbox{\beamer@tempbox}{2.25ex}{\color{white}\insertsubsectionhead}%
     \beamer@colorbox{beamerstructure}{\box\beamer@tempbox}%
   }%
@@ -150,27 +173,36 @@
                                 % Sidebar
   \usesidebartemplate[\beamer@sidebarside]{\beamer@sidebarwidth}{%
     \vskip1em
+    \usebeamerfont{sidebar}%
     \beamer@tempdim=\beamer@sidebarwidth%
     \advance\beamer@tempdim by -6pt%
-    \Tiny
-      \hskip3pt\color{white}\bfseries\insertshorttitle%
-        [width=\beamer@tempdim,center,respectlinebreaks]\par%
+      \hskip3pt\color{white}{\usebeamerfont{title in sidebar}\insertshorttitle%
+        [width=\beamer@tempdim,center,respectlinebreaks]\par}%
       \vskip1.5em
-      \hskip3pt\color{beamerstructure!50}\insertshortauthor%
-        [width=\beamer@tempdim,center,respectlinebreaks]\par
+      \hskip3pt\color{beamerstructure!50}%
+      {\usebeamerfont{author in sidebar}\insertshortauthor%
+        [width=\beamer@tempdim,center,respectlinebreaks]\par}%
       \vskip1.5em%
     \color{beamerstructure!25}%
     \insertverticalnavigation{\beamer@sidebarwidth}%
     \vfill
-  }
+    \ifx\beamer@sidebarside\beamer@lefttext%
+    \else%
+      \llap{\insertnavigationsymbols\hskip0.1cm}%
+      \vskip2pt%
+    \fi%
+  }%
+  
 
                                 % Side bar background
   \beamertemplatesidebarcolor[\beamer@sidebarside]{beamerstructure}
 
-  \usesidebartemplate[\beamer@sidebarsideopposite]{0cm}{%
-    \vfill%
-    \llap{\insertnavigationsymbols\hskip0.1cm}%
-    \vskip2pt}
+  \ifx\beamer@sidebarside\beamer@lefttext%
+    \usesidebartemplate[right]{0cm}{%
+      \vfill%
+      \llap{\insertnavigationsymbols\hskip0.1cm}%
+      \vskip2pt}
+  \fi
                                 % Margins
   \beamersetleftmargin{0.5cm}
   \beamersetrightmargin{0.5cm}

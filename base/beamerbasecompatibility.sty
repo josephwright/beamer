@@ -167,6 +167,21 @@
 \def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
 \def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
 \def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
+\def\beamertemplatelargepartpage{%
+  \setbeamerfont{part}{size=\Large}%
+  \beamertemplatepartpage}
+\def\beamertemplateboldpartpage{%
+  \setbeamerfont{part}{size=\large}%
+  \setbeamerfont{partname}{typeface=\bfseries}%
+  \beamertemplatepartpage}
+\def\beamertemplatelargetitlepage{\beamertemplatetitlepage}
+\def\beamertemplateboldtitlepage{%
+  \setbeamerfont{title}{size=\large,typeface=\bfseries}%
+  \beamertemplatetitlepage}
+\@onlypreamble\beamertemplateboldtitlepage
+\@onlypreamble\beamertemplatelargetitlepage
+\@onlypreamble\beamertemplateboldpartpage
+\@onlypreamble\beamertemplatelargepartpage
   
 \mode
 <all>{\def\unpause{\onslide{}}}

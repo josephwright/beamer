@@ -16,63 +16,43 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
+
 %
 % Title and part page templates
 %
 
-\newcommand{\beamertemplatelargetitlepage}{
+\newcommand{\beamertemplatetitlepage}{
   \usetitlepagetemplate{
     \vbox{}
     \vfill
     \begin{centering}
-      {\Large\structure{\inserttitle}}\par
-      \ifx\insertsubtitle\@empty\else\vskip0.25em{\structure{\insertsubtitle}}\par\fi
+      {\usebeamerfont{title}\structure{\inserttitle}\par}%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\structure{\insertsubtitle}\par}%
+      \fi%
       \vskip1em\par
-      \normalsize\insertauthor\vskip1em\par
-      {\scriptsize\insertinstitute\par}\par\vskip1em
-      \insertdate\par\vskip1.5em
+      {\usebeamerfont{author}\insertauthor\par}\vskip1em
+      {\usebeamerfont{institute}\insertinstitute\par}\vskip1em
+      {\usebeamerfont{date}\insertdate\par}\vskip1.5em
       \inserttitlegraphic\par
     \end{centering}
     \vfill
   }
 }
 
-\newcommand{\beamertemplateboldtitlepage}{
-  \usetitlepagetemplate{
-    \vbox{}
-    \vfill
+
+\newcommand{\beamertemplatepartpage}{
+  \usepartpagetemplate{
     \begin{centering}
-      {\large\structure{\textbf{\inserttitle}}}\par
-      \ifx\insertsubtitle\@empty\else\vskip0.25em{\structure{\insertsubtitle}}\par\fi
+      \usebeamerfont{partpage}%
+      \structure{\partname~\insertromanpartnumber}
       \vskip1em\par
-      \normalsize\insertauthor\vskip1em\par
-      {\scriptsize\insertinstitute\par}\par\vskip1em
-      \insertdate\par\vskip1.5em
-      \inserttitlegraphic\par
+      {\usebeamerfont{partname}\insertpart\par}
     \end{centering}
-    \vfill
   }
 } 
-
-\newcommand{\beamertemplatelargepartpage}{
-  \usepartpagetemplate{
-    \begin{centering}
-      \Large\structure{\partname~\insertromanpartnumber}
-      \vskip1em\par
-      \insertpart\par
-    \end{centering}
-  }
-}
-
-\newcommand{\beamertemplateboldpartpage}{
-  \usepartpagetemplate{
-    \begin{centering}
-      \large\structure{\partname~\insertromanpartnumber}
-      \vskip1em\par
-      \textbf{\insertpart}\par
-    \end{centering}
-  }
-}
 
 
 %
@@ -849,9 +829,9 @@
 %
 
 \newcommand{\beamertemplateboldblocks}{
-  \useblocktemplate{\medskip{\color{beamerstructure}\textbf{\insertblockname}}\par}{\medskip}
-  \usealertblocktemplate{\medskip{\alert{\textbf{\insertblockname}}}\colorlet{beamerstructure}{beameralert}\par}{\medskip}
-  \useexampleblocktemplate{\medskip\begingroup{\color{beamerstructure!50!green}\textbf{\insertblockname}}\par%
+  \useblocktemplate{\medskip{\color{beamerstructure}\normalfont\textbf{\insertblockname}}\par}{\medskip}
+  \usealertblocktemplate{\medskip{\alert{\normalfont\textbf{\insertblockname}}}\colorlet{beamerstructure}{beameralert}\par}{\medskip}
+  \useexampleblocktemplate{\medskip\begingroup{\color{beamerstructure!50!green}\normalfont\textbf{\insertblockname}}\par%
     \color{black!50!green}\colorlet{beamerstructure}{beamerstructure!50!green}}{\endgroup\medskip}
 }
 
@@ -1033,8 +1013,8 @@
 \@onlypreamble\beamertemplatenumberedsectiontoc
 \@onlypreamble\beamertemplatenumberedsubsectiontoc
 \@onlypreamble\beamertemplateplaintoc
-\@onlypreamble\beamertemplateboldtitlepage
-\@onlypreamble\beamertemplatelargetitlepage
+\@onlypreamble\beamertemplatetitlepage
+\@onlypreamble\beamertemplatepartpage
 
 \mode
 <all>
