@@ -97,6 +97,7 @@
   \ifx\beamer@nexttoken\mode\let\next=\beamer@stopoutsidemode\fi%
   \ifx\beamer@nexttoken\common\let\next=\beamer@stopoutsidemode\fi%
   \ifx\beamer@nexttoken\presentation\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\begin\let\next=\beamer@checkbeginframe\fi%
   \ifx\beamer@nexttoken\end\let\next=\beamer@checkenddoc\fi%
   \next}
 
@@ -110,6 +111,16 @@
   \fi%
   \next}
 \def\beamer@enddoc{document}
+
+\def\beamer@checkbeginframe#1{%
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\beamer@frametext%
+    \let\next=\beamer@beginframeenv%
+  \else%
+    \let\next=\beamer@outsidemode%
+  \fi%
+  \next}
+\def\beamer@beginframeenv{\begin{frame}}
 
 \def\beamer@modeoutsideframe{%
   \beamer@closer%

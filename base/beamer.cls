@@ -381,6 +381,9 @@
 \RequirePackage{beamerbaseframe}
 % Commands for constructing frames
 
+\RequirePackage{beamerbaseframesize}
+% Commands for constructing frames
+
 \RequirePackage{beamerbaseframecomponents}
 % Headlines, sidebars, columns
 
