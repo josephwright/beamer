@@ -349,7 +349,8 @@
   {}
   {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body}%
-  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\vskip-.75ex\vbox{}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}%
+    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
 }
 \defbeamertemplate*{block end}{default}  
 {\end{beamercolorbox}\vskip\smallskipamount}
@@ -365,7 +366,8 @@
   {}
   {\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body alerted}%
-  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}\vskip-.75ex\vbox{}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}%
+    \ifbeamercolorempty[bg]{block body alerted}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
 }
 
 \defbeamertemplate*{block alerted end}{default}
@@ -383,7 +385,8 @@
   {}
   {\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body example}%
-  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}\vskip-.75ex\vbox{}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}%
+    \ifbeamercolorempty[bg]{block body example}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
 }
 \defbeamertemplate*{block example end}{default}
 {\end{beamercolorbox}\vskip\smallskipamount}

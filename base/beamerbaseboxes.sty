@@ -30,6 +30,7 @@
 \newdimen\bmb@prevheight
 
 \newcommand\beamerboxesrounded[2][]{%
+  \global\let\beamer@firstlineitemizeunskip=\relax%
   \vbox\bgroup%
   \setkeys{beamerboxes}{upper=block title,lower=block body,width=\textwidth,shadow=false}%
   \setkeys{beamerboxes}{#1}%
@@ -169,10 +170,48 @@
       {\pgfpoint{\the\bmb@dima}{-3bp}}%
       {\pgfpoint{\the\bmb@dimb}{-1.2bp}}%
       {\pgfpoint{\the\bmb@dimb}{1bp}}%
+      {
       \bmb@dima=\ht\bmb@box%
       \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
       \pgflineto{\pgfpoint{-4bp}{\bmb@dima}}
       \pgffill
+      }
+      {
+        \color{black!50!bg}
+        \pgfsetlinewidth{0pt}
+        \pgfmoveto{\pgfpoint{\bmb@dimb}{-.5bp}}
+        \bmb@dima=\ht\bmb@box%
+        \advance\bmb@dima by\bmb@prevheight%
+        \advance\bmb@dima by 1bp%
+        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfstroke
+        \bmb@temp=\bmb@dima
+        \advance\bmb@dima by 1bp%
+        \color{black!31!bg}
+        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfstroke
+        \advance\bmb@dima by 1bp%
+        \advance\bmb@temp by 1bp%
+        \color{black!19!bg}
+        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfstroke
+        \advance\bmb@dima by 1bp%
+        \advance\bmb@temp by 1bp%
+        \color{black!6!bg}
+        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfstroke
+        \advance\bmb@dima by 1.5bp%
+        \advance\bmb@temp by 1bp%
+        \color{bg}
+        \pgfmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
+        \pgflineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfstroke
+      }
+      {
+      }      
     \end{pgfpicture}%
     \box\bmb@box%
   }%

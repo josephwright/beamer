@@ -7,6 +7,8 @@
 
 \mode<presentation>
 
+\RequirePackage{pgf} % for setting \pdfoutput
+
 %
 % Color theme stuff
 %
@@ -341,10 +343,10 @@
   \fi%
 }
 
-\ifx\pdftexversion\@undefined
+\ifcase\pdfoutput
   \def\beamer@postscriptcolorhack{%
     \special{ps: \XC@usecolor{beamer@tempcolor}}}
-\else
+\or
   \def\beamer@postscriptcolorhack{}%
 \fi
 

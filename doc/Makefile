@@ -1,7 +1,7 @@
 rerun = "(There were undefined references|Rerun to get (cross-references|the bars) right)"
 doc   = beameruserguide
 
-themes = Antibes Berkeley Berlin Bergen Copenhagen Darmstadt \
+themes = Antibes Berkeley Berlin Bergen Boadilla  Copenhagen Darmstadt \
   Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
   Luebeck Malmoe Madrid Marburg Montpellier PaloAlto \
   Pittsburgh Rochester Singapore Szeged Warsaw \
@@ -9,7 +9,7 @@ themes = Antibes Berkeley Berlin Bergen Copenhagen Darmstadt \
 
 fontthemes = default serif structurebold structureitalicserif structuresmallcapsserif 
 
-colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily structure dove seagull beetle fly
+colorthemes = default crane albatross seahorse whale dolphin rose orchid sidebartab lily structure dove seagull beetle fly
 
 outerthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
 
