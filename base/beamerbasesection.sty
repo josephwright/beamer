@@ -105,6 +105,8 @@
     \setcounter{subsection}{0}%
     \def\insertsection{}%
     \def\insertsubsection{}%
+    \def\insertsectionhead{}%
+    \def\insertsubsectionhead{}%
     \def\lastsubsection{}%
     \def\insertpart{\expandafter\hyperlink\partlink}%
     \beamer@atbeginpart%
@@ -176,6 +178,8 @@
     \beamer@subsectionstartpage=\c@page%
     \def\insertsection{\expandafter\hyperlink\sectionlink}%
     \def\insertsubsection{}%
+    \def\insertsectionhead{#1}%
+    \def\insertsubsectionhead{}%
     \def\lastsubsection{}%
     \Hy@writebookmark{\the\c@section}{\secname}{Outline\the\c@section}{1}{toc}%
     \hyper@anchorstart{Outline\the\c@section}\hyper@anchorend%
@@ -188,6 +192,8 @@
 \def\breakhere{\protect\beamer@breakhere}
 \def\beamer@breakhere{}
 
+\def\insertsectionhead{}
+\def\insertsubsectionhead{}
 
 \mode
 <all>
@@ -236,7 +242,8 @@
     \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
     \beamer@subsectionstartpage=\c@page%
     \edef\subsectionlink{{Navigation\the\c@page}{\noexpand\subsecname}}%
-    \def\insertsubsection{\expandafter\hyperlink\subsectionlink}
+    \def\insertsubsection{\expandafter\hyperlink\subsectionlink}%
+    \def\insertsubsectionhead{#1}%
     \Hy@writebookmark{\the\c@subsection}{#1}{Outline\the\c@section.\the\c@subsection.\the\c@page}{2}{toc}%
     \hyper@anchorstart{Outline\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
     \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}%
