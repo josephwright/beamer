@@ -1,0 +1,177 @@
+\ProvidesPackage{beamertemplates}[2003/09/31 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+
+%
+% Itemize templates
+%
+
+\newcommand{\beamertemplatedotitem}{%
+  \useitemizeitemtemplate{\small\raise0.5pt\hbox{\color{structure}\textbullet}}
+  \usesubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\color{structure}\textbullet}}
+  }
+
+\newcommand{\beamertemplateballitem}{%
+  \RequirePackage{pgfshade}
+  \pgfdeclareradialshading{bigsphere}{\pgfpoint{1pt}{1pt}}%
+   {rgb(0cm)=(0,0,1); rgb(0.6pt)=(0,0,0.9); rgb(1.4pt)=(0,0,0.7); rgb(2pt)=(0,0,0.5); rgb(2.4pt)=(1,1,1)}
+  \pgfdeclareradialshading{smallsphere}{\pgfpoint{0.8pt}{0.8pt}}%
+   {rgb(0cm)=(0,0,1); rgb(0.48pt)=(0,0,0.9); rgb(1.12pt)=(0,0,0.7); rgb(1.6pt)=(0,0,0.5); rgb(1.9pt)=(1,1,1)}
+  \useitemizeitemtemplate{\pgfuseshading{bigsphere}}
+  \usesubitemizeitemtemplate{\pgfuseshading{smallsphere}}
+  }
+
+%
+% Head templates
+%
+
+\newcommand{\beamertemplateheadempty}{\useheadtemplate{}}
+
+
+%
+% Foot templates
+%
+
+\newcommand{\beamertemplatefootempty}{\usefoottemplate{}}
+
+\newcommand{\beamertemplatefootpagenumber}{%
+  \usefoottemplate{%
+  \hfil\tiny{\color{shaded}\insertpagenumber}}}
+
+%
+% Mini navigation bar frame templates
+%
+
+\newcommand{\beamertemplateboxminiframe}{
+  \useminislidetemplate{%
+    \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+      \color{structure}
+      \pgfrect[fillstroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
+    \end{pgfpicture}%
+  }  
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+      \color{structure}
+      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
+    \end{pgfpicture}%
+  }
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+      \color{structureshaded}
+      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
+    \end{pgfpicture}%
+  }
+  {.1cm}{.05cm}
+  }
+
+\newcommand{\beamertemplateticksminiframe}{
+  \useminislidetemplate
+  {%
+    \color{structure}%
+    \hskip-0.4pt\vrule height\boxsize width1.2pt%
+  }  
+  {%
+    \color{structure}%
+    \vrule height\boxsize width0.4pt%
+  }
+  {%
+    \color{structureshaded}%
+    \vrule height\boxsize width0.4pt%
+  }
+  {.1cm}{.05cm}}
+
+
+%
+% Background templates
+%
+
+\newcommand{\beamertemplateshadingbackground}[2]{
+  \RequirePackage{pgfshade}
+  \pgfdeclareverticalshading{background}{\the\paperwidth}%
+  {rgb(0cm)=(#1); rgb(\the\paperheight)=(#2)}
+
+  \usebackgroundtemplate{\pgfuseshading{background}}  
+  }
+  
+\newcommand{\beamertemplategridbackground}{
+  \usebackgroundtemplate{
+  \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
+    \color{lightgray}%
+    \pgfxyline(0.5,0)(0.5,10)
+    \pgfxyline(1,0)(1,10)
+    \pgfxyline(1.5,0)(1.5,10)
+    \pgfxyline(2,0)(2,10)
+    \pgfxyline(2.5,0)(2.5,10)
+    \pgfxyline(3,0)(3,10)
+    \pgfxyline(3.5,0)(3.5,10)
+    \pgfxyline(4,0)(4,10)
+    \pgfxyline(4.5,0)(4.5,10)
+    \pgfxyline(5,0)(5,10)
+    \pgfxyline(5.5,0)(5.5,10)
+    \pgfxyline(6,0)(6,10)
+    \pgfxyline(6.5,0)(6.5,10)
+    \pgfxyline(7,0)(7,10)
+    \pgfxyline(7.5,0)(7.5,10)
+    \pgfxyline(8,0)(8,10)
+    \pgfxyline(8.5,0)(8.5,10)
+    \pgfxyline(9,0)(9,10)
+    \pgfxyline(9.5,0)(9.5,10)
+    \pgfxyline(10,0)(10,10)
+    \pgfxyline(10.5,0)(10.5,10)
+    \pgfxyline(11,0)(11,10)
+    \pgfxyline(11.5,0)(11.5,10)
+    \pgfxyline(12,0)(12,10)
+    \pgfxyline(12.5,0)(12.5,10)
+    \pgfxyline(0,0.5)(13,0.5)
+    \pgfxyline(0,1)(13,1)
+    \pgfxyline(0,1.5)(13,1.5)
+    \pgfxyline(0,2)(13,2)
+    \pgfxyline(0,2.5)(13,2.5)
+    \pgfxyline(0,3)(13,3)
+    \pgfxyline(0,3.5)(13,3.5)
+    \pgfxyline(0,4)(13,4)
+    \pgfxyline(0,4.5)(13,4.5)
+    \pgfxyline(0,5)(13,5)
+    \pgfxyline(0,5.5)(13,5.5)
+    \pgfxyline(0,6)(13,6)
+    \pgfxyline(0,6.5)(13,6.5)
+    \pgfxyline(0,7)(13,7)
+    \pgfxyline(0,7.5)(13,7.5)
+    \pgfxyline(0,8)(13,8)
+    \pgfxyline(0,8.5)(13,8.5)
+    \pgfxyline(0,9)(13,9)
+    \pgfxyline(0,9.5)(13,9.5)
+  \end{pgfpicture}%    
+  }}
+
+
+%
+% Bibliography templates
+%
+
+\pgfdeclareimage{beamericonbook}{13pt}{13pt}{beamericonbook}
+
+\newcommand{\beamertemplatebookbibitems}{
+  \usebibitemtemplate{\lower2pt\hbox{\pgfuseimage{beamericonbook}}}
+}
+
+
+\newcommand{\beamertemplatearticlebibitems}{
+  \usebibitemtemplate{\lower2pt\hbox{\pgfuseimage{beamericonarticle}}}
+}
+
+\newcommand{\beamertemplatetextbibitems}{
+  \usebibitemtemplate{\color{structure}\insertbiblabel}
+}
+
+\newcommand{\beamertemplatearrowbibitems}{
+  \usebibitemtemplate{\color{structure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
+}
+
+

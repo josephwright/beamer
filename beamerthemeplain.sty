@@ -1,0 +1,69 @@
+\ProvidesPackage{beamerthemeplain}[2003/09/17 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+                                % Title page  
+\usetitlepagetemplate{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \Large\structure{\textrm{\textit{{\inserttitle}}}}
+    \vskip1em\par
+    \normalsize\insertauthor\vskip1em\par
+    {\scriptsize\insertinstitute\par}\par\vskip1em
+    \insertdate\par\vskip1.5em
+    \inserttitlegraphic
+  \end{centering}
+  \vfill
+  }
+
+                                % Frametitles
+\useframetitletemplate{%
+  \vskip1.5em
+  {\leftskip-\Geom@lmargin plus1fill\advance\leftskip by0.3cm%
+   \rightskip-\Geom@rmargin plus1fill\advance\rightskip by0.3cm\leavevmode
+    \color{structure}\Large\textrm{\textit{{\insertframetitle}}}\par}
+  }
+
+                                % Sections in headline
+\usesectionheadtemplate
+{\color{structure}\tiny\insertsectionhead}
+{\color{structureshaded}\tiny\insertsectionhead}
+
+                                % Entries in table of contents
+\usetemplatetocsection
+{{\large\color{structure}\textrm{\textit{{\inserttocsection}}}}}
+{{\large\color{structureshaded}\textrm{\textit{{\inserttocsection}}}}}
+
+                                % Entries in table of contents
+\usetemplatetocsubsection
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
+
+                                % Head
+\useheadtemplate{}
+
+                                % Footline
+\usefoottemplate{}
+
+\def\logo#1{%
+  \def\insertlogo{#1}%
+  \usefoottemplate{\hfill\insertlogo}
+  }
+
+                                % Background
+\usebackgroundtemplate{}
+
+                                % Blocks
+\useblocktemplate{\medskip{\color{structure}\large\textrm{\textsc{\insertblockname}}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large\textrm{\textsc{\insertblockname}}}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\textrm{\textsc{\insertblockname}}}\par}{\endgroup\medskip}
+
+                                % Itemize
+\useitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
+\usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
