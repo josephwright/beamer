@@ -27,8 +27,6 @@
 }%
 }
 
-%\newcommand\useframetitletemplate[1]{\def\beamer@headrenderer{\parskip0pt\reset@font#1\vskip0.25em}}
-
 \newcommand\insertshortframetitle[1][]{%
   {%
     \beamer@setupshort{#1}%
@@ -122,7 +120,7 @@
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
     \par%
-    \mode<presentation>{\usebeamerfont*{block}}%
+    \mode<presentation>{\usebeamerfont{block}}%
     \beamer@beginblocktemplate}
   {\par%
     \beamer@endblocktemplate%
@@ -132,7 +130,7 @@
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
     \par%
-    \mode<presentation>{\usebeamerfont*{block}%
+    \mode<presentation>{\usebeamerfont{block}%
     \setbeamercolor{local structure}{parent=alerted text}}%
     \beamer@beginalertblocktemplate}
   {\par%
@@ -143,7 +141,7 @@
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
     \par%
-    \mode<presentation>{\usebeamerfont*{block}%
+    \mode<presentation>{\usebeamerfont{block}%
     \setbeamercolor{local structure}{parent=example text}}%
     \beamer@beginexampleblocktemplate}
   {\par%
@@ -203,6 +201,8 @@
     \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
     \advance\@itemdepth\@ne%
   \fi%
+  \beamer@computepref\@enumdepth% sets \beameritemnestingprefix
+  \edef\beamer@enumtempl{enumerate \beameritemnestingprefix item}%
   \@ifnextchar[{\beamer@@enum@}{\beamer@enum@}}
 \def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
 \def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
@@ -211,8 +211,9 @@
   \@enLab{}\let\@enThe\@enQmark
   \@enloop#1\@enum@
   \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
-   ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
-  \expandafter\def\csname label\@enumctr\endcsname{\def\insertenumlabel{\the\@enLab}\beamer@autoenumtemplate}%
+    ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
+  \def\insertenumlabel{\the\@enLab}
+  \def\beamer@enumtempl{enumerate mini template}%
   \expandafter\let\csname the\@enumctr\endcsname\@enThe
   \csname c@\@enumctr\endcsname7
   \expandafter\settowidth
@@ -220,21 +221,32 @@
             {\the\@enLab\hspace{\labelsep}}%
   \beamer@enum@}
 \def\beamer@enum@{%
-  \csname\@enumctr starttemplate\endcsname%
+  \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+  \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
   \expandafter
     \list
-      \csname label\@enumctr\endcsname
+      {\usebeamertemplate{\beamer@enumtempl}}
       {\usecounter\@enumctr%
-        \def\makelabel##1{{\hss\llap{\usebeamerfont*{item}##1}}}}%
+        \def\makelabel##1{{\hss\llap{{%
+                \usebeamerfont*{enumerate \beameritemnestingprefix item}%
+                \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}##1}}}}}%
   \beamer@cramped%
   \raggedright%
   \beamer@firstlineitemizeunskip%
 }
-\def\endenumerate{\ifhmode\unskip\fi\endlist\csname\@enumctr endtemplate\endcsname}
+\def\endenumerate{\ifhmode\unskip\fi\endlist%
+   \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}}
 
-\def\useenumerateitemminitemplate#1{%
-  \def\beamer@autoenumtemplate{#1}}
-\useenumerateitemminitemplate{\color{beamerstructure}\insertenumlabel}
+\def\beamer@computepref#1{%
+  \let\beameritemnestingprefix\@empty%
+  \ifcase#1\or\or\def\beameritemnestingprefix{sub}\or\def\beameritemnestingprefix{subsub}\or\@toodeep\fi%
+}
+
+\def\insertenumlabel{\theenumi}
+\def\insertsubenumlabel{\theenumii}
+\def\insertsubsubenumlabel{\theenumiii}
 
 \mode
 <article>
@@ -244,6 +256,7 @@
     \renewcommand{\enumerate}[1][]{\beamer@origenumerate}
   }
 }
+
 
 
 %
@@ -256,20 +269,30 @@
   \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
   \ifnum \@itemdepth >2\relax\@toodeep\else
     \advance\@itemdepth\@ne
-    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
-    \edef\@itemctr{item\romannumeral\the\@itemdepth}%
-    \csname\@itemctr starttemplate\endcsname%
-    \expandafter
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
     \list
-      \csname\@itemitem\endcsname
-      {\def\makelabel##1{{\hss\llap{\usebeamerfont*{item}##1}}}}
+      {\usebeamertemplate{itemize \beameritemnestingprefix item}}
+      {\def\makelabel##1{%
+          {%
+            \hss\llap{{%
+                \usebeamerfont*{itemize \beameritemnestingprefix item}%
+                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1}}%
+          }%
+        }%
+      }
   \fi%
   \beamer@cramped%
   \raggedright%
   \beamer@firstlineitemizeunskip%
 }
     
-\def\enditemize{\ifhmode\unskip\fi\endlist\csname\@itemctr endtemplate\endcsname}
+\def\enditemize{\ifhmode\unskip\fi\endlist%
+  \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}}
+
+\let\beamer@itemize\itemize
 
 \mode
 <article>
@@ -281,86 +304,29 @@
 }
 
 
-\def\useenumerateitemtemplate#1{% 
-  \def\labelenumi{%
-    \def\insertenumlabel{\theenumi}%
-    \usebeamercolor[fg]{enumerate item}%
-    #1}}
-
-\def\useenumeratetemplate#1#2{% before and after
-  \def\enumistarttemplate{#1}%
-  \def\enumiendtemplate{#2}}
-
-\def\usesubenumerateitemtemplate#1{%
-  \def\labelenumii{%
-    \def\insertenumlabel{\theenumi}%
-    \def\insertsubenumlabel{\theenumii}%
-    \usebeamercolor[fg]{enumerate subitem}%
-    #1}}
-
-\def\usesubenumeratetemplate#1#2{% before and after
-  \def\enumiistarttemplate{#1}%
-  \def\enumiiendtemplate{#2}}
-
-\def\usesubsubenumerateitemtemplate#1{%
-  \def\labelenumiii{%
-    \def\insertenumlabel{\theenumi}%
-    \def\insertsubenumlabel{\theenumii}%
-    \def\insertsubsubenumlabel{\theenumiii}%
-    \usebeamercolor[fg]{enumerate subsubitem}%
-    #1}}
-
-\def\usesubsubenumeratetemplate#1#2{% before and after
-  \def\enumiiistarttemplate{#1}%
-  \def\enumiiiendtemplate{#2}}
 
 
-\def\useitemizeitemtemplate#1{%
-  \def\labelitemi{\usebeamercolor[fg]{itemize item}#1}\let\beamer@labelitemi\labelitemi}
-
-\def\useitemizetemplate#1#2{% before and after
-  \def\itemistarttemplate{#1}%
-  \def\itemiendtemplate{#2}}
-
-\def\usesubitemizeitemtemplate#1{%
-  \def\labelitemii{\usebeamercolor[fg]{itemize subitem}#1}\let\beamer@labelitemii\labelitemii}
-
-\def\usesubitemizetemplate#1#2{% before and after
-  \def\itemiistarttemplate{#1}%
-  \def\itemiiendtemplate{#2}}
-
-\def\usesubsubitemizeitemtemplate#1{%
-  \def\labelitemiii{\usebeamercolor[fg]{itemize subsubitem}#1}\let\beamer@labelitemiii\labelitemiii}
-
-\def\usesubsubitemizetemplate#1#2{% before and after
-  \def\itemiiistarttemplate{#1}%
-  \def\itemiiiendtemplate{#2}}
-
-\def\description{\@ifnextchar[{\beamer@testforospec}{\beamer@descdefault\beamer@descdefaulttemp\@@description}}
+\def\description{\@ifnextchar[{\beamer@testforospec}{\beamer@descdefault\beamer@descriptionwidth\@@description}}
 \def\beamer@testforospec[{\@ifnextchar<{\beamer@scandefaultospec[}{\@description[}}
 \def\beamer@scandefaultospec[#1]{\def\beamer@defaultospec{#1}\description}
-\def\@description[#1]{\setbox\beamer@tempbox=\hbox{\usebeamerfont*{item}\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
-  \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
-\def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
+\def\@description[#1]{\setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\usebeamertemplate**{description item}}%
+  \beamer@descdefault\wd\beamer@tempbox\@@description}
+\def\@@description{%
+  \advance\beamer@descdefault by \labelsep%
+  \list
+  {}
+  {\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
   \beamer@cramped%
   \raggedright
   \beamer@firstlineitemizeunskip%
 }
 \def\enddescription{\ifhmode\unskip\fi\endlist}
-\long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
-  \hfil\hspace\labelsep\usebeamerfont*{description item}\usebeamercolor[fg]{description item}\descriptionitemtemplate}
+\long\def\beamer@descriptionitem#1{%
+  \def\insertdescriptionitem{#1}%
+  \hfil\hspace\labelsep{\usebeamertemplate**{description item}}}
 
-\def\usedescriptionitemtemplate#1#2{\def\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
-  \global\advance\beamer@descdefaulttemp by \labelsep}
-\usedescriptionitemtemplate{\insertdescriptionitem}{2cm}
 
-\def\usedescriptionitemofwidthas#1{%
-  \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
-  \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by
-  \labelsep%
-  \beamer@descdefaulttemp=\beamer@descdefault}
-
-\let\beamer@itemize\itemize
+\def\beamersetdescriptionwidth#1{\beamer@descriptionwidth=#1}
 
 
 \mode
@@ -371,6 +337,8 @@
     \renewcommand{\description}[1][]{\beamer@origdescription}
   }
 }
+
+
 
 
 

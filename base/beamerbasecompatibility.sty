@@ -154,61 +154,6 @@
 \newenvironment{columnsonlytextwidth}{\begin{columns}[onlytextwidth]}{\end{columns}}
 \def\untitledsubsection{\subsection*{}}
 \def\noteitems{\note[enumerate]}
-\def\useleftsidebartemplate{\usesidebartemplate[left]}
-\def\userightsidebartemplate{\usesidebartemplate[right]}
-\def\useleftsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[left]}
-\def\userightsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[right]}
-\def\useleftsidebarcolortemplate#1{\usesidebarbackgroundtemplate[left]{#1\vrule height\paperheight
-  width\csname beamer@leftsidebar\endcsname}}
-\def\userightsidebarcolortemplate#1{\usesidebarbackgroundtemplate[right]{#1\vrule height\paperheight
-  width\csname beamer@rightsidebar\endcsname}}
-\def\useleftsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[left]}
-\def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
-\def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
-\def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
-\def\beamertemplatelargepartpage{\setbeamertemplate{part page}[default]}
-\def\beamertemplateboldpartpage{%
-  \setbeamerfont{part}{size=\large}%
-  \setbeamerfont{partname}{series=\bfseries}%
-  \setbeamertemplate{part page}[default]}
-\def\beamertemplatelargetitlepage{%
-  \setbeamertemplate{title page}[default]}
-\def\beamertemplateboldtitlepage{%
-  \setbeamerfont{title}{size=\large,series=\bfseries}%
-  \setbeamertemplate{title page}[default]}
-
-\def\beamertemplateboldcenterframetitle{
-  \setbeamerfont{frametitle}{size={},series=\bfseries}
-  \setbeamerfont{framesubtitle}{series=\bfseries}
-  \setbeamertemplate{frametitle}[default][center]}
-\@onlypreamble\beamertemplateboldcenterframetitle
-
-\def\beamertemplateboldframetitle{
-  \setbeamerfont{frametitle}{series=\bfseries}
-  \setbeamerfont{framesubtitle}{series=\bfseries}
-  \setbeamertemplate{frametitle}[default]}
-
-\def\beamertemplatelargeframetitle{
-  \setbeamertemplate{frametitle}[default]}
- 
-\def\beamertemplateboldblocks{
-  \setbeamerfont{block title}{size={},series=\bfseries}
-  \beamertemplatedefaultblocks}
-\@onlypreamble\beamertemplateboldblocks
-
-\def\beamertemplatelargeblocks{\beamertemplatedefaultblocks}
-\def\beamertemplateshadowblocks{\beamertemplateroundedblocks[shadow=true]}
-\def\beamertemplateplaintoc{\beamertemplatedefaulttoc}
-\def\beamertemplatecircleminiframeinverted{%
-  \beamertemplatecircleminiframe%
-  \usebeamercolor{mini frames}{use=structure,fg=white,bg=structure.bg}}
-\def\beamertemplatesphereminiframe{\beamertemplatecircleminiframe}
-\def\beamertemplatesphereminiframeinverted{\beamertemplatecircleminiframeinverted}
-
-\def\beamertemplatelightsectionheads
-{\usesectionheadtemplate{\hfill\insertsectionhead}{\hfill\color{fg!50!bg}\insertsectionhead}
- \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}}
-\let\beamertemplatedarksectionheads=\beamertemplatedefaultsectionheads
 
 
 \define@key{beamertoc}{current}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}}
@@ -240,7 +185,6 @@
       height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
     \box\beamer@linebox}%
   }
-
 \def\tinyline#1{%
   {\tiny\setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
   \ht\beamer@linebox=2.06ex%
@@ -265,17 +209,45 @@
       height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
     \box\beamer@linebox}%
   }
-\def\beamerline#1{%
-  \hbox{\hskip-\Gm@lmargin#1\hskip-\Gm@rmargin}}
-
-\def\insertvrule#1#2{%
-  \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
-    height #1\hskip-\Gm@rmargin}}
-
+\def\beamerline#1{\hbox{\hskip-\Gm@lmargin#1\hskip-\Gm@rmargin}}
+\def\insertvrule#1#2{\hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth height #1\hskip-\Gm@rmargin}}
 
 \def\usetitlepagetemplate{\setbeamertemplate{title page}}
 \def\usepartpagetemplate{\setbeamertemplate{part page}}
 \def\useframetitletemplate{\setbeamertemplate{frametitle}}
+\def\useitemizeitemtemplate{\setbeamertemplate{itemize item}}
+\def\usesubitemizeitemtemplate{\setbeamertemplate{itemize subitem}}
+\def\usesubsubitemizeitemtemplate{\setbeamertemplate{itemize subsubitem}}
+\def\useenumerateitemtemplate{\setbeamertemplate{enumerate item}}
+\def\usesubenumerateitemtemplate{\setbeamertemplate{enumerate subitem}}
+\def\usesubsubenumerateitemtemplate{\setbeamertemplate{enumerate subsubitem}}
+\def\useitemizetemplate#1#2{% before and after
+  \setbeamertemplate{itemize/enumerate body begin}{#1}%
+  \setbeamertemplate{itemize/enumerate body end}{#2}}
+\def\usesubitemizetemplate#1#2{% before and after
+  \setbeamertemplate{itemize/enumerate subbody begin}{#1}%
+  \setbeamertemplate{itemize/enumerate subbody end}{#2}}
+\def\usesubsubitemizetemplate#1#2{% before and after
+  \setbeamertemplate{itemize/enumerate subsubbody begin}{#1}%
+  \setbeamertemplate{itemize/enumerate subsubbody end}{#2}}
+\def\useenumerateitemminitemplate{\setbeamertemplate{enumerate mini template}}
+\let\useenumeratetemplate=\useitemizetemplate
+\let\usesubenumeratetemplate=\usesubitemizetemplate
+\let\usesubsubenumeratetemplate=\usesubsubitemizetemplate
+\def\useleftsidebartemplate{\usesidebartemplate[left]}
+\def\userightsidebartemplate{\usesidebartemplate[right]}
+\def\useleftsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[left]}
+\def\userightsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[right]}
+\def\useleftsidebarcolortemplate#1{\usesidebarbackgroundtemplate[left]{#1\vrule height\paperheight
+  width\csname beamer@leftsidebar\endcsname}}
+\def\userightsidebarcolortemplate#1{\usesidebarbackgroundtemplate[right]{#1\vrule height\paperheight
+  width\csname beamer@rightsidebar\endcsname}}
+\def\useleftsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[left]}
+\def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
+\def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
+\def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
+\def\usedescriptionitemtemplate#1#2{\setbeamertemplate{description item}{#1}\setbeamertemplate{description item width}{#2}}
+\def\usedescriptionitemofwidthas{\setbeamertemplate{description item width}[widthof]}%
 
 
 \def\beamertemplatedefaulttoc{\setbeamertemplate{table of contents}[default]}
@@ -285,7 +257,38 @@
 \def\beamertemplatenumberedsquaresectiontoc{\setbeamertemplate{table of contents}[square numbered]}
 \def\beamertemplatenumberedballsectiontoc{\setbeamertemplate{table of contents}[ball numbered]}
 \def\beamertemplateballtoc{\setbeamertemplate{table of contents}[ball]}
-
+\def\beamertemplatedotitem{\setbeamertemplate{itemize items}[circle]}
+\def\beamertemplatetriangleitem{\setbeamertemplate{itemize items}[default]}
+\def\beamertemplatesquareitem{\setbeamertemplate{itemize items}[square]}
+\def\beamertemplateballitem{\setbeamertemplate{item}[ball]}
+\def\beamertemplateenumeratealpha{\setbeamerfont{enumerate items}[default]}
+\def\beamertemplateenumeratecircle{\setbeamertemplate{enumerate items}[circle]}
+\def\beamertemplateenumeratesquare{\setbeamertemplate{enumerate items}[square]}
+\def\beamertemplatelargepartpage{\setbeamertemplate{part page}[default]}
+\def\beamertemplateboldpartpage{\setbeamerfont{part}{size=\large}%
+  \setbeamerfont{partname}{series=\bfseries}%
+  \setbeamertemplate{part page}[default]}
+\def\beamertemplatelargetitlepage{\setbeamertemplate{title page}[default]}
+\def\beamertemplateboldtitlepage{\setbeamerfont{title}{size=\large,series=\bfseries}%
+  \setbeamertemplate{title page}[default]}
+\def\beamertemplateboldcenterframetitle{\setbeamerfont{frametitle}{size={},series=\bfseries}
+  \setbeamerfont{framesubtitle}{series=\bfseries}
+  \setbeamertemplate{frametitle}[default][center]}
+\def\beamertemplateboldframetitle{\setbeamerfont{frametitle}{series=\bfseries}
+  \setbeamerfont{framesubtitle}{series=\bfseries}
+  \setbeamertemplate{frametitle}[default]}
+\def\beamertemplatelargeframetitle{\setbeamertemplate{frametitle}[default]}
+\def\beamertemplateboldblocks{\setbeamerfont{block title}{size={},series=\bfseries}\beamertemplatedefaultblocks}
+\def\beamertemplatelargeblocks{\beamertemplatedefaultblocks}
+\def\beamertemplateshadowblocks{\beamertemplateroundedblocks[shadow=true]}
+\def\beamertemplateplaintoc{\beamertemplatedefaulttoc}
+\def\beamertemplatecircleminiframeinverted{\beamertemplatecircleminiframe%
+  \usebeamercolor{mini frames}{use=structure,fg=white,bg=structure.bg}}
+\def\beamertemplatesphereminiframe{\beamertemplatecircleminiframe}
+\def\beamertemplatesphereminiframeinverted{\beamertemplatecircleminiframeinverted}
+\def\beamertemplatelightsectionheads{\usesectionheadtemplate{\hfill\insertsectionhead}{\hfill\color{fg!50!bg}\insertsectionhead} 
+ \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}}
+\let\beamertemplatedarksectionheads=\beamertemplatedefaultsectionheads
 
 \mode
 <all>

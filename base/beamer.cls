@@ -40,7 +40,7 @@
 \newdimen\beamer@boxsize
 \newdimen\beamer@vboxoffset
 \newdimen\beamer@descdefault
-\newdimen\beamer@descdefaulttemp
+\newdimen\beamer@descriptionwidth
 
 \newskip\beamer@lastskip
 

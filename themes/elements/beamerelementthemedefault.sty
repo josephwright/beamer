@@ -10,23 +10,155 @@
 
 \mode<presentation>
 
+
+
+% Title page: default
+
+\defbeamertemplate*{title page}{default}[1][]
+{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \end{centering}
+  \vfill
+}
+
+
+% Part page: default
+
+\defbeamertemplate*{part page}{default}[1][]
+{
+  \begin{centering}
+    {\usebeamerfont{partname}\usebeamercolor[fg]{partname}\partname~\insertromanpartnumber}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
+      \usebeamerfont{part title}\insertpart\par
+    \end{beamercolorbox}
+  \end{centering}
+} 
+
+
+% Frame title: default
+
+\defbeamertemplate*{frametitle}{default}[1][left]
+{
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
+    \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
+    {\usebeamerfont{frametitle}\insertframetitle\par}%
+    {%
+      \ifx\insertframesubtitle\@empty%
+      \else%
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+      \fi
+    }%
+    \if@tempswa\else\vskip-.3cm\fi%
+  \end{beamercolorbox}%
+}
+
+\def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip by1.7cm}
+
+
+
+
+
+%
+% Table of contents
+%
+
+\defbeamertemplateparent{table of contents}{section in toc,subsection in toc}
+{}
+
+\defbeamertemplateparent{table of contents shaded}{section in toc shaded,subsection in toc shaded}[1][20]
+{[#1]}
+
+
+
+
+% (sub-)section in toc: default
+
+\defbeamertemplate*{section in toc}{default}
+{\inserttocsection\par}
+
+\defbeamertemplate*{subsection in toc}{default}
+{\leavevmode\leftskip=1.5em\inserttocsubsection\par}
+
+
+% (sub-)section in toc shaded, default
+
+\defbeamertemplate*{section in toc shaded}{default}[1][20]
+{\begin{colormixin}{#1!parent.bg}\usebeamertemplate{section in toc}\end{colormixin}\unskip}
+
+\defbeamertemplate*{subsection in toc shaded}{default}[1][20]
+{\begin{colormixin}{#1!parent.bg}\usebeamertemplate{subsection in toc}\end{colormixin}\unskip}
+
+
+
+
+%
+% Item
+%
+
+\defbeamertemplateparent{item}{itemize items,enumerate items}
+{}
+
+
+% Itemize items
+
+\defbeamertemplateparent{itemize items}{itemize item,itemize subitem,itemize subsubitem}
+{}
+
+
+% Itemize items, default
+
+\defbeamertemplate*{itemize item}{default}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+\defbeamertemplate*{itemize subitem}{default}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+\defbeamertemplate*{itemize subsubitem}{default}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+
+
+% Enumerate items, default
+
+\defbeamertemplateparent{enumerate items}{enumerate item,enumerate subitem,enumerate subsubitem,enumerate mini}
+{}
+
+\defbeamertemplate*{enumerate item}{default}{\insertenumlabel.}
+\defbeamertemplate*{enumerate subitem}{default}{\insertenumlabel.\insertsubenumlabel}
+\defbeamertemplate*{enumerate subsubitem}{default}{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+\defbeamertemplate*{enumerate mini template}{default}{\insertenumlabel}
+
+
+% Description item width
+
+\defbeamertemplate*{description item}{default}{\insertdescriptionitem}
+\defbeamertemplate*{description item width}{default}[1][2cm]{}[action]{\beamersetdescriptionwidth{#1}}
+
+
 \beamertemplatedefaultblocks
-%\beamertemplatedefaulttoc
 
                                 % Theorems
 \beamertemplatetheoremsunnumbered
-
-                                % Enumerations
-\beamertemplateenumeratealpha
-\useenumeratetemplate{}{}
-\usesubenumeratetemplate{\begin{small}}{\end{small}}
-\usesubsubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}
-
-                                % Itemize
-\beamertemplatetriangleitem
-\useitemizetemplate{}{}
-\usesubitemizetemplate{\begin{small}}{\end{small}}
-\usesubsubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}
 
                                 % Buttons
 \beamertemplateroundedbuttons

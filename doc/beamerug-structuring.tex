@@ -22,19 +22,54 @@ on hyperlinks, to advance the presentation.
 \subsubsection{Adding a Title Page}
 
 You can use the |\titlepage| command to insert a title page into
-a frame. 
-
-The |\titlepage| command will arrange the following elements on
+a frame. By default, it will arrange the following elements on
 the title page: the document title, the author(s)'s names, their
 affiliation, a title graphic, and a date.
 
 \begin{command}{\titlepage}
   Inserts the text of a title page into the current frame.
   \example |\frame{\titlepage}|
+  \example |\frame[plain]{\titlepage}| for a titlepage that fills the
+  whole frame.
 
   \lyxnote
   If you use the ``Title'' style in your presentation, a title page is
   automatically inserted.
+
+  
+  \begin{template}{title page}
+    This template is invoked when the |\titlepage| command is used.
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{orientation}}
+      The title page is typeset showing the title, followed by the
+      author, his or her affiliation, the date, and a titlegraphic. If
+      any of these are missing, they are not shown. Except for the
+      titlegraphic, if the \beamer-color |title|, |author|, |institute|,
+      or |date| is defined, respectively, it is used to as textcolor for
+      these entries. If a background color is defined for them, a
+      colored bar in the corresponding color is drawn behind them,
+      spanning the text width. The corresponding \beamer-fonts are used
+      for these entries.
+
+      The \meta{orientation} option is passed on the |beamercolorbox|
+      and can be used, for example, to flush the title page to the left
+      by specifying |left| here.
+    \end{templateoptions}
+
+    \begin{templateinserts}
+      \iteminsert{\insertauthor} inserts a version of the author's name
+      that is useful for the title page.
+      \iteminsert{\insertdate} inserts the date.
+      \iteminsert{\insertinstitute} inserts the institute.
+      \iteminsert{\inserttitle} inserts a version of the document title
+      that is useful for the title page.
+      \iteminsert{\insertsubtitle} inserts a version of the document title
+      that is useful for the title page.
+      \iteminsert{\inserttitlegraphic} inserts the title graphic into a
+      template. 
+    \end{templateinserts}
+  \end{template}
 \end{command}
 
 For compatibility with other classes, in |article| mode the following
@@ -129,6 +164,8 @@ commands:
 \end{command}
 
 
+
+
 \begin{command}{\subject\marg{text}}
   Enters the \meta{text} as the subject text in the \pdf\ document
   info. It currently has no other effect.
@@ -151,6 +188,7 @@ following class option:
   Suppresses the automatic generation of title and author entries in
   the \pdf\ document information.
 \end{classoption}
+
 
 
 
@@ -346,10 +384,30 @@ beginning of a new part. See |beamerexample3.tex| for an example.
 
 \begin{command}{\partpage}
   Works like |\titlepage|, only that the current part, not the current
-  presentation is ``advertised.'' The appearance can be changed by
-  adjusting the part page template, see
-  Section~\ref{section-part-page-template}. 
+  presentation is ``advertised.''
   \example |\frame{\partpage}|
+  
+  \begin{template}{part page}
+    This template is invoked when the |\partpage| command is used.
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{orientation}}
+      The part page is typeset showing the current part number and,
+      below, the current part title. The \beamer-color and -font
+      |part page| are used, including the background color of
+      |part page|. As for the |title page| template, the
+      \meta{orientation} option is passed on the |beamercolorbox|.
+    \end{templateoptions}
+
+    \begin{templateinserts}
+      \iteminsert{\insertpart}
+      inserts the current part name.
+      \iteminsert{\insertpartnumber}
+      inserts the current part number as an Arabic number into a template.
+      \iteminsert{\insertpartromannumber}
+      inserts the current part number as a Roman number into a template.
+    \end{templateinserts}
+  \end{template}
 \end{command}
 
 \begin{command}{\AtBeginPart\marg{text}}

@@ -403,8 +403,7 @@ components are automatically setup by the theme you are
 using. To change them, you must install an appropriate template, see
 Section~\ref{section-head-templates} for the head- and footlines and
 Section~\ref{section-sidebar-templates} for the sidebars. To install
-a logo, invoke the following command in the preamble, \emph{after}
-having loaded the theme:
+a logo, use the following command:
 
 \begin{command}{\logo\marg{logo text}}
   The \meta{logo text} is usually a command for including a
@@ -465,6 +464,7 @@ be specified with the following command:
   ``BeginFrame'' style.
 \end{command}
 
+
 \begin{command}{\framesubtitle\sarg{overlay specification}\marg{frame
       subtitle text}}
   If present, a subtitle will be shown in a smaller font below the
@@ -500,6 +500,37 @@ change this using the following class options:
   the default. You can override this for
   individual frames using the |t| or |b| option.
 \end{classoption}
+
+
+\begin{template}{frametitle}
+  When the frame title and subtitle are to be typeset, this template
+  is invoked with the \beamer\ color and font |frametitle| set. This
+  template is \emph{not} invoked when the commands |\frametitle| or
+  |\framesubtitle| are called. Rather, it is invoked when the whole
+  frame has been completely read. Till then, the frame title and frame
+  subtitle text are stored in a special place. This way, when the
+  template is invoked, both inserts are setup correctly. The resulting
+  \TeX-box is then magically put back to the top of the frame.
+
+  \begin{templateoptions}
+    \itemoption{default}{\oarg{orientation}}
+    The frame is typeset using the \beamer-color |frametitle| and the
+    \beamer-font |frametitle|. The subtitle is put below using the
+    color and font |framesubtitle|. If the color |frametitle| has a
+    background, a background bar stretching the whole frame width is put
+    behind the title. A background color of the subtitle is ignored. The
+    \meta{orientation} is passed on to the |beamercolorbox|
+    environment. In particular, useful options are |left|, |center|, and
+    |right|. As a special case, the |right| option causes the left
+    border of the frame title to be somewhat larger than normal so that
+    the frame title is more in the middle of the frame.
+  \end{templateoptions}
+
+  \begin{templateinserts}
+    \iteminsert{\insertframetitle} yields the frame title.
+    \iteminsert{\insertframesubtitle} yields the frame subtitle.
+  \end{templateinserts}
+\end{template}
 
 
 

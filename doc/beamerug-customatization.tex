@@ -265,121 +265,121 @@ template:
 
 
 
-\subsection{Title Page}
+%% \subsection{Title Page}
 
-\paragraph{Predefined Templates}\ 
+%% \paragraph{Predefined Templates}\ 
 
-\begin{command}{\beamertemplatelargetitlepage}
-  Causes the title page to be typeset with a large font for the title.
-\end{command}
+%% \begin{command}{\beamertemplatelargetitlepage}
+%%   Causes the title page to be typeset with a large font for the title.
+%% \end{command}
 
-\begin{command}{\beamertemplateboldtitlepage}
-  Causes the title page to be typeset with a bold font for the title.
-\end{command}
-
-
-
-\paragraph{Template Installation Commands}\ 
-
-\begin{command}{\usetitlepagetemplate\marg{title page template}}
-  \example
-\begin{verbatim}
-\usetitlepagetemplate{
-  \vbox{}
-  \vfill
-  \begin{centering}
-    \Large\structure{\inserttitle}
-    \vskip1em\par
-    \normalsize\insertauthor\vskip1em\par
-    {\scriptsize\insertinstitute\par}\par\vskip1em
-    \insertdate\par\vskip1.5em
-    \inserttitlegraphic
-  \end{centering}
-  \vfill
-}
-\end{verbatim}
-\end{command}
-
-If you wish to suppress the head- and footline in the title page, use
-|\frame[plain]{\titlepage}|.
+%% \begin{command}{\beamertemplateboldtitlepage}
+%%   Causes the title page to be typeset with a bold font for the title.
+%% \end{command}
 
 
 
+%% \paragraph{Template Installation Commands}\ 
 
-\paragraph{Inserts for these Templates}\ 
+%% \begin{command}{\usetitlepagetemplate\marg{title page template}}
+%%   \example
+%% \begin{verbatim}
+%% \usetitlepagetemplate{
+%%   \vbox{}
+%%   \vfill
+%%   \begin{centering}
+%%     \Large\structure{\inserttitle}
+%%     \vskip1em\par
+%%     \normalsize\insertauthor\vskip1em\par
+%%     {\scriptsize\insertinstitute\par}\par\vskip1em
+%%     \insertdate\par\vskip1.5em
+%%     \inserttitlegraphic
+%%   \end{centering}
+%%   \vfill
+%% }
+%% \end{verbatim}
+%% \end{command}
 
-\begin{command}{\insertauthor}
-  Inserts the author names into a template.
-\end{command}
-
-\begin{command}{\insertdate}
-  Inserts the date into a template.
-\end{command}
-
-\begin{command}{\insertinstitute}
-  Inserts the institute into a template.
-\end{command}
-
-\begin{command}{\inserttitle}
-  Inserts a version of the document title into a template that is
-  useful for the title page. 
-\end{command}
-
-\begin{command}{\insertsubtitle}
-  Inserts a version of the document subtitle into a template that is
-  useful for the title page. 
-\end{command}
-
-\begin{command}{\inserttitlegraphic}
-  Inserts the title graphic into a template.
-\end{command}
+%% If you wish to suppress the head- and footline in the title page, use
+%% |\frame[plain]{\titlepage}|.
 
 
 
-\subsection{Part Page}
 
-\label{section-part-page-template}
+%% \paragraph{Inserts for these Templates}\ 
 
-\paragraph{Predefined Templates}\ 
+%% \begin{command}{\insertauthor}
+%%   Inserts the author names into a template.
+%% \end{command}
 
-\begin{command}{\beamertemplatelargepartpage}
-  Causes the part pages to be typeset with a large font for the part name.
-\end{command}
+%% \begin{command}{\insertdate}
+%%   Inserts the date into a template.
+%% \end{command}
 
-\begin{command}{\beamertemplateboldpartpage}
-  Causes the part pages to be typeset with a bold font for the part name.
-\end{command}
+%% \begin{command}{\insertinstitute}
+%%   Inserts the institute into a template.
+%% \end{command}
 
+%% \begin{command}{\inserttitle}
+%%   Inserts a version of the document title into a template that is
+%%   useful for the title page. 
+%% \end{command}
 
-\paragraph{Template Installation Commands}\ 
+%% \begin{command}{\insertsubtitle}
+%%   Inserts a version of the document subtitle into a template that is
+%%   useful for the title page. 
+%% \end{command}
 
-\begin{command}{\usepartpagetemplate\marg{part page template}}
-  \example
-\begin{verbatim}
-\usepartpagetemplate{
-  \begin{centering}
-    \Large\structure{\partname~\insertromanpartnumber}
-    \vskip1em\par
-    \insertpart\par
-  \end{centering}
-  }
-\end{verbatim}
-\end{command}
+%% \begin{command}{\inserttitlegraphic}
+%%   Inserts the title graphic into a template.
+%% \end{command}
 
 
-\paragraph{Inserts for these Templates}\ 
 
-\begin{command}{\insertpart}
-  Inserts the current part name.
-\end{command}
+%% \subsection{Part Page}
 
-\begin{command}{\insertpartnumber}
-  Inserts the current part number as an Arabic number into a template.
-\end{command}
+%% \label{section-part-page-template}
 
-\begin{command}{\insertpartromannumber}
-  Inserts the current part number as a Roman number into a template.
-\end{command}
+%% \paragraph{Predefined Templates}\ 
+
+%% \begin{command}{\beamertemplatelargepartpage}
+%%   Causes the part pages to be typeset with a large font for the part name.
+%% \end{command}
+
+%% \begin{command}{\beamertemplateboldpartpage}
+%%   Causes the part pages to be typeset with a bold font for the part name.
+%% \end{command}
+
+
+%% \paragraph{Template Installation Commands}\ 
+
+%% \begin{command}{\usepartpagetemplate\marg{part page template}}
+%%   \example
+%% \begin{verbatim}
+%% \usepartpagetemplate{
+%%   \begin{centering}
+%%     \Large\structure{\partname~\insertromanpartnumber}
+%%     \vskip1em\par
+%%     \insertpart\par
+%%   \end{centering}
+%%   }
+%% \end{verbatim}
+%% \end{command}
+
+
+%% \paragraph{Inserts for these Templates}\ 
+
+%% \begin{command}{\insertpart}
+%%   Inserts the current part name.
+%% \end{command}
+
+%% \begin{command}{\insertpartnumber}
+%%   Inserts the current part number as an Arabic number into a template.
+%% \end{command}
+
+%% \begin{command}{\insertpartromannumber}
+%%   Inserts the current part number as a Roman number into a template.
+%% \end{command}
 
 
 

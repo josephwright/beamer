@@ -7,18 +7,16 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-%\DeclareOptionBeamer{blockheadcolor}{\def\beamer@themerounded@bhc{#1}}
-%\DeclareOptionBeamer{titlecolor}{\def\beamer@themerounded@tit{#1}}
 \DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
-\ExecuteOptionsBeamer{shadow=false}%,blockheadcolor=beamerstructure!75!black,titlecolor=beamerstructure!75!black}
+\ExecuteOptionsBeamer{shadow=false}
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
-\beamertemplateballitem
 \beamertemplateroundedblocks[shadow=\beamer@themerounded@shadow]
 
-\setbeamertemplate{table of contents}[ball numbered]
+\setbeamertemplate{item}[ball]
+\setbeamertemplate{table of contents}[ball]
 \setbeamertemplate{title page}[default][colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
 \setbeamertemplate{part page}[default][colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
   

@@ -16,9 +16,13 @@
 % Template Installation Commands
 %
 
-\def\usebeamertemplate{\@ifstar{\beamer@usebeamertemplates}{\beamer@usebeamertemplate}}
-\def\beamer@usebeamertemplate#1{{{\usebeamerfont{#1}\usebeamercolor[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
-\def\beamer@usebeamertemplates#1{\csname beamer@@tmpl@#1\endcsname}
+\def\usebeamertemplate{\@ifstar{\beamer@usebeamertemplates}{\beamer@usebeamertemplatedo}}
+\def\beamer@usebeamertemplates{\@ifstar{\beamer@usebeamertemplatess}{\beamer@usebeamertemplatedos}}
+\def\beamer@usebeamertemplatess{\@ifstar{\beamer@usebeamertemplatedosss}{\beamer@usebeamertemplatedoss}}
+\def\beamer@usebeamertemplatedo#1{\csname beamer@@tmpl@#1\endcsname}
+\def\beamer@usebeamertemplatedos#1{{{\usebeamerfont{#1}\usebeamercolor[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
+\def\beamer@usebeamertemplatedoss#1{{{\usebeamerfont*{#1}\usebeamercolor[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
+\def\beamer@usebeamertemplatedosss#1{{{\usebeamerfont*{#1}\usebeamercolor*[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
 
 
 \newif\ifbeamer@sbt
@@ -90,8 +94,6 @@
 
 
 
-
-\RequirePackage{beamerbasedefaulttemplates}
 \RequirePackage{beamerbaseauxtemplates}
 
 

@@ -12,12 +12,16 @@
 
 
 
+\RequirePackage{pgfshade}
+\RequirePackage{beamerbaseboxes}
+
 
 
 %
 % declare some balls
 %
 
+\normalsize
 \pgfdeclareradialshading[bg,parent.bg]{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
 {%
   color(0cm)=(bg!35!white);
@@ -48,6 +52,8 @@
 
 
 
+
+
 % (sub-)section in toc: sections numbered
 
 \defbeamertemplate{section in toc}{sections numbered}
@@ -55,6 +61,9 @@
 
 \defbeamertemplate{subsection in toc}{sections numbered}
 {\leavevmode\leftskip=2.5em\inserttocsubsection\par}
+
+
+
 
 
 % (sub-)section in toc: subsections numbered
@@ -66,9 +75,12 @@
 {\leavevmode\leftskip=2em\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
 
 
+
+
+
 % (sub-)section in toc: circle
 
-\defbeamertemplate{section in toc}{circle numbered}
+\defbeamertemplate{section in toc}{circle}
 {\leavevmode\leftskip=2ex%
   \llap{%
     \usebeamerfont*{section number projected}%
@@ -81,13 +93,15 @@
   }%
   \inserttocsection\par}
 
-\defbeamertemplate{subsection in toc}{circle numbered}
+\defbeamertemplate{subsection in toc}{circle}
 {\leavevmode\leftskip=2em\inserttocsubsection\par}
+
+
 
 
 % (sub-)section in toc: square
 
-\defbeamertemplate{section in toc}{square numbered}
+\defbeamertemplate{section in toc}{square}
 {\leavevmode\leftskip=1.75ex%
   \llap{%
     \usebeamerfont*{section number projected}%
@@ -97,33 +111,38 @@
     \hbox to2.25ex{\hfil\color{fg}\inserttocsectionnumber\hfil}}%
   \kern1.25ex\inserttocsection\par}
 
-\defbeamertemplate{subsection in toc}{square numbered}
+\defbeamertemplate{subsection in toc}{square}
 {\leavevmode\leftskip=5ex\llap{%
     \usebeamercolor[bg]{subsection number projected}%
     \vrule width1ex height1ex\kern1ex}\inserttocsubsection\par}
 
 
+
+
 % (sub-)section in toc: ball
 
-\defbeamertemplate{section in toc}{ball}
+\defbeamertemplate{section in toc}{ball unnumbered}
 {\leavevmode\raise0.1ex\beamer@usesphere{section number projected}{bigsphere}\kern1.25ex\inserttocsection\par}
 
-\defbeamertemplate{subsection in toc}{ball}
+\defbeamertemplate{subsection in toc}{ball unnumbered}
 {\leavevmode\leftskip=1.5em\raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}%
   \kern1ex\inserttocsubsection\par}
 
 
+
+
 % (sub-)section in toc: ball numbered
 
-\defbeamertemplate{section in toc}{ball numbered}
+\defbeamertemplate{section in toc}{ball}
 {\leavevmode\leftskip=2.75ex%
   \llap{%
-    \colorlet{parent.bg}{bg}%
-    \usebeamercolor{section number projected}%
+    \normalsize%
     \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
-      \pgfbox[center,center]{\normalfont\pgfuseshading{tocsphere}}
-      \pgfbox[center,center]{\color{fg!90!bg}%
+      \pgfbox[center,center]{\beamer@usesphere{section number projected}{tocsphere}}
+      \pgfbox[center,center]{%
         \usebeamerfont*{section number projected}%
+        \usebeamercolor{section number projected}%
+        \color{fg!90!bg}%
         \inserttocsectionnumber}
     \end{pgfpicture}%
     \kern1.25ex}%
@@ -132,7 +151,7 @@
 [action]
 {\setbeamerfont{section number projected}{size=\scriptsize}}
 
-\defbeamertemplate{subsection in toc}{ball numbered}
+\defbeamertemplate{subsection in toc}{ball}
 {\leavevmode\leftskip=5ex%
   \llap{\raise0.1ex\beamer@usesphere{subsection number projected}{bigsphere}\kern1ex}%
   \inserttocsubsection\par%
@@ -141,11 +160,11 @@
 
 
 
-% Itemize items, dot
+% Itemize items, circle
 
-\defbeamertemplate{itemize item}{dot}{\small\raise0.5pt\hbox{\textbullet}}
-\defbeamertemplate{itemize subitem}{dot}{\footnotesize\raise0.5pt\hbox{\textbullet}}
-\defbeamertemplate{itemize subsubitem}{dot}{\footnotesize\raise0.5pt\hbox{\textbullet}}
+\defbeamertemplate{itemize item}{circle}{\small\raise0.5pt\hbox{\textbullet}}
+\defbeamertemplate{itemize subitem}{circle}{\footnotesize\raise0.5pt\hbox{\textbullet}}
+\defbeamertemplate{itemize subsubitem}{circle}{\footnotesize\raise0.5pt\hbox{\textbullet}}
 
 
 
@@ -159,190 +178,194 @@
 
 
 
+% Itemize items, ball
 
-\newcommand{\beamertemplateballitem}{%
-  \useitemizeitemtemplate{\raise0.2pt\beamer@usesphere{item projected}{bigsphere}}
-  \usesubitemizeitemtemplate{\raise0.2pt\beamer@usesphere{subitem projected}{smallsphere}}%
-  \usesubsubitemizeitemtemplate{\raise0.2pt\beamer@usesphere{subsubitem projected}{smallsphere}}%
+\defbeamertemplate{itemize item}{ball}{\raise0.2pt\beamer@usesphere{item projected}{bigsphere}}
+\defbeamertemplate{itemize subitem}{ball}{\raise0.2pt\beamer@usesphere{subitem projected}{smallsphere}}
+\defbeamertemplate{itemize subsubitem}{ball}{\raise0.2pt\beamer@usesphere{subsubitem projected}{smallsphere}}
 
-  \useenumerateitemtemplate{
-    \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
-      \colorlet{parent.bg}{bg}
-      \usebeamercolor{item projected}
-      \begin{pgfmagnify}{1.75}{1.75}
-        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-      \end{pgfmagnify}
-      \pgfputat{\pgfpoint{0pt}{0.5pt}}
-      {%
-        \pgfbox[center,center]{%
-          \color{fg}%
-          \usebeamerfont*{item projected}%
-          \insertenumlabel}}
-    \end{pgfpicture}}
-  \usesubenumerateitemtemplate{%
-    \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
-      \colorlet{parent.bg}{bg}
-      \usebeamercolor{subitem projected}
-      \begin{pgfmagnify}{1.4}{1.4}
-        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-      \end{pgfmagnify}
+
+
+% Enumerate items, ball
+
+\defbeamertemplate{enumerate item}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+    \usebeamercolor[fg]{item projected}
+    \begin{pgfmagnify}{1.75}{1.75}
+      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
+    \end{pgfmagnify}
+    \pgfputat{\pgfpoint{0pt}{0.5pt}}
+    {%
       \pgfbox[center,center]{%
-          \color{fg}%
-          \usebeamerfont*{item projected}%
-          \insertsubenumlabel}
-    \end{pgfpicture}}
-  \usesubsubenumerateitemtemplate{%
-    \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
-      \colorlet{parent.bg}{bg}
-      \usebeamercolor{subsubitem projected}
-      \begin{pgfmagnify}{1.4}{1.4}
-        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-      \end{pgfmagnify}
-      \pgfbox[center,center]{%
-          \color{fg}%
-          \usebeamerfont*{item projected}%
-          \insertsubsubenumlabel}
-    \end{pgfpicture}}
-  \useenumerateitemminitemplate{%
-    \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
-      \colorlet{parent.bg}{bg}
-      \usebeamercolor{item projected}
-      \begin{pgfmagnify}{1.75}{1.75}
-        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-      \end{pgfmagnify}
-      \pgfputat{\pgfpoint{0pt}{0.5pt}}
-        {\pgfbox[center,center]{%
-          \color{fg}%
-          \usebeamerfont*{item projected}%
-          \insertenumlabel}}
-    \end{pgfpicture}}
-}
-\@onlypreamble\beamertemplateballitem
-
-\newcommand{\beamertemplatedotitem}{%
-  \useitemizeitemtemplate{\small\raise0.5pt\hbox{\textbullet}}
-  \usesubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\textbullet}}
-  \usesubsubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\textbullet}}
-  }
-
-\newcommand{\beamertemplatetriangleitem}{%
-  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-  }
-
-\newcommand{\beamertemplatesquareitem}{%
-  \useitemizeitemtemplate{\hbox{\vrule width 1ex height 1ex}}
-  \usesubitemizeitemtemplate{\small\hbox{\vrule width 1ex height 1ex}}
-  \usesubsubitemizeitemtemplate{\small\hbox{\vrule width 1ex height 1ex}}
-  }
-
-
-%
-% Enumerate Items
-%
-
-
-\newcommand{\beamertemplateenumeratealpha}{
-  \useenumerateitemtemplate{\insertenumlabel.}
-  \usesubenumerateitemtemplate{\insertenumlabel.\insertsubenumlabel}
-  \usesubsubenumerateitemtemplate{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+        \usebeamerfont*{item projected}%
+        \insertenumlabel}}
+  \end{pgfpicture}%
 }
 
-  
-\newcommand{\beamertemplateenumeratesquare}{%
-  \setbeamerfont{item projected}{size=\scriptsize}
-    
-  \useenumerateitemtemplate{%
-    \hbox{%
-      \usebeamerfont*{item projected}%
-      \usebeamercolor[bg]{item projected}%
-      \vrule width2.25ex height1.85ex depth.4ex%
-      \hskip-2.25ex%
-      \hbox to2.25ex{%
-        \hfil%
-        \color{fg}\insertenumlabel%
-        \hfil}%
-    }%
-  }
-  \usesubenumerateitemtemplate{%
-    \hbox{%
-      \usebeamerfont*{item projected}%
-      \usebeamercolor[bg]{subitem projected}%
-      \vrule width2.25ex height1.85ex depth.4ex%
-      \hskip-2.25ex%
-      \hbox to2.25ex{%
-        \hfil%
-        \color{fg}\insertsubenumlabel%
-        \hfil}%
-    }%
-  }
-  \usesubsubenumerateitemtemplate{%
-    \hbox{%
-      \usebeamerfont*{item projected}%
-      \usebeamercolor[bg]{subsubitem projected}%
-      \vrule width2.25ex height1.85ex depth.4ex%
-      \hskip-2.25ex%
-      \hbox to2.25ex{%
-        \hfil%
-        \color{fg}\insertsubsubenumlabel%
-        \hfil}%
-    }%
-  }
-  \useenumerateitemminitemplate{%
-    \hbox{%
-      \usebeamerfont*{item projected}%
-      \usebeamercolor[bg]{item projected}%
-      \vrule width2.25ex height1.85ex depth.4ex%
-      \hskip-2.25ex%
-      \hbox to2.25ex{%
-        \hfil%
-        \color{fg}\insertenumlabel%
-        \hfil}%
-    }%
-  }
+\defbeamertemplate{enumerate subitem}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+    \usebeamercolor[fg]{subitem projected}
+    \begin{pgfmagnify}{1.4}{1.4}
+      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
+    \end{pgfmagnify}
+    \pgfbox[center,center]{%
+      \usebeamerfont*{subitem projected}%
+      \insertsubenumlabel}
+  \end{pgfpicture}
 }
 
-  
-\newcommand{\beamertemplateenumeratecircle}{%
-  \setbeamerfont{item projected}{size=\scriptsize}
-    
-  \useenumerateitemtemplate{%
+\defbeamertemplate{enumerate subsubitem}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+    \usebeamercolor[fg]{subsubitem projected}
+    \begin{pgfmagnify}{1.4}{1.4}
+      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
+    \end{pgfmagnify}
+    \pgfbox[center,center]{%
+      \usebeamerfont*{subitem projected}%
+      \insertsubsubenumlabel}
+  \end{pgfpicture}
+}
+
+\defbeamertemplate{enumerate mini template}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+    \usebeamercolor[fg]{\beameritemnestingprefix item projected}
+    \begin{pgfmagnify}{1.75}{1.75}
+      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
+    \end{pgfmagnify}
+    \pgfputat{\pgfpoint{0pt}{0.5pt}}
+    {%
+      \usebeamerfont*{\beameritemnestingprefix item projected}%
+      \pgfbox[center,center]{\insertenumlabel}}
+  \end{pgfpicture}
+}
+
+
+
+% Enumerate items, square
+
+\defbeamertemplate{enumerate item}{square}
+{
+  \hbox{%
     \usebeamerfont*{item projected}%
     \usebeamercolor[bg]{item projected}%
-    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{fg}\insertenumlabel}
-    \end{pgfpicture}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertenumlabel%
+      \hfil}%
   }%
+}
+[action]
+{\setbeamerfont{item projected}{size=\scriptsize}}
 
-  \usesubenumerateitemtemplate{%
-    \usebeamerfont*{item projected}%
+\defbeamertemplate{enumerate subitem}{square}
+{
+  \hbox{%
+    \usebeamerfont*{subitem projected}%
     \usebeamercolor[bg]{subitem projected}%
-    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{fg}\insertsubenumlabel}
-    \end{pgfpicture}%
-  }%
-  
-  \usesubsubenumerateitemtemplate{%
-    \usebeamerfont*{item projected}%
-    \usebeamercolor[bg]{subsubitem projected}%
-    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{fg}\insertsubsubenumlabel}
-    \end{pgfpicture}%
-  }%
-  
-  \useenumerateitemminitemplate{%
-    \usebeamerfont*{item projected}%
-    \usebeamercolor[bg]{item projected}%
-    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{fg}\insertenumlabel}
-    \end{pgfpicture}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertsubenumlabel%
+      \hfil}%
   }%
 }
+
+\defbeamertemplate{enumerate subsubitem}{square}
+{
+  \hbox{%
+    \usebeamerfont*{subitem projected}%
+    \usebeamercolor[bg]{subsubitem projected}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertsubsubenumlabel%
+      \hfil}%
+  }%
+}
+
+\defbeamertemplate{enumerate mini template}{square}
+{
+  \hbox{%
+    \usebeamerfont*{\beameritemnestingprefix item projected}%
+    \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertenumlabel%
+      \hfil}%
+  }%
+}
+
+
+  
+    
+% Enumerate items, circle
+  
+\defbeamertemplate{enumerate item}{circle}
+{
+  \usebeamerfont*{item projected}%
+  \usebeamercolor[bg]{item projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfbox[center,base]{\color{fg}\insertenumlabel}
+  \end{pgfpicture}%
+}
+[action]
+{\setbeamerfont{item projected}{size=\scriptsize}}
+
+\defbeamertemplate{enumerate subitem}{circle}
+{
+  \usebeamerfont*{subitem projected}%
+  \usebeamercolor[bg]{subitem projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfbox[center,base]{\color{fg}\insertsubenumlabel}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{enumerate subsubitem}{circle}
+{
+  \usebeamerfont*{subsubitem projected}%
+  \usebeamercolor[bg]{subsubitem projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfbox[center,base]{\color{fg}\insertsubsubenumlabel}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{enumerate mini template}{circle}
+{
+  \usebeamerfont*{\beameritemnestingprefix item projected}%
+  \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+    \pgfbox[center,base]{\color{fg}\insertenumlabel}
+  \end{pgfpicture}%
+}
+
+
+
+% description item width, widthof
+
+\defbeamertemplate{description item width}{widthof}[1]{}
+[action]
+{
+  \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\usebeamertemplate**{decription item}}%
+  \beamersetdescriptionwidth{\wd\beamer@tempbox}
+}
+
+
+
+
 
 
 %
@@ -400,37 +423,6 @@
 \newcommand{\beamertemplatefootpagenumber}{%
   \usefoottemplate{%
   \hfil{\color{.!50!bg}\insertpagenumber}}}
-
-%
-% Mini navigation bar frame templates
-%
-
-%%  \pgfdeclareradialshading{minispherehilight}{\pgfpoint{-0.63pt}{0.77pt}}%
-%%   {color(0cm)=(white);
-%%     color(0.56pt)=(white);
-%%     color(1.12pt)=(beamerstructure!25);
-%%     color(1.54pt)=(beamerstructure!30!black);
-%%     color(1.82pt)=(bg)}
-%%   \pgfdeclareradialshading{minispheresemidull}{\pgfpoint{-0.63pt}{0.77pt}}%
-%%   {color(0cm)=(beamerstructure!15);
-%%     color(0.56pt)=(beamerstructure!50);
-%%     color(1.12pt)=(beamerstructure!70!black);
-%%     color(1.54pt)=(beamerstructure!50!black);
-%%     color(1.82pt)=(bg)}
-%%   \begin{colormixin}{25!bg}
-%%   \pgfdeclareradialshading{minispheredull}{\pgfpoint{-0.63pt}{0.77pt}}%
-%%   {color(0cm)=(beamerstructure!15);
-%%     color(0.56pt)=(beamerstructure!50);
-%%     color(1.12pt)=(beamerstructure!70!black);
-%%     color(1.54pt)=(beamerstructure!50!black);
-%%     color(1.82pt)=(bg)}
-%%   \end{colormixin}
-%%   \def\beamer@sphereradius{0.05cm}
-%%   \useminislidetemplate
-%%   {\pgfuseshading{minispherehilight}}
-%%   {\pgfuseshading{minispheresemidull}}
-%%   {\pgfuseshading{minispheredull}}
-%%   {.14cm}{.03cm}
 
 
 \newcommand{\beamertemplatecircleminiframe}{
@@ -521,7 +513,7 @@
 {
   \newcommand{\beamertemplatesolidbackgroundcolor}[1]{}
   \newcommand{\beamertemplateshadingbackground}[2]{}
-  \newcommand{\beamertemplategridbackground}{}
+  \newcommand{\beamertemplategridbackground}[1][]{}
 }
 
 
@@ -735,7 +727,7 @@
   \useblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title}
-      \usebeamerfont{block title}\insertblockname%
+      \usebeamerfont*{block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip}}%
@@ -744,7 +736,7 @@
   \usealertblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
-      \usebeamerfont{block title}\insertblockname%
+      \usebeamerfont*{block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip}}%
@@ -753,7 +745,7 @@
   \useexampleblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title example}
-      \usebeamerfont{block title}\insertblockname%
+      \usebeamerfont*{block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip}}%
@@ -766,19 +758,19 @@
   \useblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
-      {\usebeamerfont{block title}\insertblockname}%
+      {\usebeamerfont*{block title}\insertblockname}%
       \raggedright}%      
     {\end{beamerboxesrounded}\vskip\smallskipamount}
   \usealertblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
-      {\usebeamerfont{block title}\insertblockname}%
+      {\usebeamerfont*{block title}\insertblockname}%
       \raggedright}%
     {\end{beamerboxesrounded}\vskip\smallskipamount}
   \useexampleblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
-      {\usebeamerfont{block title}\insertblockname}%
+      {\usebeamerfont*{block title}\insertblockname}%
       \raggedright}%
     {\end{beamerboxesrounded}\vskip\smallskipamount}
 }
