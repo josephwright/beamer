@@ -452,8 +452,8 @@
 %
 
 \let\beamer@origitem=\item
-\def\beamer@callorigitem{\@ifnextchar[\beamer@@callorigitem{\beamer@origitem\leavevmode\ignorespaces}}
-\def\beamer@@callorigitem[#1]{\beamer@origitem[#1]\leavevmode\ignorespaces}
+\def\beamer@callorigitem{\@ifnextchar[\beamer@@callorigitem{\beamer@origitem\kern0pt\ignorespaces}}
+\def\beamer@@callorigitem[#1]{\beamer@origitem[#1]\kern0pt\ignorespaces}
 
 \def\item{%
   \@ifnextchar\relax\beamer@origitem{%
