@@ -22,6 +22,10 @@
 
 \newif\ifbmb@shadow
 \newbox\bmb@box
+\newbox\bmb@colorbox
+\newbox\bmb@boxshadow
+\newbox\bmb@boxshadowball
+\newbox\bmb@boxshadowballlarge
 \newdimen\bmb@temp
 \newdimen\bmb@dima
 \newdimen\bmb@dimb
@@ -103,7 +107,12 @@
   }%
   \nointerlineskip%
   \fi%
-  \edef\beamer@savedextension{\pgfalternateextension}%
+  \ifbmb@shadow%
+    \setbox\bmb@boxshadow=\hbox{\pgfuseshading{bmb@shadow}}%
+    \setbox\bmb@boxshadowball=\hbox{\pgfuseshading{bmb@shadowball}}%
+    \setbox\bmb@boxshadowballlarge=\hbox{\pgfuseshading{bmb@shadowballlarge}}%
+  \fi%
+  \setbox\bmb@colorbox=\hbox{\color{lower.bg}}%
   \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
     \vskip2pt%
     \usebeamercolor{\bmb@lower}%
@@ -114,8 +123,6 @@
 
 \def\endbeamerboxesrounded{%
   \end{minipage}\egroup%
-  % temporarily restore alternate extension
-  \edef\pgfalternateextension{\beamer@savedextension}%
   \wd\bmb@box=\bmb@width%
   \bmb@temp=\dp\bmb@box%
   \advance\bmb@temp by.5pt%
@@ -127,18 +134,18 @@
   \hbox{%
     \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
       \ifbmb@shadow%
-      \pgfputat{\pgfpoint{4bp}{-3bp}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowball}}}
+      \pgfputat{\pgfpoint{4bp}{-3bp}}{\pgfbox[center,center]{\copy\bmb@boxshadowball}}
       \begin{pgfscope}
         {%
         \advance\bmb@temp by-1bp%
         \pgfrect[clip]{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
         }%
-        \pgfputat{\pgfpoint{\bmb@temp}{1bp}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowballlarge}}}
+        \pgfputat{\pgfpoint{\bmb@temp}{1bp}}{\pgfbox[center,center]{\box\bmb@boxshadowballlarge}}
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by-4bp%
         \pgfrect[clip]{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
-        \pgfputat{\pgfpoint{4bp}{-7bp}}{\pgfbox[left,base]{\pgfuseshading{bmb@shadow}}}%
+        \pgfputat{\pgfpoint{4bp}{-7bp}}{\pgfbox[left,base]{\copy\bmb@boxshadow}}%
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by 4bp%
@@ -147,15 +154,15 @@
         \advance\bmb@dima by 4bp%
         \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \advance\bmb@dima by-4bp%
-        \pgfputat{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgfbox[center,center]{\pgfuseshading{bmb@shadowball}}}
+        \pgfputat{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgfbox[center,center]{\box\bmb@boxshadowball}}
         \advance\bmb@dima by-1bp%
         \pgfrect[clip]{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \advance\bmb@temp by4bp%
         \pgfputat{\pgfpoint{\bmb@temp}{-3bp}}%
-        {\begin{pgfrotateby}{\pgfdegree{90}}\pgfbox[left,base]{\pgfuseshading{bmb@shadow}}\end{pgfrotateby}}%
+        {\begin{pgfrotateby}{\pgfdegree{90}}\pgfbox[left,base]{\box\bmb@boxshadow}\end{pgfrotateby}}%
       \end{pgfscope}
       \fi%
-      \color{lower.bg}%
+      \unhbox\bmb@colorbox%
       \pgfqmoveto{-4}{1}
       \pgfqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
       \pgflineto{\pgfpoint{\the\bmb@temp}{-3bp}}

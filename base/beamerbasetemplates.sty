@@ -317,9 +317,9 @@
 \@onlypreamble\beamertemplateballitem
 
 \newcommand{\beamertemplatetriangleitem}{%
-  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
-  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{$\blacktriangleright$}}
-  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{$\blacktriangleright$}}
+  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\everymath{}$\blacktriangleright$}}
+  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\everymath{}$\blacktriangleright$}}
+  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\everymath{}$\blacktriangleright$}}
   }
 
 \newcommand{\beamertemplatesquareitem}{%
@@ -616,11 +616,11 @@
 }
 
 \newcommand{\beamertemplatetextbibitems}{
-  \usebibitemtemplate{\color{beamerstructure}\insertbiblabel}
+  \usebibitemtemplate{\insertbiblabel}
 }
 
 \newcommand{\beamertemplatearrowbibitems}{
-  \usebibitemtemplate{\color{beamerstructure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
+  \usebibitemtemplate{\scriptsize\raise1.25pt\hbox{\everymath{}$\blacktriangleright$}}
 }
 
 \mode

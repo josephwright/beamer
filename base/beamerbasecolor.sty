@@ -105,6 +105,15 @@
 \colorlet{bg}{white}
 
 
+\mode
+<article>
+{
+  \newcommand\setbeamercolor{\@ifstar{\@gobbletwo}{\@gobbletwo}}
+  \newcommand\usebeamercolor{\@ifstar{\beamer@optgog}{\beamer@optgog}}
+  \newcommand\beamer@optgog[2][]{}
+}
+
+
 
 %
 % Colored boxes
@@ -207,6 +216,11 @@
   \endgroup%
 }
 
+\mode
+<article>
+{
+  \newenvironment{beamercolorbox}[2][]{}{}
+}
 
 
 %
@@ -214,6 +228,8 @@
 %
 
 \AtBeginDocument{\usebeamercolor{normal text}\color{fg}}%
+\AtBeginDocument{\everymath{\usebeamercolor{math text inlined}\ifbeamercolorempty[fg]{math text inlined}{}{\color{fg}}}}%
+\AtBeginDocument{\everydisplay{\@displaytrue}}%\usebeamercolor{math text displayed}\ifbeamercolorempty[fg]{math text displayed}{}{\color{fg}}}}%
 
 
 %

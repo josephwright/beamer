@@ -465,7 +465,8 @@
        {\@latex@warning{Empty `thebibliography' environment}}%
       \ifhmode\unskip\fi\endlist}
 
-\long\def\beamer@biblabeltemplate#1{\def\insertbiblabel{#1}\biblabeltemplate\hfil}
+\long\def\beamer@biblabeltemplate#1{\def\insertbiblabel{#1}{%
+  \usebeamercolor[fg]{bibliography item}\biblabeltemplate}\hfil}
 
 \def\bibitem{\@ifnextchar<{\beamer@bibitem@store}{\gdef\beamer@bibstore{}\beamer@plainbibitem}}
 \def\beamer@bibitem@store<#1>{\gdef\beamer@bibstore{<#1>}\beamer@plainbibitem}
@@ -506,10 +507,10 @@
 
 \beamertemplatearticlebibitems
 \usebibliographyblocktemplate
-  {\color{beamerstructure}}
-  {\par\color{black}}
-  {\par\color{beamerstructure!65}}
-  {\par\color{beamerstructure!65}}
+  {\usebeamercolor[fg]{bibliography entry author}}
+  {\par\usebeamercolor[fg]{bibliography entry title}}
+  {\par\usebeamercolor[fg]{bibliography entry location}}
+  {\par\usebeamercolor[fg]{bibliography entry note}}
 
 
 \mode

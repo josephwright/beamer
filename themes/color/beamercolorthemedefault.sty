@@ -15,6 +15,10 @@
 \setbeamercolor{alerted text}{fg=red}
 \setbeamercolor{example text}{fg=green!50!black}
 
+\setbeamercolor{math text}{}
+\setbeamercolor{math text inlined}{parent=math text}
+\setbeamercolor{math text displayed}{parent=math text}
+
 \setbeamercolor{structure}{fg=beamer@blendedblue}
 \setbeamercolor{structure in head/foot}{parent=structure}
 \setbeamercolor{structure in sidebar}{parent=structure}
@@ -68,7 +72,7 @@
 \setbeamercolor{caption}{}
 \setbeamercolor{caption name}{parent=structure}
 
-\setbeamercolor{button}{use=local structure,bg*=local structure.fg!50!bg,bg=local structure.fg!50!bg,fg=white}
+\setbeamercolor{button}{use=local structure,bg=local structure.fg!50!bg,fg=white}
 \setbeamercolor{button border}{use=local structure,fg=local structure.fg!50!bg}
 \setbeamercolor{navigation symbols}{use=structure,fg=structure.fg!40!bg}
 \setbeamercolor{navigation symbols dimmed}{use=structure,fg=structure.fg!20!bg}
@@ -99,6 +103,13 @@
 
 \setbeamercolor{description item}{parent=item}
 
+\setbeamercolor{bibliography item}{parent=item}
+
+\setbeamercolor{bibliography entry author}{use=structure,fg=structure.fg}
+\setbeamercolor{bibliography entry title}{use=normal text,fg=normal text.fg}
+\setbeamercolor{bibliography entry location}{use=structure,fg=structure.fg!65!bg}
+\setbeamercolor{bibliography entry note}{use=structure,fg=structure.fg!65!bg}
+  
 \setbeamercolor{separation line}{}
 
 \setbeamercolor{upper separation line head}{parent=separation line}
@@ -107,8 +118,6 @@
 
 \setbeamercolor{upper separation line foot}{parent=separation line}
 \setbeamercolor{lower separation line foot}{parent=separation line}
-
-
   
 \mode
 <all>
