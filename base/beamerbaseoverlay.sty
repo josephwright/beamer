@@ -8,6 +8,7 @@
 % of the GNU Public License, version 2.
 
 
+\presentation
 
   
 %
@@ -80,6 +81,12 @@
 \beamer@coveringdepth=0
 
 
+\article
+{
+  \def\beamersetuncovermixins#1#2{}
+}
+
+
 
 
 %
@@ -102,9 +109,17 @@
   \alt<\beamer@pausecount->%
   {\beamer@spacingcover\def\beamer@endpause{\beamer@spacingcover}}%
   {\beamer@startcovered\def\beamer@endpause{\beamer@endcovered}}%
-  }
+}
 
 
+
+\article
+{
+  \def\pause{}
+  \newenvironment{pauses}[1][]{}{}%  
+}
+
+  
 
   
 %
@@ -147,70 +162,110 @@
 \let\beamer@@trivlist=\@trivlist
 
 
+
+
 %
 %
 % Verbatim support
 %
 %
 
-\let\beamer@verb@egroup=\verb@egroup
+\common
+{
+  \let\beamer@verb@egroup=\verb@egroup
 
-\def\beamer@setb{\setbox0=\copy}
-\long\def\defverb#1{%
-  \expandafter\newbox\csname @verb\string#1\endcsname%
-  \def#1{{\expandafter\beamer@setb\csname
-      @verb\string#1\endcsname\unhbox0}}%
-  \def\verb@egroup{\global\let\verb@balance@group\@empty\egroup\egroup\let\verb@egroup=\beamer@verb@egroup}
-  \expandafter\setbox\csname @verb\string#1\endcsname=\hbox\bgroup
-  \verb}
+  \def\beamer@setb{\setbox0=\copy}
+  \long\def\defverb#1{%
+    \expandafter\newbox\csname @verb\string#1\endcsname%
+    \def#1{{\expandafter\beamer@setb\csname
+        @verb\string#1\endcsname\unhbox0}}%
+    \def\verb@egroup{\global\let\verb@balance@group\@empty\egroup\egroup\let\verb@egroup=\beamer@verb@egroup}
+    \expandafter\setbox\csname @verb\string#1\endcsname=\hbox\bgroup
+    \verb}
 
 
-\long\def\defverbatim#1{%
-  \expandafter\newbox\csname @verb\string#1\endcsname%
-  \def#1{{\expandafter\beamer@setb\csname @verb\string#1\endcsname\unvbox0}}%
-  \expandafter\setbox\csname @verb\string#1\endcsname=\vbox\bgroup
-  \def\set@color{}\def\reset@color{}\let\@next=}
-
+  \long\def\defverbatim#1{%
+    \expandafter\newbox\csname @verb\string#1\endcsname%
+    \def#1{{\expandafter\beamer@setb\csname @verb\string#1\endcsname\unvbox0}}%
+    \expandafter\setbox\csname @verb\string#1\endcsname=\vbox\bgroup
+    \def\set@color{}\def\reset@color{}\let\@next=}
+}
 
 
 %
 % Overlay commands
 %
 
-\long\def\beamer@gobbleoptional{\@ifnextchar[{\beamer@@gobbleoptional}{\beamer@@gobbleoptional[]}}
-\long\def\beamer@@gobbleoptional[#1]#2{}
+\common
+{
+  \long\def\beamer@gobbleoptional{\@ifnextchar[{\beamer@@gobbleoptional}{\beamer@@gobbleoptional[]}}
+  \long\def\beamer@@gobbleoptional[#1]#2{}
 
-\long\def\beamer@ignoreoptional{\@ifnextchar[{\beamer@@ignoreoptional}{}}
-\long\def\beamer@@ignoreoptional[#1]{}
+  \long\def\beamer@ignoreoptional{\@ifnextchar[{\beamer@@ignoreoptional}{}}
+  \long\def\beamer@@ignoreoptional[#1]{}
 
-\long\def\beamer@insp#1{\ignorespaces#1\ignorespaces}
-\long\def\beamer@gobbleis#1{\ignorespaces}
+  \long\def\beamer@insp#1{\ignorespaces#1\ignorespaces}
+  \long\def\beamer@gobbleis#1{\ignorespaces}
+}
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
 \long\def\fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
 \long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
 
-\newoverlaycommand{\pgfonly}{\beamer@insp}{\beamer@gobbleis}
-\newoverlaycommand{\only}{}{\@gobble}
 \newoverlaycommand{\uncover}{\fakeinvisible}{\makeinvisible}
 \newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\fakeinvisible}
-\renewoverlaycommand{\textbf}{\beameroriginal{\textbf}}{}
-\renewoverlaycommand{\textit}{\beameroriginal{\textit}}{}
-\renewoverlaycommand{\textsl}{\beameroriginal{\textsl}}{}
-\renewoverlaycommand{\textsf}{\beameroriginal{\textsf}}{}
-\renewoverlaycommand{\textrm}{\beameroriginal{\textrm}}{}
-\renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptional}
 \newoverlayenvironment{uncoverenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
+\renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptional}
+
+\article
+{
+  \newoverlaycommand{\uncover}{}{\@gobble}
+  \newoverlaycommand{\invisible}{\@gobble}{}
+  \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
+  \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
+
+  \AtBeginDocument{
+    % These have to be done late...
+    \renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptional}
+  }
+}
+
+\common
+{
+  \newoverlaycommand{\pgfonly}{\beamer@insp}{\beamer@gobbleis}
+  \newoverlaycommand{\only}{}{\@gobble}
+  \renewoverlaycommand{\textbf}{\beameroriginal{\textbf}}{}
+  \renewoverlaycommand{\textit}{\beameroriginal{\textit}}{}
+  \renewoverlaycommand{\textsl}{\beameroriginal{\textsl}}{}
+  \renewoverlaycommand{\textsf}{\beameroriginal{\textsf}}{}
+  \renewoverlaycommand{\textrm}{\beameroriginal{\textrm}}{}
+}
+
 \renewoverlaycommand{\hypertarget}{\beameroriginal{\hypertarget}}{\@gobble}
 
-\newcommand\onlyarticle{\only<all:0| article:1>}
-\newcommand\onlypresentation{\only<article:0>}
+\article
+{
+  \AtBeginDocument{
+    % These have to be done late...
+    \renewoverlaycommand{\hypertarget}{\beameroriginal{\hypertarget}}{\@gobble}
+  }
+}
+
+
 
 \newoverlaycommand{\emph}{\@emph}{}
 \def\@emph#1{{\itshape#1}}
 
-\newoverlaycommand{\nameslide}{\beamer@nameslide}{\@gobble}
+\article
+{
+  \renewoverlaycommand{\emph}{\beameroriginal{\emph}}{}
+}
+
+
+\newoverlaycommand{\nameslide}{\beamer@nameslide}{\@gobble}%obsolete
+
+
 
 %
 % Insert area
@@ -228,6 +283,12 @@
   \dp\beamer@areabox=\beamer@finalheight%
   \box\beamer@areabox%
 }
+
+\article
+{
+  \newenvironment{overlayarea}[2]{}{}% no effect
+}
+
 
 \def\overprint{\@ifnextchar[{\@overprint}{\@overprint[\textwidth]}}
 \def\@overprint[#1]{%
@@ -267,6 +328,16 @@
   \setbox\beamer@animcurrent=\vbox\bgroup\begin{minipage}[t]{\beamer@animwd}%
 }
 
+\article
+{
+  \newenvironment{overprint}[1][]%
+    {\begin{onlyenv}}
+    {\end{onlyenv}}
+
+  \def\onslide<#1>{\end{onlyenv}\begin{onlyenv}<#1>}
+}
+
+
 %
 % Transitions - DISTRACTING and to be used with CARE!!!! 
 %
@@ -282,25 +353,38 @@
   \edef\beamer@temp{{pdfpagetransition={#1 \beamer@transdir\space\beamer@dur}}}
   \expandafter\hypersetup\beamer@temp}
 
-\newoverlaycommand{\transblindshorizontal}{\beamer@dotrans{Blinds /Dm /H}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transblindsvertical}{\beamer@dotrans{Blinds /Dm /V}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transboxin}{\beamer@dotrans{Box /M /I}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transboxout}{\beamer@dotrans{Box /M /O}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transcover}{\beamer@dotrans{Cover}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transdissolve}{\beamer@dotrans{Dissolve}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transfade}{\beamer@dotrans{Fade}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transglitter}{\beamer@dotrans{Glitter}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transpush}{\beamer@dotrans{Push}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transsplitverticalin}{\beamer@dotrans{Split /Dm /V /M /I}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transsplitverticalout}{\beamer@dotrans{Split /Dm /V /M /O}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transsplithorizontalin}{\beamer@dotrans{Split /Dm /H /M /I}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transsplithorizontalout}{\beamer@dotrans{Split /Dm /H /M /O}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transuncover}{\beamer@dotrans{Uncover}}{\beamer@ignoreoptional}
-\newoverlaycommand{\transwipe}{\beamer@dotrans{Wipe}}{\beamer@ignoreoptional}
+\article
+{
+  \def\beamer@dotrans#1{\@ifnextchar[{\beamer@@dotrans{#1}}{\beamer@@dotrans{#1}[]}}
+  \def\beamer@@dotrans#1[#2]{}
+}
 
+\common
+{
+  \newoverlaycommand{\transblindshorizontal}{\beamer@dotrans{Blinds /Dm /H}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transblindsvertical}{\beamer@dotrans{Blinds /Dm /V}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transboxin}{\beamer@dotrans{Box /M /I}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transboxout}{\beamer@dotrans{Box /M /O}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transcover}{\beamer@dotrans{Cover}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transdissolve}{\beamer@dotrans{Dissolve}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transfade}{\beamer@dotrans{Fade}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transglitter}{\beamer@dotrans{Glitter}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transpush}{\beamer@dotrans{Push}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transsplitverticalin}{\beamer@dotrans{Split /Dm /V /M /I}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transsplitverticalout}{\beamer@dotrans{Split /Dm /V /M /O}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transsplithorizontalin}{\beamer@dotrans{Split /Dm /H /M /I}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transsplithorizontalout}{\beamer@dotrans{Split /Dm /H /M /O}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transuncover}{\beamer@dotrans{Uncover}}{\beamer@ignoreoptional}
+  \newoverlaycommand{\transwipe}{\beamer@dotrans{Wipe}}{\beamer@ignoreoptional}
+}
 
 \newoverlaycommand{\transduration}{\beamer@transdur}{\@gobble}
 \def\beamer@transdur#1{\hypersetup{pdfpageduration=#1}}
+
+\article
+{
+  \newoverlaycommand{\transduration}{\@gobble}{\@gobble}
+}
 
 
 %
@@ -332,6 +416,13 @@
   \fi%  
 }
 
+\article
+{
+  \def\animate<#1>{}
+  \def\animatevalue<#1-#2>#3#4#5{#3=#4}
+}
+
+
 
 %
 % Labels in overlays
@@ -344,10 +435,20 @@
   \def\label@in@display{\@ifnextchar<{\beamer@label@in@display}{\beamer@label@in@display<1>}}
 }
 
-
 \def\beamer@label<#1>#2{\alt<#1>{\beamer@origlabel{#2}\beamer@nameslide{#2}}{}}
 \def\beamer@label@in@display<#1>#2{\alt<#1>{\beamer@origlabel@in@display{#2}\beamer@nameslide{#2}}{}}  
 
+\article
+{
+  \AtBeginDocument{
+    % Has to be done late...
+    \newoverlaycommand{\label}{\beameroriginal{\label}}{}
+  }
+}
+
+
+
+\common
 
 %%% Local Variables: 
 %%% mode: latex

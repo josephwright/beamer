@@ -7,6 +7,9 @@
 % of the GNU Public License, version 2.
 
 
+
+\presentation
+
 %
 % Setting the left and right margin
 %
@@ -20,15 +23,24 @@
   \beamer@tempdim=\beamer@leftmargin%
   \advance\beamer@tempdim by\beamer@leftsidebar%
   \geometry{left=\the\beamer@tempdim}%
-  }
+}
+
 \def\beamersetrightmargin#1{%
   \beamer@rightmargin=#1\relax%
   % Reset right margin now
   \beamer@tempdim=\beamer@rightmargin%
   \advance\beamer@tempdim by\beamer@rightsidebar%
   \geometry{right=\the\beamer@tempdim}%
-  }
+}
 
+
+\article
+{
+  \def\beamersetleftmargin#1{}
+  \def\beamersetrightmargin#1{}
+}
+
+  
 
 %
 %
@@ -116,9 +128,11 @@
 % Background management
 %
 %
-\long\def\usebackgroundtemplate#1{%
-  \gdef\beamer@backgroundtemplate{#1}}
-
+\common
+{
+  \long\def\usebackgroundtemplate#1{%
+    \gdef\beamer@backgroundtemplate{#1}}
+}
 
 
 %
@@ -256,14 +270,23 @@
 \newenvironment{columnsonlytextwidth}%
   {\begin{columns}[onlytextwidth]}{\end{columns}}
 
+\article
+{
+  % do sth. more intelligent in the future
+  \newenvironment{columns}[1][]{}{}
+}
 
-\newenvironment{beamer@columnenv}[2][\beamer@colalign]{%
-  \beamer@colclose\def\beamer@colclose{}%
-  \begin{minipage}[#1]{#2}%
-    \raggedright}
-  {\end{minipage}\hfill\@ignoretrue}
-\let\endcolumn\endbeamer@columnenv
 
+
+
+%
+%
+% Column command/environment
+%
+%
+
+\common
+{
 \def\beamer@columnname{column}
 \def\column{%
   \ifx\@currenvir\beamer@columnname%
@@ -272,13 +295,28 @@
   \let\beamer@next=\beamer@columncom%
   \fi%
   \beamer@next}
+}
+
+\newenvironment{beamer@columnenv}[2][\beamer@colalign]{%
+  \beamer@colclose\def\beamer@colclose{}%
+  \begin{minipage}[#1]{#2}%
+    \raggedright}
+  {\end{minipage}\hfill\@ignoretrue}
+\let\endcolumn\endbeamer@columnenv
 
 \newcommand\beamer@columncom[2][\beamer@colalign]{%
   \beamer@colclose%
   \def\beamer@colclose{\end{minipage}\hfill\ignorespaces}%
   \begin{minipage}[#1]{#2}%
     \raggedright}
-      
+   
+\article
+{
+  \newenvironment{beamer@columnenv}[2][]{}{}
+  \newcommand{\beamer@columncom}[2][]{}
+}
+
+   
 
 %
 %
@@ -298,6 +336,8 @@
   \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
 
 
+
+\common
 
 %%% Local Variables: 
 %%% mode: latex

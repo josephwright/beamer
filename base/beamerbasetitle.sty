@@ -1,12 +1,21 @@
 \ProvidesPackage{beamerbasetitle}[2004/01/10 ver 1.20]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
-
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+
+\presentation
+
+
+%
+%
+% The \maketitle command (for compatibility with other classes)
+%
+%
+\def\maketitle{\frame{\titlepage}}
 
 %
 %
@@ -23,6 +32,12 @@
 %
 \def\partpage{{\beamer@partpagetemplate}}
 \long\def\usepartpagetemplate#1{\def\beamer@partpagetemplate{#1}}
+
+\article
+{
+  \def\partpage{}
+}
+
 
 %
 %
@@ -42,6 +57,12 @@
   }
 \title{}
 
+\article
+{
+  \let\beamer@origtitle=\title
+  \renewcommand{\title}[2][]{\beamer@origtitle{#2}}
+}
+
 
 %
 %
@@ -56,6 +77,11 @@
   }
 \date{\today}
 
+\article
+{
+  \let\beamer@origdate=\date
+  \renewcommand{\date}[2][]{\beamer@origdate{#2}}
+}
 
 %
 %
@@ -74,6 +100,13 @@
 \def\beamer@andtitle{\quad}
 \def\beamer@instother#1{}
 \def\beamer@andother{\unskip, }
+
+\article
+{
+  \let\beamer@origauthor=\author
+  \renewcommand{\author}[2][]{\beamer@origauthor{#2}}
+}
+
 
 
 %
@@ -101,6 +134,25 @@
 \def\beamer@andinst{\\[1em]}
 
 
+\article
+{
+  \ifx\institute\@undefined
+    \newcommand{\institute}[2][]{}
+  \else
+    \let\beamer@originstitute=\institute
+    \renewcommand{\institute}[2][]{\beamer@originstitute{#2}}
+  \fi
+
+  \ifx\and\@undefined
+    \def\and{\unskip, }
+  \fi
+
+  \ifx\inst\@undefined
+    \def\inst#1{$^{#1}$}
+  \fi
+}
+
+
 %
 %
 % The \logo command
@@ -108,6 +160,16 @@
 %
 \def\logo#1{\def\insertlogo{#1}}
 \logo{}
+
+\article
+{
+  \ifx\logo\@undefined
+    \def\logo#1{}
+  \fi
+}
+
+
+\common
 
 
 %%% Local Variables: 

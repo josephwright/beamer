@@ -8,6 +8,9 @@
 
 
 
+\presentation
+
+
 %
 % Alerting
 %
@@ -26,6 +29,13 @@
 \usealerttemplate{{\begin{colormixin}{15!alert}\insertalert\end{colormixin}}}
 \usestructuretemplate{{\color{structure}\insertstructure}}
 
+\article
+{
+  \newoverlaycommand{\alert}{\emph}{}
+  \newoverlaycommand{\structure}{\textbf}{}
+}
+
+
 
 %
 %
@@ -33,18 +43,20 @@
 %
 %
 
-\long\def\useblocktemplate#1#2{%
-  \gdef\beamer@beginblocktemplate{#1}
-  \gdef\beamer@endblocktemplate{#2}}
+\common
+{
+  \long\def\useblocktemplate#1#2{%
+    \gdef\beamer@beginblocktemplate{#1}
+    \gdef\beamer@endblocktemplate{#2}}
 
-\long\def\usealertblocktemplate#1#2{%
-  \gdef\beamer@beginalertblocktemplate{#1}
-  \gdef\beamer@endalertblocktemplate{#2}}
+  \long\def\usealertblocktemplate#1#2{%
+    \gdef\beamer@beginalertblocktemplate{#1}
+    \gdef\beamer@endalertblocktemplate{#2}}
 
-\long\def\useexampleblocktemplate#1#2{%
-  \gdef\beamer@beginexampleblocktemplate{#1}
-  \gdef\beamer@endexampleblocktemplate{#2}}
-
+  \long\def\useexampleblocktemplate#1#2{%
+    \gdef\beamer@beginexampleblocktemplate{#1}
+    \gdef\beamer@endexampleblocktemplate{#2}}
+}
 \newoverlayenvironment{block}[1]{%
   \beamer@spacingcover\def\insertblockname{#1}%
   \par%
@@ -72,35 +84,66 @@
   \par%
   \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate\beamer@endcovered}
 
-\newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
-\newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}
-\newenvironment{Definition}{\begin{block}{Definition}}{\end{block}}
-\newenvironment{Satz}{\begin{block}{Satz}}{\end{block}}
-\newenvironment{Beweis}{\begin{block}{Beweis.}}{\end{block}}
-\newenvironment{Folgerung}{\begin{block}{Folgerung}}{\end{block}}
-\newenvironment{Lemma}{\begin{block}{Lemma}}{\end{block}}
-\newenvironment{Fakt}{\begin{block}{Fakt}}{\end{block}}
-\newenvironment{Beispiel}{\begin{exampleblock}{Beispiel}}{\end{exampleblock}}
-\newenvironment{Beispiele}{\begin{exampleblock}{Beispiele}}{\end{exampleblock}}
+\article
+{
+  \newoverlayenvironment{block}[1]{%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginblocktemplate}{\par\beamer@endblocktemplate}%
+  {\def\insertblockname{#1}\begin{onlyenv}<all:0>}{\end{onlyenv}}
 
-\newenvironment{Theorem}{\begin{block}{Theorem}}{\end{block}}
-\newenvironment{Proof}{\begin{block}{Proof.}}{\end{block}}
-\newenvironment{Corollary}{\begin{block}{Corollary}}{\end{block}}
-\newenvironment{Fact}{\begin{block}{Fact}}{\end{block}}
-\newenvironment{Example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
-\newenvironment{Examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+  \newoverlayenvironment{alertblock}[1]{%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginalertblocktemplate}{\par\beamer@endalertblocktemplate}%
+  {\def\insertblockname{#1}\begin{onlyenv}<all:0>}{\end{onlyenv}}
 
-\newenvironment{definition}{\begin{block}{Definition}}{\end{block}}
-\newenvironment{definitions}{\begin{block}{Definitions}}{\end{block}}
-\newenvironment{theorem}{\begin{block}{Theorem}}{\end{block}}
-\newenvironment{proof}{\begin{block}{Proof.}}{\end{block}}
-\newenvironment{corollary}{\begin{block}{Corollary}}{\end{block}}
-\newenvironment{fact}{\begin{block}{Fact}}{\end{block}}
-\newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
-\newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+  \newoverlayenvironment{exampleblock}[1]{%
+  \def\insertblockname{#1}%
+  \par%
+  \beamer@beginexampleblocktemplate}{\par\beamer@endexampleblocktemplate}%
+  {\def\insertblockname{#1}\begin{onlyenv}<all:0>}{\end{onlyenv}}
 
-\newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
-\newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
+  \useblocktemplate{\medskip{\textbf{\insertblockname}}\par}{\medskip}
+  \usealertblocktemplate{\medskip{\textbf{\emph{\insertblockname}}}\par}{\medskip}
+  \useexampleblocktemplate{\medskip{\emph{\insertblockname}}\par}{\medskip}
+}
+
+\common
+{
+
+  \ifbeamer@blocks
+    \newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
+    \newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}
+    \newenvironment{Definition}{\begin{block}{Definition}}{\end{block}}
+    \newenvironment{Satz}{\begin{block}{Satz}}{\end{block}}
+    \newenvironment{Beweis}{\begin{block}{Beweis.}}{\end{block}}
+    \newenvironment{Folgerung}{\begin{block}{Folgerung}}{\end{block}}
+    \newenvironment{Lemma}{\begin{block}{Lemma}}{\end{block}}
+    \newenvironment{Fakt}{\begin{block}{Fakt}}{\end{block}}
+    \newenvironment{Beispiel}{\begin{exampleblock}{Beispiel}}{\end{exampleblock}}
+    \newenvironment{Beispiele}{\begin{exampleblock}{Beispiele}}{\end{exampleblock}}
+
+    \newenvironment{Theorem}{\begin{block}{Theorem}}{\end{block}}
+    \newenvironment{Proof}{\begin{block}{Proof.}}{\end{block}}
+    \newenvironment{Corollary}{\begin{block}{Corollary}}{\end{block}}
+    \newenvironment{Fact}{\begin{block}{Fact}}{\end{block}}
+    \newenvironment{Example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+    \newenvironment{Examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+
+    \newenvironment{definition}{\begin{block}{Definition}}{\end{block}}
+    \newenvironment{definitions}{\begin{block}{Definitions}}{\end{block}}
+    \newenvironment{theorem}{\begin{block}{Theorem}}{\end{block}}
+    \newenvironment{proof}{\begin{block}{Proof.}}{\end{block}}
+    \newenvironment{corollary}{\begin{block}{Corollary}}{\end{block}}
+    \newenvironment{fact}{\begin{block}{Fact}}{\end{block}}
+    \newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+    \newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+  \fi
+
+  \newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
+  \newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
+}
 
 
 
@@ -280,6 +323,17 @@
   {\par\color{structure!65}}
 
 
+\article
+{
+  \AtBeginDocument{
+    \renewoverlaycommand{\bibitem}%
+    {\beameroriginal{\bibitem}}%
+    {\beameroriginal{\bibitem}}%should actually suppress
+  }
+}
+
+  
+
 %
 % Floats and tables
 %
@@ -344,6 +398,8 @@
 \usecaptiontemplate{%
   {\small\structure{\insertcaptionname:} \insertcaption}}
 
+
+\common
 
 
 %%% Local Variables: 

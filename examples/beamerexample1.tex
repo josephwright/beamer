@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[class=article]{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
@@ -12,9 +12,15 @@
 % For a green structure color use:
 %\colorlet{structure}{green!50!black}
 
+\usepackage{beamerbasearticle}
+
 \beamertemplateshadingbackground{red!10}{blue!10}
 
-\usepackage{beamerthemeshadow}
+\presentation
+{
+  \usepackage{beamerthemeshadow}
+}
+
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
 \usepackage[latin1]{inputenc}
@@ -27,7 +33,10 @@
 %\usepackage{times}
 
 % Use some nice templates
+\presentation
+{
 \beamertemplatetransparentcovereddynamic
+}
 
 %
 % The following defintions are peculiar to this particular
@@ -134,11 +143,14 @@
 % The following info should normally be given in you main file:
 %
 
+\presentation
+{
 \hypersetup{%
   pdftitle={Computation with Absolutely No Space Overhead},%
   pdfauthor={Lane Hemaspaandra, Proshanto Mukherji, and Till Tantau},
   pdfsubject={Theoretical Computer Science},
   pdfkeywords={overhead-free, context-free, linear space}}
+}
 
 \title[Computation with Absolutely No~Space~Overhead]{Computation~with Absolutely~No~Space~Overhead}
 \author[Hemaspaandra, Mukherji, Tantau]{%
@@ -163,6 +175,8 @@
 \logo{\vbox{\hbox to 1cm{\hfil\pgfuseimage{tu-logo}}\vskip0.1cm\hbox{\pgfuseimage{ur-logo}}}}
 
 \begin{document}
+
+\articleoutsideframe
 
 \frame{\titlepage}
 

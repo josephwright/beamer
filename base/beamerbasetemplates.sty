@@ -1,6 +1,10 @@
 \ProvidesPackage{beamerbasetemplates}[2004/01/10 ver 1.20]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
+
+\presentation
+
+
 \RequirePackage{pgfshade}
 \RequirePackage{beamerbaseboxes}
 
@@ -407,7 +411,7 @@
   \usebackgroundtemplate{\color{#1}\vrule width \paperwidth height\paperwidth}
   \beamersetaveragebackground{#1}
   }
-  
+
 \newcommand{\beamertemplateshadingbackground}[2]{
   \pgfdeclareverticalshading{background}{\the\paperwidth}%
   {color(0cm)=(#1); color(\the\paperheight)=(#2)}
@@ -469,6 +473,13 @@
   \end{pgfpicture}%    
   }}
 
+\article
+{
+  \newcommand{\beamertemplatesolidbackgroundcolor}[1]{}
+  \newcommand{\beamertemplateshadingbackground}[2]{}
+  \newcommand{\beamertemplategridbackground}{}
+}
+
 
 %
 % Bibliography templates
@@ -503,6 +514,14 @@
 
 \newcommand{\beamertemplatearrowbibitems}{
   \usebibitemtemplate{\color{structure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
+}
+
+\article
+{
+  \newcommand{\beamertemplatebookbibitems}{}
+  \newcommand{\beamertemplatearticlebibitems}{}
+  \newcommand{\beamertemplatetextbibitems}{}
+  \newcommand{\beamertemplatearrowbibitems}{}  
 }
 
 
@@ -683,3 +702,6 @@
   \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=example]{\color{white}\insertblockname}}%
     {\end{beamerboxesrounded}}
 }
+
+
+\common

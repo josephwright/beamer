@@ -8,6 +8,17 @@
 % of the GNU Public License, version 2.
 
 
+%
+% 
+%
+%
+% Special stuff for presentation mode
+%
+%
+% 
+
+
+\presentation
 
 %
 % Slide Definitions
@@ -50,7 +61,7 @@
 % The \frametitle command
 %
 %
-\def\frametitle#1{%
+\long\def\frametitle#1{%
   \beamer@ifempty{#1}{}{%
   \vskip0pt plus -1fill%
   {\gdef\insertframetitle{#1}\beamer@headrenderer}
@@ -62,6 +73,13 @@
 
 \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
 
+
+\article
+{
+  \long\def\frametitle#1{\gdef\insertframetitle{#1}\beamer@headrenderer}
+  \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
+  \useframetitletemplate{\textbf{\insertframetitle}}
+}
 
 
 
@@ -98,9 +116,6 @@
 }
 
 
-\newcounter{framenumber}
-\def\insertframenumber{\@arabic\c@framenumber}
-
 %
 % Keys
 %
@@ -132,6 +147,7 @@
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
 \def\beamer@@@frame<#1>[#2]{%
   \beamer@savemode%
+  \def\beamer@mode{\common}%
   \def\beamer@frametheme{}%
   \def\beamer@resumename{}%
   \setkeys{beamerframe}{#2}%
@@ -226,6 +242,59 @@
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\beamer@resumemode}
 
 
+\article
+{
+  \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<+>}}
+  \def\beamer@frame{\begingroup\catcode`:=12\catcode`|=12\beamer@@@frame}% Hackery for french style
+  \def\beamer@@@frame<#1>{\endgroup\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
+  \def\beamer@@frame<#1>[#2]{%
+    \beamer@slideinframe=1\relax%
+    \refstepcounter{framenumber}%
+    \beamer@slideinframe=0\relax%
+    \beamer@anotherslidefalse%
+    {\setbox0=\hbox{\expandafter\beamer@decode#1| stop:| }}%
+    \ifbeamer@anotherslide%
+      \let\beamer@howtotreatframe\beamer@dosingleframe%
+    \else% no slides in frame
+      \let\beamer@howtotreatframe\beamer@donoframe%
+    \fi%
+    \beamer@slideinframe=1\relax%
+    \beamer@howtotreatframe}
+
+  \long\def\beamer@donoframe{%
+    \setbox\beamer@tempbox\vbox\bgroup%
+    \beamer@templateframestart%
+    \bgroup%
+    \aftergroup\beamer@endframe%
+    \let\beamer@next}
+  \def\beamer@dosingleframe{%
+    \bgroup%
+    \beamer@templateframestart%
+    \bgroup\aftergroup\beamer@endframe%
+    \let\beamer@next}
+  \def\beamer@endframe{%
+    \beamer@templateframeend\egroup}
+
+  \long\def\useframetemplate#1#2{\gdef\beamer@templateframestart{#1}\gdef\beamer@templateframeend{#2}}
+  \useframetemplate{\medskip
+    \begin{minipage}{12.6cm}
+      \hrule
+      \smallskip}{\smallskip
+      \par\hrule
+    \end{minipage}%
+    \medskip}
+}
+
+%
+% Frame counter
+%
+\common
+{
+  \newcounter{framenumber}
+  \def\insertframenumber{\@arabic\c@framenumber}
+}
+
+
 
 %
 % Plain frames
@@ -251,6 +320,15 @@
   \expandafter\let\expandafter\beamer@templet\csname beamer@resume@#3\endcsname%
   \expandafter\beamer@temp\beamer@templet}%
 }
+
+\article
+{
+  \def\resumeframe{\@ifnextchar<{\beamer@resumeframe}{\beamer@resumeframe<>}}
+  \def\beamer@resumeframe<#1>{\@ifnextchar[{\beamer@@resumeframe<#1>}{\beamer@@resumeframe<#1>[]}}
+  \def\beamer@@resumeframe<#1>[#2]#3{} % do nothing
+}
+
+
 
 %
 % Notes
@@ -313,6 +391,17 @@
 
 \long\def\noteitems#1{\note{\begin{itemize}#1\end{itemize}}}
 
+
+\article
+{
+  \long\def\note#1{}
+  \long\def\noteitems#1{}
+}
+
+
+
+\common
+% End in common mode
 
 
 %%% Local Variables: 

@@ -7,6 +7,10 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+
+
+\common
+
 %
 % News
 %
@@ -187,15 +191,6 @@
       \expandafter\def\csname end#1\endcsname{#3}#2}}%
 }
 
-
-\long\def\beamer@gobbleoptional{\@ifnextchar[{\beamer@@gobbleoptional}{\beamer@@gobbleoptional[]}}
-\long\def\beamer@@gobbleoptional[#1]#2{}
-
-\long\def\beamer@ignoreoptional{\@ifnextchar[{\beamer@@ignoreoptional}{}}
-\long\def\beamer@@ignoreoptional[#1]{}
-
-\long\def\beamer@insp#1{\ignorespaces#1\ignorespaces}
-\long\def\beamer@gobbleis#1{\ignorespaces}
 
 
 

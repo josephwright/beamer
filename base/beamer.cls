@@ -9,6 +9,15 @@
 
 
 %
+% Global Declarations used by beamer in all modes
+%
+\newbox\beamer@tempbox
+\newif\ifbeamer@blocks
+\beamer@blockstrue
+
+
+
+%
 % Versioning stuff
 %
 \newdimen\beamer@version
@@ -29,7 +38,6 @@
 % Setup modes and check for article option
 
 \beamer@transferifnecessary
-
 
 %
 %
@@ -61,7 +69,6 @@
 \newbox\beamer@areabox
 \newbox\beamer@animcurrent
 \newbox\beamer@animshowbox
-\newbox\beamer@tempbox
 \newbox\beamer@sectionbox
 \newbox\beamer@logobox
 \newbox\beamer@linebox
@@ -193,6 +200,8 @@
 
 \DeclareOption{mathsans}{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
 \DeclareOption{mathserif}{\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
+
+\DeclareOption{nodefaultblocks}{\beamer@blocksfalse}
 
 \DeclareOption{pdftex}{}% Used by hyperref
 \DeclareOption{nativepdf}{}% Used by hyperref

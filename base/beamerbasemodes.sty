@@ -27,11 +27,9 @@
     \begingroup%
     \let\do\beamer@makeinnocent\dospecials%
     \beamer@makeinnocent\^^L% and whatever other special cases
-    \endlinechar`\^^M \catcode`\^^M=12 \beamer@ignore}
+    \endlinechar`\^^M \catcode`\^^M=12 \beamer@processline}
 
 {\catcode`\^^M=12\endlinechar=-1%
- \long\gdef\beamer@ignore#1^^M{%
-    \expandafter\beamer@processline}
  \long\gdef\beamer@processline#1^^M{%
    \def\beamer@test{#1}%
     \ifx\beamer@test\beamer@stoparticle%
@@ -102,20 +100,9 @@
   \next}
 \def\beamer@enddoc{document}
 
-\def\article{\beamer@closer%
-  \gdef\beamer@mode{\article}
-  \ifbeamer@inpresentation%
-    \let\next=\beamer@startcomment%
-    \gdef\beamer@closer{\endgroup}%
-  \else%
-    \let\next=\relax%
-    \gdef\beamer@closer{}%
-  \fi%
-  \next}  
-
 \def\articleoutsideframe{%
   \beamer@closer%
-  \gdef\beamer@mode{\articleoutsideframe}
+  \gdef\beamer@mode{\articleoutsideframe}%
   \ifbeamer@inpresentation%
     \let\next=\beamer@outsidemode%
     \gdef\beamer@closer{}%
@@ -125,8 +112,32 @@
   \fi%
   \next}
 
-\def\presentation{\beamer@closer%
-  \gdef\beamer@mode{\presentation}
+\def\article{\beamer@closer\@ifnextchar\bgroup\beamer@articleinline\beamer@article}
+\long\def\beamer@articleinline#1{%
+  \gdef\beamer@closer{}%
+  \ifbeamer@inpresentation\let\beamer@next=\@gobble\else\let\beamer@next=\beamer@relax\fi%
+  \beamer@next{#1}%
+  \beamer@mode\par}
+\def\beamer@article{%
+  \gdef\beamer@mode{\article}%
+  \ifbeamer@inpresentation%
+    \let\next=\beamer@startcomment%
+    \gdef\beamer@closer{\endgroup}%
+  \else%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+  \fi%
+  \next}
+\long\def\beamer@relax#1{#1}
+
+
+\def\presentation{\beamer@closer\@ifnextchar\bgroup\beamer@presentationinline\beamer@presentation}
+\long\def\beamer@presentationinline#1{%
+  \gdef\beamer@closer{}%
+  \ifbeamer@inpresentation\let\beamer@next=\beamer@relax\else\let\beamer@next=\@gobble\fi%
+  \beamer@mode\par}
+\def\beamer@presentation{%
+  \gdef\beamer@mode{\presentation}%
   \ifbeamer@inpresentation%
     \let\next=\relax%
     \gdef\beamer@closer{}%
@@ -136,9 +147,12 @@
   \fi%
   \next}
 
-\def\common{\beamer@closer%
-  \beamer@closer\gdef\beamer@closer{}%
-  \gdef\beamer@mode{\common}}
+\def\common{\beamer@closer\gdef\beamer@closer{}%
+  \@ifnextchar\bgroup\beamer@commoninline\beamer@common}
+\long\def\beamer@commoninline#1{%
+  #1%
+  \beamer@mode\par}
+\def\beamer@common{\gdef\beamer@mode{\common}}
 
 
 \common
@@ -204,7 +218,9 @@
 
   \beamer@inpresentationfalse
 
-  \RequirePackage{beamerbasearticle}
+  \gdef\beamer@currentmode{article}
+
+  \common
   
   \edef\beamer@classwhat{[\beamer@classoptions]{\beamer@classname}}
   \expandafter\LoadClass\beamer@classwhat

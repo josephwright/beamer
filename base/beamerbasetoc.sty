@@ -6,6 +6,9 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+
+\presentation
+
 %
 % Local counters/ifs/dimensions
 %
@@ -163,6 +166,19 @@
 \long\def\@usetemplatetocsubsection#1#2{
   \gdef\beamer@subsectiontemplate{\def\beamer@breakhere{\\}#1}
   \gdef\beamer@subsectiontemplateshaded{\def\beamer@breakhere{\\}#2}}
+
+
+\article
+{
+  \AtBeginDocument{
+    \let\beamer@origtableofcontents=\tableofcontents
+    \renewcommand{\tableofcontents}[1][]{\beamer@origtableofcontents}
+    }
+}
+
+
+
+\common
 
 %%% Local Variables: 
 %%% mode: latex

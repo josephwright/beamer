@@ -8,6 +8,9 @@
 % of the GNU Public License, version 2.
 
 
+\presentation
+
+
 %
 % Part Definitions
 %
@@ -18,6 +21,7 @@
 \def\part{\@ifnextchar[\@part\@@part}
 \long\def\@@part#1{\@part[#1]{#1}}
 \long\def\@part[#1]#2{%
+  \beamer@savemode%
   \refstepcounter{part}%
   \def\beamer@partname{#2}%
   \def\beamer@partnameshort{#1}%
@@ -37,7 +41,8 @@
   \def\lastsubsection{}%
   \def\insertpart{\expandafter\hyperlink\partlink}%
   \def\insertshortpart{\expandafter\hyperlink\partlinkshort}%
-  \beamer@atbeginpart}%
+  \beamer@atbeginpart%
+  \beamer@resumemode}%
 \def\insertpart{}
 \def\insertshortpart{}
 
@@ -45,9 +50,12 @@
 \def\insertpartnumber{\@arabic\c@part}
 
 
-\long\def\AtBeginPart#1{%
-  \def\beamer@atbeginpart{#1}}
-\AtBeginPart{}
+\common
+{
+  \long\def\AtBeginPart#1{%
+    \def\beamer@atbeginpart{#1}}
+  \AtBeginPart{}
+}
 
 
 %
@@ -64,6 +72,7 @@
 \long\def\@@ssection*#1{\@section[#1]{}}
 \long\def\@@@section#1{\@section[#1]{#1}}
 \long\def\@section[#1]#2{%
+  \beamer@savemode%
   \refstepcounter{section}%
   \beamer@ifempty{#2}%
   {\long\def\secname{#1}}%
@@ -82,7 +91,8 @@
   \def\lastsubsection{}%
   \Hy@writebookmark{\thesection}{\secname}{Outline\thesection}{1}{toc}%
   \hyper@anchorstart{Outline\thesection}\hyper@anchorend%
-  \beamer@ifempty{#2}{\beamer@atbeginsections}{\beamer@atbeginsection}}%
+  \beamer@ifempty{#2}{\beamer@atbeginsections}{\beamer@atbeginsection}%
+  \beamer@resumemode}%
 \def\insertsection{}
 \def\lastsubsection{}
 
@@ -90,12 +100,15 @@
 \def\beamer@breakhere{}
 
 
-\def\AtBeginSection{\@ifnextchar[{\beamer@AtBeginSection}{\beamer@@AtBeginSection}}
-\long\def\beamer@@AtBeginSection#1{\beamer@AtBeginSection[#1]{#1}}
-\long\def\beamer@AtBeginSection[#1]#2{%
-  \def\beamer@atbeginsection{#2}%
-  \def\beamer@atbeginsections{#1}}
-\AtBeginSection{}
+\common
+{
+  \def\AtBeginSection{\@ifnextchar[{\beamer@AtBeginSection}{\beamer@@AtBeginSection}}
+  \long\def\beamer@@AtBeginSection#1{\beamer@AtBeginSection[#1]{#1}}
+  \long\def\beamer@AtBeginSection[#1]#2{%
+    \def\beamer@atbeginsection{#2}%
+    \def\beamer@atbeginsections{#1}}
+  \AtBeginSection{}
+}
 
 
 %
@@ -111,6 +124,7 @@
 \long\def\@@ssubsection*#1{\@subsection[#1]{}}
 \def\@@@subsection#1{\@subsection[#1]{#1}}
 \def\@subsection[#1]#2{%
+  \beamer@savemode%
   \refstepcounter{subsection}%
   \beamer@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}
   {%
@@ -125,7 +139,8 @@
   \def\insertsubsection{\expandafter\hyperlink\subsectionlink}
   \Hy@writebookmark{\thesubsection}{#1}{Outline\thesection.\thesubsection.\thepage}{2}{toc}%
   \hyper@anchorstart{Outline\thesection.\thesubsection.\thepage}\hyper@anchorend%
-  \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}}
+  \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}%
+  \beamer@resumemode}
 
 \def\untitledsubsection{%
   \refstepcounter{subsection}%
@@ -133,13 +148,16 @@
   \def\lastsubsection{}}
 \def\insertsubsection{}
 
-\def\AtBeginSubsection{\@ifnextchar[{\beamer@AtBeginSubsection}{\beamer@@AtBeginSubsection}}
-\long\def\beamer@@AtBeginSubsection#1{\beamer@AtBeginSubsection[#1]{#1}}
-\long\def\beamer@AtBeginSubsection[#1]#2{%
-  \def\beamer@atbeginsubsection{#2}%
-  \def\beamer@atbeginsubsections{#1}}
-\AtBeginSubsection{}
 
+\common
+{
+  \def\AtBeginSubsection{\@ifnextchar[{\beamer@AtBeginSubsection}{\beamer@@AtBeginSubsection}}
+  \long\def\beamer@@AtBeginSubsection#1{\beamer@AtBeginSubsection[#1]{#1}}
+  \long\def\beamer@AtBeginSubsection[#1]#2{%
+    \def\beamer@atbeginsubsection{#2}%
+    \def\beamer@atbeginsubsections{#1}}
+  \AtBeginSubsection{}
+}
 
 
 %
@@ -149,6 +167,8 @@
   \part{\appendixname}
   \addtocontents{nav}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}}
 
+
+\common
 
 %%% Local Variables: 
 %%% mode: latex
