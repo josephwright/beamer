@@ -100,10 +100,21 @@
 %
 % Stuff needed in both article and presentation version
 %
+\def\jobnamebeamerversion{}%
+
 \def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
-\def\@includeslide[#1]#2#3{%
-  \edef\beamer@temp{#1 page \csname beamer@slide#2\endcsname}
-  \expandafter\pdfximage\beamer@temp{#3.pdf}\pdfrefximage\pdflastximage}
+\def\@includeslide[#1]#2{%
+  \ifx\jobnamebeamerversion\@empty%
+  \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
+  \else%
+  \pgfimage[#1,page=\csname beamer@slide#2\endcsname]{\jobnamebeamerversion}
+  \fi}
+
+\def\setjobnamebeamerversion#1{%
+  \def\jobnamebeamerversion{#1}%
+  {\makeatletter
+  \@input{\jobnamebeamerversion.snm}}
+}
 
 
 
@@ -136,9 +147,8 @@
 
 \def\beamer@transfer{%
   % Prepare...
-  \def\beamer@slide##1##2{\expandafter\def\csname
+  \def\beamer@slide##1##2{\expandafter\gdef\csname
     beamer@slide##1\endcsname{##2}}
-  \@input{\jobname.snm}
 
   \beamer@inpresentationfalse
   \edef\beamer@classwhat{[\beamer@classoptions]{\beamer@classname}}
@@ -264,6 +274,8 @@
 
 \newif\ifbeamer@centered
 
+\newif\ifbeamer@draftmode
+\beamer@draftmodefalse
 
 %
 %
@@ -334,6 +346,47 @@
 \DeclareOption{bigger}{\def\beamer@size{{size12.clo}}}
 \DeclareOption{smaller}{\def\beamer@size{{size10.clo}}}
 
+\DeclareOption{draft}{\beamer@draftmodetrue}
+\AtBeginDocument{
+  \ifbeamer@draftmode
+  \gdef\@foottemplate{%
+    \color{black!25}%
+    \kern-\Gm@lmargin\vrule width\paperwidth
+    height\footheight\kern-\Gm@rmargin}
+  \gdef\@headtemplate{%
+    \color{black!25}%
+    \kern-\Gm@lmargin\vrule width\paperwidth
+    height\headheight\kern-\Gm@rmargin}
+  \gdef\beamer@leftsidebartemplate{%
+    \color{black!20}%
+    \vrule width \beamer@leftsidebar height\sidebarheight}
+  \gdef\beamer@rightsidebartemplate{%
+    \color{black!20}%
+    \vrule width \beamer@rightsidebar height\sidebarheight}
+  \gdef\beamer@leftsidebarbackground{}
+  \gdef\beamer@rightsidebarbackground{}
+  \fi
+  }
+\def\insertpagenumber{\thepage}
+
+\def\beamer@activecjk{}
+
+\DeclareOption{CJK}{\ExecuteOptions{cjk}}
+\DeclareOption{cjk}{
+  \hypersetup{CJKbookmarks=true}
+
+  \def\beamer@activecjk{
+    % Activate all >128 characters. 
+    \count@=127
+    \@whilenum\count@<255 \do{%
+      \advance\count@ by 1
+      \lccode`\~=\count@
+      \catcode\count@=\active
+      \lowercase{\def~{\kern1ex}}
+    }
+  }  
+}
+  
 %
 %
 % Process Options
@@ -344,6 +397,7 @@
 \ProcessOptions
 
 \expandafter\input\beamer@size
+
 
 %
 %
@@ -522,14 +576,12 @@
 % Empty test
 %
 %
-\long\def\@ifempty#1#2#3{\def\@shouldbeempty{#1}\ifx\@shouldbeempty\@empty#2\else#3\fi}
+\long\def\@ifempty#1{\beamer@xifempty#1@@..\@nil}
+\long\def\beamer@xifempty#1#2@#3#4#5\@nil{%
+  \ifx#3#4\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
 
 
 
-%
-% Page where the appendix start. (Updated later)
-%
-\def\beamer@appendixstart{1}
 
 % Calculate maximum number of sections/subsections per part
 \newcount\beamer@sectioncount
@@ -540,8 +592,9 @@
 \beamer@sectioncount=0\relax
 
 \newcount\totalheads
-\def\headcommand#1{\advance\totalheads by1\relax\expandafter\def\csname
+\def\headcommand#1{\global\advance\totalheads by1\relax\expandafter\gdef\csname
   head\the\totalheads\endcsname{#1}}
+\beamer@activecjk
 \@input{\jobname.head}
 \newcount\headcounter
 \def\dohead{\headcounter=0\loop\ifnum\headcounter<\totalheads%
@@ -563,8 +616,6 @@
 \def\sectionentry#1#2#3#4#5{\advance\beamer@sectioncount by1\relax%
   \ifnum\section@max<\beamer@sectioncount\section@max=\beamer@sectioncount\fi}
 \def\slideentry#1#2#3#4#5#6{\ifnum\subsection@max<#2\relax\subsection@max=#2\fi}
-\def\appendixslideentry#1#2#3#4#5#6{\ifnum\subsection@max<#2\relax\subsection@max=#2\fi}
-\def\appendixsectionentry#1#2#3#4#5{\gdef\beamer@appendixstart{#3}}
 \def\beamer@framepages#1#2{}
 \def\beamer@subsectionpages#1#2{}
 \def\beamer@sectionpages#1#2{}
@@ -572,7 +623,6 @@
 \def\beamer@appendixpages#1{\gdef\beamer@startpageofappendix{#1}}
 \def\beamer@documentpages#1{\gdef\beamer@endpageofdocument{#1}}
 \dohead
-
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
 \renewcommand\baselinestretch{}
@@ -667,11 +717,10 @@
   \def\inserttitle{#2}%
   \def\insertshorttitle{\def\\{}%
     \ifnum\thepage=1%
-    \edef\beamer@def{{Navigation\beamer@appendixstart}}%
-    \expandafter\hyperlink\beamer@def{#1}%
+    \hyperlinkpresentationend{#1}%
     \else%
-    \hyperlink{Navigation1}{#1}%
-    \fi}%
+    \hyperlinkpresentationstart{#1}%
+    \fi}
   }
 \title{}
 
@@ -768,11 +817,12 @@
   \beamer@sectionstartpage=\c@page%
   \beamer@subsectionstartpage=\c@page%
   \def\insertpart{\expandafter\hyperlink\partlink}%
-  \def\insertpartshort{\expandafter\hyperlink\partlinkshort}}%
+  \def\insertshortpart{\expandafter\hyperlink\partlinkshort}}%
 \def\insertpart{}
-\def\insertpartshort{}
+\def\insertshortpart{}
 
-
+\def\insertromanpartnumber{\@Roman\c@part}
+\def\insertpartnumber{\@arabic\c@part}
 
 %
 % Section Definitions
@@ -828,11 +878,7 @@
   {%
     \long\def\subsecname{#2}%
     \long\def\lastsubsection{#1}%
-    \ifbeamer@inappendix%
-    \addtocontents{toc}{\protect\appendixsubsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}{\thepart}}%
-    \else%
     \addtocontents{toc}{\protect\subsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}{\thepart}}%
-    \fi%
   }%
   \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
   \addtocontents{head}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
@@ -864,8 +910,6 @@
   {%
     \def\sectionentry##1##2##3##4##5{}%
     \def\slideentry##1##2##3##4##5##6{}%
-    \def\appendixslideentry##1##2##3##4##5##6{}%
-    \def\appendixsectionentry##1##2##3##4##5{}%
     \dohead%
   }%
 }
@@ -902,25 +946,9 @@
 %
 % Appendix stuff
 %
-\newif\ifbeamer@inappendix
 \def\appendix{%
-  \beamer@inappendixtrue%
-  \refstepcounter{section}%
-  \long\edef\secname{\appendixname}%
-  \addtocontents{toc}{\protect\appendixtoc{\thesubsection}{\appendixname}{\thepage}{\thepart}}
-  \addtocontents{head}{\protect\headcommand{\protect\appendixsectionentry{\thesection}{\secname}{\thepage}{\secname}{\thepart}}}%
-  \addtocontents{head}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}%
-  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
-  \addtocontents{head}{\protect\headcommand{\protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
-  \addtocontents{head}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
-  \beamer@sectionstartpage=\c@page%
-  \beamer@subsectionstartpage=\c@page%
-  \xdef\sectionlink{{Navigation\thepage}{\noexpand\secname}}%
-  \def\insertsection{\expandafter\hyperlink\sectionlink}%
-  \def\insertsubsection{}%
-  \def\lastsubsection{}%
-  \Hy@writebookmark{\thesection}{\secname}{Outline\thesection}{1}{toc}%
-  \hyper@anchorstart{Outline\thesection}\hyper@anchorend}%
+  \part{\appendixname}
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}}
 
 
 
@@ -1176,7 +1204,7 @@
 \long\def\donoframe{%
   \serialnumber=1\relax%
   \@serialnumber=1\relax%
-  \setbox\tempbox\vbox\bgroup\leavevmode\afterassignment\@checknoslide\let\@next}
+  \setbox\tempbox\vbox\bgroup\leavevmode\def\pause{}\afterassignment\@checknoslide\let\@next}
 \def\@checknoslide{%
   \ifcat\bgroup\noexpand\@next%
   \let\@do\beamer@reseteecodes%
@@ -1213,23 +1241,13 @@
 \def\beamer@writeslidentry{%
   \expandafter\@ifempty\expandafter{\beamer@framestartpage}{}% nothing to do ...
   {%else
-    \ifbeamer@inappendix%
-      \addtocontents{head}%
-        {\protect\headcommand{% 
-            \protect\appendixslideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
-            {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\thepart}}}%
-      \addtocontents{head}%
-        {\protect\headcommand{% 
-          \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
-    \else%
-      \addtocontents{head}%
-        {\protect\headcommand{%
-            \protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
-            {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\thepart}}}%
-      \addtocontents{head}%
-        {\protect\headcommand{% 
-          \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
-    \fi%
+    \addtocontents{head}%
+      {\protect\headcommand{%
+          \protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
+          {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\thepart}}}%
+    \addtocontents{head}%
+      {\protect\headcommand{% 
+        \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
     \clearpage%
   }
 }
@@ -1365,12 +1383,17 @@
 
 \newoverlaycommand{\nameslide}{\@nameslide}{\gobble}
 
-\def\@nameslide#1{%
-  \addtocontents{snm}{\protect\beamer@slide{#1}{\thepage}}}
-\def\beamer@slide#1#2{\expandafter\def\csname hyperlink#1\endcsname{%
-  \hyperlink{Navigation#2}}}
 
-\@input{\jobname.snm}
+
+%
+% Names slides
+%
+
+\def\@nameslide#1{%
+  \addtocontents{snm}{\protect\beamer@slide{#1}{\thepage}}%
+  \hypertarget{#1}{}}
+\def\beamer@slide#1#2{\expandafter\def\csname beamer@hyperlink#1\endcsname{%
+  \hyperlink{Navigation#2}}}
 
 
 %
@@ -1627,6 +1650,7 @@
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
 \def\recalculatefoot{%
+  \beamer@activecjk%
   \setbox\tempbox=\hbox{\@foottemplate}%
   \footheight=\ht\tempbox%
   \advance\footheight by \dp\tempbox%
@@ -1638,6 +1662,7 @@
   \advance\sidebarheight by\headdp%
   \advance\sidebarheight by-\footheight}
 \def\recalculatehead{%
+  \beamer@activecjk%
   \setbox\tempbox=\hbox{\@headtemplate}%
   \headheight=\ht\tempbox%
   \headdp=\dp\tempbox%
@@ -1670,13 +1695,6 @@
 
 \def\insertnavigation#1{%
   \vbox{%
-    \ifbeamer@inappendix%
-    \def\sectionentry##1##2##3##4##5{}%
-    \def\slideentry{\fakeslideentry}%
-    \else%
-    \def\appendixsectionentry##1##2##3##4##5{}%
-    \def\appendixslideentry{\fakeslideentry}%
-    \fi%
     \beamer@xpos=0\relax%
     \beamer@ypos=1\relax%
     \hbox to #1{\hskip.3cm\tiny\setbox\sectionbox=\hbox{\kern1sp}%
@@ -1699,8 +1717,6 @@
   \ht\sectionbox=5pt%
   \dp\sectionbox=2pt%
   \fi\ignorespaces}
-
-\let\appendixsectionentry=\sectionentry
 
 \def\usesectionheadtemplate#1#2{\gdef\@sectionheadhilight{#1}\gdef\@sectionheadnohilight{#2}}
 \def\usesectionsidetemplate#1#2{\gdef\@sectionsidehilight{#1}\gdef\@sectionsidenohilight{#2}}
@@ -1738,15 +1754,6 @@
             \@subsectionsidenohilight%
           \fi}}%
       \fi\fi}%
-    \let\appendixsectionentry=\sectionentry%
-    \let\appendixslideentry=\slideentry%
-    \ifbeamer@inappendix%
-    \def\sectionentry##1##2##3##4##5{}%
-    \def\slideentry##1##2##3##4##5##6{}%
-    \else%
-    \def\appendixsectionentry##1##2##3##4##5{}%
-    \def\appendixslideentry##1##2##3##4##5##6{}%
-    \fi%
     \currentsubsection=1\relax%
     \dohead%
   }}
@@ -1778,8 +1785,6 @@
   \else%
   \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
   \fi\ignorespaces}
-
-\let\appendixslideentry=\slideentry
 
 \def\fakeslideentry#1#2#3#4#5#6{%
   \ifnum#2>0\ifnum#3>0%
@@ -1814,16 +1819,6 @@
     \vbox{%
      \vskip1.5pt%
      \def\slideentry##1##2##3##4##5##6{}%
-     \def\appendixslideentry##1##2##3##4##5##6{}%
-     \def\appendixsectionentry##1##2##3##4##5{%
-       \ifnum##5=\c@part%
-       \def\insertsectionhead{##2}%
-       \setbox\tempbox=\hbox{%
-         \hyperlink{Navigation##3}{\hbox to #1{%
-           \hskip0.3cm\ifnum\thesection=##1%
-           \@sectionheadhilight\else\@sectionheadnohilight\fi\hskip0.3cm}}}%
-       \ht\tempbox=4.5pt\dp\tempbox=2pt%        
-       \box\tempbox\fi}%
      \def\sectionentry##1##2##3##4##5{%
        \ifnum##5=\c@part%
        \def\insertsectionhead{##2}%
@@ -1833,22 +1828,11 @@
            \@sectionheadhilight\else\@sectionheadnohilight\fi\hskip0.3cm}}}%
        \ht\tempbox=4.5pt\dp\tempbox=2pt%        
        \box\tempbox\fi}%
-     \ifbeamer@inappendix%
-     \def\sectionentry##1##2##3##4##5{}%
-     \else%
-     \def\appendixsectionentry##1##2##3##4##5{}%
-     \fi%
      \dohead\vskip1.5pt}\hfil}}
 
 \def\insertsectionnavigationhorizontal#1#2#3{%
   \hbox to #1{%
      \def\slideentry##1##2##3##4##5##6{}%
-     \def\appendixslideentry##1##2##3##4##5##6{}%
-     \ifbeamer@inappendix%
-     \def\sectionentry##1##2##3##4##5{}%
-     \else%
-     \def\appendixsectionentry##1##2##3##4##5{}%
-     \fi%
      #2\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
      \ht\sectionbox=5pt%
      \dp\sectionbox=2pt%
@@ -1863,7 +1847,6 @@
       \vskip1.5pt%
       \currentsubsection=1%
       \def\sectionentry##1##2##3##4##5{}%
-      \def\appendixsectionentry##1##2##3##4##5{}%
       \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
         \ifnum##2=\currentsubsection%
         \advance\currentsubsection by1%
@@ -1873,27 +1856,12 @@
           \@subsectionheadhilight\else\@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
         \ht\tempbox=4.5pt\dp\tempbox=2pt%
         \box\tempbox\fi\fi\fi}%
-      \def\appendixslideentry##1##2##3##4##5##6{\ifnum##6=\c@part%
-        \ifnum##2=\currentsubsection%
-        \advance\currentsubsection by1%
-        \def\insertsubsectionhead{##5}%
-        \setbox\tempbox=\hbox{\beamer@link(##4){%
-          \hbox to #1{\hskip0.3cm\ifnum\thesubsection=##2%
-          \@subsectionheadhilight\else\@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
-        \ht\tempbox=4.5pt\dp\tempbox=2pt%
-        \box\tempbox\fi\fi}%
-      \ifbeamer@inappendix%
-      \def\slideentry##1##2##3##4##5##6{}%
-      \else%
-      \def\appendixslideentry##1##2##3##4##5##6{}%
-      \fi%
       \dohead\vskip1.5pt}\hfil}}
 
 \def\insertsubsectionnavigationhorizontal#1#2#3{%
   \hbox to #1{%
     \currentsubsection=1%
     \def\sectionentry##1##2##3##4##5{}%
-    \def\appendixsectionentry##1##2##3##4##5{}%
     \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
       \ifnum##2=\currentsubsection%
       \advance\currentsubsection by1%
@@ -1906,23 +1874,6 @@
       \ht\sectionbox=5pt%
       \dp\sectionbox=2pt%
       \fi\fi\fi\ignorespaces}%
-    \def\appendixslideentry##1##2##3##4##5##6{\ifnum##6=\c@part%
-      \ifnum##2=\currentsubsection%
-      \advance\currentsubsection by1%
-      \box\sectionbox\hskip5pt plus1fill%
-      \setbox\sectionbox=
-      \hbox{\def\insertsubsectionhead{##5}%
-        \ifnum\thesubsection=##2%
-        \beamer@link(##4){\@subsectionheadhilight}\else%
-        \beamer@link(##4){\@subsectionheadnohilight}\fi}%
-      \ht\sectionbox=5pt%
-      \dp\sectionbox=2pt%
-      \fi\fi\ignorespaces}%
-    \ifbeamer@inappendix%
-      \def\slideentry##1##2##3##4##5##6{}%
-    \else%
-      \def\appendixslideentry##1##2##3##4##5##6{}%
-    \fi%
     #2\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
     \hskip-5pt plus-1fill\dohead%
     \box\sectionbox\hfil\hskip.3cm%
@@ -2087,13 +2038,6 @@
   \@subsectionsshadedfalse%
   \setkeys{beamertoc}{#1}%
   \vspace*{-.5em}{\makeatletter%
-    \ifbeamer@inappendix
-    \def\sectionintoc##1##2##3##4{}%
-    \def\subsectionintoc##1##2##3##4##5{}%
-    \else%
-    \def\appendixtoc##1##2##3##4{}%
-    \def\appendixsubsectionintoc##1##2##3##4##5{}%
-    \fi%
     \begin{pauses}[0]%
       \@input{\jobname.toc}%
     \end{pauses}\vfill}%
@@ -2121,15 +2065,6 @@
       \hbox{\vbox{\sectiontemplate}}%
     \fi
     \par\fi}
-
-\def\appendixtoc#1#2#3#4{%
-  \ifnum#4=\beamer@showpartnumber%
-  \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
-  \vfill
-  \hbox{\vbox{\sectiontemplate}}%
-  \par%
-  \fi%
-}
 
 \def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
 \long\def\@@usetemplatetocsection[#1]#2{
@@ -2162,14 +2097,6 @@
       \fi
     \fi%
   \fi%  
-}
-
-\long\def\appendixsubsectionintoc#1#2#3#4#5{%
-  \ifnum#5=\beamer@showpartnumber%
-  \if@pausesubsections\pause\fi%
-  \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
-  {\@subsectiontemplate}
-  \fi%
 }
 
 \def\usetemplatetocsubsection{\@ifnextchar[\@@usetemplatetocsubsection\@usetemplatetocsubsection}
@@ -2416,8 +2343,8 @@
   \gdef\thirdblocktemplate{#3}%
   \gdef\otherblocktemplate{#4}}
 
-\pgfdeclareimage{beamericonarticle}{11pt}{14pt}{beamericonarticle}
-\pgfdeclareimage{beamericonarticleshaded}{11pt}{14pt}{beamericonarticle.20}
+\pgfdeclareimage[width=11pt,height=14pt]{beamericonarticle}{beamericonarticle}
+\pgfdeclareimage[width=11pt,height=14pt]{beamericonarticleshaded}{beamericonarticle.20}
 \pgfaliasimage{beamericonarticle!20!averagebackgroundcolor}{beamericonarticleshaded}
 \pgfaliasimage{beamericonarticle!15!averagebackgroundcolor}{beamericonarticleshaded}
 \pgfaliasimage{beamericonarticle!10!averagebackgroundcolor}{beamericonarticleshaded}
@@ -3074,7 +3001,7 @@
                                 % Part page  
 \usepartpagetemplate{
   \begin{centering}
-    \Large\structure{\partname~\@Roman\c@part}
+    \Large\structure{\partname~\insertromanpartnumber}
     \vskip1em\par
     \insertpart\par
   \end{centering}
@@ -3201,3 +3128,8 @@
   \hbox{\insertsectionnavigationsymbol}
   \hbox{\insertdocnavigationsymbol}
   \hbox{\insertbackfindforwardnavigationsymbol}}}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: doc/beamerexample.tex
+%%% End: 

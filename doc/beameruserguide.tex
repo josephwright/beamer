@@ -11,32 +11,32 @@
 \usepackage{amsmath,amssymb}
 \usepackage[pdfborder={0 0 0}]{hyperref}
 
-\pgfdeclareimage{themebars}{6.66666cm}{5cm}{themebars}
-\pgfdeclareimage{themebars2}{6.66666cm}{5cm}{themebars2}
-\pgfdeclareimage{themeboxes}{6.66666cm}{5cm}{themeboxes}
-\pgfdeclareimage{themeboxes2}{6.66666cm}{5cm}{themeboxes2}
-\pgfdeclareimage{themeclassic}{6.66666cm}{5cm}{themeclassic}
-\pgfdeclareimage{themeclassic2}{6.66666cm}{5cm}{themeclassic2}
-\pgfdeclareimage{themelined}{6.66666cm}{5cm}{themelined}
-\pgfdeclareimage{themelined2}{6.66666cm}{5cm}{themelined2}
-\pgfdeclareimage{themeplain}{6.66666cm}{5cm}{themeplain}
-\pgfdeclareimage{themeplain2}{6.66666cm}{5cm}{themeplain2}
-\pgfdeclareimage{themesidebar}{6.66666cm}{5cm}{themesidebar}
-\pgfdeclareimage{themesidebar2}{6.66666cm}{5cm}{themesidebar2}
-\pgfdeclareimage{themesidebardark}{6.66666cm}{5cm}{themesidebardark}
-\pgfdeclareimage{themesidebardark2}{6.66666cm}{5cm}{themesidebardark2}
-\pgfdeclareimage{themesidebartab}{6.66666cm}{5cm}{themesidebartab}
-\pgfdeclareimage{themesidebartab2}{6.66666cm}{5cm}{themesidebartab2}
-\pgfdeclareimage{themesidebardarktab}{6.66666cm}{5cm}{themesidebardarktab}
-\pgfdeclareimage{themesidebardarktab2}{6.66666cm}{5cm}{themesidebardarktab2}
-\pgfdeclareimage{themesplit}{6.66666cm}{5cm}{themesplit}
-\pgfdeclareimage{themesplit2}{6.66666cm}{5cm}{themesplit2}
-\pgfdeclareimage{themesplitcondensed}{6.66666cm}{5cm}{themesplitcondensed}
-\pgfdeclareimage{themesplitcondensed2}{6.66666cm}{5cm}{themesplitcondensed2}
-\pgfdeclareimage{themetree}{6.66666cm}{5cm}{themetree}
-\pgfdeclareimage{themetree2}{6.66666cm}{5cm}{themetree2}
-\pgfdeclareimage{themetreebars}{6.66666cm}{5cm}{themetreebars}
-\pgfdeclareimage{themetreebars2}{6.66666cm}{5cm}{themetreebars2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themebars}{themebars}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themebars2}{themebars2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themeboxes}{themeboxes}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themeboxes2}{themeboxes2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themeclassic}{themeclassic}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themeclassic2}{themeclassic2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themelined}{themelined}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themelined2}{themelined2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themeplain}{themeplain}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themeplain2}{themeplain2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebar}{themesidebar}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebar2}{themesidebar2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebardark}{themesidebardark}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebardark2}{themesidebardark2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebartab}{themesidebartab}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebartab2}{themesidebartab2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebardarktab}{themesidebardarktab}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesidebardarktab2}{themesidebardarktab2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesplit}{themesplit}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesplit2}{themesplit2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesplitcondensed}{themesplitcondensed}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themesplitcondensed2}{themesplitcondensed2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themetree}{themetree}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themetree2}{themetree2}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themetreebars}{themetreebars}
+\pgfdeclareimage[width=6.66666cm,height=5cm]{themetreebars2}{themetreebars2}
 
 \def\beamer{\textsc{beamer}}
 \def\pdf{\textsc{pdf}}
@@ -231,7 +231,7 @@ the following: Obtain the latest source version (ending
 |.tar.gz|) of the \beamer\ package from 
 \href{http://sourceforge.net/projects/latex-beamer/}{|http://sourceforge.net/projects/latex-beamer/|}
 (most likely, you have already done this). Next, you also need at
-least version 0.34 of the \textsc{pgf} package, which can be found at
+least version 0.40 of the \textsc{pgf} package, which can be found at
 the same place. Finally, you need at least version 1.03 of the
 \textsc{xcolor} package, which can also be found at that place
 (although the version on CTAN might be newer).
@@ -315,10 +315,10 @@ However, note that the \beamer\ package does not come with a
 
 \subsection{Testing the Installation}
 
-To test your installation, copy the file |beamerexample.tex|
+To test your installation, copy the file |beamerexample1.tex|
 from the documentation subdirectory to some place where you usually
 create presentations. Then run the command |pdflatex| twice on
-the file and check whether the resulting |beamerexample.pdf|
+the file and check whether the resulting |beamerexample1.pdf|
 looks correct. If so, you are all set.
 
 If you have updated from a previous version and you have trouble
@@ -333,11 +333,8 @@ When using certain packages together with the |beamer| class, there
 may be incompatibilities.
 
 \begin{package}{{CJK}}
-  When using the |CJK| package, you should write
-\begin{verbatim}
-\hypersetup{CJKbookmarks}
-\end{verbatim}
-  somewhere in your preamble.
+  When using the |CJK| package, you should use the class option
+  \declare{|CJK|}.
 \end{package}
 
 
@@ -411,23 +408,26 @@ appropriate.
 
 With the time constraints in mind, make a mental inventory of the
 things you can reasonably talk about within the time available. Then
-categorize the inventory into sections and subsections. Put
-|\section{}| and |\subsection{}| commands into the (more or
-less empty) main file. Do not create any frames until you
+categorize the inventory into sections and subsections. For very long
+talks (like a 90 minute lecture), you might also divide your talk into
+independent parts (like a ``review of the previous lecture part'' and
+a ``main part''). Put |\section{}| and |\subsection{}| commands into
+the (more or less empty) main file. Do not create any frames until you
 have a first working version of a possible table of contents. Do not
 feel afraid to change it later on as you work on the talk.
 
-You should not use more than four sections and not less than two. Even
-four sections are usually too much, unless they follow a very easy
-pattern. Five and more sections are simply too hard to remember for the
-audience. After all, when you present the table of contents, the
-audience will not yet really be able to grasp the importance and
-relevance of the different sections and will most likely have
-forgotten them by the time you reach them.
+You should not use more than four sections and not less than two per
+part. Even four sections are usually too much, unless they follow 
+a very easy pattern. Five and more sections are simply too hard to
+remember for the audience. After all, when you present the table of
+contents, the audience will not yet really be able to grasp the
+importance and relevance of the different sections and will most
+likely have forgotten them by the time you reach them.
 
 Ideally, a table of contents should be understandable by itself. In
 particular, it should be comprehensible \emph{before} someone has
-heard your talk. Keep section and subsection titles self-explaining.
+heard your talk. Keep section and subsection titles
+self-explaining. Note each part has its own table of contents. 
 
 Both the sections and the subsections should follow a logical
 pattern. Begin with an explanation of what your talk is all about. (Do
@@ -440,6 +440,9 @@ message of the talk in a short and simple way. People pay most
 attention at the beginning and at the end of talks. The summary is
 your ``second chance'' to get across a message.
 
+You can also add an appendix part using the |\appendix| command. Put
+everything into this part which you do not actually intend to talk
+about, but which might come in handy in questions are asked.
 
 
 
@@ -487,9 +490,10 @@ might  look like this:
 \subsubsection{Creating PDF}
 
 To create a |PDF| version of this file, run the program
-|pdflatex| on |main.tex| at least twice. Your need to run it
-twice, so that \TeX\ can create the table of contents. In the
-following example, the greater-than sign is the prompt.
+|pdflatex| on |main.tex| at least twice. Your need to run it twice, so
+that \TeX\ can create the table of contents. (It may even be necessary
+to run it more often since there are all sorts of auxilliary files
+created.) In the following example, the greater-than sign is the prompt. 
 
 \begin{verbatim}
 > pdflatex main.tex
@@ -497,7 +501,6 @@ following example, the greater-than sign is the prompt.
 > pdflatex main.tex
     ... lots of output ...
 \end{verbatim}
-
 
 You can next use a program like the Acrobat Reader or |xpdf|
 to view the resulting presentation.
@@ -506,9 +509,13 @@ to view the resulting presentation.
 > acroread main.pdf
 \end{verbatim}
 
-When printing a presentation, make sure that the option ``expand small
-pages to paper size'' is enabled. This is necessary, because slides are
-only 128mm times 96mm.
+When printing a presentation using Acrobat, make sure that the option
+``expand small pages to paper size'' is enabled. This is necessary,
+because slides are only 128mm times 96mm.
+
+To put several slides onto one page (useful for the handout version)
+or to enlarge the slides, you can use the program |pdfnup|. Also, many
+commercial programs can perform this task.
 
 
 
@@ -709,6 +716,21 @@ Section~\ref{section-graphics}.
 \end{itemize}
 
 
+\subsubsection{Using the Draft Option}
+
+While working on your presentation, it may sometimes be useful to
+\TeX\ your |.tex| file quickly and have the presentation contain only
+the most important information. This is especially true if you have a
+slow machine. In this case, the |draft| class option is useful.
+
+\begin{classoption}{{draft}}
+  Causes the head lines, foot lines, and sidebars to be replaced by
+  gray rectangles (their sizes are still computed, though). Many
+  other packages, including |pgf| and |hyperref|, also ``speedup''
+  when this option is given.
+\end{classoption}
+
+
 
 \subsection{Step Five: Test Your Presentation}
 
@@ -726,7 +748,7 @@ test and retest the talk and modify it as needed.
 
 
 
-\subsection{Step Six: Optionally Create a Handout}
+\subsection{Step Six: Optionally Create a Handout or an Article Version}
 
 Once your talk is fixed, you can create a handout, if this seems
 appropriate. For this, use the class option |handout| as
@@ -734,6 +756,15 @@ explained in Section~\ref{handout}. Typically, you might wish
 to put several handout slides on one page. See
 Section~\ref{section-postscript} on how to do this.
 
+You may also wish to create an article version of your talk. An
+``article version'' of your presentation is a normal \TeX\ text
+typeset using, for example, the document class |article| or perhaps
+|lncs| or a similar document class. The \beamer\ class offers
+facilities to have this version coexist with your presentation version
+in one file and to share code. Also, you can include slides of your
+presentation as figures in your article version. Details on how to
+setup the article version can be found in
+Section~\ref{section-article}.  
 
 
 
@@ -1647,6 +1678,106 @@ commands:
 
 
 
+\subsubsection{Adding Sections and Subsections}
+
+You can structure your text using the commands |\section| and
+|\subsection|. Unlike standard \LaTeX, these commands will not
+create a heading at the position where you use them. Rather, they will
+add an entry to the table of contents and also to the navigation
+bars.
+
+In order to create a line break in the table of contents (usually not
+a good idea), you can use the command |\breakhere|. Note that the
+standard command |\\| does not work.
+
+\begin{command}{\section\oarg{short section name}\marg{section name}}
+  Starts a section. No heading is created, but the \meta{section name}
+  is only shown in the table of contents and the \meta{short section name}
+  is only shown in the navigation bar. If the \meta{section name} is
+  empty, a navigation entry is created, but no entry in the table of
+  contents. This is useful for sections like a ``table of contents
+  section.''
+  \example|\section[Summary]{Summary of Main Results}| or
+  |\section[Outline]{}| 
+\end{command}
+
+
+\begin{command}{\subsection\oarg{short subsection name}\marg{subsection name}}
+  This command works the same way as the |\section| command.
+  \example|\subsection{Some Subsection}|
+\end{command}
+
+
+
+
+\subsubsection{Adding Parts}
+
+If you give a long talk (like a lecture), you may wish to break up
+your talk into several parts. Each such part acts like a little ``talk
+of its own'' with its own table of contents, its own navigation bars,
+and so on. Inside one part, the sections and subsections of the other
+parts are not shown at all.
+
+To create a new part, use the |\part| command. All sections and
+subsections following this command will be ``local'' to that part.
+Like the |\section| and |\subsection| command, the |\part| command
+does not cause any frame or special text to be produced. However,
+it is often advisable for the start of a new part to use the command
+|\partpage| to insert some text into a frame that ``advertises'' the
+beginning of a new part. 
+
+\begin{command}{\part\oarg{short part name}\marg{part name}}
+  Starts a part. The \meta{part name} will be shown when the
+  |\partpage| command is used. The \meta{shown part name} is not shown
+  anywhere by default, but it is accessible via the command
+  |\insertshortpart|.
+  \example
+\begin{verbatim}
+\begin{document}
+  \frame{\titlepage}
+
+  \section[Outlines]{}
+  \subsection{Part I: Review of Previous Lecture}
+  \frame{
+    \frametitle{Outline of Part I}
+    \tableofcontents[part=1]}
+  \subsection{Part II: Today's Lecture}
+  \frame{
+    \frametitle{Outline of Part II}
+    \tableofcontents[part=2]}
+
+  \part{Review of Previous Lecture}
+  \frame{\partpage}
+  \section[Previous Lecture]{Summary of the Previous Lecture}
+  \subsection{Topics}
+  \frame{...}
+  \subsection{Learning Objectives}
+  \frame{...}
+  
+  \part{Today's Lecture}
+  \frame{\partpage}
+  \section{Topic A}
+  \frame{\tableofcontents[current]}
+  \subsection{Foo}
+  \frame{...}
+  \section{Topic B}
+  \frame{\tableofcontents[current]}
+  \subsection{bar}
+  \frame{...}
+\end{document}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\partpage}
+  Works like |\titlepage|, only that the current part, not the current
+  presentation is ``advertised.'' The appearance can be changed by
+  adjusting the part page template, see
+  Section~\ref{section-part-page-template}. 
+  \example |\frame{\partpage}|
+\end{command}
+
+
+
 \subsubsection{Adding a Table of Contents}
 
 You can create a table of contents using the command
@@ -1682,6 +1813,12 @@ that can be used to create certain special effects.
   The following options can be given:
   \begin{itemize}
   \item
+    \declare{|part=|\meta{part number}} causes the table of contents
+    of part \meta{part number} to be shown, instead of the table of
+    contents of the current part (which is the default). This option
+    can be combined with the other options, although combining it with
+    the |current| option obviously makes no sense.
+  \item
     \declare{|current|} causes all but the current section to be
     shown in a semi-transparent way.
   \item
@@ -1703,38 +1840,6 @@ that can be used to create certain special effects.
   details when presenting the talk outline.
 \end{command}
 
-
-
-
-
-\subsubsection{Adding Sections and Subsections}
-
-You can structure your text using the commands |\section| and
-|\subsection|. Unlike standard \LaTeX, these commands will not
-create a heading at the position where you use them. Rather, they will
-add an entry to the table of contents and also to the navigation
-bars.
-
-In order to create a line break in the table of contents (usually not
-a good idea), you can use the command |\breakhere|. Note that the
-standard command |\\| does not work.
-
-\begin{command}{\section\oarg{short section name}\marg{section name}}
-  Starts a section. No heading is created, but the \meta{section name}
-  is only shown in the table of contents and the \meta{short section name}
-  is only shown in the navigation bar. If the \meta{section name} is
-  empty, a navigation entry is created, but no entry in the table of
-  contents. This is useful for sections like a ``table of contents
-  section.''
-  \example|\section[Summary]{Summary of Main Results}| or
-  |\section[Outline]{}| 
-\end{command}
-
-
-\begin{command}{\subsection\oarg{short subsection name}\marg{subsection name}}
-  This command works the same way as the |\section| command.
-  \example|\subsection{Some Subsection}|
-\end{command}
 
 
 
@@ -1846,31 +1951,22 @@ bevahior, see also Section~\ref{section-bib-templates}.
 
 
 
+
 \subsubsection{Adding an Appendix}
 
 You can add an appendix to your talk by using the |\appendix|
 command. You should put frames and perhaps whole subsections into the
 appendix that you do not intend to show during your presentation, but
-which might be useful to answer a question. 
-
-The appendix acts like an additional section with subsections
-all of its own, but it is not shown in the normal table of contents or
-in the navigation bars. Thus, it is kept perfectly separate of your
-actual talk. However, once you ``enter'' the slides that make up the
-appendix (either by continuing past the last slide of the actual talk
-or by using a hyper-jump), the navigation bars show (only) the
-contents of the appendix and the table of contents commands (only)
-show the subsections of the appendix.
-
-Inside the appendix, you should not use the |\section| command,
-but you can use the |\subsection| command to structure the
-appendix. Use the |\tableofcontents| command to insert a table of
-contents of the appendix into the current frame.
+which might be useful to answer a question. The |\appendix| command
+essentially just start a new part named |\appendixname|. However, it
+also sets up certain hyperlinks. 
+Like other parts, the appendix is kept separate of your actual
+talk.
 
 \begin{command}{\appendix}
-  Starts the appendix. All frames and all |\subsection| commands
-  used after this command will not be shown as part of the normal
-  navigation bars.
+  Starts the appendix. All frames, all |\subsection| commands, and all
+   |\section| commands used after this command will not be shown as
+   part of the normal navigation bars.
   \example
 \begin{verbatim}
 \begin{document}
@@ -1883,6 +1979,7 @@ contents of the appendix into the current frame.
 \frame{Summary text}
 
 \appendix
+\section{\appendixname}
 \frame{\tableofcontents}
 \subsection{Additional material}
 \frame{Details}
@@ -3281,12 +3378,15 @@ structure. Nevertheless, you may wish to have this version coexist
 with your presentation in one file and you may wish to share some part
 of it (like a figure or a formula) with your presentation.
 
-To achieve this, a special class option and three commands can be
-used. The class option is the option |class=|\meta{class name}, where
+
+
+\subsubsection{Article, Common, and Presentation Mode}
+
+The class option |class=|\meta{class name}, where
 \meta{class name} is the name of another document class like
-|article| or |report|. If this class option is given,
-the beamer class will almost immediately transfer control to this
-class. None of the normal commands defined by the beamer class will be
+|article| or |report|, causes the |beamer| class to transfer control
+almost immediately to the class named \meta{class name}. None of the
+normal commands defined by the beamer class will be 
 defined, except for the three commands listed in the following. All
 class options passed to the beamer class will be passed on to the
 class \meta{class name}, \emph{except}, naturally, for the option
@@ -3318,8 +3418,8 @@ round. In common mode, the text is always inserted.
 Right after the |documentclass| command and right after the
 |\begin{document}| (provided it is the sole entry on a line with no
 comments following and no leading spaces), \TeX\ is always in common
-mode. 
-
+mode. If you do not wish this to be the case, simply append a comment
+to the line.
   
 \begin{command}{\article}
   All text following this command will only be present in the article
@@ -3384,10 +3484,9 @@ following example:
 \begin{document}
 ...
 \common
-  \pgfdeclareimage{myimage}{1cm}{}{filename}
   \def\myfigure{
     \begin{figure}
-      \pgfuseimage{myimage}
+      \pgfimage{filename}
     \end{figure}}
 
 \article
@@ -3397,6 +3496,115 @@ following example:
   \frame{\myfigure}
 \end{document}
 \end{verbatim}
+
+
+
+\subsubsection{Workflow}
+
+The following workflow steps are optional, but they can simplify the
+creation of the article version.
+
+\begin{itemize}
+\item 
+  In the main file |main.tex|, delete the first line, which sets the
+  document class.
+\item
+  Create a file named, say, |main.beamer.tex| with the
+  following content:
+\begin{verbatim}
+\documentclass{beamer}
+\input{main.tex}
+\end{verbatim} 
+\item
+  Create an extra file named, say, |main.article.tex| with the
+  following content:
+\begin{verbatim}
+\documentclass[class=article]{beamer}
+\setjobnamebeamerversion{main.beamer}
+\input{main.tex}
+\end{verbatim}
+\item
+  You can now run |pdflatex| or |latex| on the two files
+  |main.beamer.tex| and |main.article.tex|. 
+\end{itemize}
+
+The command |\setjobnamebeamerversion| tells the article version where
+to find the presentation version. This is necessary if you wish to include
+slides from the presentattion version in an article as figures.
+
+\begin{command}{\setjobnamebeamerversion\marg{filename without extension}}
+  Tells the beamer class where to find the presentation version of the
+  current file.  
+\end{command}
+
+
+\subsubsection{Including Slides from the Presentation Version in the
+  Article Version}
+
+In order to include a slide from your presentation in your article
+version, you must do two things: first, you must \emph{name} the slide
+using the following command:
+
+\begin{command}{\nameslide\sarg{overlay specification}\marg{slide
+      name}}
+  The specified slide gets assigned the name \meta{slide name}. This
+  causes an entry with the slide's page number to be inserted into an
+  auxiliary file with the extension |.snm|. Furthermore, a hyper
+  target of the name \meta{slide name} is also setup.
+  \example
+\begin{verbatim}
+\frame{
+  \nameslide<1>{slide1}
+  \nameslide<2>{slide2}
+  
+  \frametitle{This is a frame with two overlays.}
+
+  \begin{itemize}
+  \item The first item$\dots$
+    \pause
+  \item $\dots$ and the second one.
+  \end{itemize}
+ }
+\end{verbatim}
+\end{command}
+
+Once you have declared a slide, you can use the following command in
+your article version to insert the slide into it:
+
+\begin{command}{\includeslide\oarg{options}\marg{slide name}}
+  This command calls |\pgfimage| with the given \meta{options}, for
+  the file specified by
+  \begin{quote}
+    |\setjobnamebeamerversion|\meta{filename}
+  \end{quote}
+  Furthermore, the option |page=|\meta{page of slide name} is passed
+  to |\pgfimage|, where the \meta{page of slide name} is read from the
+  file \meta{filename}|.snm|. See the documentation of |pgf| for the
+  exact effect of this option.
+  \example
+
+\begin{verbatim}
+\article
+  \begin{figure}
+    \begin{center}
+      \includeslide{slide1}
+    \end{center}
+    \caption{The first slide. Note the partly covered second item.}
+  \end{figure}
+  \begin{figure}
+    \begin{center}
+      \includeslide{slide2}
+    \end{center}
+    \caption{The second slide. Now the second item is also shown.}
+  \end{figure}
+\end{verbatim}  
+\end{command}
+
+
+
+
+
+
 
 
 
@@ -3832,7 +4040,7 @@ If you wish to suppress the head and foot line in the title page, use
 \paragraph{Inserts for this Template}\ 
 
 \begin{command}{\insertauthor}
-  Inserts the one-line version of the author names into a template.
+  Inserts the author names into a template.
 \end{command}
 
 \begin{command}{\insertdate}
@@ -3852,6 +4060,41 @@ If you wish to suppress the head and foot line in the title page, use
   Inserts the title graphic into a template.
 \end{command}
 
+
+
+\subsubsection{Part Page}
+
+\label{section-part-page-template}
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usepartpagetemplate\marg{part page template}}
+  \example
+\begin{verbatim}
+\usepartpagetemplate{
+  \begin{centering}
+    \Large\structure{\partname~\insertromanpartnumber}
+    \vskip1em\par
+    \insertpart\par
+  \end{centering}
+  }
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts for this Template}\ 
+
+\begin{command}{\insertpart}
+  Inserts the current part name.
+\end{command}
+
+\begin{command}{\insertpartnumber}
+  Inserts the current part number as an Arabic number into a template.
+\end{command}
+
+\begin{command}{\insertpartromannumber}
+  Inserts the current part number as a Roman number into a template.
+\end{command}
 
 
 
@@ -4168,6 +4411,10 @@ or
 
 \begin{command}{\insertshortinstitute}
   Inserts the short version of the institute into a template.
+\end{command}
+
+\begin{command}{\insertshortpart}
+  Inserts the short version of the part name into a template.
 \end{command}
 
 \begin{command}{\insertshorttitle}

@@ -1,7 +1,7 @@
 \documentclass{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
-% [red], [compress], [class=article] and see what happens!
+% [red], [compress], [draft] and see what happens!
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -9,26 +9,16 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-
-\common
-
-\usepackage[english]{babel}
-
-\article
-
-\usepackage{fullpage}
-
-\presentation
-
 % For a green structure color use:
 %\colorlet{structure}{green!50!black}
 
 \usepackage{beamertemplates}
-\usepackage{beamerthemesplit}
+\usepackage{beamerthemebars}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
 \usepackage[latin1]{inputenc}
 \usepackage{colortbl}
+\usepackage[english]{babel}
 
 
 % Use some nice templates
@@ -60,11 +50,11 @@
 \newcommand{\Nat}{\mathbb{N}}
 \newcommand{\Set}[1]{\{#1\}}
 
-\pgfdeclareimage{computerimage}{1.8361cm}{2cm}{computer}
-\pgfdeclareimage{computerworkingimage}{1.8361cm}{2cm}{computerred}
-\pgfdeclareimage{apple}{1.625cm}{2cm}{g4}
-\pgfdeclareimage{appleworking}{1.625cm}{2cm}{g4red}
-\pgfdeclareimage{ram}{3.811cm}{1cm}{ram}
+\pgfdeclareimage[width=1.8361cm,height=2cm]{computerimage}{computer}
+\pgfdeclareimage[width=1.8361cm,height=2cm]{computerworkingimage}{computerred}
+\pgfdeclareimage[width=1.625cm,height=2cm]{apple}{g4}
+\pgfdeclareimage[width=1.625cm,height=2cm]{appleworking}{g4red}
+\pgfdeclareimage[width=3.811cm,height=1cm]{ram}{ram}
 
 \newcommand{\tape}[9]{%
   \pgfputat{#1}{%
@@ -158,44 +148,18 @@
 
 \begin{document}
 
-\presentation
-
 \frame{\titlepage}
+
 
 \section[Outline]{}
 
-\subsection{Part I: Review of Last Lecture}
+\frame{\tableofcontents[pausesections]}
 
-\frame{
-  \nameslide{outline}
-  \frametitle{Part I: Review of Last Lecture}
-  \tableofcontents[pausesections,part=1]}
-
-\subsection{Part II: Today's Lecture}
-\frame{
-  \frametitle{Part II: Today's Lecture}
-  \tableofcontents[pausesections,part=2]}
-\note{At most 1 minute for the outline.}
-
-\part{Review of Last Lecture}
-\frame{\partpage}
-
-\section[Results]{Results of Last Lecture}
-
-\subsection[First]{First Result}
-
-\frame{Some results.}
-
-\subsection[Second]{Second Result}
-
-\frame{Some results.}
-
-\part{Today's Lecture}
-\frame{\partpage}
 
 \section[Models]{The Model of Overhead-Free Computation}
 
 \frame[handout:0]{\tableofcontents[current]}
+
 
 \subsection[Standard Model]{The Standard Model of Linear Space}
 
@@ -290,6 +254,7 @@
 \item Explain CSL.
 \item Point out the connections to formal language theory.}
 
+
 \subsection[Our Model]{Our Model of Absolutely No Space Overhead}
 
 \frame
@@ -357,7 +322,6 @@
 }
 \note{Point out that no markers are used.}
 
-
 \frame
 {
   \frametitle{Definition of Overhead-Free Computations}
@@ -402,7 +366,6 @@
 \item Joke about German pronunciation.
 \item Stress meaning of D and N.}
 
-
 \frame
 {
   \frametitle{Simple Relationships among\\ Overhead-Free Computation Classes}
@@ -426,6 +389,7 @@
 \section[Power of the Model]{The Power of Overhead-Free Computation}
 
 \frame[handout:0]{\tableofcontents[current]}
+
 
 \subsection{Palindromes}
 
@@ -531,7 +495,6 @@
 }
 \note{Use 3 minutes.}
 
-
 \frame
 {
   \frametitle{Relationships among Overhead-Free Computation Classes}
@@ -550,6 +513,7 @@
     \pgfputat{\pgfxy(0,0.25)}{\pgfbox[center,base]{\alert{Palindromes}}}
   \end{pgfpicture}
 }
+
 
 \subsection{Linear Languages}
 
@@ -657,7 +621,6 @@
   \end{Definition}
 }
 
-
 \frame
 {
   \frametitle{Context-Free Languages with a Forbidden Subword\\ Can Be
@@ -700,6 +663,7 @@
   \end{pgfpicture}
 }
 
+
 \subsection[Complete Languages]{Languages Complete for Polynomial Space}
 
 \frame
@@ -716,7 +680,6 @@
   \hyperlink{proofdetails}{\beamergotobutton{Proof details}}
   \nameslide{backfromproofdetails}
 }
-
 
 \frame
 {
@@ -740,10 +703,10 @@
 }
 
 
-
 \section[Limitations of the Model]{Limitations of Overhead-Free Computation}
 
 \frame[handout:0]{\tableofcontents[current]}
+
 
 \subsection[Strict Inclusion]{Linear Space is Strictly More Powerful}
 
@@ -764,7 +727,6 @@
   The proofs are based on old diagonalisations due to Feldman, Owings,
   and Seiferas.  
 }
-
 
 \frame
 {
@@ -788,8 +750,6 @@
   \end{pgfpicture}
 }
 
-
-
 \frame
 {
   \frametitle{Candidates for Languages that\\
@@ -811,7 +771,9 @@
 
 \section[Summary]{}
 
+
 \subsection[Summary]{}
+
 \frame
 {
   \frametitle{Summary}
@@ -883,14 +845,17 @@
 
 \appendix
 
+
+\section{\appendixname}
+
 \frame{\tableofcontents}
+
 
 \subsection{Overhead Freeness and Completeness}
 
 \frame{
   \frametitle{Overhead-Free Languages can be PSPACE-Complete}
 
-  \hypertarget{proofdetails}{}
   \begin{Theorem}
     $\DOF$ contains languages that are complete for
     $\Class{PSPACE}$. 
@@ -913,8 +878,10 @@
     \end{itemize}
   \end{proof}
 
-  \hfill\hyperlinkbackfromproofdetails{\beamerreturnbutton{Return}}
+  \nameslide<1>{proofdetails}
+  \hfill\hyperlink{backfromproofdetails}{\beamerreturnbutton{Return}}
 }
+
 
 \subsection{Improvements for Context-Free Languages}
 
@@ -930,6 +897,7 @@
     \end{enumerate}
   \end{theorem}
 }
+
 
 \subsection{Abbreviations}
 
@@ -948,94 +916,6 @@
     \caption{Explanation of what different abbreviations mean.}
   \end{table}
 }
-
-
-\article
-
-\title{{\Large\textbf{Computation with\\ Absolutely No Space Overhead}}}
-\date{September 23, 2003}
-
-\author{
-  Lane A. Hemaspaandra\footnote{Supported in part by grants
-    NSF-CCR-9322513 and
-    NSF-INT-9815095\,/\penalty0\,DAAD-315-PPP-g{\"u}-ab.}
-{}\\
-Department of Computer Science\\
-  University of Rochester\\
-  Rochester, NY 14627, USA\\
-  \texttt{lane@cs.rochester.edu}
-  \and Proshanto Mukherji \\
-Department of Computer Science\\
-  University of Rochester\\
-  Rochester, NY 14627, USA\\
-  \texttt{mukherji@cs.rochester.edu}
-  \and
-  Till Tantau\thanks{Supported in part by an Erwin-Stephan-Prize grant
-    of the Technical University of Berlin and a postdoc research
-    fellowship grant of the German Academic Exchange Service
-    (DAAD). Work done in part while working at the Technical
-    University of Berlin and while visiting the University of
-    Rochester.} 
-\\
-  International Computer Science Institute\\
-  1947 Center Street\\
-  Berkeley, CA, USA\\
-  \texttt{tantau@icsi.berkeley.edu}
-    }
-
-\maketitle
-
-\begin{abstract}
-  We study Turing machines that are allowed absolutely no space
-  overhead. The only work space the machines have, beyond the fixed
-  amount of memory implicit in their finite-state control, is that
-  which they can create by cannibalizing the input bits' own space. 
-  This model more closely reflects the fixed-sized memory of real
-  computers than does the standard complexity-theoretic model of linear
-  space. Though some context-sensitive languages cannot
-  be accepted by such machines, we show that all deterministic 
-  context-free languages can be accepted deterministically in
-  polynomial time with absolutely no space overhead. Similarly, all
-  context-free languages can be accepted nondeterministically without
-  space overhead.
-
-  \vskip1em
-  \noindent\emph{Keywords.} \sloppy Space overhead,  space reuse,
-  overhead-free computation, con\-text-sensitive
-  languages, context-free languages, linear space, in-place
-  algorithms. 
-\end{abstract}
-
-
-\section{Introduction}
-
-Complexity theory studies which problems can be solved
-\emph{realistically} using a computer. Since it depends on
-context what resources are deemed ``realistic,'' different resource
-bounds on various models have been studied. For example, deterministic
-linear space is a possible formalization of the limited memory of
-computers. Unfortunately, the standard complexity-theoretic
-formalizations may be too ``rough'' in realistic contexts, as most
-have hidden constants tucked away inside their definitions.
-Polynomial-time algorithms with a time bound of $n^{100}$ and
-linear-space algorithms that need one megabyte of extra memory per
-input bit will typically be unhelpful from a practical point of view.
-
-\begin{figure}
-  \begin{centering}
-    \leavevmode\includeslide{outline}{beamerexample.presentation}\par
-  \end{centering}
-  \caption{The outline.}
-\end{figure}
-
-\begin{figure}
-  \begin{centering}
-    \leavevmode\includeslide[height 5cm]{backfromproofdetails}{beamerexample.presentation}\par
-  \end{centering}
-  \caption{A jump back.}
-\end{figure}
-
-\dots
 
 \end{document}
 
