@@ -56,7 +56,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 0.90\\
+\title{User's Guide to the Beamer Class, Version 0.90-dev\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -2773,7 +2773,7 @@ Themes are used by including an appropriate \LaTeX\ style file, using
 the standard \verb!\usepackage! command.
 
 
-\subsection{Bars Theme}
+\subsubsection{Bars Theme}
 
 \Theme{beamerthemebars}
 \Parameters{
@@ -2792,7 +2792,7 @@ of the foot line. Specified in a key~=~value fashion.
 \hbox{\pgfuseimage{themebars}\quad\pgfuseimage{themebars2}}
 
 
-\subsection{Boxes Theme}
+\subsubsection{Boxes Theme}
 
 \vbox{
 \Theme{beamerthemeboxes}
@@ -3394,6 +3394,55 @@ with ``left'' replaced by ``right'' everywhere.
 \end{verbatim}
 
 
+\Command{usesectionsidetemplate}
+\Parameters{
+\item A template for the current section name in a side navigation
+bar. Should be an \texttt{hbox}.
+\item a template for a different section name in a side navigation
+bar. Should be an \texttt{hbox}.
+  }
+\Example
+\begin{verbatim}
+\usesectionsidetemplate
+{\setbox\tempbox=\hbox{\color{black}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+{\setbox\tempbox=\hbox{\color{structuremedium}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+\end{verbatim}
+
+
+\Command{usesubsectionsidetemplate}
+\Parameters{
+\item A template for the current subsection name in a side navigation
+bar. Should be an \texttt{hbox}.
+\item a template for a different subsection name in a side navigation
+bar. Should be an \texttt{hbox}.
+  }
+\Example
+\begin{verbatim}
+\usesectionsidetemplate
+{\setbox\tempbox=\hbox{\color{black}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+{\setbox\tempbox=\hbox{\color{structuremedium}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+\end{verbatim}
+
+
+
+
+
 
 
 
@@ -3856,6 +3905,17 @@ templates.
   Inserts the version of the current subsection name into a template
   that is useful for the table of contents.
   }
+
+\Command{insertverticalnavigation}
+\Parameters{
+\item a width
+  }
+\Description{
+  Inserts a vertical navigation bar of the given width into a
+  template. The bar shows a little table of contents. The indiviual
+  lines are typeset using the templates
+  \texttt{usesectionsidetemplate} and \texttt{usesubsectionsidetemplate}.
+}
 
 \Command{insertvrule}
 \Parameters{
