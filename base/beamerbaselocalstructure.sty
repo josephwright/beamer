@@ -331,64 +331,65 @@
 %
 
 \newenvironment<>{abstract}%
-{\begin{actionenv}#1\beamer@templateabstractstart}{\beamer@templateabstractend\end{actionenv}}
-
-\newcommand\usetemplateabstract[2]{\def\beamer@templateabstractstart{#1}\def\beamer@templateabstractend{#2}}
-
-\usetemplateabstract{
-  \begin{center}%
-    \structure{\abstractname}\vspace{-.5em}\vspace{0pt}%
-  \end{center}\small%
-  \begin{quote}\normalfont}
-  {\end{quote}}
-
-
+{\actionenv#1%
+  \beamercolorbox[vmode]{abstract}%
+  \usebeamerfont{abstract}%
+  \usebeamertemplate**{abstract title}%
+  \usebeamertemplate{abstract body begin}}%
+{\usebeamertemplate{abstract body end}\endbeamercolorbox\endactionenv}
 
   
 %
 % Verse, quotation, quote environments
 %
-    
-\newenvironment<>{verse}
-               {\begin{actionenv}#1\let\\\@centercr
-                \list{}{\itemsep      \z@
-                        \itemindent   -1.5em%
-                        \listparindent\itemindent
-                        \rightmargin  \leftmargin
-                        \advance\leftmargin 1.5em
-                        \parsep       .75em plus .25em minus.25em}%
-                \item\relax\beamer@templateversestart}
-               {\beamer@templateverseend\endlist\end{actionenv}}
 
-\newcommand\usetemplateverse[2]{\def\beamer@templateversestart{#1}\def\beamer@templateverseend{#2}}
-\usetemplateverse{\rmfamily\itshape}{}
+\newenvironment<>{verse}
+{\actionenv#1%
+  \beamercolorbox[vmode]{verse}%
+  \usebeamerfont{verse}%
+  \let\\\@centercr%
+  \list{}{\itemsep      \z@
+    \itemindent   -1.5em%
+    \listparindent\itemindent
+    \rightmargin  \leftmargin
+    \advance\leftmargin 1.5em
+    \parsep       .75em plus .25em minus.25em}%
+\item\relax%
+  \usebeamertemplate{verse begin}}
+{\usebeamertemplate{verse end}\endlist\endbeamercolorbox\endactionenv}
+
                
 \newenvironment<>{quotation}
-               {\begin{actionenv}#1\list{}{\listparindent 1.5em%
-                        \itemindent    \listparindent
-                        \rightmargin   \leftmargin
-                        \parsep        \z@ \@plus\p@}%
-                \item\relax\beamer@templatequotationstart}
-               {\beamer@templatequotationend\endlist\end{actionenv}}
-
+{\actionenv#1%
+  \beamercolorbox[vmode]{quotation}%
+  \usebeamerfont{quotation}%
+  \list{}{\listparindent 1.5em%
+    \itemindent    \listparindent
+    \rightmargin   \leftmargin
+    \parsep        \z@ \@plus\p@}%
+\item\relax%
+  \usebeamertemplate{quotation begin}}
+{\usebeamertemplate{quotation end}\endlist\endbeamercolorbox\endactionenv}
+      
 \newenvironment<>{quote}
-               {\begin{actionenv}#1\list{}{\rightmargin\leftmargin}%
-                \item\relax\beamer@templatequotationstart}
-               {\beamer@templatequotationend\endlist\end{actionenv}}
-
-             
-% applies both to quote and quotation
-\newcommand\usetemplatequotation[2]{\def\beamer@templatequotationstart{#1}\def\beamer@templatequotationend{#2}}
-\usetemplatequotation{\itshape}{}
+{\actionenv#1%
+  \beamercolorbox[vmode]{quote}%
+  \usebeamerfont{quote}%
+  \list{}{\rightmargin   \leftmargin}
+\item\relax%
+  \usebeamertemplate{quote begin}}
+{\usebeamertemplate{quote end}\endlist\endbeamercolorbox\endactionenv}
 
 
 \mode
 <article>
 {
-  \renewenvironment<>{verse}{\begin{actionenv}#1\begin{originalverse}}{\end{originalverse}\end{actionenv}}
-  \renewenvironment<>{quotation}{\begin{actionenv}#1\begin{originalquotation}}{\end{originalquotation}\end{actionenv}}
-  \renewenvironment<>{quote}{\begin{actionenv}#1\begin{originalquote}}{\end{originalquote}\end{actionenv}}
+  \renewenvironment<>{verse}{\actionenv#1\originalverse}{\endoriginalverse\endactionenv}
+  \renewenvironment<>{quotation}{\actionenv#1\originalquotation}{\endoriginalquotation\endactionenv}
+  \renewenvironment<>{quote}{\actionenv#1\originalquote}{\endoriginalquote\endactionenv}
 }
+
+
 
     
 %

@@ -179,23 +179,23 @@ indicates special mode considerations.
   \emph{template}, see Section~\ref{section-elements} once more, and
   also a \beamer-color and a \beamer-font.
 
-  The three markers to the right of |some beamer element| indicate
-  wheter a template, a \beamer-color, and/or a \beamer-font of the
+  For each element, it is indicated wheter a template, a
+  \beamer-color, and/or a \beamer-font of the  
   name |some beamer element| exist. Typically, all three exist and are
-  employed together when the element needs to be typeset. However,
-  sometimes templates do not have a color or font associated with them
-  (like parent templates, which are indicated by a check sign in
-  brackets). Also, there exist \beamer-colors and -fonts that do not
-  have an underlying template.
+  employed together when the element needs to be typeset, that is,
+  when the template is inserted the \beamer-color and -font are
+  installed first. However, sometimes templates do not have a color or
+  font associated with them (like parent templates). Also, there exist
+  \beamer-colors and -fonts that do not have an underlying template.
 
-  How to use and change templates is explained in
-  Section~\ref{section-templates}. Here is the essence: If
-  ``template'' is checked, you can say
+  Using and changing templates is explained in
+  Section~\ref{section-templates}. Here is the essence: To change a
+  template, you can say 
 \begin{verbatim}
 \setbeamertemplate{some beamer element}{your definition for this template}
 \end{verbatim}
   Unfortunately, it is not quite trivial to come up with a good definition for
-  the template. Fortunately, there are often \emph{predefined options}
+  some templates. Fortunately, there are often \emph{predefined options}
   for a template. These are indicated like this:
   \begin{itemize}
     \itemoption{square}{}
@@ -212,9 +212,8 @@ indicates special mode considerations.
 %% New a circle is used
 \end{verbatim}
   
-  How to use and change colors is explained in
-  Section~\ref{section-colors}. Here is the essence: To change the
-  foreground of the color to, say, red, use
+  \beamer-colors are explained in Section~\ref{section-colors}. Here
+  is the essence: To change the foreground of the color to, say, red, use
 \begin{verbatim}
 \setbeamercolor{some beamer element}{fg=red}
 \end{verbatim}
@@ -222,11 +221,14 @@ indicates special mode considerations.
 \begin{verbatim}
 \setbeamercolor{some beamer element}{bg=black}
 \end{verbatim}
-  You can also change them together using |fg=red,bg=black|.
+  You can also change them together using |fg=red,bg=black|. The
+  background will not always be ``honoured,'' since it is difficult to
+  show a colored background correctly and an extra effort must be made
+  by the templates (while the foreground color is usually used
+  automatically). 
 
-  How to use and change fonts is explained in
-  Section~\ref{section-fonts}. Here is the essence: To change the size
-  of the font to, say, large, use:
+  \beamer-fonts are explained in Section~\ref{section-fonts}. Here is
+  the essence: To change the size of the font to, say, large, use:
 \begin{verbatim}
 \setbeamerfont{some beamer element}{size=\large}
 \end{verbatim}

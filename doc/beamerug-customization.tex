@@ -1671,78 +1671,78 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsection{Verse, Quotation and Quote Environments}
+%% \subsection{Verse, Quotation and Quote Environments}
 
 
-\paragraph{Template Installation Commands}\
+%% \paragraph{Template Installation Commands}\
 
-\begin{command}{\usetemplateverse\marg{block beginning
-      template}\marg{block end template}}
-  In a |verse| environment, the \meta{block beginning template} is
-  inserted before the verse, the \meta{block end template} after the
-  verse. The margins are not setup in these templates; this is done in
-  the |verse| environment and cannot be changed.
-  \example |\usetemplateverse{\rmfamily\itshape}{}|
-\end{command}
+%% \begin{command}{\usetemplateverse\marg{block beginning
+%%       template}\marg{block end template}}
+%%   In a |verse| environment, the \meta{block beginning template} is
+%%   inserted before the verse, the \meta{block end template} after the
+%%   verse. The margins are not setup in these templates; this is done in
+%%   the |verse| environment and cannot be changed.
+%%   \example |\usetemplateverse{\rmfamily\itshape}{}|
+%% \end{command}
 
 
-\begin{command}{\usetemplatequotation\marg{block beginning
-      template}\marg{block end template}}
-  Both in |quotation| and in |quote| environments, the \meta{block
-    beginning template} is inserted before the quotation, the
-  \meta{block end template} after the quotation. As for verses, the
-  margins are not setup in these templates and cannot be changed.
+%% \begin{command}{\usetemplatequotation\marg{block beginning
+%%       template}\marg{block end template}}
+%%   Both in |quotation| and in |quote| environments, the \meta{block
+%%     beginning template} is inserted before the quotation, the
+%%   \meta{block end template} after the quotation. As for verses, the
+%%   margins are not setup in these templates and cannot be changed.
   
-  \example |\usetemplatequotation{\itshape}{}|
-\end{command}
+%%   \example |\usetemplatequotation{\itshape}{}|
+%% \end{command}
 
 
 
 
-\subsection{Typesetting Notes}
+%% \subsection{Typesetting Notes}
 
-\label{section-note-templates}
+%% \label{section-note-templates}
 
-\paragraph{Predefined Templates}\
+%% \paragraph{Predefined Templates}\
 
-\begin{command}{\beamertemplatenoteplain}
-  Causes all note pages to contain only the note text.
-\end{command}
+%% \begin{command}{\beamertemplatenoteplain}
+%%   Causes all note pages to contain only the note text.
+%% \end{command}
 
-\begin{command}{\beamertemplatenotecompress}
-  Causes the ``routing information'' at the top of a note to be
-  smaller. 
-\end{command}
+%% \begin{command}{\beamertemplatenotecompress}
+%%   Causes the ``routing information'' at the top of a note to be
+%%   smaller. 
+%% \end{command}
 
 
-\paragraph{Template Installation Commands}\
+%% \paragraph{Template Installation Commands}\
 
-\begin{command}{\usetemplatenote\marg{note template}}
-  Each note is typeset by inserting the \meta{note template}. The
-  template should contain a mentioning of the insert |\insertnote|,
-  which will contain the note text.
+%% \begin{command}{\usetemplatenote\marg{note template}}
+%%   Each note is typeset by inserting the \meta{note template}. The
+%%   template should contain a mentioning of the insert |\insertnote|,
+%%   which will contain the note text.
   
-  \example |\usetemplatenote{\tiny\insertnote}|
-\end{command}
+%%   \example |\usetemplatenote{\tiny\insertnote}|
+%% \end{command}
 
 
 
-\paragraph{Inserts for these Templates}\
+%% \paragraph{Inserts for these Templates}\
 
-\begin{command}{\insertnote}
-  Inserts the text of the current note into the template.
-\end{command}
+%% \begin{command}{\insertnote}
+%%   Inserts the text of the current note into the template.
+%% \end{command}
 
 
-\begin{command}{\insertslideintonotes\marg{magnification}}
-  Inserts a ``mini picture'' of the last slide into the current
-  note. The slide will be scaled by the given magnification.
+%% \begin{command}{\insertslideintonotes\marg{magnification}}
+%%   Inserts a ``mini picture'' of the last slide into the current
+%%   note. The slide will be scaled by the given magnification.
 
-  \example |\insertslideintonotes{0.25}|
+%%   \example |\insertslideintonotes{0.25}|
 
-  This will give a mini slide whose width and height are one fourth of
-  the usual size.
-\end{command}
+%%   This will give a mini slide whose width and height are one fourth of
+%%   the usual size.
+%% \end{command}
 
 
 

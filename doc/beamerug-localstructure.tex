@@ -1250,6 +1250,40 @@ its documentation.
 
 
 
+\subsection{Abstract}
+
+The |abstract| environment is overlay-specificiation-aware in \beamer:
+
+
+\begin{environment}{{abstract}\sarg{action specification}}
+  You can use this environment to typeset an abstract.
+
+  \begin{element}{abstact}\no\yes\yes
+    These \beamer-color and -font are used to typeset the abstract. If
+    a background color is set, this background color is used as
+    background for the whole abstract.
+  \end{element}
+
+  \begin{element}{abstract title}\yes\yes\yes
+    \colorparents{titlelike}
+    This template is used for the title. By default, this inserts
+    the word |\abstractname|, centered. The background color is ignored.
+  \end{element}
+
+  \begin{element}{abstract body begin}\yes\no\no
+    This template is inserted at the beginning of the abstract, after the
+    abstract title has been inserted, but before the \meta{environment
+    contents}.
+  \end{element}
+
+  \begin{element}{abstract body end}\yes\no\no
+    This template is inserted at the end of the abstract, after the
+    \meta{environment contents}.
+  \end{element}
+\end{environment}
+
+
+
 
 \subsection{Verse, Quotations, Quotes}
 
@@ -1262,12 +1296,66 @@ covered otherwise. The difference between a |quotation| and a |quote|
 is that the first has paragraph indentation, whereas the second does
 not. 
 
-Unlike the standard \LaTeX\ environments, in \beamer\ these
-environments do not only change the left and right margins, but also
-the font: A verse is typeset using an italic serif font, quotations
-and quotes are typeset using an italic font (whether serif or
-sans-serif depends on the standard document font). To change this, you
-can adjust the templates for these environments. 
+You can change the font and color used for these by changing the
+\beamer-colors and -fonts listed below. Unlike the standard \LaTeX\
+environments, the default font theme typesets a verse in an italic
+serif font, quotations and quotes are typeset using an italic font
+(whether serif or sans-serif depends on the standard document font).
+
+
+\begin{environment}{{verse}\sarg{action specification}}
+  You can use this environment to typeset a verse.
+
+  \begin{element}{verse}\no\yes\yes
+    These \beamer-color and -font are used to typeset the verse. If
+    a background color is set, this background color is used as
+    background for the whole abstract. The default font is italic
+    serif. 
+  \end{element}
+
+  \begin{element}{verse begin}\yes\no\no
+    This template is inserted at the beginning of the verse.
+  \end{element}
+
+  \begin{element}{verse end}\yes\no\no
+    This template is inserted at the end of the verse.
+  \end{element}
+\end{environment}
+
+
+\begin{environment}{{quotation}\sarg{action specification}}
+  Use this environment to typeset multi-paragraph quotations. Think
+  again, before presenting multi-paragraph quotations.
+
+  \begin{element}{quotation}\no\yes\yes
+    These \beamer-color and -font are used to typeset the quotation.
+  \end{element}
+
+  \begin{element}{quotation begin}\yes\no\no
+    This template is inserted at the beginning of the quotation.
+  \end{element}
+
+  \begin{element}{quotation end}\yes\no\no
+    This template is inserted at the end of the quotation.
+  \end{element}
+\end{environment}
+
+
+\begin{environment}{{quote}\sarg{action specification}}
+  Use this environment to typeset a single-paragraph quotation.
+
+  \begin{element}{quote}\no\yes\yes
+    These \beamer-color and -font are used to typeset the quote.
+  \end{element}
+
+  \begin{element}{quote begin}\yes\no\no
+    This template is inserted at the beginning of the quote.
+  \end{element}
+
+  \begin{element}{quote end}\yes\no\no
+    This template is inserted at the end of the quote.
+  \end{element}
+\end{environment}
 
 
 \subsection{Footnotes}

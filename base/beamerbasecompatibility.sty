@@ -265,6 +265,12 @@
   \setbeamertemplate{bibliography entry location}{#3}%
   \setbeamertemplate{bibliography entry note}{#4}}
 \def\usebuttontemplate{\setbeamertemplate{button}}
+\def\usetemplateabstract#1#2{%
+  \setbeamertemplate{abstract title}{}
+  \setbeamertemplate{abstract body begin}{#1}
+  \setbeamertemplate{abstract body end}{#2}}
+\def\usetemplateverse#1#2{\setbeamertemplate{verse begin}{#1}\setbeamertemplate{verse end}{#2}}
+\def\usetemplatenote{\setbeamertemplate{note page}}
 
 
 
@@ -315,6 +321,11 @@
 \def\beamertemplateoutlinebuttons{\setbeamercolor*{button border}{parent=structure,use=structure,fg=structure.fg!50!bg}}
 \def\beamertemplatesolidbuttons{\setbeamercolor*{button}{use=structure,bg=structure.fg!50!bg,fg=white}
  \setbeamercolor*{button border}{use=structure,fg=structure.fg!50!bg}}
+\def\usetemplatequotation#1#2{
+  \setbeamertemplate{quotation begin}{#1}
+  \setbeamertemplate{quote begin}{#1}
+  \setbeamertemplate{quotation end}{#2}
+  \setbeamertemplate{quote end}{#2}}
 
 \mode
 <all>

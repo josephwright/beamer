@@ -6,9 +6,10 @@
 
 
 
-\section{How To Import Presentations Based on Other Packages and Classes}
+\section[How To Import Presentations Based on Other Packages and Classes]
+{How To Import Presentations Based on\\ Other Packages and Classes}
 
-The \beamer\ class comes with a number of emulation layer for classes
+The \beamer\ class comes with a number of emulation layers for classes
 or packages that do not support \beamer\ directly. For example, the
 package |beamerseminar| maps some (not all) commands of the \seminar\ 
 class to appropriate \beamer\ commands. This way, individual slides or
@@ -130,18 +131,6 @@ problems:
 \documentclass[notes]{beamer}
 
 \usepackage[framesassubsections]{beamerprosper}
-\mode<presentation>
-{
-  \definecolor{beamerstructure}{RGB}{43,79,112}
-  \definecolor{sidebackground}{RGB}{230,242,250}
-  \color{beamerstructure}
-  \usepackage[tab,width=3.25cm]{beamerthemesidebar}
-  \usepackage{times}
-  \userightsidebarcolortemplate{\color{sidebackground}}
-  \beamertemplateballitem
-  \beamertemplateboldframetitle
-  \beamertemplateboldtitlepage
-}
 
 \title{A Beamer Presentation Using (HA-)Prosper Commands}
 \subtitle{Subtitles Are Also Supported}

@@ -272,6 +272,40 @@ Next, the syntax and effects of the |\note| command
 \end{command}
 
 
+The following element dictates who the note pages are rendered:
+\begin{element}{note page}\yes\yes\yes
+  This template is used to typeset a note page.  The
+  template should contain a mentioning of the insert |\insertnote|,
+  which will contain the note text. To squeeze more onto note pages
+  you might consider changing the size of the \beamer-font |note page|
+  to something small. The default is |\small|.
+  \begin{templateoptions}
+    \itemoption{default}{}
+    The default template shows the last slide in the upper right
+    corner and some ``hints'' that should help you match a note page
+    to the slide that is currently shown.
+    \itemoption{compress}{}
+    The option produces an output that is similar to the default, only
+    more fits onto each note page at the price of legibility.
+    \itemoption{plain}{}
+    Just inserts the note text, no fancy hints.
+  \end{templateoptions}
+  The following two inserts are useful for note pages:
+  \begin{itemize}
+    \iteminsert{\insertnote}
+    Inserts the text of the current note into the template.
+    \iteminsert{\insertslideintonotes}\marg{magnification}
+    Inserts a ``mini picture'' of the last slide into the current
+    note. The slide will be scaled by the given magnification.
+
+    \example |\insertslideintonotes{0.25}|
+
+    This will give a mini slide whose width and height are one fourth of
+    the usual size.
+  \end{itemize}
+\end{element}
+
+
 
 \subsubsection{Specifying Which Notes and Frames Are Shown}
 
@@ -313,22 +347,6 @@ explained in the following.
 
 
 
-\subsubsection{Changing the Appearance of Notes}
-
-By default, notes are put on a page that contains your text,
-some information that should make it easier to match the note to the
-frame while talking, and a little ``mini version'' of the slide coming
-before the note (this mini version contains only the body of the
-frame, the headline, footline, and sidebars are not shown). 
-
-You can change this appearance by specifying a different template for
-note rendering, see Section~\ref{section-note-templates} for
-details. In most cases it will be sufficient to say either
-|\beamertemplatenoteplain| in your preamble, which will give you
-``plain'' notes without anything on them but your text, or
-|\beamertemplatenotecompress|, which will give you notes with more
-space on them.
-
 
 
 
@@ -354,53 +372,10 @@ The article mode of a presentation is created by specifying |article|
 or |book| or some other class as the document class instead of
 |beamer| and by then loading the package |beamerarticle|.
 
-%The class option |class=|\meta{class name}, where
-%\meta{class name} is the name of another document class like
-%|article| or |report|, causes the |beamer| class to transfer control
-%almost immediately to the class named \meta{class name}. None of the
-%normal commands defined by the \beamer\ class will be 
-%defined, except for one: |\mode|. All
-%class options passed to the \beamer\ class will be passed on to the
-%class \meta{class name}, \emph{except}, naturally, for the option
-%|class=|\meta{class name} itself.
-
-%\begin{classoption}{class={\normalfont\meta{another class
-%        name}}{\opt{,{\normalfont\meta{options for another class}}}}}
-%  Transfer control to document class \meta{another class name} with
-%  the options \meta{options for another class}.
-  
-%  \example
-%\begin{verbatim}
-%\documentclass[class=article,a4paper]{beamer}
-%\end{verbatim}
-%  This will cause the rest of the text to be typeset using the
-%  |article| class with the only class option being
-%  |a4paper|.
-%\end{classoption}
-
-%Since \beamer\ gives over control to another class almost immediately,
-%none of the usual commands like |\frame| and so on are defined in
-%|article| mode initially. The only command that is guaranteed to be
-%defined is |\mode|; which can be used to ``comment out'' all of
-%\beamer's commands. For example, in your preamble you might write
-%things like
-%\begin{verbatim}
-%\mode<presentation>{\usepackage{beamerthemeshadow}}
-%\mode<article>{\usepackage{fullpage}}
-%\mode<all>{
-%  \usepackage{times}
-%  \newcommand{\myfavoritecommand}{...}
-%}
-%\end{verbatim}
-
-%However, for the main text this is very bothersome and there is a much
-%better way: 
-                                %You can include the package
-%|beamerbasearticle|.
 The package |beamerarticle| defines virtually all of \beamer's
 commands in a way that is sensible for the |article| mode. Also,
 overlay specifications can be given to commands like |\textbf| or
-|\item| once |beamerbasearticle| has been 
+|\item| once |beamerarticle| has been 
 loaded. Note that, except for |\item|, these overlay specifications
 also work: by writing |\section<presentation>{Name}| you will suppress
 this section command in the article version. For the exact effects
@@ -584,7 +559,7 @@ subdirectory for files starting with |beamerexample2|.
 \subsubsection{Including Slides from the Presentation Version in the
   Article Version}
 
-If you use the package |beamerbasearticle|, the |\frame| command
+If you use the package |beamerarticle|, the |\frame| command
 becomes available in |article| mode. By adjusting the frame template,
 you can ``mimic'' the appearance of frames typeset by \beamer\ in
 your articles. However, sometimes you may wish to insert ``the real

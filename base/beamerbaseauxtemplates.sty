@@ -732,36 +732,37 @@
 % Note templates
 %
 
-\newcommand{\beamertemplatenoteplain}{
-  \usetemplatenote{\small\insertnote}}
+\defbeamertemplate{note page}{plain}
+{\insertnote}
 
-\newcommand{\beamertemplatenotecompress}{
-\usetemplatenote{\tiny
-  \let\\=\relax%
-  \insertvrule{0.125\paperheight}{white!90!black}%
-  \vskip-0.125\paperheight
-  \nointerlineskip
-  \vbox{\hfill\insertslideintonotes{0.125}\hskip-\Gm@rmargin\hskip0pt%
-    \vskip-0.125\paperheight\nointerlineskip}%
-  \nointerlineskip
-  \vbox to .125\paperheight{
-  \setbox\beamer@tempbox=\hbox{\hbox{\insertsection}}%
-  \ht\beamer@tempbox=1em
-  \box\beamer@tempbox
-  \nointerlineskip
-  \setbox\beamer@tempbox=\hbox{\hbox{\quad\insertsubsection}}%
-  \ht\beamer@tempbox=1em
-  \box\beamer@tempbox
-  \nointerlineskip
-  \setbox\beamer@tempbox=\hbox{\hbox{\quad\quad\insertshortframetitle}}%
-  \ht\beamer@tempbox=1em
-  \box\beamer@tempbox
-  \vfil
-  }\vskip0.5em
-  \small
+\defbeamertemplate{note page}{compressed}
+{%
+  {%
+    \tiny
+    \let\\=\relax%
+    \insertvrule{0.125\paperheight}{white!90!black}%
+    \vskip-0.125\paperheight
+    \nointerlineskip
+    \vbox{\hfill\insertslideintonotes{0.125}\hskip-\Gm@rmargin\hskip0pt%
+      \vskip-0.125\paperheight\nointerlineskip}%
+    \nointerlineskip
+    \vbox to .125\paperheight{
+      \setbox\beamer@tempbox=\hbox{\hbox{\insertsection}}%
+      \ht\beamer@tempbox=1em
+      \box\beamer@tempbox
+      \nointerlineskip
+      \setbox\beamer@tempbox=\hbox{\hbox{\quad\insertsubsection}}%
+      \ht\beamer@tempbox=1em
+      \box\beamer@tempbox
+      \nointerlineskip
+      \setbox\beamer@tempbox=\hbox{\hbox{\quad\quad\insertshortframetitle}}%
+      \ht\beamer@tempbox=1em
+      \box\beamer@tempbox
+      \vfil
+    }\vskip0.5em
+  }
   \nointerlineskip
   \insertnote
-}
 }
 
 

@@ -90,8 +90,10 @@
 {\endlist}
 
 \newenvironment{element}[4]{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
-\item \textbf{Element} {\ttfamily{\declare{#1}}}\hfill%
-  {\choosecol#2Template #2} {\choosecol#3Color #3} {\choosecol#4Font #4}\par\topsep=0pt%
+\item \textbf{\ifx#2\semiyes Parent Beamer-Template\else%
+    Beamer\applier#2{-Template}\applier#3{\applier#2{/}-Color}\applier#4{\ifx#2\yes/\else\ifx#3\yes/\fi\fi
+      -Font}\fi}
+    {\ttfamily{\declare{#1}}}\par\topsep=0pt%
   \edef\parameters{%
     \ifx#2\semiyes parent template\else%
     \applier#2{template}\applier#3{\applier#2{/}color}\applier#4{\ifx#2\yes/\else\ifx#3\yes/\fi\fi font}\fi}
