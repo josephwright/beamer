@@ -21,7 +21,7 @@
 % Versioning stuff
 %
 \newdimen\beamer@version
-\beamer@version=1.11pt % It is only fitting, that the version should
+\beamer@version=2.00pt % It is only fitting, that the version should
                        % be given in points...
 \def\beamer@endinputifotherversion#1{%
   \let\beamer@next=\relax%
@@ -300,7 +300,7 @@
 \RequirePackage[implicit=false]{hyperref}
 % For hyperlinks
 
-\hypersetup{pdfcreator={LaTeX with beamer class}}
+\hypersetup{pdfcreator={LaTeX with beamer class version 2.00}}
 
 
 \expandafter\input\beamer@size

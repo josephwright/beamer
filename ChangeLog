@@ -1,12 +1,6 @@
-2004-02-13 Till Tantau <tantau@users.sourceforge.net>
+2004-02-18 Till Tantau <tantau@users.sourceforge.net>
 
-	Bugfixes:
-	- Fixed bugs with "jumping" blocks in overlays.
-	- Fixed bug with tabbing in beamerbaseboxes.
-	- Added work-around for problem with black background in older
-	  versions of acroread.
-	- Fixed problems with linebreak in short title and short author
-	  in sidebar themes. 
+	Version 2.00
 
 	Added:
 	- Added placement options to columns and column commands.
@@ -26,7 +20,8 @@
 	- Added professionalfont option.
 	- Added automatic support of serif math minion fonts.
 	- Added option to \pause command to pause only from a specific
-	  slide on.
+	  slide on. 
+	- Added \unpause to stop the last \pause.
 	- Includes enumerate.sty by default and allows one to use its
 	  functionality in beamer.
 	- Added dark and tab options to beamerthemesidebar. Other sidebar
@@ -61,12 +56,13 @@
 	  used instead of the old \frame<all:1> (which is, however, still
 	  supported). 
 	- Made \includegraphics, \pgfimage, and \pgfuseimage
-	  overlay-specification-aware. 
+	  overlay-specification-aware. (useful for pseudo-animations)
 	
 	Changed:
 	- Every frame is now put into a box internally. Slides will never
 	  be split over two pages.
-	- \pause commands now transcends blocks (very useful!)
+	- \pause commands now transcends blocks (very useful, but not
+	  compatible!) 
 	- Balls are now also used for enumerations, not just for itemize
 	  in shadow theme. Use \beamertemplateenumeratealpha to get old
 	  behaviour. 
@@ -121,6 +117,14 @@
 	  material. 
 	- Added TitleGraphic command.
 	- Documented the LyX interface in beameruserguide.pdf.
+	
+	Bugfixes:
+	- Fixed bugs with "jumping" blocks in overlays.
+	- Fixed bug with tabbing in beamerbaseboxes.
+	- Added work-around for problem with black background in older
+	  versions of acroread.
+	- Fixed problems with linebreak in short title and short author
+	  in sidebar themes. 
 
 2004-01-19 Till Tantau <tantau@users.sourceforge.net>
 
