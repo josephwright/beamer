@@ -1,0 +1,117 @@
+\ProvidesPackage{beamerthemesplitcondensed}[2003/10/21]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Paul Gomme <paul-gomme@uiowa.edu> and
+%                   Till Tantau <tantau@cs.tu-berlin.de> 
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+                                % Title page 
+\usetitlepagetemplate{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \Large\structure{\bfseries\inserttitle}
+    \vskip1em\par
+    \normalsize\insertauthor\vskip1em\par
+    {\scriptsize\insertinstitute\par}\par\vskip1em
+    \insertdate\par\vskip1.5em
+    \inserttitlegraphic
+  \end{centering}
+  \vfill
+  }
+
+                                % Frametitles
+\useframetitletemplate{%
+  {\leftskip-\Geom@lmargin\advance\leftskip by0.3cm%
+   \rightskip-\Geom@rmargin plus1fil\advance\rightskip by0.3cm\leavevmode
+    \color{structure}
+    \Large\insertframetitle\par}%
+  }
+
+                                % Sections in headline
+\usesectionheadtemplate
+{\color{white}\tiny\textbf{\insertsectionhead}}
+{\color{shaded}\tiny\textbf{\insertsectionhead}}
+
+\usesubsectionheadtemplate
+{\color{white}\tiny\textbf{\insertsubsectionhead}}
+{\color{structureshaded}\tiny\textbf{\insertsubsectionhead}}
+
+
+                                % Entries in table of contents
+\usetemplatetocsection
+{{\large\color{structure}\inserttocsection}}
+{{\large\color{structureshaded}\inserttocsection}}
+
+                                % Entries in table of contents
+\usetemplatetocsubsection
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
+
+\useframetitletemplate{%
+  {\leftskip-\Geom@lmargin\advance\leftskip by0.3cm%
+   \rightskip-\Geom@rmargin plus1fil\advance\rightskip by0.3cm\leavevmode
+    \color{structure}
+    \Large\textbf{\insertframetitle}\par}%
+  }
+
+                                % Head
+\useheadtemplate{%
+  \vbox{%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
+      \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}\hfil}%
+    \ht\linebox=7pt
+    \dp\linebox=0pt
+    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \hbox to\textwidth{%
+      {\color{black}\hskip-1cm\vrule width.5\paperwidth height\ht\linebox
+      \color{structure}\vrule width.5\paperwidth height\ht\linebox\hskip-\paperwidth\hskip1cm}%
+      \hskip-1cm\box\linebox\hfill\hskip-1cm%
+      }%
+  }%
+}
+
+
+                                % Footline
+\usefoottemplate{%
+  \hbox{%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
+      \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
+    \ht\linebox=7pt%
+    \dp\linebox=0pt%
+    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \color{black}\hskip-\Geom@lmargin\vrule width.5\paperwidth
+    height\ht\linebox\color{structure}\vrule width.5\paperwidth
+    height\ht\linebox\hskip-\paperwidth% 
+    \hbox{\box\linebox\hfill}\hfill\hskip-\Geom@rmargin}}
+
+\def\logo#1{%
+  \def\insertlogo{#1}%
+  \usefoottemplate{%
+    \vbox{%
+      \hbox to\textwidth{\hfill\setbox\logobox=\hbox{\insertlogo}\ht\logobox=0pt\box\logobox\hskip-\Geom@rmargin\hskip0.3cm}\vskip2pt%
+    \hbox{%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
+      \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
+    \ht\linebox=7pt%
+    \dp\linebox=0pt%
+    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \color{black}\hskip-\Geom@lmargin\vrule width.5\paperwidth
+    height\ht\linebox\color{structure}\vrule width.5\paperwidth
+    height\ht\linebox\hskip-\paperwidth% 
+    \hbox{\box\linebox\hfill}\hfill\hskip-\Geom@rmargin}}}}
+
+                                % Background
+\usebackgroundtemplate{}
+
+                                % Blocks
+\useblocktemplate{\medskip{\color{blockstructure}\large\insertblockname}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large\insertblockname}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\insertblockname}\par}{\endgroup\medskip}
+

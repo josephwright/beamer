@@ -2628,6 +2628,18 @@ certain global behaviors of the presentation.
   for different subsections are shown in different lines.
   }
 
+\ClassOption{slidescentered}
+\Description{
+  Place text of slides at the (vertical) center of the slides. This is
+  the default.
+  }
+
+\ClassOption{slidestop}
+\Description{
+  Place text of slides at the (vertical) top of the slides. This
+  corresponds to a vertical ``flush.''
+}
+
 \ClassOption{blue, red, grey, brown}
 \Description{
   These options change the main color of the navigation and title bars
@@ -3353,6 +3365,11 @@ templates.
   Inserts the current footnote text into a template. 
 }
 
+\Command{insertframenumber}
+\Description{
+  Inserts the number of the current frame (not slide) into a template.
+}
+
 \Command{insertframetitle}
 \Description{
   Inserts the current frame title into a template.
@@ -3397,6 +3414,22 @@ templates.
   current section hilighted.
 }
 
+\Command{insertsectionnavigationhorizontal}
+\Parameters{
+\item a width
+\item a text (typical a glue) to be inserted at the left
+\item a text (typical a glue) to be inserted at the right
+  }
+\Description{
+  Inserts a horizontal navigation bar containing all sections, with the
+  current section hilighted. By inserting a triple fill (a
+  \texttt{filll}) you can flush to bar to the left or right.
+}
+\Example
+\begin{verbatim}
+\insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
+\end{verbatim}
+
 \Command{insertshortauthor}
 \Description{
   Inserts the short version of the author into a template.
@@ -3428,6 +3461,11 @@ templates.
   Arabic number) into a template.
 }
 
+\Command{insertsubsection}
+\Description{
+  Inserts the current subsection into a template.
+}
+
 \Command{insertsubsectionnavigation}
 \Parameters{
 \item a width
@@ -3437,10 +3475,21 @@ templates.
   current section, with the current subsection hilighted.
 }
 
-\Command{insertsubsection}
+\Command{insertsubsectionnavigationhorizontal}
+\Parameters{
+\item a width
+\item a text (typical a glue) to be inserted at the left
+\item a text (typical a glue) to be inserted at the right
+  }
 \Description{
-  Inserts the current subsection into a template.
+  Inserts a horizontal navigation bar containing all subsections, with the
+  current section hilighted. By inserting a triple fill (a
+  \texttt{filll}) you can flush to bar to the left or right.
 }
+\Example
+\begin{verbatim}
+\insertsubsectionnavigationhorizontal{.5\textwidth}{}{\hskip0pt plus1filll}
+\end{verbatim}
 
 \Command{inserttitle}
 \Description{

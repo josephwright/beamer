@@ -89,6 +89,48 @@
 \def\textlatin{}
 
 
+%
+% Theme coloring, this should be changed to use xcolor...
+%
+\def\themecolor#1#2#3{
+  \definecolor{structure}{rgb}{#1,#2,#3}
+  \edef\thethemecolor{#1,#2,#3}
+  \pgf@ya=1pt
+  \advance\pgf@ya by-#1pt%
+  \pgf@ya=.4\pgf@ya%
+  \pgf@x=1pt%
+  \advance\pgf@x by-\pgf@ya%
+  \pgf@ya=1pt
+  \advance\pgf@ya by-#2pt%
+  \pgf@ya=.4\pgf@ya%
+  \pgf@y=1pt%
+  \advance\pgf@y by-\pgf@ya%
+  \pgf@ya=1pt
+  \advance\pgf@ya by-#3pt%
+  \pgf@ya=.4\pgf@ya%
+  \pgf@xa=1pt%
+  \advance\pgf@xa by-\pgf@ya%
+  \definecolor{structureshaded}{rgb}{\pgfget{x},\pgfget{y},\pgfget{xa}}
+  \edef\theshadedthemecolor{\pgfget{x},\pgfget{y},\pgfget{xa}}
+  \pgf@ya=1pt
+  \advance\pgf@ya by-#1pt%
+  \pgf@ya=.7\pgf@ya%
+  \pgf@x=1pt%
+  \advance\pgf@x by-\pgf@ya%
+  \pgf@ya=1pt
+  \advance\pgf@ya by-#2pt%
+  \pgf@ya=.7\pgf@ya%
+  \pgf@y=1pt%
+  \advance\pgf@y by-\pgf@ya%
+  \pgf@ya=1pt
+  \advance\pgf@ya by-#3pt%
+  \pgf@ya=.7\pgf@ya%
+  \pgf@xa=1pt%
+  \advance\pgf@xa by-\pgf@ya%
+  \definecolor{structuremedium}{rgb}{\pgfget{x},\pgfget{y},\pgfget{xa}}
+  }
+\themecolor{0.2}{0.2}{0.7}
+
 
 %
 %
@@ -109,6 +151,7 @@
 \subsectionshidefalse
 \subsectionsshadedfalse
 
+\newif\ifbeamer@centered
 
 
 %
@@ -124,6 +167,12 @@
 
 \DeclareOption{inrow}
 {\subsectionrowstrue}
+
+\DeclareOption{slidescentered}
+{\beamer@centeredtrue}
+
+\DeclareOption{slidestop}
+{\beamer@centeredfalse}
 
 \DeclareOption{blue}
 {\themecolor{0.2}{0.2}{0.7}}
@@ -176,7 +225,7 @@
 \DeclareOption{bigger}{\def\beamer@size{{size12.clo}}}
 \DeclareOption{smaller}{\def\beamer@size{{size10.clo}}}
 
-\ExecuteOptions{sans}
+\ExecuteOptions{sans,slidescentered}
 
 \ProcessOptions
 
@@ -318,46 +367,6 @@
 \definecolor{shaded}{gray}{0.6}
 \definecolor{blockstructure}{rgb}{0.2,0.2,0.7}
 \definecolor{lightgray}{gray}{0.9}
-
-% This should be changed to use xcolor...
-\def\themecolor#1#2#3{
-  \definecolor{structure}{rgb}{#1,#2,#3}
-  \edef\thethemecolor{#1,#2,#3}
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#1pt%
-  \pgf@ya=.4\pgf@ya%
-  \pgf@x=1pt%
-  \advance\pgf@x by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#2pt%
-  \pgf@ya=.4\pgf@ya%
-  \pgf@y=1pt%
-  \advance\pgf@y by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#3pt%
-  \pgf@ya=.4\pgf@ya%
-  \pgf@xa=1pt%
-  \advance\pgf@xa by-\pgf@ya%
-  \definecolor{structureshaded}{rgb}{\pgfget{x},\pgfget{y},\pgfget{xa}}
-  \edef\theshadedthemecolor{\pgfget{x},\pgfget{y},\pgfget{xa}}
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#1pt%
-  \pgf@ya=.7\pgf@ya%
-  \pgf@x=1pt%
-  \advance\pgf@x by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#2pt%
-  \pgf@ya=.7\pgf@ya%
-  \pgf@y=1pt%
-  \advance\pgf@y by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#3pt%
-  \pgf@ya=.7\pgf@ya%
-  \pgf@xa=1pt%
-  \advance\pgf@xa by-\pgf@ya%
-  \definecolor{structuremedium}{rgb}{\pgfget{x},\pgfget{y},\pgfget{xa}}
-  }
-\themecolor{0.2}{0.2}{0.7}
 
 %
 % Page where the appendix start.
@@ -640,7 +649,9 @@
   \vskip0pt plus -1fill%
   {\gdef\insertframetitle{#1\par}\@headrenderer}
   \vskip0.25em%
+  \ifbeamer@centered
   \vfill%
+  \fi
 }
 
 \long\def\useframetitletemplate#1{\def\@headrenderer{#1}}
@@ -819,8 +830,12 @@
 \newif\if@anotherslide
 \newif\if@localanotherslide
 
+\newcounter{framenumber}
+\def\insertframenumber{\@arabic\c@framenumber}
+
 \def\frame{\@ifnextchar[{\@frame}{\@frame[+]}}
 \def\@frame[#1]{%
+  \refstepcounter{framenumber}%
   {\let\@elt\@savecounter\@overlaycounterresets}
   \gdef\insertframetitle{}%
   \gdef\beamer@framestartpage{}%
@@ -1121,7 +1136,7 @@
     \tempheight=\ht\tempbox%
     \setbox\tempbox=\hbox{\lower\tempheight\hbox{\box\tempbox}}\wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
     \vbox{\hbox{\hskip-\Geom@lmargin\box\tempbox}\hbox{\@headtemplate}\hfil}}
-  \def\@oddfoot{\@foottemplate\hypertarget{Navigation\thepage}{}\hfill}
+  \def\@oddfoot{\@foottemplate\hypertarget{Navigation\thepage}{}\hfil}
   \let\@evenhead\@oddhead
   \let\@evenfoot\@oddfoot}
 \pagestyle{navigation}
@@ -1174,12 +1189,12 @@
     \def\appendixslideentry{\fakeslideentry}%
     \fi%
     \hbox to #1{\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
-        \hskip0pt plus-1fill\dohead%
+        \hskip-5pt plus-1fill\dohead%
       \box\sectionbox\hfil\hskip.3cm}%
   }}
 
 \def\sectionentry#1#2#3#4{% section name, section title, page
-  \box\sectionbox\hfill
+  \box\sectionbox\hskip5pt plus 1fill%
   \setbox\sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \ifnum\thesection=#1%
@@ -1188,7 +1203,7 @@
   \ignorespaces}
 
 \def\appendixsectionentry#1#2#3#4{% section name, section title, page
-  \box\sectionbox\hfill
+  \box\sectionbox\hskip5pt plus 1fill%
   \setbox\sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \ifnum\thesection=#1%
@@ -1286,7 +1301,21 @@
      \else%
      \def\appendixsectionentry##1##2##3##4{}%
      \fi%
-     \dohead\vskip1.5pt}\hfill}}
+     \dohead\vskip1.5pt}\hfil}}
+
+\def\insertsectionnavigationhorizontal#1#2#3{%
+  \hbox to #1{%
+     \def\slideentry##1##2##3##4##5{}%
+     \def\appendixslideentry##1##2##3##4##5{}%
+     \ifbeamer@inappendix%
+     \def\sectionentry##1##2##3##4{}%
+     \else%
+     \def\appendixsectionentry##1##2##3##4{}%
+     \fi%
+     #2\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
+     \hskip-5pt plus-1fill\dohead%
+     \box\sectionbox\hfil\hskip.3cm%
+     #3}}
 
 \newcount\currentsubsection
 \def\insertsubsectionnavigation#1{%
@@ -1319,7 +1348,42 @@
       \else%
       \def\appendixslideentry##1##2##3##4##5{}%
       \fi%
-      \dohead\vskip1.5pt}\hfill}}
+      \dohead\vskip1.5pt}\hfil}}
+
+\def\insertsubsectionnavigationhorizontal#1#2#3{%
+  \hbox to #1{%
+    \currentsubsection=1%
+    \def\sectionentry##1##2##3##4{}%
+    \def\appendixsectionentry##1##2##3##4{}%
+    \def\slideentry##1##2##3##4##5{\ifnum##1=\thesection%
+      \ifnum##2=\currentsubsection%
+      \advance\currentsubsection by1%
+      \box\sectionbox\hskip5pt plus1fill%
+      \setbox\sectionbox=
+      \hbox{\def\insertsubsectionhead{##5}%
+        \ifnum\thesubsection=##2%
+        \beamer@link(##4){\@subsectionheadhilight}\else%
+        \beamer@link(##4){\@subsectionheadnohilight}\fi}%
+      \fi\fi\ignorespaces}%
+    \def\appendixslideentry##1##2##3##4##5{%
+      \ifnum##2=\currentsubsection%
+      \advance\currentsubsection by1%
+      \box\sectionbox\hskip5pt plus1fill%
+      \setbox\sectionbox=
+      \hbox{\def\insertsubsectionhead{##5}%
+        \ifnum\thesubsection=##2%
+        \beamer@link(##4){\@subsectionheadhilight}\else%
+        \beamer@link(##4){\@subsectionheadnohilight}\fi}%
+      \fi\ignorespaces}%
+    \ifbeamer@inappendix%
+      \def\slideentry##1##2##3##4##5{}%
+    \else%
+      \def\appendixslideentry##1##2##3##4##5{}%
+    \fi%
+    #2\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
+    \hskip-5pt plus-1fill\dohead%
+    \box\sectionbox\hfil\hskip.3cm%
+    #3}}
 
 \long\def\usesubsectionheadtemplate#1#2{\def\@subsectionheadhilight{#1}\def\@subsectionheadnohilight{#2}}
 
