@@ -294,6 +294,10 @@
   % Fix $$ usage in multicolumn:
   \let\beamer@orig@start@multline=\start@multline
   \def\start@multline{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@multline}
+  
+  % Fix $$ usage in eqnarray:
+  \let\beamer@orig@eqnarray=\eqnarray
+  \def\eqnarray{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@eqnarray}
 
   % Fix \text:
   \let\beamer@orig@text@=\text@

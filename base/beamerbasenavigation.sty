@@ -547,8 +547,6 @@
   \dp\beamer@sectionbox=0.75ex%
   \fi\ignorespaces}
 
-\def\usesectionsidetemplate#1#2{\gdef\beamer@sectionsidehilight{#1}\gdef\beamer@sectionsidenohilight{#2}}
-
 \def\beamer@nav@subsectionstyle#1{\beamer@toc@sprocess\beamer@nav@css\beamer@nav@oss\beamer@nav@ooss#1///}
 \beamer@nav@subsectionstyle{show}
 
@@ -564,12 +562,16 @@
           \hyperlink{Navigation##3}{%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=0\relax%
-              {\beamer@sectionsidehilight}%
+              {\usebeamertemplate{section in sidebar}}%
             \else%
-              \ifx\beamer@nav@css\beamer@hidetext{\beamer@sectionsidehilight}\else{\beamer@sectionsidenohilight}\fi%
+              \ifx\beamer@nav@css\beamer@hidetext%
+                {\usebeamertemplate{section in sidebar}}%
+              \else%
+                {\usebeamertemplate{section in sidebar shaded}}%
+              \fi%
             \fi%
           \else
-            {\beamer@sectionsidenohilight}%
+            {\usebeamertemplate{section in sidebar shaded}}%
           \fi}}}%
       \beamer@currentsubsection=0\relax\fi}%
     \def\slideentry##1##2##3##4##5##6{%
@@ -586,12 +588,12 @@
           \beamer@link(##4){%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=##2%
-              {\beamer@subsectionsidehilight}%
+              {\usebeamertemplate{subsection in sidebar}}%
             \else%
-              {\beamer@subsectionsidenohilight}%
+              {\usebeamertemplate{subsection in sidebar shaded}}%
             \fi%
           \else%
-            {\beamer@subsectionsidenohilight}%
+            {\usebeamertemplate{subsection in sidebar shaded}}%
           \fi}}}%
       }%
       \fi\fi}%
@@ -755,8 +757,6 @@
     \box\beamer@sectionbox\hfil\hskip.3cm%
     #3}}}
 
-
-\def\usesubsectionsidetemplate#1#2{\gdef\beamer@subsectionsidehilight{#1}\gdef\beamer@subsectionsidenohilight{#2}}
 
 
 %

@@ -721,7 +721,6 @@ following templates:
     or frame number in the footline.
   \end{element}
 \end{element}
-\label{section-navigation-bars}
 
 
 
@@ -886,6 +885,7 @@ next to the left sidebar, you might write
 
 
 \subsubsection{Navigation Bars}
+\label{section-navigation-bars}
 
 Many themes install a headline or a sidebar that shows a
 \emph{navigation bar}. Although these navigation bars take up quite
@@ -1069,6 +1069,45 @@ can use it to jump to the different subsections.
   \end{templateoptions}
 \end{element}
 
+
+
+\begin{element}{section in sidebar}\yes\yes\yes
+  This template is used to render a section entry if it occurs in the
+  sidebar, typically as part of a mini table of contents shown
+  there. The background of the \beamer-color is used as background for
+  the entry. Just like |section in head/foot|, you cannot usually use
+  this template yourself and you should also use |\insertsectionhead|
+  to insert the name of the section that is to be typeset.
+
+  For once, no default is installed for this template.
+
+  \begin{templateoptions}
+    \itemoption{sidebar theme}{}
+    This template, which is only available if the |sidebar| outer
+    theme is loaded, inserts a bar with the \beamer-color's
+    foreground and background that shows the section  name. The width of
+    the bar is the same as the width of the whole sidebar.
+  \end{templateoptions}
+
+  The same inserts as for |section in head/foot| can be used.
+\end{element}
+
+\begin{element}{section in sidebar shaded}\yes\yes\no
+  This template is used instead of |section in sidebar| for
+  typesetting sections that are currently shaded. Such shading is
+  usually applied to all sections but the current one.
+
+  Differently from |section in head/foot shaded|, this tempalte
+  \emph{has} its own \beamer-color.
+
+  \begin{templateoptions}
+    \itemoption{sidebar theme}{}
+    Does the same as for the nonshaded version, except that a
+    different \beamer-color is used.
+  \end{templateoptions}
+\end{element}
+
+
 \begin{element}{subsection in head/foot}\yes\yes\yes
   This template behaves exactly like |section in head/foot|, only for
   subsections. 
@@ -1081,7 +1120,7 @@ can use it to jump to the different subsections.
   \end{itemize}
 \end{element}
 
-\begin{element}{section in head/foot shaded}\yes\no\no
+\begin{element}{subsection in head/foot shaded}\yes\no\no
   This template behaves exactly like |section in head/foot shaded|,
   only for subsections. 
   \begin{templateoptions}
@@ -1094,6 +1133,16 @@ can use it to jump to the different subsections.
 \setbeamertemplate{subsection in head/foot shaded}[default][20]
 \end{verbatim}
   \end{templateoptions}
+\end{element}
+
+\begin{element}{subsection in sidebar}\yes\yes\yes
+  This template behaves exactly like |section in sidebar|, only for
+  subsections. 
+\end{element}
+
+\begin{element}{subsection in head/foot shaded}\yes\no\no
+  This template behaves exactly like |section in sidebar shaded|,
+  only for subsections. 
 \end{element}
 
 By clicking on the document title in a navigation bar (not all themes

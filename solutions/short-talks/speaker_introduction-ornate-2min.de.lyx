@@ -3,15 +3,13 @@
 \textclass beamer
 \begin_preamble
 
-\beamertemplateshadingbackground%
-  {beamerstructure!25}{white}
-% or whatever
+\setbeamertemplate{background canvas}[vertical shading][bottom=white,top=structure.fg!25]
+% Oder was auch immer.
 
 \usetheme{Warsaw}
-
-\usefoottemplate{}
-\useheadtemplate{}
-\beamersetleftmargin{0.5cm}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\setbeamersize{text margin left=0.5cm}
 % or whatever
   
 \end_preamble

@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2004/09/17 v2.21-cvs Class for Typesetting a Beamer Presentation]
+[2004/09/23 v2.99 Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -8,6 +8,9 @@
 % of the GNU Public License, version 2.
 
 
+\newdimen\beamer@version
+\beamer@version=2.99pt % It is only fitting, that the version should
+                       % be given in points...
 
 
 \RequirePackage{beamerbasemodes}

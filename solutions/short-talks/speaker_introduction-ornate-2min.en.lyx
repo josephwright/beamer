@@ -3,17 +3,13 @@
 \textclass beamer
 \begin_preamble
 
-\beamertemplateshadingbackground%
-  {beamerstructure!25}{white}
+\setbeamertemplate{background canvas}[vertical shading][bottom=white,top=structure.fg!25]
 % or whatever
 
 \usetheme{Warsaw}
-
-\usefoottemplate{}
-\useheadtemplate{}
-\beamersetleftmargin{0.5cm}
-% or whatever
-  
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\setbeamersize{text margin left=0.5cm}  
 \end_preamble
 \language english
 \inputencoding auto

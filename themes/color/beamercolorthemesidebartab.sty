@@ -9,15 +9,15 @@
 
 \mode<presentation>
 
-\setbeamercolor*{section in sidebar}{parent=palette sidebar secondary}
-\setbeamercolor*{section in sidebar current}
-  {parent=section in sidebar,use={sidebar,section in sidebar},%
-   bg=sidebar.bg!70!section in sidebar.fg}
+\setbeamercolor*{section in sidebar shaded}{parent=palette sidebar secondary}
+\setbeamercolor*{section in sidebar}
+  {parent=section in sidebar shaded,use={sidebar,section in sidebar shaded},%
+   bg=sidebar.bg!70!section in sidebar shaded.fg}
     
-\setbeamercolor*{subsection in sidebar}{parent=palette sidebar primary}
-\setbeamercolor*{subsection in sidebar current}
-  {parent=subsection in sidebar,use=section in sidebar current,%
-   bg=section in sidebar current.bg}
+\setbeamercolor*{subsection in sidebar shaded}{parent=palette sidebar primary}
+\setbeamercolor*{subsection in sidebar}
+  {parent=subsection in sidebar shaded,use=section in sidebar,%
+   bg=section in sidebar.bg}
 
 \mode
 <all>

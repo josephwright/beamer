@@ -73,6 +73,7 @@
   }
 \fi
 
+
 \def\beamer@sidebarformat#1#2#3{%
   \begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=1ex plus1fil,vmode]{#2}
     \vbox{}%
@@ -81,33 +82,32 @@
     \vskip-1.5ex%
   \end{beamercolorbox}
 }
-                                % Sections in sidebar
-\usesectionsidetemplate
+
+\defbeamertemplate*{section in sidebar}{sidebar theme}
 {%
-  \usebeamerfont{section in sidebar}%
-  \vbox{%
-    \vskip1ex%
-    \beamer@sidebarformat{3pt}{section in sidebar current}{\insertsectionhead}%
-  }%
-}
-{%
-  \usebeamerfont{section in sidebar}%
   \vbox{%
     \vskip1ex%
     \beamer@sidebarformat{3pt}{section in sidebar}{\insertsectionhead}%
   }%
 }
 
-\usesubsectionsidetemplate
+\defbeamertemplate*{section in sidebar shaded}{sidebar theme}
 {%
-  \usebeamerfont{subsection in sidebar}%
-  \beamer@sidebarformat{5pt}{subsection in sidebar current}{\insertsubsectionhead}%
+  \vbox{%
+    \vskip1ex%
+    \beamer@sidebarformat{3pt}{section in sidebar shaded}{\insertsectionhead}%
+  }%
 }
+
+\defbeamertemplate*{subsection in sidebar}{sidebar theme}
 {%
-  \usebeamerfont{subsection in sidebar}%
   \beamer@sidebarformat{5pt}{subsection in sidebar}{\insertsubsectionhead}%
 }
 
+\defbeamertemplate*{subsection in sidebar shaded}{sidebar theme}
+{%
+  \beamer@sidebarformat{5pt}{subsection in sidebar shaded}{\insertsubsectionhead}%
+}
 
 
 \ifdim\beamer@sidebarwidth>0pt
