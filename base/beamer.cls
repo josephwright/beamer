@@ -117,6 +117,7 @@
 \DeclareOptionBeamer{slidestop}
 {\beamer@centeredfalse}
 
+% Obsolete, do not use:
 \DeclareOptionBeamer{blue}{\def\beamer@structurecolor{0.2,0.2,0.7}}
 \DeclareOptionBeamer{red}{\def\beamer@structurecolor{0.7,0.2,0.2}}
 \DeclareOptionBeamer{blackandwhite}{\def\beamer@structurecolor{0.2,0.2,0.2}}
@@ -287,7 +288,7 @@
 % Process Options
 %
 
-\ExecuteOptionsBeamer{blue,sans,slidescentered}
+\ExecuteOptionsBeamer{sans,slidescentered}
 
 \ProcessOptionsBeamer
 
@@ -325,8 +326,15 @@
 
 \expandafter\input\beamer@size
 \geometry{headsep=0pt}
-\definecolor{structure}{rgb}{\beamer@structurecolor}
 
+\ifx\beamer@structurecolor\@undefined
+\else
+\AtBeginDocument
+{
+  \definecolor{beamer@structure}{rgb}{\beamer@structurecolor}
+  \setbeamercolor{structure}{fg=beamer@structure}
+}
+\fi
 
 \RequirePackage{beamerbasecompatibility}
 % Fixes other packages

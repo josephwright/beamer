@@ -288,6 +288,12 @@
 
 \AtBeginDocument{
   \colorlet{averagebackgroundcolor}{bg}
+  {
+    \usebeamercolor[fg]{structure}
+    \globalcolorstrue
+    \colorlet{structure}{fg}
+    \colorlet{beamerstructure}{structure}
+  }
 }
 
 \mode
@@ -301,10 +307,11 @@
 }
 
 \colorlet{alert}{red!95!black}
+\colorlet{structure}{black} % dummy
 
 \colorlet{beameralert}{alert}
 \colorlet{beamerexample}{green!50!black}
-\colorlet{beamerstructure}{structure}
+\colorlet{beamerstructure}{structure} % dummy
 
 \mode
 <article>
