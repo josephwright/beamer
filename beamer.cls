@@ -1558,8 +1558,8 @@
   \def\thirdblocktemplate{#3}%
   \def\otherblocktemplate{#4}}
 
-\pgfdeclareimage{beamericonarticle}{9pt}{10.125pt}{beamericonarticle}
-\usebibitemtemplate{\lower2pt\hbox{\pgfuseimage{beamericonarticle}}}
+\pgfdeclareimage{beamericonarticle}{11pt}{14pt}{beamericonarticle}
+\usebibitemtemplate{\lower3pt\hbox{\hskip1.5pt\pgfuseimage{beamericonarticle}}}
 \usebibliographyblocktemplate
   {\color{structure}}
   {\par\color{black}}
