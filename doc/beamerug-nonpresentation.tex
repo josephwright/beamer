@@ -1,0 +1,890 @@
+
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\section{Managing Non-Presentation Versions and Material}
+
+\label{section-modes}
+
+The \beamer\ package offers different ways of creating special
+versions of your talk and adding material that is not shown during
+the presentation. You can create a \emph{handout} version of the
+presentation that can be distributed to the audience. You can also
+create a version that is more suitable for a presentation using an
+overhead projector. You can add notes for yourself that help
+you remember what to say for specific slides. Finally, you can have a
+completely independent ``article'' version of your presentation 
+coexist in your main file. All special versions are created by
+specifying different class options and rerunning \TeX\ on the main
+file. 
+
+
+
+
+
+
+\subsection{Creating Handouts}
+
+\label{handout}
+
+A \emph{handout} is a version of a presentation in which the slides
+are printed on paper and handed out to the audience before or after
+the talk. (See Section~\ref{section-postscript} for how to place
+numerous frames on one page, which is very useful for handouts.)  For
+the handout you typically want to produce as few slides as possible
+per frame. In particular, you do not want to print a new slide for
+each slide of a frame. Rather, only the ``last'' slide should be
+printed.  
+
+In order to create a handout, specify the class option
+|handout|. If you do not specify anything else, this will cause
+all overlay specifications to be suppressed. For most cases this will
+create exactly the desired result.
+
+\begin{classoption}{handout}
+  Create a version that uses the |handout| overlay specifications.
+\end{classoption}
+
+In some cases, you may want a more complex behaviour. For example, if
+you use many |\only| commands to draw an animation. In this case,
+suppressing all overlay specifications is not such a good idea, since
+this will cause all steps of the animation to be shown at the same
+time. In some cases this is not desirable. Also, it might be desirable
+to suppress some |\alert| commands that apply only to specific
+slides in the handout.
+
+For a fine-grained control of what is shown on a handout, you can use
+\emph{mode specifications}. They specify which slides
+ of a frame should be shown for a special version, for example for the
+handout version. As explained in
+Section~\ref{section-concept-overlays}, a mode specification is written
+alongside the normal overlay specification inside the pointed
+brackets. It is separated from the normal specification by a vertical
+bar and a space. Here is an example:
+\begin{verbatim}
+  \only<1-3,5-9| handout:2-3,5>{Text}
+\end{verbatim}
+This specification says: ``Normally (in |beamer| mode), insert the
+text on slides 1--3 and 5--9. For the handout version, insert the text
+only on slides 2,~3, and~5.'' If no special mode specification is
+given for handouts, the default is ``always.'' This causes the
+desirable effect that if you do not specify anything, the overlay
+specification is effectively suppressed for the handout.
+
+An especially useful specification is the following:
+\begin{verbatim}
+  \only<3| handout:0>{Not shown on handout.}
+\end{verbatim}
+Since there is no zeroth slide, the text is not shown. Likewise,
+\verb!\alert<3| handout:0>{Text}! will not alert the text on a
+handout.
+
+You can also use a mode specification for the overlay specification
+of the |\frame| command as in the following example.
+\begin{verbatim}
+\frame<1-| handout:0>{Text...}
+\end{verbatim}
+This causes the frame to be suppressed in the handout version. Also,
+you can restrict the presentation such that only specific slides of
+the frame are shown on the handout:
+\begin{verbatim}
+\frame<1-| handout:4-5>{Text...}
+\end{verbatim}
+
+It is also possible to give only an alternate overlay
+specification. For example, |\alert<handout:0>{...}| causes the
+text to be always hilighted during the presentation, but never on the
+handout version. Likewise, |\frame<handout:0>{...}| causes the
+frame to be suppressed for the handout.
+
+Finally, note that it is possible to give more than one alternate
+overlay specification and in any order. For example, the following
+specification states that the text should be inserted on the first
+three slides in the presentation, in the first two slides of the
+transparency version, and not at all in the handout.
+\begin{verbatim}
+  \only<trans:1-2| 1-3| handout:0>{Text}
+\end{verbatim}
+
+If you wish to give the same specification in all versions, you can do
+so by specifying |all:| as the version. For example,
+\begin{verbatim}
+\frame<all:1-2>{blah...}
+\end{verbatim}
+ensures that the frame has two slides in all versions. 
+
+
+
+
+\subsection{Creating Transparencies}
+
+\label{trans}
+
+The main aim of the \beamer\ class is to create presentations for
+beamers. However, it is often useful to print transparencies as
+backup, in case the hardware fails. A transparencies version of a talk
+often has less slides than the main version, since it takes more time
+to switch slides, but it may have more slides than the handout
+version. For example, while in a handout an animation might be
+condensed to a single slide, you might wish to print several slides
+for the transparency version.
+
+You can use the same mechanism as for creating handouts: Specify
+|trans| as a class option and add alternate transparency
+specifications for the |trans| version as needed. An elaborated
+example of different overlay specifications for the presentation, the
+handout, and the transparencies can be found in the file
+|beamerexample1.tex|.
+
+\begin{classoption}{trans}
+  Create a version that uses the |trans| overlay
+  specifications. 
+\end{classoption}
+
+When printing a presentation using Acrobat, make sure that the option
+``expand small pages to paper size'' in the printer dialog is
+enabled. This is necessary, because slides are only 128mm times 96mm.
+
+
+
+\subsection{Adding Notes}
+
+A \emph{note} is a small piece of paper that is intended as a reminder
+to yourself of what you should say or should keep in 
+mind when presenting a slide.
+
+
+
+\subsubsection{Specifying Note Contents}
+
+To add a note to a slide or a frame, you should use the |\note|
+command. This command can be used both inside and outside frames, but
+it has quite different behaviors then: Inside frames, |\note| commands
+accumulate and append a single note page after the current slide;
+outside frames each |\note| directly inserts a single note page with
+the given parameter as contents. Using the |\note| command inside
+frames is usually preferably over using them outside, since only
+commands issued inside frames profit from the class option
+|onlyslideswithnotes|, see below.
+
+\lyxnote
+In \LyX, only the inside-frame |\note| command with the option
+|[item]| is available in the form of the NoteItem style. 
+
+Inside a frame, the effect of |\note|\meta{text} is the following:
+When you use it somewhere inside the frame on a specific slide, a note
+page is created after the slide, containing the \meta{text}. Since you
+can add an overlay specification to the |\note| command, you can
+specify after which slide the note should be shown. If you use
+multiple |\note| commands on one slide, they ``accumulate'' and are
+all shown on the same note.
+
+To make the accumulation of notes more convenient, you can use the
+|\note| command with the option |[item]|. The notes added with this
+option are accumulated in an |enumerate| list that follows any text
+inserted using |\note|. 
+
+The following example will produce one note page that follows the
+second slide and has two entries. 
+
+\begin{verbatim}
+\begin{frame}
+  \begin{itemize}
+  \item<1-> Eggs
+  \item<2-> Plants
+    \note[item]<2>{Tell joke about plants.}
+    \note[item]<2>{Make it short.}
+  \item<3-> Animals
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+
+
+Outside frames, the command |\note| creates a single note page. It
+is ``independent'' of any usage of the |\note| commands
+inside the previous frame. If you say |\note| inside a frame and
+|\note| right after it, \emph{two} note pages are created.
+
+In the following, the syntax and effects of the |\note| command
+\emph{inside} frames is described:
+
+\begin{command}{\note\sarg{overlay
+      specification}\oarg{options}\marg{note text}}
+  Effects \emph{inside} frames:
+  
+  This command appends the \meta{note text} to
+  the note that follows the current slide. Multiple uses of this
+  command on a slide accumulate. If you 
+  do not specify an \meta{overlay specification}, the 
+  note will be added to \emph{all} slides of the current frame. This
+  is often not what you want, so adding a specification like |<1>| is
+  usually a good idea.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|item|} causes the note to be put as an item in a
+    list that is shown at the end of the note page.
+  \end{itemize}
+    
+  \example|\note<2>{Do not talk longer than 2 minutes about this.}|
+
+  \articlenote
+  Notes are ignored in |article| mode.
+
+  \lyxnote
+  Use the NoteItem style to insert a note item. 
+\end{command}
+
+
+Next, the syntax and effects of the |\note| command
+\emph{outside} frames are described:
+
+\begin{command}{\note\oarg{options}\marg{note text}}
+  Outside frames, this command creates a note page. This command is  
+  \emph{not} affected by the option |notes=onlyframeswithnotes|, see
+  below.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|itemize|} will enclose the whole note page in an
+    |itemize| environment. This is just a convenience.
+  \item \declare{|enumerate|} will enclose the whole note page in an
+    |enumerate| environment.
+  \end{itemize}
+  
+  \example
+\begin{verbatim}
+\frame{some text}
+\note{Talk no more than 1 minute.}
+
+\note[enumerate]
+{
+\item Stress this first.
+\item Then this.
+}
+\end{verbatim}
+
+  \articlenote
+  Notes are ignored in |article| mode.
+\end{command}
+
+
+
+\subsubsection{Specifying Which Notes and Frames Are Shown}
+
+Since you normally do not wish the notes to be part of your
+presentation, you must explicitly specify the class option
+|notes| to include notes. If this option is not specified, notes
+are suppressed.
+
+The |notes| class option takes several parameters whose effects are
+explained in the following.
+
+
+\begin{classoption}{notes=hide}
+  Notes are not shown. This is the default in a presentation.
+\end{classoption}
+
+\begin{classoption}{notes=show}
+  Include notes in the output file. Normal slides are also included. 
+\end{classoption}
+
+\begin{classoption}{notes=only}
+  Include only the notes in the output file and suppresses all
+  frames. Useful for printing them. If you specify this command, the
+  |.aux| and |.toc| files are \emph{not} updated. So, if you add a
+  section and re\TeX\ your presentation, this will not be reflected in
+  the navigation bars (which you do not see anyway since only notes
+  are output).
+\end{classoption}
+
+\begin{classoption}{notes=onlyslideswithnotes}
+  This includes all notes and those slides that \emph{contain} a
+  |\note|. Frames that are just ``followed'' by a |\note| command will
+  not be included. 
+
+  If you use only |\note| commands, this option will cause the frames
+  and the notes that apply to them to be nicely paired. This is useful
+  for printing.
+\end{classoption}
+
+
+
+\subsubsection{Changing the Appearance of Notes}
+
+By default, notes are put on a page that contains your text,
+some information that should make it easier to match the note to the
+frame while talking, and a little ``mini version'' of the slide coming
+before the note (this mini version contains only the body of the
+frame, the headline, footline, and sidebars are not shown). 
+
+You can change this appearance by specifying a different template for
+note rendering, see Section~\ref{section-note-templates} for
+details. In most cases it will be sufficient to say either
+|\beamertemplatenoteplain| in your preamble, which will give you
+``plain'' notes without anything on them but your text, or
+|\beamertemplatenotecompress|, which will give you notes with more
+space on them.
+
+
+
+
+
+\subsection{Creating an Article Version}
+
+\label{section-article}
+
+In the following, the ``article version'' of your presentation refers
+to a normal \TeX\ text typeset using, for example, the document class
+|article| or perhaps |llncs| or a similar document
+class. This version of the presentation will typically follow
+different typesetting rules and may even have a different
+structure. Nevertheless, you may wish to have this version coexist
+with your presentation in one file and you may wish to share some part
+of it (like a figure or a formula) with your presentation.
+
+
+
+\subsubsection{Starting the Article Mode}
+
+The article mode of a presentation is created by specifying |article|
+or |book| or some other class as the document class instead of
+|beamer| and by then loading the package |beamerarticle|.
+
+%The class option |class=|\meta{class name}, where
+%\meta{class name} is the name of another document class like
+%|article| or |report|, causes the |beamer| class to transfer control
+%almost immediately to the class named \meta{class name}. None of the
+%normal commands defined by the \beamer\ class will be 
+%defined, except for one: |\mode|. All
+%class options passed to the \beamer\ class will be passed on to the
+%class \meta{class name}, \emph{except}, naturally, for the option
+%|class=|\meta{class name} itself.
+
+%\begin{classoption}{class={\normalfont\meta{another class
+%        name}}{\opt{,{\normalfont\meta{options for another class}}}}}
+%  Transfer control to document class \meta{another class name} with
+%  the options \meta{options for another class}.
+  
+%  \example
+%\begin{verbatim}
+%\documentclass[class=article,a4paper]{beamer}
+%\end{verbatim}
+%  This will cause the rest of the text to be typeset using the
+%  |article| class with the only class option being
+%  |a4paper|.
+%\end{classoption}
+
+%Since \beamer\ gives over control to another class almost immediately,
+%none of the usual commands like |\frame| and so on are defined in
+%|article| mode initially. The only command that is guaranteed to be
+%defined is |\mode|; which can be used to ``comment out'' all of
+%\beamer's commands. For example, in your preamble you might write
+%things like
+%\begin{verbatim}
+%\mode<presentation>{\usepackage{beamerthemeshadow}}
+%\mode<article>{\usepackage{fullpage}}
+%\mode<all>{
+%  \usepackage{times}
+%  \newcommand{\myfavoritecommand}{...}
+%}
+%\end{verbatim}
+
+%However, for the main text this is very bothersome and there is a much
+%better way: 
+                                %You can include the package
+%|beamerbasearticle|.
+The package |beamerarticle| defines virtually all of \beamer's
+commands in a way that is sensible for the |article| mode. Also,
+overlay specifications can be given to commands like |\textbf| or
+|\item| once |beamerbasearticle| has been 
+loaded. Note that, except for |\item|, these overlay specifications
+also work: by writing |\section<presentation>{Name}| you will suppress
+this section command in the article version. For the exact effects
+overlay specifications have in |article| mode, please see the
+descriptions of the commands to which you wish to apply them.
+
+\begin{package}{{beamerarticle}\opt{|[|\meta{options}|]|}}
+  Makes most \beamer\ commands available for another document class.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|activeospeccharacters|} will leave the character code of
+    the pointed brackets as specified by
+    other packages. Normally, \beamer\ will turn off the special
+    behaviour of the two characters |<| and |>|. Using this option,
+    you can reinstall the original behaviour at the price of possible
+    problems when using overlay specifications in the |article| mode.
+  \item
+    \declare{|noamsthm|} will suppress the loading of the |amsthm|
+    package. No theorems will be defined.
+  \item
+    \declare{|notheorem|} will suppress the definition of standard
+    environments like |theorem|, but |amsthm| is still loaded and the
+    |\newtheorem| command still makes the defined environments
+    overlay-specification-aware. Using this option allows you to
+    define the standard environments in whatever way you like while
+    retaining the power of the extensions to |amsthm|.    
+  \item
+    \declare{|envcountsect|} causes theorem, definitions and the like
+    to be numbered with each section. Thus instead of Theorem~1 you
+    get Theorem~1.1. I recommend using this option.
+  \item
+    \declare{|noxcolor|} will suppress the loading of the |xcolor|
+    package. No colors will be defined.
+  \end{itemize}
+
+  \example
+\begin{verbatim}
+\documentclass{article}
+\usepackage{beamerarticle}
+\begin{document}
+\begin{frame}
+  \frametitle{A frame title}
+  \begin{itemize}
+  \item<1-> You can use overlay specifications.
+  \item<2-> This is useful.
+  \end{itemize}
+\end{frame}
+\end{document}
+\end{verbatim}
+\end{package}
+
+There is one remaining problem: While the |article| version can easily
+\TeX\ the whole file, even in the presence of commands like
+|\frame<2>|, we do not want the special article text to be inserted
+into our original \beamer\ presentation. That means, we would like all
+text \emph{between} frames to be suppressed. More precisely, we want
+all text except for commands like |\section| and so on to be
+suppressed. This behaviour can be enforced by specifying the option
+|ignorenonframetext| in the presentation version. The option will
+insert a |\mode*| at the beginning of your presentation. 
+
+The following example shows a simple usage of the |article| mode:
+
+\begin{verbatim}
+\documentclass[a4paper]{article}
+\usepackage{beamerarticle}
+%%\documentclass[ignorenonframetext,red]{beamer}
+
+\mode<article>{\usepackage{fullpage}}
+\mode<presentation>{\usepackage{beamerthemesplit}}
+
+%% everyone:
+\usepackage[english]{babel}
+\usepackage{pgf}
+
+\pgfdeclareimage[height=1cm]{myimage}{filename}
+
+\begin{document}
+
+\section{Introduction}
+
+This is the introduction text. This text is not shown in the
+presentation, but will be part of the article.
+
+\begin{frame}
+  \begin{figure}
+    % In the article, this is a floating figure,
+    % In the presentation, this figure is shown in the first frame
+    \pgfuseimage{myimage}
+  \end{figure}
+\end{frame}
+
+This text is once more not shown in the presentation.
+
+\section{Main Part}
+
+While this text is not shown in the presentation, the section command
+also applies to the presentation.
+
+We can add a subsection that is only part of the article like this:
+
+\subsection<article>{Article-Only Section}
+
+With some more text.
+
+\begin{frame}
+  This text is part both of the article and of the presentation.
+  \begin{itemize}
+  \item This stuff is also shown in both version.
+  \item This too.
+  \only<article>{\item This particular item is only part
+      of the article version.}
+  \item<presentation:only@0> This text is also only part of the article.
+  \end{itemize}
+\end{frame}
+\end{document}
+\end{verbatim}
+
+There is one command whose behaviour is a bit special in |article|
+mode: The line break command |\\|. Inside frames, this command has no
+effect in |article| mode, except if an overlay specification is
+present. Then it has the normal effect dictated by the
+specification. The reason for this behaviour is that you will
+typically inserts lots of |\\| commands in a presentation in order to
+get control over all line breaks. These line breaks are mostly
+superfluous in |article| mode. If you really want a line break to
+apply in all versions, say |\\<all>|. Note that the command |\\| is
+often redefined by certain environments, so it may not always be
+overlay-specification-aware. In such a case you have to write
+something like |\only<presentation>{\\}|.
+
+
+
+
+\subsubsection{Workflow}
+\label{section-article-version-workflow}
+The following workflow steps are optional, but they can simplify the
+creation of the article version.
+
+\begin{itemize}
+\item 
+  In the main file |main.tex|, delete the first line, which sets the
+  document class.
+\item
+  Create a file named, say, |main.beamer.tex| with the
+  following content:
+\begin{verbatim}
+\documentclass[ignorenonframetext]{beamer}
+\input{main.tex}
+\end{verbatim} 
+\item
+  Create an extra file named, say, |main.article.tex| with the
+  following content:
+\begin{verbatim}
+\documentclass{article}
+\usepackage{beamerarticle}
+\setjobnamebeamerversion{main.beamer}
+\input{main.tex}
+\end{verbatim}
+\item
+  You can now run |pdflatex| or |latex| on the two files
+  |main.beamer.tex| and |main.article.tex|. 
+\end{itemize}
+
+The command |\setjobnamebeamerversion| tells the article version where
+to find the presentation version. This is necessary if you wish to include
+slides from the presentation version in an article as figures.
+
+\begin{command}{\setjobnamebeamerversion\marg{filename without extension}}
+  Tells the \beamer\ class where to find the presentation version of the
+  current file.  
+\end{command}
+
+An example of this workflow approach can be found in the |examples|
+subdirectory for files starting with |beamerexample2|.
+
+
+
+\subsubsection{Including Slides from the Presentation Version in the
+  Article Version}
+
+If you use the package |beamerbasearticle|, the |\frame| command
+becomes available in |article| mode. By adjusting the frame template,
+you can ``mimic'' the appearance of frames typeset by \beamer\ in
+your articles. However, sometimes you may wish to insert ``the real
+thing'' into the |article| version, that is, a precise ``screenshot''
+of a slide from the presentation. The commands introduced in the
+following help you do exactly this.
+
+In order to include a slide from your presentation in your article
+version, you must do two things: First, you must place a normal
+\LaTeX\ label on the slide using the |\label| command. Since this
+command is overlay-specification-aware, you can also select specific
+slides of a frame. Also, by adding the option |label=|\meta{name} to
+a frame, a label \meta{name}|<|\meta{slide number}|>| is automatically
+added to each slide of the frame.
+
+Once you have labeled a slide, you can use the following command in
+your article version to insert the slide into it:
+
+\begin{command}{\includeslide\oarg{options}\marg{label name}}
+  This command calls |\pgfimage| with the given \meta{options} for
+  the file specified by
+  \begin{quote}
+    |\setjobnamebeamerversion|\meta{filename}
+  \end{quote}
+  Furthermore, the option |page=|\meta{page of label name} is passed
+  to |\pgfimage|, where the \meta{page of label name} is read
+  internally from the file \meta{filename}|.snm|.
+  \example
+
+\begin{verbatim}
+\article
+  \begin{figure}
+    \begin{center}
+      \includeslide[height=5cm]{slide1}
+    \end{center}
+    \caption{The first slide (height 5cm). Note the partly covered second item.}
+  \end{figure}
+  \begin{figure}
+    \begin{center}
+      \includeslide{slide2}
+    \end{center}
+    \caption{The second slide (original size). Now the second item is also shown.}
+  \end{figure}
+\end{verbatim}  
+\end{command}
+
+The exact effect of passing the option |page=|\meta{page of label
+  name} to the command |\pgfimage| is explained in the documentation
+of |pgf|. In essence, the following happens:
+\begin{itemize}
+\item
+  For old version of |pdflatex| and for any version of |latex|
+  together with |dvips|, the |pgf| package will look for a file named
+  \begin{quote}
+    \meta{filename}|.page|\meta{page of label name}|.|\meta{extension}
+  \end{quote}
+  For each page of your |.pdf| or |.ps| file that is to be included in
+  this way, you must create such a file by hand. For example, if the
+  PostScript file of your presentation version is named
+  |main.beamer.ps| and you wish to include the slides with page
+  numbers 2 and~3, you must create (single page) files
+  |main.beamer.page2.ps| and |main.beamer.page3.ps| ``by hand'' (or
+  using some script). If these files cannot be found, |pgf| will
+  complain.
+\item
+  For new versions of |pdflatex|, |pdflatex| also looks for the files
+  according to the above naming scheme. However, if it fails to find
+  them (because you have not produced them), it uses a special
+  mechanism to directly extract the desired page from the presentation
+  file |main.beamer.pdf|.
+\end{itemize}
+
+
+
+
+\subsection{Details on Modes}
+
+\label{section-mode-details}
+
+This subsection describes how modes work exactly and how you can use
+the |\mode| command to control what part of your text belongs to which
+mode. 
+
+When \beamer\ typesets your text, it is always in one of the following
+four modes:
+\begin{itemize}
+\item
+  \declare{|beamer|} is the default mode.
+\item
+  \declare{|handout|} is the mode for creating handouts.
+\item
+  \declare{|trans|} is the mode for creating transparencies.
+\item
+  \declare{|article|} is the mode when control has been transferred to
+  another class, like |article.cls|. Note that the mode is also
+  |article| if control is transferred to, say, |book.cls|.
+\end{itemize}
+
+In addition to these modes, \beamer\ recognizes the following
+names for modes sets:
+
+\begin{itemize}
+\item
+  \declare{|all|} refers to all modes.
+\item
+  \declare{|presentation|} refers to the first three modes, that is,
+  to all modes except for the |article| mode.
+\end{itemize}
+
+Depending on the current mode, you may wish to have certain text
+inserted only in that mode. For example, you might wish a certain
+frame or a certain table to be left out of your article version. In
+some situations, you can use the |\only| command for this
+purpose. However, the command |\mode|, which is described in the
+following, is much more powerful than |\only|.
+
+The command actually comes in three ``flavors,'' which only slightly
+differ in syntax. The first, and simplest, is the version that takes
+one argument. It behaves essentially the same way as |\only|.
+
+\begin{command}{\mode\sarg{mode specification}\marg{text}}
+  Causes the \meta{text} to be inserted only for the specified
+  modes. Recall that a \meta{mode specification} is just an overlay
+  specification in which no slides are mentioned.
+
+  The \meta{text} should not do anything fancy that involves mode
+  switches or including other files. In particular, you should not put
+  an |\include| command inside \meta{text}. Use the argument-free form
+  below, instead.
+
+  \example
+\begin{verbatim}
+\mode<article>{Extra detail mentioned only in the article version.}
+
+\mode
+<beamer| trans>
+{\frame{\tableofcontents[currentsection]}}
+\end{verbatim}
+\end{command}
+
+The second flavor of the |\mode| command takes no argument. ``No
+argument'' means that it is not followed by an opening brace, but any
+other symbol. 
+
+\begin{command}{\mode\sarg{mode specification}}
+  In the specified mode, this command actually has no effect. The
+  interesting part is the effect in the non-specified modes: In these
+  modes, the command causes \TeX\ to enter a kind of ``gobbling''
+  state. It will now ignore all following lines until the next
+  line that has a sole occurrence of one of the following commands:
+  |\mode|, |\mode*|, |\begin{document}|, |\end{document}|. Even a comment on
+  this line will make \TeX\ skip it. Note that the line with the
+  special commands that make \TeX\ stop gobbling may not directly
+  follow the line where the gobbling is started. Rather, there must
+  either be one non-empty line before the special command or at least
+  two empty lines.
+
+  When \TeX\ encounters a single |\mode| command, it will execute this
+  command. If the command is |\mode| command of the first flavor,
+  \TeX\ will resume its ``gobbling'' state after having inserted (or
+  not inserted) the argument of the |\mode| command. If the |\mode|
+  command is of the second flavor, it takes over.
+
+  Using this second flavor of |\mode| is less convenient than the
+  first, but there are different reasons why you might need to use it:
+  \begin{itemize}
+  \item
+    The line-wise gobbling is much faster than the gobble of the third
+    flavor, explained below.
+  \item
+    The first flavor reads its argument completely. This means, it
+    cannot contain any verbatim text that contains unbalanced braces.
+  \item
+    The first flavor cannot cope with arguments that contain
+    |\include|. 
+  \item
+    If the text mainly belongs to one mode with only small amounts of
+    text from another mode inserted, this second flavor is nice to
+    use.
+  \end{itemize}
+
+  \emph{Note:} When searching line-wise for a |\mode| command to shake
+  it out of its gobbling state, \TeX\ will not recognize a |\mode|
+  command if a mode specification follows on the same line. Thus, such
+  a specification must be given on the next line.
+
+  \emph{Note:} When a \TeX\ file ends, \TeX\ must not be in the
+  gobbling state. Switch this state off using |\mode| on one line and
+  |<all>| on the next.
+  
+  \example
+\begin{verbatim}
+\mode<article>
+
+This text is typeset only in |article| mode.
+\verb!verbatim text is ok {!
+
+\mode
+<presentation>
+{ % this text is inserted only in presentation mode
+\frame{\tableofcontents[currentsection]}}
+
+Here we are back to article mode stuff. This text
+is not inserted in presentation mode
+
+\mode
+<presentation>
+
+This text is only inserted in presentation mode.
+\end{verbatim}
+\end{command}
+
+The last flavor of the mode command behaves quite differently.
+
+\begin{command}{\mode\declare{|*|}}
+  The effect of this mode is to ignore all text outside frames in the
+  |presentation| modes. In article mode it has no effect.
+
+  This mode should only be entered outside of frames. Once entered, if
+  the current mode is a |presentation| mode, \TeX\ will enter a
+  gobbling state similar to the gobbling state of the second
+  ``flavor'' of the |\mode| command. The difference is that the text
+  is now read token-wise, not line-wise. The text is gobbled token by
+  token until one of the following tokens is found: |\mode|, |\frame|,
+  |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|,
+  |\note|, |\begin{frame}|, and |\end{document}| (the last two are
+  really tokens, but they are recognized anyway).
+
+  Once one of these commands is encountered, the gobbling stops and
+  the command is executed. However, all of these commands restore the
+  mode that was in effect when they started. Thus, once the command is
+  finished, \TeX\ returns to its gobbling.
+
+  Normally, |\mode*| is exactly what you want \TeX\ to do outside of
+  frames: ignore everything except for the above-mentioned commands
+  outside frames in |presentation| mode. However, there are  cases
+  in which you have to use the second flavor of the |\mode| command
+  instead: If you have verbatim text that contains one of the commands,
+  if you have very long text outside frames, or if you wish some text
+  outside a frame (like a definition) to be executed also in
+  |presentation| mode.
+
+  The class option |ignorenonframetext| will switch on |\mode*| at the
+  beginning of the document.
+
+  \example
+\begin{verbatim}
+\begin{document}
+\mode*
+
+This text is not shown in the presentation.
+
+\begin{frame}
+  This text is shown both in article and presentation mode.
+\end{frame}
+
+this text is not shown in the presentation again.
+
+\section{This command also has effect in presentation mode}
+
+Back to article stuff again.
+
+\frame<presentation>
+{ this frame is shown only in the presentation. }
+\end{document}
+\end{verbatim}
+
+  \example The following example shows how you can include other files
+  in a main file. The contents of a |main.tex|:
+
+\begin{verbatim}
+\documentclass[ignorenonframetext]{beamer}
+\begin{document}
+This is star mode stuff.
+
+Let's include files:
+\mode<all>
+\include{a}
+\include{b}
+\mode*
+
+Back to star mode
+\end{document}
+\end{verbatim}
+
+  And |a.tex| (and likewise |b.tex|):
+\begin{verbatim}
+\mode*
+\section{First section}
+Extra text in article version.
+\begin{frame}
+  Some text.
+\end{frame}
+\mode<all>
+\end{verbatim}  
+\end{command}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

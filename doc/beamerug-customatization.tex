@@ -1,0 +1,2192 @@
+
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\section{Customization}
+
+\subsection{Fonts}
+
+\subsubsection{Serif Fonts and Sans-Serif Fonts}
+
+By default, the \beamer\ class uses the Computer Modern sans-serif fonts
+for typesetting a presentation. The Computer Modern font family is the
+original font family designed by Donald Knuth himself for the \TeX\
+program. A sans-serif font is a font in which the letters do not have
+serifs (from French \emph{sans}, which means ``without''). Serifs are
+the little hooks at the ending of the strokes that make up a
+letter. The font you are currently reading is a serif font. \textsf{By
+  comparison, this text is in a sans-serif font.}
+
+The choice Computer Modern sans-serif had the following reasons:
+
+\begin{itemize}
+\item
+  The Computer Modern family has a very large number of symbols
+  available that go well together.
+\item
+  Sans-serif fonts are (generally considered to be) easier to read
+  when used in a presentation. In low resolution rendering, serifs
+  decrease the legibility of a font.
+\end{itemize}
+
+While these reasons are pretty good, you still might wish to change the font:
+
+\begin{itemize}
+\item
+  The Computer Modern fonts are a bit boring if you have seen them too
+  often. Using another font (but not Times!) can give a fresh look.
+\item
+  Other fonts, especially Times, are sometime rendered better since
+  they seem to have better internal hinting.
+\item
+  A presentation typeset in a serif font creates a more conservative
+  impression, which might be exactly what you wish to create.
+\item
+  On projections with a very high resolutions serif text is just as
+  readable as sans-serif text.
+\end{itemize}
+
+You must decide whether the text should be typeset in sans-serif or in
+serif. To choose this, use either the class option |sans| or
+|serif|. By default, |sans| is selected, so you do not
+need to specify this.
+
+\begin{classoption}{sans}
+  Use a sans-serif font during the presentation. (Default.)
+\end{classoption}
+
+\begin{classoption}{serif}
+  Use a serif font during the presentation.
+\end{classoption}
+
+
+
+
+\subsubsection{Fonts in Mathematical Text}
+
+By default, if a sans-serif font is used for the main text,
+mathematical formulas are also typeset using sans-serif letters. In
+most cases, this is visually the most pleasing and easily readable way of
+typesetting mathematical formulas. However, in mathematical texts the
+font used to render, say, a variable is sometimes used to
+differentiate between different meanings of this variable. In such
+case, it may be necessary to typeset mathematical text using serif
+letters. Also, if you have a lot of mathematical text, the audience
+may be quicker to ``parse'' it, if it is typeset the way people
+usually read mathematical text: in a serif font.
+
+You can use the two options |mathsans| and |mathserif| to override the
+overall sans-serif/serif choice for math text. However, using the option
+|mathsans| in a |serif| environment makes little sense in my opinion.
+
+\begin{classoption}{mathsans}
+  Override the math font to be a sans-serif font.
+\end{classoption}
+
+\begin{classoption}{mathserif}
+  Override the math font to be a serif font.
+\end{classoption}
+
+The command |\mathrm| will always produce upright (not slanted), serif
+text and the command |\mathsf| will always produce upright, sans-serif
+text. The command |\mathbf| will produce upright, bold-face,
+sans-serif or serif text, depending on whether |mathsans| or
+|mathserif| is used.
+
+To produce an upright, sans-serif or serif text, depending on
+whether |mathsans| or |mathserif| is used, you can use for instance
+the command |\operatorname| from the |amsmath| package. Using this
+command instead of |\mathrm| or |\mathsf| directly will  automatically
+adjust  upright mathematical text if you switch from sans-serif to
+serif or back.
+
+
+
+\subsubsection{Font Families}
+
+\label{section-substition}
+
+Independently of the serif/sans-serif choice, you can switch the
+document font. To do so, you should use one of the prepared packages
+of \LaTeX's font mechanism. For example, to change to Times/Helvetica,
+simply add 
+\begin{verbatim}
+\usepackage{mathptmx}
+\usepackage{helvet}
+\end{verbatim}
+in your preamble. Note that if you do not specify |serif| as a
+class option, Helvetica (not Times) will be selected as the text
+font.
+
+There may be many other fonts available on your
+installation. Typically, at least some of the following packages
+should be available: |avant|, |bookman|, |chancery|, |charter|,
+|euler|, |helvet|, |mathtime|, |mathptm|, |mathptmx|, |newcent|,
+|palatino|, |pifont|, |utopia|.
+
+If you use the |mathtime| package (you have to buy some of the fonts),
+you also need to specify the |serif| option.
+
+If you use professional fonts (fonts that you buy and that come with a
+complete set of every symbol in all modes), you may need to specify the
+class option |professionalfont|. This will tell \beamer\ that it
+should not meddle with the fonts you use. The reason is that \beamer\ 
+normally replaces certain character glyphs in mathematical text by
+more appropriate versions. For example, \beamer\ will normally replace
+glyphs such that the italic characters from the main font are used for
+variables in mathematical text. If your professional font package
+takes care of this already, \beamer's meddling should be switched
+off. Note that \beamer's substitution is automatically turned off if
+one of the following packages is loaded: |mathtime|, |mathpmnt|,
+|lucidabr|, |mtpro|, and |hvmath|. If your favorite professional font
+package is not among these, use the |professionalfont| option (and
+write me an email, so that the package can be added).
+
+\begin{classoption}{professionalfont}
+  Deactivates \beamer's internal font replacements for mathematical
+  text. This option should be used if you use a professional font
+  package that sets up all mathematical fonts correctly.
+\end{classoption}
+
+
+\subsubsection{Font Sizes}
+
+The default sizes of the fonts are chosen in a way that makes it
+difficult to fit ``too much'' onto a slide. Also, it will ensure that 
+your slides are readable even under bad conditions like a large
+room and a small only a small projection area. However, you may wish
+to enlarge or shrink the fonts a bit if you know this to be more
+appropriate in your presentation environment.
+
+The default font size is 11pt. This may seem surprisingly small, but
+the actual size of each frame is just 128mm times 96mm and the viewer
+application enlarges the font. By specifying a default font size
+smaller than 11pt you can put more onto each slide, by specifying a
+larger font size you can fit on less.
+
+To specify the font size, you can use the following class options:
+
+\begin{classoption}{8pt}
+  This is way too small. Requires that the package |extsize|
+  is installed.
+\end{classoption}
+
+\begin{classoption}{9pt}
+  This is also too small. Requires that the package |extsize|
+  is installed.
+\end{classoption}
+
+\begin{classoption}{10pt}
+  If you really need to fit much onto each frame, use this
+  option. Works without |extsize|.
+\end{classoption}
+
+\begin{classoption}{smaller}
+  Same as the |10pt| option.
+\end{classoption}
+
+\begin{classoption}{11pt}
+  The default font size. You need not specify this option.
+\end{classoption}
+
+\begin{classoption}{12pt}
+  Makes all fonts a little bigger, which makes the text more
+  readable. The downside is that less fits onto each frame.
+\end{classoption}
+
+\begin{classoption}{bigger}
+  Same as the |12pt| option.
+\end{classoption}
+
+\begin{classoption}{14pt}
+  Makes all fonts somewhat bigger. Requires |extsize| to be installed.
+\end{classoption}
+
+\begin{classoption}{17pt}
+  This is about the default size of PowerPoint. Requires |extsize| to
+  be installed. 
+\end{classoption}
+
+\begin{classoption}{20pt}
+  This is really huge. Requires |extsize| to be installed.
+\end{classoption}
+
+
+\subsubsection{Font Encodings}
+\label{section-font-encoding}
+
+The same font can come in different encodings, which are (very roughly
+spoken) the ways the characters of a text are mapped to glyphs (the
+actual shape of a particular character in a particular font at a
+particular size). In \TeX\ two encodings are often used: the
+T1~encoding and the OT1~encoding (old T1~encoding).
+
+Conceptually, the newer T1~encoding is preferable over the old
+OT1~encoding. For example, hyphenation of words containing umlauts
+(like the famous German word Fr\"aulein) will work only if you use the
+T1~encoding. Unfortunately, only the bitmapped version of the Computer
+Modern fonts are available in this encoding in a standard
+installation. For this reason, using the T1~encoding will produce
+\pdf\ files that render very poorly.
+
+Most standard PostScript fonts are available in T1~encoding. For
+example, you can use Times in the T1~encoding. The package |lmodern|
+makes the standard Computer Modern fonts available in the
+T1~encoding. Furthermore, if you use |lmodern| several extra fonts
+become available (like a sans-serif boldface math) and extra symbols
+(like proper guillemots).
+
+To select the T1 encoding, use |\usepackage[T1]{fontenc}|. Thus, if
+you have the |lmodern| fonts installed, you could write
+\begin{verbatim}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\end{verbatim}
+to get beautiful outline fonts and correct hyphenation.
+
+
+\subsection{Margin Sizes}
+
+The ``paper size'' of a \beamer\ presentation is fixed to 128mm times
+96mm. The aspect ratio of this size is 4:3, which is exactly what most
+beamers offer these days. It is the job of the
+presentation program (like |acroread|) to display the slides at
+full screen size. The main advantage of using a small ``paper size''
+is that you can use all your normal fonts at their natural sizes. In
+particular, inserting a graphic with 11pt labels will result in
+reasonably sized labels during the presentation.
+
+You should refrain from changing the ``paper size.'' However, you
+\emph{can} change the size of the left and right margins, which
+default to 1cm. To change them, you should use the following two
+commands:
+
+\begin{command}{\beamersetleftmargin\marg{left margin dimension}}
+  Sets a new left margin. This excludes the left sidebar. Thus, it is
+  the distance between the right edge of the left sidebar and the left
+  edge of the text. This command can only be used in the preamble
+  (before the |document| environment is used).
+  \example |\beamersetleftmargin{1cm}|
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+\begin{command}{\beamersetrightmargin\marg{left margin dimension}}
+  Like |\beamersetleftmargin|, only for the right margin.
+\end{command}
+
+For more information on sidebars, see
+Section~\ref{section-sidebar-templates}. 
+
+
+
+\subsection{Themes}
+
+Just like \LaTeX\ in general, the \beamer\ class tries to separate the
+contents of a text from the way it is typeset (displayed). There are two ways in
+which you can change how a presentation is typeset: you can specify a
+different theme and you can specify different templates. A theme is
+a predefined collection of templates.
+
+There exist a number of different predefined themes that can be used
+together with the \beamer\ class. Feel free to add further themes.
+Themes are used by including an appropriate \LaTeX\ style file, using
+the standard |\usepackage| command.
+
+
+\begin{smallpackage}{{beamerthemebars}}
+  \example
+
+  \pgfuseimage{themebars}\quad\pgfuseimage{themebars2}
+\end{smallpackage}
+
+
+\begin{package}{{beamerthemeboxes}\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}
+  \example
+
+  \pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}
+
+  \example
+\begin{verbatim}
+\usepackage[headheight=12pt,footheight=12pt]{beamerthemeboxes}
+\end{verbatim}
+
+  For this theme, you can specify an arbitrary number of templates for
+  the boxes in the headline and in the footline. You can add a
+  template for another box by using the following commands.
+\end{package}
+
+\begin{command}{\addheadboxtemplate%
+    \marg{background color command}\marg{box template}}
+  Each time this command is invoked, a new box is added to the head
+  line, with the first added box being shown on the left. All boxes
+  will have the same size.
+  \example
+\begin{verbatim}
+\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+\addheadboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
+\addheadboxtemplate{\color{structure!50}}{\color{white}\tiny\quad 3. Box}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\addfootboxtemplate%
+    \marg{background color command}\marg{box template}}
+  \example
+\begin{verbatim}
+\addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+\addfootboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
+\end{verbatim}
+\end{command}
+
+
+\begin{smallpackage}{{beamerthemeclassic}}
+  \example
+
+  \pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}
+\end{smallpackage}
+
+
+\begin{smallpackage}{{beamerthemelined}}
+  \example
+
+  \pgfuseimage{themelined}\quad\pgfuseimage{themelined2}
+\end{smallpackage}
+
+
+\begin{smallpackage}{{beamerthemeplain}}
+  \example
+
+  \pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}
+\end{smallpackage}
+
+
+\begin{package}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
+        width}|,dark,tab]|}}
+  The option |width| sets the width of the sidebar to \meta{sidebar
+    width}. The option |dark| makes the sidebar and the whole theme
+  darked. The option |tab| causes the current section or subsection to
+  be hilighted by changing the background behind the entry, rather
+  than hilighting the entry itself.
+  
+  \example |\usepackage{beamerthemesidebar}|
+
+  \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
+
+  \example |\usepackage[tab]{beamerthemesidebar}|
+
+  \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
+
+  \example |\usepackage[dark]{beamerthemesidebar}|
+
+  \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
+
+  \example |\usepackage[dark,tab]{beamerthemesidebar}|
+
+  \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
+\end{package}
+
+
+\begin{smallpackage}{{beamerthemeshadow}}
+  \example
+
+  \pgfuseimage{themeshadow}\quad\pgfuseimage{themeshadow2}
+\end{smallpackage}
+
+\begin{smallpackage}{{beamerthemesplit}}
+  \example
+
+  \pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}
+\end{smallpackage}
+
+\begin{smallpackage}{{beamerthemetree}}
+  \example
+
+  \pgfuseimage{themetree}\quad\pgfuseimage{themetree2}
+\end{smallpackage}
+
+
+\begin{smallpackage}{{beamerthemetree}\declare{|[bar]|}}
+  \example
+
+  \pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}
+\end{smallpackage}
+
+
+
+\subsection{Templates}
+\label{section-templates}
+
+\subsubsection{Introduction to Templates}
+
+If you only wish to modify a small part of how your presentation is
+rendered, you do not need to create a whole new theme. Instead, you
+can modify an appropriate template.
+
+A template specifies how a part of a presentation is typeset. For
+example, the frame title template dictates where the frame title is
+put, which font is used, and so on.
+
+As the name suggests, you specify a template by writing the exact
+\LaTeX\ code you would also use when typesetting a single frame title
+by hand. Only, instead of the actual title, you use the command
+|\insertframetitle|.
+
+For example, suppose we would like to have the frame title typeset in
+red, centered, and boldface. If we were to typeset a single frame
+title by hand, it might be done like this:
+\begin{verbatim}
+\begin{frame}
+  \begin{centering}
+    \color{red}
+    \textbf{The Title of This Frame.}
+    \par
+  \end{centering}
+
+  Blah, blah.
+\end{frame}
+\end{verbatim}
+
+In order to typeset the frame title in this way on all slides, we can
+change the frame title template as follows:
+\begin{verbatim}
+\useframetitletemplate{
+  \begin{centering}
+    \color{red}
+    \textbf{\insertframetitle}
+    \par
+  \end{centering}
+}
+\end{verbatim}
+
+We can then use the following code to get the desired effect:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Title of This Frame.}
+
+  Blah, blah.
+\end{frame}
+\end{verbatim}
+
+When rendering the frame, the \beamer\ class will use the code of the
+frame title template to typeset the frame title and it will replace
+every occurrence of |\insertframetitle| by the current frame
+title.
+
+In the following subsections all commands for changing templates are
+listed, like the above-mentioned command
+|\useframetitletemplate|. Inside these commands, you should use
+the |\insertxxxx| commands, which are listed following the template
+changing commands. Although the |\insertxxxx| commands are listed
+alongside the templates for which they make the most sense, you can
+(usually) also use them in all other templates.
+
+\articlenote
+In |article| mode, most of the template mechanism is switched off and
+has no effect. However, a few templates are also available. If this is
+the case, it is specially indicated.
+\smallskip
+
+Some of the below subsections start with commands for using
+\emph{predefined} templates. Calling one of them will change a template in
+a predefined way, making it unnecessary to worry about how exactly one
+creates, say, these cute little balls in different sizes. Using them,
+you can use, for example, your favorite theme together with a
+shading background and a numbered table of contents.
+
+Here are a few hints that might be helpful when you wish to redefine a
+template: 
+\begin{itemize}
+\item
+  Usually, you might wish to copy code from an existing template. The
+  code often takes care of some things that you may not yet have
+  thought about. The file |beamerbasetemplates| might be useful
+  starting point.
+\item
+  When copying code from another template and when inserting this code
+  in the preamble of your document (not in another style file), you may
+  have to ``switch on'' the at-character (|@|). To do so, add the
+  command |\makeatletter| before the |\usexxxtemplate| command and the
+  command |\makeatother| afterward.
+\item
+  Most templates having to do with the frame components (headlines,
+  sidebars, etc.)\ can only be changed in the preamble. Other
+  templates can be changed during the document.
+\item
+  The height of the headline and footline templates is calculated
+  automatically. This is done by typesetting the templates and then
+  ``having a look'' at their heights. This recalculation is done right
+  at the beginning of the document, \emph{after} all packages have
+  been loaded and even \emph{after} these have executed their
+  |\AtBeginDocument| initialization. 
+\item
+  The left and right margins of the head- and footline templates are
+  the same as of the normal text. In order to start the headline and
+  footline at the page margin, you must insert a negative
+  horizontal skip using |\hskip-\Gm@lmargin|. You may wish to add a
+  |\hskip-\Gm@rmargin| at the end to avoid having \TeX\ complain about
+  overfull boxes.
+\item
+  Getting the boxes right inside any template is often a bit of a
+  hassle. You may wish to consult the \TeX\ book for the glorious
+  details on ``Making Boxes.'' If your headline is simple, you might
+  also try putting everything into a |pgfpicture| environment, which
+  makes the placement easier.
+\end{itemize}
+
+
+
+\subsubsection{Title Page}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatelargetitlepage}
+  Causes the title page to be typeset with a large font for the title.
+\end{command}
+
+\begin{command}{\beamertemplateboldtitlepage}
+  Causes the title page to be typeset with a bold font for the title.
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usetitlepagetemplate\marg{title page template}}
+  \example
+\begin{verbatim}
+\usetitlepagetemplate{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \Large\structure{\inserttitle}
+    \vskip1em\par
+    \normalsize\insertauthor\vskip1em\par
+    {\scriptsize\insertinstitute\par}\par\vskip1em
+    \insertdate\par\vskip1.5em
+    \inserttitlegraphic
+  \end{centering}
+  \vfill
+}
+\end{verbatim}
+\end{command}
+
+If you wish to suppress the head- and footline in the title page, use
+|\frame[plain]{\titlepage}|.
+
+
+
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\insertauthor}
+  Inserts the author names into a template.
+\end{command}
+
+\begin{command}{\insertdate}
+  Inserts the date into a template.
+\end{command}
+
+\begin{command}{\insertinstitute}
+  Inserts the institute into a template.
+\end{command}
+
+\begin{command}{\inserttitle}
+  Inserts a version of the document title into a template that is
+  useful for the title page. 
+\end{command}
+
+\begin{command}{\insertsubtitle}
+  Inserts a version of the document subtitle into a template that is
+  useful for the title page. 
+\end{command}
+
+\begin{command}{\inserttitlegraphic}
+  Inserts the title graphic into a template.
+\end{command}
+
+
+
+\subsubsection{Part Page}
+
+\label{section-part-page-template}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatelargepartpage}
+  Causes the part pages to be typeset with a large font for the part name.
+\end{command}
+
+\begin{command}{\beamertemplateboldpartpage}
+  Causes the part pages to be typeset with a bold font for the part name.
+\end{command}
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usepartpagetemplate\marg{part page template}}
+  \example
+\begin{verbatim}
+\usepartpagetemplate{
+  \begin{centering}
+    \Large\structure{\partname~\insertromanpartnumber}
+    \vskip1em\par
+    \insertpart\par
+  \end{centering}
+  }
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\insertpart}
+  Inserts the current part name.
+\end{command}
+
+\begin{command}{\insertpartnumber}
+  Inserts the current part number as an Arabic number into a template.
+\end{command}
+
+\begin{command}{\insertpartromannumber}
+  Inserts the current part number as a Roman number into a template.
+\end{command}
+
+
+
+\subsubsection{Frames}
+
+\label{section-frame-template}
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\useframetemplate\marg{begin of frame}\marg{end of
+      frame}}
+  \beamernote
+  This command is currently \emph{not} available in the presentation
+  modes.
+
+  \articlenote
+  The \meta{begin of frame} text is inserted at the beginning of each
+  frame, when it is inserted into the article. The text \meta{end of
+  frame} is inserted at the end. You can use this template to put,
+  say, lines around a frame or to put the whole frame into  a
+  minipage. By default, nothing is inserted.
+  
+  \example
+\begin{verbatim}
+\useframetemplate{\par\medskip\hrule\smallskip}{\par\smallskip\hrule\medskip}
+\end{verbatim}
+\end{command}
+
+
+
+
+
+\subsubsection{Background}
+
+\label{section-backgrounds}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatesolidbackgroundcolor\marg{color}}
+  Installs the given color as the background color for every frame.
+  
+  \example |\beamertemplatesolidbackgroundcolor{white!90!red}|
+\end{command}
+
+\begin{command}{\beamertemplateshadingbackground%
+    \marg{color expression page bottom}\marg{color expression page top}}
+  Installs a vertically shaded background such that the
+  specified bottom color changes smoothly to the specified top
+  color. \emph{Use with care: Background shadings are often
+    distracting!} However, a very light shading with warm colors can 
+  make a presentation more lively.
+  \example
+\begin{verbatim}
+\beamertemplateshadingbackground{red!10}{blue!10}
+%% Bottom is light red, top is light blue
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\beamertemplategridbackground\oarg{spacing}}
+  Installs a light grid as background with lines spaced apart by
+  \meta{spacing}. Default is half a centimeter.
+
+  \example |\beamertemplategridbackground[0.2cm]|
+\end{command}
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usebackgroundtemplate\marg{background template}}
+  Installs a new background template. Call
+  |\beamersetaveragebackground| after you have called this macro, see
+  Section~\ref{section-average} for details.
+  \example
+\begin{verbatim}
+\usebackgroundtemplate{%
+  \color{red}%
+  \vrule  height\paperheight width\paperwidth%
+}
+\end{verbatim}
+\end{command}
+
+
+
+
+
+
+
+\subsubsection{Table of Contents}
+
+\label{section-toc-templates}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplateplaintoc}
+  Installs a simple table of contents template with indented subsections. 
+\end{command}
+
+\begin{command}{\beamertemplateballtoc}
+  Installs a table of contents template in which small balls are shown
+  before each section and subsection.
+\end{command}
+
+\begin{command}{\beamertemplatenumberedsectiontoc}
+  Installs a table of contents template in which the sections are
+  numbered. 
+\end{command}
+
+\begin{command}{\beamertemplatenumberedcirclesectiontoc}
+  Installs a table of contents template in which the sections are
+  numbered and the numbers are drawn on a small circle. 
+\end{command}
+
+\begin{command}{\beamertemplatenumberedballsectiontoc}
+  Installs a table of contents template in which the sections are
+  numbered and the numbers are drawn on a small ball. 
+\end{command}
+
+\begin{command}{\beamertemplatenumberedsubsectiontoc}
+  Installs a table of contents template in which the subsections are
+  numbered. 
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usetemplatetocsection\oarg{mix-in specification}%
+    \marg{template}\opt{\marg{grayed template}}}
+  Installs a \meta{template} for rendering sections in the table of
+  contents. If the \meta{mix-in specification} is present, the
+  \meta{grayed template} may not be present and the grayed sections
+  names are obtained by mixing in the  \meta{mix-in specification}. 
+  If \meta{mix-in specification} is not present,  \meta{grayed
+    template} must be present and is used to render grayed section
+  names. 
+  \example
+\begin{verbatim}
+\usetemplatetocsection
+{\color{structure}\inserttocsection}
+{\color{structure!50}\inserttocsection}
+
+\usetemplatetocsection[50!averagebackgroundcolor]
+{\color{structure}\inserttocsection}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\usetemplatetocsubsection\oarg{mix-in specification}%
+    \marg{template}\opt{\marg{grayed template}}}
+  See |\usetemplatetocsection|.
+  \example
+\begin{verbatim}
+\usetemplatetocsubsection
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+{\leavevmode\leftskip=1.5em\color{black!50!white}\inserttocsubsection\par}
+
+\usetemplatetocsection[50!averagebackgroundcolor]
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+\end{verbatim}
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\inserttocsection}
+  Inserts the table of contents version of the current section name
+  into a template.
+\end{command}
+
+\begin{command}{\inserttocsectionnumber}
+  Inserts the number of the current section (in the table of contents)
+  into a template. 
+\end{command}
+
+\begin{command}{\inserttocsubsection}
+  Inserts the table of contents version of the current subsection name
+  into a template. 
+\end{command}
+
+\begin{command}{\inserttocsubsectionnumber}
+  Inserts the number of the current subsection (in the table of
+  contents) into a template. 
+\end{command}
+
+
+
+
+
+\subsubsection{Bibliography}
+
+\label{section-bib-templates}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplatetextbibitems}
+  Shows the citation text in front of references in a
+  bibliography instead of a small symbol.
+\end{command} 
+
+\begin{command}{\beamertemplatearrowbibitems}
+  Changes the symbol before references in a bibliography to
+  a small arrow.
+\end{command}
+
+\begin{command}{\beamertemplatebookbibitems}
+  Changes the symbol before references in a bibliography to
+  a small book icon.
+\end{command}
+
+\begin{command}{\beamertemplatearticlebibitems}
+  Changes the symbol before references in a bibliography to
+  a small article icon. (Default)
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usebibitemtemplate\marg{citation template}}
+  Installs a template for the citation text before the entry. (The 
+  ``label'' of the item.)
+  \example |\usebibitemtemplate{\color{structure}\insertbiblabel}|
+\end{command}
+
+
+\begin{command}{\usebibliographyblocktemplate%
+    \marg{template 1}\marg{template 2}%
+    \marg{template 3}\marg{template 4}}
+  The text \meta{template~1} is inserted before the first block of the
+  entry (the first block is all text before the first occurrence of a 
+  |\newblock| command). The text \meta{template~2} is inserted before
+  the second block (the text between the first and second occurrence
+  of |\newblock|). Likewise for \meta{template~3} and \meta{template~4}. 
+
+  The templates are inserted \emph{before} the blocks and you do not
+  have access to the blocks themselves via insert commands. In the
+  following example, the first |\par| commands ensure that the
+  author, the title, and the journal are put on different lines. The
+  color commands cause the author (first block) to be typeset using
+  the theme color, the second block (title of the paper) to be typeset
+  in black, and all other lines to be typeset in a washed-out version
+  of the theme color. 
+  \example
+\begin{verbatim}
+  \usebibliographyblocktemplate
+  {\color{structure}}
+  {\par\color{black}}
+  {\par\color{structure!75}}
+  {\par\color{structure!75}}
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\insertbiblabel}
+  Inserts the current citation label into a template.
+\end{command}
+
+
+
+\subsubsection{Frame Titles}
+
+\label{section-continuation}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplateboldcenterframetitle}
+  Typesets the frame title using a bold face and centers it.
+\end{command}
+
+\begin{command}{\beamertemplatelargeframetitle}
+  Typesets the frame title using a large face and flushes it left.
+\end{command}
+
+\begin{command}{\beamertemplatecontinuationroman}
+  Causes the text in the frame title informing that the
+  current frame has been broken up into several pages to be Roman
+  numbers. Thus if you have a frame with title ``Foo'' that is broken
+  up into two pages, the first page will have the title ``Foo~I'' and the
+  second will have ``Foo~II''. 
+\end{command}
+
+\begin{command}{\beamertemplatecontinuationtext}
+  Causes the text in the frame title informing that the
+  current frame has been broken up into several pages to be the text
+  |\insertcontinuationtext| on all pages but the first. This text
+  inserted by this insert is ``(cont.)'' by default. Thus if you have
+  a frame with title ``Foo'' that is broken up into two pages, the
+  first page will have the title ``Foo'' and the 
+  second will have ``Foo~(cont.)'' or ``Foo~(Forts.)'' if you have
+  redefined |\insertcontinuationtext| to ``(Forts.)''.
+\end{command}
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\useframetitletemplate\marg{frame title template}}
+  \example
+\begin{verbatim}
+\useframetitletemplate{%
+  \begin{centering}
+    \structure{\textbf{\insertframetitle}}
+    \par
+    \small\structure{\textbf{\insertframesubtitle}}}
+    \par
+  \end{centering}
+}
+\end{verbatim}
+
+  \articlenote
+  This command is also available in |article| mode. By default, a new
+  paragraph is created. You may wish to install a template that will
+  simply suppress the frame title.
+\end{command}
+
+
+
+\begin{command}{\usecontinuationtemplate\marg{template}}
+  The \meta{template} will be added at the end of the text inserted by
+  the |\insertframetitle| text if a frame has the |allowframebreaks| option
+  set. 
+  \example
+\begin{verbatim}
+\usecontinuationtemplate{ \ifnum\insertcontinuationcount>1(Forts.)\fi}
+\end{verbatim}
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\insertframetitle}
+  Inserts the current frame title into a template. If the current
+  frame has the option |allowframebreaks| set, at the end of this insert the
+  template that has been set using |\usecontinuationtemplate| will be
+  appended.
+\end{command}
+
+\begin{command}{\insertframesubtitle}
+  Inserts the current frame subtitle into a template.
+\end{command}
+
+\begin{command}{\insertcontinuationtext}
+  Inserts the text ``(cont.)'' into a template. Redefine this insert
+  if you use a different language. This insert is used by the template
+  installed by the command |\beamertemplatecontinuationtext|.
+\end{command}
+
+\begin{command}{\insertcontinuationcount}
+  Inserts which page of the current frame is currently presented. If
+  the |allowframebreaks| option is \emph{not} set, this number is 0.
+\end{command}
+
+\begin{command}{\insertcontinuationcountroman}
+  Inserts which page of the current frame is currently presented as a
+  Roman number.
+\end{command}
+
+
+
+\subsubsection{Headlines and Footlines}
+
+\label{section-head-templates}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplateheadempty}
+  Makes the headline empty.
+\end{command}
+
+\begin{command}{\beamertemplatefootempty}
+  Makes the footline empty.
+\end{command}
+
+\begin{command}{\beamertemplatefootpagenumber}
+  Shows only the page number in the footline.
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usefoottemplate\marg{footline template}}
+  The final height of the footline is calculated by invoking this
+  template just before the beginning of the document and by setting
+  the footline height to the height of the template.
+  \example
+\begin{verbatim}
+\usefoottemplate{\hfil\tiny{\color{black!50}\insertpagenumber}}
+\end{verbatim}
+or
+\begin{verbatim}
+\usefoottemplate{%
+  \vbox{%
+    \tinycolouredline{structure!75}%
+      {\color{white}\textbf{\insertshortauthor\hfill\insertshortinstitute}}%
+    \tinycolouredline{structure}%
+      {\color{white}\textbf{\insertshorttitle}\hfill}%
+    }}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\useheadtemplate\marg{headline template}}
+  See |\usefoottemplate|.
+  \example
+\begin{verbatim}
+\useheadtemplate{%
+  \vbox{%
+  \vskip3pt%
+  \beamerline{\insertnavigation{\paperwidth}}%
+  \vskip1.5pt%
+  \insertvrule{0.4pt}{structure!50}}%
+}
+\end{verbatim}
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\insertframenumber}
+  Inserts the number of the current frame (not slide) into a template.
+\end{command}
+
+\begin{command}{\inserttotalframenumber}
+  Inserts the total number of the frames (not slides) into a
+  template. The number is only correct on the second run of \TeX\ on
+  your document.
+\end{command}
+
+\begin{command}{\insertlogo}
+  Inserts the logo(s) into a template.
+\end{command}
+
+\begin{command}{\insertnavigation\marg{width}}
+  Inserts a horizontal navigation bar of the given \meta{width} into a
+  template. The bar lists the sections and below them mini frames for
+  each frame in that section.
+\end{command}
+
+\begin{command}{\insertpagenumber}
+  Inserts the current page number into a template.
+\end{command}
+
+\begin{command}{\insertsection}
+  Inserts the current section into a template.
+\end{command}
+
+\begin{command}{\insertsectionnavigation\marg{width}}
+  Inserts a vertical navigation bar containing all sections, with the
+  current section hilighted.
+\end{command}
+
+\begin{command}{\insertsectionnavigationhorizontal\marg{width}%
+    \marg{left insert}\marg{right insert}}
+  Inserts a horizontal navigation bar containing all sections, with
+  the current section hilighted. The \meta{left insert} will be
+  inserted to the left of the sections, the \marg{right insert} to the
+  right. By inserting a triple fill (a
+  |filll|) you can flush the bar to the left or right.
+  \example
+\begin{verbatim}
+\insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\insertshortauthor\oarg{options}}
+  Inserts the short version of the author into a template. The text
+  will be printed in one long line, line breaks introduced using the
+  |\\| command are suppressed.  The
+  following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|width=|\meta{width}}
+    causes the text to be put into a multi-line minipage of the given
+    size. Line breaks are still suppressed by default.
+  \item
+    \declare{|center|}
+    centers the text inside the minipage created using the |width|
+    option, rather than having it left aligned.
+  \item
+    \declare{|respectlinebreaks|}
+    causes line breaks introduced by the |\\| command to be honored.    
+  \end{itemize}
+
+  \example |\insertauthor[width={3cm},center,respectlinebreaks]|
+\end{command}
+
+\begin{command}{\insertshortdate\oarg{options}}
+  Inserts the short version of the date into a template. The same
+  options as for |\insertshortauthor| may be given. 
+\end{command}
+
+\begin{command}{\insertshortinstitute\oarg{options}}
+  Inserts the short version of the institute into a template. The same
+  options as for |\insertshortauthor| may be given. 
+\end{command}
+
+\begin{command}{\insertshortpart\oarg{options}}
+  Inserts the short version of the part name into a template. The same
+  options as for |\insertshortauthor| may be given. 
+\end{command}
+
+\begin{command}{\insertshorttitle\oarg{options}}
+  Inserts the short version of the document title into a template. Same
+  options as for |\insertshortauthor| may be given. 
+\end{command}
+
+\begin{command}{\insertshortsubtitle\oarg{options}}
+  Inserts the short version of the document subtitle. Same
+  options as for |\insertshortauthor| may be given. 
+\end{command}
+
+\begin{command}{\insertsubsection}
+  Inserts the current subsection into a template.
+\end{command}
+
+\begin{command}{\insertsubsectionnavigation\marg{width}}
+  Inserts a vertical navigation bar containing all subsections of the
+  current section, with the current subsection hilighted.
+\end{command}
+
+\begin{command}{\insertsubsectionnavigationhorizontal\marg{width}%
+    \marg{left insert}\marg{right insert}}
+  See |\insertsectionnavigationhorizontal|.
+\end{command}
+
+
+\begin{command}{\insertverticalnavigation\marg{width}}
+  Inserts a vertical navigation bar of the given \meta{width} into a
+  template. The bar shows a little table of contents. The individual
+  lines are typeset using the templates
+  |\usesectionsidetemplate| and |\usesubsectionsidetemplate|.
+\end{command}
+
+\begin{command}{\insertvrule\marg{color expression}\marg{thickness}}
+  Inserts a rule of the given color and \meta{thickness} into a
+  template. 
+\end{command}
+
+
+
+
+
+\subsubsection{Sidebars}
+
+\label{section-sidebar-templates}
+
+Sidebars are vertical areas that stretch from the lower end of the
+headline to the top of the footline. There can be a sidebar at the
+left and one at the right (or even both). Sidebars can show a table
+of contents, but they could also be added for purely aesthetic
+reasons.
+
+When you install a sidebar template, you must explicitly specify the
+horizontal size of the sidebar. The vertical size is determined
+automatically. Each sidebar can have its own background, which can be
+setup using special side background templates.
+
+Adding a sidebar of a certain size, say 1cm, will make the main text
+1cm narrower. The distance between the inner side of a side
+bar and the outer side of the text, as specified by
+the command |\beamersetleftmargin| and its counterpart for the
+right margin, is not changed when a sidebar is installed.
+
+Internally, the sidebars are typeset by showing them as part of the
+headline. The \beamer\ class keeps track of six dimensions, three 
+for each side: the variables |\beamer@leftsidebar| and
+|\beamer@rightsidebar| store the (horizontal) sizes of the side
+bars, the variables |\beamer@leftmargin| and
+|\beamer@rightmargin| store the distance between sidebar and
+text, and the macros |\Gm@lmargin| and  |\Gm@rmargin| store
+the distance from the edge of the paper to the edge of the text. Thus
+the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
+exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
+next to the left sidebar, you might write
+|\hskip-\beamer@leftmargin| to get there.
+
+In the following, only the commands for the left sidebars are
+listed. Each of these commands also exists for the right sidebar,
+with ``left'' replaced by ``right'' everywhere.
+
+
+\begin{command}{\useleftsidebartemplate\marg{horizontal size}\marg{template}}
+  When the sidebar is typeset, the \meta{template} is invoked inside a
+  |\vbox| of the height of the sidebar. Thus, the below example
+  will produce a sidebar of half a centimeter width, in which the word
+  ``top'' is printed just below the headline and ``bottom'' is printed
+  just above the footline.
+  \example
+\begin{verbatim}
+\useleftsidebartemplate{1cm}{
+  top
+  \vfill
+  bottom
+}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\useleftsidebarbackgroundtemplate\marg{template}}
+  The template is shown behind whatever is shown in the left side
+  bar. 
+  \example
+\begin{verbatim}
+\useleftsidebarbackgroundtemplate
+  {\color{red}\vrule height\paperheight width\beamer@leftsidebar}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\useleftsidebarcolortemplate\marg{color expression}}
+  Uses the given color as background for the sidebar.
+  \example
+\begin{verbatim}
+\useleftsidebarcolortemplate{\color{red}}
+\useleftsidebarcolortemplate{\color[rgb]{1,0,0.5}}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\useleftsidebarverticalshadingtemplate\marg{bottom
+      color expression}\marg{top color expression}}
+  Installs a smooth vertical transition between the given colors as
+  background for the sidebar.
+  \example
+\begin{verbatim}
+\useleftsidebarverticalshadingtemplate{white}{red}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\useleftsidebarhorizontalshadingtemplate\marg{left end
+      color expression}\marg{right end color expression}}
+  Installs a smooth horizontal transition between the given colors as
+  background for the sidebar.
+  \example
+\begin{verbatim}
+\useleftsidebarhorizontalshadingtemplate{white}{red}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\usesectionsidetemplate\marg{current section
+      template}\marg{other section template}}
+  Both parameters should be |\hbox|es. The templates are used to
+  typeset a section name inside a side navigation bar.
+  \example
+\begin{verbatim}
+\usesectionsidetemplate
+{\setbox\tempbox=\hbox{\color{black}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+{\setbox\tempbox=\hbox{\color{structure!75}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+\end{verbatim}
+\end{command}
+
+
+
+\begin{command}{\usesubsectionsidetemplate\marg{current subsection
+      template}\marg{other subsection template}}
+  See |\usesectionsidetemplate|.
+  \example
+\begin{verbatim}
+\usesectionsidetemplate
+{\setbox\tempbox=\hbox{\color{black}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+{\setbox\tempbox=\hbox{\color{structure!75}\tiny{\kern3pt\insertsectionhead}}%
+  \ht\tempbox=8pt%
+  \dp\tempbox=2pt%
+  \wd\tempbox=\beamer@sidebarwidth%
+  \box\tempbox}
+\end{verbatim}
+\end{command}
+
+
+
+
+
+
+
+
+
+
+\subsubsection{Buttons}
+\label{section-navigation-buttons}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplateoutlinebuttons}
+  Renders buttons as rectangles with rounded left and right
+  border. Only the border (outline) is painted.
+\end{command}
+
+\begin{command}{\beamertemplatesolidbuttons}
+  Renders buttons as filled rectangles with rounded left and right
+  border.
+\end{command}
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usebuttontemplate\marg{button template}}
+  Installs a new button template. This template is invoked whenever a
+  button should be rendered.
+  \example
+\begin{verbatim}
+\usebuttontemplate{\color{structure}\insertbuttontext}
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts}\ 
+
+Inside the button template, the button text can be accessed via the
+following command:
+
+\begin{command}{\insertbuttontext}
+  Inserts the text of the current button into a template. When called
+  by  button creation commands, like |\beamerskipbutton|, the symbol
+  will be part of this text.
+\end{command}
+
+The button creation commands automatically add the following three
+inserts to the text to be rendered by |\insertbuttontext|:
+
+\begin{command}{\insertgotosymbol}
+  Inserts a small right-pointing arrow.
+\end{command}
+
+\begin{command}{\insertskipsymbol}
+  Inserts a double right-pointing arrow.
+\end{command}
+
+\begin{command}{\insertreturnsymbol}
+  Inserts a small left-pointing arrow.
+\end{command}
+
+You can redefine these commands to change these symbols.
+
+
+
+
+\subsubsection{Navigation Bars}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatecircleminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small circle.
+\end{command}
+
+\begin{command}{\beamertemplatecircleminiframeinverted}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small circle, but with the colors inverted. Use this if
+  the navigation bar is shown on a dark background.
+\end{command}
+
+\begin{command}{\beamertemplatesphereminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small sphere.
+\end{command}
+
+\begin{command}{\beamertemplatesphereminiframeinverted}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small sphere, but with the colors inverted. Use this if
+  the navigation bar is shown on a |structure| background.
+\end{command}
+
+\begin{command}{\beamertemplateboxminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small box.
+\end{command}
+
+\begin{command}{\beamertemplateticksminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small vertical bar of varying length.
+\end{command}
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usesectionheadtemplate\marg{current section
+      template}\marg{other section template}}
+  The templates are used to render the section names in a navigation
+  bar. 
+  \example
+\begin{verbatim}
+\usesectionheadtemplate
+  {\hfill\color{white}\tiny\textbf{\insertsectionheadnumber.\ \
+    \insertsectionhead}}
+  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionheadnumber.\ \ 
+    \insertsectionhead}}
+\end{verbatim}
+\end{command}
+  
+
+\begin{command}{\usesubsectionheadtemplate\marg{current subsection
+      template}\marg{other subsection template}}
+  See |\usesectionheadtemplate|.
+  \example
+\begin{verbatim}
+\usesubsectionheadtemplate{\color{white}%
+  \tiny\textbf{\insertsectionheadnumber.\insertsubsectionheadnumber\ \
+  \insertsubsectionhead}}%
+  {\color{white!50!beamerstructure}%
+  \tiny\textbf{\insertsectionheadnumber.\insertsubsectionheadnumber\ \ 
+  \insertsubsectionhead}}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\useminislidetemplate%
+    \marg{template current frame icon}%
+    \marg{template current subsection frame icon}\\%
+    \marg{template other frame icon}%
+    \marg{horizontal offset}%
+    \marg{vertical offset}}
+  The templates are used to draw frame icons in navigation bars. The
+  offsets describe the offset between icons.
+  \example
+\begin{verbatim}
+\useminislidetemplate
+  {
+    \color{structure}%
+    \hskip-0.4pt\vrule height\boxsize width1.2pt%
+  }  
+  {%
+    \color{structure}%
+    \vrule height\boxsize width0.4pt%
+  }
+  {%
+    \color{structure!50}%
+    \vrule height\boxsize width0.4pt%
+  }
+  {.1cm}
+  {.05cm}
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts}\
+
+
+\begin{command}{\insertsectionhead}
+  Inserts the text of the section that is to be typeset in a
+  navigation bar.
+\end{command}
+
+\begin{command}{\insertsubsectionhead}
+  Inserts the text of the subsection that is to be typeset in a
+  navigation bar. 
+\end{command}
+
+\begin{command}{\insertsectionheadnumber}
+  Inserts the number of the section that is to be typeset in a
+  navigation bar. 
+\end{command}
+
+\begin{command}{\insertsubsectionheadnumber}
+  Inserts the number of the subsection that is to be typeset in a
+  navigation bar. 
+\end{command}
+
+\begin{command}{\insertpartheadnumber}
+  Inserts the number of the part of the current section of subsection
+  that is to be typeset in a navigation bar. 
+\end{command}
+
+
+
+
+
+\subsubsection{Navigation Symbols}
+\label{section-navigation-symbols-template}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatenavigationsymbolsempty}
+  Suppresses all navigation symbols.
+\end{command}
+
+\begin{command}{\beamertemplatenavigationsymbolsframe}
+  Shows only the frame symbol as navigation symbol.
+\end{command}
+
+\begin{command}{\beamertemplatenavigationsymbolsvertical}
+  Organizes the navigation symbols vertically.
+\end{command}
+
+\begin{command}{\beamertemplatenavigationsymbolshorizontal}
+  Organizes the navigation symbols horizontally.
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usenavigationsymbolstemplate\marg{symbols template}}
+  Installs a new symbols template. This template is invoked by themes
+  at the place where the navigation symbols should be shown.
+  \example
+\begin{verbatim}
+\usenavigationsymbolstemplate{\vbox{%
+  \hbox{\insertslidenavigationsymbol}
+  \hbox{\insertframenavigationsymbol}
+  \hbox{\insertsubsectionnavigationsymbol}
+  \hbox{\insertsectionnavigationsymbol}
+  \hbox{\insertdocnavigationsymbol}
+  \hbox{\insertbackfindforwardnavigationsymbol}}}
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\ 
+
+The following inserts are useful for the navigation symbols template:
+
+\begin{command}{\insertslidenavigationsymbol}
+  Inserts the slide navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertframenavigationsymbol}
+  Inserts the frame navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertsubsectionnavigationsymbol}
+  Inserts the subsection navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertsectionnavigationsymbol}
+  Inserts the section navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertdocnavigationsymbol}
+  Inserts the presentation navigation symbol and (if necessary) the
+  appendix navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertbackfindforwardnavigationsymbol}
+  Inserts a back, a find, and a forward navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+
+
+
+
+\subsubsection{Footnotes}
+
+\label{section-templates-footnotes}
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usefootnotetemplate\marg{footnote template}}
+  \example
+\begin{verbatim}
+\usefootnotetemplate{
+  \parindent 1em
+  \noindent
+  \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertfootnotemark}
+  Inserts the current footnote mark (like a raised number) into a
+  template. 
+\end{command}
+
+\begin{command}{\insertfootnotetext}
+  Inserts the current footnote text into a template. 
+\end{command}
+
+
+
+
+
+\subsubsection{Captions}
+\label{section-template-caption}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplatecaptionwithnumber}
+  Changes the caption template such that the number of the
+  table or figure is also shown.
+\end{command}
+
+\begin{command}{\beamertemplatecaptionownline}
+  Changes the caption template such that the word ``Table''
+  or ``Figure'' has its own line.
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usecaptiontemplate\marg{caption template}}
+  \example
+\begin{verbatim}
+\usecaptiontemplate{
+  \small
+  \structure{\insertcaptionname~\insertcaptionnumber:}
+  \insertcaption
+}
+\end{verbatim}
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\
+ 
+\begin{command}{\insertcaption}
+  Inserts the text of the current caption into a template.
+\end{command}
+
+\begin{command}{\insertcaptionname}
+  Inserts the name of the current caption into a template. This word
+  is either ``Table'' or ``Figure'' or, if the |babel| package is
+  used, some translation thereof.
+\end{command}
+
+\begin{command}{\insertcaptionnumber}
+  Inserts the number of the current figure or table into a template.
+\end{command}
+
+
+
+
+
+
+\subsubsection{Lists (Itemizations, Enumerations, Descriptions)}
+
+\label{section-template-enumerate}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplateballitem}
+  Changes the symbols shown in an |itemize| and an |enumerate|
+  environment to small plastic balls.
+\end{command}
+
+\begin{command}{\beamertemplatedotitem}
+  Changes the symbols shown in an |itemize|
+  environment to dots.
+\end{command}
+
+\begin{command}{\beamertemplatetriangleitem}
+  Changes the symbols shown in an |itemize|
+  environment to triangles.
+\end{command}
+
+\begin{command}{\beamertemplateenumeratealpha}
+  Changes the labels of first-level enumerations to ``1.'', ``2.'',
+  ``3.'', and so on, and to ``1.1'', ``1.2'', ``1.3'', and so on for
+  the second level.
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\useenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the top
+  level of an enumeration. 
+  \example |\useenumerateitemtemplate{\insertenumlabel}|
+\end{command}
+
+
+\begin{command}{\useitemizeitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the top
+  level of an itemize list.
+  \example |\useitemizeitemtemplate{\pgfuseimage{mybullet}}|
+\end{command}
+
+
+\begin{command}{\usesubitemizeitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the
+  second level of an itemize list.
+  \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
+\end{command}
+
+\begin{command}{\usesubsubitemizeitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the
+  third level of an itemize list.
+  \example |\usesubsubitemizeitemtemplate{\pgfuseimage{mysubsubbullet}}|
+\end{command}
+
+\begin{command}{\useitemizetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a top-level
+  itemize list, the \meta{end text} at its end.
+  \example |\useitemizetemplate{}{}|
+\end{command}
+
+\begin{command}{\usesubitemizetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a second-level
+  itemize list, the \meta{end text} at its end.
+  \example |\usesubitemizetemplate{\begin{small}}{\end{small}}|
+\end{command}
+
+\begin{command}{\usesubsubitemizetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a third-level
+  itemize list, the \meta{end text} at its end.
+  \example |\usesubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}|
+\end{command}
+
+
+\begin{command}{\useenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the
+  top-level of an enumeration.  
+  \example
+  |\useenumerateitemtemplate{\insertenumlabel}|
+\end{command}
+
+\begin{command}{\useenumerateitemminitemplate\marg{template}}
+  The \meta{template} is used to render the items in an enumeration
+  where the optional argument \meta{mini template} is used (see
+  Section~\ref{section-enumerate}). 
+  \example
+  |\useenumerateitemminitemplate{\color{structure}\insertenumlabel}|
+\end{command}
+
+\begin{command}{\usesubenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the second
+  level of an enumeration. 
+  \example
+  |\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}|
+\end{command}
+
+\begin{command}{\usesubsubenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the third
+  level of an enumeration. 
+  \example
+\begin{verbatim}
+\usesubsubenumerateitemtemplate
+{\insertenumlabel-\insertsubenumlabel-\insertsubsubenumlabel}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\useenumeratetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a top-level
+  enumeration, the \meta{end text} at its end.
+  \example |\useenumeratetemplate{}{}|
+\end{command}
+
+\begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a second-level
+  enumeration, the \meta{end text} at its end.
+  \example |\usesubenumeratetemplate{\begin{small}}{\end{small}}|
+\end{command}
+
+\begin{command}{\usesubsubenumeratetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a third-level
+  enumeration, the \meta{end text} at its end.
+  \example |\usesubsubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}|
+\end{command}
+
+\begin{command}{\usedescriptiontemplate\marg{description
+      template}\marg{default width}}
+  The \meta{default width} is used as width of the default item, if no
+  other width is specified; the width |\labelsep| is
+  automatically added to this parameter.
+  \example
+  |\usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}|
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertdescriptionitem}
+  Inserts the current item of a |description| environment into a
+  template.
+\end{command}
+
+\begin{command}{\insertenumlabel}
+  Normally, this command inserts the current number of the top-level
+  enumeration (as an Arabic number) into a template. However, in an
+  enumeration where the optional \meta{mini template} option is used,
+  this command inserts the current number rendered by this mini
+  template. For example, if the \meta{mini template} is |(i)| and this
+  command is used in the fourth item, |\insertenumlabel| would yield
+  |(iv)|. 
+\end{command}
+
+\begin{command}{\insertsubenumlabel}
+  Inserts the current number of the second-level enumeration (as an
+  Arabic number) into a template.
+\end{command}
+
+\begin{command}{\insertsubsubenumlabel}
+  Inserts the current number of the third-level enumeration (as an
+  Arabic number) into a template.
+\end{command}
+
+
+
+
+
+\subsubsection{Hilighting Commands}
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usealerttemplate\marg{alert template
+      begin}\marg{alert template end}}
+  In an |\alert| command and in an |alertenv| environment, the text
+  \meta{alert template begin} is inserted at the beginning, the text
+  \meta{alert template end} at the end.
+  
+  \example |\usealerttemplate{\color{red}}{}|
+
+  \articlenote
+  This command is also available in |article| mode.
+\end{command}
+
+\begin{command}{\usestructuretemplate\marg{structure template
+      begin}\marg{structure template end}}
+  Same as for alerts.
+  
+  \example |\usestructuretemplate{\color{blue}}{}|
+
+  \articlenote
+  This command is also available in |article| mode.
+\end{command}
+
+
+
+
+\subsubsection{Block Environments}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplateboldblocks}
+  Block titles are printed in bold.
+\end{command}
+
+\begin{command}{\beamertemplatelargeblocks}
+  Block titles are printed slightly larger.
+\end{command}
+
+\begin{command}{\beamertemplateroundedblocks}
+  Changes the block templates such that they are printed on a
+  rectangular area with rounded corners.
+\end{command}
+
+\begin{command}{\beamertemplateshadowblocks}
+  Changes the block templates such that they are printed on a
+  rectangular area with rounded corners and a shadow.
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\useblocktemplate\marg{block beginning
+      template}\marg{block end template}}
+  \example
+\begin{verbatim}
+\useblocktemplate
+  {%
+   \medskip%
+    {\color{blockstructure}\textbf{\insertblockname}}%
+    \par%
+  }
+  {\medskip}
+\end{verbatim}
+
+  \articlenote
+  This command is also available in |article| mode.
+\end{command}
+
+
+\begin{command}{\usealertblocktemplate\marg{block beginning
+      template}\marg{block end template}}
+  \example
+\begin{verbatim}
+\usealertblocktemplate
+  {%
+    \medskip
+    {\alert{\textbf{\insertblockname}}}%
+  \par}
+  {\medskip}
+\end{verbatim}
+
+  \articlenote
+  This command is also available in |article| mode.
+\end{command}
+
+
+\begin{command}{\useexampleblocktemplate\marg{block beginning
+      template}\marg{block end template}}
+  \example
+\begin{verbatim}
+\useexampleblocktemplate
+  {%
+    \medskip
+    \begingroup\color{darkgreen}{\textbf{\insertblockname}}
+    \par}
+  {%
+     \endgroup
+     \medskip
+  }
+\end{verbatim}
+
+  \articlenote
+  This command is also available in |article| mode.
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertblockname}
+  Inserts the name of the current block into a template.
+\end{command}
+
+
+
+\subsubsection{Theorem Environments}
+
+\label{section-theorems-templates}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplatetheoremssimple}
+  Causes the theorem head and text to be directly passed to the
+  |block| or |exampleblock| environment. All font specifications for
+  theorems are ignored. 
+\end{command}
+
+\begin{command}{\beamertemplatetheoremsunnumbered}
+  Causes theorems to be typeset as follows: The font specification for
+  the body is honored, the font specification for the head is
+  ignored. No theorem number is printed. This is the default.
+\end{command}
+
+\begin{command}{\beamertemplatetheoremsnumbered}
+  Like |\beamertemplatetheoremsunnumbered|, except that the theorem
+  number is printed for environments that are numbered.
+\end{command}
+
+\begin{command}{\beamertemplatetheoremsamslike}
+  This causes theorems to be put in a |block| or |exampleblock|, but
+  to be otherwise typeset as is normally done in |amsthm|. Thus the
+  head font and body font depend on the setting for the theorem to be
+  typeset and theorems are numbered. 
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usetheoremtemplate\marg{block beginning
+      template}\marg{block end template}}
+  \beamernote
+  Whenever an environment declared using the command |\newtheorem| is
+  to be typeset, the \meta{block beginning template} is inserted at
+  the beginning and the \meta{block end template} at the end. If there
+  is a overlay specification when an environment like |theorem| is
+  used, this overlay specification will directly follow the
+  \meta{block beginning template} upon invocation. This is even true
+  if there was an optional argument to the |theorem| environment. This
+  optional argument is available via the insert |\inserttheoremaddition|.
+
+  Numerous inserts are available in this template, see below.  
+
+  Before the template starts, the font is set to the body font
+  prescribed by the environment to be typeset.
+  
+  \example The following typesets theorems like |amsthm|:
+\begin{verbatim}
+\usetheoremtemplate{\begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremheadfont
+    \inserttheoremname
+    \inserttheoremnumber
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+    \inserttheorempunctuation
+  }%
+}{\end{\inserttheoremblockenv}}
+\end{verbatim}
+
+  \example In the following example, all font ``suggestions'' for the
+  environment are suppressed or ignored; and the theorem number is
+  suppressed.
+\begin{verbatim}
+\usetheoremtemplate{%
+  \normalfont% ignore body font
+  \begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremname
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  }%
+}{\end{\inserttheoremblockenv}}
+\end{verbatim}
+  
+  \articlenote
+  This command is not available in |article| mode.
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\inserttheoremblockenv}
+  This will normally expand to |block|, but if a theorem that has
+  theorem style |example| is typeset, it will expand to
+  |exampleblock|. Thus you can use this insert to decide which
+  environment should be used when typesetting the theorem.
+\end{command}
+
+\begin{command}{\inserttheoremheadfont}
+  This will expand to a font chainging command that switches to the
+  font to be used in the head of the theorem. By not inserting it, you
+  can ignore the head font.
+\end{command}
+
+\begin{command}{\inserttheoremname}
+  This will expand to the name of the environment to be typeset (like
+  ``Theorem'' or ``Corollary''). 
+\end{command}
+
+
+\begin{command}{\inserttheoremnumber}
+  This will expand to the number of the current theorem preceeded by a
+  space or to nothing, if the current theorem does not have a number.
+\end{command}
+
+\begin{command}{\inserttheoremaddition}
+  This will expand to the optional argument given to the environment
+  or will be empty, if there was no optional argument.
+\end{command}
+
+\begin{command}{\inserttheorempunctuation}
+  This will expand to the punctuation character for the current
+  environment. This is usually a period.
+\end{command}
+
+
+
+
+
+\subsubsection{Verse, Quotation and Quote Environments}
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usetemplateverse\marg{block beginning
+      template}\marg{block end template}}
+  In a |verse| environment, the \meta{block beginning template} is
+  inserted before the verse, the \meta{block end template} after the
+  verse. The margins are not setup in these templates; this is done in
+  the |verse| environment and cannot be changed.
+  \example |\usetemplateverse{\rmfamily\itshape}{}|
+\end{command}
+
+
+\begin{command}{\usetemplatequotation\marg{block beginning
+      template}\marg{block end template}}
+  Both in |quotation| and in |quote| environments, the \meta{block
+    beginning template} is inserted before the quotation, the
+  \meta{block end template} after the quotation. As for verses, the
+  margins are not setup in these templates and cannot be changed.
+  
+  \example |\usetemplatequotation{\itshape}{}|
+\end{command}
+
+
+
+
+\subsubsection{Typesetting Notes}
+
+\label{section-note-templates}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplatenoteplain}
+  Causes all note pages to contain only the note text.
+\end{command}
+
+\begin{command}{\beamertemplatenotecompress}
+  Causes the ``routing information'' at the top of a note to be
+  smaller. 
+\end{command}
+
+
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usetemplatenote\marg{note template}}
+  Each note is typeset by inserting the \meta{note template}. The
+  template should contain a mentioning of the insert |\insertnote|,
+  which will contain the note text.
+  
+  \example |\usetemplatenote{\tiny\insertnote}|
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertnote}
+  Inserts the text of the current note into the template.
+\end{command}
+
+
+\begin{command}{\insertslideintonotes\marg{magnification}}
+  Inserts a ``mini picture'' of the last slide into the current
+  note. The slide will be scaled by the given magnification.
+
+  \example |\insertslideintonotes{0.25}|
+
+  This will give a mini slide whose width and height are one fourth of
+  the usual size.
+\end{command}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

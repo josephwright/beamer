@@ -1,0 +1,258 @@
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\section{Color Management}
+
+The color management of the \beamer\ class relies on the packages
+|xcolor|, which is a stand-alone extension of the |color| package, 
+and on |xxcolor|, which in turn is an extension of
+|xcolor| and is part of \pgf. Hopefully, in the future |xxcolor| and
+|xcolor| will merge into one package and perhaps they will
+someday also merge together with |color|.
+
+Since the |color| package and the |xcolor| package are loaded already
+by the \beamer\ class, in order to pass options to these classes, you
+need to use the class options |color={|\meta{options for color}|}| or
+|xcolor={|\meta{options for xcolor}|}| to pass options to these
+classes.
+
+The whole color management will hopefully be much improved in the
+future. 
+
+\subsection{Colors of Main Text Elements}
+
+By default, the following colors are used in a presentation:
+\begin{itemize}
+\item
+  Normal text is typeset in |black|.
+\item
+  All ``structural'' elements, like titles, navigation bars, block
+  titles, and so on, are typeset using the color
+  |beamerstructure|. By default, this color is bluish. Using one of
+  the class options |red|, |blackandwhite|, or |brown|
+  changes this. You can also change this color simply be redefining
+  the color |beamerstructure|.
+\item
+  All ``alert'' text is typeset by setting the default color and the
+  structure color to 85\% of red. To change this, you can either
+  redefine the color |beameralert|, or you can change the whole alert
+  template. 
+\item
+  All examples are typeset using 50\% of green. To change this, you
+  must change the example templates.
+\end{itemize}
+
+\begin{classoption}{brown}
+  Changes the main color of the navigation and title bars
+  to a brownish color.
+\end{classoption}
+
+\begin{classoption}{red}
+  Changes the main color of the navigation and title bars
+  to a reddish color.
+\end{classoption}
+
+\begin{classoption}{blackandwhite}
+  Changes the main color of the navigation and title bars
+  to monochrome.
+\end{classoption}
+
+
+
+\subsection{Average Background Color}
+
+\label{section-average}
+
+In some situations, for example when creating a transparency effect,
+it is useful to have access to the current background
+color. One can then, for example, mix a color with the background
+color to create a ``transparent'' color.
+
+Unfortunately, it is not always clear what exactly the background
+color is. If the background is a shading or a picture, different parts
+of a slide have different background colors. In these cases, one can
+at least try to mix-in an \emph{average} background color, called
+|averagebackgroundcolor|. If a shading or picture is not too
+colorful, this works fairly well.
+
+To specify the average background color, use the following command:
+
+\begin{command}{\beamersetaveragebackground\marg{color expression}}
+  Installs the given color as the average background color. See the
+  |xcolor| package for the syntax of color expressions.
+  \example |\beamersetaveragebackground{red!10}|
+\end{command}
+
+If you use the commands from Section~\ref{section-backgrounds} for
+installing a background coloring, the average background color is
+computed automatically for you. When you directly use the command
+|\usebackgroundtemplate|, you should must set the average
+background color afterward.
+
+
+
+
+\subsection{Transparency Effects}
+\label{section-transparent}
+
+By default, \emph{covered} items are not shown during a
+presentation. Thus if you write |\uncover<2>{Text.}|, the text
+is not shown on any but the second slide. On the other slide, the text
+is not simply printed using the background color -- it is not shown at
+all. This effect is most useful if your background does not have a
+uniform color.
+
+Sometimes however, you might prefer that covered items are not
+completely covered. Rather, you would like them to be shown already in
+a very dim or shaded way. This allows your audience to get a feeling
+for what is yet to come, without getting distracted by it. Also, you
+might wish text that is covered ``once more'' still to be visible to
+some degree.
+
+Ideally, there would be an option to make covered text
+``transparent.'' This would mean that when covered text is shown, it
+would instead be mixed with the background behind it. Unfortunately,
+|pgf| does not support real transparency yet.
+Nevertheless, one can come ``quite close'' to transparent text using
+the special command
+\begin{verbatim}
+\beamersetuncovermixins{#1}{#2}
+\end{verbatim}
+This commands allows you to specify in a quite general way how a
+covered item should be rendered. You can even specify different ways
+of rendering the item depending on how long it will take before this
+item is shown or for how long it has already been covered once
+more. The transparency effect will automatically apply to all colors,
+\emph{except} for the colors in images and shadings. For images and
+shadings there is a workaround, see the documentation of the
+\pgf\ package. 
+
+As a convenience, several commands install a predefined uncovering
+behavior.
+
+\begin{command}{\beamertemplatetransparentcovered}
+  Makes all covered text quite transparent. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcoveredmedium}
+  Makes all covered text even more transparent. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcoveredhigh}
+  Makes all covered text highly transparent. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcoveredhigh}
+  Makes all covered text extremely transparent, but not totally. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcovereddynamic}
+  Makes all covered text quite transparent, but is a dynamic way. The
+  longer it will take till the text is uncovered, the stronger the
+  transparency. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcovereddynamicmedium}
+  Like the previous command, only it the ``range'' of dynamics is
+  smaller. 
+\end{command}
+
+\begin{command}{\beamersetuncovermixins\marg{not yet list}%
+    \marg{once more list}}
+  The \meta{not yet list} specifies  how to render covered items that
+  have not  yet been uncovered. The \meta{once more list} specifies
+  how to render covered items that have once more been covered. 
+  If you leave one of the specifications empty, the corresponding
+  covered items are completely covered, that is, they are invisible.
+  \example
+\begin{verbatim}
+\beamersetuncovermixins
+  {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}
+  {\opaqueness<1->{15}}
+\end{verbatim}
+  The \meta{not yet list} and the  \meta{once more list} can
+  contain any number of |\opaqueness| commands.
+\end{command}
+
+%\begin{command}{\mixinon\ssarg{overlay specification}\marg{mix-in specification}}
+%  The \meta{overlay specification} specifies on which slides the
+%  \meta{mix-in specification} should be applied to all colors. Unlike
+%  other overlay specifications, this \meta{overlay specification} is a
+%  ``relative'' overlay specification. For example, the specification
+%  ``3'' here means ``things that will be uncovered three slides
+%  ahead,'' respectively ``things that have once more been covered for
+%  three slides.'' More precisely, if an item is uncovered for more
+%  than one slide and then covered once more, only the ``first moment
+%  of uncovering'' is used for the calculation of how long the item has
+%  been covered once more.
+
+%  \emph{Mix-in} specifications are a concept introduced by the
+%  |xcolor| package. The \meta{mix-in specification} specifies how colors
+%  should be altered by adding another color to them. The specification
+%  consists of two parts, separated by an exclamation mark. The first
+%  part is a number between 0 and 100, where 0 means ``do not mix in the
+%  text color at all'' and 100 means ``use only the text color''. The
+%  second part is the color that should be mixed in. This second part may
+%  be omitted (along with the exclamation mark), in which case ``white''
+%  is used as mix-in color. Any color that has been defined using the
+%  |\definecolor| command is permissible as a mix-in color.
+
+%  The mix-in specifications is added to the \pgf\ alternate
+%  extension for shadings and images (see the \pgf\
+%  documentation). Nested uses of mix-in accumulate. 
+%  \example
+%\begin{verbatim}
+%\beamersetuncovermixins{\mixinon<1>{15!blue}{\mixinon<1->{15!white}}
+%\pgfdeclareimage{book}{book}
+%\pgfdeclareimage{book.!15!averagebackgroundcolor}{filenameforbooknearlyblue}
+%\pgfdeclareimage{book.!15!white}{filenameforbooknearlywhite}
+%\end{verbatim}
+%  For all items that become uncovered on the next slide or that have
+%  just been covered on the previous slide (depending on whether this
+% command is used as part of the first or second parameter of the command
+%  |\beamersetuncovermixins|), use only 15\% of the actual color and
+%  85\% of the average background color.
+%\end{command}
+
+\begin{command}{\opaqueness\ssarg{overlay
+      specification}\marg{percentage of opaqueness}}
+  The \meta{overlay specification} specifies on which slides covered
+  text should have which \meta{percentage of opaqueness}. Unlike
+  other overlay specifications, this \meta{overlay specification} is a
+  ``relative'' overlay specification. For example, the specification
+  ``3'' here means ``things that will be uncovered three slides
+  ahead,'' respectively ``things that have once more been covered for
+  three slides.'' More precisely, if an item is uncovered for more
+  than one slide and then covered once more, only the ``first moment
+  of uncovering'' is used for the calculation of how long the item has
+  been covered once more.
+
+  An opaqueness of 100 is fully opaque and 0 is fully
+  transparent. Currently, since real transparency is not yet
+  implemented, this command causes all colors to get a mixing of
+  \meta{percentage of opaqueness} of the current
+  |averagebackgroundcolor|. At some future point this command might
+  result in real transparency.
+
+  The alternate \pgf\ extension used inside an opaque area is
+  \meta{percentage of opaqueness}|opaque|. In case of nested calls,
+  only the innermost opaqueness specification is used. 
+  \example
+\begin{verbatim}
+\beamersetuncovermixins{\opaqueness<1->{15}{\opaqueness<1->{15}}
+\pgfdeclareimage{book}{book}
+\pgfdeclareimage{book.15opaque}{filenameforbooknearlytransparent}
+\end{verbatim}
+  Makes everything that is uncovered in two slides only 15 percent
+  opaque. 
+\end{command}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

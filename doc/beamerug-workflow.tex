@@ -1,0 +1,608 @@
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\section{Workflow for Creating a Presentation}
+
+\label{section-workflow}
+
+This section presents a possible workflow for creating a \beamer\ 
+presentation and possibly a handout to go along with it. Technical
+questions are addressed, like which programs to call with 
+which parameters, and hints are given on how to create a
+presentation. If you have already created numerous presentations, you
+may wish to skip the first of the following steps 
+and only have a look at how to convert the |.tex| file into a
+|.pdf| or |.ps| file.
+
+
+\subsection{Step Zero: Know the Time Constraints}
+
+When you start to create a presentation, the very first thing you
+should worry about is the amount of time you have for your
+presentation. Depending on the occasion, this can
+be anything between 2 minutes and two hours. A simple rule for the
+number of frames is that you should have at most one frame per
+minute.
+
+In most situations, you will have less time for your presentation that
+you would like. \emph{Do not try to squeeze more into a
+  presentation than time allows for.} No matter how important some
+detail seems to you, it is better to leave it out, but get the main
+message across, than getting neither the main message nor the detail
+across. 
+
+In many situations, a quick appraisal of how much time you have will
+show that you won't be able to mention certain details. Knowing this can
+save you hours of work on preparing slides that you would have to remove
+later anyway.
+
+
+
+
+\subsection{Step One: Setup the Files}
+
+\beamernote
+It is advisable that you create a folder for each
+presentation. Even though your presentation will usually reside in a
+single file, \TeX\ produces so many extra files that things can easily
+get very confusing otherwise. The folder's name should ideally start
+with the date of your talk in ISO format (like 2003-12-25 for a
+Christmas talk), followed by some reminder text of what the talk is
+all about. Putting the date at the front in this format causes your
+presentation folders to be listed nicely when you have several of them
+residing in one directory. If you use an extra directory for each
+presentation, you can call your main file |main.tex|. 
+
+To create an initial |main.tex| file for your talk, copy an
+existing file from the |beamer/solutions| directory and adapt it to
+your needs. A list of possible \beamer\ solutions that contain
+templates for presentation \TeX-files can be found below.
+
+If you wish your talk to reside in the same file as some different,
+non-presentation article version of your text, it is advisable to
+setup a more elaborate file scheme. See
+Section~\ref{section-article-version-workflow} for details.
+
+\lyxnote
+You can either open a new file and then select |beamer| as the
+document class or you say ``New from template'' and then use a
+template from the directory |beamer/solutions|.
+
+
+\subsubsection{Solution Templates for Presentations}
+
+The following list of solution templates is sorted by the length of
+the talks for which they provide a template. As always, the solutions
+can be found in the directory |beamer/solutions|.
+
+\begin{solution}{short-talks/speaker\_introduction-ornate-2min}
+  \begin{itemize}
+  \item
+    Introducing another speaker.
+  \item
+    Talk length is about 2min.
+  \item
+    Ornate style.
+  \end{itemize}
+  \beamernote \TeX-version available in languages |de| and |en|.
+  \lyxnote    \LyX-version available in languages |de| and |en|.
+\end{solution}
+
+\begin{solution}{generic-talks/generic-ornate-15min-45min}
+  \begin{itemize}
+  \item
+    Generic solution template for talks on any subject.
+  \item
+    Talk length is between 15min and 45min.
+  \item
+    Ornate style.
+  \end{itemize}
+  \beamernote \TeX-version available in languages |de| and |en|.
+  \lyxnote    \LyX-version available in languages |de| and |en|.
+\end{solution}
+
+\begin{solution}{conference-talks/conference-ornate-20min}
+  \begin{itemize}
+  \item
+    Talk at a conference/colloquium.
+  \item
+    Talk length is about 20 minutes.
+  \item
+    Ornate style.
+  \end{itemize}
+  \beamernote \TeX-version available in languages |de| and |en|.
+  \lyxnote    \LyX-version available in languages |de| and |en|.
+\end{solution}
+
+
+
+
+
+\subsection{Step Two: Structure Your Presentation}
+
+With the time constraints in mind, make a mental inventory of the
+things you can reasonably talk about within the time available. Then
+categorize the inventory into sections and subsections. For very long
+talks (like a 90 minute lecture), you might also divide your talk into
+independent parts (like a ``review of the previous lecture part'' and
+a ``main part''). Put |\section| and |\subsection| commands into
+the (more or less empty) main file. Do not create any frames until you
+have a first working version of a possible table of contents. Do not
+feel afraid to change it later on as you work on the talk.
+
+You should not use more than four sections and not less than two per
+part. Even four sections are usually too much, unless they follow 
+a very easy pattern. Five and more sections are simply too hard to
+remember for the audience. After all, when you present the table of
+contents, the audience will not yet really be able to grasp the
+importance and relevance of the different sections and will most
+likely have forgotten them by the time you reach them.
+
+Ideally, a table of contents should be understandable by itself. In
+particular, it should be comprehensible \emph{before} someone has
+heard your talk. Keep section and subsection titles
+self-explaining. Note that each part has its own table of contents. 
+
+Both the sections and the subsections should follow a logical
+pattern. Begin with an explanation of what your talk is all about. (Do
+not assume that everyone knows this. The Ignorant Audience Law states:
+The audience always knows less than you think it should know, even if
+you take the Ignorant Audience Law into account.) Then explain what
+you or someone else has found out concerning the subject
+matter. Always conclude your talk with a summary that repeats the main
+message of the talk in a short and simple way. People pay most
+attention at the beginning and at the end of talks. The summary is
+your ``second chance'' to get across a message.
+
+You can also add an appendix part using the |\appendix| command. Put
+everything into this part that you do not actually intend to talk
+about, but that might come in handy when questions are asked.
+
+
+
+\subsection{Step Three: Creating a PDF or PostScript File}
+
+\beamernote
+Once a first version of the structure is finished, you should create a
+first PDF or PostScript file of your (still empty) talk. This file
+will only contain the title page and the table of contents. The file
+might  look like this:
+
+\begin{verbatim}
+\documentclass{beamer}
+%% This is the file main.tex
+
+\usepackage{beamerthemesplit}
+
+\title{Example Presentation Created with the Beamer Package}
+\author{Till Tantau}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\section*{Outline}
+\frame{\tableofcontents}
+
+\section{Introduction}
+\subsection{Overview of the Beamer Class}
+\subsection{Overview of Similar Classes}
+
+\section{Usage}
+\subsection{...}
+\subsection{...}
+
+\section{Examples}
+\subsection{...}
+\subsection{...}
+
+\frame{} % to enforce entries in the table of contents
+
+\end{document}
+\end{verbatim}
+
+The empty frame at the end (which should be deleted later) ensures
+that the sections and subsections are actually part of the table of
+contents. This frame is necessary since a |\section| or |\subsection|
+command following the last page of a document have no effect.
+
+\lyxnote
+Use ``View'' to check whether the presentation compiles fine. Note
+that you must put the table of contents inside a frame, but that the
+title page is created automatically.
+
+
+\subsubsection{Creating PDF}
+
+\beamernote
+To create a |PDF| version of this file, run the program
+|pdflatex| on |main.tex| at least twice. Your need to run it twice, so
+that \TeX\ can create the table of contents. (It may even be necessary
+to run it more often since all sorts of auxiliary files are
+created.) In the following example, the greater-than-sign is the prompt. 
+
+\begin{verbatim}
+> pdflatex main.tex
+    ... lots of output ...
+> pdflatex main.tex
+    ... lots of output ...
+\end{verbatim}
+
+You can next use a program like the Acrobat Reader or |xpdf|
+to view the resulting presentation.
+
+\begin{verbatim}
+> acroread main.pdf
+\end{verbatim}
+
+When printing a presentation using Acrobat, make sure that the option
+``expand small pages to paper size'' in the printer dialog is
+enabled. This is necessary, because slides are only 128mm times 96mm.
+
+To put several slides onto one page (useful for the handout version)
+or to enlarge the slides, you can use the program |pdfnup|. Also, many
+commercial programs can perform this task. If you put several slides
+on one page and if these slides normally have a white background, it
+may be useful to write the following in your preamble:
+
+\begin{verbatim}
+\mode<handout>{\beamertemplatesolidbackgroundcolor{black!5}}
+\end{verbatim}
+
+This will cause the slides of the handout version to have a very
+light gray background. This makes it easy to discern the slides'
+border if several slides are put on one page.
+
+\lyxnote
+Choose ``View pdf'' to view your presentation.
+
+
+\subsubsection{Creating PostScript}
+\label{section-postscript}
+
+\beamernote
+To create a PostScript version, you should first ascertain that the
+\textsc{hyperref} package (which is automatically loaded by the
+\beamer\ class) uses the option |dvips| or some compatible
+option, see the documentation of the \textsc{hyperref} package for
+details. Whether this is the case depends on the contents of your
+local |hyperref.cfg| file. You can enforce the usage of this
+option by passing |dvips| or a compatible option to the
+\beamer\ class (write |\documentclass[dvips]{beamer}|), which
+will pass this option on to the \textsc{hyperref} package.
+
+You can then run |latex| twice, followed by |dvips|.
+
+\begin{verbatim}
+> latex main.tex
+    ... lots of output ...
+> latex main.tex
+    ... lots of output ...
+> dvips -P pdf main.dvi
+\end{verbatim}
+
+The option (|-P pdf|) tells |dvips| to use
+Type~1 outline fonts instead of the usual Type~3 bitmap fonts. You may
+wish to omit this option if there is a problem with it. 
+
+If you wish each slide to completely fill a letter-sized page, use the
+following commands instead:
+
+\begin{verbatim}
+> dvips -P pdf -tletter main.dvi -o main.temp.ps
+> psnup -1 -W128mm -H96mm -pletter main.temp.ps main.ps
+\end{verbatim}
+
+For A4-sized paper, use:
+
+\begin{verbatim}
+> dvips -P pdf -ta4 main.dvi -o main.temp.ps
+> psnup -1 -W128mm -H96mm -pa4 main.temp.ps main.ps
+\end{verbatim}
+
+In order to create a white margin around the whole page (which is sometimes
+useful for printing), add the option |-m 1cm| to the options of
+|psnup|. 
+
+To put two or four slides on one page, use |-2|, respectively
+|-4| instead of |-1| as the first parameter for
+|psnup|. In this case, you may wish to add the option
+|-b 1cm| to add a bit of space around the individual slides. The same
+trick as for the \pdf-version can be used to make the borders of
+slides more pronounced in the handout version.
+
+You can convert a PostScript file to a pdf file using
+
+\begin{verbatim}
+> ps2pdf main.ps main.pdf
+\end{verbatim}
+
+
+\lyxnote
+Use ``View Postscript'' to view the PostScript version.
+
+
+\subsection{Step Four: Create Frames}
+
+Once the table of contents looks satisfactory, start creating frames
+for your presentation. In the following, some guidelines that I stick
+to are given on what to put on slides and what not to put. You can
+certainly ignore any of these guidelines, but you should be aware of
+it when you ignore a rule and you should be able to justify it to
+yourself. 
+
+\lyxnote
+To create a frame, use the style ``BeginFrame''. The frame title
+is given on the line of this style. The frame ends automatically with
+the start of the next frame, with a section or subsection command, and
+with an empyt line in the sylte ``EndFrame''. Note that the last frame
+of your presentation must be ended using ``EndFrame'' and that the
+last frame before the appendix must be ended this way.
+
+\subsubsection{Guidelines on What to Put on a Frame}
+
+\begin{itemize}
+\item
+  A frame with too little on it is better than a
+  frame with too much on it.
+\item
+  Do not assume that everyone in the audience is an expert on the
+  subject matter. (Remember the Ignorant Audience Law.) Even if the
+  people listening to you should be experts, they may last have heard
+  about things you consider obvious several years ago. You should
+  always have the time for a quick reminder of what exactly a
+  ``semantical complexity class'' or an ``$\omega$-complete partial
+  ordering'' is.
+\item
+  Never put anything on a slide that you are not going to explain
+  during the talk, not even to impress anyone with how
+    complicated your subject matter really is. However, you may
+  explain things that are not on a slide.
+\item
+  Keep it simple. Typically, your audience will see a slide for less
+  than 50 seconds. They will not have the time to puzzle through long
+  sentences or complicated formulas.
+\end{itemize}
+
+
+\subsubsection{Guidelines on Titles}
+
+\begin{itemize}
+\item
+  Put a title on each frame. The title explains the contents of the
+  frame to people who did not follow all details on the slide.
+\item
+  The title should really \emph{explain} things, not just give a
+  cryptic summary that cannot be understood unless one has understood
+  the whole slide. For example, a title like ``The Poset'' will have
+  everyone puzzled what this slide might be about. Titles like
+  ``Review of the Definition of Partially Ordered Sets (Posets)'' or
+  ``A Partial Ordering on the Columns of the Genotype Matrix'' are
+  \emph{much} more informative.
+\item
+  Ideally, titles on consecutive frames should ``tell a story'' all by
+  themselves.
+\item
+  In English, you should \emph{either} \emph{always} capitalize all words in
+  a frame title except for words like ``a'' or ``the'' (as in a
+  title), \emph{or} you \emph{always} use the normal lowercase
+  letters. Do \emph{not} mix this; stick to one rule. The same is true
+  for block titles. For example, do not use titles like ``A short
+  Review of Turing machines.'' Either use ``A Short Review of Turing
+  Machines.'' or ``A short review of Turing machines.'' (Turing is
+  still spelled with a capital letter since it is a name).
+\item
+  In English, the title of the whole document should be
+  capitalized, regardless of whether you capitalize anything else.
+\item
+  In German and other languages that have lots of capitalized words,
+  always use the correct upper-/lowercase letters. Never capitalize
+  anything in addition to what is usually capitalized.
+\end{itemize}
+
+
+
+\subsubsection{Guidelines on the Body Text}
+
+\begin{itemize}
+\item
+  \emph{Never} use a smaller font size to ``fit more on a frame.''
+\item
+  Prefer enumerations and itemize environments over plain text. Do not
+  use long sentences.
+\item
+  Do not hyphenate words. If absolutely necessary, hyphenate words
+  ``by hand,'' using the command~|\-|.
+\item
+  Break lines ``by hand'' using the command~|\\|. Do not rely on
+  automatic line breaking. Break where there is a logical pause. For 
+  example, good breaks in ``the tape alphabet is larger
+  than the input alphabet'' are before ``is'' and before the second
+  ``the.'' Bad breaks are before either ``alphabet'' and before
+  ``larger.''
+\item
+  Text and numbers in figures should have the \emph{same} size as
+  normal text. Illegible numbers on axes usually ruin a chart and its
+  message. 
+\end{itemize}
+
+
+\subsubsection{Guidelines on Graphics}
+
+\begin{itemize}
+\item
+  Put (at least) one graphic on each slide, whenever
+  possible. Visualizations help an audience enormously.
+\item
+  Usually, place graphics to the left of the text. (Use the
+  |columns| environment.) 
+\item
+  Graphics should have the same typographic parameters as the
+  text: Use the same fonts (at the same size) in graphics as in the
+  main text. A small dot in a graphic should have exactly the same 
+  size as a small dot in a text. The line width should be the same as
+  the stroke width used in creating the glyphs of the font. For
+  example, an 11pt non-bold Computer Modern font has a stroke width of
+  0.4pt.
+\item
+  While bitmap graphics, like photos, can be much more colorful than the
+  rest of the text, vector graphics should follow the same ``color
+  logic'' as the main text (like black~= normal lines, red~= hilighted
+  parts, green~= examples, blue~= structure).
+\item
+  Like text, you should explain everything that is shown on a
+  graphic. Unexplained details make the audience puzzle whether this
+  was something important that they have missed. Be careful when
+  importing graphics from a paper or some other source. They usually
+  have much more detail than you will be able to explain.
+\end{itemize}
+
+For technical hints on how to create graphics, see
+Section~\ref{section-graphics}.
+
+
+\subsubsection{Guidelines on Colors}
+
+\begin{itemize}
+\item
+  Use colors sparsely. The prepared themes are already quite
+  colorful (blue~= structure, red~= alert, green~= example). If you
+  add more colors, you should have a \emph{very} good reason.
+\item
+  Be careful when using bright colors on white background,
+  \emph{especially} when using green. What looks good on your monitor
+  may look bad during a presentation due to the different ways
+  monitors, beamers, and printers reproduce colors. Add lots of black
+  to pure colors when you use them on bright backgrounds.
+\item
+  Maximize contrast. Normal text should be black on white or at least
+  something very dark on something very bright. \emph{Never} do things
+  like ``light green text on not-so-light green background.''
+\item
+  Background shadings decrease the legibility without increasing the
+  information content. Do not add a background shading just because it
+  ``somehow looks nicer.'' In the examples that come along with the
+  \beamer\ class, the backgrounds are intended as demonstrations, not
+  as recommendations.
+\item
+  Inverse video (bright text on dark background) can be a problem
+  during presentations in bright environments since only a small
+  percentage of the presentation area is light up by the
+  beamer. Inverse video is harder to reproduce on printouts and on
+  transparencies. 
+\end{itemize}
+
+
+\subsubsection{Guidelines on Animations and Special Effects}
+
+\begin{itemize}
+\item
+  Use animations to explain the dynamics of systems, algorithms, etc.
+\item
+  Do \emph{not} use animations just to attract the attention of your
+  audience. This often distracts attention away from the main topic of the
+  slide.
+\item
+  Do \emph{not} use distracting special effects like ``dissolving''
+  slides unless you have a very good reason for using them. If you use
+  them, use them sparsely. 
+\end{itemize}
+
+
+\subsubsection{Ways of Improving Compilation Speed}
+\label{section-speedup}
+
+While working on your presentation, it may sometimes be useful to
+\TeX\ your |.tex| file quickly and have the presentation contain only
+the most important information. This is especially true if you have a
+slow machine. In this case, you can do several things to speedup the
+compilation. First, you can use the |draft| class option.
+
+\begin{classoption}{{draft}}
+  Causes the headlines, footlines, and sidebars to be replaced by
+  gray rectangles (their sizes are still computed, though). Many
+  other packages, including |pgf| and |hyperref|, also ``speedup''
+  when this option is given.
+\end{classoption}
+
+Second, you can use the following command:
+
+\begin{command}{{\includeonlyframes}\marg{frame label list}}
+  This command behaves a little bit like the |\includeonly| command:
+  Only the frames mentioned in the list are included. All other frames
+  are suppressed. Nevertheless, the section and subsection commands
+  are still executed, so that you still have the correct navigation
+  bars. By labeling the current frame as, say, |current| and then
+  saying |\includeonlyframes{current}|, you can work on a single frame
+  quickly.  
+
+  The \meta{frame label list} is a comma-separated list (without
+  spaces) of the names of frames that have been labeled. To label a
+  frame, you must pass the option |label=|\meta{name} to the |\frame|
+  command or |frame| environment.
+
+  \example
+\begin{verbatim}
+\includeonlyframes{example1,example3}
+
+\frame[label=example1]
+{This frame will be included. }
+
+\frame[label=example2]
+{This frame will not be included. }
+
+\frame{This frame will not be included.}
+
+\againframe{example1} % Will be included
+\end{verbatim}
+\end{command}
+
+
+
+\subsection{Step Five: Test Your Presentation}
+
+\emph{Always} test your presentation. For this, you should
+vocalize or subvocalize your talk in a quiet environment. Typically,
+this will show that your talk is too long. You should then remove
+parts of the presentation, such that it fits into the allotted time
+slot. Do \emph{not} attempt to talk faster in order to squeeze the
+talk into the given amount of time. You are almost sure to loose your
+audience this way.
+
+Do not try to create the ``perfect'' presentation immediately. Rather,
+test and retest the talk and modify it as needed. 
+
+
+
+
+\subsection{Step Six: Optionally Create a Handout or an Article Version}
+
+Once your talk is fixed, you can create a handout, if this seems
+appropriate. For this, use the class option |handout| as
+explained in Section~\ref{handout}. Typically, you might wish
+to put several handout slides on one page. See
+Section~\ref{section-postscript} on how to do this.
+
+You may also wish to create an article version of your talk. An
+``article version'' of your presentation is a normal \TeX\ text
+typeset using, for example, the document class |article| or perhaps
+|llncs| or a similar document class. The \beamer\ class offers
+facilities to have this version coexist with your presentation version
+in one file and to share code. Also, you can include slides of your
+presentation as figures in your article version. Details on how to
+setup the article version can be found in
+Section~\ref{section-article}.  
+
+\lyxnote
+Creating an article version is not really possible in \LyX. You
+can \emph{try}, but I would not advise it.
+
+
+
+

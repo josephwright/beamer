@@ -1,0 +1,175 @@
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\section{Installation}
+
+\label{section-installation}
+
+To use the \beamer\ class, you just need to put the files of the
+\beamer\ package in a directory that is read by \TeX. To uninstall the
+class, simply remove these files once more. The same is true of the
+\textsc{pgf} package, which you will also need.
+
+Unfortunately, there are different ways of making \TeX\ ``aware'' of
+the files in the \beamer\ package. Which way you should choose depends
+on how permanently you intend to use the class.
+
+
+\subsection{Versions}
+
+This documentation is part of version \version\ of the \beamer\
+class. \beamer\ needs a reasonably recent version of \LaTeX\ and of
+several standard packages to run. It also needs the following versions
+of rather special packages:
+\begin{enumerate}
+\item
+  |pgf| version 0.62 and
+\item
+  |xcolor| version 1.11.
+\end{enumerate}
+This version of \beamer\ should also work with more recent versions of
+|pgf| and |xcolor|, but I cannot guarantee this. In particular,
+|xcolor| is developped by Uwe Kern, not by me, and \beamer\ messes
+around with the |xcolor| internals in a not-so-friendly way. So
+whenever Uwe Kern changes |xcolor| internals (to which he is perfectly
+entitled), things can break down. We are working on removing
+|beamer|'s dependency on internals of |xcolor|, but that is still
+work-in-progress. 
+
+
+
+\subsection{Installing Prebundled Packages}
+
+I do not create or manage prebundled packages of \beamer, but,
+fortunately, nice other people do. I cannot give detailed instructions
+on how to install these packages, since I do not manage them, but I
+\emph{can} tell you were to find them. You install them the ``usual
+way'' you install packages. If anyone has any hints and additional
+information on this, please email me.
+
+For Debian, you need the packages at
+\begin{verbatim}
+http://packages.debian.org/latex-beamer
+http://packages.debian.org/pgf
+http://packages.debian.org/latex-xcolor
+\end{verbatim}
+
+For MiK\TeX, you need the packages called |latex-beamer|, |pgf| and
+|xcolor|. 
+
+
+\subsection{Installation in a texmf Tree}
+
+If, for whatever reason, you do not wish to use a prebundled package,
+the ``right'' way to install \beamer\ is to put it in a so-called
+|texmf| tree. In the following, I explain how to do this.
+
+Obtain the latest source version (ending |.tar.gz|) of the \beamer\
+package from
+\begin{verbatim}
+http://sourceforge.net/projects/latex-beamer/
+\end{verbatim}
+(most likely, you have already done this). Next, you also need at
+the \textsc{pgf} package, which can be found at the same
+place. Finally, you need the  \textsc{xcolor} package, which can also
+be found at that place (although the version on CTAN might be newer).
+
+\lyxnote
+For usage with \LyX,  version 1.3.3 of \LyX\ is known to work. I have
+not tried other versions; they might also work. 
+\smallskip
+
+In all cases, the packages contain a bunch of files (for the \beamer\
+class, |beamer.cls| is one of these files and happens to be the
+most important one, for the \textsc{pgf} package |pgf.sty| is
+the most important file). You now need to put these files in an
+appropriate |texmf| tree. 
+
+When you ask \TeX\ to use a certain class or package, it usually looks
+for the necessary files in so-called |texmf| trees. These trees
+are simply huge directories that contain these files. By default,
+\TeX\ looks for files in three different |texmf| trees:
+\begin{itemize}
+\item
+  The root |texmf| tree, which is usually located at
+  |/usr/share/texmf/|, |c:\texmf\|, or\\
+  |c:\Program Files\TeXLive\texmf\|.
+\item
+  The local  |texmf| tree, which is usually located at
+  |/usr/local/share/texmf/|, |c:\localtexmf\|, or\\
+  |c:\Program Files\TeXLive\texmf-local\|.
+\item
+  Your personal  |texmf| tree, which is usually located in your home
+  directory at |~/texmf/| or |~/Library/texmf/|.   
+\end{itemize}
+
+You should install the packages either in the local tree or in
+your personal tree, depending on whether you have write access to the
+local tree. Installation in the root tree can cause problems, since an
+update of the whole \TeX\ installation will replace this whole tree.
+
+Inside whatever |texmf| directory you have chosen, create
+the sub-sub-sub-directories
+\begin{itemize}
+\item
+  |texmf/tex/latex/beamer|,
+\item
+  |texmf/tex/latex/pgf|, and
+\item
+  |texmf/tex/latex/xcolor|
+\end{itemize}
+and place all files in these three directories.
+
+Finally, you need to rebuild \TeX's filename database. This done by
+running the command  |texhash| or |mktexlsr| (they are
+the same). In MiK\TeX, there is a menu option to do this.
+
+\lyxnote
+For usage of the \beamer\ class with \LyX, you have to do all of the
+above. Then you also have to make \LyX\ aware of the file
+|beamer/lyx/layouts/beamer.layout|. To do so, link (or, not
+so good in case of later updates, copy) this file to the directory
+|.lyx/layouts/| in your home directory. Then use \LyX's Reconfigure
+command to make \LyX\ aware of this file.
+
+\vskip1em
+For a more detailed explanation of the standard installation process
+of packages, you might wish to consult
+\href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}.
+However, note that the \beamer\ package does not come with a
+|.ins| file (simply skip that part).
+
+
+
+
+\subsection{Updating the Installation}
+
+To update your installation from a previous version, simply replace
+everything in the directories like |texmf/tex/latex/beamer| with the
+files of the new version. The easiest way to do this is to first
+delete the old version and then proceed as described above. Sometimes,
+there are changes in the syntax of certain command from version to
+version. If things no longer work that used to work, you wish to have
+a look at the release notes and at the change log.
+
+
+\subsection{Testing the Installation}
+
+To test your installation, copy the file |beamerexample1.tex|
+from the examples subdirectory to some place where you usually
+create presentations. Then run the command |pdflatex| several times on
+the file and check whether the resulting |beamerexample1.pdf|
+looks correct. If so, you are all set.
+
+\lyxnote
+To test the \LyX\ installation, create a new file from the
+template |generic-ornate-15min-45min.en.lyx|, which is located in the directory
+|beamer/solutions/generic-talks|.
+
+
+
+
+
+

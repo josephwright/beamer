@@ -1,0 +1,278 @@
+
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+
+\section{Tips and (Dirty) Tricks}
+
+The aim of this section is to collect some hints and tricks that make
+use of the basic \beamer\ class concepts.
+
+
+
+\subsection{Piecewise Uncovering}
+
+\subsubsection{Uncovering an Enumeration Piecewise}
+
+A common usage of overlays is to show a list of points in an
+enumeration in a piecewise fashion. The easiest and most flexible way
+to do this is the following:
+
+\begin{verbatim}
+\begin{itemize}
+\item<1-> First point.
+\item<2-> Second point.
+\item<3-> Third point.
+\end{itemize}
+\end{verbatim}
+
+The advantage of this approach is that you retain total control over
+the order in which items are shown. By changing, for example, the last
+specification to |<2->|, you can have the last two points uncovered at
+the same time.
+
+A disadvantage of the approach is that you will have to renumber
+everything if you add a new item. This is usually not such a big
+problem, but it can be a nuiseance.
+
+To automatize the uncovering, you can use the following code:
+
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+The effect of the |[<+->]| is to install a \emph{default overlay
+  specification}, see the definition of |itemize| for details.
+
+Now, suppose you wish the second and third point to be shown at the
+same time. You could achieve this by adding the specificaiton |<2->|
+to either the second or third |\item| command. However, then you still
+have to do some renumbering if you add a new item at the beginning. A
+better, though more cumbersome, approach is to decrease the counter
+|beamerpause| before the last item:
+
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item First point.
+\item Second point.
+  \addtocounter{beamerpause}{-1}
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+This does not look so nice, but it works. Also, you might wish to
+build your own macros based on these ideas (like an |itemstep|
+environment or a |\itemlikeprevious| command).
+
+
+
+\subsubsection{Hilighting the Current Point in an Enumeration}
+
+If you uncover an enumeration piecewise, it is sometimes a good idea
+to hilight the last uncovered point to draw the audience's attention
+to it. This is best achieved as follows:
+
+
+\begin{verbatim}
+\begin{itemize}
+\item<1-| alert@1> First point.
+\item<2-| alert@2> Second point.
+\item<3-| alert@3> Third point.
+\end{itemize}
+\end{verbatim}
+
+or
+
+\begin{verbatim}
+\begin{itemize}[<+-| alert@+>]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+Note that this will draw the little item symbol also in red.
+
+
+
+\subsubsection{Changing Symbol Before an Enumeration}
+
+When uncovering a list of tasks or problems, you may desire that the
+symbol in front of the last uncovered symbol is, say, a ballot~X,
+while for the previous items it is a check mark (you'll find these
+characters in some Dingbats fonts).
+
+The best way to achieve this is to implement a new action
+environment. If this action is activated, it temporarily changes the
+item symbol template to the other symbol:
+
+\begin{verbatim}
+\newenvironment{ballotenv}
+{\only{%
+  \useitemizeitemtemplate{code for showing a ballot}%
+  \usesubitemizeitemtemplate{code for showing a smaller ballot}%
+  \usesubsubitemizeitemtemplate{code for showing a smaller ballot}}}
+{}
+
+\useitemizeitemtemplate{code for showing a check mark}
+\usesubitemizeitemtemplate{code for showing a smaller check mark}
+\usesubsubitemizeitemtemplate{code for showing a smaller check mark}
+\end{verbatim}
+
+The effect of the code is to install a check mark as the default
+template. If the action |ballot| is now requested for some item, this
+template will temporarily be replaced by the ballot templates.
+
+Note that the |ballotenv| is invoked with the overlay specification
+given for the action directly following it. This causes the |\only| to
+be invoked exactly for the specified overlays.
+
+Here are example usages:
+
+\begin{verbatim}
+\begin{itemize}
+\item<1-| ballot@1> First point.
+\item<2-| ballot@2> Second point.
+\item<3-| ballot@3> Third point.
+\end{itemize}
+\end{verbatim}
+
+and
+
+\begin{verbatim}
+\begin{itemize}[<+-| ballot@+>]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+In the following example, more and more items become ``checked'' from
+slide to slide:
+
+\begin{verbatim}
+\begin{itemize}[<ballot@+-| visible@1-,+(1)>]
+\item First point.
+\item Second point.
+\item Third point.
+\end{itemize}
+\end{verbatim}
+
+The important point is |ballot@+|. The funny |visible@1-,+(1)| has the
+following effect: Although it has no effect with respect to what is
+shown (after all, it applies to all slides), it ensures that in
+the enumeration the slide number 4 is mentioned. Thus there will also
+be a slide in which all three points are checked.
+
+
+\subsubsection{Uncovering Tagged Formulas Piecewise}
+
+Suppose you have a three-line formula as the following:
+\begin{verbatim}
+\begin{align}
+  A &= B \\
+    &= C \\
+    &= D
+\end{align}
+\end{verbatim}
+
+Uncovering this formula line-by-line is a little tricky. A first idea
+is to use the |\pause| or |\onslide| commands. Unfortunately, these do
+not work since |align| internally reprocesses its input several times,
+which messes up the delicate internals of the commands. The next idea
+is the following, which works a little better:
+\begin{verbatim}
+\begin{align}
+  A &= B \\
+    \uncover<2->{&= C \\}
+    \uncover<3->{&= D}
+\end{align}
+\end{verbatim}
+Unfortunately, this does not work in the presence of tags (so it works
+for the |align*| environment). What happens is that the tag of the
+last line is shown on all slides. The problem here is that the tag is
+created when |\\| is encountered or when |\end{align}| is
+encountered. In the last line these are already ``behind'' the
+|\uncover|.
+
+To solve this problem, you can add an empty line without a tag and then
+insert a negative vertical skip to undo the last line:
+\begin{verbatim}
+\begin{align}
+  A &= B \\
+    \uncover<2->{&= C \\}
+    \uncover<3->{&= D \\}
+    \notag
+  \end{align}
+\vskip-1.5em
+\end{verbatim}
+
+
+\subsubsection{Uncovering a Table Linewise}
+
+When you wish to uncover a table line-by-line, you will run into all
+sorts of problems if there are vertical and horizontal lines in the
+table. The reason is that the first vertical line at the left end is
+drawn before the line is even read (and thus, in particular, before
+any |\onslide| command can be read). However, placing a |\pause| or
+|\uncover| at the end of the line before is also not helpful since it
+will then suppress the horizontal line below the last uncovered line.
+
+A possible way to solve this problem is not to use either horizontal
+or vertical lines. Instead, colouring the lines using the |colortbl|
+package is a good alternative to structure the table. Here is an
+optically pleasing example, where the table is uncovered line-wise:
+
+\begin{verbatim}
+\rowcolors[]{1}{blue!20}{blue!10}
+\begin{tabular}{l!{\vrule}cccc}
+  Class & A & B & C & D \\\hline
+  X     & 1 & 2 & 3 & 4 \pause\\
+  Y     & 3 & 4 & 5 & 6 \pause\\
+  Z     & 5 & 6 & 7 & 8
+\end{tabular}
+\end{verbatim}
+
+By using |\onslide| instead of |\pause|, you can get more fine-grained
+control over which line is shown on which slide.
+
+
+\subsubsection{Uncovering a Table Columnwise}
+
+The same problems as for uncovering a table linewise arise for
+uncovering it columnwise.
+
+Once more, using the |colortbl| package offers a solution. In the
+following example, the |tabular| header is used to insert |\onslide|
+commands, one for each column, that cover the entries in the column
+from a certain slide on. At the end of the last column, the |\onslide|
+without a specification ensures that the first column on the next row
+is once more shown normally.
+
+Inserting a horizontal line is tricky since it will protrude over the
+full width of the table also in the covered version. The best idea is
+just not to use horizontal bars.
+
+\begin{verbatim}
+\rowcolors[]{1}{blue!20}{blue!10}
+\begin{tabular}{l!{\vrule}c<{\onslide<2->}c<{\onslide<3->}c<{\onslide<4->}c<{\onslide}c}
+  Class & A & B & C & D \\
+  X     & 1 & 2 & 3 & 4 \\
+  Y     & 3 & 4 & 5 & 6 \\
+  Z     & 5 & 6 & 7 & 8
+\end{tabular}
+\end{verbatim}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 
