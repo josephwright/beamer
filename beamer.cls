@@ -610,11 +610,14 @@
   {\let\@elt\@restorecounter\@overlaycounterresets}
   \hypersetup{pdfpagetransition=R}%
   \serialnumber=#1\relax%
-  \ifnum\serialnumber=1\relax%
-  \refstepcounter{subsectionslide}%
-  \addtocontents{head}{\protect\headcommand{\protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}{\thepage}{\lastsubsection}}}%
-  \fi\beamer@entrycode\vspace*{-\baselineskip}\vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill\clearpage}
+  \expandafter\@ifempty\expandafter{\beamer@framestartpage}{%
+    \refstepcounter{subsectionslide}%
+    \xdef\beamer@framestartpage{\thepage}% only first time
+  }{\clearpage% cleanup from previous slide
+  }%
+  \xdef\beamer@frameendpage{\thepage}% every time
+  \beamer@entrycode\vspace*{-\baselineskip}\vfill}%
+  {\beamer@exitcode\vskip0pt plus 1.5fill}
 
 \def\frametitle#1{%
   \vskip0pt plus -1fill%
@@ -784,6 +787,7 @@
 \def\@frame[#1]{%
   {\let\@elt\@savecounter\@overlaycounterresets}
   \gdef\insertframetitle{}%
+  \gdef\beamer@framestartpage{}%
   \gdef\@whichframes{#1}%
   \serialnumber=0\relax%
   \@anotherslidefalse%
@@ -811,8 +815,9 @@
 \def\@checknoslide{%
   \ifcat\bgroup\noexpand\@next%
   \let\@do\beamer@reseteecodes%
-  \else\let\@do\@singletoken\fi%
+  \else\let\@do\beamer@noframesingletoken\fi%
   \@do}
+\def\beamer@noframesingletoken{\@next\egroup\beamer@reseteecodes}
 
 \long\def\doseveralframes#1{%
   \@serialnumber=1\relax%
@@ -827,16 +832,29 @@
   \dowhat%
   \if@anotherslide
   \advance\@serialnumber by 1\relax
-  \repeat\beamer@reseteecodes}
+  \repeat%
+  \beamer@writeslidentry%
+  \beamer@reseteecodes}
 
 \def\dosingleframe{\begin{frameslide}[1]\bgroup\aftergroup\@endslide\afterassignment\@checkslide\let\@next}
 \def\@checkslide{%
   \ifcat\bgroup\noexpand\@next%
   \let\@do\relax%
-  \else\let\@do\@singletoken\fi%
+  \else\let\@do\beamer@singletoken\fi%
   \@do}
-\def\@endslide{\end{frameslide}\beamer@reseteecodes}
-\def\@singletoken{\@next\egroup\beamer@reseteecodes}
+\def\@endslide{\end{frameslide}\beamer@writeslidentry\beamer@reseteecodes}
+\def\beamer@singletoken{\@next\egroup}
+
+\def\beamer@writeslidentry{%
+  \expandafter\@ifempty\expandafter{\beamer@framestartpage}{}% nothing to do ...
+  {%else
+    \addtocontents{head}%
+    {\protect\headcommand{%
+        \protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}{\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}}}%
+    \clearpage%
+  }
+}
+
 
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\pagestyle{navigation}\thispagestyle{navigation}}
 
@@ -1121,7 +1139,7 @@
 \newdimen\footheight
 
 \def\slideentry#1#2#3#4#5{%
-  %section number, subsection number, slide number, page number
+  %section number, subsection number, slide number, first/last frame page number
   \ifnum#2>0\ifnum#3>0%
   \hbox to 0pt{%
     \postemp=-#2\vboxoffset%
@@ -1131,11 +1149,21 @@
       \postemp=#3\boxsize%
       \advance\postemp by -\boxsize%
       \advance\postemp by 1pt%
-      \kern\postemp\hbox{\hyperlink{Navigation#4}{%
+      \kern\postemp\hbox{\beamer@link(#4){%
         \ifnum\thesection=#1\ifnum\thesubsection=#2\ifnum\thesubsectionslide=#3%
         \@minislidehilight\else\@minisliderowhilight\fi\else\@minislide\fi\else\@minislide\fi%
         }}}\hskip-10cm plus 1fil
   }\fi\fi\ignorespaces}
+
+\def\beamer@link(#1/#2){%
+  \def\beamer@goto{{Navigation#1}}% default: first slide of frame
+  \ifnum\thepage<#2%
+  \ifnum\thepage<#1\else% go to last slide of frame, on all slides of
+                                % the frame, except for the last one
+  \def\beamer@goto{{Navigation#2}}% jump to last slide of frame
+  \fi\fi%
+  \expandafter\hyperlink\beamer@goto}
+
 
 \long\def\useminislidetemplate#1#2#3#4#5{\def\@minislidehilight{#1}\def\@minisliderowhilight{#2}\def\@minislide{#3}
 \boxsize=#4\vboxoffset=#5}
@@ -1165,7 +1193,7 @@
         \ifnum##2=\currentsubsection%
         \advance\currentsubsection by1%
         \def\insertsubsectionhead{##5}%
-        \setbox\tempbox=\hbox{\hyperlink{Navigation##4}{%
+        \setbox\tempbox=\hbox{\beamer@link(##4){%
           \hbox to #1{\hskip0.3cm\ifnum\thesubsection=##2%
           \@subsectionheadhilight\else\@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
         \ht\tempbox=4.5pt\dp\tempbox=2pt%
@@ -1257,8 +1285,19 @@
 %
 %
 
-\newenvironment{columns}{\leavevmode\hskip-\Geom@lmargin\nobreak\hbox to\paperwidth\bgroup\hbox{}\hfill\ignorespaces}{\egroup\nobreak\hskip-\Geom@rmargin}
-\newenvironment{columnsonlytextwidth}{\leavevmode\hbox to\textwidth\bgroup\ignorespaces}{\unskip\egroup}
+\newenvironment{columns}{%
+  \leavevmode%
+  \hskip-\Geom@lmargin%
+  \nobreak%
+  \hbox to\paperwidth\bgroup%
+  \hbox{}\hfill\ignorespaces}%
+  {\egroup%
+    \nobreak%
+    \hskip-\Geom@rmargin}
+  
+\newenvironment{columnsonlytextwidth}%
+  {\leavevmode\hbox to\textwidth\bgroup\ignorespaces}
+  {\unskip\egroup}
 
 \newenvironment{column}[1]{%
   \begin{minipage}[c]{#1}%
