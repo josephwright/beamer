@@ -244,6 +244,36 @@
 }
 
 
+\AtBeginDocument{
+  % The following code was send to me by Rolf Niepraschk
+   \@ifundefined{Gin@driver}{}%
+   {%
+     \ifx\Gin@driver\@empty\else%
+       \filename@parse{\Gin@driver}\@tempswafalse%
+       \def\reserved@a{dvips}%
+       \ifx\filename@base\reserved@a\@tempswatrue\fi%
+       \def\reserved@a{dvipdfm}%
+       \ifx\filename@base\reserved@a\@tempswatrue\fi%
+       \if@tempswa%
+         \ClassInfo{leaflet}{Generating code for dvips}%
+         \AtBeginDvi{%
+           \special{papersize=\the\paperwidth,\the\paperheight}}%
+       \fi%
+       \def\reserved@a{pdftex}%
+       \ifx\filename@base\reserved@a
+         \ClassInfo{leaflet}{Generating code for pdfTeX}%
+         \pdfpagewidth\paperwidth\pdfpageheight\paperheight%
+       \fi%
+       \def\reserved@a{vtex}%
+       \ifx\filename@base\reserved@a
+         \ClassInfo{leaflet}{Generating code for VTeX}%
+         \mediawidth\paperwidth\mediaheight\paperheight%
+       \fi%
+     \fi
+   }
+ }
+
+ 
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"

@@ -370,7 +370,7 @@
     {\global\advance\c@beamerpauses by1\relax}%
     {\global\c@beamerpauses=#1\relax}%
   \onslide<\c@beamerpauses->\relax%
-
+}
 
 \mode
 <all>
@@ -537,15 +537,21 @@
     \verb}
 
   \define@key{beamerverb}{colored}[true]{\def\beamer@colorsup{}}
+  \define@key{beamerverb}{width}{\def\beamer@verbwidth{#1}}
   
   \newcommand{\defverbatim}[2][]{%
     \def\beamer@colorsup{\def\set@color{}\def\reset@color{}}%
+    \setkeys{beamerverb}{width=\textwidth}%
     \setkeys{beamerverb}{#1}%
     \expandafter\newbox\csname @verb\string#2\endcsname%
-    \def#2{{\expandafter\beamer@setb\csname @verb\string#2\endcsname\unvbox0}\color{.}}%
-    \expandafter\setbox\csname @verb\string#2\endcsname=\vbox\bgroup
+    \def#2{{\expandafter\beamer@setb\csname @verb\string#2\endcsname%
+        \unvbox0}\color{.}}%
+    \expandafter\setbox\csname @verb\string#2\endcsname=\vbox\bgroup%
     \beamer@colorsup%
+    \hsize=\beamer@verbwidth\textwidth=\beamer@verbwidth\linewidth=\beamer@verbwidth%
+    \vskip-\baselineskip\strut\bgroup\aftergroup\beamer@verbend%
     \let\@next=}
+  \def\beamer@verbend{\vskip-\baselineskip\strut\egroup}
 }
 
 
