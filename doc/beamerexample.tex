@@ -1,0 +1,827 @@
+\documentclass{beamer}
+% Try the class options [notes], [notesonly], [trans], [handout],
+% [red] and see what happens!
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\usepackage{beamerthemebars,beamertemplates}
+\usepackage[english]{babel}
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{amsmath,amssymb}
+\usepackage[latin1]{inputenc}
+
+%
+% The following defintions are peculiar to this particular
+% presetation. They have nothing to do with the beamer class
+%
+
+\newcommand{\Lang}[1]{\operatorname{\text{\textsc{#1}}}}
+
+\newcommand{\Class}[1]{\operatorname{\mathchoice
+  {\text{\small #1}}
+  {\text{\small #1}}
+  {\text{#1}}
+  {\text{#1}}}}
+
+\newcommand{\DOF}{\Class{DOF}}
+\newcommand{\NOF}{\Class{NOF}}
+\newcommand{\DOFpoly}{\Class{DOF}_{\mathsf{poly}}}
+\newcommand{\NOFpoly}{\Class{NOF}_{\mathsf{poly}}}
+
+
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\Set}[1]{\{#1\}}
+
+\pgfdeclareimage{computerimage}{1.8361cm}{2cm}{computer}
+\pgfdeclareimage{computerworkingimage}{1.8361cm}{2cm}{computerred}
+\pgfdeclareimage{apple}{1.625cm}{2cm}{g4}
+\pgfdeclareimage{appleworking}{1.625cm}{2cm}{g4red}
+\pgfdeclareimage{ram}{3.811cm}{1cm}{ram}
+
+\newcommand{\tape}[9]{%
+  \pgfputat{#1}{%
+  \pgfsetlinewidth{0.8pt}%
+  \pgfrect[stroke]{\pgfxy(0,0)}{\pgfxy(4,0.5)}%
+  \pgfsetlinewidth{0.4pt}%
+  \pgfline{\pgfxy(0.5,0)}{\pgfxy(0.5,0.5)}%
+  \pgfline{\pgfxy(1.0,0)}{\pgfxy(1.0,0.5)}%
+  \pgfline{\pgfxy(1.5,0)}{\pgfxy(1.5,0.5)}%
+  \pgfline{\pgfxy(2.0,0)}{\pgfxy(2.0,0.5)}%
+  \pgfline{\pgfxy(2.5,0)}{\pgfxy(2.5,0.5)}%
+  \pgfline{\pgfxy(3.0,0)}{\pgfxy(3.0,0.5)}%
+  \pgfline{\pgfxy(3.5,0)}{\pgfxy(3.5,0.5)}%
+  %
+  \pgfputat{\pgfxy(0.25,0.25)}{\pgfbox[center,center]{#2}}%
+  \pgfputat{\pgfxy(0.75,0.25)}{\pgfbox[center,center]{#3}}%
+  \pgfputat{\pgfxy(1.25,0.25)}{\pgfbox[center,center]{#4}}%
+  \pgfputat{\pgfxy(1.75,0.25)}{\pgfbox[center,center]{#5}}%
+  \pgfputat{\pgfxy(2.25,0.25)}{\pgfbox[center,center]{#6}}%
+  \pgfputat{\pgfxy(2.75,0.25)}{\pgfbox[center,center]{#7}}%
+  \pgfputat{\pgfxy(3.25,0.25)}{\pgfbox[center,center]{#8}}%
+  \pgfputat{\pgfxy(3.75,0.25)}{\pgfbox[center,center]{#9}}%
+  %
+  \pgfputat{\pgfxy(0,0.7)}{\pgfbox[left,base]{tape}}%
+  }%
+  %
+  \pgfnodecircle{n1}[virtual]{\pgfrelative{#1}{\pgfxy(0.25,0)}}{2pt}%
+  \pgfnodecircle{n2}[virtual]{\pgfrelative{#1}{\pgfxy(0.75,0)}}{2pt}%
+  \pgfnodecircle{n3}[virtual]{\pgfrelative{#1}{\pgfxy(1.25,0)}}{2pt}%
+  \pgfnodecircle{n4}[virtual]{\pgfrelative{#1}{\pgfxy(1.75,0)}}{2pt}%
+  \pgfnodecircle{n5}[virtual]{\pgfrelative{#1}{\pgfxy(2.25,0)}}{2pt}%
+  \pgfnodecircle{n6}[virtual]{\pgfrelative{#1}{\pgfxy(2.75,0)}}{2pt}%
+  \pgfnodecircle{n7}[virtual]{\pgfrelative{#1}{\pgfxy(3.25,0)}}{2pt}%
+  \pgfnodecircle{n8}[virtual]{\pgfrelative{#1}{\pgfxy(3.75,0)}}{2pt}%
+}
+
+\newcommand{\putmachine}[2]{%
+  \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{computerimage}}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
+}
+\newcommand{\putmachineworking}[2]{%
+  \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{computerworkingimage}}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
+}
+
+\newcommand{\putmachinea}[2]{%
+  \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{apple}}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
+}
+\newcommand{\putmachineworkinga}[2]{%
+  \pgfputat{#1}{\pgfbox[center,center]{\pgfuseimage{appleworking}}}%
+  \pgfputat{\pgfrelative{#1}{\pgfxy(0,-1.4)}}{\pgfbox[center,base]{#2}}%
+  \pgfnodecircle{machine}[virtual]{\pgfrelative{#1}{\pgfxy(0,1)}}{2pt}%
+}
+
+\newcommand{\selectpos}[1]{%
+   \pgfsetlinewidth{0.6pt}%
+   \color{structure}%
+   \pgfsetendarrow{\pgfarrowto}%
+   \pgfnodeconncurve{machine}{n#1}{90}{-90}{.5cm}{.5cm}%
+}
+
+%
+% The following info should normally be given in you main file:
+%
+
+\hypersetup{%
+  pdftitle={Computation with Absolutely No Space Overhead},%
+  pdfauthor={Lane Hemaspaandra, Proshanto Mukherji, and Till Tantau},
+  pdfsubject={Theoretical Computer Science},
+  pdfkeywords={overhead-free, context-free, linear space}}
+
+\title{Computation with Absolutely No Space Overhead}
+\author{%
+  Lane Hemaspaandra\inst{1} \and
+  Proshanto Mukherji\inst{1} \and
+  Till Tantau\inst{2}}
+\institute[Universities of Rochester and Berlin]{
+  \inst{1}%
+  Department of Computer Science\\
+  University of Rochester
+  \and
+  \inst{2}%
+  Fakultät für Elektrotechnik und Informatik\\
+  Technical University of Berlin}
+\date[DLT 2003]{Developments in Language Theory Conference, 2003}
+
+
+% Try this:
+%\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section[Outline]{}
+
+\frame{\tableofcontents}
+\note{At most 1 minute for the outline.}
+
+\section[Our Model]{The Model of Overhead-Free Computation}
+
+\frame{\tableofcontentscurrent}
+
+\subsection{The Standard Model of Linear Space}
+
+\frame
+{
+  \frametitle{The Standard Model of Linear Space}
+
+  \begin{columns}
+    \begin{column}{4.5cm}
+      \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
+        \pgfonly<1| trans:1>{
+          \putmachine{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{1}}
+        \pgfonly<2| handout:0| trans:2>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{2}}        
+        \pgfonly<3| handout:0| trans:3>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{8}}        
+        \pgfonly<4| handout:0| trans:4>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{\$}
+          \selectpos{7}}      
+        \pgfonly<5| handout:0| trans:0>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{0}{1}{0}{0}{1}{0}{\$}
+          \selectpos{2}}      
+        \pgfonly<6| handout:0| trans:0>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{\$}{1}{0}{0}{1}{0}{\$}
+          \selectpos{3}}      
+        \pgfonly<7| handout:0| trans:0>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{\$}{1}{0}{0}{1}{0}{\$}
+          \selectpos{7}}      
+        \pgfonly<8| handout:0| trans:0>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{\$}{1}{0}{0}{1}{\$}{\$}
+          \selectpos{6}}      
+        \pgfonly<9| handout:0| trans:0>{
+          \putmachineworking{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{\$}{\$}{\$}{\$}{\$}{\$}{\$}
+          \selectpos{5}}      
+        \pgfonly<10| handout:0| trans:5>{
+          \putmachine{\pgfxy(1.75,3)}{Turing machine}
+          \tape{\pgfxy(0,5)}{\$}{\$}{\$}{\$}{\$}{\$}{\$}{\$}
+          \selectpos{5}}      
+     \end{pgfpicture}
+    \end{column}
+    \begin{column}{6cm}
+      \begin{block}{Characteristics}
+      \begin{itemize}
+      \item
+        Input fills \alert{fixed-size tape}
+      \item
+        Input may be \alert{modified}
+      \item
+        Tape alphabet \alert{is larger than}\\ input alphabet
+      \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+} 
+\noteitems{
+\item Stress the large tape alphabet.    
+\item Point out that \$ is a marker symbol.}
+
+\frame
+{
+  \frametitle{Linear Space is a Powerful Model}
+
+  \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6cm}
+    \pgfsetlinewidth{0.8pt}
+    \pgfxyline(-5,0)(5,0)
+    
+    \pgfsetlinewidth{0.4pt}
+
+    \pgfheaplabeledcentered{2cm}{2.5cm}{$\Class{CFL}$}
+    \pgfheaplabeledcentered{3.5cm}{3cm}{\raise10pt\hbox{}$\Class{DLINSPACE}$}
+    \pgfheaplabeledcentered{5cm}{4cm}{\raise13pt\hbox{}$\Class{NLINSPACE} = \Class{CSL}$}
+    \pgfheaplabeledcentered{6cm}{5cm}{$\Class{PSPACE}$}
+
+    \pgfsetdash{{3pt}{3pt}}{0pt}
+    \pgfheaplabeled{\pgfxy(0,3.3)}{\pgfxy(-5,6)}{\pgfxy(5,6)}{}%
+    \pgfputat{\pgfxy(-4.6,5.75)}{\pgfbox[left,base]{$\Class{PSPACE}$-hard}}%      
+  \end{pgfpicture}
+}
+\noteitems{
+\item Explain CSL.
+\item Point out the connections to formal language theory.}
+
+\subsection{Our Model of Absolutely No Space Overhead}
+
+\frame
+{
+  \frametitle{Our Model of ``Absolutely No Space Overhead''}
+
+  \begin{columns}
+    \begin{column}{4.5cm}
+      \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
+        \pgfonly<1| trans:1>{%
+          \putmachinea{\pgfxy(1.75,3)}{Turing machine}%
+          \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}%
+          \selectpos{1}}%
+        \pgfonly<2| handout:0| trans:2>{%
+          \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}%
+          \selectpos{2}}%      
+        \pgfonly<3| handout:0| trans:3>{%
+          \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}%
+          \selectpos{8}}%      
+        \pgfonly<4| handout:0| trans:0>{%
+          \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}%
+          \selectpos{7}}%      
+        \pgfonly<5| handout:0| trans:0>{%
+          \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}%
+          \selectpos{2}}%      
+        \pgfonly<6| handout:0| trans:0>{%
+          \putmachineworkinga{\pgfxy(1.75,3)}{Turing machine}%
+          \tape{\pgfxy(0,5)}{1}{1}{1}{0}{0}{1}{0}{1}%
+          \selectpos{3}}%      
+        \pgfonly<7| handout:0| trans:4>{%
+          \putmachinea{\pgfxy(1.75,3)}{Turing machine}%
+          \pgfputat{\pgfxy(1.75,5.5)}{\pgfbox[center,center]{\pgfuseimage{ram}}}%
+          \pgfnodecircle{n3}[virtual]{\pgfxy(1.25,5)}{2pt}%
+          \selectpos{3}}%      
+      \end{pgfpicture}
+    \end{column}
+    \begin{column}{6cm}
+      \begin{overprint}
+      \onslide<1-6| trans:1-3>
+        \begin{block}{Characteristics}
+          \begin{itemize}
+          \item
+            Input fills \alert{fixed-size tape}
+          \item
+            Input may be \alert{modified}
+          \item
+            Tape alphabet \alert{equals}\\
+            input alphabet
+          \end{itemize}
+        \end{block}
+      \onslide<7-| trans:4>
+        \begin{block}{Intuition}
+          \begin{itemize}
+          \item
+            Tape is used like a RAM module.
+          \end{itemize}
+        \end{block}
+      \end{overprint}
+    \end{column}
+  \end{columns}
+}
+\note{Point out that no markers are used.}
+
+
+\frame
+{
+  \frametitle{Definition of Overhead-Free Computations}
+
+  \begin{Definition}
+    A Turing machine is \alert{overhead-free} if
+    \begin{itemize}
+    \item
+      it has only a single tape,
+    \item
+      writes only on input cells,
+    \item
+      writes only symbols drawn from the input alphabet.
+    \end{itemize}
+  \end{Definition}
+}
+
+\frame
+{
+  \frametitle{Overhead-Free Computation Complexity Classes}
+ 
+  \begin{Definition}
+    A language $L \subseteq \Sigma^*$ is in
+    \begin{description}
+    \item<1->[\alert<1| handout:0| trans:0>{$\DOF$}]
+      if $L$ is accepted by a deterministic overhead-free machine with
+      input alphabet~$\Sigma$, 
+    \item<2->[\alert<2| handout:0| trans:0>{$\DOFpoly$}]
+      if $L$ is accepted by a deterministic overhead-free machine with
+      input alphabet~$\Sigma$ in polynomial time.
+    \item<3->[\alert<3| handout:0| trans:0>{$\NOF$}]
+      is the nondeterministic  version of $\DOF$, 
+    \item<4->[\alert<4| handout:0| trans:0>{$\NOFpoly$}]
+      is the nondeterministic version of $\DOFpoly$. 
+    \end{description}
+  \end{Definition}
+}
+\noteitems{
+\item Joke about German pronunciation.
+\item Stress meaning of D and N.}
+
+
+\frame
+{
+  \frametitle{Simple Relationships among\\ Overhead-Free Computation Classes}
+
+  \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6cm}
+    \pgfsetlinewidth{0.8pt}
+    \pgfxyline(-5,0)(5,0)
+    
+    \pgfsetlinewidth{0.4pt}
+
+    \pgfheaplabeledcentered{1.75cm}{2cm}{$\DOFpoly$}
+    \pgfheaplabeledcentered{3.5cm}{3cm}{$\DOF$}
+    \pgfheaplabeledcentered{2.5cm}{3.5cm}{$\NOFpoly$}
+    \pgfheaplabeledcentered{5cm}{4cm}{$\NOF$}
+
+    \pgfheaplabeledcentered{6cm}{5cm}{\raise10pt\hbox{}$\Class{NLINSPACE}$}
+  \end{pgfpicture}
+}
+
+
+\section[Power of the Model]{The Power of Overhead-Free Computation}
+
+\frame{\tableofcontentscurrent}
+
+\subsection{Palindromes}
+
+\frame
+{
+  \frametitle{Palindromes Can be Accepted in an Overhead-Free Way}
+
+  \begin{columns}
+    \begin{column}{4.5cm}
+      \begin{pgfpicture}{-0.5cm}{1cm}{4cm}{7cm}
+        \pgfonly<1| trans:1>{
+          \putmachinea{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{1}}
+        \pgfonly<2| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{2}}      
+        \pgfonly<3| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{8}}
+        \pgfonly<4| handout:0| trans:2>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}
+          \selectpos{7}}      
+        \pgfonly<5| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{1}{0}{1}{0}{0}{1}{0}{1}
+          \selectpos{1}}      
+        \pgfonly<6| handout:0| trans:3>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{0}{1}
+          \selectpos{2}}      
+        \pgfonly<7| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{0}{1}
+          \selectpos{8}}      
+        \pgfonly<8| handout:0| trans:4>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{1}{0}
+          \selectpos{7}}      
+        \pgfonly<9| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{1}{1}{0}{0}{1}{1}{0}
+          \selectpos{2}}      
+        \pgfonly<10| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{1}{0}
+          \selectpos{3}}      
+        \pgfonly<11| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{1}{0}
+          \selectpos{7}}      
+        \pgfonly<12| handout:0| trans:5>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{6}}      
+        \pgfonly<13| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{1}{0}{0}{1}{0}{0}
+          \selectpos{3}}      
+        \pgfonly<14| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{0}{1}{0}{1}{0}{0}
+          \selectpos{4}}      
+        \pgfonly<15| handout:0| trans:0>{
+          \putmachineworkinga{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{0}{1}{0}{1}{0}{0}
+          \selectpos{6}}      
+        \pgfonly<16| handout:0| trans:6>{
+          \putmachinea{\pgfxy(1.75,3)}{overhead-free machine}
+          \tape{\pgfxy(0,5)}{0}{0}{0}{1}{1}{0}{0}{0}
+          \selectpos{5}}      
+      \end{pgfpicture}
+    \end{column}
+    \begin{column}{6cm}
+      \begin{block}{Algorithm}
+        \vskip1em
+
+        \alert<1| handout:0| trans:1>{Phase 1:\\
+        Compare first and last bit}
+
+        \quad \alert<2| handout:0| trans:2>{Place left end marker}
+
+        \quad \alert<3| handout:0| trans:2>{Place right end marker}
+        \vskip1em
+
+        \alert<4| handout:0| trans:3->{Phase 2:\\
+        Compare bits next to end markers}
+        
+        \quad \alert<5,9,13| handout:0| trans:0>{Find left end marker}
+
+        \quad \alert<6,10,14| handout:0| trans:0>{Advance left end marker}
+
+        \quad \alert<7,11,15| handout:0| trans:0>{Find right end marker}
+
+        \quad \alert<8,12,16| handout:0| trans:0>{Advance right end marker}
+        
+      \end{block}
+    \end{column}
+  \end{columns}
+}
+\note{Use 3 minutes.}
+
+
+\frame
+{
+  \frametitle{Relationships among Overhead-Free Computation Classes}
+
+  \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
+    \pgfsetlinewidth{0.8pt}
+    \pgfxyline(-5,0)(5,0)
+    
+    \pgfsetlinewidth{0.4pt}
+
+    \pgfheaplabeledcentered{1.75cm}{2cm}{$\DOFpoly$}
+    \pgfheaplabeledcentered{3.5cm}{3cm}{$\DOF$}
+    \pgfheaplabeledcentered{2.5cm}{3.5cm}{$\NOFpoly$}
+    \pgfheaplabeledcentered{5cm}{4cm}{$\NOF$}
+
+    \pgfputat{\pgfxy(0,0.25)}{\pgfbox[center,base]{\alert{Palindromes}}}
+  \end{pgfpicture}
+}
+
+\subsection{Linear Languages}
+
+\frame
+{
+  \frametitle{A Review of Linear Grammars}
+
+  \begin{Definition}
+    A grammar is \alert{linear} if it is context-free and\\ there is
+    only one nonterminal per right-hand side.
+  \end{Definition}
+
+  \begin{Example}
+    $G_1\colon S \to 00S0 \mid 1$.
+    
+    $G_2\colon S \to 0S10 \mid 0$.
+  \end{Example}
+
+  \begin{Definition}<2->
+    A grammar is \alert{deterministic} if\\ ``there is always only one
+    rule that can be applied.''
+  \end{Definition}
+
+  \begin{Example}<2->
+    $G_1$ is deterministic.
+    
+    $G_2$ is not deterministic.
+  \end{Example}  
+}
+\note{Just explain intuition using the example.}
+
+\frame
+{
+  \frametitle{Deterministic Linear Languages\\ Can Be Accepted in an
+    Overhead-Free Way}
+
+  \begin{Theorem}
+    Every deterministic linear language is in $\DOFpoly$.
+  \end{Theorem}
+}
+
+\frame
+{
+  \frametitle{Continued Review of Linear Grammars}
+
+  \begin{Definition}
+    A language is \alert{metalinear} if it is the concatenation\\ of
+    linear languages.
+  \end{Definition}
+
+  \begin{Example}<2->
+    $\Lang{triple-palindrome} = \Set{uvw \mid \text{$u$, $v$, and $w$ are palindromes}}$.
+  \end{Example}  
+}
+
+\frame
+{
+  \frametitle{Metalinear Languages\\ Can Be Accepted in an
+    Overhead-Free Way}
+
+  \begin{Theorem}
+    Every metalinear language is in $\NOFpoly$.
+  \end{Theorem}
+}
+
+
+\frame
+{
+  \frametitle{Relationships among Overhead-Free Computation Classes}
+
+  \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
+    \pgfsetlinewidth{0.8pt}
+    \pgfxyline(-5,0)(5,0)
+    
+    \pgfsetlinewidth{0.4pt}
+
+    \pgfheaplabeledcentered{3.5cm}{3cm}{$\DOFpoly$}
+    \pgfheaplabeledcentered{4.25cm}{4cm}{$\NOFpoly$}
+    \pgfheaplabeledcentered{5cm}{5cm}{$\NOF$}
+
+    \color{red}%
+    \pgfheaplabeledcentered{1.75cm}{2cm}{\raise10pt\hbox{}deterministic}
+    \pgfheaplabeledcentered{2.5cm}{3.5cm}{metalinear}
+
+    \pgfputat{\pgfxy(0,0.6)}{\pgfbox[center,base]{linear}}
+  \end{pgfpicture}
+}
+\note{Skip next subsection if more than 18 minutes have passed.}
+
+
+\subsection{Context-Free Languages with a Forbidden Subword}
+
+\frame
+{
+  \frametitle{Definition of Almost-Overhead-Free Computations}
+ 
+  \begin{Definition}
+    A Turing machine is \alert{almost-overhead-free} if
+    \begin{itemize}
+    \item<1->
+      it has only a single tape,
+    \item<2->
+      writes only on input cells,
+    \item<3->
+      writes only symbols drawn from the input alphabet\\
+      \alert{plus one special symbol}.
+    \end{itemize}
+  \end{Definition}
+}
+
+
+\frame
+{
+  \frametitle{Context-Free Languages with a Forbidden Subword\\ Can Be
+    Accepted in an Overhead-Free Way}
+
+  \begin{Theorem}
+    Let $L$ be a context-free language with a forbidden word.\\
+    Then $L  \in \NOFpoly$.
+  \end{Theorem}
+  \vskip1em
+
+  The proof is based on the fact that every context-free
+  language can be accepted by a nondeterministic almost-overhead-free
+  machine in polynomial time.
+}
+
+
+
+\frame
+{
+  \frametitle{Relationships among Overhead-Free Computation Classes}
+
+  \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
+    \pgfsetlinewidth{0.8pt}
+    \pgfxyline(-5,0)(5,0)
+    
+    \pgfsetlinewidth{0.4pt}
+
+    \pgfheaplabeledcentered{3.5cm}{3cm}{$\DOFpoly$}
+    \pgfheaplabeledcentered{4.25cm}{4cm}{$\NOFpoly$}
+    \pgfheaplabeledcentered{5cm}{5cm}{$\NOF$}
+
+    \color{red}%
+    \pgfheaplabeledcentered{2.5cm}{3.5cm}{CFL with}
+
+    \pgfputat{\pgfxy(0,1.6)}{\pgfbox[center,base]{forbidden subwords}}
+  \end{pgfpicture}
+}
+
+\subsection{Languages Complete for Polynomial Space}
+
+\frame
+{
+  \frametitle{Some PSPACE-complete Languages\\ Can Be
+    Accepted in an Overhead-Free Way} 
+
+  \begin{Theorem}
+    $\DOF$ contains languages that are complete for
+    $\Class{PSPACE}$. 
+  \end{Theorem}
+  \vskip1em
+  
+  The proof is based on the fact that for every $L \in
+  \Class{DLINSPACE}$ there exists an isometric homomorphism~$h$ such
+  that $h(L) \in \DOF$. 
+}
+
+
+\frame
+{
+  \frametitle{Relationships among Overhead-Free Computation Classes}
+
+  \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
+    \pgfsetlinewidth{0.8pt}
+    \pgfxyline(-5,0)(5,0)
+    
+    \pgfsetlinewidth{0.4pt}
+
+    \pgfheaplabeledcentered{1.75cm}{2cm}{$\DOFpoly$}
+    \pgfheaplabeledcentered{3.5cm}{3cm}{$\DOF$}
+    \pgfheaplabeledcentered{2.5cm}{3.5cm}{$\NOFpoly$}
+    \pgfheaplabeledcentered{5cm}{4cm}{$\NOF$}
+
+    \pgfsetdash{{3pt}{3pt}}{0pt}
+    \pgfheaplabeled{\pgfxy(0,2.9)}{\pgfxy(-5,6)}{\pgfxy(5,6)}{}%
+    \pgfputat{\pgfxy(-4.6,5.75)}{\pgfbox[left,base]{$\Class{PSPACE}$-hard}}%      
+  \end{pgfpicture}
+}
+
+
+
+\section[Limitations of the Model]{Limitations of Overhead-Free Computation}
+
+\frame{\tableofcontentscurrent}
+
+\subsection{Linear Space is Strictly More Powerful}
+
+\frame
+{
+  \frametitle{Some Context-Sensitive Languages\\
+    Cannot be Accepted in an Overhead-Free Way}
+
+  \begin{Theorem}
+    $\DOF \subsetneq \Class{DLINSPACE}$.    
+  \end{Theorem}
+  
+  \begin{Theorem}
+    $\NOF \subsetneq \Class{NLINSPACE}$.    
+  \end{Theorem}
+
+  \vskip1em
+  The proofs are based on old diagonalisations due to Feldman, Owings,
+  and Seiferas.  
+}
+
+
+\frame
+{
+  \frametitle{Relationships among Overhead-Free Computation Classes}
+
+  \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
+    \pgfsetlinewidth{0.8pt}
+    \pgfxyline(-5,0)(5,0)
+    
+    \pgfsetlinewidth{0.4pt}
+
+    \pgfheaplabeledcentered{3.5cm}{3cm}{$\DOF$}
+    \pgfheaplabeledcentered{5cm}{4cm}{$\NOF$}
+
+    \pgfheaplabeledcentered{4.3cm}{4.5cm}{\raise8pt\hbox{}$\Class{DLINSPACE}$}
+    \pgfheaplabeledcentered{6cm}{5cm}{\raise10pt\hbox{}$\Class{NLINSPACE}$}
+
+    \pgfsetdash{{3pt}{3pt}}{0pt}
+    \pgfheaplabeled{\pgfxy(0,2.9)}{\pgfxy(-5,6)}{\pgfxy(5,6)}{}%
+    \pgfputat{\pgfxy(-4.6,5.75)}{\pgfbox[left,base]{$\Class{PSPACE}$-hard}}%      
+  \end{pgfpicture}
+}
+
+
+
+\frame
+{
+  \frametitle{Candidates for Languages that\\
+    Cannot be Accepted in an Overhead-Free Way}
+
+  \begin{block}{Conjecture}
+    $\Lang{double-palindromes} \notin \Class{DOF}$.
+  \end{block}
+
+  \begin{block}{Conjecture}
+    $\Set{ww \mid w\in \Set{0,1}^*} \notin \Class{NOF}$. 
+  \end{block}
+
+  \vskip1em
+  Proving the first conjecture would show $\Class{DOF} \subsetneq
+  \Class{NOF}$. 
+}
+
+
+\section[Summary]{}
+
+\subsection[Summary]{}
+\frame
+{
+  \frametitle{Summary}
+
+  \begin{itemize}
+  \item
+    Overhead-free computation is a more faithful\\
+    \alert{model of fixed-size memory}.
+  \item
+    Overhead-free computation is \alert{less powerful} than linear space.
+  \item
+    \alert{Many} context-free languages can be accepted\\
+    by overhead-free machines.
+  \item
+    We conjecture that \alert{all} context-free languages are in
+    $\NOFpoly$.
+  \item
+    Our results can be seen as new results on the power of\\
+    \alert{linear bounded automata with fixed alphabet} size.
+  \end{itemize}
+}
+\noteitems{
+\item Point out result concerning all context-free languages.
+\item Relationship to restart automata.}
+
+
+\subsection[Further Reading]{}
+
+\frame{
+  \frametitle{For Further Reading}
+  
+  \beamertemplatebookbibitems
+  
+  \begin{thebibliography}{10}
+    
+  \bibitem{sal:b:formal-languages}
+    A.~Salomaa.
+    \newblock {\em Formal Languages}.
+    \newblock Academic Press, 1973.
+
+    \beamertemplatearticlebibitems
+
+  \bibitem{dij:j:smoothsort}
+    E.~Dijkstra.
+    \newblock Smoothsort, an alternative for sorting in situ.
+    \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
+
+  \bibitem{FeldmanO1973}
+    E.~Feldman and J.~Owings, Jr.
+    \newblock A class of universal linear bounded automata.
+    \newblock {\em Information Sciences}, 6:187--190, 1973.
+
+  \bibitem{JancarMPV1995}
+    P.~Jan{\v c}ar, F.~Mr{\'a}z, M.~Pl{\'a}tek, and J.~Vogel.
+    \newblock Restarting automata.
+    \newblock {\em FCT Conference 1995}, LNCS 985, pages
+    282--292. 1995.
+
+  \end{thebibliography}
+}
+
+\end{document}
+
+

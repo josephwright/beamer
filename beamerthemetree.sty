@@ -1,0 +1,87 @@
+\ProvidesPackage{beamerthemetree}[2003/07/28 ver 0.2]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+                                % Title page  
+\usetitlepagetemplate{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \Large\structure{\inserttitle}
+    \vskip1em\par
+    \normalsize\insertauthor\vskip1em\par
+    {\scriptsize\insertinstitute\par}\par\vskip1em
+    \insertdate\par\vskip1.5em
+    \inserttitlegraphic
+  \end{centering}
+  \vfill
+  }
+
+                                % Frametitles
+\useframetitletemplate{%
+  {\leftskip-\Geom@lmargin\advance\leftskip by0.3cm%
+   \rightskip-\Geom@rmargin plus 1fil\advance\rightskip by0.3cm\leavevmode
+    \color{structure}
+    \Large\insertframetitle\par}%
+  }
+
+  
+                                % Sections in headline
+\usesectionheadtemplate
+{\color{structure}\tiny\insertsectionhead}
+{\color{structureshaded}\tiny\insertsectionhead}
+
+                                % Entries in table of contents
+\usetemplatetocsection
+{{\large\color{structure}\inserttocsection}}
+{{\large\color{structureshaded}\inserttocsection}}
+
+                                % Entries in table of contents
+\usetemplatetocsubsection
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
+
+                                % Head
+\useheadtemplate{%
+  \vbox{%
+    \vskip3pt%
+    \tinyline{\color{structure}\insertshorttitle\hfill}%
+    \setbox\tempbox=\hbox{\insertsection}%
+    \tinyline{\color{structure}\ifdim\wd\tempbox>1pt{\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\insertsection\fi\hfill}%
+    \setbox\tempbox=\hbox{\insertsubsection}%
+    \tinyline{\color{structure}\ifdim\wd\tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\insertsubsection\fi\hfill}%
+    \insertvrule{3pt}{structureshaded}%
+    }%
+  }
+
+                                % Footline
+\usefoottemplate{}
+
+\def\logo#1{%
+  \def\insertlogo{#1}%
+  \useheadtemplate{%
+    \setbox\logobox=\hbox{\insertlogo}%
+  \vbox{%
+    \vskip3pt%
+    \tinyline{\color{structure}\insertshorttitle\hfill}%
+    \setbox\tempbox=\hbox{\insertsection}%
+    \tinyline{\color{structure}\ifdim\wd\tempbox>1pt{\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\insertsection\fi\hfill}%
+    \setbox\tempbox=\hbox{\insertsubsection}%
+    \tinyline{\color{structure}\ifdim\wd\tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\insertsubsection\fi\hfill\ht\logobox=0pt\box\logobox}%
+    \insertvrule{3pt}{structureshaded}%
+    }%
+  }}
+
+                                % Background
+\usebackgroundtemplate{}
+
+                                % Blocks
+\useblocktemplate{\medskip{\color{structure}\large\insertblockname}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large\insertblockname}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\insertblockname}\par}{\endgroup\medskip}
+ 
