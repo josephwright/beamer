@@ -244,7 +244,8 @@
 
 \newtoks\beamer@envbody
 \def\beamer@frameenv{%
-  \def\beamer@process@envbody{\endgroup\expandafter\beamer@framecommand\beamer@frameoptions{\the\beamer@envbody}}%
+  \def\beamer@process@envbody{\endgroup%
+    \expandafter\expandafter\expandafter\beamer@framecommand\expandafter\beamer@frameoptions\expandafter{\the\beamer@envbody}}%
   \global\beamer@envbody{}\def\beamer@begin@stack{b}%
   \begingroup
   \let\frame\beamer@collect@@body
@@ -257,16 +258,30 @@
 
 \long\def\beamer@push@begins#1\begin#2{\ifx\end#2\else b\expandafter\beamer@push@begins\fi}
 \long\def\beamer@collect@@body#1\end#2{%
+  \def\test{#1}%
   \edef\beamer@begin@stack{\beamer@push@begins#1\begin\end \expandafter\@gobble\beamer@begin@stack}%
   \ifx\@empty\beamer@begin@stack
-    \endgroup
-    \@checkend{#2}%
-    \global\beamer@envbody\expandafter{\the\beamer@envbody#1}%
+      \global\beamer@envbody\expandafter{\the\beamer@envbody#1}%
+    \def\reserved@a{#2}
+    \ifx\reserved@a\beamer@frametext%
+      \endgroup%
+      \let\@next=\beamer@process@envbody % A little tricky! Note the grouping
+      \@checkend{#2}%
+    \else%
+      % ok, just expand it, presumably it will generate the desired \end{frame}  
+      \let\@next=\beamer@process@expander%
+    \fi
   \else
     \global\beamer@envbody\expandafter{\the\beamer@envbody#1\end{#2}}%
+    \let\@next=\beamer@process@envbody%
   \fi
-  \beamer@process@envbody % A little tricky! Note the grouping
+  \@next
 }
+
+\def\beamer@process@expander{%
+  \def\beamer@begin@stack{b}%
+  \expandafter\expandafter\expandafter\beamer@collect@@body\csname end\reserved@a\endcsname\endgroup}
+
 
 \mode
 <all>

@@ -12,12 +12,8 @@
 %
 % Local counters/ifs/dimensions
 %
-\newif\ifbeamer@onlycurrent
-\newif\ifbeamer@onlycurrentsubsection
 \newif\ifbeamer@pausesections
 \newif\ifbeamer@pausesubsections
-\newif\ifbeamer@subsectionshide
-\newif\ifbeamer@subsectionsshaded
 
 %
 %
@@ -25,12 +21,23 @@
 %
 %
 
-\define@key{beamertoc}{current}[true]{\beamer@onlycurrenttrue}
-\define@key{beamertoc}{currentsubsection}[true]{\beamer@onlycurrentsubsectiontrue}
+\define@key{beamertoc}{sectionstyle}{\beamer@toc@process\beamer@toc@cs\beamer@toc@os#1//}
+\define@key{beamertoc}{subsectionstyle}{\beamer@toc@sprocess\beamer@toc@css\beamer@toc@oss\beamer@toc@ooss#1///}
+\def\beamer@toc@process#1#2#3/#4/{%
+  \beamer@ifempty{#4}{\def#1{#3}\def#2{#3}}{\def#1{#3}\def#2{#4}\@gobble}}
+\def\beamer@toc@sprocess#1#2#3#4/#5/#6/{%
+  \beamer@ifempty{#5}%
+  {\def#1{#4}\def#2{#4}\def#3{#4}}
+  {\beamer@ifempty{#6}
+    {\def#1{#4}\def#2{#5}\def#3{#5}\@gobble}
+    {\def#1{#4}\def#2{#5}\def#3{#6}\@gobbletwo}}}
+
 \define@key{beamertoc}{pausesections}[true]{\beamer@pausesectionstrue}
 \define@key{beamertoc}{pausesubsections}[true]{\beamer@pausesubsectionstrue}
-\define@key{beamertoc}{hidesubsections}[true]{\beamer@subsectionshidetrue}
-\define@key{beamertoc}{shadesubsections}[true]{\beamer@subsectionsshadedtrue}
+
+\define@key{beamertoc}{currentsection}[]{\setkeys{beamertoc}{sectionstyle=show/shaded,subsectionstyle=show/show/shaded}}
+\define@key{beamertoc}{currentsubsection}[]{\setkeys{beamertoc}{subsectionstyle=show/shaded}}
+
 \define@key{beamertoc}{part}{\beamer@showpartnumber=#1\relax}
 \define@key{beamertoc}{sections}{\beamer@parsetocsections#1[]}
 \define@key{beamertoc}{firstsection}{\beamer@sectionadjust=-#1\relax\advance\beamer@sectionadjust by 1\relax}
@@ -40,13 +47,14 @@
 
 \def\tableofcontents{\@ifnextchar[{\@tableofcontents}{\@tableofcontents[]}}
 \def\@tableofcontents[#1]{%
+  \def\beamer@toc@cs{show}%
+  \def\beamer@toc@os{show}%
+  \def\beamer@toc@css{show}%
+  \def\beamer@toc@oss{show}%
+  \def\beamer@toc@ooss{show}%
   \beamer@showpartnumber=\c@part%
-  \beamer@onlycurrentfalse%
-  \beamer@onlycurrentsubsectionfalse%
   \beamer@pausesectionsfalse%
   \beamer@pausesubsectionsfalse%
-  \beamer@subsectionshidefalse%
-  \beamer@subsectionsshadedfalse%
   \def\beamer@tocsections{<*>}%
   \setkeys{beamertoc}{firstsection=1}%
   \setkeys{beamertoc}{#1}%
@@ -56,41 +64,50 @@
     \vfill}%
   }
 
-\def\tableofcontentscurrent{\tableofcontents[current]}
+
+\def\beamer@tocaction@show#1{\csname #1\endcsname}
+\def\beamer@tocaction@shaded#1{\csname #1shaded\endcsname}
+\def\beamer@tocaction@hide#1{}
+
+\def\beamer@tocact#1#2{\csname beamer@tocaction@#1\endcsname{#2}}
+
+\def\beamer@tocifnothide#1{\csname beamer@tocinvcheck@#1\endcsname}
+\let\beamer@tocinvcheck@hide\@gobble
+
+\def\beamer@hidetex{hide}
 
 \def\sectionintoc{}
 \def\beamer@sectionintoc#1#2#3#4#5{%
+  \ifnum\c@tocdepth>0%
   \ifnum#4=\beamer@showpartnumber%
   {
   \beamer@saveanother%
   \gdef\beamer@todo{}%
   \beamer@slideinframe=#1\relax%
   \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
-    \ifbeamer@pausesections\pause\fi%
-    \beamer@tempcount=#5\relax%
-    \advance\beamer@tempcount by\beamer@sectionadjust%
-    \edef\inserttocsectionnumber{\the\beamer@tempcount}%
-    \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
-    \ifbeamer@subsectionshide
-    \vskip1.5em
-    \else
-    \vfill
-    \fi
-    {\usebeamerfont{section in toc}%
-    \ifbeamer@onlycurrent%
-      \ifnum\c@section=#1%
-        \hbox{\vbox{\sectiontemplate}}%
-      \else%
-        \hbox{\vbox{\sectiontemplateshaded}}%
-      \fi%
-    \else%
-      \hbox{\vbox{\sectiontemplate}}%
-    \fi
-    \par}}}%
+      \beamer@tempcount=#5\relax%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
+      {
+        \ifbeamer@pausesections\pause\fi%
+        \ifx\beamer@toc@ooss\beamer@hidetex
+          \vskip1.5em
+        \else
+          \vfill
+        \fi
+        {\usebeamerfont{section in toc}%
+         \hbox{\vbox{\beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{sectiontemplate}}}
+         \par%
+        }%
+      }%
+    }
+  }%
   \beamer@restoreanother%
   }
   \beamer@todo%
-  \fi%
+  \fi\fi%
 }
 
 \def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
@@ -102,6 +119,7 @@
 
 \def\subsectionintoc{}
 \long\def\beamer@subsectionintoc#1#2#3#4#5#6{%
+  \ifnum\c@tocdepth>1%
   \ifnum#5=\beamer@showpartnumber%
   {
     \beamer@saveanother%
@@ -114,52 +132,16 @@
       \edef\inserttocsectionnumber{\the\beamer@tempcount}%
       \def\inserttocsubsectionnumber{#2}%
       \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@oss\else\beamer@toc@ooss\fi}%
       {\usebeamerfont{subsection in toc}%
-      \ifbeamer@subsectionshide
-        \ifnum\c@section=#1
-          {\beamer@subsectiontemplate}
-        \fi
-      \else
-        \ifbeamer@onlycurrent
-          \ifnum\c@section=#1
-            \ifbeamer@onlycurrentsubsection
-              \ifnum\c@subsection=#2
-                {\beamer@subsectiontemplate}
-              \else
-                {\beamer@subsectiontemplateshaded}
-              \fi
-            \else 
-              {\beamer@subsectiontemplate}
-            \fi
-          \else
-            {\beamer@subsectiontemplateshaded}
-          \fi
-        \else
-          \ifbeamer@subsectionsshaded
-            {\beamer@subsectiontemplateshaded}
-          \else
-            \ifbeamer@onlycurrentsubsection
-              \ifnum\c@section=#1
-                \ifnum\c@subsection=#2
-                  {\beamer@subsectiontemplate}
-                \else
-                  {\beamer@subsectiontemplateshaded}
-                \fi
-              \else
-                {\beamer@subsectiontemplateshaded}
-              \fi
-            \else 
-              {\beamer@subsectiontemplate}
-            \fi
-          \fi
-        \fi
-      \fi%
-      }
+        \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
+        {beamer@subsectiontemplate}%
+      }%
     }}%
     \beamer@restoreanother%
   }
   \beamer@todo%
-  \fi
+  \fi\fi%
 }
 
 \def\usetemplatetocsubsection{\@ifnextchar[\@@usetemplatetocsubsection\@usetemplatetocsubsection}

@@ -1,5 +1,7 @@
-\documentclass[dvips,notes]{beamer}
+\documentclass[notes]{beamer}
 
+% Do NOT take this file as a template for your own talks. Use a file
+% in the directory solutions instead. They are much better suited.
 
 % Try the class options [notes], [notes=only], [trans], [handout],
 % [red], [compress], [draft], [class=article] and see what happens!
@@ -22,7 +24,8 @@
 
 \beamertemplateshadingbackground{red!10}{blue!10}
 
-\usepackage{beamerthemeshadow}
+\usetheme{Warsaw}
+\usefonttheme[onlytinystructure]{bold}
 
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
@@ -30,8 +33,8 @@
 \usepackage{colortbl}
 \usepackage[english]{babel}
 
-%\usepackage{lmodern}
-%\usepackage[T1]{fontenc} 
+\usepackage{lmodern}
+\usepackage[T1]{fontenc} 
 
 %\usepackage{times}
 
@@ -173,19 +176,17 @@
 
 \section<presentation>*{Outline}
 
-\frame
-{
+\begin{frame}
   \frametitle{Outline}
   \tableofcontents[part=1,pausesections]
-}
+\end{frame}
 
 \AtBeginSubsection[]
 {
-  \frame<handout:0>
-  {
+  \begin{frame}<beamer>
     \frametitle{Outline}
     \tableofcontents[current,currentsubsection]
-  }
+  \end{frame}
 }
 
 \part<presentation>{Main Talk}
@@ -194,8 +195,7 @@
 
 \subsection[Standard Model]{The Standard Model of Linear Space}
 
-\frame
-{
+\begin{frame}
   \frametitle{The Standard Model of Linear Space}
 
   \begin{columns}
@@ -258,10 +258,10 @@
       \end{itemize}
       \end{block}
   \end{columns}
-} 
+\end{frame}
 
-\frame
-{
+
+\begin{frame}
   \frametitle{Linear Space is a Powerful Model}
 
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6cm}
@@ -281,13 +281,12 @@
     \pgfputat{\pgfxy(-4.6,5.75)}{\pgfbox[left,base]{$\Class{PSPACE}$-hard}}%      
   \end{pgfpicture}
   \note[item]{Point out the connections to formal language theory.}
-}
+\end{frame}
 
 
 \subsection[Our Model]{Our Model of Absolutely No Space Overhead}
 
-\frame
-{
+\begin{frame}
   \frametitle{Our Model of ``Absolutely No Space Overhead''}
 
   \transdissolve<7>[duration=0.2]
@@ -351,10 +350,10 @@
       \end{overprint}
   \end{columns}
   \note[item]<6>{Point out that no markers are used.}
-}
+\end{frame}
 
-\frame
-{
+
+\begin{frame}
   \frametitle{Definition of Overhead-Free Computations}
 
   \begin{Definition}
@@ -368,10 +367,9 @@
       writes only symbols drawn from the input alphabet.
     \end{enumerate}
   \end{Definition}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Overhead-Free Computation Complexity Classes}
 
   \begin{Definition}
@@ -394,10 +392,9 @@
       is the nondeterministic version of $\DOFpoly$. 
     \end{description}
   \end{Definition}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Simple Relationships among\\ Overhead-Free Computation Classes}
 
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6cm}
@@ -413,7 +410,7 @@
 
     \pgfheaplabeledcentered{6cm}{5cm}{\raise10pt\hbox{}$\Class{NLINSPACE}$}
   \end{pgfpicture}
-}
+\end{frame}
 
 
 \section[Power of the Model]{The Power of Overhead-Free Computation}
@@ -421,8 +418,7 @@
 
 \subsection{Palindromes}
 
-\frame
-{
+\begin{frame}
   \frametitle{Palindromes Can be Accepted in an Overhead-Free Way}
 
   \begin{columns}
@@ -521,10 +517,9 @@
       \end{block}
   \end{columns}
   \note<1>{Use 3 minutes.}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Relationships among Overhead-Free Computation Classes}
 
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
@@ -540,13 +535,12 @@
 
     \pgfputat{\pgfxy(0,0.25)}{\pgfbox[center,base]{\alert{Palindromes}}}
   \end{pgfpicture}
-}
+\end{frame}
 
 
 \subsection{Linear Languages}
 
-\frame
-{
+\begin{frame}
   \frametitle{A Review of Linear Grammars}
 
   \begin{Definition}<1>
@@ -569,20 +563,19 @@
     
     $G_2\colon S \to 0S10 \mid 0$ is \alert{not} deterministic.
   \end{Example} 
-}
+\end{frame}
 
-\frame
-{
+
+\begin{frame}
   \frametitle{Deterministic Linear Languages\\ Can Be Accepted in an
     Overhead-Free Way}
 
   \begin{Theorem}
     Every deterministic linear language is in $\DOFpoly$.
   \end{Theorem}
-}
+\end{frame}
 
-\frame[<+->]
-{
+\begin{frame}[<+->]
   \frametitle{Metalinear Languages\\ Can Be Accepted in an
     Overhead-Free Way}
 
@@ -598,10 +591,9 @@
   \begin{Theorem}
     Every metalinear language is in $\NOFpoly$.
   \end{Theorem}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Relationships among Overhead-Free Computation Classes}
 
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
@@ -621,13 +613,12 @@
     \pgfputat{\pgfxy(0,0.6)}{\pgfbox[center,base]{linear}}
   \end{pgfpicture}
   \note[item]{Skip next subsection if more than 18 minutes have passed.}
-}
+\end{frame}
 
 
 \subsection[Forbidden Subword]{Context-Free Languages with a Forbidden Subword}
 
-\frame
-{
+\begin{frame}
   \frametitle{Definition of Almost-Overhead-Free Computations}
 
   \begin{Definition}
@@ -639,10 +630,9 @@
       plus one special symbol.
     \end{enumerate}
   \end{Definition}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Context-Free Languages with a Forbidden Subword\\ Can Be
     Accepted in an Overhead-Free Way}
 
@@ -660,10 +650,9 @@
       almost-overhead-free machine in polynomial time.
     \end{proof}
   \end{overprint}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Relationships among Overhead-Free Computation Classes}
 
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
@@ -681,13 +670,13 @@
 
     \pgfputat{\pgfxy(0,1.6)}{\pgfbox[center,base]{forbidden subwords}}
   \end{pgfpicture}
-}
+\end{frame}
+
 
 
 \subsection[Complete Languages]{Languages Complete for Polynomial Space}
 
-\frame<1>[label=pspacecomplete]
-{
+\begin{frame}<1>[label=pspacecomplete]
   \frametitle{Overhead-Free Languages can be PSPACE-Complete}
 
   \begin{Theorem}
@@ -722,10 +711,9 @@
 
     \only<beamer>{\hfill\hyperlink{pspacecomplete<1>}{\beamerreturnbutton{Return}}}
   }
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Relationships among Overhead-Free Computation Classes}
 
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
@@ -743,7 +731,7 @@
     \pgfheaplabeled{\pgfxy(0,2.9)}{\pgfxy(-5,6)}{\pgfxy(5,6)}{}%
     \pgfputat{\pgfxy(-4.6,5.75)}{\pgfbox[left,base]{$\Class{PSPACE}$-hard}}%      
   \end{pgfpicture}
-}
+\end{frame}
 
 
 \section[Limitations of the Model]{Limitations of Overhead-Free Computation}
@@ -751,8 +739,7 @@
 
 \subsection[Strict Inclusion]{Linear Space is Strictly More Powerful}
 
-\frame
-{
+\begin{frame}
   \frametitle{Some Context-Sensitive Languages\\
     Cannot be Accepted in an Overhead-Free Way}
 
@@ -767,10 +754,9 @@
   \vskip1em
   The proofs are based on old diagonalisations due to Feldman, Owings,
   and Seiferas.  
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Relationships among Overhead-Free Computation Classes}
 
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
@@ -789,10 +775,9 @@
     \pgfheaplabeled{\pgfxy(0,2.9)}{\pgfxy(-5,6)}{\pgfxy(5,6)}{}%
     \pgfputat{\pgfxy(-4.6,5.75)}{\pgfbox[left,base]{$\Class{PSPACE}$-hard}}%      
   \end{pgfpicture}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   \frametitle{Candidates for Languages that\\
     Cannot be Accepted in an Overhead-Free Way}
 
@@ -817,15 +802,14 @@
   \vskip1em
   \uncover<1>{Proving the first conjecture would show $\Class{DOF} \subsetneq
   \Class{NOF}$.}
-}
+\end{frame}
 
 
 \section*{Summary}
 
 \subsection<presentation>*{Summary}
 
-\frame
-{
+\begin{frame}
   \frametitle<presentation>{Summary}
 
   \begin{block}{}
@@ -849,13 +833,13 @@
 
   \note[item]{Point out result concerning all context-free languages.}
   \note[item]{Relationship to restart automata.}
-}
+\end{frame}
 
 
 
 \subsection<presentation>*{Further Reading}
 
-\frame{
+\begin{frame}
   \frametitle<presentation>{For Further Reading}
   
   \beamertemplatebookbibitems
@@ -888,7 +872,7 @@
     \newblock {\em FCT Conference 1995}, LNCS 985, pages
     282--292. 1995.
   \end{thebibliography}
-}
+\end{frame}
 
 
 %
@@ -913,7 +897,7 @@
 
 \subsection{Improvements for Context-Free Languages}
 
-\frame{
+\begin{frame}
   \frametitle{Improvements}
 
   \begin{theorem}
@@ -924,13 +908,12 @@
       $\Class{CFL} \subseteq \NOFpoly$.
     \end{enumerate}
   \end{theorem}
-}
+\end{frame}
 
 
 \subsection{Abbreviations}
 
-\frame
-{
+\begin{frame}
   \frametitle{Explanation of Different Abbreviations}
 
   \begin{table}
@@ -944,7 +927,7 @@
     \end{tabular}
     \caption{Explanation of what different abbreviations mean.}
   \end{table}
-}
+\end{frame}
 
 \end{document}
 

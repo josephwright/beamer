@@ -349,9 +349,9 @@ several standard packages to run. It also needs the following versions
 of rather special packages:
 \begin{enumerate}
 \item
-  |pgf| version 0.61 and
+  |pgf| version 0.62 and
 \item
-  |xcolor| version 1.10.
+  |xcolor| version 1.11.
 \end{enumerate}
 This version of \beamer\ should also work with more recent versions of
 |pgf| and |xcolor|, but I cannot guarantee this. In particular,
@@ -1827,17 +1827,6 @@ contains only one slide.
   This command does the same as putting the \meta{contents} in a
   |frame| environment called.
 
-  Internally, the |\frame| command is what is actually executed. The
-  |frame| environment just collects its environment contents and then
-  calls the |\frame| command; except if the option |containsverbatim|
-  is specified, in which case the contents is not collected, but
-  control is nevertheless passed on the |\frame| (the internals are a
-  it obscure).
-
-  If, for whatever reason, the |frame| environment has a problem with
-  some contents, it \emph{might} help to try using the |\frame|
-  command instead.
-
   \example The following two frame will be identical:
 \begin{verbatim}
 \frame{Hi!}
@@ -1848,18 +1837,29 @@ contains only one slide.
 \end{verbatim}
 \end{command}
 
+Internally, the |\frame| command is what is actually executed. The
+|frame| environment just collects its environment contents and then
+calls the |\frame| command; except if the option |containsverbatim|
+is specified, in which case the contents is not collected, but
+control is nevertheless passed on the |\frame| (the internals are a
+bit obscure). You \emph{can} use the |frame| environment inside other
+environments like this:
+\begin{verbatim}
+\newenvironment{myframe}[1]{\begin{frame}\frametitle{#1}}{\end{frame}}
+\end{verbatim}
+However, the actual mechanics are somewhat fragile since the
+``collecting'' of the frame contents is not easy, so
+do not attempt anything too fancy.
 
+If, for whatever reason, the |frame| environment has a problem with
+some contents, it \emph{might} help to try using the |\frame|
+command instead.
 
 For compatibility with earlier versions, you can also give an overlay
 specification in square brackets. If the sole argument to the |\frame|
 command is an argument in square brackets, the \beamer\ class will try
 to check whether this argument ``looks like'' an overlay
 specification. If so, it is assumed to be an overlay specification.
-
-Note that there is \emph{no} environment for creating frames. The
-reason is that I simply have not been able to come up with an idea of
-how to implement it in the presence of multiple overlays.
-
 
 
 
@@ -3222,7 +3222,7 @@ following two commands.
 {
   \begin{frame}<beamer>
     \frametitle{Outline}
-    \tableofcontents[current]
+    \tableofcontents[currentsection]
   \end{frame}
 }
 \end{verbatim}
@@ -3247,7 +3247,7 @@ following two commands.
 {
   \begin{frame}<beamer>
     \frametitle{Outline}
-    \tableofcontents[current,currentsubsection]
+    \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
 \end{verbatim}
@@ -3303,11 +3303,11 @@ beginning of a new part. See |beamerexample3.tex| for an example.
   \part{Today's Lecture}
   \frame{\partpage}
   \section{Topic A}
-  \frame{\tableofcontents[current]}
+  \frame{\tableofcontents[currentsection]}
   \subsection{Foo}
   \frame{...}
   \section{Topic B}
-  \frame{\tableofcontents[current]}
+  \frame{\tableofcontents[currentsection]}
   \subsection{bar}
   \frame{...}
 \end{document}
@@ -3422,7 +3422,7 @@ that can be used to create certain special effects.
 \frame{\tableofcontents}
 
 \section{Introduction}
-\frame{\tableofcontents[current]}
+\frame{\tableofcontents[currentsection]}
 \subsection{Why?}
 \frame{...}
 \frame{...}
@@ -3430,7 +3430,7 @@ that can be used to create certain special effects.
 \frame{...}
 
 \section{Results}
-\frame{\tableofcontents[current]}
+\frame{\tableofcontents[currentsection]}
 \subsection{Because}
 \frame{...}
 \subsection{Here}
@@ -3440,11 +3440,39 @@ that can be used to create certain special effects.
   The following options can be given:
   \begin{itemize}
   \item
+    \declare{|currentsection|} causes all sections but the current to
+    be shown in a semi-transparent way. Also, all subsections but
+    those in the current section are shown in the semi-transparent
+    way. This command is a shorthand for specifying the following
+    options: 
+\begin{verbatim}
+sectionstyle=show/shaded,subsectionstyle=show/show/shaded
+\end{verbatim}
+  \item
+    \declare{|currentsubsection|} causes all subsections but the
+    current subsection in the current section to be shown in a
+    semi-transparent way. This command is a shorthand for specifying
+    the option |subsectionstyle=show/shaded|.
+  \item
+    \declare{|firstsection=|\meta{section number}} specifies which
+    section should be numbered as section~``1.''  This is useful if
+    you have a first section (like an overview section) that should
+    not receive a number. Section numbers are not shown by default. To
+    show them, you must install a different table of contents
+    templates.
+  \item
     \declare{|part=|\meta{part number}} causes the table of contents
     of part \meta{part number} to be shown, instead of the table of
     contents of the current part (which is the default). This option
     can be combined with the other options, although combining it with
     the |current| option obviously makes no sense.
+  \item
+    \declare{|pausesections|} causes a |\pause| command to
+    be issued before each section. This is useful if you wish to show
+    the table of contents in an incremental way.
+  \item
+    \declare{|pausesubsections|} causes a |\pause| command to
+    be issued before each subsection.
   \item
     \declare{|sections=|\marg{overlay specification}} causes only the
     sections mentioned in the \meta{overlay specification} to be
@@ -3456,37 +3484,37 @@ that can be used to create certain special effects.
     versions. Thus |sections={2-4}| causes sections two, three, and
     four to be shown in all versions.
   \item
-    \declare{|firstsection=|\meta{section number}} specifies which
-    section should be numbered as section~``1.''  This is useful if
-    you have a first section (like an overview section) that should
-    not receive a number. Section numbers are not shown by default. To
-    show them, you must install a different table of contents
-    templates.
+    \declare{|sectionstyle=|\meta{style for current
+      section}|/|\meta{style for other sections}} specifies how
+    sections should be displayed. Allowed \meta{styles} are |show|,
+    |shaded|, and |hide|. The first will show the section title
+    normally, the second will show it in a semi-transparent way, and
+    the third will completely suppress it. You can
+    also omit the second style, in which case the first is used for
+    all sections (this is not really useful). 
   \item
-    \declare{|current|} causes all sections but the current to
-    be shown in a semi-transparent way. Also, all subsections but
-    those in the current section are shown in the semi-transparent way.
-  \item
-    \declare{|currentsubsection|} causes all subsections but the
+    \declare{|subsectionstyle=|\meta{style for current
+      subsection}|/|\meta{style for other subsections in current
+      section}|/|\\\meta{style for subsections in other sections}}
+    specifies how subsections should be displayed. The same styles as
+    for the |sectionstyle| option may be given. You can omit the last
+    style, in which case the second also applies to the last, and you can
+    omit the last two, in which case the first applies to all.
+    \example |subsectionstyle=shaded| causes all subsections to be
+    shaded.
+    \example |subsectionstyle=hide| causes all subsections to be
+    hidden.
+    \example |subsectionstyle=show/shaded| causes all subsections but the
     current subsection in the current section to be shown in a
     semi-transparent way.
-  \item
-    \declare{|pausesections|} causes a |\pause| command to
-    be issued before each section. This is useful if you wish to show
-    the table of contents in an incremental way.
-  \item
-    \declare{|pausesubsections|} causes a |\pause| command to
-    be issued before each subsection.
-  \item
-    \declare{|hidesubsections|} causes the subsections to be
-    omitted. However, if used together with the |current| option,
-    the subsections of the current section are not omitted.
-  \item
-    \declare{|shadesubsections|} causes the subsections to
-    be shown in a semi-transparent way.
+    \example |subsectionstyle=show/show/hide| causes all
+    subsections outside the current section to be suppressed.
+    \example |subsectionstyle=show/shaded/hide| causes all
+    subsections outside the current section to be suppressed and only
+    the current subsection in the current section to be hilighted.
   \end{itemize}
-  The last two commands are useful if you do not wish to show too many
-  details when presenting the talk outline.
+  The last two commands examples are useful if you do not wish to show
+  too many details when presenting the talk outline.
 
   \articlenote
   The options are ignored in |article| mode.
@@ -4218,7 +4246,7 @@ from where you ``come.''
 
 By clicking on a section or subsection in the navigation bar, you will
 jump to that section. Clicking on a section is particularly useful if
-the section starts with a |\tableofcontents[current]|, since you
+the section starts with a |\tableofcontents[currentsection]|, since you
 can use it to jump to the different subsections.
 
 By clicking on the document title in a navigation bar (not all themes
@@ -7025,7 +7053,7 @@ one argument. It behaves essentially the same way as |\only|.
 
 \mode
 <beamer| trans>
-{\frame{\tableofcontents[current]}}
+{\frame{\tableofcontents[currentsection]}}
 \end{verbatim}
 \end{command}
 
@@ -7089,7 +7117,7 @@ This text is typeset only in |article| mode.
 \mode
 <presentation>
 { % this text is inserted only in presentation mode
-\frame{\tableofcontents[current]}}
+\frame{\tableofcontents[currentsection]}}
 
 Here we are back to article mode stuff. This text
 is not inserted in presentation mode
@@ -9652,6 +9680,14 @@ just not to use horizontal bars.
 When using certain packages or classes together with the |beamer|
 class, extra options or precautions may be necessary.
 
+\begin{package}{{AlDraTex}}
+  Graphics created using AlDraTex must be treated like verbatim
+  text. The reason is that DraTex fiddles with catcodes and spaces
+  much like verbatim does. So, in order to insert a picture, either
+  add the |containsverbatim| option to the frame or use the
+  |\defverbatim| command to create a box containing the picture.
+\end{package}
+
 \begin{package}{{amsthm}}
   This package is automatically loaded since \beamer\ uses it for
   typesetting theorems. If you do not wish it to be loaded, which can
@@ -9711,6 +9747,10 @@ class, extra options or precautions may be necessary.
   \beamernote
   The caption generation facilities of |deluxetable| are
   deactivated. Instead, the caption template is used.
+\end{package}
+
+\begin{package}{{DraTex}}
+  See |AlDraTex|.
 \end{package}
 
 \begin{package}{{enumerate}}
@@ -9805,6 +9845,12 @@ class, extra options or precautions may be necessary.
   way as you would treat |verbatim| environments. When using
   |\defverbatim| that contains a colored |lstlisting|, use the
   |colored| option of |\defverbatim|.
+\end{package}
+
+\begin{package}{{msc}}
+  \beamernote
+  Since this packages uses |pstricks| internally, everything that
+  applies to pstricks also applies to |msc|.
 \end{package}
 
 \begin{package}{{\normalfont\meta{professional font package}}}

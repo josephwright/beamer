@@ -50,35 +50,21 @@
 \define@key{beamerprosper}{Dissolve}[true]{\def\beamerprosper@trans{Dissolve}}
 \define@key{beamerprosper}{Glitter}[true]{\def\beamerprosper@trans{Glitter}}
 
-\newenvironment{slide}[2][]{%
-  \def\beamerprosper@toc{#2}%
-  \def\beamerprosper@trans{}%
-  \setkeys{beamerprosper}{#1}%
-  \expandafter\beamerprosper@entry\expandafter{\beamerprosper@toc}
-  \frame[containsverbatim]\bgroup\PDFtransition{\beamerprosper@trans}\frametitle{#2}}{\egroup}
+
 \newcommand{\PDForPS}[2]{\ifx\pdfoutput\@undefined#2\else#1\fi}
 \newcommand{\onlyInPDF}[1]{\ifx\pdfoutput\@undefined\else#1\fi}
 \newcommand{\onlyInPS}[1]{\ifx\pdfoutput#1\@undefined\fi}
 
-
-\long\def\overlays#1#2{%
-  % Extract frame title (evil trickery necessary to do this, before the frame starts...)
-  \beamerprosper@extractor#2\beamerprosper@ender}
-\long\def\beamerprosper@extractor#1#2{%
-  \ifx#1\begin%
-  \else%
-    \PackageError{beamerprosper}{Sorry, this overlays command does not start with begin; I'm confused}{}
-  \fi%
-  \@ifnextchar[\beamerprosper@extractora{\beamerprosper@extractora[]}}
-\long\def\beamerprosper@extractora[#1]#2#3\beamerprosper@ender{%
+\newenvironment{slide}[2][]{%
   \def\beamerprosper@toc{#2}
   \def\beamerprosper@trans{}%
   \setkeys{beamerprosper}{#1}%    
   \expandafter\beamerprosper@entry\expandafter{\beamerprosper@toc}%
-  \begingroup
-  \renewenvironment{slide}{}{}
-  \frame{\begin{slide}\PDFtransition{\beamerprosper@trans}\frametitle{#2}#3}
-  \endgroup}
+  \edef\@temp{\noexpand\begin{frame}\beamerprosper@options}%
+  \@temp\PDFtransition{\beamerprosper@trans}\frametitle{#2}}{\end{frame}}
+
+\def\beamerprosper@options{[containsverbatim]}
+\long\def\overlays#1#2{{\def\beamerprosper@options{}#2}}
 
 \def\fromSlide{\@ifstar{\beamer@sfromSlide}{\beamer@fromSlide}}
 \newcommand{\beamer@fromSlide}[2]{\uncover<#1->{#2}}
