@@ -10,13 +10,12 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{beamer}
-[2004/09/23 v2.99 Class for Typesetting a Beamer Presentation]
 
-\newdimen\beamer@version
-\beamer@version=2.99pt % It is only fitting, that the version should
-                       % be given in points...
+\RequirePackage{beamerbasercs}
+
+\ProvidesClassRCS $Name$ $Id$
+[A class for typesetting presentations]
+
 
 
 \RequirePackage{beamerbasemodes}
