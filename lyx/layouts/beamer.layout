@@ -124,7 +124,7 @@ Style BeginFrame
   Preamble
     \makeatletter
     \long\def\lyxframe#1{\@lyxframe#1\@lyxframestop}%
-    \def\@lyxframe{\@ifnextchar<{\@@lyxframe}{\@@lyxframe<+>}}%
+    \def\@lyxframe{\@ifnextchar<{\@@lyxframe}{\@@lyxframe<*>}}%
     \def\@@lyxframe<#1>{\@ifnextchar[{\@@@lyxframe<#1>}{\@@@lyxframe<#1>[]}}
     \long\def\@@@lyxframe<#1>[#2]#3\@lyxframestop#4\lyxframeend{%
       \frame<#1>[#2]{\frametitle{#3}#4}}
@@ -163,7 +163,7 @@ Style BeginPlainFrame
   Preamble
     \makeatletter
     \long\def\lyxplainframe#1{\@lyxplainframe#1\@lyxframestop}%
-    \def\@lyxplainframe{\@ifnextchar<{\@@lyxplainframe}{\@@lyxplainframe<+>}}%
+    \def\@lyxplainframe{\@ifnextchar<{\@@lyxplainframe}{\@@lyxplainframe<*>}}%
     \long\def\@@lyxplainframe<#1>#2\@lyxframestop#3\lyxframeend{%
       \frame<#1>[plain]{\frametitle{#2}#3}}
     \makeatother
@@ -362,7 +362,7 @@ Style AgainFrame
   Preamble
     \makeatletter
     \long\def\lyxagainframe#1{\@lyxagainframe#1\@lyxframestop}%
-    \def\@lyxagainframe{\@ifnextchar<{\@@lyxagainframe}{\@@lyxagainframe<+>}}%
+    \def\@lyxagainframe{\@ifnextchar<{\@@lyxagainframe}{\@@lyxagainframe<*>}}%
     \def\@@lyxagainframe<#1>{\@ifnextchar[{\@@@lyxagainframe<#1>}{\@@@lyxagainframe<#1>[]}}
     \long\def\@@@lyxagainframe<#1>[#2]#3\@lyxframestop{%
       \againframe<#1>[#2]{#3}}
@@ -906,6 +906,29 @@ Style Title
   AlignPossible		Center
   LabelType		No_Label
   OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Size		Huge
+    Series		Bold
+    Color               Blue
+  EndFont
+
+End
+
+Style TitleGraphic
+  Margin		Static
+  LatexType		Command
+  InTitle		1
+  LatexName		titlegraphic
+  ParSkip		0.4
+  ItemSep		0
+  TopSep		0
+  BottomSep		1
+  ParSep		1
+  Align			Center
+  AlignPossible		Center
+  LabelType		No_Label
 
   # standard font definition
   Font 

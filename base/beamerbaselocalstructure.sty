@@ -53,6 +53,9 @@
 % Alerting
 %
 
+\mode
+<all>
+{
 \newenvironment{alertenv}{\begin{altenv}%
     {\beamer@templatestartalert}
     {\beamer@templateendalert}{}{}}{\end{altenv}}
@@ -68,25 +71,25 @@
   \def\beamer@templatestartalert{#1}\def\beamer@templateendalert{#2}}
 \long\def\usestructuretemplate#1#2{%
   \def\beamer@templatestartstructure{#1}\def\beamer@templateendstructure{#2}}
+}
 
+
+\mode
+<presentation>
+{
 \usealerttemplate{%
   \def\bmb@scheme{alert}%
   \colorlet{beamerstructure}{beameralert!85!beamerstructure}%
   \colorlet{beamerexample}{beameralert!85!beamerexample}%
   \color{beameralert}}{}
 \usestructuretemplate{\color{beamerstructure}}{}
-
+}
 
 \mode
 <article>
 {
-  \newenvironment{alertenv}{\begin{altenv}%
-    {\begin{itshape}}{\end{itshape}}{}{}}{\end{altenv}}
-  \newenvironment{structureenv}{\begin{structureenv}%
-    {\begin{bfseries}}{\end{bfseries}}{}{}}{\end{altenv}}
-  
-  \newcommand{\alert}{\only{\emph}}
-  \newcommand{\structure}{\only{\textbf}}
+  \usealerttemplate{\begin{itshape}}{\end{itshape}}
+  \usestructuretemplate{\begin{bfseries}}{\end{bfseries}}
 }
 
 

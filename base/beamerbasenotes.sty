@@ -17,6 +17,7 @@
 %
 
 \long\def\notes#1{%
+  \beamer@savemode%
   \ifbeamer@notes
   \begingroup
     \useitemizeitemtemplate{\textbullet}
@@ -41,7 +42,8 @@
       \vskip-\footheight}\hskip-\Gm@lmargin\hskip1cm}%
     \clearpage
   \endgroup
-  \fi}
+  \fi%
+  \beamer@resumemode}
 
 \long\def\noteitems#1{\notes{\begin{enumerate}\itemsep=0pt\parskip=0pt#1\end{enumerate}}}
 

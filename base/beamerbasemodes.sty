@@ -33,6 +33,9 @@
 {\catcode`\^^M=12\endlinechar=-1%
   \long\gdef\beamer@processline#1^^M{%
     \def\beamer@test{#1}%
+    \ifx\beamer@test\beamer@stopmodestar%
+      \let\next=\beamer@modeoutsideframe%
+    \else%
     \ifx\beamer@test\beamer@stopmode%
       \let\next=\mode%
     \else%
@@ -58,6 +61,7 @@
         \fi%
       \fi%
     \fi%
+    \fi%
     \next}
 }
 
@@ -66,6 +70,7 @@
 \def\beamer@closer{}
 {\escapechar=-1\relax%
   \xdef\beamer@stopmode{\string\\mode}
+  \xdef\beamer@stopmodestar{\string\\mode*}
   \xdef\beamer@stoparticle{\string\\article}
   \xdef\beamer@stoppresentation{\string\\presentation}
   \xdef\beamer@stopcommon{\string\\common}
