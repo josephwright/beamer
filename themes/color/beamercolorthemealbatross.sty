@@ -7,9 +7,16 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\mode<presentation>
 
 \setbeamercolor*{normal text}{fg=yellow!50!white,bg=blue!50!black}
+
+\DeclareOption{overlystylish}
+{
+  \setbeamertemplate{background canvas}[vertical shading][bottom=black,top=black,middle=blue!25!black]
+}
+\ProcessOptions
+
+\mode<presentation>
 
 \setbeamercolor*{example text}{fg=green!65!black}
 
