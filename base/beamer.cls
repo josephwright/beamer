@@ -13,7 +13,9 @@
 %
 \newbox\beamer@tempbox
 \newif\ifbeamer@blocks
+\newif\ifbeamer@ams
 \beamer@blockstrue
+\beamer@amstrue
 
 \newcount\beamer@tempcount
 
@@ -129,7 +131,8 @@
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
 
-\DeclareOptionBeamer{nodefaultblocks}{\beamer@blocksfalse}
+\DeclareOptionBeamer{notheorems}{\beamer@blocksfalse}
+\DeclareOptionBeamer{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}
 
 \DeclareOptionBeamer{compress}
 {\beamer@compresstrue}
@@ -184,8 +187,6 @@
 \DeclareOptionBeamer{mathserif}{\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
 
 \DeclareOptionBeamer{professionalfont}{\beamer@suppressreplacementstrue}
-
-\DeclareOptionBeamer{nodefaultblocks}{\beamer@blocksfalse}
 
 \DeclareOptionBeamer{pdftex}{}% Used by hyperref
 \DeclareOptionBeamer{nativepdf}{}% Used by hyperref
@@ -390,6 +391,9 @@
 \RequirePackage{beamerbasenavigation}
 % Navigation buttons
 
+\RequirePackage{beamerbasetheorems}
+% Navigation buttons
+
 
 
 
@@ -434,6 +438,9 @@
 
                                 % Blocks
 \beamertemplateboldblocks
+
+                                % Theorems
+\beamertemplatetheoremsunnumbered
 
                                 % Enumerations
 \beamertemplateenumeratealpha

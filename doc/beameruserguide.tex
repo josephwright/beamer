@@ -438,7 +438,7 @@ options or precautions may be necessary.
   \beamernote
   I do not recommend using this package since numbered theorems are
   usually not a good idea in a presentation. If you wish to use this
-  package, use the class option |nodefaultblocks|. You must then
+  package, use the class option |notheorems|. You must then
   define the default block environments (like |theorem|) yourself, but
   that's most likely what you want to do anyway, if you use
   |amsthm|. If you define an environment like |theorem|, you should
@@ -448,11 +448,11 @@ options or precautions may be necessary.
 
   \articlenote
   In |article| mode, the package |amsthm| is automatically loaded,
-  \emph{unless} you say |nodefaultblocks|. If you say
-  |nodefaultblocks|, then, just as in the presentation modes, you have
+  \emph{unless} you say |notheorem|. If you say
+  |notheorems|, then, just as in the presentation modes, you have
   to define the theorem-like environments yourself.
 
-  \begin{classoption}{{nodefaultblocks}}
+  \begin{classoption}{{notheorems}}
     Switches off the definition of default blocks like |Theorem| or
     |proof|. 
   \end{classoption}

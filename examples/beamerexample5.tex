@@ -362,7 +362,7 @@
       \end{pgfpicture}
     \end{column}
     \begin{column}{6.5cm}
-      \begin{block}{Definition (1987, 1989, 1994, 2001)}
+      \begin{definition}[1987, 1989, 1994, 2001]
         An \alert{$m$-enumerator} for a function~$f$
         \begin{enumerate}
         \item<alert@1-4>
@@ -374,7 +374,7 @@
         \item<alert@9>
           one of which is $f(w_1,\dots,w_n)$.
         \end{enumerate}
-      \end{block}
+      \end{definition}
     \end{column}
   \end{columns}
 }
@@ -400,20 +400,21 @@
   \end{alertblock}
 }
 
+\newtheorem{card}{Cardinality Theorem}[theorem]
+\newtheorem{weakcard}{Weak Cardinality Theorems}[theorem]
 
 \frame
 {
   \frametitle{How Well Can the Cardinality Function\\ Be Enumerated
     by Turing Machines?}
 
-  \begin{block}{Cardinality Theorem (Kummer, 1992)}
+  \begin{card}[Kummer, 1992]
     If $\NumA^n$ is $n$-enumerable by a Turing machine, then $A$ is
     recursive.
-  \end{block}
+  \end{card}
 
-  \begin{block}{Weak Cardinality Theorems
-      (\uncover<2->{\alert<1-2>{1987},} \uncover<3->{\alert<3>{1989},}
-      \uncover<4->{\alert<4>{1992}})}<2-> 
+  \begin{weakcard}[\uncover<2->{\alert<1-2>{1987},} \uncover<3->{\alert<3>{1989},}
+      \uncover<4->{\alert<4>{1992}}]<2-> 
     \begin{enumerate}
     \item<2-| alert@2>
       If $\chi_A^n$ is $n$-enumerable by a Turing machine, then $A$ is
@@ -425,7 +426,7 @@
       If $\NumA^n$ is $n$-enumerable by a Turing machine that never
         enumerates both $0$ and~$n$, then $A$ is recursive.
     \end{enumerate}
-  \end{block}
+  \end{weakcard}
 }
 
 
@@ -439,7 +440,7 @@
     \alert{regular}.
   \end{alertblock}
 
-  \begin{block}{Weak Cardinality Theorems (2001, 2002)}
+  \begin{weakcard}[2001, 2002]
     \begin{enumerate}
     \item
       If $\chi_A^n$ is $n$-enumerable by a \alert{finite automaton}, then $A$ is
@@ -451,7 +452,7 @@
       If $\NumA^n$ is $n$-enumerable by a \alert{finite automaton} that never
       enumerates both $0$ and~$n$, then $A$ is \alert{regular}.
     \end{enumerate}
-  \end{block}
+  \end{weakcard}
 }
 
 
@@ -548,17 +549,17 @@
 {
   \frametitle{Characterisation of Classes by Elementary Definitions}
 
-  \begin{block}{Theorem (B\"uchi, 1960)}
+  \begin{theorem}[B\"uchi, 1960]
     There exists a logical structure~$(\Nat, +, \mathrm e_2)$
     such that a set $A \subseteq \Nat$ is\\ \alert{regular} iff it is 
     \alert{elementarily definable in~$(\Nat, +, \mathrm e_2)$}.
-  \end{block}
+  \end{theorem}
 
-  \begin{block}{Theorem}
+  \begin{theorem}
     There exists a logical structure~$\mathcal R$ such that a set $A
     \subseteq \Nat$ is \alert{recursively enumerable} iff it is \alert{positively
     elementarily definable in~$\mathcal R$}.\hskip-0.5cm\hbox{}
-  \end{block}
+  \end{theorem}
 }
 
 
@@ -698,16 +699,16 @@
   \end{theorem}
   \begin{overprint}
     \onslide<2>
-      \begin{block}{Corollary \phantom{(}}
+      \begin{corollary}
         If $\chi_A^n$ is $n$-enumerable by a finite automaton, then
         $A$ is regular.
-      \end{block}
+      \end{corollary}
 
     \onslide<3>
-      \begin{block}{Corollary (with more effort)}
+      \begin{corollary}[with more effort]
         If $\chi_A^n$ is $n$-enumerable by a Turing machine, then $A$
         is recursive.
-      \end{block}
+      \end{corollary}
   \end{overprint}  
 }
 
@@ -967,7 +968,7 @@
       \end{pgfpicture}
     \end{column}
     \begin{column}{6.8cm}
-      \begin{block}{Theorem}
+      \begin{theorem}
         Let $\mathcal S$ be a well-orderable logical structure in which
         all finite relations are elementarily definable.\\[0.5em]
         If there exist elementarily definable supersets of
@@ -976,7 +977,7 @@
         {\color<2>{darkblue}$\barA \times \barA$} whose
         intersection is empty,\\
         then $A$ is elementarily definable in~$\mathcal S$. 
-      \end{block}  
+      \end{theorem}  
       \begin{alertblock}{Note}<3>
         The theorem is no longer true\\
         if we add $\barA \times A$ to the list. 

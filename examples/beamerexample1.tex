@@ -46,10 +46,10 @@
 \newcommand{\Lang}[1]{\operatorname{\text{\textsc{#1}}}}
 
 \newcommand{\Class}[1]{\operatorname{\mathchoice
-  {\text{\small #1}}
-  {\text{\small #1}}
-  {\text{#1}}
-  {\text{#1}}}}
+  {\text{\normalfont\small #1}}
+  {\text{\normalfont\small #1}}
+  {\text{\normalfont#1}}
+  {\text{\normalfont#1}}}}
 
 \newcommand{\DOF}{\Class{DOF}}
 \newcommand{\NOF}{\Class{NOF}}
@@ -721,7 +721,7 @@
         homomorphism.
       \item
         Then $h(L)$ is in $\Class{DOF}$ and it is
-        $\Class{PSPACE}$-complete. 
+        $\Class{PSPACE}$-complete. \qedhere
       \end{enumerate}
     \end{proof}
 

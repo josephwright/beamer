@@ -103,7 +103,7 @@
 %
 %
 \def\author{\@dblarg\beamer@author}
-\def\beamer@author[#1]#2{%
+\long\def\beamer@author[#1]#2{%
   \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}#2}%
   \def\beamer@shortauthor{#1}%
 }
@@ -137,7 +137,7 @@
 % The \titlegraphic command
 %
 %
-\def\titlegraphic#1{\def\inserttitlegraphic{#1}}
+\long\def\titlegraphic#1{\def\inserttitlegraphic{#1}}
 \titlegraphic{}
 
 

@@ -13,7 +13,7 @@
 \beamer@articleactivefalse
 
 \DeclareOption{noxcolor}{\beamer@articlexcolorfalse}
-\DeclareOption{nodefaultblocks}{\beamer@blocksfalse}
+\DeclareOption{nodefaultblocks}{\beamer@blocksfalse}% obsolete. use notheorems
 \DeclareOption{activeospeccharacters}{\beamer@articleactivetrue}
 
 \ProcessOptions
@@ -67,6 +67,9 @@
 % Commands for local structure like alert, itemize, etc.
 
 \RequirePackage{beamerbasenavigation}
+% Navigation buttons
+
+\RequirePackage{beamerbasetheorems}
 % Navigation buttons
 }
 
