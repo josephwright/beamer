@@ -7298,8 +7298,10 @@ You can redefine these commands to change these symbols.
   \example
 \begin{verbatim}
 \usesectionheadtemplate
-{\color{structure}\tiny\insertsectionhead}
-{\color{structure!50}\tiny\insertsectionhead}
+  {\hfill\color{white}\tiny\textbf{\insertsectionheadnumber.\ \
+    \insertsectionhead}}
+  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionheadnumber.\ \ 
+    \insertsectionhead}}
 \end{verbatim}
 \end{command}
   
@@ -7309,9 +7311,12 @@ You can redefine these commands to change these symbols.
   See |\usesectionheadtemplate|.
   \example
 \begin{verbatim}
-\usesubsectionheadtemplate
-{\color{structure}\tiny\insertsubsectionhead}
-{\color{structure!50}\tiny\insertsubsectionhead}
+\usesubsectionheadtemplate{\color{white}%
+  \tiny\textbf{\insertsectionheadnumber.\insertsubsectionheadnumber\ \
+  \insertsubsectionhead}}%
+  {\color{white!50!beamerstructure}%
+  \tiny\textbf{\insertsectionheadnumber.\insertsubsectionheadnumber\ \ 
+  \insertsubsectionhead}}
 \end{verbatim}
 \end{command}
 
@@ -7342,6 +7347,36 @@ You can redefine these commands to change these symbols.
   {.05cm}
 \end{verbatim}
 \end{command}
+
+
+\paragraph{Inserts}\
+
+
+\begin{command}{\insertsectionhead}
+  Inserts the text of the section that is to be typeset in a
+  navigation bar.
+\end{command}
+
+\begin{command}{\insertsubsectionhead}
+  Inserts the text of the subsection that is to be typeset in a
+  navigation bar. 
+\end{command}
+
+\begin{command}{\insertsectionheadnumber}
+  Inserts the number of the section that is to be typeset in a
+  navigation bar. 
+\end{command}
+
+\begin{command}{\insertsubsectionheadnumber}
+  Inserts the number of the subsection that is to be typeset in a
+  navigation bar. 
+\end{command}
+
+\begin{command}{\insertpartheadnumber}
+  Inserts the number of the part of the current section of subsection
+  that is to be typeset in a navigation bar. 
+\end{command}
+
 
 
 

@@ -522,13 +522,15 @@
       \box\beamer@sectionbox\hfil\hskip.3cm}%
   }}
 
-\def\sectionentry#1#2#3#4#5{% section name, section title, page
+\def\sectionentry#1#2#3#4#5{% section number, section title, page
   \ifnum#5=\c@part%
   \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
   \setbox\beamer@sectionbox=
   \hbox{\def\insertsectionhead{#2}%
+    \def\insertsectionheadnumber{#1}%
+    \def\insertpartheadnumber{#5}%
     \ifnum\c@section=#1%
     \hyperlink{Navigation#3}{\beamer@sectionheadhilight}\else%
     \hyperlink{Navigation#3}{\beamer@sectionheadnohilight}\fi}%
@@ -545,7 +547,9 @@
     \def\sectionentry##1##2##3##4##5{%
       \ifnum##5=\c@part%
       \def\insertsectionhead{##2}%
-      \hbox{\hyperlink{Navigation##3}{%
+      \def\insertsectionheadnumber{##1}%
+      \def\insertpartheadnumber{##5}%
+         \hbox{\hyperlink{Navigation##3}{%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=0\relax%
               \beamer@sectionsidehilight%
@@ -561,6 +565,9 @@
       \ifnum##2>\beamer@currentsubsection%
       \beamer@currentsubsection=##2%
       \def\insertsubsectionhead{##5}%
+      \def\insertsectionheadnumber{##1}%
+      \def\insertsubsectionheadnumber{##2}%
+      \def\insertpartheadnumber{##6}%
       \hbox{\beamer@link(##4){%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=##2%
@@ -644,6 +651,8 @@
      \def\sectionentry##1##2##3##4##5{%
        \ifnum##5=\c@part%
        \def\insertsectionhead{##2}%
+       \def\insertsectionheadnumber{##1}%
+       \def\insertpartheadnumber{##5}%
        \setbox\beamer@tempbox=\hbox{%
          \hyperlink{Navigation##3}{\hbox to #1{%
            \hskip0.3cm\ifnum\c@section=##1%
@@ -672,6 +681,9 @@
         \ifnum##2>\beamer@currentsubsection%
         \beamer@currentsubsection=##2%
         \def\insertsubsectionhead{##5}%
+        \def\insertsectionheadnumber{##1}%
+        \def\insertsubsectionheadnumber{##2}%
+        \def\insertpartheadnumber{##6}%
         \setbox\beamer@tempbox=\hbox{\beamer@link(##4){%
           \hbox to #1{\hskip0.3cm\ifnum\c@subsection=##2%
           \beamer@subsectionheadhilight\else\beamer@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
@@ -689,7 +701,10 @@
       \box\beamer@sectionbox\hskip1.875ex plus1fill%
       \setbox\beamer@sectionbox=
       \hbox{\def\insertsubsectionhead{##5}%
-        \ifnum\c@subsection=##2%
+         \def\insertsectionheadnumber{##1}%
+         \def\insertsubsectionheadnumber{##2}%
+         \def\insertpartheadnumber{##6}%
+         \ifnum\c@subsection=##2%
         \beamer@link(##4){\beamer@subsectionheadhilight}\else%
         \beamer@link(##4){\beamer@subsectionheadnohilight}\fi}%
       \ht\beamer@sectionbox=1.875ex%
