@@ -277,41 +277,52 @@ should be available: |avant|, |bookman|, |chancery|, |charter|,
 |palatino|, |pifont|, |utopia|.
 
 
-
 \subsubsection{Choosing a Font Encodings}
 \label{section-font-encoding}
 
 The same font can come in different encodings, which are (very roughly
 spoken) the ways the characters of a text are mapped to glyphs (the
 actual shape of a particular character in a particular font at a
-particular size). In \TeX\ two encodings are often used: the
-T1~encoding and the OT1~encoding (old T1~encoding).
+particular size). In \TeX\ two encodings are often used with Latin
+characters: the T1~encoding and the OT1~encoding (old T1~encoding).
 
 Conceptually, the newer T1~encoding is preferable over the old
 OT1~encoding. For example, hyphenation of words containing umlauts
 (like the famous German word Fr\"aulein) will work only if you use the
-T1~encoding. Unfortunately, only the bitmapped version of the Computer
-Modern fonts are available in this encoding in a standard
-installation. For this reason, using the T1~encoding will produce
-\pdf\ files that render very poorly.
+T1~encoding. Unfortunately, the EC fonts, that is, the T1-encoded
+Computer Modern fonts, are distributed on small installations just as
+MetaFont sources and only have bitmap renditions of each glyph. For
+this reason, using the T1-encoded EC fonts on such small installations
+will produce \pdf\ files that render poorly.
 
-Most standard PostScript fonts are available in T1~encoding. For
-example, you can use Times in the T1~encoding. The package |lmodern|
-makes the standard Computer Modern fonts available in the
-T1~encoding. Furthermore, if you use |lmodern| several extra fonts
-become available (like a sans-serif boldface math) and extra symbols
-(like proper guillemots).
+MiK\TeX\ (for Windows platforms) and \texttt{teTeX} for
+\textsc{unix}\slash Linux can be installed with different levels of 
+completeness. Concerning the Computer Modern fonts, the following
+packages can be installed: |cm-super| fonts, |lmodern| (Latin Modern)
+fonts, and |lgc| fonts, the latter containing the Latin, Greek, and
+Cyrillic alphabets. Concerning other fonts,  the |txfonts| and
+|pxfonts| are two extended sets of the Times and the Palatino
+PostScript fonts, both packages containing extended sets of
+mathematical glyphs. Most other standard PostScript fonts are also
+available in T1~encoding.
 
-To select the T1 encoding, use |\usepackage[T1]{fontenc}|. Thus, if
-you have the |lmodern| fonts installed, you could write
+Among the packages that make available the Computer Modern fonts in the
+T1~encoding, the package |lmodern| may be suggested. If you use
+|lmodern|, several extra fonts become available (like a sans-serif
+boldface math) and extra symbols (like proper guillemots).
+
+To select the T1 encoding, use \verb|\usepackage[T1]{fontenc}|. Thus, if you
+have the LM~fonts installed, you could write
 \begin{verbatim}
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \end{verbatim}
-to get beautiful outline fonts and correct hyphenation. Note, however,
-that some versions of the |lmodern| package do not include correct
-glyphs for ligatures like ``fi,'' which may cause
-trouble. Double-check whether all ligatures are displayed correctly.
+to get beautiful outline fonts and correct hyphenation. Note, however, that
+certain older versions of the LM~bundle did not include correct glyphs
+for ligatures like ``fi,'' which may cause trouble. Double check
+that all ligatures are displayed correctly and, if not, update.
+
+
 
 
 \subsection{Changing the Fonts Used for Different Elements of a Presentation}
