@@ -19,11 +19,9 @@
   color(0pt)=(frametitle.bg);
   color(\paperwidth)=(frametitle right.bg)}
 
-\AtBeginDocument{
-  \pgfdeclareverticalshading{beamer@topshade}{\the\paperwidth}{%
-    color(0pt)=(bg);
-    color(4pt)=(black!50!bg)}
-}
+\pgfdeclareverticalshading{beamer@topshade}{\the\paperwidth}{%
+  color(0pt)=(bg);
+  color(4pt)=(black!50!bg)}
 
 \addtobeamertemplate{headline}
 {}

@@ -327,31 +327,24 @@
   \beamer@lastskip=\lastskip%
   \edef\beamer@lastskiptexta{\the\lastskip}%
   \ifx\beamer@lastskiptexta\beamer@zeropt\else%
-  \ifvmode\unskip\fi%
-  \ifhmode\unskip\fi%
+    \ifvmode\unskip\fi%
+    \ifhmode\unskip\fi%
   \fi%
-   \ifx\beamer@current@colorhook\beamer@colorhook%
+  \ifx\beamer@current@colorhook\beamer@colorhook%
     \beamerorig@reset@color%
   \else% mixin changed -> recalculate
     \colorlet{beamer@tempcolor}{.}%
     \applycolormixins{beamer@tempcolor}%
     \@namelet{current@color}{\string\color@beamer@tempcolor}%
     \beamerorig@reset@color%
-    \beamer@postscriptcolorhack%  
+    \pgfsys@color@unstacked{beamer@tempcolor}%  
   \fi%
-  \ifx\beamer@lastskiptexta\beamer@zeropt\else%
-  \ifvmode\vskip\beamer@lastskip\fi%
-  \ifhmode\hskip\beamer@lastskip\fi%
+  \ifx\beamer@lastskiptexta\beamer@zeropt%
+  \else%
+    \ifvmode\vskip\beamer@lastskip\fi%
+    \ifhmode\hskip\beamer@lastskip\fi%
   \fi%
 }
-
-\ifcase\pdfoutput
-  \def\beamer@postscriptcolorhack{%
-    \special{ps: \XC@usecolor{beamer@tempcolor}}}
-\or
-  \def\beamer@postscriptcolorhack{}%
-\fi
-
 
 
 
