@@ -1,6 +1,7 @@
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/10/23 v0.91-dev Class for Typesetting a Beamer Presentation]
+[2003/10/23 v0.92 Class for Typesetting a Beamer Presentation]
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -23,6 +24,9 @@
 
 \RequirePackage{amssymb}
 % For \blacktriangleright
+
+\RequirePackage{keyval}
+% For \tableofcontents parameters
 
 
 %
@@ -96,49 +100,6 @@
 
 
 %
-% Theme coloring, this should be changed to use xcolor...
-%
-\def\themecolor#1#2#3{
-  \definecolor{structure}{rgb}{#1,#2,#3}
-  \edef\thethemecolor{#1,#2,#3}
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#1pt%
-  \pgf@ya=.4\pgf@ya%
-  \pgf@x=1pt%
-  \advance\pgf@x by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#2pt%
-  \pgf@ya=.4\pgf@ya%
-  \pgf@y=1pt%
-  \advance\pgf@y by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#3pt%
-  \pgf@ya=.4\pgf@ya%
-  \pgf@xa=1pt%
-  \advance\pgf@xa by-\pgf@ya%
-  \definecolor{structureshaded}{rgb}{\pgfget{x},\pgfget{y},\pgfget{xa}}
-  \edef\theshadedthemecolor{\pgfget{x},\pgfget{y},\pgfget{xa}}
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#1pt%
-  \pgf@ya=.7\pgf@ya%
-  \pgf@x=1pt%
-  \advance\pgf@x by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#2pt%
-  \pgf@ya=.7\pgf@ya%
-  \pgf@y=1pt%
-  \advance\pgf@y by-\pgf@ya%
-  \pgf@ya=1pt
-  \advance\pgf@ya by-#3pt%
-  \pgf@ya=.7\pgf@ya%
-  \pgf@xa=1pt%
-  \advance\pgf@xa by-\pgf@ya%
-  \definecolor{structuremedium}{rgb}{\pgfget{x},\pgfget{y},\pgfget{xa}}
-  }
-\themecolor{0.2}{0.2}{0.7}
-
-
-%
 %
 % Ifs for document options
 %
@@ -151,11 +112,7 @@
 \@notesnormalstrue
 
 \newif\ifsubsectionrows
-\newif\ifsubsectionshide
-\newif\ifsubsectionsshaded
 \subsectionrowsfalse
-\subsectionshidefalse
-\subsectionsshadedfalse
 
 \newif\ifbeamer@centered
 
@@ -165,11 +122,6 @@
 % Document options
 %
 %
-\DeclareOption{hidesubsections}
-{\subsectionshidetrue}
-
-\DeclareOption{shadesubsections}
-{\subsectionsshadedtrue}
 
 \DeclareOption{inrow}
 {\subsectionrowstrue}
@@ -181,16 +133,16 @@
 {\beamer@centeredfalse}
 
 \DeclareOption{blue}
-{\themecolor{0.2}{0.2}{0.7}}
+{\definecolor{structure}{rgb}{0.2,0.2,0.7}}
 
 \DeclareOption{red}
-{\themecolor{0.7}{0.2}{0.2}}
+{\definecolor{structure}{rgb}{0.7,0.2,0.2}}
 
-\DeclareOption{grey}
-{\themecolor{0.2}{0.2}{0.2}}
+\DeclareOption{gray}
+{\definecolor{structure}{rgb}{0.2,0.2,0.2}}
 
 \DeclareOption{brown}
-{\themecolor{0.66}{0.4}{0.166}}
+{\definecolor{structure}{rgb}{0.66,0.4,0.166}}
 
 \DeclareOption{leqno}{\input{leqno.clo}}
 \DeclareOption{fleqn}{\input{fleqn.clo}}
@@ -236,7 +188,7 @@
 % Process Options
 %
 %
-\ExecuteOptions{sans,slidescentered}
+\ExecuteOptions{blue,sans,slidescentered}
 
 \ProcessOptions
 
@@ -409,11 +361,6 @@
   \begingroup\beamer@origdocument}
 
 \definecolor{alert}{rgb}{1,0,0}
-\definecolor{darkgreen}{rgb}{0.15,0.6,0.15}
-\definecolor{shaded}{gray}{0.6}
-\definecolor{blockstructure}{rgb}{0.2,0.2,0.7}
-\definecolor{lightgray}{gray}{0.9}
-
 
 %
 %
@@ -690,6 +637,7 @@
 
 \newenvironment{frameslide}[1][1]{%
   {\let\@elt\@restorecounter\@overlaycounterresets}
+  \global\beamer@pausecount=1\relax%
   \serialnumber=#1\relax%
   \expandafter\@ifempty\expandafter{\beamer@framestartpage}{%
     \refstepcounter{subsectionslide}%
@@ -698,8 +646,8 @@
   \hypersetup{pdfpagetransition=R}%
   \hypersetup{pdfpageduration=}%
   \xdef\beamer@frameendpage{\thepage}% every time
-  \beamer@entrycode\vspace*{-\baselineskip}\vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill}
+  \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
+  {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
 
 \def\frametitle#1{%
   \vskip0pt plus -1fill%
@@ -845,6 +793,8 @@
 \resetcounteronoverlays{parentequation}
 \resetcounteronoverlays{footnote}
 \resetcounteronoverlays{mpfootnote}
+\resetcounteronoverlays{figure}
+\resetcounteronoverlays{table}
 
 \def\@savecounter#1{%
   \@ifundefined{#1}{}%
@@ -894,6 +844,30 @@
 \beamersetuncovermixins{}{}
 
 
+
+  
+%
+% Pausing environment
+%
+
+\newcount\beamer@pausecount%
+\def\pauses{\@ifnextchar[{\@pauses}{\@@pauses}}
+\def\@pauses[#1]{\global\beamer@pausecount=#1\relax%
+  \@@pauses}
+\def\@@pauses{%
+  \alt<\beamer@pausecount->%
+  {\beamer@spacingcover\def\beamer@endpause{\beamer@spacingcover}}%
+  {\beamer@startcovered\def\beamer@endpause{\beamer@endcovered}}%
+}
+\def\endpauses{\beamer@endpause}
+
+\def\pause{%
+  \beamer@endpause%
+  \global\advance\beamer@pausecount by1\relax%
+  \alt<\beamer@pausecount->%
+  {\beamer@spacingcover\def\beamer@endpause{\beamer@spacingcover}}%
+  {\beamer@startcovered\def\beamer@endpause{\beamer@endcovered}}%
+  }
 
 
 
@@ -1117,7 +1091,7 @@
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
 \long\def\fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
-
+\long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
 
 %
 % Overlay commands
@@ -1126,6 +1100,7 @@
 \newoverlaycommand{\pgfonly}{\@insp}{\@gobbleis}
 \newoverlaycommand{\only}{}{\gobble}
 \newoverlaycommand{\uncover}{\fakeinvisible}{\makeinvisible}
+\newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\fakeinvisible}
 \renewoverlaycommand{\textbf}{\original{\textbf}}{}
 \renewoverlaycommand{\textit}{\original{\textit}}{}
 \renewoverlaycommand{\textsl}{\original{\textsl}}{}
@@ -1156,7 +1131,7 @@
 \long\def\usestructuretemplate#1{%
   \gdef\@structuretemplate{#1}}
 
-\usealerttemplate{{\color{red}\insertalert}}
+\usealerttemplate{{\begin{colormixin}{15!alert}\insertalert\end{colormixin}}}
 \usestructuretemplate{{\color{structure}\insertstructure}}
 
 
@@ -1279,22 +1254,19 @@
 \useleftsidebarbackgroundtemplate{}
 
 % Sets the background of the side bar to a monotone color
-% Usage: usesidebarcolortemplate{\color{red}}
 \def\useleftsidebarcolortemplate#1{
   \useleftsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@leftsidebar}}
 
 % Sets the background of the side bar to a vertical shading ranging
-% between the parameter colors, given as rgb triples.
-% Example: usesidebarverticalshadingtemplate{\theshadedthemecolor}{1,1,1}
+% between the parameter colors.
 \def\useleftsidebarverticalshadingtemplate#1#2{%
-  \pgfdeclareverticalshading{beamer@leftsidebar}{\beamer@leftsidebar}{rgb(0cm)=(#1); rgb(\paperheight)=(#2)}%
+  \pgfdeclareverticalshading{beamer@leftsidebar}{\beamer@leftsidebar}{color(0cm)=(#1); color(\paperheight)=(#2)}%
   \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
 
 % Sets the background of the side bar to a horizontal shading ranging
-% between the parameter colors, given as rgb triples.
-% Example: \usesidebarhorizontalshadingtemplate{\theshadedthemecolor}{1,1,1}
+% between the parameter colors.
 \def\useleftsidebarhorizontalshadingtemplate#1#2{%
-  \pgfdeclarehorizontalshading{beamer@leftsidebar}{\textheight}{rgb(0cm)=(#1); rgb(\beamer@leftsidebar)=(#2)}%
+  \pgfdeclarehorizontalshading{beamer@leftsidebar}{\textheight}{color(0cm)=(#1); color(\beamer@leftsidebar)=(#2)}%
   \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
 
 
@@ -1311,17 +1283,15 @@
   \userightsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@rightsidebar}}
 
 % Sets the background of the side bar to a vertical shading ranging
-% between the parameter colors, given as rgb triples.
-% Example: usesidebarverticalshadingtemplate{\theshadedthemecolor}{1,1,1}
+% between the parameter colors.
 \def\userightsidebarverticalshadingtemplate#1#2{%
-  \pgfdeclareverticalshading{beamer@rightsidebar}{\beamer@rightsidebar}{rgb(0cm)=(#1); rgb(\paperheight)=(#2)}%
+  \pgfdeclareverticalshading{beamer@rightsidebar}{\beamer@rightsidebar}{color(0cm)=(#1); color(\paperheight)=(#2)}%
   \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
 
 % Sets the background of the side bar to a horizontal shading ranging
-% between the parameter colors, given as rgb triples.
-% Example: \usesidebarhorizontalshadingtemplate{\theshadedthemecolor}{1,1,1}
+% between the parameter colors.
 \def\userightsidebarhorizontalshadingtemplate#1#2{%
-  \pgfdeclarehorizontalshading{beamer@rightsidebar}{\textheight}{rgb(0cm)=(#1); rgb(\beamer@rightsidebar)=(#2)}%
+  \pgfdeclarehorizontalshading{beamer@rightsidebar}{\textheight}{color(0cm)=(#1); color(\beamer@rightsidebar)=(#2)}%
   \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
 
 
@@ -1464,8 +1434,9 @@
     \hyperlink{Navigation#3}{\@sectionheadnohilight}\fi}%
   \ignorespaces}
 
-\long\def\usesectionheadtemplate#1#2{\gdef\@sectionheadhilight{#1}\gdef\@sectionheadnohilight{#2}}
-\long\def\usesectionsidetemplate#1#2{\gdef\@sectionsidehilight{#1}\gdef\@sectionsidenohilight{#2}}
+\def\usesectionheadtemplate#1#2{\gdef\@sectionheadhilight{#1}\gdef\@sectionheadnohilight{#2}}
+\def\usesectionsidetemplate#1#2{\gdef\@sectionsidehilight{#1}\gdef\@sectionsidenohilight{#2}}
+
 
 \def\insertverticalnavigation#1{%
   \vbox{%
@@ -1562,7 +1533,7 @@
   \expandafter\hyperlink\beamer@goto}
 
 
-\long\def\useminislidetemplate#1#2#3#4#5{\gdef\@minislidehilight{#1}\gdef\@minisliderowhilight{#2}\gdef\@minislide{#3}
+\def\useminislidetemplate#1#2#3#4#5{\gdef\@minislidehilight{#1}\gdef\@minisliderowhilight{#2}\gdef\@minislide{#3}
 \beamer@boxsize=#4\vboxoffset=#5}
 
 \def\insertsectionnavigation#1{%
@@ -1675,8 +1646,9 @@
     \box\sectionbox\hfil\hskip.3cm%
     #3}}
 
-\long\def\usesubsectionheadtemplate#1#2{\gdef\@subsectionheadhilight{#1}\gdef\@subsectionheadnohilight{#2}}
-\long\def\usesubsectionsidetemplate#1#2{\gdef\@subsectionsidehilight{#1}\gdef\@subsectionsidenohilight{#2}}
+\def\usesubsectionheadtemplate#1#2{\gdef\@subsectionheadhilight{#1}\gdef\@subsectionheadnohilight{#2}}
+\def\usesubsectionsidetemplate#1#2{\gdef\@subsectionsidehilight{#1}\gdef\@subsectionsidenohilight{#2}}
+
 
 
 %
@@ -1751,8 +1723,8 @@
 \newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
 \newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
 
-\newcommand{\BeispielInline}[1]{{\color{darkgreen}Beispiel: \ignorespaces#1}}
-\newcommand{\ExampleInline}[1]{{\color{darkgreen}Example: \ignorespaces#1}}
+\newcommand{\BeispielInline}[1]{{\color{black50!green}Beispiel: \ignorespaces#1}}
+\newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
 
 
 %
@@ -1810,9 +1782,25 @@
 %
 
 \newif\if@onlycurrent
+\newif\if@pausesections
+\newif\if@pausesubsections
+\newif\if@subsectionshide
+\newif\if@subsectionsshaded
 
-\newcommand\tableofcontents{%
+\define@key{beamertoc}{current}[true]{\@onlycurrenttrue}
+\define@key{beamertoc}{pausesections}[true]{\@pausesectionstrue}
+\define@key{beamertoc}{pausesubsections}[true]{\@pausesubsectionstrue}
+\define@key{beamertoc}{hidesubsections}[true]{\@subsectionshidetrue}
+\define@key{beamertoc}{shadesubsections}[true]{\@subsectionsshadedtrue}
+
+\def\tableofcontents{\@ifnextchar[{\@tableofcontents}{\@tableofcontents[]}}
+\def\@tableofcontents[#1]{%
   \@onlycurrentfalse%
+  \@pausesectionsfalse%
+  \@pausesubsectionsfalse%
+  \@subsectionshidefalse%
+  \@subsectionsshadedfalse%
+  \setkeys{beamertoc}{#1}%
   \vspace*{-.5em}{\makeatletter%
     \ifbeamer@inappendix
     \def\sectionintoc##1##2##3{}%
@@ -1821,27 +1809,18 @@
     \def\appendixtoc##1##2##3{}%
     \def\appendixsubsectionintoc##1##2##3##4{}%
     \fi%
-    \@input{\jobname.toc}\vfill}%
-  \color{black}
-}
+    \begin{pauses}[0]%
+      \@input{\jobname.toc}%
+    \end{pauses}\vfill}%
+  \normalcolor
+  }
 
-\newcommand\tableofcontentscurrent{%
-  \@onlycurrenttrue%
-  \vspace*{-.5em}{\makeatletter%
-    \ifbeamer@inappendix
-    \def\sectionintoc##1##2##3{}%
-    \def\subsectionintoc##1##2##3##4{}%
-    \else%
-    \def\appendixtoc##1##2##3{}%
-    \def\appendixsubsectionintoc##1##2##3##4{}%
-    \fi%
-    \@input{\jobname.toc}\vfill}%
-  \color{black}
-}
+\def\tableofcontentscurrent{\tableofcontents[current]}
 
 \def\sectionintoc#1#2#3{%
+  \if@pausesections\pause\fi%
     \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
-    \ifsubsectionshide
+    \if@subsectionshide
     \vskip1.5em
     \else
     \vfill
@@ -1864,13 +1843,17 @@
   \par%
 }
 
-\long\def\usetemplatetocsection#1#2{
+\def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
+\long\def\@@usetemplatetocsection[#1]#2{
+  \@usetemplatetocsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}}}
+\long\def\@usetemplatetocsection#1#2{
   \gdef\sectiontemplate{\def\@breakhere{\\}#1}
   \gdef\sectiontemplateshaded{\def\@breakhere{\\}#2}}
 
 \long\def\subsectionintoc#1#2#3#4{%
+  \if@pausesubsections\pause\fi%
     \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
-    \ifsubsectionshide
+    \if@subsectionshide
       \ifnum\thesection=#1
         {\@subsectiontemplate}
       \fi
@@ -1882,7 +1865,7 @@
           {\@subsectiontemplateshaded}
         \fi
       \else
-        \ifsubsectionsshaded
+        \if@subsectionsshaded
           {\@subsectiontemplateshaded}
         \else
           {\@subsectiontemplate}
@@ -1892,11 +1875,15 @@
 }
 
 \long\def\appendixsubsectionintoc#1#2#3#4{%
+  \if@pausesubsections\pause\fi%
   \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
   {\@subsectiontemplate}
 }
 
-\long\def\usetemplatetocsubsection#1#2{
+\def\usetemplatetocsubsection{\@ifnextchar[\@@usetemplatetocsubsection\@usetemplatetocsubsection}
+\long\def\@@usetemplatetocsubsection[#1]#2{
+  \@usetemplatetocsubsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}}}
+\long\def\@usetemplatetocsubsection#1#2{
   \gdef\@subsectiontemplate{\def\@breakhere{\\}#1}
   \gdef\@subsectiontemplateshaded{\def\@breakhere{\\}#2}}
 
@@ -1946,8 +1933,9 @@
         \csname label\@enumctr\endcsname
         {\usecounter\@enumctr%
           \def\makelabel##1{{\hss\llap{##1}}}}%
-  \fi}
-\def\endenumerate{\endlist\csname\@enumctr endtemplate\endcsname}
+  \fi%
+  \begin{pauses}}
+\def\endenumerate{\end{pauses}\endlist\csname\@enumctr endtemplate\endcsname}
 
 \def\itemize{%
   \ifnum \@itemdepth >1\relax\@toodeep\else
@@ -1959,8 +1947,10 @@
     \list
       \csname\@itemitem\endcsname
       {\def\makelabel##1{{\hss\llap{##1}}}}
-      \fi}
-\def\enditemize{\endlist\csname\@itemctr endtemplate\endcsname}
+  \fi%
+  \begin{pauses}}
+    
+\def\enditemize{\end{pauses}\endlist\csname\@itemctr endtemplate\endcsname}
 
 \def\useenumerateitemtemplate#1{% 
   \gdef\labelenumi{\def\insertenumlabel{\theenumi}#1}}
@@ -1995,8 +1985,9 @@
 \def\description{\@ifnextchar[{\@description}{\@descdefault\@descdefaulttemp\@@description}}
 \def\@description[#1]{\setbox\tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
   \@descdefault\wd\tempbox\advance\@descdefault by \labelsep\@@description}
-\def\@@description{\list{}{\labelwidth\@descdefault\leftmargin\@descdefault\let\makelabel\@descriptionitem}}
-\def\enddescription{\endlist}
+\def\@@description{\list{}{\labelwidth\@descdefault\leftmargin\@descdefault\let\makelabel\@descriptionitem}%
+  \begin{pauses}}
+\def\enddescription{\end{pauses}\endlist}
 \long\def\@descriptionitem#1{\def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
 
@@ -2079,6 +2070,7 @@
             \let\p@enumiv\@empty
             \renewcommand\theenumiv{\@arabic\c@enumiv}
             \let\makelabel\@biblabeltemplate}%
+      \begin{pauses}%
       \sloppy
       \clubpenalty10000
       \@clubpenalty \clubpenalty
@@ -2086,7 +2078,7 @@
       \sfcode`\.\@m}
      {\def\@noitemerr
        {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
+      \end{pauses}\endlist}
 
 \long\def\@biblabeltemplate#1{\def\insertbiblabel{#1}\biblabeltemplate\hfil}
 
@@ -2132,8 +2124,8 @@
 \usebibliographyblocktemplate
   {\color{structure}}
   {\par\color{black}}
-  {\par\color{structuremedium}}
-  {\par\color{structuremedium}}
+  {\par\color{structure!65}}
+  {\par\color{structure!65}}
 
 
 %
@@ -2157,6 +2149,43 @@
 
 \newoverlaycommand{\transduration}{\@transdur}{\gobble}
 \def\@transdur#1{\hypersetup{pdfpageduration=#1}}
+
+
+
+
+%
+% Animation macros
+%
+
+\newcount\beamer@animationtempa
+\newcount\beamer@animationtempb
+\def\animate<#1>{\transduration<#1| handout:0| trans:0>{0}}
+\def\animatevalue<#1-#2>#3#4#5{%
+  \only<#1-#2>{}% enforce these frames
+  \ifnum\serialnumber<#1\relax%
+    #3=#4%
+  \else%
+    \ifnum\serialnumber<#2\relax%
+      #3=#4\relax%
+      #3=-#3\relax%
+      \advance#3 by#5\relax%
+      \beamer@animationtempa=#2\relax%
+      \advance\beamer@animationtempa by-#1%
+      \ifnum\beamer@animationtempa>0%
+        \divide#3 by\beamer@animationtempa%
+      \fi%
+      \beamer@animationtempa=\serialnumber%
+      \advance\beamer@animationtempa by-#1%
+      \multiply#3 by\beamer@animationtempa%
+      \advance#3 by#4%
+    \else
+      #3=#5%
+    \fi%
+  \fi%  
+}
+  
+
+
 
 
 %
@@ -2221,8 +2250,7 @@
 \long\def\usecaptiontemplate#1{%
   \gdef\beamer@captiontemplate{#1}}
 \usecaptiontemplate{%
-  {\small\structure{\insertcaptionname~\insertcaptionnumber:}
-  \insertcaption}}
+  {\small\structure{\insertcaptionname:} \insertcaption}}
 
 
 
@@ -2240,7 +2268,7 @@
   \def\@backgroundtemplate{}
   \vbox{%
     \vskip-\headheight%
-    \insertvrule{8em}{lightgray}
+    \insertvrule{8em}{white!90!black}
     \vskip-8.5em
     \hbox{\vbox{
     \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
@@ -2264,39 +2292,6 @@
 \long\def\noteitems#1{\note{\begin{itemize}#1\end{itemize}}}
 
 
-
-%
-%
-% Just for fun! Not really meant seriously... But give it a try with
-% the Acrobat Reader in Fullscreen...
-%
-%
-\def\fadeoutframe#1{%
-  \frame[all:1]{#1}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}}
-\def\fadeinframe#1{%
-  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{#1}}
-\def\fadeinoutframe#1{%
-  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{#1}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
-  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}}
 
 %
 %
@@ -2331,11 +2326,11 @@
                                 % Sections in headline
 \usesectionheadtemplate
 {\color{structure}\tiny\insertsectionhead}
-{\color{structureshaded}\tiny\insertsectionhead}
+{\color{structure!50!averagebackgroundcolor}\tiny\insertsectionhead}
 
 \usesubsectionheadtemplate
 {\color{structure}\tiny\insertsubsectionhead}
-{\color{structureshaded}\tiny\insertsubsectionhead}
+{\color{structure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
 
                                 % Mini slides in headline
 \def\sphereradius{0.05cm}
@@ -2345,7 +2340,7 @@
     \color{structure}
     \pgfcircle[fillstroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
   \end{pgfpicture}%
-  }  
+  }
 {%
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
     \color{structure}
@@ -2354,21 +2349,19 @@
   }
 {%
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{structureshaded}
+    \color{structure!50!averagebackgroundcolor}
     \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
   \end{pgfpicture}%
   }
 {.14cm}{.03cm}
 
                                 % Entries in table of contents
-\usetemplatetocsection
-{\color{structure}\inserttocsection}
-{\color{structureshaded}\inserttocsection}
+\usetemplatetocsection[50!averagebackgroundcolor]
+  {\color{structure}\inserttocsection}
 
                                 % Entries in table of contents
-\usetemplatetocsubsection
-{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
+\usetemplatetocsubsection[50!averagebackgroundcolor]
+  {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
 
                                 % Head
 \useheadtemplate{%
@@ -2376,7 +2369,7 @@
   \vskip3pt%
   \beamerline{\insertnavigation{\paperwidth}}%
   \vskip1.5pt%
-  \insertvrule{0.4pt}{structureshaded}}%
+  \insertvrule{0.4pt}{structure!50!averagebackgroundcolor}}%
 }
 
                                 % Footline
@@ -2386,9 +2379,10 @@
 \usebackgroundtemplate{}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{blockstructure}\textbf{\insertblockname}}\par}{\medskip}
+\useblocktemplate{\medskip{\color{structure}\textbf{\insertblockname}}\par}{\medskip}
 \usealertblocktemplate{\medskip{\alert{\textbf{\insertblockname}}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\textbf{\insertblockname}}\par}{\endgroup\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\textbf{\insertblockname}}\par%
+\color{black!50!green}}{\endgroup\medskip}
 
                                 % Enumerations
 \useenumerateitemtemplate{\color{structure}\insertenumlabel.}

@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemesidebardark}[2003/10/22 ver 0.1]
+\ProvidesPackage{beamerthemesidebardark}[2003/10/29 ver 0.92]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -53,9 +53,8 @@
 \useheadtemplate{}
 \usefoottemplate{}
                                 % Entries in table of contents
-\usetemplatetocsection
+\usetemplatetocsection[50!averagebackgroundcolor]
 {\color{structure}\textbf{\inserttocsection}}
-{\color{structureshaded}\textbf{\inserttocsection}}
 
                                 % Sidebar
 \userightsidebartemplate{\beamer@sidebarwidth}{%
@@ -69,7 +68,7 @@
       \rightskip0pt plus1fill%
       \tiny\color{white}\bfseries\insertshorttitle%
       \vskip.5em
-      \color{structureshaded}\insertshortauthor
+      \color{structure!50}\insertshortauthor
     \end{minipage}}%
   \vskip1em
   \insertverticalnavigation{\beamer@sidebarwidth}%
@@ -79,7 +78,7 @@
 }
 
                                 % Sidebar Background
-\userightsidebarverticalshadingtemplate{\thethemecolor}{0,0,0}
+\userightsidebarverticalshadingtemplate{structure}{black}
 
                                 % Sections in headline
 \usesectionsidetemplate
@@ -91,7 +90,7 @@
   \box\tempbox%
 }
 {%
-  \setbox\tempbox=\hbox{\color{structuremedium}\tiny{\kern3pt\bfseries\insertsectionhead}}%
+  \setbox\tempbox=\hbox{\color{structure!80}\tiny{\kern3pt\bfseries\insertsectionhead}}%
   \ht\tempbox=8pt%
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
@@ -107,7 +106,7 @@
   \box\tempbox%
 }
 {%
-  \setbox\tempbox=\hbox{\color{shaded}\tiny{\kern6pt\bfseries\insertsubsectionhead}}%
+  \setbox\tempbox=\hbox{\color{black!50}\tiny{\kern6pt\bfseries\insertsubsectionhead}}%
   \ht\tempbox=4.5pt%
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
@@ -119,10 +118,11 @@
 \usebackgroundtemplate{}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{blockstructure}\bfseries\insertblockname}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\bfseries\insertblockname}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\bfseries\insertblockname}\par}{\endgroup\medskip}
- 
+\useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
+\color{black!50!green}}{\endgroup\medskip}
+
  
                                 % Margins
 \beamersetleftmargin{0.5cm}

@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemesidebar}[2003/10/22 ver 0.1]
+\ProvidesPackage{beamerthemesidebar}[2003/10/29 ver 0.92]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -58,7 +58,7 @@
   \box\tempbox%
 }
 {%
-  \setbox\tempbox=\hbox{\color{structuremedium}\tiny{\kern3pt\insertsectionhead}}%
+  \setbox\tempbox=\hbox{\color{structure!75}\tiny{\kern3pt\insertsectionhead}}%
   \ht\tempbox=8pt%
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
@@ -74,7 +74,7 @@
   \box\tempbox%
 }
 {%
-  \setbox\tempbox=\hbox{\color{shaded}\tiny{\kern6pt\insertsubsectionhead}}%
+  \setbox\tempbox=\hbox{\color{black!50}\tiny{\kern6pt\insertsubsectionhead}}%
   \ht\tempbox=4.5pt%
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
@@ -99,7 +99,7 @@
       \rightskip0pt plus1fill%
       \tiny\color{structure}\insertshorttitle%
       \vskip.5em
-      \color{black}\insertshortauthor
+      \color{black!75}\insertshortauthor
     \end{minipage}}%
   \vskip1em
   \insertverticalnavigation{\beamer@sidebarwidth}%
@@ -109,16 +109,17 @@
 }
 
                                 % Side bar background
-\userightsidebarverticalshadingtemplate{1,1,1}{\theshadedthemecolor}
+\userightsidebarverticalshadingtemplate{white}{structure!50!averagebackgroundcolor}
 
                                 % Background
 \usebackgroundtemplate{}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{blockstructure}\large\insertblockname}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\large\insertblockname}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\insertblockname}\par}{\endgroup\medskip}
- 
+\useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
+\color{black!50!green}}{\endgroup\medskip}
+
                                 % Margins
 \beamersetleftmargin{0.5cm}
 \beamersetrightmargin{0.5cm}

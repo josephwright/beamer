@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemesplit}[2003/07/28 ver 0.2]
+\ProvidesPackage{beamerthemesplit}[2003/10/29 ver 0.92]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -33,22 +33,20 @@
 
                                 % Sections in headline
 \usesectionheadtemplate
-{\hfill\color{white}\tiny\textbf{\insertsectionhead}}
-{\hfill\color{shaded}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
 
 \usesubsectionheadtemplate
-{\color{white}\tiny\textbf{\insertsubsectionhead}}
-{\color{structureshaded}\tiny\textbf{\insertsubsectionhead}}
+  {\color{white}\tiny\textbf{\insertsubsectionhead}}
+  {\color{white!50!structure}\tiny\textbf{\insertsubsectionhead}}
 
                                 % Entries in table of contents
-\usetemplatetocsection
+\usetemplatetocsection[50!averagebackgroundcolor]
 {{\large\color{structure}\inserttocsection}}
-{{\large\color{structureshaded}\inserttocsection}}
 
                                 % Entries in table of contents
-\usetemplatetocsubsection
+\usetemplatetocsubsection[50!averagebackgroundcolor]
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
 
 \newdimen\tempdimen
                                 % Head
@@ -109,7 +107,9 @@
 \usebackgroundtemplate{}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{blockstructure}\large\insertblockname}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\large\insertblockname}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\insertblockname}\par}{\endgroup\medskip}
+\useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
+\color{black!50!green}}{\endgroup\medskip}
+
  

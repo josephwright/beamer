@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemetreebars}[2003/07/28 ver 0.2]
+\ProvidesPackage{beamerthemetreebars}[2003/10/29 ver 0.92]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -34,7 +34,7 @@
                                 % Sections in headline
 \usesectionheadtemplate
 {\color{structure}\tiny\insertsectionhead}
-{\color{structureshaded}\tiny\insertsectionhead}
+{\color{structure!50!averagebackgroundcolor}\tiny\insertsectionhead}
 
                                 % Mini slides in headline
 \def\sphereradius{0.05cm}
@@ -53,21 +53,19 @@
   }
 {%
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{structureshaded}
+    \color{structure!50!averagebackgroundcolor}
     \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
   \end{pgfpicture}%
   }
 {.14cm}{.03cm}
 
                                 % Entries in table of contents
-\usetemplatetocsection
+\usetemplatetocsection[50!averagebackgroundcolor]
 {{\large\color{structure}\inserttocsection}}
-{{\large\color{structureshaded}\inserttocsection}}
 
                                 % Entries in table of contents
-\usetemplatetocsubsection
+\usetemplatetocsubsection[50!averagebackgroundcolor]
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
 
                                 % Head
 \useheadtemplate{%
@@ -76,7 +74,7 @@
     \setbox\tempbox=\hbox{\insertsection}%
     \tinycolouredline{structure}{\color{black}\ifdim\wd\tempbox>1pt{\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\color{white}\textbf{\insertsection}\fi\hfill}%
     \setbox\tempbox=\hbox{\insertsubsection}%
-    \tinycolouredline{structuremedium}{\color{black}\ifdim\wd\tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\color{white}\textbf{\insertsubsection}\fi\hfill}%
+    \tinycolouredline{structure!75}{\color{black}\ifdim\wd\tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\color{white}\textbf{\insertsubsection}\fi\hfill}%
     }%
   }
 
@@ -92,7 +90,9 @@
 \usebackgroundtemplate{}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{structure}\large\insertblockname}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\large\insertblockname}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\insertblockname}\par}{\endgroup\medskip}
+\useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
+\color{black!50!green}}{\endgroup\medskip}
+
  

@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemelined}[2003/07/28 ver 0.2]
+\ProvidesPackage{beamerthemelined}[2003/10/29 ver 0.92]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -34,17 +34,15 @@
                                 % Sections in headline
 \usesectionheadtemplate
 {\color{structure}\tiny\insertsectionhead}
-{\color{structureshaded}\tiny\insertsectionhead}
+{\color{structure!50!averagebackgroundcolor}\tiny\insertsectionhead}
 
                                 % Entries in table of contents
-\usetemplatetocsection
+\usetemplatetocsection[50!averagebackgroundcolor]
 {{\large\color{structure}\inserttocsection}}
-{{\large\color{structureshaded}\inserttocsection}}
 
                                 % Entries in table of contents
-\usetemplatetocsubsection
+\usetemplatetocsubsection[50!averagebackgroundcolor]
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
 
                                 % Head
 \useheadtemplate{%
@@ -52,17 +50,17 @@
     \vskip3pt%
     \beamerline{\insertnavigation{\paperwidth}}%
     \vskip1.5pt%
-    \insertvrule{0.4pt}{structureshaded}%
+    \insertvrule{0.4pt}{structure!50!averagebackgroundcolor}%
     \vskip1.5pt%
     \tinyline{\color{structure}\insertsubsection\hfill}
-    \insertvrule{4pt}{structureshaded}%
+    \insertvrule{4pt}{structure!50!averagebackgroundcolor}%
     }%
   }
 
                                 % Footline
 \usefoottemplate{%
   \vbox{%
-    \insertvrule{4pt}{structureshaded}%
+    \insertvrule{4pt}{structure!50!averagebackgroundcolor}%
     \vskip1.5pt
     \setbox\tempbox=\hbox{\tiny\insertshortauthor: \insertshorttitle\hskip1.5cm\insertshortinstitute}%
     \ifdim\wd\tempbox>\paperwidth%
@@ -77,7 +75,7 @@
   \def\insertlogo{#1}%
   \usefoottemplate{%
     \vbox{%
-      \insertvrule{4pt}{structureshaded}%
+      \insertvrule{4pt}{structure!50!averagebackgroundcolor}%
       \vskip1.5pt%
       \setbox\logobox=\hbox{\lower1pt\hbox{\insertlogo}}%
       \tinyline{\color{structure}\insertshortauthor:\hfill}%
@@ -91,7 +89,7 @@
 \usebackgroundtemplate{}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{structure}\large\insertblockname}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\large\insertblockname}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\insertblockname}\par}{\endgroup\medskip}
- 
+\useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
+\color{black!50!green}}{\endgroup\medskip}

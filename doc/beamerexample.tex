@@ -8,13 +8,24 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\usepackage{beamerthemesplit}
+% For a green structure color use:
+%\colorlet{structure}{green!50!black}
+
 \usepackage{beamertemplates}
+\usepackage{beamerthemesplit}
 \usepackage[english]{babel}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
 \usepackage[latin1]{inputenc}
 \usepackage{colortbl}
+
+
+% Use some nice templates
+
+\beamertemplateshadingbackground{red!10}{structure!10}
+\beamertemplatetransparentcovereddynamic
+\beamertemplateballitem
+
 
 %
 % The following defintions are peculiar to this particular
@@ -133,24 +144,18 @@
   Technical University of Berlin}
 \date[DLT 2003]{Developments in Language Theory Conference, 2003}
 
-% Try this:
-%\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
-\beamertemplatetransparentcoveredchanging
-
 \begin{document}
 
 \frame{\titlepage}
-% Try this instead: \fadeoutframe{\titlepage}
 
 \section[Outline]{}
 
-\frame{\tableofcontents}
-% Try this instead: \fadeinframe{\tableofcontents}
+\frame{\tableofcontents[pausesections]}
 \note{At most 1 minute for the outline.}
 
 \section[Models]{The Model of Overhead-Free Computation}
 
-\frame[handout:0]{\transdissolve\tableofcontentscurrent}
+\frame[handout:0]{\tableofcontents[current]}
 
 \subsection[Standard Model]{The Standard Model of Linear Space}
 
@@ -337,15 +342,18 @@
   \begin{Definition}
     A language $L \subseteq \Sigma^*$ is in
     \begin{description}
-    \item<1->[\alert<1| handout:0| trans:0>{$\DOF$}]
+    \item[\alert<1| handout:0| trans:0>{$\DOF$}]
       if $L$ is accepted by a deterministic overhead-free machine with
-      input alphabet~$\Sigma$, 
-    \item<2->[\alert<2| handout:0| trans:0>{$\DOFpoly$}]
+      input alphabet~$\Sigma$,
+      \pause
+    \item[\alert<2| handout:0| trans:0>{$\DOFpoly$}]
       if $L$ is accepted by a deterministic overhead-free machine with
       input alphabet~$\Sigma$ in polynomial time.
-    \item<3->[\alert<3| handout:0| trans:0>{$\NOF$}]
-      is the nondeterministic  version of $\DOF$, 
-    \item<4->[\alert<4| handout:0| trans:0>{$\NOFpoly$}]
+      \pause
+    \item[\alert<3| handout:0| trans:0>{$\NOF$}]
+      is the nondeterministic  version of $\DOF$,
+      \pause
+    \item[\alert<4| handout:0| trans:0>{$\NOFpoly$}]
       is the nondeterministic version of $\DOFpoly$. 
     \end{description}
   \end{Definition}
@@ -377,7 +385,7 @@
 
 \section[Power of the Model]{The Power of Overhead-Free Computation}
 
-\frame[handout:0]{\tableofcontentscurrent}
+\frame[handout:0]{\tableofcontents[current]}
 
 \subsection{Palindromes}
 
@@ -528,7 +536,7 @@
   \begin{Example}<2->
     $G_1$ is deterministic.
     
-    $G_2$ is not deterministic.
+    $G_2$ is \alert{not} deterministic.
   \end{Example}  
 }
 \note{Just explain intuition using the example.}
@@ -543,30 +551,25 @@
   \end{Theorem}
 }
 
-\frame
-{
-  \frametitle{Continued Review of Linear Grammars}
+\frame{
+  \frametitle{Metalinear Languages\\ Can Be Accepted in an
+    Overhead-Free Way}
 
   \begin{Definition}
     A language is \alert{metalinear} if it is the concatenation\\ of
     linear languages.
   \end{Definition}
 
-  \begin{Example}<2->
+  \pause
+  \begin{Example}
     $\Lang{triple-palindrome} = \Set{uvw \mid \text{$u$, $v$, and $w$ are palindromes}}$.
   \end{Example}  
-}
 
-\frame
-{
-  \frametitle{Metalinear Languages\\ Can Be Accepted in an
-    Overhead-Free Way}
-
+  \pause
   \begin{Theorem}
     Every metalinear language is in $\NOFpoly$.
   \end{Theorem}
 }
-
 
 \frame
 {
@@ -601,11 +604,13 @@
   \begin{Definition}
     A Turing machine is \alert{almost-overhead-free} if
     \begin{itemize}
-    \item<1->
+    \item
       it has only a single tape,
-    \item<2->
+      \pause
+    \item
       writes only on input cells,
-    \item<3->
+      \pause
+    \item
       writes only symbols drawn from the input alphabet\\
       \alert{plus one special symbol}.
     \end{itemize}
@@ -695,7 +700,7 @@
 
 \section[Limitations of the Model]{Limitations of Overhead-Free Computation}
 
-\frame[handout:0]{\tableofcontentscurrent}
+\frame[handout:0]{\tableofcontents[current]}
 
 \subsection[Strict Inclusion]{Linear Space is Strictly More Powerful}
 
@@ -799,23 +804,27 @@
   
   \begin{thebibliography}{10}
     
-  \bibitem<2->{sal:b:formal-languages}
+  \bibitem{sal:b:formal-languages}
     A.~Salomaa.
     \newblock {\em Formal Languages}.
     \newblock Academic Press, 1973.
+    \pause
 
   \beamertemplatearticlebibitems
-  \bibitem<3->{dij:j:smoothsort}
+  \bibitem{dij:j:smoothsort}
     E.~Dijkstra.
     \newblock Smoothsort, an alternative for sorting in situ.
-    \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
+    \newblock {\em Science of Computer Programming}, 1(3):223--233,
+    1982.
+    \pause
 
-  \bibitem<4->{FeldmanO1973}
+  \bibitem{FeldmanO1973}
     E.~Feldman and J.~Owings, Jr.
     \newblock A class of universal linear bounded automata.
     \newblock {\em Information Sciences}, 6:187--190, 1973.
+    \pause
 
-  \bibitem<5->{JancarMPV1995}
+  \bibitem{JancarMPV1995}
     P.~Jan{\v c}ar, F.~Mr{\'a}z, M.~Pl{\'a}tek, and J.~Vogel.
     \newblock Restarting automata.
     \newblock {\em FCT Conference 1995}, LNCS 985, pages
@@ -879,7 +888,6 @@
   \end{theorem}
 }
 
-\makeatletter
 \subsection{Abbreviations}
 
 \frame{

@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemesidebardarktab}[2003/10/22 ver 0.1]
+\ProvidesPackage{beamerthemesidebardarktab}[2003/10/29 ver 0.92]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -40,11 +40,14 @@
   \vfill
 }
 
-\pgfdeclarehorizontalshading{beamer@tabmain}{6.5pt}{rgb(0pt)=(1,1,1); rgb(\beamer@sidebarwidth)=(\theshadedthemecolor)}
+\pgfdeclarehorizontalshading{beamer@tabmain}{6.5pt}
+{color(0pt)=(white);
+  color(\beamer@sidebarwidth)=(structure!50!averagebackgroundcolor)}
 \pgfdeclarehorizontalshading{beamer@tab}{6.5pt}{%
-  rgb(0pt)=(1,1,1);
-  rgb(9pt)=(\theshadedthemecolor);
-  rgb(\beamer@sidebarwidth)=(\thethemecolor)}
+  color(0pt)=(white);
+  color(9pt)=(structure!50!averagebackgroundcolor);
+  color(\beamer@sidebarwidth)=(structure)}
+
 
                                 % Frametitles
 \useframetitletemplate{%
@@ -67,7 +70,7 @@
   \box\tempbox%
 }
 {%
-  \setbox\tempbox=\hbox{\color{structure}\tiny{\kern3pt\bfseries\insertsectionhead}}%
+  \setbox\tempbox=\hbox{\color{structure!50}\tiny{\kern3pt\bfseries\insertsectionhead}}%
   \ht\tempbox=8pt%
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
@@ -93,9 +96,8 @@
   \box\tempbox%
 }
                                 % Entries in table of contents
-\usetemplatetocsection
+\usetemplatetocsection[50!averagebackgroundcolor]
 {\color{structure}\textbf{\inserttocsection}}
-{\color{structureshaded}\textbf{\inserttocsection}}
 
                                 % Head
 \useheadtemplate{}
@@ -115,7 +117,7 @@
       \rightskip0pt plus1fill%
       \tiny\color{white}\bfseries\insertshorttitle%
       \vskip.5em
-      \color{structureshaded}\insertshortauthor
+      \color{structure!50}\insertshortauthor
     \end{minipage}}%
   \vskip1em
   \insertverticalnavigation{\beamer@sidebarwidth}%
@@ -125,15 +127,16 @@
 }
 
                                 % Sidebar Background
-\userightsidebarverticalshadingtemplate{\thethemecolor}{0,0,0}
+\userightsidebarverticalshadingtemplate{structure}{black}
 
                                 % Background
 \usebackgroundtemplate{}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{blockstructure}\bfseries\insertblockname}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\bfseries\insertblockname}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\bfseries\insertblockname}\par}{\endgroup\medskip}
+\useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
+\color{black!50!green}}{\endgroup\medskip}
  
                                 % Margins
 \beamersetleftmargin{0.5cm}

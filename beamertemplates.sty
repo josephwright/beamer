@@ -1,5 +1,7 @@
-\ProvidesPackage{beamertemplates}[2003/09/31 ver 0.1]
+\ProvidesPackage{beamertemplates}[2003/10/29 ver 0.92]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+\RequirePackage{pgfshade}
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -18,13 +20,44 @@
   }
 
 \newcommand{\beamertemplateballitem}{%
-  \RequirePackage{pgfshade}
-  \pgfdeclareradialshading{bigsphere}{\pgfpoint{1pt}{1pt}}%
-   {rgb(0cm)=(0,0,1); rgb(0.6pt)=(0,0,0.9); rgb(1.4pt)=(0,0,0.7); rgb(2pt)=(0,0,0.5); rgb(2.4pt)=(1,1,1)}
-  \pgfdeclareradialshading{smallsphere}{\pgfpoint{0.8pt}{0.8pt}}%
-   {rgb(0cm)=(0,0,1); rgb(0.48pt)=(0,0,0.9); rgb(1.12pt)=(0,0,0.7); rgb(1.6pt)=(0,0,0.5); rgb(1.9pt)=(1,1,1)}
-  \useitemizeitemtemplate{\pgfuseshading{bigsphere}}
-  \usesubitemizeitemtemplate{\pgfuseshading{smallsphere}}
+  \pgfdeclareradialshading{bigsphere}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(structure!15);
+    color(0.8pt)=(structure!75);
+    color(1.6pt)=(structure!70!black);
+    color(2.2pt)=(structure!50!black);
+    color(2.6pt)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{smallsphere}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(structure!15);
+    color(0.64pt)=(structure!75);
+    color(1.28pt)=(structure!70!black);
+    color(1.76pt)=(structure!50!black);
+    color(2.08pt)=(averagebackgroundcolor)}
+  \begin{colormixin}{15!averagebackgroundcolor}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(structure!15);
+    color(0.8pt)=(structure!75);
+    color(1.6pt)=(structure!70!black);
+    color(2.2pt)=(structure!50!black);
+    color(2.6pt)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(structure!15);
+    color(0.64pt)=(structure!75);
+    color(1.28pt)=(structure!70!black);
+    color(1.76pt)=(structure!50!black);
+    color(2.08pt)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{bigsphere!20!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!15!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!10!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!5!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{bigsphere!2!averagebackgroundcolor}{bigsphereshaded}  
+  \pgfaliasshading{smallsphere!20!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{smallsphere!15!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{smallsphere!10!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{smallsphere!5!averagebackgroundcolor}{smallsphereshaded}
+  \pgfaliasshading{smallsphere!2!averagebackgroundcolor}{smallsphereshaded}  
+  \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bigsphere}}}
+  \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{smallsphere}}}
   }
 
 %
@@ -42,7 +75,7 @@
 
 \newcommand{\beamertemplatefootpagenumber}{%
   \usefoottemplate{%
-  \hfil\tiny{\color{shaded}\insertpagenumber}}}
+  \hfil\tiny{\color{black!50!averagebackgroundcolor}\insertpagenumber}}}
 
 %
 % Mini navigation bar frame templates
@@ -63,7 +96,7 @@
   }
   {%
     \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \color{structureshaded}
+      \color{structure!50!averagebackgroundcolor}
       \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
     \end{pgfpicture}%
   }
@@ -81,7 +114,7 @@
     \vrule height\boxsize width0.4pt%
   }
   {%
-    \color{structureshaded}%
+    \color{structure!50!averagebackgroundcolor}%
     \vrule height\boxsize width0.4pt%
   }
   {.1cm}{.05cm}}
@@ -97,13 +130,12 @@
   }
   
 \newcommand{\beamertemplateshadingbackground}[2]{
-  \RequirePackage{pgfshade}
   \pgfdeclareverticalshading{background}{\the\paperwidth}%
-  {rgb(0cm)=(#1); rgb(\the\paperheight)=(#2)}
+  {color(0cm)=(#1); color(\the\paperheight)=(#2)}
 
   \usebackgroundtemplate{\pgfuseshading{background}}%
-  \definecolor{beamer@backgroundshadestart}{rgb}{#1}%
-  \definecolor{beamer@backgroundshadeend}{rgb}{#2}%
+  \colorlet{beamer@backgroundshadestart}{#1}%
+  \colorlet{beamer@backgroundshadeend}{#2}%
   \beamersetaveragebackground{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
   }
   
@@ -186,6 +218,25 @@
 \newcommand{\beamertemplatearrowbibitems}{
   \usebibitemtemplate{\color{structure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
 }
+
+
+%
+% Captions
+%
+
+\newcommand{\beamertemplatecaptionwithnumber}{
+\usecaptiontemplate{%
+  {\small\structure{\insertcaptionname~\insertcaptionnumber:}
+    \insertcaption}}}
+
+\newcommand{\beamertemplatecaptionownline}{
+\usecaptiontemplate{%
+  {\small%
+    \begin{minipage}{\textwidth}
+      \structure{\insertcaptionname}\\
+      \insertcaption
+    \end{minipage}}}}
+
 
 
 %

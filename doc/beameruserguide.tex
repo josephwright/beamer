@@ -57,7 +57,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 0.91-dev\\
+\title{User's Guide to the Beamer Class, Version 0.92\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -186,22 +186,25 @@ If you only wish to install the beamer class for a quick appraisal, do
 the following: Obtain the latest source version (ending
 \texttt{.tar.gz}) of the \beamer\ package from 
 \href{http://sourceforge.net/projects/latex-beamer/}{\texttt{http://sourceforge.net/projects/latex-beamer/}}
-(most likely, you have already done this). Next, you also need the
-\textsc{pgf} package, which can be found, for example, at 
-\href{http://www.ctan.org/tex-archive/graphics/pgf/}{\texttt{http://www.ctan.org/tex-archive/graphics/pgf/}}.
+(most likely, you have already done this). Next, you also need at
+least version 0.34 of the \textsc{pgf} package, which can be found at
+the same place. Finally, you need at least version 1.03 of the
+\textsc{xcolor} package, which can also be found at that place
+(although the version on CTAN might be newer).
 
-In both cases, the packages contain a bunch of files (for the \beamer\
+In all cases, the packages contain a bunch of files (for the \beamer\
 class, \texttt{beamer.cls} is one of these files and happens to be the
 most important one, for the \textsc{pgf} package \texttt{pgf.sty} is
 the most important file). 
-Place all files in two directories. For example,
-\texttt{/home/tantau/beamer/} and \texttt{/home/tantau/pgf/} would
-work fine for me. Then setup the environment variable called
-\texttt{TEXINPUTS} to be the following string (how exactly this is
-done  depends on your operating system and shell):
+Place all files in three directories. For example,
+\texttt{/home/tantau/beamer/}, \texttt{/home/tantau/pgf/}, and
+\texttt{/home/tantau/xcolor/} would work fine for me. Then setup the
+environment variable called \texttt{TEXINPUTS} to be the following
+string (how exactly this is done depends on your operating system and
+shell): 
 
 \begin{verbatim}
-.:/home/tantau/beamer:/home/tantau/pgf:
+.:/home/tantau/beamer:/home/tantau/pgf:/home/tantau/xcolor:
 \end{verbatim}
 
 Naturally, if the \texttt{TEXINPUTS} variable is already defined
@@ -248,8 +251,10 @@ the sub-sub-sub-directories
   \texttt{texmf/tex/latex/beamer} and
 \item
   \texttt{texmf/tex/latex/pgf}
+\item
+  \texttt{texmf/tex/latex/xcolor}
 \end{itemize}
-and place all files in these two directories.
+and place all files in these three directories.
 
 Finally, you need to rebuild \TeX's filename database. This done by
 running the command  \texttt{texhash} or \texttt{mktexlsr} (they are
@@ -271,6 +276,11 @@ from the documentation subdirectory to some place where you usually
 create presentations. Then run the command \texttt{pdflatex} twice on
 the file and check whether the resulting \texttt{beamerexample.pdf}
 looks correct. If so, you are all set.
+
+If you have updated from a previous version and you have trouble
+\TeX ing some old file, it sometimes help to delete all the extra
+files \TeX\ creates automatically (like the \texttt{.aux} and
+\texttt{.head} files).
 
 
 
@@ -666,9 +676,14 @@ Section~\ref{section-postscript} on how to do this.
 
 
 
+
 \section{Frames and Overlays}
 
 \label{section-overlay}
+
+\subsection{Frames}
+
+\subsubsection{Frame Creation}
 
 A presentation consists of a series of frames. Each frame consists of
 a series of slides. You create a frame using the command
@@ -737,7 +752,7 @@ by two graphics.
 \end{verbatim}
 
 
-\subsection{Components of a Frame}
+\subsubsection{Components of a Frame}
 
 Each frame consists of up to six components:
 \begin{enumerate}\itemsep=0pt\parskip=0pt
@@ -775,13 +790,243 @@ sentence. Otherwise, there should not be a period.
 
 
 
-\subsection{Commands with Overlay Specifications}
+\subsubsection{Restricting the Slides of a Frame}
+\label{subsection-restriction}
+
+As mentioned above, the number of slides in a frame is automatically
+calculated. If the largest number mentioned in any
+specification is 4, four slides are introduced (despite the fact
+that a specification like \verb!<4->! might suggest that more than
+four slides would be possible).
+
+You can also specify the number of slides in the frame ``by hand.'' To
+do so, you pass an optional argument to the \verb!\frame! command,
+given in \emph{square} brackets. This argument is also a 
+slide specification. The frame will contain only the slides
+specified in this argument. Consider the following example.
+
+\begin{verbatim}
+\frame[1-2,4-]
+{
+  This is slide number \only<1>{1}\only<2>{2}\only<3>{3}%
+  \only<4>{4}\only<5>{5}.
+}
+\end{verbatim}
+This command will create a frame containing four slides. The first
+will contain the text ``This is slide number~1,'' the second ``This is
+slide number~2,'' the third ``This is slide number~4,'' and the fourth
+``This is slide number~5.''
+
+
+
+\subsubsection{Verbatim Commands inside Frames}
+
+The \verb!\verb! command and the verbatim environment work only in
+frames that contain a single slide. Furthermore, you must explicitly
+specify that the frame contains only one slide; like this:
+\begin{verbatim}
+\frame[all:1]
+{
+  \frametitle{Our Search Procedure}
+
+  \begin{verbatim}
+  int find(int* a, int n, int x)
+  {
+    for (int i = 0; i<n; i++)
+      if (a[i] == x)
+        return i;
+  }
+\end{verbatim}
+\unskip\verb!  \end{verbatim}!
+\begin{verbatim}
+}
+\end{verbatim}
+
+Instead of \verb!\frame[all:1]! you could also have specified
+\verb!\frame[1]!, but this works only for the presentation version of
+the talk, not for the handout version. To make verbatim accessible
+also in the handout version, you would have to specify
+\verb!\frame[1| handout: 1]! and even more if you also have a
+transparencies version. The specification \verb!\frame[all:1]! states
+that the frame has just one slide in all versions.
+
+If you need to use verbatim commands in frames that contain several
+slides, you must \emph{declare} your verbatim texts before the frame
+starts. This is done using two special commands:
+
+
+\Command{defverb}
+\Parameters{
+\item command name (including a backslash)
+\item a one-line verbatim text, delimited by a special symbol (works
+  like the \texttt{verb} command). Adding a star before the second
+  parameter make spaces visible.
+}
+\Description{
+  Declares a verbatim text for later use. The declaration should be
+  done outside the frame. Once declared, the text can be used
+  in overlays like normal text.
+  }
+\Example
+\begin{verbatim}
+\defverb\mytext!int main (void) { ...!
+\defverb\mytextspaces*!int  main  (void ){  ...!
+
+\frame
+{
+  \begin{itemize}
+  \item<1-> In C you need a main function.
+  \item<2-> It is declare like this: \mytext
+  \item<3-> Spaces are not important: \mytextspaces
+  \end{itemize}
+}
+\end{verbatim}
+
+
+\Command{defverbatim}
+\Parameters{
+\item command name (including a backslash)
+\item a normal parameter that contains a \texttt{verbatim} or
+  \texttt{verbatim*} environment.
+}
+\Description{
+  Declares a verbatim environment for later use. The declaration
+  should be done outside the frame. Once declared, the text can be
+  used in overlays like normal text.
+  }
+\Example
+\begin{verbatim}
+\defverbatim\algorithm{
+\begin{verbatim}
+int main (void)
+{
+  cout << "Hello world." << endl;
+  return 0;
+}
+\end{verbatim}
+\unskip\verb!\end{verbatim}}!
+\begin{verbatim}
+\frame
+{
+  Our algorithm:
+
+  \alert<1>{\algorithm}
+
+  \uncover<2>{Note the return value.}
+}
+\end{verbatim}
+
+
+
+\subsection{Overlays}
+
+\subsubsection{The Pauses Environment}
+
+The \texttt{pauses} environment offers an easy, but not very flexible
+way of creating frames that are uncovered piecewise. The environment
+itself does not have an immediate effect. But if you use the command
+\verb!\pause! inside the environment, only the text of the environment
+up to the \verb!\pause! command is shown on the first slide. On the
+second slide, everything is shown up to the second \verb!\pause!, and
+so forth. Note that the \verb!\pause! command can only be used on the 
+same level of nesting as the \texttt{pauses} environment.
+
+A much more fine-grained control over what is shown on each slide can
+be attained using overlay specifications, see the next
+subsections. However, for many simple cases the \verb!\pause!
+command is sufficient.
+
+If you use multiple  \texttt{pauses} environments on one frame, the
+slide counting for the second environment starts where the first one
+left off, see the following example. You can nest \texttt{pauses}
+environments, but this will not always have the effect you might
+expect. 
+
+\begin{verbatim}
+\frame{
+  \begin{pauses}
+    Shown from first slide on.
+    \pause
+    Shown from second slide on.
+    \pause
+    Shown from third slide on.
+  \end{pauses}
+
+  Shown from first slide on (not affected by the environment).
+
+  \begin{pauses}
+    Shown from third slide on. (continued from above)
+    \pause
+    Shown from fourth slide on.
+  \end{pauses}
+}
+\end{verbatim}
+
+As a convenience, a \texttt{pauses} environment is automatically setup
+inside each frame, each \texttt{itemize}, each \texttt{description},
+and each \texttt{enumerate}. Thus, by simply using the \verb!\pause!
+command on the outermost level of any frame or after items in lists or
+descriptions, you uncover the rest of the frame or list only on the
+next slide.
+
+\Environment{pauses}
+\Parameters{
+\item Put the text before first \texttt{pause} from this slide on,
+then continue increasing the slide number. Optional parameter, given
+in square brackets.
+}
+\Description{
+  The content of the environment is shown piecewise. Each
+  \texttt{pause} command used inside uncovers a bit more of the
+  environment's text. The optional parameter's main use is to set is
+  to~0. The effect of this is that the first \texttt{pause} has no
+  effect, which can be useful if the \texttt{pauses} environment
+  immediately starts with a \texttt{pause} command. This happens
+  sometimes, when the environment's content is created automatically.
+}
+\Example
+\begin{verbatim}
+\frame
+{
+  \begin{pauses}
+    Shown from slide 1 onward.
+    \pause
+
+    Shown from slide 2 onward.
+  \end{pauses}
+}
+\end{verbatim}
+As mentioned above, in the above example the \texttt{pause}
+environment could also have been omitted, as the \verb!\frame! command
+inserts it automatically.
+
+
+\Command{pause}
+\Description{
+  When used inside a \texttt{pauses} environment, this command causes
+  the text following it to be shown only from the next slide on.
+}
+\begin{verbatim}
+\frame
+{
+  \begin{itemize}
+  \item
+    A    
+    \pause
+  \item
+    B
+    \pause
+  \item
+    C
+  \end{itemize}
+}
+\end{verbatim}
+
+
+
+\subsubsection{Commands with Overlay Specifications}
 \label{subsection-overlay}
 
-The number of slides in a frame is calculated automatically from the
-overlay specifications inside the frame, but see below for how to
-specify this number explicitly. The number is chosen to be
-the maximum number mentioned in any overlay specification.
 An overlay specification is a comma-separated list of slides and
 ranges. Ranges are specified like this: \verb!2-5!, which
 means slide two through to five. The start or the beginning of a range
@@ -809,7 +1054,7 @@ text to be set in boldface only on the specified slides. On all other
 slides, the text is set in a normal font.
 
 You cannot add an overlay specification to every command, but only to
-those listed below. However, it is quite easy to redefine a
+those listed in the following. However, it is quite easy to redefine a
 command such that it becomes ``overlay specification aware.''
 
 For the following commands, adding an overlay specification causes the
@@ -853,8 +1098,25 @@ commands that are needed by \pgf.
   If an overlay specification is present, the text is shown
   (``uncovered'') only on the specified slides. On other slides, the
   text still occupies space and it is still typeset, but it is not
-  shown.}
+  shown or only shown as if transparent. For details on how to specify
+  whether the text is invisible or just transparent, see
+  Section~\ref{section-transparent}. 
+}
 \Example \verb!\uncover<3->{Text shown from slide 3 on.}!
+
+\Command{invisible}
+\Parameters{
+\item a text
+}
+\Description{
+  The text is occupies space and it is still typeset, but it is not
+  shown. If an overlay specification is given, this command takes
+  effect only on the specified slides. This command is a conter-part to
+  \texttt{uncover}, but not quite: unlike \texttt{uncover}, invisible 
+  text is never shown in a transparent way, but is guaranteed to
+  really be invisible.
+}
+\Example \verb!\invisible<-2>{Text shown from slide 3 on.}!
 
 \Command{alt}
 \Parameters{
@@ -886,12 +1148,12 @@ commands that are needed by \pgf.
   \temporal<3,5>{Shown on 1, 2, 4}{Shown on 3, 5}{Shown 6, 7, 8, ...}
 \end{verbatim}
 
-For a useful application of the \verb!\temporal! command consider the
+As a possible application of the \verb!\temporal! command consider the
 following example: 
 
 \begin{verbatim}
 \def\colorize<#1>{%
-  \temporal<#1>{\color{structureshaded}}{\color{black}}{\color{shaded}}}
+  \temporal<#1>{\color{structure!50}}{\color{black}}{\color{black!50}}}
 
 \frame{
   \begin{itemize}
@@ -968,14 +1230,14 @@ in the same way as \verb!\item!.
 \Example
 \begin{verbatim}
 \frame{
-\begin{itemize}
-\item<1-> First item.
-\item<2-> Second item.
-\item<3-> Third item.
-\end{itemize}
+  \begin{itemize}
+  \item<1-> First item.
+  \item<2-> Second item.
+  \item<3-> Third item.
+  \end{itemize}
 
-\hyperlink{jumptoend}{Jump to last slide of the frame.}
-\hypertarget<3>{jumptoend}{}
+  \hyperlink{jumptoend}{Jump to last slide of the frame.}
+  \hypertarget<3>{jumptoend}{}
 }
 \end{verbatim}
 
@@ -1010,7 +1272,7 @@ in the same way as \verb!\item!.
 \end{verbatim}
 
 
-\subsection{Environments with Overlay Specifications}
+\subsubsection{Environments with Overlay Specifications}
 
 Environments can also be equipped with overlay specifications. For
 most of the predefined environments, see subsection~\ref{predefined},
@@ -1077,35 +1339,7 @@ The two special environments \verb!onlyenv! and \verb!uncoverenv! are
 \end{verbatim}
 
 
-\subsection{Restricting the Slides of a Frame}
-\label{subsection-restriction}
-
-As mentioned above, the number of slides in a frame is automatically
-calculated. If the largest number mentioned in any
-specification is 4, four slides are introduced (despite the fact
-that a specification like \verb!<4->! might suggest that more than
-four slides would be possible).
-
-You can also specify the number of slides in the frame ``by hand.'' To
-do so, you pass an optional argument to the \verb!\frame! command,
-given in \emph{square} brackets. This argument is also a 
-slide specification. The frame will contain only the slides
-specified in this argument. Consider the following example.
-
-\begin{verbatim}
-\frame[1-2,4-]
-{
-  This is slide number \only<1>{1}\only<2>{2}\only<3>{3}%
-  \only<4>{4}\only<5>{5}.
-}
-\end{verbatim}
-This command will create a frame containing four slides. The first
-will contain the text ``This is slide number~1,'' the second ``This is
-slide number~2,'' the third ``This is slide number~4,'' and the fourth
-``This is slide number~5.''
-
-
-\subsection{Dynamically Changing Text}
+\subsubsection{Dynamically Changing Text}
 
 You may sometimes wish to have some part of a frame change dynamically
 from slide to slide. On each slide of the frame, something different
@@ -1121,10 +1355,9 @@ annoying differences in the heights of the lines, which may cause the
 whole frame to ``whobble'' from slide to slide. This problem becomes
 much more severe if the replacement text is several lines long.
 
-So solve this problem, you can use two environments:
+To solve this problem, you can use two environments:
 \verb!overlayarea! and \verb!overprint!. The first is more flexible,
 but less user-friendly.
-
 
 \Environment{overlayarea}
 \Parameters{
@@ -1319,112 +1552,14 @@ been invoked.
 
 
 
-\subsection{Frames and Verbatim Commands}
-
-The \verb!\verb! command and the verbatim environment work only in
-frames that contain a single slide. Furthermore, you must explicitly
-specify that the frame contains only one slide; like this:
-\begin{verbatim}
-\frame[all:1]
-{
-  \frametitle{Our Search Procedure}
-
-  \begin{verbatim}
-  int find(int* a, int n, int x)
-  {
-    for (int i = 0; i<n; i++)
-      if (a[i] == x)
-        return i;
-  }
-\end{verbatim}
-\unskip\verb!  \end{verbatim}!
-\begin{verbatim}
-}
-\end{verbatim}
-
-Instead of \verb!\frame[all:1]! you could also have specified
-\verb!\frame[1]!, but this works only for the presentation version of
-the talk, not for the handout version. To make verbatim accessible
-also in the handout version, you would have to specify
-\verb!\frame[1| handout: 1]! and even more if you also have a
-transparencies version. The specification \verb!\frame[all:1]! states
-that the frame has just one slide in all versions.
-
-If you need to use verbatim commands in frames that contain several
-slides, you must \emph{declare} your verbatim texts before the frame
-starts. This is done using two special commands:
-
-
-\Command{defverb}
-\Parameters{
-\item command name (including a backslash)
-\item a one-line verbatim text, delimited by a special symbol (works
-  like the \texttt{verb} command). Adding a star before the second
-  parameter make spaces visible.
-}
-\Description{
-  Declares a verbatim text for later use. The declaration should be
-  done outside the frame. Once declared, the text can be used
-  in overlays like normal text.
-  }
-\Example
-\begin{verbatim}
-\defverb\mytext!int main (void) { ...!
-\defverb\mytextspaces*!int  main  (void ){  ...!
-
-\frame
-{
-  \begin{itemize}
-  \item<1-> In C you need a main function.
-  \item<2-> It is declare like this: \mytext
-  \item<3-> Spaces are not important: \mytextspaces
-  \end{itemize}
-}
-\end{verbatim}
-
-
-\Command{defverbatim}
-\Parameters{
-\item command name (including a backslash)
-\item a normal parameter that contains a \texttt{verbatim} or
-  \texttt{verbatim*} environment.
-}
-\Description{
-  Declares a verbatim environment for later use. The declaration
-  should be done outside the frame. Once declared, the text can be
-  used in overlays like normal text.
-  }
-\Example
-\begin{verbatim}
-\defverbatim\algorithm{
-\begin{verbatim}
-int main (void)
-{
-  cout << "Hello world." << endl;
-  return 0;
-}
-\end{verbatim}
-\unskip\verb!\end{verbatim}}!
-\begin{verbatim}
-\frame
-{
-  Our algorithm:
-
-  \alert<1>{\algorithm}
-
-  \uncover<2>{Note the return value.}
-}
-\end{verbatim}
-
-
-
-
 
 
 
 \section{Structuring a Presentation}
 
 \subsection{Kinds of Global Structures of Presentations}
+
+Still needs to be written.
 
 \subsubsection{Linear Global Structure}
 
@@ -1525,19 +1660,28 @@ commands:
 
 \subsubsection{Adding Table of Contents}
 
-The two commands for creating a table of contents are
-\verb!\tableofcontents! and \verb!\tableofcontentscurrent!. The
-difference between these commands is small: the first inserts the main
-table of contents into the current frame, the second inserts a table
-of contents in which only the current section is highlighted. An
-example usage is given in the following example:
+You can create a table of contents using the command
+\verb!\tableofcontents!. Unlike the normal \LaTeX\ table of contents
+command, this command takes an optional parameter in square brackets
+that can be used to create certain special effects.
 
+\Command{tableofcontents}
+\Parameters{
+\item A list of options, separated by commas. The valid options and
+their effects are explained below.
+}
+\Description{
+  Inserts a table of contents into the current frame. To change how
+the table of contents is typeset, you need to modify the appropriate
+templates, see Section~\ref{section-toc-templates}.
+}
+\Example
 \begin{verbatim}
 \section[Outline]{}
 \frame{\tableofcontents}
 
 \section{Introduction}
-\frame{\tableofcontentscurrent}
+\frame{\tableofcontents[current]}
 \subsection{Why?}
 \frame{...}
 \frame{...}
@@ -1545,12 +1689,37 @@ example usage is given in the following example:
 \frame{...}
 
 \section{Results}
-\frame{\tableofcontentscurrent}
+\frame{\tableofcontents[current]}
 \subsection{Because}
 \frame{...}
 \subsection{Here}
 \frame{...}
 \end{verbatim}
+
+The options of the command \verb!\tableofcontents! have the following
+effects: 
+\begin{itemize}
+\item
+  The option \texttt{current} causes all but the current section to be
+  shown in a semi-transparent way.
+\item
+  The option \texttt{pausesections} causes a \verb!\pause! command to
+  be issued before each section. This is useful if you wish to show
+  the table of contents in an incremental way.
+\item
+  The option \texttt{pausesubsections} causes a \verb!\pause! command to
+  be issued before each subsection.
+\item
+  The option \texttt{hidesubsections} causes the subsections to be
+  omitted. However, if used together with the \texttt{current} option,
+  the subsections of the current section are not omitted.
+\item
+  The option \texttt{shadesubsections} causes the subsections to
+  be shown in a semi-transparent way.
+\end{itemize}
+
+The last two commands are useful if you do not wish to show too many
+details when presenting the talk outline.
 
 
 
@@ -1841,7 +2010,7 @@ from where you ``come.''
 
 By clicking on a section or subsection in the navigation bar, you will
 jump to that section. Clicking on a section is particularly useful if
-the section starts with a \verb!\tableofcontentscurrent!, since you
+the section starts with a \verb!\tableofcontents[current]!, since you
 can use it to jump to the different subsections.
 
 By clicking on the document title in a navigation bar (not all themes
@@ -2073,6 +2242,37 @@ their usage
 \end{verbatim}
 
 
+\subsubsection{Figures and Tables}
+
+You can use the standard \LaTeX\ environments \texttt{figure} and
+\texttt{table} much the same way you would normally use them. However,
+any placement specification will be ignored. Figures and tables are
+immediately inserted where the environments start. If there are too
+many of them to fit on the frame, you must manually split them among
+additional frames.
+
+\Example
+\begin{verbatim}
+\frame{
+  \begin{figure}
+    \pgfuseimage{myfigure}
+    \caption{This caption is placed below the figure.}
+  \end{figure}
+
+  \begin{figure}
+    \caption{This caption is placed above the figure.}
+    \pgfuseimage{myotherfigure}
+  \end{figure}
+}
+\end{verbatim}
+
+You can adjust how the figure and table captions are typeset by
+changing the corresponding template, see
+Section~\ref{section-template-caption}.
+
+
+
+
 
 \subsubsection{Splitting a Frame into Multiple Columns}
 
@@ -2255,15 +2455,72 @@ and on \texttt{xxcolor}, which in turn is an extension of
 someday also merge together with \texttt{color}.
 
 
-\subsubsection{The Average Background Color}
+\subsubsection{Colors of Main Text Elements}
+
+By default, the following colors are used in a presentation:
+\begin{itemize}
+\item
+  Normal text is typeset in \texttt{black}.
+\item
+  All ``structural'' elements, like titles, navigation bars, block
+  titles, and so on, are typeset using the color
+  \texttt{structure}. By default, this color is bluish. Using one of
+  the class options \texttt{red}, \texttt{gray}, or \texttt{brown}
+  changes this. You can also simply redefine this color to a different
+  color using the \verb!\definecolor! command.
+\item
+  All ``alert'' text is typeset by mixing in 85\% of red. To change
+  this, you can either redefine the color \texttt{alert}, or you can
+  change the whole alert template.
+\item
+  All examples are typeset using 50\% of green. To change this, you
+  must change the example templates.
+\end{itemize}
+
+
+
+\subsubsection{Average Background Color}
+
+In some situations, for example when creating a transparency effect,
+it is useful to have access to the current background
+color. One can then, for example, mix a color with the background
+color to create a ``transparent'' color.
+
+Unfortunately, it is not always clear what exactly the background
+color is. If the background is a shading or a picture, the color
+changes all the time. In these cases, one can at least try to mix-in
+an \emph{average} background color, called
+\texttt{averagebackgroundcolor}. If a shading or picture is not too
+colorful, this works fairly well.
+
+To specify the average background color, use the following command:
+
+\Command{beamersetaveragebackground}
+\Parameters{
+\item name of a color or a color expression (see the \texttt{xcolor}
+package).
+}
+\Description{
+  Installs the given color as the average background color.
+}
+\Example \verb/\beamersetaveragebackground{red!10}/
+
+If you use the commands from Section~\ref{section-backgrounds} for
+installing a background coloring, the average background color is
+computed automatically for you. When you directly use the command
+\verb!\usebackgroundtemplate!, you should must set the average
+background color afterward.
+
+
 
 
 \subsubsection{Transparency Effects}
+\label{section-transparent}
 
 By default, \emph{covered} items are not shown during a
 presentation. Thus if you write \verb!\uncover<2>{Text.}!, the text
-is not shown on any but the second slide. Note that the text is not
-simply printed using the background color -- it is not shown at
+is not shown on any but the second slide. On the other slide, the text
+is not simply printed using the background color -- it is not shown at
 all. This effect is most useful if your background does not have a
 uniform color.
 
@@ -2278,34 +2535,34 @@ Ideally, there would be an option to make covered text
 ``transparent.'' This would mean that when covered text is shown, it
 would instead be mixed with the background behind it. Unfortunately,
 this is more or less impossible to implement since neither PostScript
-nor \pdf\ currently support this.
+nor \pdf\ currently support transparency.
 
-Nevertheless, you can come ``quite close'' to transparent text using
+Nevertheless, one can come ``quite close'' to transparent text using
 the special command
 \begin{verbatim}
 \beamersetuncovermixins{#1}{#2}
 \end{verbatim}
-This commands allows you 
-to specify in a quite general way, how a covered item should be
-rendered. You can even specify different ways of rendering the item,
-depending on how long it will take before this item is shown or for
-how long it has already been covered once more. The transparency
-effect will automatically apply to all colors, \emph{except} for the
-colors in images and shadings. For images there is an awkward
-workaround, see the documentation of the \pgf\ package.
+This commands allows you to specify in a quite general way how a
+covered item should be rendered. You can even specify different ways
+of rendering the item depending on how long it will take before this
+item is shown or for how long it has already been covered once
+more. The transparency effect will automatically apply to all colors,
+\emph{except} for the colors in images and shadings. For images and
+shadings there is an awkward workaround, see the documentation of the
+\pgf\ package. 
 
 As a convenience, two commands are defined in \texttt{beamertemplates}
 that install a predefined uncovering behavior.
 
 \Command{beamertemplatetransparentcovered}
 \Description{
-  Makes all covered text transparent. 
+  Makes all covered text nearly transparent. 
 }
 
 \Command{beamertemplatetransparentcovereddynamic}
 \Description{
-  Makes all covered text transparent, but is a dynamic way. The longer
-  it will take till the text is uncovered, the stronger the
+  Makes all covered text nearly transparent, but is a dynamic way. The
+  longer it will take till the text is uncovered, the stronger the
   transparency. 
 }
 
@@ -2394,27 +2651,131 @@ been shown.
 
 \subsection{Animations}
 
-There are two ways of creating animations. One way is to use the
+A word of warning first: Animations can be very distracting. No matter
+how cute a rotating, flying theorem looks like to you and no matter
+how badly you feel your audience needs some action to keep happy,
+most people in the audience will typically feel you are making fun of
+them. 
+
+\subsubsection{Using an External Viewer}
+
+If you have created an animation using some external
+program (like a renderer), you can use the capabilities of the
+presentation program (like the Acrobat Reader) to show the
+animation. Unfortunately, currently there is no portable way of doing
+this and even the Acrobat Reader does not support this feature on all
+platforms.
+
+
+\subsubsection{Animations Created by Showing Slides in Rapid Succession}
+
+You can create an animation in a portable way by using the
 overlay commands of the \beamer\ package to create a series of slides
 that, when shown in rapid succession, present an animation. This is a
 flexible approach, but such animations will typically be rather static
 since it will take some time to advance from one slide to the
 next. This approach is mostly useful for animations where you want
 to explain each ``picture'' of the animation.
-
-When you advance ``by hand,'' that is, by pressing a forward
+When you advance slides ``by hand,'' that is, by pressing a forward
 button, it typically takes at least a second for the next slide to
-show. If you use the command \verb!\transduration{0}!, see the
-next subsection, you can create a much more rapid succession of
-slides. Note however, that each additional slide enlarges the final
-\texttt{.pdf} file quite a bit.
+show.
 
-A second way is to include an animation generated using some external
-program (like a renderer) and to then use the capabilities of the
-presentation program (like the Acrobat Reader) to show the
-animation. Unfortunately, currently there is no portable way of doing
-this and even the Acrobat Reader does not support this feature on all
-platforms.
+More ``lively'' animations can be created by relying on a capability
+of the viewer program. Some programs support
+showing slides only for a certain number of seconds during a
+presentation (for the Acrobat Reader this works only in full-screen
+mode). By setting the number of seconds to zero, you can create a
+rapid succession of slides.
+
+To facilitate the creating of animations in using the feature, you can
+use two commands: \verb!\animate! and \verb!\animatevalue!.
+
+\Command{animate}
+\Description{
+  An overlay specification should be present. The slides specified by
+  this overlay specification will be shown only as shortly as
+  possible.
+}
+\Example
+\begin{verbatim}
+\frame{
+  \frametitle{A Five Slide Animation}
+  \animate<2-4>
+
+  The first slide is shown normally. When the second slide is shown
+  (presumably after pressing a forward key), the second, third, and
+  fourth slides ``flash by.'' At the end, the content of the fifth
+  slide is shown.
+
+  ... code for creating an animation...
+}
+\end{verbatim}
+
+
+\Command{animatevalue}
+\Parameters{
+\item An overlay specification range given in pointed brackets. Two
+  numbers must be given, separated by a dash.
+\item Name of a counter or a dimension that will be varied on
+  the specified slides.
+\item The value the counter or dimension should have on and before the
+  first slide of the range.
+\item The value the counter or dimension should have on and after the
+  last slide of the range.
+}
+\Description{
+  That command allows you to vary a counter or dimension between two
+  values. For the slides in the specified range, the counter or
+  dimension is set to an interpolated value that depends on the
+  current slide number.
+}
+\Example
+\begin{verbatim}
+\newcount\opaqueness
+\frame{
+  \animate<2-10>
+  \animatevalue<1-10>{\opaqueness}{100}{0}
+  \begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
+    \frametitle{Fadeout Frame}
+
+    This text (and all other frame content) will fade out when the
+    second slide is shown. This even works with
+    {\color{green!90!black}colored} \alert{text}.
+  \end{colormixin}
+}
+\end{verbatim}
+
+\begin{verbatim}
+\newcount\opaqueness
+\newdimen\offset
+\frame{
+  \frametitle{Flying Theorems (You Really Shouldn't!)}
+
+  \animate<2-14>
+
+  \animatevalue<1-15>{\opaqueness}{100}{0}
+  \animatevalue<1-15>{\offset}{0cm}{-5cm}
+  \begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
+  \hskip\offset
+    \begin{minipage}{\textwidth}
+      \begin{theorem}
+        This theorem flies out.
+      \end{theorem}
+    \end{minipage}
+  \end{colormixin}
+
+  \animatevalue<1-15>{\opaqueness}{0}{100}
+  \animatevalue<1-15>{\offset}{-5cm}{0cm}
+  \begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
+  \hskip\offset
+    \begin{minipage}{\textwidth}
+      \begin{theorem}
+        This theorem flies in.
+      \end{theorem}
+    \end{minipage}
+  \end{colormixin}
+}
+\end{verbatim}
 
 
 
@@ -2889,22 +3250,6 @@ certain global behaviors of the presentation.
   specifications. See subsection~\ref{trans}.
   }
 
-\ClassOption{hidesubsections}
-\Description{
-  Suppresses the subsections in the main table of contents. This is
-  useful if you do not wish to show too many details when presenting
-  the talk outline. However, the subsections of the current subsection
-  will still be shown when using the command
-  \texttt{tableofcontentscurrent}. 
-  }
-
-\ClassOption{shadesubsections}
-\Description{
-  Show the subsections in the main table of contents in a shaded
-  way. This is useful if you wish to show, but do not wish to talk
-  about them when presenting the talk outline.
-  }
-
 \ClassOption{inrow}
 \Description{
   All small frame representation in the navigation bars for a single
@@ -2924,13 +3269,11 @@ certain global behaviors of the presentation.
   corresponds to a vertical ``flush.''
 }
 
-\ClassOption{blue, red, grey, brown}
+\ClassOption{blue, red, gray, brown}
 \Description{
   These options change the main color of the navigation and title bars
-  to the given colors. Other colors can be setup using the command
-  \texttt{themecolor}, which takes three parameters: a red, a green,
-  and a blue value as floating point numbers between 0 (black) and 1
-  (highest intensity). 
+  to the given colors. Other colors can be setup by redefining the
+  color \texttt{structure}.
   }
 
 \ClassOption{bigger}
@@ -3269,14 +3612,14 @@ If you wish to suppress the head and foot line in the title page, use
 
 \subsubsection{Background}
 
+\label{section-backgrounds}
+
 \paragraph{Predefined Templates}\ 
 
 \Command{beamertemplateshadingbackground}
 \Parameters{
-\item A comma-separated rgb triple specifying the color at the page
-  bottom.
-\item A comma-separated rgb triple specifying the color at the top of
-  the page.  
+\item Name of the color at the page bottom.
+\item Name of the color at the page top.
   }
 \Description{Installs a vertically shaded background such that the
   specified bottom color changes smoothly to the specified top
@@ -3285,7 +3628,7 @@ If you wish to suppress the head and foot line in the title page, use
   make a presentation more lively.}
 \Example
 \begin{verbatim}
-\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
+\beamertemplateshadingbackground{red!10}{blue!10}
 % Bottom is light red, top is light blue
 \end{verbatim}
 
@@ -3308,6 +3651,8 @@ If you wish to suppress the head and foot line in the title page, use
 
 
 \subsubsection{Table of Contents}
+
+\label{section-toc-templates}
 
 \Command{usetemplatetocsection}
 \Parameters{
@@ -3572,10 +3917,8 @@ with ``left'' replaced by ``right'' everywhere.
 
 \Command{useleftsidebarverticalshadingtemplate}
 \Parameters{
-\item A comma-separated rgb triple specifying the color at the bottom
-  of the side bar.
-\item A comma-separated rgb triple specifying the color at the top
-  of the side bar.
+\item Name of the color at the bottom of the side bar.
+\item Name of the color at the top of the side bar.
   }
 \Description{
   Installs a smooth vertical transition between the given colors as
@@ -3583,16 +3926,14 @@ with ``left'' replaced by ``right'' everywhere.
 }
 \Example
 \begin{verbatim}
-\useleftsidebarverticalshadingtemplate{1,1,1}{1,0,0} % white to red
+\useleftsidebarverticalshadingtemplate{white}{red}
 \end{verbatim}
 
 
 \Command{useleftsidebarhorizontalshadingtemplate}
 \Parameters{
-\item A comma-separated rgb triple specifying the color at the left
-  end of of the side bar.
-\item A comma-separated rgb triple specifying the color at the right
-  end of the side bar.
+\item Name of the color at the left end of the side bar.
+\item Name of the color at the right end of the side bar.
   }
 \Description{
   Installs a smooth horizontal transition between the given colors as
@@ -3600,7 +3941,7 @@ with ``left'' replaced by ``right'' everywhere.
 }
 \Example
 \begin{verbatim}
-\useleftsidebarhorizontalshadingtemplate{1,1,1}{1,0,0} % white to red
+\useleftsidebarhorizontalshadingtemplate{white}{red}
 \end{verbatim}
 
 
@@ -3745,6 +4086,39 @@ bar. Should be an \texttt{hbox}.
   \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
 \end{verbatim}
 
+
+
+
+
+\subsubsection{Captions}
+\label{section-template-caption}
+
+\paragraph{Predefined Templates}\
+
+\Command{beamertemplatecaptionwithnumber}
+\Description{Changes the caption template such that the number of the
+table or figure is also shown.}
+
+\Command{beamertemplatecaptionownline}
+\Description{Changes the caption template such that the word ``Table''
+or ``Figure'' has its own line.}
+
+
+
+\paragraph{Template Changes Commands}\
+
+\Command{usecaptiontemplate}
+\Parameters{
+\item a caption template.
+  }
+\Example
+\begin{verbatim}
+\usecaptiontemplate{
+  \small
+  \structure{\insertcaptionname~\insertcaptionnumber:}
+  \insertcaption
+}
+\end{verbatim}
 
 
 
@@ -3931,6 +4305,23 @@ templates.
 \Command{insertblockname}
 \Description{
   Inserts the name of the current block into a template.
+}
+
+\Command{insertcaption}
+\Description{
+  Inserts the text of the current caption into a template.
+}
+
+\Command{insertcaptionname}
+\Description{
+  Inserts the name of the current caption into a template. This word
+  is either ``Table'' or ``Figure'' or, if the \texttt{babel} package is
+  used, some translation thereof.
+}
+
+\Command{insertcaptionnumber}
+\Description{
+  Inserts the number of the current figure or table into a template.
 }
 
 \Command{insertdate}
