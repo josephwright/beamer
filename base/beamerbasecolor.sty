@@ -250,9 +250,10 @@
 
 % compatibility:
 
+\def\beamersetaveragebackground#1{\setbeamercolor{normal text}{bg=#1}}
+
 \AtBeginDocument{
   \colorlet{averagebackgroundcolor}{bg}
-  \def\beamersetaveragebackground#1{\setbeamercolor{bg=#1}}
 }
 
 \mode

@@ -96,6 +96,7 @@
 \let\@mkboth\@gobbletwo
 \def\ps@navigation{
   \def\@oddhead{%
+    \begingroup%
     \setbox\beamer@tempbox=\hbox{\normalcolor{\beamer@backgroundtemplate}\hyper@pagetransition\hyper@pageduration}%
     \beamer@tempdim=\ht\beamer@tempbox%
     \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
@@ -107,7 +108,7 @@
             {\setbox\beamer@tempbox=\hbox{\normalcolor\beamer@leftsidebarbackground}%
               \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
               \box\beamer@tempbox}%
-            \beamer@leftsidebartemplate}%
+            {\beamer@leftsidebartemplate}}%
           \beamer@tempdim=\ht\beamer@tempbox%
           \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
           \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
@@ -118,16 +119,17 @@
             {\setbox\beamer@tempbox=\hbox{\normalcolor\beamer@rightsidebarbackground}%
               \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
               \box\beamer@tempbox}%
-            \beamer@rightsidebartemplate}%
+            {\beamer@rightsidebartemplate}}%
           \beamer@tempdim=\ht\beamer@tempbox%
           \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
           \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
           \box\beamer@tempbox%
         }%
-        \normalcolor\beamer@headtemplate\hfil%
+        \normalcolor{\beamer@headtemplate}\hfil%
       }%
-      \hfil}}
-  \def\@oddfoot{\normalcolor\beamer@foottemplate\hypertarget{Navigation\the\c@page}{}\hfil}
+      \hfil}%
+    \endgroup}
+  \def\@oddfoot{\normalcolor{\beamer@foottemplate}\hypertarget{Navigation\the\c@page}{}\hfil}
   \let\@evenhead\@oddhead
   \let\@evenfoot\@oddfoot}
 \pagestyle{navigation}
@@ -137,24 +139,27 @@
 %
 \def\ps@empty{%
   \let\@mkboth\@gobbletwo%
-  \def\@oddhead{\setbox\beamer@tempbox=\hbox{{\beamer@backgroundtemplate}\hyper@pagetransition\hyper@pageduration}%
+  \def\@oddhead{\begingroup%
+    \setbox\beamer@tempbox=\hbox{{\beamer@backgroundtemplate}\hyper@pagetransition\hyper@pageduration}%
     \beamer@tempdim=\ht\beamer@tempbox%
     \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
     \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
-    \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox}\hfil}}
-  \def\@oddfoot{\hypertarget{Navigation\the\c@page}{}\hfil%
+    \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox}\hfil}%
+    \endgroup%
+  }
+  \def\@oddfoot{\normalcolor{\hypertarget{Navigation\the\c@page}{}\hfil%
     \setbox\beamer@tempbox=\hbox{{\insertnavigationsymbols}\hskip-\Gm@lmargin\hskip2pt}%
     \ht\beamer@tempbox=0pt%
     \dp\beamer@tempbox=0pt%
-    \box\beamer@tempbox}
+    \box\beamer@tempbox}}
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
 \def\beamer@calculateheadfoot{%
-  \setbox\beamer@tempbox=\hbox{\beamer@foottemplate}%
+  \setbox\beamer@tempbox=\hbox{{\beamer@foottemplate}}%
   \footheight=\ht\beamer@tempbox%
   \advance\footheight by \dp\beamer@tempbox%
   \advance\footheight by 4pt%
-  \setbox\beamer@tempbox=\hbox{\beamer@headtemplate}%
+  \setbox\beamer@tempbox=\hbox{{\beamer@headtemplate}}%
   \headheight=\ht\beamer@tempbox%
   \headdp=\dp\beamer@tempbox%
   \advance\headheight by\headdp%

@@ -109,9 +109,7 @@
 \mode
 <article>
 {
-  \ifx\subtitle\@undefined%
-    \newcommand{\subtitle}[2][]{\g@addto@macro\@title{\\{\normalsize#2}}}
-  \fi
+  \providecommand{\subtitle}[2][]{\g@addto@macro\@title{\\{\normalsize#2}}}
 }
 
 
@@ -216,9 +214,8 @@
 \mode
 <all>
 {
-  \ifx\subject\@undefined
-    \newcommand\subject[1]{\hypersetup{pdfsubject={#1}}}
-  \fi
+  \providecommand\subject[1]{\hypersetup{pdfsubject={#1}}}
+  \providecommand\keywords[1]{\hypersetup{pdfkeywords={#1}}}
 }
 
 
@@ -257,13 +254,8 @@
     \renewcommand{\institute}[2][]{\beamer@originstitute{#2}}
   \fi
 
-  \ifx\and\@undefined
-    \def\and{\unskip, }
-  \fi
-
-  \ifx\inst\@undefined
-    \def\inst#1{$^{#1}$}
-  \fi
+  \providecommand\and{\unskip, }
+  \providecommand\inst[1]{$^{#1}$}
 }
 
 
@@ -278,9 +270,7 @@
 \mode
 <article>
 {
-  \ifx\logo\@undefined
-    \def\logo#1{}
-  \fi
+  \providecommand\logo#1{}
 }
 
 

@@ -135,7 +135,7 @@
 % Note frame insert
 %
 
-\newcommand{\insertslideintonotes}[1]{%
+\newcommand{\insertslideintonotes}[1]{{%
   \begin{pgfpicture}{0cm}{0cm}{#1\paperwidth}{#1\paperheight}
     \begin{pgfmagnify}{#1}{#1}
       \color[gray]{0.8}
@@ -144,7 +144,7 @@
       \pgfputat{\pgfpoint{\Gm@lmargin}{\footheight}}{\pgfbox[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgfmagnify}
   \end{pgfpicture}%
-  }
+  }}
 
 
 
