@@ -15,12 +15,12 @@
 \setbeamercolor{frametitle right}{parent=section in head/foot}
 
 
-\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\paperheight}{%
+\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\the\paperheight}{%
   color(0pt)=(frametitle.bg);
   color(\paperwidth)=(frametitle right.bg)}
 
 \AtBeginDocument{
-  \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
+  \pgfdeclareverticalshading{beamer@topshade}{\the\paperwidth}{%
     color(0pt)=(bg);
     color(4pt)=(black!50!bg)}
 }

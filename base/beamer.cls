@@ -16,6 +16,14 @@
 
 \beamer@transferifnecessary
 
+
+%
+% Ensure that \pdfoutput is defined. Might be removed at some point.
+%
+\ifx\pdfoutput\@undefined \newcount\pdfoutput \fi
+\ifx\pdfoutput\relax \newcount\pdfoutput \fi
+
+
 %
 %
 % Declarations used by beamer
@@ -264,7 +272,7 @@
 \def\beamer@loaducs{}
 
 \DeclareOptionBeamer{ucs}{%
-  \ifx\pdfoutput\@undefined
+  \ifnum\pdfoutput=0\relax
     \def\beamer@loaducs{
       \RequirePackage{ucs}%
       \AtBeginDocument{\PreloadUnicodePage{0}}%
