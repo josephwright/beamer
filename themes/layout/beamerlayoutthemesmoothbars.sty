@@ -7,6 +7,12 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
+\newif\ifbeamer@sb@subsection
+
+\DeclareOptionBeamer{showsubsection}[true]{\csname beamer@sb@subsection#1\endcsname}
+\ExecuteOptionsBeamer{showsubsection=true}
+\ProcessOptionsBeamer
+
 \mode<presentation>
 
 \beamer@compresstrue
@@ -14,42 +20,84 @@
 \AtBeginDocument{
   {
     \usebeamerfont*{headline}
-    \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
-      color(0ex)=(averagebackgroundcolor);%
-      color(1ex)=(beamerstructure!50!black);%
-      color(3.25ex)=(beamerstructure!50!black);%
-      color(4.25ex)=(black);%
-      color(9ex)=(black)%
-    }
+
+    \ifbeamer@sb@subsection
+      \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+        color(0ex)=(averagebackgroundcolor);%
+        color(1ex)=(beamerstructure!50!black);%
+        color(3.25ex)=(beamerstructure!50!black);%
+        color(4.25ex)=(black);%
+        color(9ex)=(black)%
+      }
+      \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+        color(0ex)=(beamerstructure);%
+        color(1ex)=(beamerstructure);%
+        color(2ex)=(beamerstructure!25!black)
+      }
+    \else
+      \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+        color(0ex)=(averagebackgroundcolor);%
+        color(1ex)=(black);%
+        color(6.25ex)=(black)%
+      }
+      \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+        color(0ex)=(beamerstructure);%
+        color(1ex)=(beamerstructure);%
+        color(2ex)=(black)
+      }
+    \fi  
     \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
       color(0ex)=(averagebackgroundcolor);%
       color(1ex)=(beamerstructure)
     }
-    \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
-      color(0ex)=(beamerstructure);%
-      color(1ex)=(beamerstructure);%
-      color(2ex)=(beamerstructure!50!black)
-    }
   }
 }
 
-\beamertemplatelightsectionheads
-\beamertemplatecircleminiframeinverted
+\usesectionheadtemplate
+  {\hfill\color{white}\insertsectionhead}
+  {\hfill\color{black!50}\insertsectionhead}
+
+\useminislidetemplate
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+      \color{white}
+      \pgfcircle[fillstroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
+    \end{pgfpicture}%
+  }
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+      \color{white}
+      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
+    \end{pgfpicture}%
+  }
+  {%
+    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+      \color{black!50!averagebackgroundcolor}
+      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
+    \end{pgfpicture}%
+  }
+  {.14cm}{.03cm}
 
                                 % Head
 \useheadtemplate{%
   \vbox{%
     \beamerline{\pgfuseshading{beamer@barshade}}%
-    \vskip-9ex%
+    \ifbeamer@sb@subsection%
+      \vskip-9ex%
+    \else%
+      \vskip-6.25ex%
+    \fi%
     {\setbox\beamer@linebox=\hbox
       to\textwidth{\hskip-\Gm@lmargin\insertnavigation{\paperwidth}\hskip-\Gm@rmargin}%
     \ht\beamer@linebox=2.25ex%
     \dp\beamer@linebox=3ex%
     \box\beamer@linebox}%
-    \beamer@fixedline{%
-        \color{white}{\usebeamerfont{subsection in
-            head/foot}\insertsubsection\hfil}%
-      }%
+    \ifbeamer@sb@subsection%
+      \beamer@fixedline{%
+          \color{white}{\usebeamerfont{subsection in
+              head/foot}\insertsubsection\hfil}%
+        }%
+    \fi%
     }%
   }%
 

@@ -54,7 +54,7 @@
   \expandafter\beamer@tempdim\expandafter=\csname beamer@#1margin\endcsname%
   \advance\beamer@tempdim by#2\relax%
   \expandafter\geometry\expandafter{#1=\the\beamer@tempdim}%
-  \expandafter\gdef\csname beamer@#1sidebartemplate\endcsname{%
+  \expandafter\def\csname beamer@#1sidebartemplate\endcsname{%
     \vbox to \sidebarheight{%
       \usebeamerfont*{sidebar}%
       #3\vfil%
@@ -83,7 +83,7 @@
 <all>
 {
   \long\def\usebackgroundtemplate#1{%
-    \gdef\beamer@backgroundtemplate{#1}}
+    \def\beamer@backgroundtemplate{#1}}
 }
 
 
@@ -142,7 +142,11 @@
     \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
     \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
     \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox}\hfil}}
-  \def\@oddfoot{\hypertarget{Navigation\the\c@page}{}\hfil}
+  \def\@oddfoot{\hypertarget{Navigation\the\c@page}{}\hfil%
+    \setbox\beamer@tempbox=\hbox{{\insertnavigationsymbols}\hskip-\Gm@lmargin\hskip2pt}%
+    \ht\beamer@tempbox=0pt%
+    \dp\beamer@tempbox=0pt%
+    \box\beamer@tempbox}
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
 \def\beamer@calculateheadfoot{%
@@ -169,11 +173,11 @@
   }
 
 \long\def\usefoottemplate#1{%
-  \gdef\beamer@foottemplate{\offinterlineskip{\usebeamerfont*{footline}\def\\{,}#1}}}
+  \def\beamer@foottemplate{\offinterlineskip{\usebeamerfont*{footline}\def\\{,}#1}}}
 \def\insertpagenumber{\thepage}
 
 \long\def\useheadtemplate#1{%
-  \gdef\beamer@headtemplate{\offinterlineskip{\usebeamerfont*{headline}#1}}}%
+  \def\beamer@headtemplate{\offinterlineskip{\usebeamerfont*{headline}#1}}}%
 
 \def\insertvrule#1#2{%
   \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
@@ -283,7 +287,7 @@
   \def\insertfootnotemark{\@makefnmark}%
   \footnotetemplate}
 \def\usefootnotetemplate#1{%
-  \gdef\footnotetemplate{#1}}
+  \def\footnotetemplate{#1}}
 
 \usefootnotetemplate{
   \parindent 1em\noindent%
