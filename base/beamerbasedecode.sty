@@ -48,7 +48,10 @@
    \ifnum\catcode`\(=13 \edef({\string(}\fi%
    \ifnum\catcode`\)=13 \edef){\string)}\fi%
   \edef\beamer@@@temp{#1\beamer@stoptexts}%
-  \setbox0=\hbox{\expandafter\beamer@decode\beamer@@@temp}%
+  \beamer@localanotherslidefalse%
+  \setbox0=\hbox{%
+    \expandafter\beamer@decode\beamer@@@temp%
+    \ifbeamer@localanotherslide\global\beamer@localanotherslidetrue\fi}%
   }
 }
 

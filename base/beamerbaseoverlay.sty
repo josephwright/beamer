@@ -124,8 +124,8 @@
 %
 \long\def\temporal<#1>#2#3#4{% past, present, future
   \def\beamer@doifnotinframe{\beamer@picked}\def\beamer@doifinframe{#3}%
-  {\beamer@localanotherslidefalse\beamer@masterdecode{#1}%
-      \ifbeamer@localanotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi}\beamer@donow}
+  {\beamer@masterdecode{#1}%
+   \ifbeamer@localanotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi}\beamer@donow}
 
 
 %
@@ -455,6 +455,9 @@
 %
 
 \let\beamer@origitem=\item
+\def\beamer@callorigitem{\@ifnextchar[\beamer@@callorigitem{\beamer@origitem\leavevmode\ignorespaces}}
+\def\beamer@@callorigitem[#1]{\beamer@origitem[#1]\leavevmode\ignorespaces}
+
 \def\item{%
   \ifhmode%
     \unskip\unskip\par%
@@ -463,7 +466,7 @@
   \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}
 \def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{%
     \ifx\beamer@defaultospec\beamer@emptyospec%
-      \let\next=\beamer@origitem%
+      \let\next=\beamer@callorigitem%
     \else%
       \let\next=\beamer@defaultparse%
     \fi%
@@ -472,7 +475,7 @@
 \def\beamer@defaultparse{\expandafter\beamer@parseitem\beamer@defaultospec}
 \long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{%
     \ifx\beamer@defaultospec\beamer@emptyospec%
-      \let\next=\beamer@origitem%
+      \let\next=\beamer@callorigitem%
     \else%
       \let\next=\beamer@defaultparse%
     \fi%
@@ -481,7 +484,7 @@
 
 \def\beamer@parseitem<#1>{%
   \gdef\beamer@closeitem{\end{actionenv}}%
-\begin{actionenv}<#1>\beamer@origitem}
+\begin{actionenv}<#1>\beamer@callorigitem}
 
 
 \def\beamerdefaultoverlayspecification#1{%
@@ -492,7 +495,7 @@
   {%
     \def\beamer@gdefaultospec{#1}%
     \def\beamer@defaultospec{#1}%
-  }
+  }%
 }
 \beamerdefaultoverlayspecification{}
 
