@@ -114,7 +114,13 @@
     \setbox\beamer@framebox=\vbox{%
       \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
       \nointerlineskip\unvbox\beamer@frametitlebox%
-      \nobreak\vskip\beamer@frametopskip\nobreak%
+      \nobreak%
+      \ifbeamer@autobreak%
+        \vskip\beamer@frametopskipautobreak%
+      \else%
+        \vskip\beamer@frametopskip%
+      \fi%
+      \nobreak%
       \nointerlineskip\box\beamer@zoombox\nointerlineskip%
       \nobreak%
       \ifbeamer@slidehaszoom\box\beamer@framebox\else\unvbox\beamer@framebox\fi%
@@ -182,6 +188,8 @@
 %
 \newskip\beamer@frametopskip
 \newskip\beamer@framebottomskip
+\newskip\beamer@frametopskipautobreak
+\newskip\beamer@framebottomskipautobreak
 
 
 %
@@ -206,13 +214,17 @@
 \def\beamer@fragiletrue{\beamer@containsverbatimandoverlaystrue}
 \def\beamer@fragilesingleslide{\beamer@containsverbatimtrue}  
 \define@key{beamerframe}{c}[true]{% centered
-  \beamer@frametopskip=0pt plus .4\paperheight\relax%
-  \beamer@framebottomskip=0pt plus .6\paperheight\relax%
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt plus 1.5fill\relax%
+  \beamer@frametopskipautobreak=0pt plus .4\paperheight\relax%
+  \beamer@framebottomskipautobreak=0pt plus .6\paperheight\relax%
   \def\beamer@initfirstlineunskip{}%
 }
 \define@key{beamerframe}{t}[true]{% top
   \beamer@frametopskip=.2cm plus .5\paperheight\relax%
   \beamer@framebottomskip=0pt plus 1fill\relax%
+  \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+  \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
   \def\beamer@initfirstlineunskip{%
     \def\beamer@firstlineitemizeunskip{%
       \vskip-\partopsep\vskip-\topsep\vskip-\parskip%
@@ -222,6 +234,8 @@
 \define@key{beamerframe}{b}[true]{% bottom
   \beamer@frametopskip=0pt plus 1fill\relax%
   \beamer@framebottomskip=0pt\relax%
+  \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+  \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
   \def\beamer@initfirstlineunskip{}%
 }
 
