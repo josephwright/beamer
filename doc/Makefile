@@ -11,9 +11,9 @@ fontthemes = default serif structurebold structureitalicserif structuresmallcaps
 
 colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily structure dove seagull beetle fly
 
-layoutthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
+outerthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
 
-elementthemes = default circles rectangles rounded
+innerthemes = default circles rectangles rounded
 
 all: $(doc).pdf
 
@@ -21,8 +21,8 @@ beameruserguide.pdf: $(doc).tex \
  $(themes:%=beamerugtheme%.pdf) \
  $(fontthemes:%=beamerugfonttheme%.pdf) \
  $(colorthemes:%=beamerugcolortheme%.pdf) \
- $(elementthemes:%=beamerugelementtheme%.pdf) \
- $(layoutthemes:%=beameruglayouttheme%.pdf) 
+ $(innerthemes:%=beameruginnertheme%.pdf) \
+ $(outerthemes:%=beamerugoutertheme%.pdf) 
 	pdflatex $(doc).tex
 	(egrep -q $(rerun) $(doc).log && pdflatex $(doc).tex) || true
 
@@ -38,13 +38,13 @@ beamerugcolortheme%.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex 
 	pdflatex \\def\\themename{$(@:beamerugcolortheme%.pdf=%)}\\input beamercolorthemeexample.tex;
 	mv beamercolorthemeexample.pdf $@
 
-beamerugelementtheme%.pdf: beamerelementthemeexample.tex beamerthemeexamplebase.tex ../themes/elements/beamerelementtheme%.sty
-	pdflatex \\def\\themename{$(@:beamerugelementtheme%.pdf=%)}\\input beamerelementthemeexample.tex;
-	mv beamerelementthemeexample.pdf $@
+beameruginnertheme%.pdf: beamerinnerthemeexample.tex beamerthemeexamplebase.tex ../themes/inner/beamerinnertheme%.sty
+	pdflatex \\def\\themename{$(@:beameruginnertheme%.pdf=%)}\\input beamerinnerthemeexample.tex;
+	mv beamerinnerthemeexample.pdf $@
 
-beameruglayouttheme%.pdf: beamerlayoutthemeexample.tex beamerthemeexamplebase.tex ../themes/layout/beamerlayouttheme%.sty
-	pdflatex \\def\\themename{$(@:beameruglayouttheme%.pdf=%)}\\input beamerlayoutthemeexample.tex;
-	mv beamerlayoutthemeexample.pdf $@
+beamerugoutertheme%.pdf: beamerouterthemeexample.tex beamerthemeexamplebase.tex ../themes/outer/beameroutertheme%.sty
+	pdflatex \\def\\themename{$(@:beamerugoutertheme%.pdf=%)}\\input beamerouterthemeexample.tex;
+	mv beamerouterthemeexample.pdf $@
 
 clean:
 	rm -f *.aux *.log *.bbl *.blg *.ps *.dvi *.pdf *.toc *.out *.snm

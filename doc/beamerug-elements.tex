@@ -5,32 +5,31 @@
 % of the GNU Public License, version 2.
 
 
-\section{Element Themes, Layout Themes, and Templates}
+\section{Inner Themes, Outer Themes, and Templates}
 
-This section discusses the element and layout themes that are
+This section discusses the inner and outer themes that are
 available in \beamer. These themes install certain \emph{templates}
-for different aspects of a presentation. The template mechanism is
+for the different elements of a presentation. The template mechanism is 
 explained at the end of the section.
 
 Before we plunge into the details, let us agree on some terminology
-for this section. An \emph{element} is 
-
-In \beamer, the appearance of every element of a presentation (like
-frame titles, the author's name, the footnote sign, or whatever else
-you can think of) governed by a \emph{template} for this
-element. Appropriate templates are installed by element and layout
-themes. Element and layout themes both install element
-templates---element themes install templates for elements
-``inside the main text'' while layout themes install template for
-elements ``around the main text.'' Thus, from the templates's point of
-view, there is no real difference between element and layout themes.
-
+for this section. In \beamer, an \emph{element} is part of a
+presentation that is potentially typeset in some special way. Examples
+of elements are frame titles, the author's name, or the footnote
+sign. The appearance of every element is governed by a \emph{template}
+for this element. Appropriate templates are installed by inner and
+outer themes, where the \emph{inner} themes only install templates for
+elements that are typically ``inside the main text,'' while \emph{outer}
+themes install templates for elements ``around the main text.'' Thus,
+from the templates's point of view, there is no real difference
+between inner and outer themes. 
 
 
-\subsection{Element Themes}
 
-An element theme installs templates that dictate how the following
-``elements'' are typeset:
+\subsection{Inner Themes}
+
+An inner theme installs templates that dictate how the following
+elements are typeset:
 \begin{itemize}
 \item Title and part pages.
 \item Itemize environments.
@@ -50,7 +49,7 @@ honoured. Furthermore, background colors have been specified for all
 elements the honour them in the default theme. In the default color
 theme, all of the large rectangular areas are transparent.
 
-\begin{elementthemeexample}{default}
+\begin{innerthemeexample}{default}
   The default element theme is quite sober. The only extravagance is
   the fact that a little trianlge is used in |itemize| environments
   instead of the usual dot.
@@ -66,20 +65,20 @@ theme, all of the large rectangular areas are transparent.
   \item Block environments, both for the title and for the body.
   \end{itemize}
   This list may increase in the future.
-\end{elementthemeexample}
+\end{innerthemeexample}
 
-\begin{elementthemeexample}{circles}
+\begin{innerthemeexample}{circles}
   In this theme, |itemize| and |enumerate| items start with a small
   circle. Likewise, entries in the table of contents start with
   circles. 
-\end{elementthemeexample}
+\end{innerthemeexample}
 
-\begin{elementthemeexample}{rectangles}
+\begin{innerthemeexample}{rectangles}
   In this theme, |itemize| and |enumerate| items and table of contents
   entries  start with small rectangles. 
-\end{elementthemeexample}
+\end{innerthemeexample}
 
-\begin{elementthemeexample}[\oarg{options}]{rounded}
+\begin{innerthemeexample}[\oarg{options}]{rounded}
   In this theme, |itemize| and |enumerate| items and table of contents
   entries start with small balls. If a background is specified for
   blocks, then the corners of the background rectangles will be
@@ -88,18 +87,18 @@ theme, all of the large rectangular areas are transparent.
   \begin{itemize}
   \item \declare{|shadow|} adds a shadow to all blocks.
   \end{itemize}
-\end{elementthemeexample}
+\end{innerthemeexample}
 
 
 
 
-\subsection{Layout Themes}
+\subsection{Outer Themes}
 
-A layout theme dictates (roughly) the overall layout of frames. It
+An outer theme dictates (roughly) the overall layout of frames. It
 specifies where any navigational elements should go (like a mini table
 of contents or navigational mini frames) and what they should look
-like. Typically, a layout theme specifies how the following parts of a
-frame are rendered:
+like. Typically, an outer theme specifies how the following elements
+are rendered: 
 \begin{itemize}
 \item The head- and footline.
 \item The sidebars.
@@ -107,25 +106,25 @@ frame are rendered:
 \item The frame title.  
 \end{itemize}
 
-A layout theme will not specify how things like |itemize| environments
-should be rendered---that is the job an element theme.
+An outer theme will not specify how things like |itemize| environments
+should be rendered---that is the job an inner theme.
 
 In the following examples the color theme |seahorse| is
 used. Since the default color theme leaves most backgrounds empty,
-most of the layout themes will look too unstructured with the default
+most of the outer themes look too unstructured with the default
 color theme. 
 
 
-\begin{layoutthemeexample}{default}
+\begin{outerthemeexample}{default}
   The default layout theme is the most sober and minimalistic theme
   around. It will flush left the frame title and it will not install
   any head- or footlines. However, even this theme honours the
   background color specified for the frame title. If a color is
   specified, a bar occupying the whole page width is put behind the
   frame title. A background color the frame subtitle is ignored.
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}{infolines}
+\begin{outerthemeexample}{infolines}
   This theme installs a headline showing the current section and the
   current subsection. It installs a footline showing the author's
   name, the institution, the presentation's title, the current date,
@@ -134,9 +133,9 @@ color theme.
   The colors used in the headline and footline are drawn from
   |palette primary|, |palette secondary|, and |primary ternary| (see
   Section~\ref{section-colors} for details on how to change these).
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}[\oarg{options}]{miniframes}
+\begin{outerthemeexample}[\oarg{options}]{miniframes}
   This theme installs a headline in which a horizontal navigational
   bar is shown. This bar contains one entry for each section of the
   presentation. Below each section entry, small circles are shown that
@@ -178,9 +177,9 @@ color theme.
     line showing the subsection in the headline. It is shown by
     default.
   \end{itemize}  
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}[\oarg{options}]{smoothbars}
+\begin{outerthemeexample}[\oarg{options}]{smoothbars}
   This theme behaves very much like the |miniframes| theme, at least
   with respect to the headline. There, the only difference is the
   smooth transitions are installed between the background colors of
@@ -195,9 +194,9 @@ color theme.
     line showing the subsection in the headline. It is shown by
     default.
   \end{itemize}  
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}[\oarg{options}]{sidebar}
+\begin{outerthemeexample}[\oarg{options}]{sidebar}
   In this layout, a sidebar is shown that contains a small table of
   contents with the current section or subsection is hilighted. The
   frame title is vertically centered in a rectangular area at the top
@@ -252,9 +251,9 @@ color theme.
     sidebar. If it is set to 0pt, it is completely supressed. The
     default is 2.5 base line heights of the frame title font.
   \end{itemize}
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}{split}
+\begin{outerthemeexample}{split}
   This theme installs a headline in which, on the left, the sections
   of the talk are shown and, on the right, the subsections of the
   current section. If the class option |compress| has been given,
@@ -265,15 +264,15 @@ color theme.
   the right.
 
   The colors are taken from |palette primary| and |palette fourth|.
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}{shadow}
+\begin{outerthemeexample}{shadow}
   This layout theme extends the |split| theme by putting a horizontal
   shading behind the frame title and adding a little ``shadow'' at the
   bottom of the headline.
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}[\oarg{options}]{tree}
+\begin{outerthemeexample}[\oarg{options}]{tree}
   In this layout, the headline contains three lines that show the
   title of the current talk, the current section in this talk, and the
   current subsection in the section. The colors are drawn from
@@ -293,12 +292,12 @@ color theme.
     the section and subsection entries. These are supposed to increase
     the tree-like appearance. 
   \end{itemize}
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
-\begin{layoutthemeexample}{smoothtree}
+\begin{outerthemeexample}{smoothtree}
   This layout is similar to the |tree| layout. The main difference is
   that the background colors change smoothly.
-\end{layoutthemeexample}
+\end{outerthemeexample}
 
 
 
@@ -312,9 +311,9 @@ This section explains how \beamer's template management works.
 
 \subsubsection{Overview of Beamer's Template Management}
 
-If you only wish to modify a single or few elements, you do not need
-to create a whole new theme. Instead, you can modify an appropriate
-template. 
+If you only wish to modify the appearance of a single or few elements,
+you do not need to create a whole new inner or outer theme. Instead,
+you can modify the appropriate template. 
 
 A template specifies how an element of a presentation is typeset. For 
 example, the |frametitle| template dictates where the frame title is
@@ -401,6 +400,9 @@ template is typeset. Thus, we should rewrite the code as follows:
 Users, themes, or whoever can now easily change the color or font of
 the frametitle without having to mess with the code used to typeset
 it.
+
+
+
 
 
 

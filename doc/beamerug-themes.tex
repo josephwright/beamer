@@ -23,7 +23,7 @@ presentation. The \beamer\ class uses five different kinds of themes:
   a presentation theme, your presentation will look they way someone
   (the creator of the theme) thought that a presentation should look
   like. Presentation themes typically only choose a particular color
-  theme, font theme, element theme, and layout theme that go well
+  theme, font theme, inner theme, and outer theme that go well
   together. 
 \item[Color Themes]
   A color theme only dictates which colors are used in a
@@ -37,29 +37,29 @@ presentation. The \beamer\ class uses five different kinds of themes:
   A font theme dictates which fonts or font attributes are used in a
   presentation. As for colors, the font of all text elements used in a
   presentation can be specified independently.
-\item[Element Themes]
-  An element theme specifies how certain ``elements'' of a
-  presentation are typeset. ``Elements'' refers to everything that needs to
-  be typeset and that is not part of the headlines, footlines, and
-  sidebars. This includes all enumerations, itemize environments,
-  block environments, theorem environments, or the table of
-  contents. For example, an element theme might
+\item[Inner Themes]
+  An inner theme specifies how certain elements of a
+  presentation are typeset. This includes all elements that are at the
+  ``inside'' the frame, that is, that are not part of the headline,
+  footline, or sidebars. This includes all enumerations, itemize
+  environments, block environments, theorem environments, or the table of
+  contents. For example, an inner theme might
   specify that in an enumeration the number should be typeset without
-  a dot and that a small circle should be shown behind it. The element
+  a dot and that a small circle should be shown behind it. The inner
   theme would \emph{not} specify what color should be used for the
   number or the circle (this is the job of the color theme) nor which font
   should be used (this is the job of the font theme).
-\item[Layout Themes]
-  A layout theme specifies what the layout of the presentation slides
-  should look like. It specifies whether there are head- and
-  footlines, what is shown in them, whether there is a sidebar, where
-  the logo goes, where the navigation symbols and bars go, and so
-  on. It also specifies where the frametitle is put and how it is
-  typeset. 
+\item[Outer Themes]
+  An outer theme specifies what the ``outside'' or ``border'' of the
+  presentation slides should look like. It specifies whether there are
+  head- and footlines, what is shown in them, whether there is a
+  sidebar, where the logo goes, where the navigation symbols and bars
+  go, and so on. It also specifies where the frametitle is put and how
+  it is typeset. 
 \end{description}
 
 The different themes reside in the four subdirectories |theme|, |color|,
-|font|, |elements|, and |layout| of the directory
+|font|, |inner|, and |outer| of the directory
 |beamer/themes|. Internally, a theme is stored as a normal style
 file. However, to use a theme, the following special commands should
 be used:
@@ -82,14 +82,14 @@ be used:
   are named |beamerfonttheme|\meta{name}|.sty|.
 \end{command}
 
-\begin{command}{\useelementtheme\oarg{options}\marg{name}}
-  Same as |\usetheme|, only for element themes. Element style files
-  are named |beamerelementtheme|\meta{name}|.sty|.
+\begin{command}{\useinnertheme\oarg{options}\marg{name}}
+  Same as |\usetheme|, only for inner themes. Inner style files
+  are named |beamerinnertheme|\meta{name}|.sty|.
 \end{command}
 
-\begin{command}{\uselayouttheme\oarg{options}\marg{name}}
-  Same as |\usetheme|, only for layout themes. Layout style files
-  are named |beamerlayouttheme|\meta{name}|.sty|.
+\begin{command}{\useoutertheme\oarg{options}\marg{name}}
+  Same as |\usetheme|, only for outer themes. Outer style files
+  are named |beameroutertheme|\meta{name}|.sty|.
 \end{command}
 
 If you do not use any of these commands, a sober \emph{default} theme
@@ -370,7 +370,7 @@ co-author of mine attended.
 Earlier versions of \beamer\ included some further themes. These
 themes are still available for compatibility, though they are now
 implemented differently (they also mainly install appropriate color,
-font, element, and layout themes). However, they may or may not honour
+font, inner, and outer themes). However, they may or may not honour
 color themes and they will not be supported in the future. The
 following list shows which of the new themes should be used instead of
 the old themes. (When switching, you may want to use the font theme
