@@ -59,8 +59,8 @@
 % mit fontenc zu löschen.
 
 
-\title[Kurzversion des Titels] % (optional, nur bei langen Titel nötig)
-{Title wie im Tagunsband angegeben\\ (u.U.\ also englisch)}
+\title[Kurzversion des Titels] % (optional, nur bei langen Titeln nötig)
+{Titel wie im Tagunsband angegeben\\ (u.U.\ also englisch)}
 
 \subtitle
 {Untertitel nur angeben, wenn es einen im Tagungsband gibt}
@@ -85,8 +85,8 @@
 % - Keep it simple, niemand interessiert sich für die genau Adresse.
 
 \date[KPT 2003] % (optional, sollte der abgekürzte Konferenzname sein)
-{Konferenz über Präsentationstechniken, 2003}
-% - Vollen oder abgekürzter Name sind möglich.
+{Konferenz über Präsentationstechniken, 2004}
+% - Vollee oder abgekürzter Name sind möglich.
 % - Dieser Eintrag ist nicht für das Publikum gedacht (das weiß
 %   nämlich, bei welcher Konferenz es ist), sondern für Leute, die die
 %   Folien später lesen.
@@ -105,16 +105,22 @@
 
 
 
-
+% Folgendes sollte gelöscht werden, wenn man nicht am Anfang jedes
+% Unterabschnitts die Gliederung nochmal sehen möchte.
 \AtBeginSubsection[]
 {
-  \begin{frame}<handout:0>
+  \begin{frame}<beamer>
     \frametitle{Gliederung}
     \tableofcontents[current,currentsubsection]
   \end{frame}
 }
-% Dies sollte gelöscht werden, wenn man nicht am Anfang jedes
-% Unterabschnitts die Gliederung nochmal sehen möchte.
+
+
+% Falls Aufzählungen immer schrittweise gezeigt werden sollen, kann
+% folgendes Kommando benutzt werden:
+
+%\beamerdefaultoverlayspecification{<+->}
+
 
 
 \begin{document}
@@ -123,7 +129,7 @@
   \titlepage
 \end{frame}
 
-\begin{frame}<handout:0>
+\begin{frame}
   \frametitle{Gliederung}
   \tableofcontents
   % Die Option [pausesections] könnte nützlich sein.
@@ -152,7 +158,7 @@
 
 \section{Motivation}
 
-\subsection{Das behandlete Problem}
+\subsection{Das behandelte Problem}
 
 \begin{frame}
   \frametitle{Überschriften sollten informativ sein.\\

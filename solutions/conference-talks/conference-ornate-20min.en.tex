@@ -36,7 +36,6 @@
   % E.g.: \beamertemplateshadingbackground{beamerstructure!10}{white}
 
   \usepackage{beamerthemeshadow}
-  % or whatever
   
   \beamertemplatetransparentcovered
   % or whatever (possibly just delete it)
@@ -103,15 +102,21 @@
 
 
 
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
 \AtBeginSubsection[]
 {
-  \begin{frame}<handout:0>
+  \begin{frame}<beamer>
     \frametitle{Outline}
     \tableofcontents[current,currentsubsection]
   \end{frame}
 }
-% Delete this, if you do not want the table of contents to pop up at
-% the beginning of each subsection.
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
 
 
 \begin{document}
@@ -120,7 +125,7 @@
   \titlepage
 \end{frame}
 
-\begin{frame}<handout:0>
+\begin{frame}
   \frametitle{Outline}
   \tableofcontents
   % You might wish to add the option [pausesections]
@@ -288,7 +293,7 @@
     A.~Author.
     \newblock {\em Handbook of Everything}.
     \newblock Some Press, 1990.
-
+ 
     
   \beamertemplatearticlebibitems
   % Followed by interesting articles. Keep the list short. 

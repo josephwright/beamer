@@ -5,12 +5,10 @@
 % If you wish to install a background
 % color/image/shading, do so now
 % (before the theme is loaded):
-% E.g.: 
-\beamertemplateshadingbackground{beamerstructure!10}{white}
+% E.g.:\beamertemplateshadingbackground{beamerstructure!10}{white}
 
 \usepackage{beamerthemeshadow}
-% or whatever
-  
+
 \beamertemplatetransparentcovered
 % or whatever (possibly just delete it)
   
@@ -19,7 +17,7 @@
 \end_preamble
 \language english
 \inputencoding auto
-\fontscheme default
+\fontscheme times
 \graphics default
 \paperfontsize default
 \spacing single 
@@ -51,10 +49,12 @@ collapsed false
 This file is a solution template for:
 \layout Standard
 
-- Giving a talk on some subject.
+- Talk at a conference/colloquium.
+ 
 \layout Standard
 
-- The talk is between 15min and 45min long.
+- Talk length is about 20min.
+ 
 \layout Standard
 
 - Style is ornate.
@@ -87,13 +87,13 @@ In principle, this file can be redistributed and/or modified under the terms
 
 \layout Title
 
-Presentation Title
+Title As It Is In the Proceedings
 \begin_inset OptArg
 collapsed false
 
 \layout Standard
 
-Short Title 
+Short Paper Title 
 \begin_inset Note
 collapsed false
 
@@ -108,16 +108,7 @@ optional, use only with long paper titles
 
 \layout Subtitle
 
-Presentation Subtitle
-\begin_inset Note
-collapsed false
-
-\layout Standard
-
-optional
-\end_inset 
-
-
+Include Only If Paper Has a Subtitle
 \layout Author
 
 F.\SpecialChar ~
@@ -156,6 +147,10 @@ inst{2}
 \begin_inset Note
 collapsed false
 
+\layout Standard
+
+- Give the names in the same order as the appear in the paper.
+ 
 \layout Standard
 
 - Use the 
@@ -266,19 +261,42 @@ optional, but mostly needed
 
 \layout Date
 
-Date/Occasion
+Conference on Fabulous Presentations, 2003
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Either use conference name or its abbreviation.
+ 
+\layout Standard
+
+- Not really informative to the audience, more for people (including yourself)
+ who are reading the slides online
+\end_inset 
+
+
 \begin_inset OptArg
 collapsed false
 
 \layout Standard
 
-Short Occasion
+CFP 2003
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, should be abbreviation of conference name
 \end_inset 
 
 
-\layout TitleGraphic
+\end_inset 
 
-Title Graphic
+
 \layout Standard
 
 
@@ -400,35 +418,52 @@ collapsed false
 
 \layout Standard
 
-Since this a solution template for a generic talk, very little can be said
- about how it should be structured.
- However, the talk length of between 15min and 45min and the theme suggest
- that you stick to the following rules:
+Structuring a talk is a difficult task and the following structure may not
+ be suitable.
+ Here are some rules that apply for this solution: 
 \layout Standard
 
 - Exactly two or three sections (other than the summary).
+ 
 \layout Standard
 
 - At *most* three subsections per section.
+ 
 \layout Standard
 
 - Talk about 30s to 2min per frame.
- So there should be between about% 15 and 30 frames, all told.
+ So there should be between about 15 and 30 frames, all told.
+\layout Standard
+
+- A conference audience is likely to know very little of what you are going
+ to talk about.
+ So *simplify*! 
+\layout Standard
+
+- In a 20min talk, getting the main ideas across is hard enough.
+ Leave out details, even if it means being less precise than you think necessary.
+ 
+\layout Standard
+
+- If you omit details that are vital to the proof/implementation, just say
+ so once.
+ Everybody will be happy with that.
+ 
 \end_inset 
 
 
 \layout Section
 
-Introduction
+Motivation
 \layout Subsection
 
-First Subsection Name
+The Basic Problem That We Studied
 \begin_inset OptArg
 collapsed false
 
 \layout Standard
 
-Short First Subsection Name (Optional)
+Basic Problem
 \end_inset 
 
 
@@ -588,7 +623,7 @@ status Collapsed
 \end_deeper 
 \layout Subsection
 
-Second Subsection Name
+Previous Work
 \layout BeginFrame
 
 Make Titles Informative.
@@ -618,6 +653,12 @@ status Collapsed
 \end_inset 
 
 On second slide.
+\layout Section
+
+Our Results/Contribution
+\layout Subsection
+
+Main Results
 \layout BeginFrame
 
 Make Titles Informative.
@@ -668,6 +709,9 @@ In right column.
 \newline 
 New line
 \end_deeper 
+\layout Subsection
+
+Basic Ideas for Proofs/Implementations
 \layout Section*
 
 Summary
@@ -731,6 +775,142 @@ What we have not done yet.
 
 Even more stuff.
 \end_deeper 
+\layout EndFrame
+
+\layout Section*
+\start_of_appendix 
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+All of the following is optional and typically not needed.
+\end_inset 
+
+Appendix
+\layout Subsection*
+
+For Further Reading
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+[allowframebreaks]
+\end_inset 
+
+For Further Reading
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+beamertemplatebookbibitems
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Start with overview books.
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Author1990}
+
+A.
+ Author.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+
+\emph on 
+Handbook of Everything
+\emph default 
+.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ Some Press, 1990.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+beamertemplatearticlebibitems
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Followed by interesting articles.
+ Keep the list short.
+ 
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Someone2002}
+
+S.
+ Someone.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ On this and that
+\emph on 
+.
+ 
+\emph default 
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+
+\emph on 
+Journal on This and That
+\emph default 
+.
+ 2(1):50--100, 2000.
 \layout EndFrame
 
 \the_end
