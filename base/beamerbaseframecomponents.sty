@@ -341,7 +341,7 @@
 
 \newbox\beamer@footins
 
-\long\def\beamer@framefootnotetext#1{%
+\long\def\beamer@framefootnotetext#1#2{%
   \global\setbox\beamer@footins\vbox{%
     \unvbox\beamer@footins
     \reset@font\footnotesize
@@ -350,15 +350,15 @@
     \protected@edef\@currentlabel
          {\csname p@footnote\endcsname\@thefnmark}%
     \color@begingroup
-      \@makefntext{%
-        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+      \uncover#1{\@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#2\@finalstrut\strutbox}}%
     \color@endgroup}}
 
 \let\@footnotetext=\beamer@framefootnotetext
 
 \define@key{beamerfootnote}{frame}[true]{\let\beamer@footnotetext=\beamer@framefootnotetext\def\beamer@mpfn{footnote}\def\beamer@thempfn{\thefootnote}}
 
-\renewcommand{\footnote}[1][]{%
+\renewcommand<>{\footnote}[1][]{%
   \let\beamer@footnotetext=\@footnotetext%
   \let\beamer@mpfn=\@mpfn%
   \let\beamer@thempfn=\thempfn%
@@ -370,14 +370,14 @@
   \ifx\beamer@footarg\@empty%
     \def\beamer@next{\stepcounter\beamer@mpfn
       \protected@xdef\@thefnmark{\beamer@thempfn}%
-      \@footnotemark\beamer@footnotetext}%
+      \@footnotemark\beamer@footnotetext{#2}}%
   \else%
     \def\beamer@next{%
       \begingroup
         \csname c@\beamer@mpfn\endcsname\beamer@footarg\relax
         \unrestored@protected@xdef\@thefnmark{\beamer@thempfn}%
       \endgroup
-      \@footnotemark\beamer@footnotetext}%
+      \@footnotemark\beamer@footnotetext{#2}}%
   \fi%
   \beamer@next}
 

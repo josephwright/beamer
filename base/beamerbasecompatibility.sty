@@ -17,23 +17,9 @@
 \def\hyperlink#1#2{\beamer@orighyperlink{#1}{\relax#2}}
 
 
-% Hyperlinks must be suspended until document starts - they are used
-% inside \usetemplate commands before the beginning of the document,
-% but there we do not want them to have an effect.
-\let\beamer@suspendedhyperlink\hyperlink
-\let\beamer@suspendedAcrobatmenu\Acrobatmenu
-\def\hyperlink#1#2{#2}
-\def\Acrobatmenu#1#2{#2}
 \providecommand\hyper@pagetransition{}
 \providecommand\hyper@pageduration{}
 \providecommand\hyper@pagehidden{}
-
-\AtBeginDocument{%
-  \ifbeamer@notesnormals
-    \let\hyperlink\beamer@suspendedhyperlink
-    \let\Acrobatmenu\beamer@suspendedAcrobatmenu
-  \fi%
-}
 
 
 \mode
