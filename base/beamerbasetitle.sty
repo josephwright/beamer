@@ -219,7 +219,12 @@
 %
 \def\institute{\@dblarg\beamer@institute}
 \long\def\beamer@institute[#1]#2{%
-  \def\insertinstitute{\def\inst{\beamer@instinst}\def\and{\beamer@andinst}#2}%
+  \def\beamer@temp{#2}%
+  \ifx\beamer@temp\@empty
+    \def\insertinstitute{}
+  \else
+    \def\insertinstitute{\def\inst{\beamer@instinst}\def\and{\beamer@andinst}#2}%
+  \fi
  \def\beamer@shortinstitute{#1}}
 \institute{}
 

@@ -91,6 +91,30 @@ theme, all of the large rectangular areas are transparent.
   \end{itemize}
 \end{innerthemeexample}
 
+\begin{innerthemeexample}{inmargin}
+  The idea behind this theme is to have ``structuring'' information on
+  the left and ``normal'' information on the right. To this end,
+  blocks are redefined such that the block title is shown on the left
+  and the block body is shown on the right.
+
+  The code used to place text in the margin is a bit fragile. You may
+  often need to adjust the spacing ``by hand,'' so use at your own risk.
+
+  Itemize items are redefined such that they appear on the
+  left. However, only the position is changed by changing some spacing
+  parameters; the code used to draw the items is not changed
+  otherwise. Because of this, you can load another inner theme first
+  and then load this theme afterwards. 
+  
+  This theme is a ``dirty'' an inner theme since it messes with things
+  that an inner theme should not mess with. In particular, it changes
+  the width of the left sidebar to a large value. However, you can
+  still use it together with most outer themes.
+
+  Using columns inside this theme is problematic. Most of the time,
+  the result will not be what you expect.
+\end{innerthemeexample}
+
 
 
 

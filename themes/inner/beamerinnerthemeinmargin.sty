@@ -61,15 +61,24 @@
     \usebeamercolor[fg]{subtitle}\usebeamerfont{subtitle}\insertsubtitle
   \end{block}
   \vfill
+  \ifx\insertauthor\@empty
+  \else
   \begin{block}{\insertauthorindicator}
     \usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor\par
   \end{block}
+  \fi
+  \ifx\insertinstitute\@empty
+  \else
   \begin{block}{\insertinstituteindicator}
     \usebeamercolor[fg]{institute}\usebeamerfont{institute}\insertinstitute\par
   \end{block}
+  \fi
+  \ifx\insertdate\@empty
+  \else
   \begin{block}{\insertdateindicator}
     \usebeamercolor[fg]{date}\usebeamerfont{date}\insertdate\par
-  \end{block}  
+  \end{block}
+  \fi
 }
 
 \defbeamertemplate*{block begin}{inmargin}

@@ -1,7 +1,7 @@
 rerun = "(There were undefined references|Rerun to get (cross-references|the bars) right)"
 doc   = beameruserguide
 
-themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
+themes = Antibes Berkeley Berlin Bergen Copenhagen Darmstadt \
   Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
   Luebeck Malmoe Madrid Marburg Montpellier PaloAlto \
   Pittsburgh Rochester Singapore Szeged Warsaw \
@@ -13,7 +13,7 @@ colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily
 
 outerthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
 
-innerthemes = default circles rectangles rounded
+innerthemes = default circles rectangles rounded inmargin
 
 all: $(doc).pdf
 
