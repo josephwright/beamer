@@ -1,0 +1,326 @@
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\section{A Short Tutorial: Euclid's Presentation}
+\label{section-tutorial}
+
+This section presents a short tutorial that focuses on those features
+of \beamer\ that you are likely to be interested in at the
+beginning and leaves out all the glorious details that are explained
+in great detail later on.
+
+We wish to help Prof.\ Euclid of the University of Alexandria to
+create a presentation on his latest discovery: There are 
+infinitely many prime numbers! Euclid wrote a paper on this and it got
+accepted at the 27th International Symposium on Prime Numbers $-280$
+(ISPN~'80). Euclid wishes to use the \beamer\ class
+to create a presentation for the conference.
+On the conference webpage he found out that he will have twenty
+minutes for his talk, including questions.
+
+The first things Euclid should do is to look for a solution template
+for his presentation. Having a look at
+Section~\ref{section-solutions}, he finds that the file
+\begin{verbatim}
+beamer/solutions/conference-talks/conference-ornate-20min.en.tex
+\end{verbatim}
+might be appropriate. He creates a subdirectories |presentation| in
+the directory that contains the actual paper and copies the solution
+template to this subdirectory, renaming to |main.tex|.
+
+\lyxnote
+If Euclid uses \LyX, he would choose ``New from template'' and pick
+the template file 
+\begin{verbatim}
+beamer/solutions/conference-talks/conference-ornate-20min.en.lyx
+\end{verbatim}
+
+Then he opens the file in his favorite editor. The file starts with
+\begin{verbatim}
+\documentclass{beamer}
+\end{verbatim}
+which Euclid finds hardly surprising. Next comes a line reading 
+\begin{verbatim}
+\mode<presentation>
+\end{verbatim}
+which Euclid does not understand. Since he finds more stuff in the file
+that he does not understand, he decides to ignore all of that for time
+being, hoping that it all serves some good purpose.
+
+The next thing that seems logical is the place where the |\title|
+command is used. Naturally, he replaces it with
+\begin{verbatim}
+\title{There Is No Largest Prime Number}
+\end{verbatim}
+since this was the title of the paper. He sees that the command
+|\title| also takes an optional ``short'' argument in square brackets,
+which is shown in places where there is little space, but he decides
+that the title is short enough by itself.
+
+Euclid next adjusts the |\author| and |\date| fields as follows:
+\begin{verbatim}
+\author{Euclid of Alexandria}
+\date[ISPN '80]{27th International Symposium of Prime Numbers}
+\end{verbatim}
+For the date, he felt that the name was a little long, so a short
+version should be given (|ISPN '80|).
+
+There are two fields that Euclid does not know, but whose meaning he
+can guess: |\subtitle| and |\institute|. He adjusts them
+accordingly. (Euclid does not need to use the |\and| command, which is
+used to separate several authors, nor the |\inst| command, which just
+makes its argument a superscript).
+
+\lyxnote
+In \LyX, Euclid just edits the first lines having of the different
+styles like Author or Title or Date. He deletes the optional short
+fields.
+
+
+The next thing in the file that seems interesting is where the first
+``frame'' is created, right after the |\||begin{document}|:
+
+\begin{verbatim}
+\begin{frame}
+  \titlepage
+\end{frame}
+\end{verbatim}
+
+In \beamer, a presentation consists of a series of frames. Each frame
+in turn may consist of several slides (if there is more than one, they
+are called overlays). Normally, everything between |\begin{frame}|
+  and |\end{frame}| is put on a single slide. No page breaking is
+performed.
+
+\lyxnote
+The title page frame is created automatically by \LyX. All other
+frames start with the style BeginFrame and end either with the style
+EndFrame or, automatically, with the start of the next frame,
+subsection, or section. 
+
+Euclid sees that the first frame is ``filled'' by the title page,
+which seems quite logical. Eager to find out how the first page will
+look, he invokes |pdflatex| on his file |main.tex| (twice). Then he
+uses the Acrobat Reader or |xpdf| to view the resulting
+|main.pdf|. Indeed, the first page contains all the information Euclid
+has provided until now. It even looks quite impressive with the
+colorful title and the rounded corners and the shadows, but he is
+doubtful whether he should leave it like that. He decides to address
+this problem later.
+
+\lyxnote
+Euclid chooses View $\to$ PDF to view the resulting presentation. On a
+slow machine, this may take a while. See Section~\ref{section-speedup}
+for ways of speeding up the compilation.
+
+The next frame contains a table of contents:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+\end{verbatim}
+Furthermore, this frame has an individual title (Outline). A comment
+in the frame says that Euclid might wish to try to add the
+|[pausesections]| option. He tries this, changing the frame to:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[pausesections]
+\end{frame}
+\end{verbatim}
+After re-pdf\LaTeX ing the presentation, he finds that instead of a
+single slide, there are now two ``table of contents slides'' in the
+presentation. On the first of these, only the first section is shown,
+on the second both sections are shown (scanning down in the file,
+Euclid finds that, indeed, there are |\section| commands introducing
+these sections). The effect of the |pausesections| seems to be that
+one can talk about the first section before the second one is
+shown. Then, Euclid can press the down- or right-key, to show the
+complete table of contents and can talk about the second section.
+
+The next commands Euclid finds are
+\begin{verbatim}
+\section{Motivation}
+\subsection{The Basic Problem That We Studied}
+\end{verbatim}
+These commands are given \emph{outside} of frames. So Euclid assumes
+that at the point of invocation they have no direct effect, they only
+create entries in the table of contents. Having a ``Motivation''
+section seems reasonable to Euclid, but he changes the |\subsection|
+title.
+
+As he looks at the presentation, he notices that his assumption was
+not quite true: each |\subsection| command seems to insert a frame
+containing a table of contents into the presentation. Doubling back he
+finds the command that causes this: The |\AtBeginSubsection| inserts a
+frame with only the current subsection hilighted at the beginning of
+each section. If Euclid does not like this, he can just delete the
+whole |\AtBeginSubsection| stuff and the table of contents at the
+beginning of each subsection disappear. 
+
+The |\section| and |\subsection| commands take optional short
+arguments. These short arguments are used whenever a short form of the
+section of subsection name is needed. While this is in keeping with
+the way \beamer\ treats the optional arguments of things like
+|\title|, it is \emph{different} from the usual way \LaTeX\ treats an
+optional argument for sections (where the optional argument dictates
+what is shown in the table of contents and the main argument dictates
+what is shown everywhere else; in \beamer\ things are exactly the
+other way round).
+
+Euclid then modifies the next frame, which is the first ``real'' frame
+of the presentation, as follows:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{What Are Prime Numbers?}
+  A prime number is a number that has exactly two divisors. 
+\end{frame}
+\end{verbatim}
+This yields the desired result. It might be a good idea to put some
+emphasis on the object being defined (prime numbers). Euclid tries
+|\emph| but finds that too mild an emphasis. \beamer\ offers the
+command |\alert|, which is used like |\emph| and, by default, typesets
+its argument in bright red.
+\lyxnote
+The |\alert| command needs to be entered in \TeX-mode, which is
+awkward. It's easier to just paint the text in red.
+
+Next, Euclid decides to make it even clearer that he is giving a
+definition by putting a |definition| environment around the
+definition. 
+\begin{verbatim}
+\begin{frame}
+  \frametitle{What Are Prime Numbers?}
+  \begin{definition}
+    A \alert{prime number} is a number that has exactly two divisors.
+  \end{definition}
+\end{frame}
+\end{verbatim}
+Other useful environments like |theorem|, |lemma|, |proof|,
+|corollary|, or |example| are also predefined by \beamer. As in
+|amsmath|, they take optional arguments that they show in
+brackets. Indeed, |amsmath| is automatically loaded by \beamer.
+
+Since it is always a good idea to add examples, Euclid decides to add
+one:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{What Are Prime Numbers?}
+  \begin{definition}
+    A \alert{prime number} is a number that has exactly two divisors.
+  \end{definition}
+  \begin{example}
+    \begin{itemize}
+    \item 2 is prime (two divisors: 1 and 2).
+    \item 3 is prime (two divisors: 1 and 3).
+    \item 4 is not prime (two divisors: 1, 2, and 4).
+  \end{example}
+\end{frame}
+\end{verbatim}
+
+The frame already looks quite nice, though, perhaps a bit colorful.
+However, Euclid would now like to show the three items one after
+another, not all three right away. By showing them incrementally, he
+hopes to focus the audience's attention on the item he is currently
+talking about. He can achieve this by adding \emph{overlay
+specifications} to the |\item| commands:
+\begin{verbatim}
+  \begin{itemize}
+    \item<1-> 2 is prime (two divisors: 1 and 2).
+    \item<2-> 3 is prime (two divisors: 1 and 3).
+    \item<3-> 4 is not prime (two divisors: 1, 2, and 4).
+  \end{example}
+\end{verbatim}
+These overlay specifications are given in pointed brackets. The
+specification |<1->| means ``from slide 1 on.'' Thus, the first item
+is shown on the first slide of the frame, but the other two items are
+not shown. Rather, the second point is shown only from the second
+slide onward. \beamer\ automatically computes the number of slides
+needed for each frame. More generally, overlay specification are lists
+of numbers or number ranges where the start or ending of a range can
+be left open. For example |-3,5-6,8-| means ``on all slides, except
+for slides 4 and~7.''
+
+\lyxnote
+You add overlay specifications to the items by entering \TeX-mode
+(press on the little \TeX\ icon) and writing |<1->|. This \TeX-text
+should be placed right at the beginning of the item.
+
+
+
+Moving on, Euclid creates a frame showing his main argument:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{There Is No Largest Prime Number}
+  \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+
+  \begin{theorem}
+    There is no largest prime number.
+  \end{theorem}
+  \begin{proof}
+    \begin{enumerate}
+    \item<1-> Suppose $p$ were the largest prime number.
+    \item<2-> Let $q$ be the product of the first $p$ numbers.
+    \item<3-> Then $q + 1$ is not divisible by any of them.
+    \item<1-> Thus $q + 1$ is also prime and greater than $p$.\qedhere
+    \end{enumerate}      
+  \end{proof}
+\end{frame}
+\end{verbatim}
+Euclid has added the overlay specification |<1->| (and not |<4->|) on
+purpose. This causes the last and first points to be shown at the same
+time, namely from the first slide onward. He can thus talk about his
+new proof idea, namely proof by contradiction, where a wrong
+assumption is brought to a contradiction at the end after a number of
+intermediate steps that are not important at the beginning.
+
+The |\qedhere| is used to put the \textsc{qed} symbol at the end of
+the line \emph{inside} the enumeration. Normally, the \textsc{qed}
+symbol is automatically inserted at the end of a proof environment,
+but that would be on an ugly empty line here.
+
+The |\item| command is not the only command that takes overlay
+specifications. Another useful command that takes one is the
+|\uncover| command, which Euclid uses in a line that he adds after the
+proof:
+\begin{verbatim}
+  \uncover<4->{The proof used \textit{reductio ad absurdum}.}
+\end{verbatim}
+The |\uncover| command only shows its argument on the slides specified
+in the overlay specification. On all other slides, the argument is
+hidden (though it still occupies space). The command |\only| is
+similar and Euclid could also have tried
+\begin{verbatim}
+  \only<4->{The proof used \textit{reductio ad absurdum}.}
+\end{verbatim}
+On non-specified slides the |\only| command simply ``throws its
+argument away'' and the argument does not occupy any space. This leads
+to different heights of the text on the first three slides and of the
+fourth slide. If the text is centered vertically, this will cause the
+text to ``wobble'' and thus |\uncover| should be used. However, you
+sometimes wish things to ``really disappear'' on some slides and then
+|\only| is useful. Euclid could also have used the class option
+|slidestop|, which causes the text in frames to be vertically flushed
+to the top. Then a differing text height does not cause
+wobbling. Vertical flushing can also be achieved for only a single
+frame be by giving the optional argument |[t]| like this to the
+|frame| environment as in 
+\begin{verbatim}
+\begin{frame}[t]
+  \frametitle{There Is No Largest Prime Number}
+  ...
+\end{frame}
+\end{verbatim}
+Vice versa, if the |slidestop| option is given, a frame can be
+vertically centered using the |[c]| option for the frame.
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

@@ -1,0 +1,713 @@
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\section{Creating Frames}
+
+\label{section-frames}
+
+\subsection{The Frame Environment}
+
+A presentation consists of a series of frames. Each frame consists of
+a series of slides. You create a frame using the command
+|\frame| or the environment |frame|, which do the same. The command
+takes one parameter, namely the contents of the frame. All of the
+text that is not tagged by overlay specifications is shown on all
+slides of the frame. (Overlay specifications is explain
+in more detail in later sections. For the moment, let's just say
+that an overlay specification is a list of number or number ranges in
+pointed brackets that is put after certain commands as in
+|\uncover<1,2>{Text}|.) If a frame contains commands that have an
+overlay specification, the frame will contain multiple slides;
+otherwise it contains only one slide.
+
+\begin{environment}{{frame}\sarg{overlay specification}%
+    \opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}}
+  The \meta{overlay specification} dictates which slides of a frame are
+  to be shown. If left out, the number is calculated automatically.
+  The \meta{environment contents} can be normal \LaTeX\ text, but may not contain
+  |\verb| commands or |verbatim| environments, unless the
+  |containsverbatim| options is given, see also
+  Section~\ref{section-verbatim}. 
+ 
+  The normal \LaTeX\ command |\frame| is available \emph{inside}
+  frames with its usual meaning. Both outside and inside frames it is
+  always available as {\color{red!75!black}|\framelatex|}. 
+ 
+  \example
+\begin{verbatim}
+\begin{frame}
+  \frametitle{A title}
+  Some content.
+\end{frame}
+\end{verbatim}
+  
+  \example
+\begin{verbatim}
+\begin{frame}<beamer>  % frame is only shown in beamer mode
+  \frametitle{Outline}
+  \tabelofcontent[current]
+\end{frame}
+\end{verbatim}
+
+  Normally, the complete \meta{environment contents} is put on a slide. If
+  the text does not fit on a slide, being too high, it will be
+  squeezed as much as possible, a warning will be issued, and the text
+  just extends unpleasantly over the bottom. You can use the option
+  |allowframebreaks| to cause the \meta{frame text} to be split among several
+  slides, though you cannot use overlays then. See the explanation of
+  the |allowframebreaks| option for details. 
+  
+  The \meta{default overlay specification} is an optional argument
+  that is ``detected'' according to the following rule: If the first
+  optional argument in square brackets starts with a |<|, then this
+  argument is a \meta{default overlay specification}, otherwise it is
+  a normal \meta{options} argument. Thus |\begin{frame}[<+->][plain]| would
+  be legal, but also |\begin{frame}[plain]|.
+
+  The effect of the \meta{default overlay specification} is the
+  following: Every command or environment \emph{inside the frame} that
+  accepts an action specification, see
+  Section~\ref{section-action-specifications}, (this includes the
+  |\item| command, the |actionenv| environment, |\action|, and all
+  block environments) and that is not followed by 
+  an overlay specification gets the \meta{default overlay
+    specification} as its specification. By providing an incremental
+  specification like |<+->|, see Section~\ref{section-incremental},
+  this will essentially cause all blocks and all enumerations to be
+  uncovered piece-wise (blocks internally employ action
+  specifications).
+  
+  \example In this frame, the theorem is shown from the first slide
+  on, the proof from the second slide on, with the first two itemize
+  points shown one after the other; the last itemize point is shown
+  together with the first one. In total, this frame will contain four
+  slides.
+\begin{verbatim}
+\begin{frame}[<+->]
+  \begin{theorem}
+    $A = B$.
+  \end{theorem}
+  \begin{proof}
+    \begin{itemize}
+    \item Clearly, $A = C$.
+    \item As shown earlier,  $C = B$.
+    \item<3-> Thus $A = B$.
+    \end{itemize}
+  \end{proof}
+\end{frame}
+\end{verbatim}
+ 
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|allowdisplaybreaks|}\opt{|=|\meta{break
+    desirability}} causes the AMS\TeX\ command
+    |\allowdisplaybreaks|\penalty0|[|\meta{break desirability}|]| to be issued
+    for the current frame. The \meta{break desirability} can be a
+    value between 0 (meaning formulas may never be broken) and 4 (the
+    default, meaning that formulas can be broken anywhere without any
+    penalty). The option is just a convenience and makes sense only
+    together with the |allowsframebreaks| option.  
+  \item
+    \declare{|allowframebreaks|}\opt{|=|\meta{fraction}}. When this option is
+    given, the frame will be automatically broken up into several
+    frames if the text does not fit on a single slide. In detail, when this
+    option is given, the following things happen:
+    \begin{enumerate}
+    \item
+      Overlays are not supported.
+    \item
+      If your frame contains verbatim text, you can and must specify the
+      option |containsverbatim|. Since overlays are not supported
+      anyway, specifying this option never hurts.
+    \item
+      Any notes for the frame created using the |\note| command will
+      be inserted after the first page of the frame.
+    \item
+      Any footnotes for the frame will be inserted on the last page of
+      the frame.
+    \item
+      If there is a frame title, each of the pages will have this
+      frame title, with a special note added indicating which page of
+      the frame that page is. By default, this special note is a
+      Roman number. However, this can be changed by changing the
+      continutation template, see Section~\ref{section-continuation}. 
+    \end{enumerate}
+    If a frame needs to be broken into several pages, the material on
+    all but the last page fills only 95\% of each page by
+    default. Thus, there will be some space left at the top and/or
+    bottom, depending on the vertical placement option for the
+    frame. This yields a better visual result than a 100\% filling,
+    which typically looks crowded. However, you can change this
+    percentage using the optional argument \meta{fraction}, where 1
+    means 100\% and 0.5 means 50\%. This percentage includes
+    the frame title. Thus, in order to split a frame ``roughly in
+    half,'' you should give 0.6 as \meta{fraction}.
+
+    Most of the fine details of normal \TeX\ page breaking also apply
+    to this option. For example, when you wish equations to be broken
+    automatically, be sure to use the |\allowdisplaybreaks|
+    command. You can insert |\break|, |\nobreak|, and |\penalty|
+    commands to control where breaks should occur. The commands 
+    |\pagebreak| and |\nopagebreak| also work, including their
+    options. Since you typically do not want page breaks for the frame
+    to apply also to the |article| mode, you can add a mode
+    specification like |<presentation>| to make these commands apply
+    only to the presentation modes. The command
+    \declare{|\string\framebreak|} is a shorthand for
+    |\pagebreak<presentation>| and \declare{|\string\noframebreak|} is
+    a shorthand for |\nopagebreak<presentation>|.
+
+    The use of this  option \emph{evil}. In a (good) presentation you
+    prepare each slide carefully and think twice before putting something
+    on a certain slide rather than on some different slide. Using the
+    |allowframebreaks| option invites the creation of horrible, endless
+    presentations that resemble more a ``paper projected on the wall''
+    than a presentation. Nevertheless, the option does have its
+    uses. Most noticably, it can be convenient for automatically
+    splitting bibliographies or long equations.
+
+    \example
+\begin{verbatim}
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+
+  \begin{thebibliography}{XX}
+
+  \bibitem...
+  \bibitem...
+    ...
+  \bibitem...
+  \end{thebibliography}
+\end{frame}
+\end{verbatim}
+    \example
+\begin{verbatim}
+\begin{frame}[allowframebreaks,allowdisplaybreaks]
+  \frametitle{A Long Equation}
+
+  \begin{align}
+    \zeta(2) &= 1 + 1/4 + 1/9 + \cdots \\
+    &= ... \\
+    ...
+    &= \pi^2/6.
+  \end{align}
+\end{frame}
+\end{verbatim}
+  \item
+    \declare{|b|}, \declare{|c|}, \declare{|t|} will cause the frame
+    to be vertically aligned at the bottom/center/top. This overrides
+    the global placement policy, which is governed by the class
+    options |slidestop| and |slidescentered|.
+  \item
+    \declare{|containsverbatim|} tells \beamer\ that the frame
+    contains verbatim commands. In this case, only one slide of
+    the frame is typeset (unless all slides are suppressed by the
+    \meta{overlay specification}). If you wish to use verbatim text in
+    a frame with several slides, a more roundabout approach is
+    necessary, see Section~\ref{section-verbatim}. This option cannot
+    be used together with the |label| option.
+    
+  \item
+    \declare{|label=|\meta{name}} causes the frame's contents to
+    be stored under the name \meta{name} for later resumption using
+    the command |\againframe|. If this option is given, you cannot
+    directly include verbatim text in the frame. The frame is still rendered
+    normally. See also |\againframe|.
+
+    Furthermore, on each slide of the frame a label with the name
+    \meta{name}|<|\meta{slide number}|>| is created. On the
+    \emph{first} slide, furthermore, a label with the name \meta{name}
+    is created (so the labels \meta{name} and \meta{name}|<1>| point
+    to the same slide). Note that labels in general, and these labels
+    in particular, can be used as targets for hyperlinks.
+  \item
+    \declare{|plain|} causes  the headlines, footlines,
+    and sidebars to be suppressed. This is useful for creating single
+    frames with different head- and footlines or for creating frames
+    showing big pictures that completely fill the frame.
+
+  \example A frame with a picture completely filling the frame:  
+\begin{verbatim}
+\begin{frame}[plain]
+  \begin{centering}%
+    \pgfimage[height=\paperheight]{somebigimagefile}%
+    \par%
+  \end{centering}%
+\end{frame}
+\end{verbatim}
+  
+  \example A title page, in which the head- and footlines are replaced
+  by two graphics.
+\begin{verbatim}
+\usetitlepagetemplate{
+  \pgfuseimage{toptitle}
+  \vskip0pt plus 1filll
+
+  \begin{centering}
+    \Large{\textbf{\inserttitle}}
+    
+    \insertdate
+  \end{centering}
+
+  \vskip0pt plus 1filll
+  \pgfuseimage{bottomtitle}
+}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+\end{verbatim}
+  \item
+    \declare{|shrink|}\opt{|=|\meta{minimum shrink percentage}}. This
+    option will cause the text of the frame to be shrunken if it is
+    too large to fit on the frame. \beamer\ will first normally
+    typeset the whole frame. Then it has a look at vertical size of
+    the frame text (excluding the frame title). If this vertical size
+    is larger than  the text height minus the frame title height,
+    \beamer\ computes a shrink factor and scales down the frame text
+    by this factor such that the frame text then fills the frame
+    completely. Using this option will automatically cause the
+    |squeeze| option to be used, also.
+
+    Since the shrinking takes place only after everything has been
+    typeset, shrunken frame text will not fill the frame completely
+    horizontally. For this reason, you can specify a \meta{minimum
+    shrink percentage} like |20|. If this percentage is specified, the
+    frame will be shrunk by \emph{at least} by this percentage. Since
+    \beamer\ knows this, it can increase the horizontal width
+    proportionally such that the shrunken text once more fills the
+    entire frame. If, however, the percentage is not enough, the text
+    will be shrunken as needed and you will be punished with a warning
+    message.
+
+    The best way to use this option is to identify frames that are
+    overly full, but in which all text absolutely has to be fit on a
+    single frame. Then start specifying first |shrink=5|, then
+    |shrink=10|, and so on, until no warning is issued any more (or
+    just ignore the warning when things look satisfactory).
+
+    Using this option is \emph{very evil}. It will
+    result in changes of the font size from slide to slide, which is a
+    typographic nightmare. Its usage can \emph{always} be avoided by
+    restructuring and simplifying frames, which will result in a
+    better presentation.
+
+    \example
+\begin{verbatim}
+\begin{frame}[shrink=5]
+  Some evil endless slide that is 5\% too large.
+\end{frame}
+\end{verbatim}
+  \item
+    \declare{|squeeze|} causes all vertical spaces in the text to be
+    squeezed together as much as possible. Currently, this just causes
+    the vertical space in enumerations or itemizations to be reduced
+    to zero.
+
+    Using this option is not good, but also not evil.   
+  \end{itemize}
+
+  \lyxnote
+  Use the style ``BeginFrame'' to start a frame and the style
+  ``EndFrame'' to end it. A frame is automatically ended by the start
+  of a new frame and by the start of a new section or section (but
+  not by the end of the document!).
+
+  \lyxnote
+  You can pass options and an overlay specification to a frame by
+  giving these in \TeX-mode as the first thing in the frame
+  title. (Some magic is performed to extract them in \LyX-mode from
+  there.)
+
+  \lyxnote
+  The style ``BeginPlainFrame'' is included as a convenience. It
+  passes the |plain| option to the frame. To pass further options to a
+  plain frame, you should use the normal ``BeginFrame'' style and
+  specify all options (including |plain|).
+
+  \lyxnote
+  In \LyX, you can insert verbatim text directly even in overlayed
+  frames. The reason is that \LyX\ uses a different internal mechanism
+  for typesetting verbatim text, that is easier to handle for \beamer.
+
+  \articlenote
+  In |article| mode, the |frame| environment does not create any visual
+  reference to the original frame (no frame is drawn). Rather, the
+  frame text is inserted into the normal text. To change this, you can
+  modify the frame template, see
+  Section~\ref{section-frame-template}. To suppress a frame in
+  |article| mode, you can, for example, specify |<presentation>| as
+  overlay specification. 
+\end{environment}
+
+\begin{command}{\frame\sarg{overlay specification}%
+    \opt{|[<|\meta{default overlay
+        specification}|>]|}\oarg{options}\marg{contents}}
+  This command does the same as putting the \meta{contents} in a
+  |frame| environment called.
+
+  \example The following two frame will be identical:
+\begin{verbatim}
+\frame{Hi!}
+
+\begin{frame}
+  Hi!
+\end{frame}
+\end{verbatim}
+\end{command}
+
+Internally, the |\frame| command is what is actually executed. The
+|frame| environment just collects its environment contents and then
+calls the |\frame| command; except if the option |containsverbatim|
+is specified, in which case the contents is not collected, but
+control is nevertheless passed on the |\frame| (the internals are a
+bit obscure). You \emph{can} use the |frame| environment inside other
+environments like this:
+\begin{verbatim}
+\newenvironment{myframe}[1]{\begin{frame}\frametitle{#1}}{\end{frame}}
+\end{verbatim}
+However, the actual mechanics are somewhat fragile since the
+``collecting'' of the frame contents is not easy, so
+do not attempt anything too fancy.
+
+If, for whatever reason, the |frame| environment has a problem with
+some contents, it \emph{might} help to try using the |\frame|
+command instead.
+
+For compatibility with earlier versions, you can also give an overlay
+specification in square brackets. If the sole argument to the |\frame|
+command is an argument in square brackets, the \beamer\ class will try
+to check whether this argument ``looks like'' an overlay
+specification. If so, it is assumed to be an overlay specification.
+
+
+
+\subsection{Components of a Frame}
+
+Each frame consists of several components:
+\begin{enumerate}\itemsep=0pt\parskip=0pt
+\item a headline,
+\item a footline,
+\item a left sidebar,
+\item a right sidebar,
+\item navigation symbols,
+\item a logo,
+\item a frame title, and
+\item some frame contents.
+\end{enumerate}
+
+A frame need not have all of these components. Usually, the first six
+components are automatically setup by the theme you are
+using. To change them, you must install an appropriate template, see
+Section~\ref{section-head-templates} for the head- and footlines and
+Section~\ref{section-sidebar-templates} for the sidebars. To install
+a logo, invoke the following command in the preamble, \emph{after}
+having loaded the theme:
+
+\begin{command}{\logo\marg{logo text}}
+  The \meta{logo text} is usually a command for including a
+  graphic.
+  \example
+\begin{verbatim}
+\pgfdeclareimage[height=0.5cm]{logo}{tu-logo}
+\logo{\pgfuseimage{logo}}
+\end{verbatim}
+
+  \articlenote This command has no effect.
+\end{command}
+
+The frame title is shown prominently at the top of the frame and can
+be specified with the following command:
+
+\begin{command}{\frametitle\sarg{overlay specification}\oarg{short
+  frame title}\marg{frame title text}} 
+  You should end the \meta{frame title text} with a period, if the title is a
+  proper sentence. Otherwise, there should not be a period. The
+  \meta{short frame title} is normally not shown, but its available
+  via the |\insertshortframetitle| command. The \meta{overlay
+  specification} is mostly useful for suppressing the frame title in
+  |article| mode.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \frametitle{A Frame Title is Important.}
+  \framesubtitle{Subtitles are not so important.}
+
+  Frame contents.
+\end{frame}
+\end{verbatim}
+
+  If you are using the |allowframebreaks| option with the current frame,
+  a continuation text (like ``(cont.)'' or something similar,
+  depending on the continuation template) is automatically added to
+  the \meta{frame title text} at the end.
+
+  \beamernote
+  The frame title is not typeset immediately when the command
+  |\frametitle| is encountered. Rather, the argument of the command is
+  stored internally and the frame title is only typeset when the
+  complete frame has been read. This gives you access to both the
+  \meta{frame title text} and to the \meta{subframe title text} that
+  is possibly introduced using the |\framesubtitle| command.
+
+  \articlenote
+  By default, this command creates a new paragraph in |article| mode,
+  entitled \meta{frame title text}. Using the \meta{overlay
+    specification} makes it easy to suppress the a frame title once in
+  a while. If you generally wish to suppress \emph{all} frame
+  titles in |article| mode, say |\useframetitletemplate{}|.
+
+  \lyxnote
+  The frame title is the text that follows on the line of the
+  ``BeginFrame'' style.
+\end{command}
+
+\begin{command}{\framesubtitle\sarg{overlay specification}\marg{frame
+      subtitle text}}
+  If present, a subtitle will be shown in a smaller font below the
+  main title. Like the |\frametitle| command, this command can be
+  given anywhere in the frame, since the frame title is actually
+  typeset only when everything else has already been typeset.
+  
+  \example
+\begin{verbatim}
+\begin{frame}
+  \frametitle<presentation>{Frame Title Should Be in Uppercase.}
+  \framesubtitle{Subtitles can be in lowercase if they are full sentences.}
+
+  Frame contents.
+\end{frame}
+\end{verbatim}
+
+  \articlenote
+  By default, the subtitle is not shown in any way in |article| mode.
+\end{command}
+
+Be default, all material for a slide is vertically centered. You can
+change this using the following class options:
+
+\begin{classoption}{slidestop}
+  Place text of slides at the (vertical) top of the slides. This
+  corresponds to a vertical ``flush.'' You can override this for
+  individual frames using the |c| or |b| option.
+\end{classoption}
+
+\begin{classoption}{slidescentered}
+  Place text of slides at the (vertical) center of the slides. This is
+  the default. You can override this for
+  individual frames using the |t| or |b| option.
+\end{classoption}
+
+
+
+\subsection{Margin Sizes}
+
+The ``paper size'' of a \beamer\ presentation is fixed to 128mm times
+96mm. The aspect ratio of this size is 4:3, which is exactly what most
+beamers offer these days. It is the job of the
+presentation program (like |acroread| or |xpdf|) to display the slides
+at full screen size. The main advantage of using a small ``paper size''
+is that you can use all your normal fonts at their natural sizes. In
+particular, inserting a graphic with 11pt labels will result in
+reasonably sized labels during the presentation.
+
+You should refrain from changing the ``paper size.'' However, you
+\emph{can} change the size of the left and right margins, which
+default to 1cm. To change them, you should use the following two
+commands:
+
+\begin{command}{\beamersetleftmargin\marg{left margin dimension}}
+  Sets a new left margin. This excludes the left sidebar. Thus, it is
+  the distance between the right edge of the left sidebar and the left
+  edge of the text. This command can only be used in the preamble
+  (before the |document| environment is used).
+  \example |\beamersetleftmargin{1cm}|
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+\begin{command}{\beamersetrightmargin\marg{left margin dimension}}
+  Like |\beamersetleftmargin|, only for the right margin.
+\end{command}
+
+For more information on sidebars, see
+Section~\ref{section-sidebar-templates}. 
+
+
+
+\subsection{Restricting the Slides of a Frame}
+\label{section-restriction}
+
+The number of slides in a frame is automatically
+calculated. If the largest number mentioned in any
+overlay specification inside the frame is 4, four slides are
+introduced (despite the fact that a specification like |<4->|
+might suggest that more than four slides would be possible).
+
+You can also specify the number of slides in the frame ``by hand.'' To
+do so, you pass an overlay specification the |\frame| command. The
+frame will contain only the slides specified in this
+argument. Consider the following example. 
+
+\begin{verbatim}
+\begin{frame}<1-2,4->
+  This is slide number \only<1>{1}\only<2>{2}\only<3>{3}%
+  \only<4>{4}\only<5>{5}.
+\end{frame}
+\end{verbatim}
+This command will create a frame containing four slides. The first
+will contain the text ``This is slide number~1,'' the second ``This is
+slide number~2,'' the third ``This is slide number~4,'' and the fourth
+``This is slide number~5.''
+
+A useful specification is just |<0>|, which causes the frame to
+have to no slides at all. For example, |\begin{frame}<handout:0>| causes
+the frame to be suppressed in the handout version, but to be shown
+normally in all other versions. Another useful specification is
+|<beamer>|, which causes the frame to be shown normally in |beamer|
+mode, but to be suppressed in all other versions.
+
+
+\subsection{Verbatim Commands and Listings inside Frames}
+\label{section-verbatim}
+
+The |\verb| command, the |verbatim| environment, the
+|lstlisting| environment, and related environments that allow
+you to typeset arbitrary text work only in
+frames that contain a single slide or that are suppressed
+altogether. Furthermore, you must explicitly specify that the frame
+contains verbatim text using the |containsverbatim| commans:
+\begin{verbatim}
+\begin{frame}[containsverbatim]
+  \frametitle{Our Search Procedure}
+
+\begin{verbatim}
+  int find(int* a, int n, int x)
+  {
+    for (int i = 0; i<n; i++)
+      if (a[i] == x)
+        return i;
+  }
+\end{verbatim}
+\unskip{\MacroFont|\end{verbatim}|}
+                                %\begin{verbatim}
+\begin{verbatim}
+\end{frame}
+\end{verbatim}
+
+You may \emph{not} use the |label=|\meta{label name} option if you
+have a verbatim text on a slide.
+
+If you need to use verbatim commands in frames that contain several
+slides or on a frame that uses the |label| option, you must
+\emph{declare} your verbatim texts before the frame starts. This is
+done using two special commands:
+
+
+\begin{command}{\defverb\marg{command name}\opt{|*|}%
+    \meta{delimiter symbol}\meta{verbatim text}\meta{delimiter symbol}}
+  Declares a verbatim text for later use. The declaration should be
+  done outside the frame. Once declared, the text can be used
+  in overlays like normal text. The one-line \meta{verbatim text} must
+  be delimited by a special \meta{delimiter symbol} (works like the
+  |\verb| command). Adding a star makes spaces visible.
+
+\example
+\begin{verbatim}
+\defverb\mytext!int main (void) { ...!
+\defverb\mytextspaces*!int  main  (void ){  ...!
+
+\begin{frame}
+  \begin{itemize}
+  \item<1-> In C you need a main function.
+  \item<2-> It is declare like this: \mytext
+  \item<3-> Spaces are not important: \mytextspaces
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\defverbatim\oarg{options}\marg{command name}\marg{text}}
+  The \meta{text} may contain a |verbatim|,  |verbatim*|,
+  |lstlisting|, or a related environment. The command \marg{command
+    name} can be used later inside frames. The declaration
+  should be done outside the frame. Once declared, the text can be
+  used in overlays like normal text.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|colored|} declares that the verbatim text will have
+    its ``own'' colors. Normally, the verbatim text is typeset using
+    the current color, which allows you to use commands like |\alert|
+    to make verbatim text red on certain slides. However, if the
+    verbatim text has, say, a special background color or different
+    parts of it a colored differently (the |lstlisting| environment
+    does this), then you do \emph{not} want the verbatim text to
+    inherit its color from the ``outside.'' In this case, you should
+    give the |colored| option.
+  \item
+    \declare{|width=|\meta{dimension}} sets the width of the verbatim
+    box. The default is the text width at the moment when the
+    |\defverbatim| command is used; but this will be too large if
+    the box is used inside a |columns| environment later on. In such a
+    case you can use this option to specify the width the box will
+    later need to have.
+  \end{itemize}  
+
+  \example
+\begin{verbatim}
+\defverbatim\algorithmA{
+\begin{verbatim}
+int main (void)
+{
+  cout << "Hello world." << endl;
+  return 0;
+}
+\end{verbatim}
+\unskip{\MacroFont|\end{verbatim}|}
+\begin{verbatim}
+}
+
+\defverbatim[colored]\algorithmB{
+\begin{lstlisting}[language={C++},backgroundcolor=\color{yellow}]
+int main (void)
+{
+  cout << "Hello world." << endl;
+  return 0;
+}
+\end{lstlisting}
+}
+
+\begin{frame}
+  Our algorithm:
+  \alert<1>{\algorithmA}
+  \uncover<2>{Note the return value.}
+\end{frame}
+
+\begin{frame}
+  Same algorithm typeset using the lstlisting environment:
+  \algorithmB
+\end{frame}
+\end{verbatim}
+%\begin{verbatim}
+\end{command}
+
+
+
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

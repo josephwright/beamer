@@ -7,207 +7,114 @@
 
 \section{Introduction}
 
-This user's guide explains the functionality of the \beamer\ class.
-It is a \LaTeX\ class that allows you to create a presentation to be
-held using a projector. It can also be used to create transparency
-slides. It behaves similarly to other packages like \textsc{prosper},
-but has the advantage that it works together directly with |pdflatex|,
-but also with |dvips|.
+\beamer\ is a \LaTeX\ class for creating presentations that are 
+held using a projector, but it can also be used to create transparency
+slides. Preparing presentations with \beamer\ is different from
+preparing with \textsc{wysiwyg} programs like OpenOffice's Impress, 
+Apple's Keynotes, or KOffice's KPresenter. A \beamer\ presentation is
+created like any other \LaTeX\ document: It has a preamble and a body,
+the doby contains |\section|'s and |\subsections|'s, the different
+slides (called \emph{frames} in \beamer) are put in environments, they
+are structured using |itemize| and |enumerate| environments, and so
+on. The obvious disadvantage of this approach is that you have to know
+\LaTeX\ in order to use \beamer. The advantage is that if you know
+\LaTeX, you can use your knowledge of \LaTeX\ also when creating a
+presentation, not only when writing papers.
 
 
+\subsection{Main Features}
 
-\subsection{Getting Started with the Beamer Class and \LaTeX/pdf\LaTeX}
-
-To use the \beamer\ class together with |latex| or |pdflatex|, proceed
-as follows: 
-\begin{enumerate}
-\item
-  Specify |beamer| as document class instead of
-  |article|.
-\item
-  Structure your \LaTeX\ text using |section| and
-  |subsection| commands.
-\item
-  Place the text of the individual slides inside |frame|
-  environments.
-\item
-  Run |pdflatex| on the text (or |latex|,
-  |dvips|, and |ps2pdf|).
-\end{enumerate}
-
-To get jump-started, try opening one of the |.tex| files in the
-|solutions| directory.
-
-The \beamer\ class has several useful features: You don't need any
-external programs to use it other than |pdflatex|, but it works
-also with |dvips|. You can easily and intuitively create
-sophisticated overlays. Finally, you can easily change the whole slide
-theme or only parts of it. The following code shows a typical usage of
-the class.
-
-\begin{verbatim}
-\documentclass{beamer}
-
-\title{Example Presentation Created with the Beamer Package}
-\author{Till Tantau}
-\date{\today}
-
-\begin{document}
-
-\begin{frame}
-  \titlepage
-\end{frame}
-
-\section*{Outline}
-
-\begin{frame}
-  \tableofcontents
-\end{frame}
-
-\section{Introduction}
-\subsection{Overview of the Beamer Class}
-
-\begin{frame}
-  \frametitle{Features of the Beamer Class}
-
-  \begin{itemize}
-  \item<1-> Normal LaTeX class.
-  \item<2-> Easy overlays.
-  \item<3-> No external programs needed.      
-  \end{itemize}
-\end{frame}
-\end{document}
-\end{verbatim}
-
-Run |pdflatex| on this code (twice) and then use, for example, the
-Acrobat Reader to present the resulting |.pdf| file in a
-presentation. You can also, alternatively, use |dvips|; see
-Section~\ref{section-postscript} for details.
-
-As can be seen, the text looks almost like a normal \LaTeX\ text. The
-main difference is the usage of the |frame| environment. This
-environment will typically show its contents on a single
-slide. However, in case you use overlay commands inside a frame, a 
-single frame command may produce several slides. An example is the
-last frame in the above example. There, the |\item| commands
-are followed by \emph{overlay specifications} like |<1->|,
-which means ``from slide 1 on.'' Such a specification causes the item
-to be shown only on the specified slides of the frame (see
-Section~\ref{section-overlay} for details). In the above example, a
-total of five slides are produced: a title page slide, an outline
-slide, a slide showing only the first of the three items, a slide
-showing the first two of them, and a slide showing all three items.
- 
-To structure your text, you can use the commands |\section| and
-|\subsection|. These commands will not only create entries in the
-table of contents, but also in the navigation bars.
-
-
-\subsection{Getting Started with the Beamer Class and \texorpdfstring{\LyX}{LyX}}
-
-Once installed (see Section~\ref{section-installation}), using the
-\beamer\ class  together with \LyX\ is quite easy: You open a new file
-and choose |beamer| as the document class. It is often even easier to
-choose ``New from template'' and to pick a template from one of the
-subdirectories of the directory |beamer/solutions|. 
-
-To reproduce the example from the previous subsection in \LyX, proceed
-as follows:
-
+The list of features supported by \beamer\ is quite long (so is,
+presumably, the list of bugs sported by \beamer). The most important
+features, in my opinion, are:
 \begin{itemize}
 \item
-  Typeset the author and date the usual way, using the styles Author
-  and Date. The title page will then be created automatically.
+  You can use \beamer\ both with |pdflatex| and |latex|+|dvips|.
 \item
-  To insert the sections and subsections, use the usual Section and
-  Subsection styles.
+  The standard commands of \LaTeX\ still work. A |\tableofcontents| will
+  still create a table of contents, a |\section| is still used create
+  structure, and |itemize| still creates a list.
 \item
-  To insert the frame containing the table of contents, insert a line
-  of style BeginFrame. Since this frame has no title, do not write
-  anything on the line with style BeginFrame. Next, insert a line of
-  style Standard and use Insert $\rangle$ Insert TOC to insert the
-  table of contents. Optionally, end the frame using a line of style
-  EndFrame (the following Section style automatically closes the frame).
+  You can easily create overlays and dynamic effects.
 \item
-  To create the last frame, start a new frame using the style
-  BeginFrame. Write the frame title on the line having this
-  style.
+  Themes allow you to change the appearance of your presentation to
+  suit you purposes.
 \item
-  Use the Itemize style to create the itemized text.
+  The themes are designed to be usable in practice, they are not just
+  for show. You will not find such nonsense as green text on
+  a picture of a green meadow.
 \item
-  Add the overlay specifications (the texts like |<1->|) to the items
-  by entering \TeX-mode (press on the little \TeX\ icon) and writing
-  |<1->|. This \TeX\ text should be placed right at the beginning of
-  the item.
+  The layout, the colors, and the fonts used in a presentation can
+  easily be changed globally, but you still also have control over
+  the most minute detail.
 \item
-  You must end this frame using the style EndFrame (sadly, the end of
-  the document and also the beginning of the appendix do not
-  automatically end the last frame -- whereas the start of a frame,
-  section, part, or subsection does).
+  A special style file allows you to use the \LaTeX-source of a
+  presentation directly in other \LaTeX\ classes like |article| or
+  |book|. This makes it easy to create presentations out of lecture
+  notes or lecture notes out of presentations.
+\item
+  The final output is typically a \textsc{pdf}-file. Viewer
+  applications for this format exist for virtually every
+  platform. When bringing your presentation to a conference on a
+  memory stick, you do not have to worry about which version of the
+  presentation program might be installed there. Also, your
+  presentation is going to look exactly the way it looked on your
+  computer. 
 \end{itemize}
 
-Now use View $\rangle$ PDF to view the resulting presentation. On a
-slow machine, this may take a while. See Section~\ref{section-speedup}
-for ways of speeding up the compilation.
+
+\subsection{History}
+
+I created \beamer\ mainly in my spare time. Many other people have
+helped by writing me emails containing suggestions for improvement or
+corrections or patches or whole new themes (by now I have gotten over a
+thousand emails concerning \beamer). Indeed, most of the
+development was only initiated by feature requests and bug
+reports. Without this feedback, \beamer\ would still be what it was
+originally intended to be: a small private collection of macros that
+make using the |seminar| class easier. I created the first version of
+\beamer\ for my PhD defense presentation in February 2003. Month
+later, I put the package on \textsc{ctan} at the request of some
+colleagues. After that, things somehow got out of hand.
 
 
 
-\subsection{Solution Templates: Getting Going Quickly}
-
-In the subdirectories of the directory |beamer/solutions| you will
-find \emph{solution templates} in different languages. A solution
-template is a \TeX-text that ``solves'' a specific problem. Such a
-problem might be ``I need to create a 20 minute talk for a
-conference'' or ``I want to create a slide that introduces the next
-speaker'' or ``I want to create a table that is uncovered piecewise.''
-For such a problem, a solution template consists of a mixture of a
-template and an example that can be used to solve this particular
-problem. Just copy the solution template file (or parts of it) and
-freely adjust them to your needs.  
-
-The collecting of \beamer\ solution templates has only begun and
-currently there are only very few of them. I hope that in the future
-more solutions will become available and I would like to encourage
-users of the \beamer\ class to send me solutions they develop. I would
-also like to encourage users to help in translating solutions to
-languages other than English and German. If you have written a
-solution or a translation, please feel free to send it to me (make
-sure however, that it contains about the same amount of explanations
-and justifications as do the existing solutions).
 
 
 
 
 \subsection{How to Read this User's Guide}
 
-First a word of warning: This text has grown rather wildly and is by
-no means well-structured or well-written. Hopefully
-this will change in the future, ideally by this text being superceded
-by a good book on creating presentations in \LaTeX\ becoming available.
+You should start with this first part. If you have not yet installed
+the package, please read Section~\ref{section-installation} first. If 
+you are knew to \beamer, you should next read the tutorial in
+Section~\ref{section-tutorial}. When you set down to create you first
+real presentation using \beamer, read Section~\ref{section-workflow}
+where the technical details of a possible workflow are
+discussed. If you still new to creating presentations in general, you
+might find Section~\ref{section-guidelines} helpful, where many
+guidelines are given on what to do and what not to do. Finally, you
+should browse through Section~\ref{section-solutions}, where you will
+find ready-to-use solution templates for creating talks, possibly even
+in the language you intend to use.
 
-If you have not yet installed the package, please read
-Section~\ref{section-installation} first. If you do not have much
-experience with preparing presentations, the subsections named
-``Guidelines'' at the beginning of certain sections may be especially
-helpful. They contain 
-advice on how to create good presentations and do not refer
-specifically to the \beamer\ class. When you create your first
-presentation using \beamer, you might wish to read 
-Section~\ref{section-workflow} first, which outlines how you should
-proceed. The later sections explain the basic usage of the |beamer|
-class as well as advanced features. You can easily change the way your
-presentation looks by using an appropriate theme. The themes are
-documented in the third part of this user's guide.
+The second part of this user's guide goes into the details of all the
+commands defined in \beamer, but it also addresses other issues that
+have to do with creating a presentation (like how to include
+graphics or animations).
 
-In this guide you will find the descriptions of all ``public''
-commands provided by the |beamer| class. In each such
-description, the described command, environment, or option is printed 
-in red. Text shown in green is optional and can be left out.
+The third part explains how you can change the appearance of your
+presentation easily either using themes or by specifying colors or
+fonts for specific elements of a presentation (like, say, the font
+used for the numbers in an enumerate). 
 
-Whenever a \beamer\ solution template exists for a specific problem,
-this will be pointed out in the (sub-)section that treats the topic of
-this problem. 
+The last part contains ``howtos,'' which are explanations of how to
+get certain things done using \beamer.
 
+This user's guide contains descriptions of all ``public''
+commands provided by the |beamer| class. In each description, the
+described command, environment, or option is printed  in red. Text
+shown in green is optional and can be left out. 
 You will sometimes find one of the words \textsc{beamer},
 \textsc{article}, or \textsc{lyx} in blue in some description of a
 command or environment. The first indicates that the description
@@ -217,3 +124,10 @@ applies only to ``normal beamer operation in \LaTeX.'' The word
 special when you use \LyX\ to prepare your presentation.  
 
 
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

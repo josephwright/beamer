@@ -6,84 +6,6 @@
 
 \section{Graphics, Animations, Sounds, and Slide Transitions}
 
-\subsection{Guidelines}
-
-As always, I start this section with some guidelines on the usage
-of graphics and animations that I stick to. The technical issues are
-addressed in later subsections.
-
-
-\subsubsection{Graphics}
-
-\begin{itemize}
-\item
-  Graphics often convey concepts or ideas much more efficiently than
-  text: A picture can say more than a thousand words. (Although,
-  sometimes a word can say more than a thousand pictures.)
-\item
-  Put (at least) one graphic on each slide, whenever
-  possible. Visualizations help an audience enormously.
-\item
-  Usually, place graphics to the left of the text. (Use the
-  |columns| environment.) In a left-to-right reading culture, we look
-  at the left first.
-\item
-  Graphics should have the same typographic parameters as the
-  text: Use the same fonts (at the same size) in graphics as in the
-  main text. A small dot in a graphic should have exactly the same 
-  size as a small dot in a text. The line width should be the same as
-  the stroke width used in creating the glyphs of the font. For
-  example, an 11pt non-bold Computer Modern font has a stroke width of
-  0.4pt.
-\item
-  While bitmap graphics, like photos, can be much more colorful than the
-  rest of the text, vector graphics should follow the same ``color
-  logic'' as the main text (like black~= normal lines, red~= hilighted
-  parts, green~= examples, blue~= structure).
-\item
-  Like text, you should explain everything that is shown on a
-  graphic. Unexplained details make the audience puzzle whether this
-  was something important that they have missed. Be careful when
-  importing graphics from a paper or some other source. They usually
-  have much more detail than you will be able to explain and should be
-  radically simplified.
-\item
-  Sometimes the complexity of a graphic is intensional and you
-  are willing to spend much time explaining the graphic in great
-  detail. In this case, you will often run into the problem that fine
-  details of the graphic are hard to discern for the audience. In this
-  case you should use a command like |\framezoom| to create
-  anticipated zoomings of interesting parts of the graphic, see
-  Section~\ref{section-zooming}. 
-\end{itemize}
-
-
-
-
-\subsubsection{Animations and Special Effects}
-
-\begin{itemize}
-\item
-  Use animations to explain the dynamics of systems, algorithms, etc.
-\item
-  Do \emph{not} use animations just to attract the attention of your
-  audience. This often distracts attention away from the main topic of the
-  slide. No matter how cute a rotating,
-  flying theorem seems to look and no matter how badly you feel your
-  audience needs some action to keep it happy, most people in the
-  audience will typically feel you are making fun of them. 
-\item
-  Do \emph{not} use distracting special effects like ``dissolving''
-  slides unless you have a very good reason for using them. If you use
-  them, use them sparsely. 
-  They \emph{can} be useful in some situations: For example, you might
-  show a   young boy on a slide and might wish to dissolve this slide
-  into   slide showing a grown man instead. In this case, the
-  dissolving  gives the audience visual feedback that the young boy
-  ``slowly becomes'' the man. 
-\end{itemize}
-
-
 
 
 
@@ -659,6 +581,139 @@ assuming you have created graphic files named |animation.1| through to
   \multiinclude[start=1]{animation}
 \end{frame}
 \end{verbatim}
+
+
+
+
+\subsubsection{Including External Animations Residing in Multiple
+  Image Files}
+\label{section-xmpmulti}
+\label{section-mpmulti}
+
+Some animations reside in external files in the following way: For
+each stage of the animation there is an image file containing
+an image for this stage. You can include such a series of images
+conveniently by using the style |mpmulti.sty| from the ppower4
+package. This style, written by Klaus Guntermann, 
+introduces a command called |\multiinclude| that takes the base name
+of a graphic file like |mygraphic| and will then search for files
+called |mygraphic.0|, |mygraphic.1|, and so on, till no more files are
+found. It will then include these graphics files using the
+|\includegraphics| command, but will put these graphics ``on top of
+each other.'' Furthermore, and this is the important part,
+it inserts a |\pause| command after each graphic. This command is
+defined in the ppower4 package and has the same effect as the |\pause|
+command of \beamer. For this reason, both ppower4 and also \beamer\
+will first display the basic graphic and will then additionally show
+the next graphic on each slide.
+
+If you try to use |mpmulti.sty| directly, you will run into the
+problem that it includes a file called |pause.sty|, which is part of
+the ppower4 package. 
+
+You might also consider using the style |xmpmulti.sty| that comes with
+\beamer. This file is mainly identical to |mpmulti|, except for two
+differences: First, it does not include |pause.sty|, a style that
+conceptually clashes with \beamer, although \beamer\ contains a
+workaround that sidesteps the problem. Second, it extends the
+|\multiinclude| command by allowing a special default overlay
+specification to be given. The effect of this is explained below. 
+
+\begin{package}{{xmpmulti}}
+  Defines the command |\multiinclude|. The code of this package is
+  due to Klaus Guntermann with some additions of mine. It can used
+  together with \beamer\ and with ppower4, i.\,e., it can be used as a
+  replacement for |mpmulti| if the |pause| package is also included in
+  a ppower4-presentation. 
+\end{package}
+
+\begin{command}{\multiinclude\opt{|[<|\meta{default overlay
+        specification}|>]|}\oarg{options}\marg{base file name}}
+  Except for the possibility of specifying a \meta{default overlay
+    specification}, this command is identical to the |\multiinclude|
+  command from the ppower4 package.
+
+  If no overlay specification is given, the command will search for
+  files called \meta{base file name}|.|\meta{number} for increasing
+  numbers \meta{number}, starting with zero. As long as it finds these
+  files, it issues an |\includegraphics| command on them. The files
+  following the first one are put ``on top'' of the first one. Between
+  any two invocations of |\includegraphics|, a |\pause| command is
+  inserted. You can modify this behaviour is different ways by given
+  suitable \meta{options}, see below.
+
+  \example Assume that MetaPost has created files called |gra.0|,
+  |gra.1|, and |gra.2|. You can then create frame consisting of three
+  slides that incrementally show the graphic as follows:
+
+\begin{verbatim}
+\begin{frame}
+  \multiinclude{gra}
+\end{frame}
+\end{verbatim}
+  
+  The effect of providing a \meta{default overlay specification} is
+  the following: First, no |\pause| command is inserted between
+  graphics. Instead, each graphic is surrounded by an |actionenv|
+  environment with the overlay specification set to \meta{default
+    overlay specification}.
+
+  \example You can create the same effect as in the previous example
+  using |\multiinclude[<+->]{gra}|.
+
+  \example For a more interesting usage of the \meta{default overlay
+    specification}, consider the following usage:
+\begin{verbatim}
+\multiinclude[<alert@+| +->]{gra}
+\end{verbatim}
+  This will always paint the most recently added part of the graphic
+  in red (assuming you do not use special colors in the graphic
+  itself).
+
+  \example In order to have each graphic completely \emph{replace} the
+  previous one, you could use |\multiinclude[<+>]{gra}|.
+
+  The following \meta{options} may be given (these are the same as for
+  the original command from the ppower4 package):
+  \begin{itemize}
+  \item
+    \declare{|pause=|\meta{command}} replaces the default pausing
+    command |\pause| by \meta{command}. If a \meta{default overlay
+      specification} is given, the default pausing command is empty;
+    otherwise it is |\pause|. Note that commands like |\pauselevel|
+    are not available in |\beamer|.
+  \item
+    \declare{|graphics=|\meta{options}} passes the \meta{options} to
+    the |\includegraphics| command.
+
+    \example |\multiinclude[graphics={height=5cm}]{gra}|
+  \item
+    \declare{|format=|\meta{extension}} will cause the file names for
+    which we search change from \meta{base file name}|.|\meta{number}
+    to \meta{base file name}|-|\meta{number}|.|\meta{extension}. Note
+    the change from the dot to a hyphen. This option allows you to
+    include, say, |.jpg| files.
+  \item
+    \declare{|start=|\meta{number}} specifies the start
+    \meta{number}. The default is zero.
+  \item
+    \declare{|end=|\meta{number}} specifies the end 
+    \meta{number}. The default is infinity.
+  \end{itemize}  
+\end{command}
+
+Note that, if you do not use the |format=| option, the
+|\includegraphics| command will be somewhat at a loss in which format
+your graphic file actually is. After all, it end with the cryptic
+``format suffix'' |.0| or |.1|. You can tell |\includegraphics| that
+any file having a suffix it knows nothing about is actually in format,
+say, |.mps|, using the following command:
+\begin{verbatim}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\end{verbatim}
+
+
+
 
 
 

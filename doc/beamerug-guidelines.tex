@@ -1,0 +1,887 @@
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\section{Guidelines for Creating Presentation}
+
+
+\label{section-guidelines}
+
+In this section I sketch the guidelines that I try to stick to when I
+create presentations. These guidelines either arise out of experience,
+out of common sense, or out of recommendations by other people or
+books. These rules are certainly not intended as commandments that, if
+not followed, will result in catastrophe. The central rule of
+typography also applies to creating presentations: \emph{Every rule
+  can be broken, but no rule may be ignored.} 
+
+
+
+
+\subsection{Structuring a Presentation}
+
+\label{section-structure-guidelines}
+
+
+
+\subsubsection{Know the Time Constraints}
+
+When you start to create a presentation, the very first thing you
+should worry about is the amount of time you have for your
+presentation. Depending on the occasion, this can
+be anything between 2 minutes and two hours. A simple rule for the
+number of frames is that you should have at most one frame per
+minute.
+
+In most situations, you will have less time for your presentation that
+you would like. \emph{Do not try to squeeze more into a
+  presentation than time allows for.} No matter how important some
+detail seems to you, it is better to leave it out, but get the main
+message across, than getting neither the main message nor the detail
+across. 
+
+In many situations, a quick appraisal of how much time you have will
+show that you won't be able to mention certain details. Knowing this can
+save you hours of work on preparing slides that you would have to remove
+later anyway.
+
+
+
+\subsubsection{Global Structure}
+
+To create the ``global structure'' of a presentation, with the time
+constraints in mind, make a mental inventory of the 
+things you can reasonably talk about within the time available. Then
+categorize the inventory into sections and subsections. For very long
+talks (like a 90 minute lecture), you might also divide your talk into
+independent parts (like a ``review of the previous lecture part'' and
+a ``main part'').  Do not feel afraid to change it later on as you
+work on the talk.  
+
+
+
+\paragraph{Parts, Section, and Subsections.}
+
+You should not use more than four sections and not less than two per
+part. Even four sections are usually too much, unless they follow 
+a very easy pattern. Five and more sections are simply too hard to
+remember for the audience. After all, when you present the table of
+contents, the audience will not yet really be able to grasp the
+importance and relevance of the different sections and will most
+likely have forgotten them by the time you reach them.
+
+Ideally, a table of contents should be understandable by itself. In
+particular, it should be comprehensible \emph{before} someone has
+heard your talk. Keep section and subsection titles
+self-explaining. Note that each part has its own table of contents. 
+
+Both the sections and the subsections should follow a logical
+pattern. Begin with an explanation of what your talk is all about. (Do
+not assume that everyone knows this. The Ignorant Audience Law states:
+The audience always knows less than you think it should know, even if
+you take the Ignorant Audience Law into account.) Then explain what
+you or someone else has found out concerning the subject
+matter. Always conclude your talk with a summary that repeats the main
+message of the talk in a short and simple way. People pay most
+attention at the beginning and at the end of talks. The summary is
+your ``second chance'' to get across a message.
+
+You can also add an appendix part using the |\appendix| command. Put
+everything into this part that you do not actually intend to talk
+about, but that might come in handy when questions are asked.
+
+
+
+\paragraph{Numbered Theorems and Definitions.}
+
+A common way of globally structuring (math) articles and books is to
+use consecutively numbered definitions and theorems. Unfortunately,
+for presentations the situtation is a bit more complicated and I would
+like to discourage using numbered theorems in presentations. The
+audience has no chance of remembering these numbers. \emph{Never} say
+things like ``now, by Theorem~2.5 that I showed you earlier, we have
+\dots'' It would be much better to refer to, say, Kummer's Theorem
+instead of Theorem~2.5. If Theorem~2.5 is some obscure theorem that
+does not have its own name (unlike Kummer's Theorem or Main Theorem or
+Second Main Theorem or Key Lemma), then the audience will have
+forgotten about it anyway by the time you refer to it again.
+
+In my opinion, the only situtation in which numbered theorems make
+sense in a presentation is in a lecture, in which the students can read
+lecture notes in parallel to the lecture where the theorems are
+numbered in exactly the same way.
+
+If you do number theorems and definition, number everything
+consecutively. Thus if there are one theorem, one lemma, 
+and one definition, you would have Theorem~1, Lemma~2, and
+Definition~3. Some people prefer all three to be numbered~1. I would
+\emph{strongly} like to discourage this. The problem is that this
+makes it virtually impossible to find anything since Theorem~2 might
+come after Definition~10 or the other way round. Papers and, worse,
+books that have a Theorem~1 and a Definition~1 are a pain. Do not
+inflict pain on other people. 
+
+
+
+\paragraph{Bibliographies.}
+
+You may also wish to present a bibliography at the end of your talk,
+so that people can see what kind of ``further reading'' is possible. 
+When adding a bibliography to a presentation, keep the following in mind:
+
+\begin{itemize}
+\item
+  It is a bad idea to present a long bibliography in a 
+  presentation. Present only very few references. (Naturally, this
+  applies only to the talk itself, not to a possible handout.)
+\item
+  If you present more references than fit on a single slide you can be 
+  almost sure that none of them will not be remembered. 
+\item
+  Present references only if they are intended as ``further reading.''
+  Do not present a list of all things you used like in a paper.
+\item
+  You should not present a long list of all your other great papers
+  \emph{except} if you are giving an application talk.
+\item
+  Using the |\cite| commands can be confusing since the audience
+  has little chance of remembering the citations. If you cite the
+  references, always cite them with full author name and year like
+  ``[Tantau, 2003]'' instead of something like ``[2,4]'' or
+  ``[Tan01,NT02]''.
+\item
+  If you want to be modest, you can abbreviate your name when citing
+  yourself as in ``[Nickelsen and T., 2003]'' or ``[Nickelsen and T,
+  2003]''. However, this can be confusing for the audience since it is
+  often not immediately clear who exactly ``T.'' might be. I recommend
+  using the full name.
+\end{itemize}
+
+
+
+
+\subsubsection{Frame Structure}
+
+\label{section-frame-guidelines}
+\label{section-guidelines-local}
+
+Just like your whole presentation, each frame should also be
+structured. A frame that is solely filled with some long text is very
+hard to follow. It is your job to structure the contents of each frame
+such that, ideally, the audience immediately seems which information
+is important, which information is just a detail, how the presented
+information is related, and so on.
+
+
+
+\paragraph{The Frame Title}
+
+\begin{itemize}
+\item
+  Put a title on each frame. The title explains the contents of the
+  frame to people who did not follow all details on the slide.
+\item
+  The title should really \emph{explain} things, not just give a
+  cryptic summary that cannot be understood unless one has understood
+  the whole slide. For example, a title like ``The Poset'' will have
+  everyone puzzled what this slide might be about. Titles like
+  ``Review of the Definition of Partially Ordered Sets (Posets)'' or
+  ``A Partial Ordering on the Columns of the Genotype Matrix'' are
+  \emph{much} more informative.
+\item
+  Ideally, titles on consecutive frames should ``tell a story'' all by
+  themselves.
+\item
+  In English, you should \emph{either} \emph{always} capitalize all words in
+  a frame title except for words like ``a'' or ``the'' (as in a
+  title), \emph{or} you \emph{always} use the normal lowercase
+  letters. Do \emph{not} mix this; stick to one rule. The same is true
+  for block titles. For example, do not use titles like ``A short
+  Review of Turing machines.'' Either use ``A Short Review of Turing
+  Machines.'' or ``A short review of Turing machines.'' (Turing is
+  still spelled with a capital letter since it is a name).
+\item
+  In English, the title of the whole document should be
+  capitalized, regardless of whether you capitalize anything else.
+\item
+  In German and other languages that have lots of capitalized words,
+  always use the correct upper-/lowercase letters. Never capitalize
+  anything in addition to what is usually capitalized.
+\end{itemize}
+
+
+
+\paragraph{How Much Can I Put On a Frame?}
+
+\begin{itemize}
+\item
+  A frame with too little on it is better than a frame with too much
+  on it. A usual frame should have between 20 and 40 words. The
+  maximum should be at about 80 words.
+\item
+  Do not assume that everyone in the audience is an expert on the
+  subject matter. Even if the
+  people listening to you should be experts, they may last have heard
+  about things you consider obvious several years ago. You should
+  always have the time for a quick reminder of what exactly a
+  ``semantical complexity class'' or an ``$\omega$-complete partial
+  ordering'' is.
+\item
+  Never put anything on a slide that you are not going to explain
+  during the talk, not even to impress anyone with how
+    complicated your subject matter really is. However, you may
+  explain things that are not on a slide.
+\item
+  Keep it simple. Typically, your audience will see a slide for less
+  than 50 seconds. They will not have the time to puzzle through long
+  sentences or complicated formulas.
+\item
+  Lance Forthnow claims: PowerPoint users give better talks. His
+  reason: Since PowerPoint is so bad at typesetting math, they use
+  less math, making their talks easier to understand.
+
+  There is some truth in this in my opinion. The great
+  math-typesetting capabilities of \TeX\ can easily lure you into
+  using many more formulas than is necessary and healthy. For example,
+  instead of writing {\catcode `|=12``Since $\left|\{x \in \{0,1\}^*
+  \mid x \sqsubseteq y\}\right| < \infty$}, we have\dots''\ use ``Since
+  $y$ has only finitely many prefixes, we have\dots''
+
+  You will be suprised how much mathematical text can be reformulated
+  in plain English or can just be omitted. Naturally, if some
+  mathematical argument is what you are actually talking about, as in
+  a math lecture, make use of \TeX's typesetting capabilities to your
+  heart's content. 
+\end{itemize}
+
+
+
+\paragraph{Structuring a Frame}
+
+\begin{itemize}
+\item
+  Use block environments like |block|, |theorem|, |proof|, |example|,
+  and so on.
+\item
+  Prefer enumerations and itemize environments over plain text.
+\item
+  Use |description| when you define several things.
+\item
+  Do not use more than two levels of ``subitemizing.'' \beamer\
+  supports three levels, but you should not use that third level.
+\item
+  Never put more than five items in an |itemize| or an
+  |enumerate|. Thus, you need \emph{two} frames to present the Ten
+  Commandmends.
+\item
+  Emphasis is an important part of creating structure. Use |\alert| to
+  highlight important things. This can be a single word or a whole
+  sentence. However, do not overuse hilighting since this will negate
+  the effect.
+\item
+  Use columns.
+\item
+  \emph{Never} use footnotes. They needlessly disrupt the flow of
+  reading. Either what is said in the footnote is important and should
+  be put in the normal text; or it is not important and should be
+  omitted (\emph{especially} in a presentation).
+\item
+  Use |quote| or |quotation| to typeset quoted text.
+\item
+  Do not use the option |allowframebreaks| except for long
+  bibliographies. Do not use long bibliographies.
+\end{itemize}
+
+
+
+
+\paragraph{Writing the Text}
+
+\begin{itemize}
+\item
+  Use short sentences.
+\item
+  Prefer phrases over complete sentences. For example,
+  instead of ``The figure on the left shows a Turing machine, the
+  figure on the right shows a finite automaton.''\ try ``Left: A Turing
+  machine. Right: A finite automaton.'' Even better, turn this into an
+  itemize or a description.
+\item
+  Punctuate correctly: no punctuation after phrases, complete
+  punctuation in and after complete sentences.
+\item
+  \emph{Never} use a smaller font size to ``fit more on a frame.''
+  \emph{Never ever} use the \emph{evil} option |shrink|.
+\item
+  Do not hyphenate words. If absolutely necessary, hyphenate words
+  ``by hand,'' using the command~|\-|.
+\item
+  Break lines ``by hand'' using the command~|\\|. Do not rely on
+  automatic line breaking. Break where there is a logical pause. For 
+  example, good breaks in ``the tape alphabet is larger
+  than the input alphabet'' are before ``is'' and before the second
+  ``the.'' Bad breaks are before either ``alphabet'' and before
+  ``larger.''
+\item
+  Text and numbers in figures should have the \emph{same} size as
+  normal text. Illegible numbers on axes usually ruin a chart and its
+  message.
+\end{itemize}
+
+
+
+
+\subsubsection{Interactive Elements}
+
+Ideally, during a presentation you would like to present your
+slides in a perfectly linear fashion, presumably by pressing the
+page-down-key once for each slide. However, there are different
+reasons why you might have to deviate from this linear order:
+\begin{itemize}
+\item
+  Your presentation may contain ``different levels of detail'' that
+  may or may not be skipped or expanded, depending on the audience's
+  reaction.
+\item
+  You are asked questions and wish to show supplementary slides.
+\item
+  You present a complicated picture and you have to ``zoom out''
+  different parts to explain details.
+\item
+  You are asked questions about an earlier slide, which forces you to 
+  find and then jump to that slide.
+\end{itemize}
+You cannot really prepare against the last kind of questions. In this
+case, you can use the navigation bars and symbols to find the slide
+you are interested in, see \ref{section-navigation-bars}.
+
+Concerning the first three kinds of deviations, there are several
+things you can do to prepare ``planned detours'' or ``planned
+short cuts''.
+\begin{itemize}
+\item
+  You can add ``skip buttons.'' When such a button
+  is pressed, you jump over a well-defined part of your talk. Skip
+  button have two advantages over just pressing the forward key
+  is rapid succession: first, you immediately end up at the correct
+  position and, second, the button's label can give the audience a
+  visual feedback of what exactly will be skipped. For example, when
+  you press a skip button labeled ``Skip proof'' nobody will start
+  puzzling over what he or she has missed.
+\item
+  You can add an appendix to your talk. The appendix is kept
+  ``perfectly separated'' from the main talk. Only once you ``enter''
+  the appendix part (presumably by hyperjumping into it), does the
+  appendix structure become visible. You can put all frames that you
+  do not intend to show during the normal course of your talk, but
+  which you would like to have handy in case someone asks, into this
+  appendix.
+\item
+  You can add ``goto buttons'' and ``return buttons'' to create
+  detours. Pressing a goto button will jump to a certain part of the
+  presentation where extra details can be shown. In this part, there
+  is a return button present on each slide that will jump back to the
+  place where the goto button was pressed.
+\item
+  In \beamer, you can use the |\againframe| command to ``continue''
+  frames that you previously started somewhere, but where certain
+  details have been suppressed. You can use the |\againframe| command
+  at a much later point, for example only in the appendix to show
+  additional slides there.
+\item
+  In \beamer, you can use the |\framezoom| command to create links to
+  zoomed out parts of a complicated slide.
+\end{itemize}
+
+
+
+
+
+\subsection{Using Graphics}
+
+Graphics often convey concepts or ideas much more efficiently than
+text: A picture can say more than a thousand words. (Although,
+sometimes a word can say more than a thousand pictures.) 
+
+\begin{itemize}
+\item
+  Put (at least) one graphic on each slide, whenever
+  possible. Visualizations help an audience enormously.
+\item
+  Usually, place graphics to the left of the text. (Use the
+  |columns| environment.) In a left-to-right reading culture, we look
+  at the left first.
+\item
+  Graphics should have the same typographic parameters as the
+  text: Use the same fonts (at the same size) in graphics as in the
+  main text. A small dot in a graphic should have exactly the same 
+  size as a small dot in a text. The line width should be the same as
+  the stroke width used in creating the glyphs of the font. For
+  example, an 11pt non-bold Computer Modern font has a stroke width of
+  0.4pt.
+\item
+  While bitmap graphics, like photos, can be much more colorful than the
+  rest of the text, vector graphics should follow the same ``color
+  logic'' as the main text (like black~= normal lines, red~= hilighted
+  parts, green~= examples, blue~= structure).
+\item
+  Like text, you should explain everything that is shown on a
+  graphic. Unexplained details make the audience puzzle whether this
+  was something important that they have missed. Be careful when
+  importing graphics from a paper or some other source. They usually
+  have much more detail than you will be able to explain and should be
+  radically simplified.
+\item
+  Sometimes the complexity of a graphic is intensional and you
+  are willing to spend much time explaining the graphic in great
+  detail. In this case, you will often run into the problem that fine
+  details of the graphic are hard to discern for the audience. In this
+  case you should use a command like |\framezoom| to create
+  anticipated zoomings of interesting parts of the graphic, see
+  Section~\ref{section-zooming}. 
+\end{itemize}
+
+
+
+\subsection{Using Animations and Page Transitions}
+
+\begin{itemize}
+\item
+  Use animations to explain the dynamics of systems, algorithms, etc.
+\item
+  Do \emph{not} use animations just to attract the attention of your
+  audience. This often distracts attention away from the main topic of the
+  slide. No matter how cute a rotating,
+  flying theorem seems to look and no matter how badly you feel your
+  audience needs some action to keep it happy, most people in the
+  audience will typically feel you are making fun of them. 
+\item
+  Do \emph{not} use distracting special effects like ``dissolving''
+  slides unless you have a very good reason for using them. If you use
+  them, use them sparsely. 
+  They \emph{can} be useful in some situations: For example, you might
+  show a   young boy on a slide and might wish to dissolve this slide
+  into   slide showing a grown man instead. In this case, the
+  dissolving  gives the audience visual feedback that the young boy
+  ``slowly becomes'' the man. 
+\end{itemize}
+
+
+
+
+\subsection{Choosing an Appropriate Theme}
+
+\beamer\ comes with a number of different themes. When choosing a
+theme, keep the following in mind:
+
+\begin{itemize}
+\item
+  Different themes are appropriate for different occasions. Do not
+  become too attached to a favorite theme; choose a 
+  theme according to occasion.
+\item
+  A longer talk is more likely to require navigational hints
+  than a short one. When you give a 90 minute lecture to students, you
+  should choose a theme that always shows a sidebar with the current
+  topic hilighted so that everyone always knows exactly what's the
+  current ``status'' of your talk is; when you give a ten-minute
+  introductory speech, a table of contents is likely to just seem
+  silly.
+\item
+  A theme showing the author's name and affiliation is appropriate in
+  situation where the audience is likely not to know you (like during
+  a conference). If everyone knows you, having your name on each slide
+  is just vanity. 
+\item
+  First choose a presentation theme that has a layout that is
+  appropriate for your talk.
+\item
+  Next you might wish to change the colors by installing a different
+  color theme. This can drastically change the appearance of your
+  presentation. A ``colorful'' theme like |Berkeley| will look much
+  less flashy if you use the color themes |seahorse| and |lily|. 
+\item
+  You might also wish to change the fonts by installing a different
+  font theme.
+\end{itemize}
+
+
+
+\subsection{Choosing Appropriate Colors}
+
+\begin{itemize}
+\item
+  Use colors sparsely. The prepared themes are already quite
+  colorful (blue~= structure, red~= alert, green~= example). If you
+  add more colors for things like code, math text, etc., you should
+  have a \emph{very} good reason. 
+\item
+  Be careful when using bright colors on white background,
+  \emph{especially} when using green. What looks good on your monitor
+  may look bad during a presentation due to the different ways
+  monitors, beamers, and printers reproduce colors. Add lots of black
+  to pure colors when you use them on bright backgrounds.
+\item
+  Maximize contrast. Normal text should be black on white or at least
+  something very dark on something very bright. \emph{Never} do things
+  like ``light green text on not-so-light green background.''
+\item
+  Background shadings decrease the legibility without increasing the
+  information content. Do not add a background shading just because it
+  ``somehow looks nicer.'' 
+\item
+  Inverse video (bright text on dark background) can be a problem
+  during presentations in bright environments since only a small
+  percentage of the presentation area is light up by the
+  beamer. Inverse video is harder to reproduce on printouts and on
+  transparencies. 
+\end{itemize}
+
+
+
+
+
+
+\subsection{Choosing Appropriate Fonts and Font Attributes}
+
+A font has numerous attributes like weight, family, or size. All of
+these have an impact on the usability of the font in
+presentations. In the following, these attributes are described and
+advantages and disadvantages of the different choices are sketched.
+A description of how to actually change font attributes globally or
+locally is given in the next sections.
+
+
+\subsubsection{Font Size}
+
+\label{section-sizes}
+
+Perhaps the most obvious attribute of a font is its size. Fonts are
+traditionally measured in ``points.'' How much a point is depends on
+whom you ask. \TeX\ thinks a point is the 72.27th part of an inch,
+which is 2.54 cm. On the other hand, PostScript and Adobe think a
+point is the 72th part of an inch (\TeX\ calls this a big point). The
+are differences between American and European points. Once it is
+settled how much a point is, claiming that a text is in ``11pt'' means
+that the ``height'' of the letters in the font are 11pt. However, this
+``height'' stems from the time when letters where still cast in lead
+and refers to the the vertical size of the lead letters. It thus does
+not need to have any correlation with the actual height of, say, the
+letter x or even the letter M. The letter x of an 11pt Times from
+Adobe will have a different height than the letter x of an 11pt Times
+from UTCs and it will have a totally different height than the letter
+x of an 11pt Helvetica from Adobe.
+
+Summing up, the font size has little to do with the actual size of
+letters. Rather, these days it is a convention that 10pt or 11pt is
+the size a font should be printed for ``normal reading.'' Fonts are
+designed so that they can optimally be read at these sizes.
+
+In a presentation the classical font sizes obviously loose their
+meaning. Nobody could read a projected text if it were actually
+11pt. Instead, the projected letters need to be several centimeters
+high. Thus, it does not really make sense to specify ``font sizes''
+for presentations in the usual way. Instead, you should try to think
+of the number of lines that will fit on a slide if you were to fill
+the whole slide with line-by-line text (you are never going to do that
+in practice, though). Depending on how far your audience is removed
+from the projection on on large the projection is, between 10 and 20
+lines should fit on a slide. The less lines, the more readable your
+text will usually be.
+
+In \beamer, the default sizes of the fonts are chosen in a way that
+makes it difficult to fit ``too much'' onto a slide. Also, it will
+ensure that your slides are readable even under bad conditions like a
+large room and a small only a small projection area. However, you may
+wish to enlarge or shrink the fonts a bit if you know this to be more
+appropriate in your presentation environment.
+
+Once the size of the normal text is settled, all other sizes are
+usually defined relative to that size. For this reason, \LaTeX\ has 
+commands like |\large| or |\small|. The actual size these commands
+select depends on the size of normal text.
+
+In a presentation, you will want to use a very small font for text in
+headlines, footlines, or sidebars since the text shown there is not
+vital and is read at the audience leasure. Naturally, the text should
+still be large enough that it actually \emph{can} be read without
+binoculars. However, in a normal presentation environment the audience
+will still be able to even |\tiny| text from time to time.
+
+However, using small fonts can be tricky. Many PostScript fonts are
+just scaled down when used at small sizes. When a font is
+used at less than its normal size, the characters should actually be
+stroked using a slightly thicker ``pen'' than the one would expect
+when just scaling down characters. For this reason, high quality
+multiple master fonts or the Computer Modern fonts use a differents
+fonts for small characters and for normal characters. However, when
+you use a normal Helvetica or Times font, the characters are just
+scaled down. A similar problem arises when you use a light font on a
+dark background. Even when printed on paper in high resolution,
+light-on-dark text tends to be ``overflooded'' by the dark
+background. When light-on-dark text is rendered in a presentation this
+effect can be much worse, making the text almost impossible to read.
+
+You can counter both nagative effects by using a bold versions for
+small text.
+
+In the other direction, you can use larger text for titles. However,
+using a larger font does not always have the desired effect. Just
+because a frame title is printed in large letters does not
+mean that is read first. Indeed, have a look at the cover of your
+favorite magazine. Most likely, the magazine's name is the typeset in the
+largest font, but you your attention will nevertheless first go to the
+topics advertised on the cover. Likewise, in the table of contents you
+are likely to first focus on the entries, not on the words ``Table of
+Contents.'' Most likely, you would not spot a spelling mistake there
+(a friend of mine actually managed to misspell \emph{his own name} on
+the cover of his master's thesis and nobody noticed until a year
+later). In essence, large text at the top of a page signals
+``unimportant since I know what to expect.'' So, instead of using a
+very large frame title, also consider using a normal size frame title
+that is typeset in bold or in italics. 
+
+
+
+
+
+\subsubsection{Font Families}
+
+The other central property of any font is its family. Examples of font
+families are Times or Helvetica or Futura. As the name suggests, a lot
+of different fonts can belong to the same family. For example, Times
+comes in different sizes, there is a bold version of Times, an
+italics version, and so on. To confuse matters, font families like
+Times are often just called the ``font Times.''
+
+The are two large classes of font families: serif fonts and
+sans-serif fonts. A sans-serif font is a font in
+which the letters do not have serifs (from French \emph{sans}, which
+means ``without''). Serifs are the little hooks at the ending of the
+strokes that make up a letter. The font you are currently reading is a
+serif font. \textsf{By comparison, this text is in a sans-serif font.}
+Sans-serif fonts are (generally considered to be) easier to read
+when used in a presentation. In low resolution rendering, serifs
+decrease the legibility of a font. However, on projectors with very
+high resolution serif text is just as readable as sans-serif text. A
+presentation typeset in a serif font creates a more conservative
+impression, which might be exactly what you wish to create. 
+
+Most likely, you'll have a lot of different font families preinstalled
+on you system. The default font used by \TeX\ (and \beamer) is the
+Computer Modern font. It  is the original font family designed by Donald
+Knuth himself for the \TeX\ program. It is a mature font that comes
+with just about everything you could wish for: extensive mathematical
+alphabets, outline PostScript versions, real small caps, real oldstyle
+numbers, specially designed small and large letters, and so on.
+
+However, there are reasons using other font families than Computer
+Modern: 
+\begin{itemize}
+\item
+  The Computer Modern fonts are a bit boring if you have seen them too
+  often. Using another font (but not Times!) can give a fresh look.
+\item
+  Other fonts, especially Times and Helvetica, are sometime rendered
+  better since they seem to have better internal hinting.
+\item
+  The sans-serif version of Computer Modern is not nearly as
+  well-designed as the serif version. Indeed, the sans-serif version
+  is, in essence, the serif version with different design parameters,
+  not an independent design.
+\item
+  Computer modern needs much more space than more economic fonts like
+  Times (this explains why Times is so popular with people who need
+  to sqeeze their great paper into just twelve pages). To be fair,
+  Times was specifically designed to be economic.
+\end{itemize}
+
+A small selection of alternatives to Computer Modern:
+\begin{itemize}
+\item
+  Helvetica is a very often-used alternative. However, Helvetica also
+  tends to look boring (since we see it everywhere) and it has a very
+  large x-height (the height of the letter~x in comparison to a letter
+  like~M). A large x-height is usually considered good for languages
+  (like English) that use uppercase letters seldomly and not-so-good
+  for languages (like German) that use uppercase letters a lot. (I
+  have never been quite convinced by the argument for this, though.)
+  Be warned: the x-height of Helvetica is so different from the
+  x-height of Times that mixing the two in a single line looks
+  strange.
+\item
+  Futura is, in my opinion, a beautiful font that is very well-suited
+  for presentations. It's thick letters make it robust against
+  scaling, inversion, and low contrast. Unfortunately, while it is
+  most likely installed on your system somewhere in some for, getting
+  \TeX\ to work with it is a complicated process.
+\item
+  Times is a possible alternative to Computer Modern. Its main
+  disadvantage is that it is a serif font, which requires a
+  high-resolution projector. Naturally, it also used very often, so we
+  all know it very well.
+\end{itemize}
+
+Families that you should \emph{not} use for normal text include:
+\begin{itemize}
+\item
+  All monospaced fonts (like Courier).
+\item
+  Script fonts (which look like handwriting). Their stroke width is
+  way too small for a presentation.
+\item
+  More delicate serif fonts like Stempel and possibly even Garamond.
+\item
+  Gothic fonts. Only a small fraction of your audience will be able to
+  read them fluently. 
+\end{itemize}
+
+There is one popular font that is a bit special: Microsoft's Comic
+Sans. On the one hand, there is a website lobbying for banning the use
+of this font. Indeed, the main trouble with the font is that it is not
+particularly well-readable and that math typeset partly using this
+font looks terrible. On the other hand, this font \emph{does} create
+the impression of a slide ``written by hand,'' which gives the
+presentation a natural look. Think twice before using this font, but
+do not let yourself be intimidated.
+
+One of the most important rules of typography is that you should use
+as little fonts as possible in a text. In particular, typographic
+wisdom dictates that you should not use more than two different
+families on one page. However, when typesetting
+mathematical text, it is often necessary and useful to use different
+font families. For example, it used to be common practice to use
+Gothic letters do denote vectors. Also, program texts are often
+typeset in monospace fonts. If your audience is used to a certain font
+family for a certain type of text, use that family, regardless of what
+typographic wisdom says.
+
+A common practice in typography is to use a sans serif fonts for
+titles and serif fonts for normal text (check your favorite
+magazine). You can \emph{also} use two different sans serif fonts or
+two differen serif fonts, but you then have to make sure that the
+fonts look ``sufficiently different.'' If they look only slightly
+different, the page will look ``somehow strange,'' but the audience
+will not be able to tell why. For example, do not mix Arial and
+Helvetica (they are almost identical) or Computer Modern and
+Baskerville (they are quite similar). A combination of Gills Sans and
+Helvetica is dangerous but perhaps possible. A combination like Futura
+and Optima is certainly ok, at least with respect to the fonts being
+very different.
+
+
+
+
+\subsubsection{Font Shapes: Italics and Small Capitals}
+
+\label{section-italics}
+\label{section-smallcaps}
+
+\LaTeX\ introduces the concept of the \emph{shape} of a font. The only
+really important ones are italic and small caps.
+An \emph{italic} font is a font in which the text is slightly slanted
+to the right \emph{like this}. Things to know about
+italics:
+\begin{itemize}
+\item
+  Italics are commonly used in novels to express emphasis. However,
+  especially with sans-serif fonts, italics are typically not ``strong
+  enough'' and the emphasis gets lost. Using a different color or bold
+  text seems better suited for presentations to create emphasis.
+\item
+  If you look closely, you'll notice that italic text is not only
+  slanted but that different letters are actually used (compare a and
+  \emph{a}, for example). However, this is only true for serif text,
+  not for sans-serif text. Text that is only slanted without using
+  different characters is called  ``slanted'' instead of ``italic.''
+  Sometimes, the word ``oblique'' is also used for slanted, but it
+  sometimes also used for italics, so it is perhaps best to avoid
+  it. Using slanted serif text is very much frowned upon by
+  typographers and is considered ``cheap computer typography.''
+  However, people who use slanted text in their books include Donald
+  Knuth.
+
+  In a presentation, if you go into the trouble of using a serif font
+  for some part of it, you should also use italics, not slanted text.
+\item
+  The different characters used for serif italics have changed much
+  less  from the original handwritten letters they are based on than
+  normal serif text. For this reason, serif italics creates the
+  impression of handwritten text, which may be desirable to give a
+  presentation a more ``personal touch'' (although you can't get very
+  personal using Times italics, which everyone has seen a thousand
+  times). However, it is harder to read than normal text, so do not
+  use it for text more than a line long.
+\end{itemize}
+
+The second font shape supported by \TeX\ are small capital
+letters. Using them can create a conservative, even formal
+impression, but some words of caution:
+
+\begin{itemize}
+\item
+  Small capitals are different from all-uppercase text. A small caps
+  text leaves normal uppercase letters unchanged and uses smaller
+  versions of the uppercase letters for normal typesetting lowercase
+  letters. Thus the word ``German'' is typeset as \textsc{German}
+  using small caps, but as \uppercase{German} using all uppercase
+  letters.
+\item
+  Small caps either come as ``faked'' small caps or as ``real''
+  small caps. Faked small caps are created by just scaling down
+  normal uppercase letters. This leads to letters the look too
+  thin. Real small caps are specially designed smaller versions of
+  the uppercase letters that have the same stroke width as normal
+  text.
+\item
+  Computer Modern fonts and expert version of PostScript fonts come
+  with real small caps (though the small caps of Computer Modern are
+  one point size too large for some unfathomable reason---but your
+  audience is going to pardon this since it will not notice
+  anyway). ``Simple'' PostScript fonts like Helvetica or Times only
+  come with faked small caps.
+\item
+  Text typeset in small caps is harder to read than normal text. The
+  reason is that we read by seeing the ``shape'' of words. For
+  example, the word ``shape'' is mainly recognized by seing one
+  normal letter, one ascending letter, a normal letter, one
+  descending letter, and a normal letter. One has much more trouble
+  spotting a misspelling like ``shepe''  than ``spape''. Small caps
+  destroy the shape of words since \textsc{shape}, \textsc{shepe}
+  and \textsc{spape} all have the same shape, thus making it much
+  harder to tell them apart. You audience will read small caps more
+  slowly than normal text. This is, by the way, why legal
+  disclaimers are often written in uppercase letters: not to make
+  them appear more important to you, but to make them much harder to
+  actually read.
+\end{itemize}
+
+
+
+\subsubsection{Font Weight}
+
+The ``weight'' of a font refers to the thickness of the
+letters. Usually, font come as regular or as bold fonts. There often
+also exist semibold, ultrabold (or black), thin, or ultrathin
+versions.
+
+In typography, using a bold font to create emphasis, especially within
+normal text, is frowned upon (bold words in the middle of a normal
+text are refered to as ``dirt''). For presentations this rule of not
+using bold text does not really apply. On a presentation slide there
+is usually very little text and there are numerous elements that try
+to attract the viewer's attention. Using the traditional italics to
+create emphasis will often be overlooked. So, using bold text, seems a
+good alternative in a presentation. However, an even better
+alternative is using a bright color like red to attract attention.
+
+As pointed out earlier, you should use bold text for small text
+unless you use an especially robust font like Futura.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

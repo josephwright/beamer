@@ -6,16 +6,10 @@
 
 
 
-\section{Tips and (Dirty) Tricks}
-
-The aim of this section is to collect some hints and tricks that make
-use of the basic \beamer\ class concepts.
+\section{How To Uncover Things Piecewise}
 
 
-
-\subsection{Piecewise Uncovering}
-
-\subsubsection{Uncovering an Enumeration Piecewise}
+\subsection{Uncovering an Enumeration Piecewise}
 
 A common usage of overlays is to show a list of points in an
 enumeration in a piecewise fashion. The easiest and most flexible way
@@ -55,25 +49,23 @@ Now, suppose you wish the second and third point to be shown at the
 same time. You could achieve this by adding the specificaiton |<2->|
 to either the second or third |\item| command. However, then you still
 have to do some renumbering if you add a new item at the beginning. A
-better, though more cumbersome, approach is to decrease the counter
-|beamerpause| before the last item:
+better approach is to temporarily use a different overlay
+specificaiton and the dot-notation:
 
 \begin{verbatim}
 \begin{itemize}[<+->]
 \item First point.
-\item Second point.
-  \addtocounter{beamerpause}{-1}
+\item[<.->] Second point.
 \item Third point.
 \end{itemize}
 \end{verbatim}
 
-This does not look so nice, but it works. Also, you might wish to
-build your own macros based on these ideas (like an |itemstep|
-environment or a |\itemlikeprevious| command).
+You might wish to build your own macros based on these ideas (like an
+|itemstep| environment or a |\itemlikeprevious| command).
 
 
 
-\subsubsection{Hilighting the Current Point in an Enumeration}
+\subsection{Hilighting the Current Point in an Enumeration}
 
 If you uncover an enumeration piecewise, it is sometimes a good idea
 to hilight the last uncovered point to draw the audience's attention
@@ -102,7 +94,7 @@ Note that this will draw the little item symbol also in red.
 
 
 
-\subsubsection{Changing Symbol Before an Enumeration}
+\subsection{Changing Symbol Before an Enumeration}
 
 When uncovering a list of tasks or problems, you may desire that the
 symbol in front of the last uncovered symbol is, say, a ballot~X,
@@ -172,7 +164,7 @@ the enumeration the slide number 4 is mentioned. Thus there will also
 be a slide in which all three points are checked.
 
 
-\subsubsection{Uncovering Tagged Formulas Piecewise}
+\subsection{Uncovering Tagged Formulas Piecewise}
 
 Suppose you have a three-line formula as the following:
 \begin{verbatim}
@@ -215,7 +207,7 @@ insert a negative vertical skip to undo the last line:
 \end{verbatim}
 
 
-\subsubsection{Uncovering a Table Linewise}
+\subsection{Uncovering a Table Linewise}
 
 When you wish to uncover a table line-by-line, you will run into all
 sorts of problems if there are vertical and horizontal lines in the
@@ -244,7 +236,7 @@ By using |\onslide| instead of |\pause|, you can get more fine-grained
 control over which line is shown on which slide.
 
 
-\subsubsection{Uncovering a Table Columnwise}
+\subsection{Uncovering a Table Columnwise}
 
 The same problems as for uncovering a table linewise arise for
 uncovering it columnwise.
