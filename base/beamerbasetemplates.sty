@@ -21,23 +21,29 @@
 % Title and part page templates
 %
 
-\newcommand{\beamertemplatedefaulttitlepage}{
+\newcommand{\beamertemplatedefaulttitlepage}[1][]{
   \usetitlepagetemplate{
     \vbox{}
     \vfill
     \begin{centering}
-      \beamercolorbox[sep=8pt,center]{title}{%
+      \begin{beamercolorbox}[sep=8pt,center,#1]{title}
         \usebeamerfont{title}\inserttitle\par%
         \ifx\insertsubtitle\@empty%
         \else%
           \vskip0.25em%
           {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
         \fi%     
-        }%
+      \end{beamercolorbox}%
       \vskip1em\par
-      \beamercolorbox[sep=8pt,center]{author}{\usebeamerfont{author}\insertauthor\par}
-      \beamercolorbox[sep=8pt,center]{institute}{\usebeamerfont{institute}\insertinstitute\par}
-      \beamercolorbox[sep=8pt,center]{date}{\usebeamerfont{date}\insertdate\par}\vskip0.5em
+      \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+        \usebeamerfont{author}\insertauthor
+      \end{beamercolorbox}
+      \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+        \usebeamerfont{institute}\insertinstitute
+      \end{beamercolorbox}
+      \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+        \usebeamerfont{date}\insertdate
+      \end{beamercolorbox}\vskip0.5em
       {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
     \end{centering}
     \vfill
@@ -45,12 +51,14 @@
 }
 \@onlypreamble\beamertemplatedefaulttitlepage
 
-\newcommand{\beamertemplatedefaultpartpage}{
+\newcommand{\beamertemplatedefaultpartpage}[1][]{
   \usepartpagetemplate{
     \begin{centering}
       {\usebeamerfont{partname}\usebeamercolor[fg]{partname}\partname~\insertromanpartnumber}
       \vskip1em\par
-      \beamercolorbox[sep=8pt,center]{part title}{\usebeamerfont{part title}\insertpart\par}
+      \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
+        \usebeamerfont{part title}\insertpart\par
+      \end{beamercolorbox}
     \end{centering}
   }
 } 
@@ -67,7 +75,7 @@
     \@tempdima=\textwidth%
     \advance\@tempdima by\beamer@leftmargin%
     \advance\@tempdima by\beamer@rightmargin%
-    \beamercolorbox[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}{%
+    \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
       \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
       {\usebeamerfont{frametitle}\insertframetitle\par}%
       {%
@@ -77,7 +85,7 @@
         \fi
       }%
       \if@tempswa\else\vskip-.3cm\fi%
-    }
+    \end{beamercolorbox}
   }
 }
 \@onlypreamble\beamertemplatedefaultframetitle
@@ -786,48 +794,53 @@
 \newcommand{\beamertemplatedefaultblocks}{
   \useblocktemplate{%
     \medskip%
-    {\usebeamerfont{block title}\structure{\insertblockname}\par}%
-    }{\medskip}
+    \begin{beamercolorbox}[colsep*=.75ex]{block title}
+      \usebeamerfont{block title}\insertblockname%
+    \end{beamercolorbox}%
+    {\parskip0pt\par}%
+    \ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip}}%
+    \begin{beamercolorbox}[colsep*=.75ex]{block body}\vskip-.75ex\vbox{}%
+    }{\end{beamercolorbox}\smallskip}
   \usealertblocktemplate{%
     \medskip%
-    {\usebeamerfont{block title}\alert{\insertblockname}\par}%
-    \colorlet{beamerstructure}{beameralert}%
-    }{\medskip}
+    \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
+      \usebeamerfont{block title}\insertblockname%
+    \end{beamercolorbox}%
+    {\parskip0pt\par}%
+    \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip}}%
+    \begin{beamercolorbox}[colsep*=.75ex]{block body alerted}\vskip-.75ex\vbox{}%
+    }{\end{beamercolorbox}\smallskip}
   \useexampleblocktemplate{%
     \medskip%
-    \begingroup%
-    {\usebeamerfont{block title}\color{beamerstructure!50!green}\insertblockname\par}%
-    \color{black!50!green}%
-    \colorlet{beamerstructure}{beamerstructure!50!green}%
-    }{\endgroup\medskip}
+    \begin{beamercolorbox}[colsep*=.75ex]{block title example}
+      \usebeamerfont{block title}\insertblockname%
+    \end{beamercolorbox}%
+    {\parskip0pt\par}%
+    \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip}}%
+    \begin{beamercolorbox}[colsep*=.75ex]{block body example}\vskip-.75ex\vbox{}%
+    }{\end{beamercolorbox}\smallskip}
 }
 \@onlypreamble\beamertemplatedefaultblocks
 
-
-
-\beamerboxesdeclarecolorscheme{block}{beamerstructure!75!bg}{beamerstructure!10!bg}
-\beamerboxesdeclarecolorscheme{alert}{beameralert!75!bg}{beameralert!10!bg}
-\beamerboxesdeclarecolorscheme{example}{beamerexample!75!bg}{beamerexample!10!bg}
-
-\newcommand{\beamertemplateboxedblocks}[2][shadow=false]{
+\newcommand{\beamertemplateroundedblocks}[1][shadow=false]{
   \useblocktemplate{%
     \medskip%
-    \begin{beamerboxes#2}[scheme=block,#1]%
-      {\usebeamerfont{block title boxed}\color{white}\insertblockname}%
+    \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
+      {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%      
-    {\end{beamerboxes#2}\smallskip}
+    {\end{beamerboxesrounded}\smallskip}
   \usealertblocktemplate{%
     \medskip%
-    \begin{beamerboxes#2}[scheme=alert,#1]%
-      {\usebeamerfont{block title boxed}\color{white}\insertblockname}%
+    \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
+      {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%
-    {\end{beamerboxes#2}\smallskip}
+    {\end{beamerboxesrounded}\smallskip}
   \useexampleblocktemplate{%
     \medskip%
-    \begin{beamerboxes#2}[scheme=example,#1]
-      {\usebeamerfont{block title boxed}\color{white}\insertblockname}%
+    \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
+      {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%
-    {\end{beamerboxes#2}\smallskip}
+    {\end{beamerboxesrounded}\smallskip}
 }
 \@onlypreamble\beamertemplateboxesblocks
 

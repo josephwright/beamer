@@ -83,8 +83,7 @@
 {
 \usealerttemplate{%
   \usebeamercolor[fg]{alerted text}%
-  \setbeamercolor{structure}{parent=alerted text}%
-  \setbeamercolor{block structure}{parent=alerted text}%
+  \setbeamercolor{local structure}{parent=alerted text}%
   }{}
 \usestructuretemplate{\usebeamercolor[fg]{structure}}{}
 }
@@ -134,7 +133,7 @@
     \def\insertblockname{#1}%
     \par%
     \mode<presentation>{\usebeamerfont*{block}%
-    \setbeamercolor{block structure}{parent=alerted text}}%
+    \setbeamercolor{local structure}{parent=alerted text}}%
     \beamer@beginalertblocktemplate}
   {\par%
     \beamer@endalertblocktemplate%
@@ -145,7 +144,7 @@
     \def\insertblockname{#1}%
     \par%
     \mode<presentation>{\usebeamerfont*{block}%
-    \setbeamercolor{block structure}{parent=example text}}%
+    \setbeamercolor{local structure}{parent=example text}}%
     \beamer@beginexampleblocktemplate}
   {\par%
     \beamer@endexampleblocktemplate%

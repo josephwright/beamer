@@ -19,6 +19,8 @@
 \setbeamercolor{structure in head/foot}{parent=structure}
 \setbeamercolor{structure in sidebar}{parent=structure}
 
+\setbeamercolor{local structure}{parent=structure}
+
 \setbeamercolor{titlelike}{parent=structure}
 
 \setbeamercolor{title}{parent=titlelike}
@@ -64,17 +66,18 @@
 \setbeamercolor{caption}{}
 \setbeamercolor{caption name}{parent=structure}
 
-\setbeamercolor{button}{use=structure,bg*=structure.fg!50!bg,bg=structure.fg!50!bg,fg=white}
+\setbeamercolor{button}{use=local structure,bg*=local structure.fg!50!bg,bg=local structure.fg!50!bg,fg=white}
 \setbeamercolor{navigation symbols}{use=structure,fg=structure.fg!40!bg,fg*=structure.fg!20!bg}
 \setbeamercolor{mini frames}{parent=section in head/foot}
 
 \setbeamercolor{block body}{}
+\setbeamercolor{block body alerted}{}
+\setbeamercolor{block body example}{}
 \setbeamercolor{block title}{parent=titlelike}
 \setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.bg}
-\setbeamercolor{blobk title example}{use={normal text,example text},fg=example text.fg!75!normal text.bg}
-\setbeamercolor{block structure}{parent=structure}
+\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.bg}
 
-\setbeamercolor{item}{parent=block structure}
+\setbeamercolor{item}{parent=local structure}
 \setbeamercolor{subitem}{parent=item}
 \setbeamercolor{subsubitem}{parent=subitem}
 

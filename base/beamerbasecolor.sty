@@ -58,11 +58,12 @@
     \global\let\beamer@thc@gbg\beamer@thc@bg%
     \global\let\beamer@thc@gfgs\beamer@thc@fgs%
     \global\let\beamer@thc@gbgs\beamer@thc@bgs%
+    \globalcolorstrue%
+    \colorlet{#1.fg}{\beamer@thc@gfg}%
+    \colorlet{#1.bg}{\beamer@thc@gbg}%
+    \colorlet{#1.fg*}{\beamer@thc@gfgs}%
+    \colorlet{#1.bg*}{\beamer@thc@gbgs}%
   }%
-  \colorlet{#1.fg}{\beamer@thc@gfg}%
-  \colorlet{#1.bg}{\beamer@thc@gbg}%
-  \colorlet{#1.fg*}{\beamer@thc@gfgs}%
-  \colorlet{#1.bg*}{\beamer@thc@gbgs}%  
 }
 
 \def\setbeamercolor{\@ifstar{\beamer@clearbeamercolor}{\beamer@setbeamercolor}}
@@ -151,31 +152,43 @@
 \define@key{beamercolbox}{right}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt}}
 \define@key{beamercolbox}{sep}{\def\beamer@colbox@sep{#1}}
 \define@key{beamercolbox}{colsep}{\def\beamer@colbox@colsep{#1}}
+\define@key{beamercolbox}{colsep*}{\def\beamer@colbox@colseps{#1}}
+\define@key{beamercolbox}{shadow}{\def\beamer@colbox@shadow{#1}}
+\define@key{beamercolbox}{rounded}{\csname beamer@colbox@rounded#1\endcsname}
 
-\newcommand\beamercolorbox[3][]{%
-  {%
-    \setkeys{beamercolbox}{wd=\textwidth,ht={},dp={},leftskip=0pt,rightskip=0pt plus1fil,sep=0pt,colsep=0pt}
+\newif\ifbeamer@colbox@rounded
+
+\newenvironment{beamercolorbox}[2][]{%
+  \begingroup%
+    \def\beamer@colbox@coladd{0pt}%
+    \setkeys{beamercolbox}{%
+      wd=\textwidth,ht={},dp={},%
+      leftskip=0pt,rightskip=0pt plus1fil,%
+      sep=0pt,colsep=0pt,colsep*=0pt,%
+      shadow=false,rounded=false}
     \setkeys{beamercolbox}{#1}%
     \ifbeamercolorempty[bg]{#2}{\@tempswafalse}{\@tempswatrue}%
-    \usebeamercolor{#2}%
+    \def\beamer@colbox@color{#2}%
     \hsize=\beamer@colbox@wd%
-    \setbox\beamer@tempbox=\hbox{\vbox{%
+    \setbox\beamer@tempbox=\hbox\bgroup\vbox\bgroup%
       \leftskip=\beamer@colbox@ls%
       \advance\leftskip by\beamer@colbox@sep%
       \rightskip=\beamer@colbox@rs%
       \advance\rightskip by\beamer@colbox@sep%
-      \color{fg}%
+      \usebeamercolor[fg]{#2}%
       \if@tempswa%
         \advance\leftskip by\beamer@colbox@colsep%
         \advance\rightskip by\beamer@colbox@colsep%
-        \ifdim\beamer@colbox@colsep>0pt\vskip\beamer@colbox@colsep\fi%
+        \ifdim\beamer@colbox@colsep=0pt\else\vskip\beamer@colbox@colsep\fi%
+        \ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi%
       \fi%
-      \ifdim\beamer@colbox@sep>0pt\vskip\beamer@colbox@sep\fi%
-      #3%
-      \ifdim\beamer@colbox@sep>0pt\vskip\beamer@colbox@sep\fi%
-      \if@tempswa\ifdim\beamer@colbox@colsep>0pt\vskip\beamer@colbox@colsep\fi\fi%
-    }}%
-    \wd\beamer@tempbox=\beamer@colbox@wd%
+      \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
+      \ignorespaces}{%
+      \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
+      \if@tempswa\ifdim\beamer@colbox@colsep=0pt\else\vskip\beamer@colbox@colsep\fi\fi%
+      \if@tempswa\ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi\fi%
+    \egroup\egroup%
+    \wd\beamer@tempbox=\hsize%
     \@tempdima=\wd\beamer@tempbox%
     \ifx\beamer@colbox@ht\@empty%
     \else%
@@ -185,12 +198,36 @@
     \else%
       \dp\beamer@tempbox=\beamer@colbox@dp%
     \fi%
-    \if@tempswa\setbox\beamer@tempbox=\vbox{\fboxsep=0pt\colorbox{bg}{\hbox{\box\beamer@tempbox}}}\fi%
-    \ifdim\@tempdima>\textwidth%
-      \setbox\beamer@tempbox=\hbox to\textwidth{\hss\box\beamer@tempbox\hss}%
+    \ifbeamer@colbox@rounded%
+      \if@tempswa%
+        \begin{beamerboxesrounded}[shadow=\beamer@colbox@shadow,lower=\beamer@colbox@color,upper=normal text]{}%
+          \box\beamer@tempbox%
+        \end{beamerboxesrounded}%
+      \else%
+        \ifdim\@tempdima>\textwidth%
+          \setbox\beamer@tempbox=\hbox to\textwidth{\hss\box\beamer@tempbox\hss}%
+        \fi%
+        \box\beamer@tempbox%
+      \fi%
+    \else%
+      \if@tempswa\setbox\beamer@tempbox=\vbox{%
+        \usebeamercolor{\beamer@colbox@color}%
+        \advance\hsize by \beamer@colbox@colseps\relax%
+        \advance\hsize by \beamer@colbox@colseps\relax%
+        \hskip-\beamer@colbox@colseps%
+        \fboxsep=0pt\colorbox{bg}{%
+          \hskip\beamer@colbox@colseps%
+          \hbox{\box\beamer@tempbox}%
+          \hskip\beamer@colbox@colseps%
+        }%
+        \hskip-\beamer@colbox@colseps%
+      }\fi%
+      \ifdim\@tempdima>\textwidth%
+        \setbox\beamer@tempbox=\hbox to\textwidth{\hss\box\beamer@tempbox\hss}%
+      \fi%
+      \box\beamer@tempbox%
     \fi%
-    \box\beamer@tempbox%
-  }%
+  \endgroup%
 }
 
 

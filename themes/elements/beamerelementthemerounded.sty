@@ -7,46 +7,48 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\DeclareOptionBeamer{blockheadcolor}{\def\beamer@themerounded@bhc{#1}}
-\DeclareOptionBeamer{titlecolor}{\def\beamer@themerounded@tit{#1}}
+%\DeclareOptionBeamer{blockheadcolor}{\def\beamer@themerounded@bhc{#1}}
+%\DeclareOptionBeamer{titlecolor}{\def\beamer@themerounded@tit{#1}}
 \DeclareOptionBeamer{shadow}{\def\beamer@themerounded@shadow{#1}}
-\ExecuteOptionsBeamer{shadow=false,blockheadcolor=beamerstructure!75!black,titlecolor=beamerstructure!75!black}
+\ExecuteOptionsBeamer{shadow=false}%,blockheadcolor=beamerstructure!75!black,titlecolor=beamerstructure!75!black}
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
 \beamertemplateballitem
-\beamertemplateboxedblocks[shadow=\beamer@themerounded@shadow]{rounded}
+\beamertemplateroundedblocks[shadow=\beamer@themerounded@shadow]
 \beamertemplatenumberedballsectiontoc
+\beamertemplatedefaulttitlepage[colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
+\beamertemplatedefaultpartpage[colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
 
-\beamerboxesdeclarecolorscheme{block}{\beamer@themerounded@bhc}{beamerstructure!10!averagebackgroundcolor}
-\beamerboxesdeclarecolorscheme{alert}{beameralert!75!averagebackgroundcolor}{beameralert!10!averagebackgroundcolor}
-\beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
+%\beamerboxesdeclarecolorscheme{block}{\beamer@themerounded@bhc}{beamerstructure!10!averagebackgroundcolor}
+%\beamerboxesdeclarecolorscheme{alert}{beameralert!75!averagebackgroundcolor}{beameralert!10!averagebackgroundcolor}
+%\beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
 
-\beamerboxesdeclarecolorscheme{title}{\beamer@themerounded@tit}{\beamer@themerounded@tit}
-\usetitlepagetemplate{
-    \vbox{}
-    \vfill
-    \begin{centering}
-      \begin{beamerboxesrounded}[shadow=\beamer@themerounded@shadow,scheme=title]{}
-          \begin{centering}%
-            \color{white}%
-            {\usebeamerfont{title}\inserttitle\par}%
-            \ifx\insertsubtitle\@empty%
-            \else%
-            \vskip0.25em%
-            {\usebeamerfont{subtitle}\insertsubtitle\par}%
-            \fi%
-          \end{centering}
-      \end{beamerboxesrounded}
-      \vskip1em\par
-      {\usebeamerfont{author}\insertauthor\par}\vskip1em
-      {\usebeamerfont{institute}\insertinstitute\par}\vskip1em
-      {\usebeamerfont{date}\insertdate\par}\vskip1.5em
-      \inserttitlegraphic\par
-    \end{centering}
-    \vfill
-  }
+%\beamerboxesdeclarecolorscheme{title}{\beamer@themerounded@tit}{\beamer@themerounded@tit}
+
+%% \usetitlepagetemplate{
+%%     \vbox{}
+%%     \vfill
+%%     \begin{centering}
+%%       \begin{beamerboxesrounded}[shadow=\beamer@themerounded@shadow,lower=title]{}
+%%         \begin{centering}%
+%%           {\usebeamerfont{title}\inserttitle\par}%
+%%           \ifx\insertsubtitle\@empty%
+%%           \else%
+%%           \vskip0.25em%
+%%           {\usebeamerfont{subtitle}\insertsubtitle\par}%
+%%           \fi%
+%%         \end{centering}
+%%       \end{beamerboxesrounded}
+%%       \vskip1em\par
+%%       {\usebeamerfont{author}\insertauthor\par}\vskip1em
+%%       {\usebeamerfont{institute}\insertinstitute\par}\vskip1em
+%%       {\usebeamerfont{date}\insertdate\par}\vskip1.5em
+%%       \inserttitlegraphic\par
+%%     \end{centering}
+%%     \vfill
+%%   }
   
 \mode<all>
 
