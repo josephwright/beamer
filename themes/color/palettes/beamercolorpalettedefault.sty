@@ -1,0 +1,29 @@
+\ProvidesPackage{beamercolorpalettedefault}[2004/08/05 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+\definecolor{beamer@blendedblue}{rgb}{0.2,0.2,0.7}
+
+\setbeamercolor{palette normal}{fg=black,bg=white}
+\setbeamercolor{palette alerted}{fg=red}
+\setbeamercolor{palette example}{fg=green!50!black}
+
+\setbeamercolor{palette structure}{fg=beamer@blendedblue}
+
+\setbeamercolor{palette layout primary}{parent=palette structure}
+\setbeamercolor{palette layout secondary}{parent=palette layout primary}
+\setbeamercolor{palette layout ternary}{parent=palette layout secondary}
+\setbeamercolor{palette layout fourth}{parent=palette layout ternary}
+
+\setbeamercolor{palette normal block}{parent=palette structure}
+\setbeamercolor{palette alerted block}{use={palette normal,palette alert},fg=palette alert.fg!75!palette normal.bg}
+\setbeamercolor{palette example block}{use={palette normal,palette example},fg=palette example.fg!75!palette normal.bg}
+ 
+\mode
+<all>

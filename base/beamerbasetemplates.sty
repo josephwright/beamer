@@ -80,7 +80,7 @@
       \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
       {\usebeamerfont{frametitle}\insertframetitle\par}%
       {%
-        \ifx\insertsubtitle\@empty%
+        \ifx\insertframesubtitle\@empty%
         \else%
         {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
         \fi
@@ -317,9 +317,9 @@
 \@onlypreamble\beamertemplateballitem
 
 \newcommand{\beamertemplatetriangleitem}{%
-  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\everymath{}$\blacktriangleright$}}
-  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\everymath{}$\blacktriangleright$}}
-  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\everymath{}$\blacktriangleright$}}
+  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
   }
 
 \newcommand{\beamertemplatesquareitem}{%
@@ -620,7 +620,7 @@
 }
 
 \newcommand{\beamertemplatearrowbibitems}{
-  \usebibitemtemplate{\scriptsize\raise1.25pt\hbox{\everymath{}$\blacktriangleright$}}
+  \usebibitemtemplate{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
 }
 
 \mode
@@ -735,7 +735,8 @@
     {\pgfpoint{\the\beamer@tempdim}{0pt}}
     \pgfclosepath
     \pgffill
-    \usebeamercolor[fg]{button outline}
+    \colorlet{bg}{parent.bg}
+    \usebeamercolor[fg]{button border}
     \pgfqmoveto{0}{0}
     \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
     \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
@@ -801,7 +802,7 @@
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip}}%
-    \begin{beamercolorbox}[colsep*=.75ex]{block body}\vskip-.75ex\vbox{}%
+    \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\smallskip}
   \usealertblocktemplate{%
     \medskip%
@@ -810,7 +811,7 @@
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip}}%
-    \begin{beamercolorbox}[colsep*=.75ex]{block body alerted}\vskip-.75ex\vbox{}%
+    \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\smallskip}
   \useexampleblocktemplate{%
     \medskip%
@@ -819,7 +820,7 @@
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip}}%
-    \begin{beamercolorbox}[colsep*=.75ex]{block body example}\vskip-.75ex\vbox{}%
+    \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}\vskip-.75ex\vbox{}%
     }{\end{beamercolorbox}\smallskip}
 }
 \@onlypreamble\beamertemplatedefaultblocks

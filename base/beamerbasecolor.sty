@@ -133,6 +133,7 @@
 \define@key{beamercolbox}{shadow}{\def\beamer@colbox@shadow{#1}}
 \define@key{beamercolbox}{rounded}{\csname beamer@colbox@rounded#1\endcsname}
 \define@key{beamercolbox}{ignorebg}[true]{\csname beamer@colbox@ignorebg#1\endcsname}
+\define@key{beamercolbox}{vmode}[]{\def\beamer@vmode{}}
 
 \newif\ifbeamer@colbox@rounded
 \newif\ifbeamer@colbox@ignorebg
@@ -140,6 +141,7 @@
 \newenvironment{beamercolorbox}[2][]{%
   \begingroup%
     \def\beamer@colbox@coladd{0pt}%
+    \def\beamer@vmode{\leavevmode}%
     \setkeys{beamercolbox}{%
       wd=\textwidth,ht={},dp={},%
       leftskip=0pt,rightskip=0pt plus1fil,%
@@ -169,7 +171,7 @@
         \ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi%
       \fi%
       \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
-      \leavevmode\ignorespaces}{%
+      \beamer@vmode\ignorespaces}{%
       \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
       \if@tempswa\ifdim\beamer@colbox@colsep=0pt\else\vskip\beamer@colbox@colsep\fi\fi%
       \if@tempswa\ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi\fi%
@@ -228,12 +230,54 @@
 %
 
 \AtBeginDocument{\usebeamercolor{normal text}\color{fg}}%
+
+
+
+
+%
+% Math mode color hackery
+%
+
+\newcommand\beamer@setmathcolor{%
+  \usebeamercolor{math text inlined}%
+  \ifbeamercolorempty[fg]{math text inlined}{}{\color{fg}}}
+
+\newcommand\donotcoloroutermaths{%
+  \everymath{\everymath{\beamer@setmathcolor}}}
+
+\newcommand\beamer@setdisplaymathcolor{%
+  \usebeamercolor{math text displayed}%
+  \ifbeamercolorempty[fg]{math text displayed}{}{\color{fg}\aftergroup\ignorespaces}}%
+
+\newcommand\donotcolorouterdisplaymaths{%
+  \everydisplay{\everydisplay{\beamer@setdisplaymathcolor}}} 
+
+\AtBeginDocument
+{
+  \everymath\expandafter{\the\everymath\beamer@setmathcolor}
+  \everydisplay\expandafter{\the\everydisplay\beamer@setdisplaymathcolor}
+}
+
 \AtBeginDocument{
-  \everymath\expandafter{\the\everymath
-    \usebeamercolor{math text inlined}\ifbeamercolorempty[fg]{math
-      text inlined}{}{\color{fg}}}}%
-% ``Crashes'' align environment:
-%\AtBeginDocument{\everydisplay\expandafter{\the\everydisplay\usebeamercolor{math text displayed}\ifbeamercolorempty[fg]{math text displayed}{}{\color{fg}}}}%
+  % Fix $ usage in tabular:
+  \let\beamer@orig@tabular=\@tabular
+  \def\@tabular{\donotcoloroutermaths\beamer@orig@tabular}
+
+  % Fix $ usage in underline:
+  \let\beamer@orig@underline=\underline
+  \def\underline#1{{\donotcoloroutermaths\beamer@orig@underline{#1}}}
+
+  % Fix $ usage in parbox:
+  \let\beamer@orig@pboxswture=\@pboxswtrue
+  \def\@pboxswtrue{\donotcoloroutermaths\beamer@orig@pboxswture}
+
+  % Fix $$ usage in align:
+  \let\beamer@orig@start@align=\start@align
+  \def\start@align{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@align}
+
+  \let\beamer@orig@text@=\text@
+  \def\text@#1{\usebeamercolor[fg]{normal text in math text}\beamer@orig@text@{#1}}
+}
 
 
 %

@@ -6,30 +6,29 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\usecolorpalette{default}
+
 \mode<presentation>
 
-\definecolor{beamer@blendedblue}{rgb}{0.2,0.2,0.7}
-
-
-\setbeamercolor{normal text}{fg=black,bg=white}
-\setbeamercolor{alerted text}{fg=red}
-\setbeamercolor{example text}{fg=green!50!black}
+\setbeamercolor{normal text}{parent=palette normal}
+\setbeamercolor{alerted text}{parent=palette alerted}
+\setbeamercolor{example text}{parent=palette example}
 
 \setbeamercolor{math text}{}
 \setbeamercolor{math text inlined}{parent=math text}
 \setbeamercolor{math text displayed}{parent=math text}
 
-\setbeamercolor{structure}{fg=beamer@blendedblue}
-\setbeamercolor{structure in head/foot}{parent=structure}
-\setbeamercolor{structure in sidebar}{parent=structure}
+\setbeamercolor{normal text in math text}{parent=normal text}
+
+\setbeamercolor{structure}{parent=palette structure}
 
 \setbeamercolor{local structure}{parent=structure}
 
-\setbeamercolor{titlelike}{parent=structure}
+\setbeamercolor{titlelike}{parent=palette layout primary}
 
 \setbeamercolor{title}{parent=titlelike}
-\setbeamercolor{title in head/foot}{}
-\setbeamercolor{title in sidebar}{parent={structure in sidebar}}
+\setbeamercolor{title in head/foot}{parent=palette layout fourth}
+\setbeamercolor{title in sidebar}{parent=structure}
 
 \setbeamercolor{subtitle}{parent=title}
 
@@ -51,13 +50,13 @@
 \setbeamercolor{part title}{parent=titlelike}
 
 \setbeamercolor{section in toc}{parent=structure}
-\setbeamercolor{section in head/foot}{parent=structure in head/foot}
-\setbeamercolor{section in sidebar}{parent=structure in sidebar}
+\setbeamercolor{section in head/foot}{parent=palette layout ternary}
+\setbeamercolor{section in sidebar}{parent=structure}
 \setbeamercolor{section in sidebar current}{parent=section in sidebar,use=structure,bg=structure.fg!50!bg}
 \setbeamercolor{section number projected}{parent=item projected}
 
 \setbeamercolor{subsection in toc}{}
-\setbeamercolor{subsection in head/foot}{}
+\setbeamercolor{subsection in head/foot}{parent=palette layout secondary}
 \setbeamercolor{subsection in sidebar}{}
 \setbeamercolor{subsection in sidebar current}{parent=subsection in sidebar,%
   use=section in sidebar current,bg=section in sidebar current.bg}
@@ -72,7 +71,7 @@
 
 \setbeamercolor{logo}{}
 
-\setbeamercolor{frametitle}{parent=titlelike}
+\setbeamercolor{frametitle}{parent=structure}
 \setbeamercolor{framesubtitle}{parent=frametitle}
 
 \setbeamercolor{frametitle right}{parent=frametitle}
@@ -81,7 +80,7 @@
 \setbeamercolor{caption name}{parent=structure}
 
 \setbeamercolor{button}{use=local structure,bg=local structure.fg!50!bg,fg=white}
-\setbeamercolor{button border}{use=local structure,fg=local structure.fg!50!bg}
+\setbeamercolor{button border}{use=button,fg=button.bg}
 \setbeamercolor{navigation symbols}{use=structure,fg=structure.fg!40!bg}
 \setbeamercolor{navigation symbols dimmed}{use=structure,fg=structure.fg!20!bg}
 \setbeamercolor{mini frames}{parent=section in head/foot}
@@ -89,9 +88,9 @@
 \setbeamercolor{block body}{}
 \setbeamercolor{block body alerted}{}
 \setbeamercolor{block body example}{}
-\setbeamercolor{block title}{parent=titlelike}
-\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.bg}
-\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.bg}
+\setbeamercolor{block title}{parent=palette normal block}
+\setbeamercolor{block title alerted}{parent=palette alerted block}
+\setbeamercolor{block title example}{parent=palette example block}
 
 \setbeamercolor{item}{parent=local structure}
 \setbeamercolor{subitem}{parent=item}

@@ -170,7 +170,7 @@
 
 
 % Aux commands for \author
-\def\beamer@insttitle#1{$^{#1}$}
+\def\beamer@insttitle#1{{\donotcoloroutermaths$^{#1}$}}
 \def\beamer@andtitle{\quad}
 \def\beamer@instother#1{}
 \def\beamer@andother{\unskip, }
@@ -232,7 +232,7 @@
  \def\beamer@shortinstitute{#1}}
 \institute{}
 
-\def\beamer@instinst#1{$^{#1}$\ignorespaces}
+\def\beamer@instinst#1{{\donotcoloroutermaths$^{#1}$}\ignorespaces}
 \def\beamer@andinst{\\[1em]}
 
 \newcommand\insertshortinstitute[1][]{%
