@@ -47,24 +47,7 @@
 
                                 % Head
 \useheadtemplate{%
-  \vbox{%
-    \vskip3pt%
-    \tinyline{\color{structure}\insertshorttitle\hfill}%
-    \setbox\tempbox=\hbox{\insertsection}%
-    \tinyline{\color{structure}\ifdim\wd\tempbox>1pt{\hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\insertsection\fi\hfill}%
-    \setbox\tempbox=\hbox{\insertsubsection}%
-    \tinyline{\color{structure}\ifdim\wd\tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\insertsubsection\fi\hfill}%
-    \insertvrule{3pt}{structure!50!averagebackgroundcolor}%
-    }%
-  }
-
-                                % Footline
-\usefoottemplate{}
-
-\def\logo#1{%
-  \def\insertlogo{#1}%
-  \useheadtemplate{%
-    \setbox\logobox=\hbox{\insertlogo}%
+  \setbox\logobox=\hbox{\insertlogo}%
   \vbox{%
     \vskip3pt%
     \tinyline{\color{structure}\insertshorttitle\hfill}%
@@ -73,8 +56,11 @@
     \setbox\tempbox=\hbox{\insertsubsection}%
     \tinyline{\color{structure}\ifdim\wd\tempbox>1pt{\hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height5pt\vrule width 5pt height0.4pt}}\hskip1pt\insertsubsection\fi\hfill\ht\logobox=0pt\box\logobox}%
     \insertvrule{3pt}{structure!50!averagebackgroundcolor}%
-    }%
-  }}
+    }}%
+
+
+                                % Footline
+\usefoottemplate{}
 
 
                                 % Blocks

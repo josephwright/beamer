@@ -86,7 +86,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 1.03\\
+\title{User's Guide to the Beamer Class, Version 1.04\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -336,15 +336,35 @@ files \TeX\ creates automatically (like the |.aux| and
 When using certain packages together with the |beamer| class, extra
 options or precautions may be necessary.
 
+\begin{package}{{babel}|[|\declare{|french|}|]|}
+  When using the French style, certain features that clash with the
+  functionality of the beamer class will be turned off. For example,
+  enumerations are still produced the way the theme dictates, not the
+  way the French style does.
+\end{package}
+
+\begin{package}{{babel}|[|\declare{|spanish|}|]|}
+  When using the Spanish style, certain features that clash with the
+  functionality of the beamer class will be turned off. In particular,
+  the special behaviour of the pointed brackets |<| and |>| is
+  deactivated. 
+\end{package}
+
 \begin{package}{{CJK}}
   When using the |CJK| package, you must use the class option
   \declare{|CJK|}. See |beamerexample4.tex| for an example.
+\end{package}
+
+\begin{package}{{deluxetable}}
+  The caption generation facilities of |deluxetable| are
+  deactivated. Instead, the caption template is used.
 \end{package}
 
 \begin{package}{{listings}}
   Note that you must treat |lstlisting| environments exactly the same
   way as you would treat |verbatim| environments.
 \end{package}
+
 
 
 
@@ -2901,8 +2921,8 @@ more. The transparency effect will automatically apply to all colors,
 shadings there is an awkward workaround, see the documentation of the
 \pgf\ package. 
 
-As a convenience, two commands are defined in |beamertemplates|
-that install a predefined uncovering behavior.
+As a convenience, two commands install a predefined uncovering
+behavior.
 
 \begin{command}{\beamertemplatetransparentcovered}
   Makes all covered text nearly transparent. 
@@ -4072,8 +4092,7 @@ the |\insertxxxx| commands listed in
 the next subsection. 
 
 Some of the below subsections start with commands for using
-\emph{predefined} templates. These commands are defined in the package
-|beamertemplates|. Calling one of them will change a template in
+\emph{predefined} templates. Calling one of them will change a template in
 a predefined way. Using them, you can use, for example, your favorite
 theme together with a predefined background.
 

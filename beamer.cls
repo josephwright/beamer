@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/11/20 v1.03 Class for Typesetting a Beamer Presentation]
+[2003/12/02 v1.04-dev Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -2585,6 +2585,8 @@
 % Navigation Button Art
 %
 
+\def\beamer@linkspace#1{\vbox to7.5pt{}\kern#1}
+
 \def\beamernavigationcolorlight{structure!20!averagebackgroundcolor}
 \def\beamernavigationcolorstrong{structure!40!averagebackgroundcolor}
 
@@ -2607,9 +2609,9 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamerslidenavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinkslideprev{\kern6pt}%
-  \Acrobatmenu{GoToPage}{\kern8pt}%
-  \hyperlinkslidenext{\kern6pt}}
+  \hyperlinkslideprev{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoToPage}{\beamer@linkspace{8pt}}%
+  \hyperlinkslidenext{\beamer@linkspace{6pt}}}
 
 \pgfdefobject{beamerframenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
  {\pgfqmoveto{4}{0.5}
@@ -2642,10 +2644,10 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamerframenavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinkframeendprev{\kern5pt}%
-  \hyperlinkframestart{\kern5pt}%
-  \hyperlinkframeend{\kern5pt}%
-  \hyperlinkframestartnext{\kern5pt}}
+  \hyperlinkframeendprev{\beamer@linkspace{5pt}}%
+  \hyperlinkframestart{\beamer@linkspace{5pt}}%
+  \hyperlinkframeend{\beamer@linkspace{5pt}}%
+  \hyperlinkframestartnext{\beamer@linkspace{5pt}}}
 
 \pgfdefobject{beamersubsectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
  {\pgfqmoveto{4}{0.5}
@@ -2682,10 +2684,10 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamersubsectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinksubsectionendprev{\kern5pt}%
-  \hyperlinksubsectionstart{\kern5pt}%
-  \hyperlinksubsectionend{\kern5pt}%
-  \hyperlinksubsectionstartnext{\kern5pt}}
+  \hyperlinksubsectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstartnext{\beamer@linkspace{5pt}}}
 
 \pgfdefobject{beamersectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
  {\pgfqmoveto{4}{0.5}
@@ -2723,10 +2725,10 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamersectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinksectionendprev{\kern5pt}%
-  \hyperlinksectionstart{\kern5pt}%
-  \hyperlinksectionend{\kern5pt}%
-  \hyperlinksectionstartnext{\kern5pt}}
+  \hyperlinksectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstartnext{\beamer@linkspace{5pt}}}
 
 \ifx\beamer@startpageofappendix\@empty
 % no appendix
@@ -2753,8 +2755,8 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamerdocnavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinkpresentationstart{\kern9pt}%
-  \hyperlinkpresentationend{\kern11pt}}
+  \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
+  \hyperlinkpresentationend{\beamer@linkspace{11pt}}}
 \else
 \pgfdefobject{beamerdocnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
 {\pgfqmoveto{10}{-.5}
@@ -2797,10 +2799,10 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamerdocnavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinkpresentationstart{\kern5pt}%
-  \hyperlinkpresentationend{\kern5pt}%
-  \hyperlinkappendixstart{\kern3.5pt}%
-  \hyperlinkappendixend{\kern6.5pt}}
+  \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
+  \hyperlinkpresentationend{\beamer@linkspace{5pt}}%
+  \hyperlinkappendixstart{\beamer@linkspace{3.5pt}}%
+  \hyperlinkappendixend{\beamer@linkspace{6.5pt}}}
 \fi
 
 \pgfdefobject{beamerbackfindforwardnav}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
@@ -2840,9 +2842,9 @@
     \color{\beamernavigationcolorlight!50!\beamernavigationcolorstrong}%
     \pgfuseobject{beamerbackfindforwardnav}%
   \end{pgfpicture}\kern-20pt%
-  \Acrobatmenu{GoBack}{\kern7pt}%
-  \Acrobatmenu{Find}{\kern6pt}%
-  \Acrobatmenu{GoForward}{\kern7pt}}
+  \Acrobatmenu{GoBack}{\beamer@linkspace{7pt}}%
+  \Acrobatmenu{Find}{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoForward}{\beamer@linkspace{7pt}}}
 
 
 \def\usenavigationsymbolstemplate#1{%

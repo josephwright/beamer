@@ -67,37 +67,22 @@
   }%
 }
 \fi
-                                % Footline
-\usefoottemplate{%
-  \hbox{%
-    \setbox\linebox=\hbox to\paperwidth{%
-      \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
-      \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
-    \ht\linebox=7pt%
-    \dp\linebox=0pt%
-    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
-    \color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
-    height\ht\linebox\color{structure}\vrule width.5\paperwidth
-    height\ht\linebox\hskip-\paperwidth% 
-    \hbox{\box\linebox\hfill}\hfill\hskip-\Gm@rmargin}}
 
-\def\logo#1{%
-  \def\insertlogo{#1}%
-  \usefoottemplate{%
-    \vbox{%
-      \hbox to\textwidth{\hfill%
-        \setbox\logobox=\hbox{\raise 10pt\hbox{\insertlogo}\llap{\insertnavigationsymbols}}\ht\logobox=0pt%
-        \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
-    \hbox{%
-    \setbox\linebox=\hbox to\paperwidth{%
-      \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
-      \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
-    \ht\linebox=7pt%
-    \dp\linebox=0pt%
-    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
-    \color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
-    height\ht\linebox\color{structure}\vrule width.5\paperwidth
-    height\ht\linebox\hskip-\paperwidth% 
-    \hbox{\box\linebox\hfill}\hfill\hskip-\Gm@rmargin}}}}
+\usefoottemplate{%
+  \vbox{%
+    \hbox to\textwidth{\hfill%
+      \setbox\logobox=\hbox{\raise 10pt\hbox{\insertlogo}\llap{\insertnavigationsymbols}}\ht\logobox=0pt%
+      \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
+  \hbox{%
+  \setbox\linebox=\hbox to\paperwidth{%
+    \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
+    \hbox to.5\paperwidth{\hskip.3cm\tiny\color{white}\textbf{\insertshorttitle}\hfill}\hfill}%
+  \ht\linebox=7pt%
+  \dp\linebox=0pt%
+  \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+  \color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
+  height\ht\linebox\color{structure}\vrule width.5\paperwidth
+  height\ht\linebox\hskip-\paperwidth% 
+  \hbox{\box\linebox\hfill}\hfill\hskip-\Gm@rmargin}}}
 
 \beamertemplatelargeblocks

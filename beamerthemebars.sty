@@ -57,42 +57,19 @@
   }}
 
                                 % Footline
-\usefoottemplate{%
-  \vbox{%
-    \tinycolouredline{structure!75!white}{\color{white}\textbf{\insertshortauthor\hfill\insertshortinstitute}}%
-    \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}}%
-    }}
-
 \def\beamernavigationcolorlight{structure!65!white}
 \def\beamernavigationcolorstrong{structure!50!white}
+ 
   
-  
-\def\logo#1{%
-  \def\insertlogo{#1}%
-  \usefoottemplate{%
-    \setbox\logobox=\hbox{\insertlogo}%
-    \vbox{%
-      \hbox to\textwidth{\hfill%
-        \setbox\logobox=\hbox{\raise 2pt\hbox{\insertlogo}}\ht\logobox=0pt%
-        \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
-      \tinycolouredline{structure!75}{\color{white}\textbf{\insertshortauthor\hfill}}%
-      \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}%
-%        \hskip10pt%
-%        \hskip\wd\logobox%
-%        \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
-%          \color{white}
-%          \pgfcircle[fill]{\pgforigin}{1.25\wd\logobox}
-%          \color{structure}
-%          \pgfsetlinewidth{6pt}
-%          \pgfcircle[stroke]{\pgforigin}{1.25\wd\logobox}
-%        \end{pgfpicture}%
-%        \hskip-.5\wd\logobox%
-%        \hbox{\ht\logobox=0pt\dp\logobox=0pt\usebox\logobox}%
-        }%
-      }%
-    }%
-  }
-
+\usefoottemplate{%
+  \setbox\logobox=\hbox{\insertlogo}%
+  \vbox{%
+    \hbox to\textwidth{\hfill%
+      \setbox\logobox=\hbox{\raise 2pt\hbox{\insertlogo}}\ht\logobox=0pt%
+      \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
+    \tinycolouredline{structure!75}{\color{white}\textbf{\insertshortauthor\hfill}}%
+    \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}%
+  }}}
 
                                 % Blocks
 \useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
