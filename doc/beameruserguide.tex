@@ -1769,14 +1769,29 @@ be specified with the following command:
   via the |\insertshortframetitle| command. The \meta{overlay
   specification} is mostly useful for suppressing the frame title in
   |article| mode.
-\example
+
+  \example
 \begin{verbatim}
 \frame{
   \frametitle{A Frame Title is Important.}
+  \framesubtitle{Subtitles are not so important.}
 
   Frame contents.
 }
 \end{verbatim}
+
+  If you are using the |autobreak| option with the current frame,
+  a continuation text (like ``(cont.)'' or something similar,
+  depending on the continuation template) is automatically added to
+  the \meta{frame title text} at the end.
+
+  \beamernote
+  The frame title is not typeset immediately when the command
+  |\frametitle| is encountered. Rather, the argument of the command is
+  stored internally and the frame title is only typeset when the
+  complete frame has been read. This gives you access to both the
+  \meta{frame title text} and to the \meta{subframe title text} that
+  is possibly introduced using the |\framesubtitle| command.
 
   \articlenote
   By default, this command creates a new paragraph in |article| mode,
@@ -1788,6 +1803,27 @@ be specified with the following command:
   \lyxnote
   The frame title is the text that follows on the line of the
   ``BeginFrame'' style.
+\end{command}
+
+\begin{command}{\framesubtitle\sarg{overlay specification}\marg{frame
+      subtitle text}}
+  If present, a subtitle will be shown in a smaller font below the
+  main title. Like the |\frametitle| command, this command can be
+  given anywhere in the frame, since the frame title is actually
+  typeset only when everything else has already been typeset.
+  
+  \example
+\begin{verbatim}
+\frame{
+  \frametitle<presentation>{Frame Title Should Be in Uppercase.}
+  \framesubtitle{Subtitles can be in lowercase if they are full sentences.}
+
+  Frame contents.
+}
+\end{verbatim}
+
+  \articlenote
+  By default, the subtitle is not shown in any way in |article| mode.
 \end{command}
 
 Be default, all material for a slide is vertically centered. You can
@@ -7451,6 +7487,8 @@ If you wish to suppress the head- and footline in the title page, use
   \begin{centering}
     \structure{\textbf{\insertframetitle}}
     \par
+    \small\structure{\textbf{\insertframesubtitle}}}
+    \par
   \end{centering}
 }
 \end{verbatim}
@@ -7482,6 +7520,10 @@ If you wish to suppress the head- and footline in the title page, use
   frame has the option |autobreak| set, at the end of this insert the
   template that has been set using |\usecontinuationtemplate| will be
   appended.
+\end{command}
+
+\begin{command}{\insertframesubtitle}
+  Inserts the current frame subtitle into a template.
 \end{command}
 
 \begin{command}{\insertcontinuationtext}
@@ -9855,9 +9897,7 @@ The following commands are parsed by \beamer, but have no effect:
 The package |beamerfoils| maps a subset of the commands of the \foils\
 package to \beamer. Since this package defines only few non-standard
 \TeX\ commands and since \beamer\ implements all the standard
-commands, the emulation layer is pretty simple. The main problem is
-the fact in foil\TeX\ page breaks are performed automatically, which
-is not the case in \beamer.
+commands, the emulation layer is pretty simple. 
 
 A copyright notice: The Foil\TeX\ package has a restricted
 license. For this reason, no example from the \foils\ package is
@@ -9878,14 +9918,9 @@ The workflow for the migration is the following:
 \item
   Possibly add commands to install themes and templates.
 \item
-  You may need to insert |\frame| commands to specify how the text
-  should be broken up into frames. If there is an automatic page break
-  in foil\TeX, you will have to manually insert a |\frame| for the
-  first frame and a second one for the second frame.
-\item
   If the command |\foilhead| is used inside a |\frame| command, it
   behaves like |\frametitle|. If it used outside a frame, it will
-  start a new frame (with the |containsverbatim| option, thus no
+  start a new frame (with the |autobreak| option, thus no
   overlays are allowed). This frame will persist till the next occurence
   of |\foilhead| or of the new command |\endfoil|. Note that a
   |\frame| command will \emph{not} end a frame started using
@@ -9924,10 +9959,12 @@ The workflow for the migration is the following:
 \foilhead{First Frame}
 
 This is on the first frame.
+\pagebreak
+This is on the second frame, which is a continuation of the first. 
 
-\foilhead{Second Frame}
+\foilhead{Third Frame}
 
-This is on the second frame.
+This is on the third frame.
 
 \endfoil
 \end{document}
@@ -9976,9 +10013,9 @@ listed.
 \begin{command}{\foilhead\oarg{dimension}\marg{frame title}}
   If used inside a |\frame| command, this is mapped to
   |\frametitle{|\meta{frame title}|}|. If used outside any frames, a
-  new frame is started. If a frame was previously started using this
-  command, it will be closed before the next frame is started. The
-  \meta{dimension} is ignored.
+  new frame is started with the option |autobreak|. If a frame was
+  previously started using this command, it will be closed before the
+  next frame is started. The \meta{dimension} is ignored.
 \end{command}
 
 \begin{command}{\rotatefoilhead\oarg{dimension}\marg{frame title}}

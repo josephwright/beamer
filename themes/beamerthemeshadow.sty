@@ -40,7 +40,12 @@
           \vbox{}\vskip-1ex%
           \leftskip0.3cm%
           \rightskip0.3cm plus1fil\leavevmode
-          \color{structure}\Large\color{white}\insertframetitle\strut\par
+          \Large\color{white}\insertframetitle%
+          \ifx\insertframesubtitle\@empty%
+            \strut\par%
+          \else
+            \par{\footnotesize{\insertframesubtitle}\strut\par}%
+          \fi%
           \nointerlineskip
           \vbox{}%
           \end{minipage}}%

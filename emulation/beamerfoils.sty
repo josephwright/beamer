@@ -29,19 +29,24 @@
   \beamerfoils@closer%
   \ifbeamer@inframe
     \gdef\beamerfoils@closer{}%
+    \let\beamerfoils@next=\relax%
   \else
     \gdef\beamerfoils@closer{\egroup}%
-    \beamerfoils@origframe[containsverbatim]\bgroup%
+    \let\beamerfoils@next=\beamerfoils@openframe%
   \fi
+  \beamerfoils@next%
   \frametitle{#2}%
   }
 \let\rotatefoilhead=\foilhead
+
+\def\beamerfoils@openframe{\beamerfoils@origframe[autobreak]\bgroup}%
 
 \let\beamerfoils@origframe=\frame
 \def\frame{\endfoil\beamerfoils@origframe}
 
 \def\endfoil{\beamerfoils@closer\gdef\beamerfoils@closer{}}
 
+\beamertemplatecontinuationtext
 
 \newenvironment{boldequation}{\boldmath\begin{equation}}{\end{equation}}
 \newenvironment{boldequation*}{\boldmath\begin{equation*}}{\end{equation*}}

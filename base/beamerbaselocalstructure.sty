@@ -37,6 +37,13 @@
 
 
 \mode
+<all>
+{
+  \newcommand<>\framesubtitle[1]{\only#2{\gdef\insertframesubtitle{#1}}}
+}
+
+
+\mode
 <article>
 {
   \newcommand<>\frametitle[2][]{\only#3{\gdef\insertframetitle{#2}\beamer@headrenderer}}
@@ -344,7 +351,7 @@
   \begin{center}%
     \structure{\abstractname}\vspace{-.5em}\vspace{0pt}%
   \end{center}\small%
-  \begin{quote}}
+  \begin{quote}\normalfont}
   {\end{quote}}
 
 
@@ -484,15 +491,15 @@
 
 \newenvironment{figure}[1][]{%
   \def\@captype{figure}%
-  \begin{center}}
-  {\end{center}}
+  \par\nobreak\begin{center}\nobreak}
+  {\par\nobreak\end{center}}
 \newcounter{figure}
 \renewcommand\thefigure{\@arabic\c@figure}
 
 \newenvironment{table}[1][]{%
   \def\@captype{table}%
-  \begin{center}}
-  {\end{center}}
+  \par\nobreak\begin{center}\nobreak}
+  {\par\nobreak\end{center}\nobreak}
 \newcounter{table}
 \renewcommand\thetable{\@arabic\c@table}
 
@@ -512,20 +519,20 @@
  {\@dblarg{\@caption\@captype}}%
 }
 \long\def\@caption#1[#2]#3{% second argument ignored
-  \par
+  \par\nobreak
   \begingroup
     \@parboxrestore
     \if@minipage
       \@setminipage
     \fi
     \normalsize
-    \beamer@makecaption{#1}{\ignorespaces #3}\par
+    \beamer@makecaption{#1}{\ignorespaces #3}\par\nobreak
     \endgroup}
 \long\def\beamer@makecaption#1#2{%
   \def\insertcaptionname{\csname#1name\endcsname}%
   \def\insertcaptionnumber{\csname the#1\endcsname}%
   \def\insertcaption{#2}%
-  \vskip\abovecaptionskip
+  \nobreak\vskip\abovecaptionskip\nobreak
   \sbox\@tempboxa{\beamer@captiontemplate}%
   \ifdim \wd\@tempboxa >\hsize
     \beamer@captiontemplate\par
@@ -533,7 +540,7 @@
     \global \@minipagefalse
     \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
   \fi
-  \vskip\belowcaptionskip}
+  \nobreak\vskip\belowcaptionskip\nobreak}
 
 \long\def\usecaptiontemplate#1{%
   \def\beamer@captiontemplate{#1}}

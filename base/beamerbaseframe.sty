@@ -157,21 +157,15 @@
 \define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
 \define@key{beamerframe}{c}[true]{% centered
   \def\beamer@frametopskip{\vfill}%
-  \def\beamer@frameundotopskip{\vskip0pt plus -1fill}%
   \def\beamer@framebottomskip{\vskip0pt plus 1.5fill}%
-  \def\beamer@frameundobottomskip{\vskip0pt plus -1.5fill}%
 }
 \define@key{beamerframe}{t}[true]{% top
-  \def\beamer@frametopskip{\vskip0.25em plus 3cm}%
-  \def\beamer@frameundotopskip{\vskip-0.25em plus -3cm}%
+  \def\beamer@frametopskip{\vskip0.25em plus 8cm}%
   \def\beamer@framebottomskip{\vfill}%
-  \def\beamer@frameundobottomskip{\vskip0pt plus -1fill}%
 }
 \define@key{beamerframe}{b}[true]{% bottom
   \def\beamer@frametopskip{\vfill}%
-  \def\beamer@frameundotopskip{\vskip0pt plus -1fill}%
   \def\beamer@framebottomskip{}%
-  \def\beamer@frameundobottomskip{}%
 }
 \define@key{beamerframe}{autobreak}[0.95]{\def\beamer@autobreakfactor{#1}\beamer@autobreaktrue}
 \define@key{beamerframe}{squeeze}[]{\def\beamer@cramped{\itemsep0pt\topsep0.5pt\relax}}
@@ -364,26 +358,23 @@
 \def\beamer@autobreakframebox{%
   \global\setbox\beamer@splitbox=\box\voidb@x%
   \ifbeamer@autobreak%
-    \@tempdima=\ht\beamer@framebox%
-    \ifdim\@tempdima>\textheight%
+%    \@tempdima=\ht\beamer@framebox%
+%    \ifdim\@tempdima>\textheight%
       % Ok, frame was overful -> split it!
       \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
       \global\setbox\beamer@splitbox=\box\beamer@framebox%
       \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa\beamer@framebottomskip\vfil%
-        \beamer@exitcode}%
-    \else%
-      \setbox\beamer@framebox=\vbox to\textheight{\unvbox\beamer@framebox%
-        \beamer@framebottomskip%
-        \ifvoid\beamer@footins%
-        \else%
-          \normalcolor%
-          \footnoterule%
-          \unvbox \beamer@footins%
-        \fi%
+        \ifvoid\beamer@splitbox%
+          \ifvoid\beamer@footins%
+          \else%
+            \normalcolor%
+            \footnoterule%
+            \unvbox \beamer@footins%
+            \global\setbox\beamer@footins=\box\voidb@x%
+          \fi%
+        \fi%       
         \beamer@exitcode%
-        }%
-      \global\setbox\beamer@footins=\box\voidb@x%
-    \fi%
+      }%
   \else%
     \setbox\beamer@framebox=\vbox to\textheight{\unvbox\beamer@framebox%
       \beamer@framebottomskip%
@@ -400,11 +391,7 @@
 
 \def\beamer@continueautobreak{%
   \refstepcounter{framenumber}%
-  \beamer@autobreakframe{%
-    \edef\beamer@args{[\beamer@shortframetitle]{\beamer@frametitle}}%
-    \expandafter\frametitle\beamer@args%
-    \unvbox\beamer@splitbox%
-  }%
+  \beamer@autobreakframe{\unvbox\beamer@splitbox}%
 }
 
 

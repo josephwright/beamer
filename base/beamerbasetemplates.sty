@@ -83,6 +83,7 @@
     \begin{centering}
       \structure{\textbf{\insertframetitle}}
       \par
+      {\footnotesize\structure{\textbf{\insertframesubtitle}}\par}
     \end{centering}
   }
 }
@@ -94,7 +95,8 @@
     {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
      \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
       \color{beamerstructure}
-      \Large\bfseries\insertframetitle\par}%
+      \Large\bfseries\insertframetitle\par%
+      {\footnotesize\structure{\textbf{\insertframesubtitle}}\par}}%
     }
 }
 \newcommand{\beamertemplatelargeframetitle}{
@@ -103,8 +105,10 @@
     {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
      \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
       \color{beamerstructure}
-      \Large\insertframetitle\par}%
-    }
+      \Large\insertframetitle\par%
+      {\footnotesize\structure{\insertframesubtitle}\par}%
+    }%
+  }
 }
   
 
