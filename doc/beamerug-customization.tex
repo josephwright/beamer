@@ -159,58 +159,11 @@ In this section all templates, colors, and fonts that are used by the
 default \beamer\ themes are listed in alphabetical order. 
 
 \begin{itemize}
-  \templatefontcolor{alerted text}\no\yes\yes
-  The color/font is used when text is typeset inside an |alertenv| or
-  when the |\alert| command is used. The background is currently
-  ignored.
 
   \templatefontcolor{example text}\no\yes\yes
   The color/font is used when text is typeset inside an |example|
   block. 
-  
-  \templatefontcolor{local structure}\no\yes\no
-  \colornote
-  This color should be used to typeset structural elements that change
-  their color according to the ``local environment.'' For example, the
-  color of an item ``button'' in an |itemize| environment changes its
-  color according to circumstances. If it is used inside an example
-  block, it should have the |example text| color; if it is currently
-  ``alerted'' it should have the |alerted text| color. This color
-  will setup by certain environments to have the color that should be
-  used to typset things like item buttons. Since the color used for
-  items, |item|, inherits from this color by default, items
-  automatically change their color according to the current
-  situation.
-
-  If you write your own environment in which the item buttons are
-  similar structural elements should have a different color, you
-  should change the color |local structure| inside these
-  environments. 
-
-  \templatefontcolor{math text}\no\yes\no
-  This color is the parent of |math text inlined| and
-  |math text displayed|. It is empty by default. See those colors for
-  details. 
-
-  \templatefontcolor{math text inlined}\no\yes\no
-  \colorparents{math text}
-  \colornote
-  If the foreground of this color is set, inlined mathematical text is
-  typeset using this color. This is done via some |\everymath| hackery
-  and may not work in all cases. If not, you'll have to try to find a
-  way around the problem. The background is currently
-  ignored. 
-
-  \templatefontcolor{math text displayed}\no\yes\no
-  \colorparents{math text}
-  \colornote
-  Like |math text inlined|, only for so-called ``displayed''
-  mathematical text. This is mathematical text between |\[| and |\]| or
-  between |$$| and |$$| or inside environments like |equation| or
-  |align|. The setup of this color is somewhat fragile, use at your
-  own risk. The background is currently
-  ignored.   
-
+ 
   \templatefontcolor{normal text}\no\yes\yes
   \colornote
   The color is used for normal text. At the beginning of
@@ -226,78 +179,9 @@ default \beamer\ themes are listed in alphabetical order.
   \beamer-color |background canvas| empty, not the background of this
   color.
 
-  \templatefontcolor{normal text in math text}\no\yes\no
-  \colornote
-  If the foreground of this color is set, normal text inside
-  mathematical text (which is introduced using the |\text| command)
-  will be typeset using this color. The background is currently
-  ignored. 
-
   \fontnote
   This font is not used, currently. In particular, redefining this
   font will not have any effect. This may change in the future.
-
-  \templatefontcolor{palette primary}\no\yes\no
-  \colornote
-  Layout themes (should) base the color of navigational elements and,
-  possibly, also of other elements, on the four palette colors. The
-  ``primary'' palette should be used for the most important
-  navigational elements, which are usually the ones that change most
-  often and hence require the most attention by the audience. The
-  ``secondary'' and ``ternary'' are less important, the ``fourth'' one
-  is least important.
-
-  By default, the palette colors do not have a background and the
-  foreground ranges from |structure.fg| to |black|.
-
-  For the sidebar, there is an extra set of palette colors, see
-  |palette sidebar primary|. 
-
-  \templatefontcolor{palette secondary}\no\yes\no
-  See |palette primary|.
-
-  \templatefontcolor{palette ternary}\no\yes\no
-  See |palette primary|.
-
-  \templatefontcolor{palette fourth}\no\yes\no
-  See |palette primary|.
-
-  \templatefontcolor{palette sidebar primary}\no\yes\no
-  Similar to |palette primary|, only outer themes (should) base the
-  colors of elements in the sidebar of the four sidebar palette
-  colors.
-
-  \templatefontcolor{palette sidebar secondary}\no\yes\no
-  See |palette sidebar primary|.
-
-  \templatefontcolor{palette sidebar ternary}\no\yes\no
-  See |palette sidebar primary|.
-
-  \templatefontcolor{palette sidebar fourth}\no\yes\no
-  See |palette sidebar primary|.
-  
-
-  \templatefontcolor{structure}\no\yes\yes
-  This color/font is used for ``structural'' elements, that is, for
-  all elements that are supposed to help the audience see the
-  structure of your presentation. This color/font is used, by default,
-  for the headings of blocks, for item buttons, for titles, and
-  several other things. In most color themes, the colors for
-  navigational elements in the headline or the footline are derived
-  from the foreground color of |structure|. By changing the structure
-  color you can easily change the ``basic color'' of your
-  presentation, other than the color of normal text. See also the
-  related color |local structure| and the related font
-  |tiny structure|. 
-
-  \templatefontcolor{tiny structure}\no\no\yes
-  This special font is used for ``tiny'' structural text. Basically,
-  this font should be used whenever a structural element uses a tiny
-  font. The idea is that the tiny versions of the |structure| font
-  often are not suitable. For example, it is often necessary to use a
-  boldface version for them. Also, one might wish to have serif smallcaps
-  structural text, but still retain normal sans-serif tiny structural
-  text. 
 
   \templatefontcolor{titlelike}\no\yes\yes
   This color/font is a more specialized form of the |structure|
@@ -1682,32 +1566,32 @@ The following inserts are useful for the navigation symbols template:
 
 
 
-\subsection{Hilighting Commands}
+%% \subsection{Hilighting Commands}
 
 
-\paragraph{Template Installation Commands}\
+%% \paragraph{Template Installation Commands}\
 
-\begin{command}{\usealerttemplate\marg{alert template
-      begin}\marg{alert template end}}
-  In an |\alert| command and in an |alertenv| environment, the text
-  \meta{alert template begin} is inserted at the beginning, the text
-  \meta{alert template end} at the end.
+%% \begin{command}{\usealerttemplate\marg{alert template
+%%       begin}\marg{alert template end}}
+%%   In an |\alert| command and in an |alertenv| environment, the text
+%%   \meta{alert template begin} is inserted at the beginning, the text
+%%   \meta{alert template end} at the end.
   
-  \example |\usealerttemplate{\color{red}}{}|
+%%   \example |\usealerttemplate{\color{red}}{}|
 
-  \articlenote
-  This command is also available in |article| mode.
-\end{command}
+%%   \articlenote
+%%   This command is also available in |article| mode.
+%% \end{command}
 
-\begin{command}{\usestructuretemplate\marg{structure template
-      begin}\marg{structure template end}}
-  Same as for alerts.
+%% \begin{command}{\usestructuretemplate\marg{structure template
+%%       begin}\marg{structure template end}}
+%%   Same as for alerts.
   
-  \example |\usestructuretemplate{\color{blue}}{}|
+%%   \example |\usestructuretemplate{\color{blue}}{}|
 
-  \articlenote
-  This command is also available in |article| mode.
-\end{command}
+%%   \articlenote
+%%   This command is also available in |article| mode.
+%% \end{command}
 
 
 

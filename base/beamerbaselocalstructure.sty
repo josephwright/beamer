@@ -58,36 +58,16 @@
 \mode
 <all>
 {
-\newenvironment{alertenv}{\begin{altenv}%
-    {\beamer@templatestartalert\usebeamercolor[fg]{alerted text}\usebeamerfont{alerted text}}
-    {\beamer@templateendalert}{\color{.}}{}}{\end{altenv}}
+  \newenvironment{alertenv}{\begin{altenv}%
+      {\usebeamertemplate{alerted text begin}\usebeamercolor[fg]{alerted text}\usebeamerfont{alerted text}}
+      {\usebeamertemplate{alerted text end}}{\color{.}}{}}{\end{altenv}}
 
-\newenvironment{structureenv}{\begin{altenv}%
-    {\beamer@templatestartstructure\usebeamercolor[fg]{structure}\usebeamerfont{structure}}
-    {\beamer@templateendstructure}{\color{.}}{}}{\end{altenv}}
+  \newenvironment{structureenv}{\begin{altenv}%
+      {\usebeamertemplate{structure text begin}\usebeamercolor[fg]{structure}\usebeamerfont{structure}}
+      {\usebeamertemplate{structure text end}}{\color{.}}{}}{\end{altenv}}
 
-\newcommand<>{\alert}[1]{\begin{alertenv}#2#1\end{alertenv}}
-\newcommand<>{\structure}[1]{\begin{structureenv}#2#1\end{structureenv}}
-
-\long\def\usealerttemplate#1#2{%
-  \def\beamer@templatestartalert{#1}\def\beamer@templateendalert{#2}}
-\long\def\usestructuretemplate#1#2{%
-  \def\beamer@templatestartstructure{#1}\def\beamer@templateendstructure{#2}}
-}
-
-
-\mode
-<presentation>
-{
-\usealerttemplate{\setbeamercolor{local structure}{parent=alerted text}}{}
-\usestructuretemplate{}{}
-}
-
-\mode
-<article>
-{
-  \usealerttemplate{\ifmmode\else\begin{itshape}\fi}{\ifmmode\else\end{itshape}\fi}
-  \usestructuretemplate{\ifmmode\else\begin{bfseries}\fi}{\ifmmode\else\end{bfseries}\fi}
+  \newcommand<>{\alert}[1]{\begin{alertenv}#2#1\end{alertenv}}
+  \newcommand<>{\structure}[1]{\begin{structureenv}#2#1\end{structureenv}}
 }
 
 

@@ -564,6 +564,129 @@ To set or to change a \beamer-color, you can use the command
 
 
 
+\subsection{The Color of Mathematical Text}
+
+By default, mathematical text does not have any special color---it
+just inherits the ``surrounding'' color. Some people prefer
+mathematical text to have some special color. Though I do not
+recommend this (I think mathematical text should \emph{not} stand out
+admit the normal text), \beamer\ makes it (reasonably) easy to change
+the color of mathematical text. Simply change the following colors:
+
+\begin{element}{math text}\no\yes\no
+  This color is the parent of |math text inlined| and
+  |math text displayed|. It is empty by default. See those colors for
+  details. 
+\end{element}
+
+\begin{element}{math text inlined}\no\yes\no
+  \colorparents{math text}
+  If the foreground of this color is set, inlined mathematical text is
+  typeset using this color. This is done via some |\everymath| hackery
+  and may not work in all cases. If not, you'll have to try to find a
+  way around the problem. The background is currently
+  ignored. 
+\end{element}
+
+\begin{element}{math text displayed}\no\yes\no
+  \colorparents{math text}
+  Like |math text inlined|, only for so-called ``displayed''
+  mathematical text. This is mathematical text between |\[| and |\]| or
+  between |$$| and |$$| or inside environments like |equation| or
+  |align|. The setup of this color is somewhat fragile, use at your
+  own risk. The background is currently
+  ignored.   
+\end{element}
+
+\begin{element}{normal text in math text}\no\yes\no
+  If the foreground of this color is set, normal text inside
+  mathematical text (which is introduced using the |\text| command)
+  will be typeset using this color. The background is currently
+  ignored. 
+\end{element}
+
+
+
+\subsection{The Color Palettes}
+
+When one designs a color theme, one faces the following problem:
+Suppose we want the colors in the headline to gradually change from
+black to, say, blue. Whatever is at the very top of the headline
+should be black, what comes right below it should be dark blue, and at
+the bottom of the headline things should just be blue. Unfortunately,
+different outer themes will put different things at the top. One theme
+might put the author at the top, another theme might put the document
+title there. This makes it impossible to directly assign one of the
+three colors ``black'', ``dark blue,'' and ``blue'' to the different
+elements that are typically rendered in the headline. No matter how we
+assign them, things will look wrong for certain outer themes.
+
+To circumvent this problem, \beamer\ uses a layer of \emph{palette
+colors}. Color themes typically only change these palette colors. For
+example, a color theme might make the \beamer-color |palette primary|
+blue, make |palette secondary| a dark blue, and make |palette ternary|
+black. Outer themes can now setup things such that whatever they show
+at the top of the headline inherits from |palette ternary|, what comes
+below inherits from |palette secondary|, and whatever is at the bottom
+inherits from |palette ternary|. This way, color themes can change the
+way even complicated outer themes look and they can do so
+consistently.
+
+Note that the user can still change the color of every element
+individually, simply by overriding the color(s) of the elements in the
+headline. In a sense, the palette colors are just a ``suggestion'' how
+things should be colored by an outer theme.
+
+In detail, the following palette colors are used by outer themes.
+
+
+\begin{element}{palette primary}\no\yes\no
+  Outer themes (should) base the color of navigational elements and,
+  possibly, also of other elements, on the four palette colors. The
+  ``primary'' palette should be used for the most important
+  navigational elements, which are usually the ones that change most
+  often and hence require the most attention by the audience. The
+  ``secondary'' and ``ternary'' are less important, the ``fourth'' one
+  is least important.
+
+  By default, the palette colors do not have a background and the
+  foreground ranges from |structure.fg| to |black|.
+
+  For the sidebar, there is an extra set of palette colors, see
+  |palette sidebar primary|. 
+\end{element}
+
+\begin{element}{palette secondary}\no\yes\no
+  See |palette primary|.
+\end{element}
+
+\begin{element}{palette ternary}\no\yes\no
+  See |palette primary|.
+\end{element}
+
+\begin{element}{palette fourth}\no\yes\no
+  See |palette primary|.
+\end{element}
+
+\begin{element}{palette sidebar primary}\no\yes\no
+  Similar to |palette primary|, only outer themes (should) base the
+  colors of elements in the sidebar of the four sidebar palette
+  colors.
+\end{element}
+
+\begin{element}{palette sidebar secondary}\no\yes\no
+  See |palette sidebar primary|.
+\end{element}
+
+\begin{element}{palette sidebar ternary}\no\yes\no
+  See |palette sidebar primary|.
+\end{element}
+
+\begin{element}{palette sidebar fourth}\no\yes\no
+  See |palette sidebar primary|.
+\end{element}
+
+
 
 
 

@@ -1873,11 +1873,100 @@ different kinds of items inherit form or just use the following
 \begin{element}{subsubitem projected}\no\yes\yes
 \end{element}
 
+
+
+
 \subsubsection{Hilighting}
 
 The \beamer\ class predefines commands and environments for
 hilighting text. Using these commands makes is easy to change the
 appearance of a document by changing the theme. 
+
+
+\begin{command}{\structure\sarg{overlay specification}\marg{text}}
+  The given text is marked as part of the structure, that is, it is
+  supposed to help the audience see the structure of your
+  presentation. If the \meta{overlay specification} is present, the
+  command only has an effect on the specified slides.
+  \example|\structure{Paragraph Heading.}|
+
+  Internally, this command just puts the \emph{text} inside a
+  |structureenv| environment.
+ 
+  \articlenote
+  Structure text is typeset as bold text. This can be changed by
+  modifying the templates.
+
+  \lyxnote
+  You need to use \TeX-mode to insert this command.
+
+  \begin{element}{structure}\no\yes\yes
+    This color/font is used when structured text is typeset, but it is
+    also widely used as a base for many other colors including the
+    headings of blocks, item buttons, and titles. In most color
+    themes, the colors for navigational elements in the headline or
+    the footline are derived from the foreground color of
+    |structure|. By changing the structure color you can easily change
+    the ``basic color'' of your presentation, other than the color of
+    normal text. See also the related color |local structure| and the
+    related font |tiny structure|.
+    
+    Inside the |\structure| command, the background of the color is
+    ignored, but this is not necessarily true for elements that
+    inherit their color from |structure|. There is no template
+    |structure|, use |structure begin| and |structure end| instead.
+  \end{element}
+ 
+  \begin{element}{local structure}\no\yes\no
+    This color should be used to typeset structural elements that change
+    their color according to the ``local environment.'' For example, the
+    color of an item ``button'' in an |itemize| environment changes its
+    color according to circumstances. If it is used inside an example
+    block, it should have the |example text| color; if it is currently
+    ``alerted'' it should have the |alerted text| color. This color
+    will setup by certain environments to have the color that should be
+    used to typset things like item buttons. Since the color used for
+    items, |item|, inherits from this color by default, items
+    automatically change their color according to the current
+    situation.
+
+    If you write your own environment in which the item buttons are
+    similar structural elements should have a different color, you
+    should change the color |local structure| inside these
+    environments. 
+  \end{element}
+  
+  \begin{element}{tiny structure}\no\no\yes
+    This special font is used for ``tiny'' structural text. Basically,
+    this font should be used whenever a structural element uses a tiny
+    font. The idea is that the tiny versions of the |structure| font
+    often are not suitable. For example, it is often necessary to use a
+    boldface version for them. Also, one might wish to have serif smallcaps
+    structural text, but still retain normal sans-serif tiny structural
+    text.
+  \end{element}
+\end{command}
+
+\begin{environment}{{structureenv}\sarg{overlay specification}}
+  Environment version of the |\structure| command.
+
+  \begin{element}{structure begin}\yes\no\no
+    This text is inserted at the beginning of a |structureenv|
+    environment.
+
+    \begin{templateoptions}
+      \itemoption{default}
+
+      \articlenote
+      The text is typeset in boldface.
+    \end{templateoptions}
+  \end{element}
+
+  \begin{element}{structure end}\yes\no\no
+    This text is inserted at the end of a |structureenv| environment.
+  \end{element}
+\end{environment}
+
 
 \begin{command}{\alert\sarg{overlay specification}\marg{hilighted text}}
   The given text is hilighted, typically be coloring the text red. If
@@ -1885,37 +1974,50 @@ appearance of a document by changing the theme.
   effect on the specified slides.
   \example |This is \alert{important}.|
 
+  Internally, this command just puts the \emph{hilighted text} inside
+  an |alertenv|.
+  
   \articlenote
   Alerted text is typeset as emphasized text. This can be changed by
-  specifying another template.
+  modifying the templates, see below.
 
   \lyxnote
-  You need to use \TeX-mode to insert this command.
+  You need to use \TeX-mode to insert this command (which is not very
+  convenient).
+
+  \begin{element}{alerted text}\no\yes\yes
+    This color/font is used when alerted text is typeset. The
+    background is currently ignored. There is no template
+    |alerted text|, rather there are templates |alerted text begin|
+    and |alerted text end| that are inserted before and after alerted
+    text.
+  \end{element}
 \end{command}
 
 \begin{environment}{{alertenv}\sarg{overlay specification}}
   Environment version of the |\alert| command.
-\end{environment}
 
+  \begin{element}{alerted text begin}\yes\no\no
+    This text is inserted at the beginning of a an |alertenv|
+    environment.
 
+    \begin{templateoptions}
+      \itemoption{default}
 
-\begin{command}{\structure\sarg{overlay specification}\marg{text}}
-  The given text is marked as part of the structure, typically by
-  coloring it in the |structure| color. If the \meta{overlay
-    specification} is present, the command only has an effect on the
-  specified slides.
-  \example|\structure{Paragraph Heading.}|
+      \beamernote
+      This changes the color |local structure| to |alerted text|. This
+      causes things like buttons or items to be colored in the same
+      color as the alerted text, which is often visually pleasing. See
+      also the |\structure| command.
 
-  \articlenote
-  Structure text is typeset as bold text. This can be changed by
-  specifying another template.
+      \articlenote
+      The text is emphasized.
+    \end{templateoptions}
+  \end{element}
 
-  \lyxnote
-  You need to use \TeX-mode to insert this command.
-\end{command}
-
-\begin{environment}{{structureenv}\sarg{overlay specification}}
-  Environment version of the |\structure| command.
+  \begin{element}{alerted text end}\yes\no\no
+    This text is inserted at the end of an |alertenv| environment.
+  \end{element}
 \end{environment}
 
 
