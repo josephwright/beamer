@@ -254,7 +254,6 @@
 % commands for smuggling skips past
 
 \newskip\beamer@lastskipcover
-\def\beamer@zeropt{0.0pt}
 \def\beamer@smuggle#1{%
   \beamer@lastskipcover=\lastskip%
   \edef\beamer@lastskiptext{\the\lastskip}%
@@ -488,15 +487,18 @@
   \newcommand\beamer@gobbleoptionalinsp[2][]{\ignorespaces}
 }
 
-\long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
+\long\def\beamer@spacingcover{\beamer@smuggle{\pgfsys@begininvisible\pgfsys@endinvisible}}
+\long\def\beamer@spacingcoverb{\pgfsys@begininvisible\pgfsys@endinvisible}
+\long\def\beamer@fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
+\long\def\beamer@makecovered#1{\beamer@startcovered#1\beamer@endcovered}
 \long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
 
-\newcommand{\uncover}{\alt{\@firstofone}{\makeinvisible}}
-\newcommand{\visible}{\alt{\@firstofone}{\beamer@reallymakeinvisible}}
-\newcommand{\invisible}{\alt{\beamer@reallymakeinvisible}{\@firstofone}}
-\newenvironment{visibleenv}{\begin{altenv}{}{}{\pgfsys@begininvisible}{\pgfsys@endinvisible}}{\end{altenv}}
-\newenvironment{invisibleenv}{\begin{altenv}{\pgfsys@begininvisible}{\pgfsys@endinvisible}{}{}}{\end{altenv}}
-\newenvironment{uncoverenv}{\begin{altenv}{}{}{\beamer@startcovered}{\beamer@endcovered}}{\end{altenv}}
+\newcommand{\uncover}{\alt{\beamer@fakeinvisible}{\beamer@makecovered}}
+\newcommand{\visible}{\alt{\beamer@fakeinvisible}{\beamer@reallymakeinvisible}}
+\newcommand{\invisible}{\alt{\beamer@reallymakeinvisible}{\beamer@fakeinvisible}}
+\newenvironment{visibleenv}{\begin{altenv}{\beamer@spacingcoverb}{\beamer@spacingcoverb}{\pgfsys@begininvisible}{\pgfsys@endinvisible}}{\end{altenv}}
+\newenvironment{invisibleenv}{\begin{altenv}{\pgfsys@begininvisible}{\pgfsys@endinvisible}{\beamer@spacingcoverb}{\beamer@spacingcoverb}}{\end{altenv}}
+\newenvironment{uncoverenv}{\begin{altenv}{\beamer@spacingcoverb}{\beamer@spacingcoverb}{\beamer@startcovered}{\beamer@endcovered}}{\end{altenv}}
 \newenvironment{onlyenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
 \renewcommand<>{\color}{\alt#1{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}}
 
