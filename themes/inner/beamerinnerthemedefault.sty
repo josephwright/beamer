@@ -79,10 +79,10 @@
 % Table of contents
 %
 
-\defbeamertemplateparent{sections/subsections in toc}{section in toc,subsection in toc}
+\defbeamertemplateparent{sections/subsections in toc}{section in toc,subsection in toc,subsubsection in toc}
 {}
 
-\defbeamertemplateparent{sections/subsections in toc shaded}{section in toc shaded,subsection in toc shaded}[1][20]
+\defbeamertemplateparent{sections/subsections in toc shaded}{section in toc shaded,subsection in toc shaded,subsubsection in toc shaded}[1][20]
 {[#1]}
 
 
@@ -96,6 +96,10 @@
 \defbeamertemplate*{subsection in toc}{default}
 {\leavevmode\leftskip=1.5em\inserttocsubsection\par}
 
+\defbeamertemplate*{subsubsection in toc}{default}
+{\leavevmode\normalsize\usebeamerfont{subsection in toc}\leftskip=3em%
+  \usebeamerfont{subsubsection in toc}\inserttocsubsubsection\par}
+
 
 % (sub-)section in toc shaded, default
 
@@ -104,6 +108,9 @@
 
 \defbeamertemplate*{subsection in toc shaded}{default}[1][20]
 {\begin{colormixin}{#1!parent.bg}\usebeamertemplate{subsection in toc}\end{colormixin}\unskip}
+
+\defbeamertemplate*{subsubsection in toc shaded}{default}[1][20]
+{\begin{colormixin}{#1!parent.bg}\usebeamertemplate{subsubsection in toc}\end{colormixin}\unskip}
 
 
 

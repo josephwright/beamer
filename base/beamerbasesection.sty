@@ -105,8 +105,10 @@
     \setcounter{subsection}{0}%
     \def\insertsection{}%
     \def\insertsubsection{}%
+    \def\insertsubsubsection{}%
     \def\insertsectionhead{}%
     \def\insertsubsectionhead{}%
+    \def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
     \def\insertpart{\expandafter\hyperlink\partlink}%
     \beamer@atbeginpart%
@@ -178,8 +180,10 @@
     \beamer@subsectionstartpage=\c@page%
     \def\insertsection{\expandafter\hyperlink\sectionlink}%
     \def\insertsubsection{}%
+    \def\insertsubsubsection{}%
     \def\insertsectionhead{#1}%
     \def\insertsubsectionhead{}%
+    \def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
     \Hy@writebookmark{\the\c@section}{\secname}{Outline\the\c@section}{1}{toc}%
     \hyper@anchorstart{Outline\the\c@section}\hyper@anchorend%
@@ -243,7 +247,9 @@
     \beamer@subsectionstartpage=\c@page%
     \edef\subsectionlink{{Navigation\the\c@page}{\noexpand\subsecname}}%
     \def\insertsubsection{\expandafter\hyperlink\subsectionlink}%
+    \def\insertsubsubsection{}%
     \def\insertsubsectionhead{#1}%
+    \def\insertsubsubsectionhead{}%
     \Hy@writebookmark{\the\c@subsection}{#1}{Outline\the\c@section.\the\c@subsection.\the\c@page}{2}{toc}%
     \hyper@anchorstart{Outline\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
     \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}%
@@ -272,6 +278,61 @@
 <article>
 {
   \renewcommand<>{\subsection}{\alt#1{\beameroriginal\subsection}{\beamer@secgobble}}
+}
+
+
+%
+% Subsubsection Definitions
+%
+\newcounter{subsubsection}[subsection]
+\renewcommand\thesubsubsection{\@arabic\c@subsubsection}
+
+\beamer@subsectionstartpage=1
+
+\newcommand<>{\subsubsection}{\alt#1{\@ifnextchar[\beamer@subsubsection\beamer@@subsubsection}{\beamer@secgobble}}
+
+\def\beamer@@subsubsection{\@ifnextchar*\beamer@@ssubsubsection\beamer@@@subsubsection}
+\long\def\beamer@@ssubsubsection*#1{\beamer@subsubsection[#1]{}}
+\def\beamer@@@subsubsection#1{\beamer@subsubsection[#1]{#1}}
+\def\beamer@subsubsection[#1]#2{%
+  \beamer@savemode%
+  \mode<all>%
+  \ifbeamer@inlecture%
+    \refstepcounter{subsubsection}%
+    \beamer@ifempty{#2}{\long\def\subsubsecname{#1}}
+    {%
+      \long\def\subsubsecname{#2}%
+      \addtocontents{toc}{\protect\beamer@subsubsectionintoc%
+        {\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{\the\c@page}{\the\beamer@tocsectionnumber}{#2}}%
+    }%
+    \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsubsectionentry%
+        {\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{\the\c@page}{\subsubsecname}}}%
+    \edef\subsubsectionlink{{Navigation\the\c@page}{\noexpand\subsubsecname}}%
+    \def\insertsubsubsection{\expandafter\hyperlink\subsubsectionlink}%
+    \def\insertsubsubsectionhead{#1}%
+    \Hy@writebookmark{\the\c@subsubsection}{#1}{Outline\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}{3}{toc}%
+    \hyper@anchorstart{Outline\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}\hyper@anchorend%
+    \beamer@ifempty{#2}{\beamer@atbeginsubsubsections}{\beamer@atbeginsubsubsection}%
+  \fi%
+  \beamer@resumemode}
+\def\insertsubsubsection{}
+\def\insertsubsubsectionhead{}
+
+\mode
+<all>
+{
+  \def\AtBeginSubsubsection{\@ifnextchar[{\beamer@AtBeginSubsubsection}{\beamer@@AtBeginSubsubsection}}
+  \long\def\beamer@@AtBeginSubsubsection#1{\beamer@AtBeginSubsubsection[#1]{#1}}
+  \long\def\beamer@AtBeginSubsubsection[#1]#2{%
+    \def\beamer@atbeginsubsubsection{#2}%
+    \def\beamer@atbeginsubsubsections{#1}}
+  \AtBeginSubsubsection{}
+}
+
+\mode
+<article>
+{
+  \renewcommand<>{\subsubsection}{\alt#1{\beameroriginal\subsubsection}{\beamer@secgobble}}
 }
 
 

@@ -548,6 +548,8 @@
 \def\beamer@nav@subsectionstyle#1{\beamer@toc@sprocess\beamer@nav@css\beamer@nav@oss\beamer@nav@ooss#1///}
 \beamer@nav@subsectionstyle{show}
 
+\def\beamer@subsubsectionentry#1#2#3#4#5#6{}% no effect by default.
+
 \def\insertverticalnavigation#1{%
   \vbox{%
     \def\sectionentry##1##2##3##4##5{%
@@ -586,7 +588,11 @@
           \beamer@link(##4){%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=##2%
-              {\usebeamertemplate{subsection in sidebar}}%
+              \ifnum\c@subsubsection=0\relax%
+                {\usebeamertemplate{subsection in sidebar}}%
+              \else%
+                {\usebeamertemplate{subsection in sidebar shaded}}%
+              \fi%
             \else%
               {\usebeamertemplate{subsection in sidebar shaded}}%
             \fi%
@@ -595,6 +601,32 @@
           \fi}}}%
       }%
       \fi\fi}%
+    \def\beamer@subsubsectionentry##1##2##3##4##5##6{%
+      \ifnum##1=\c@part%
+      \def\insertpartheadnumber{##1}%
+      \def\insertsectionheadnumber{##2}%
+      \def\insertsubsectionheadnumber{##3}%
+      \def\insertsubsubsectionheadnumber{##3}%
+      \def\insertsubsubsectionhead{##6}%
+      \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
+      {\hbox{{%
+        \usebeamerfont{subsubsection in sidebar}\usebeamercolor[fg]{subsubsection in sidebar}%
+          \hyperlink{Navigation##5}{%
+          \ifnum\c@section=##2%
+            \ifnum\c@subsection=##3%
+              \ifnum\c@subsubsection=##4%
+                {\usebeamertemplate{subsubsection in sidebar}}%
+              \else
+                {\usebeamertemplate{subsubsection in sidebar shaded}}%
+              \fi%
+            \else%
+              {\usebeamertemplate{subsubsection in sidebar shaded}}%
+            \fi%
+          \else%
+            {\usebeamertemplate{subsubsection in sidebar shaded}}%
+          \fi}}}%
+      }%
+      \fi}%
     \beamer@currentsubsection=0\relax%
     \dohead%
   }}

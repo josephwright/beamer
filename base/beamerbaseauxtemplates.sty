@@ -187,6 +187,10 @@
 \defbeamertemplate{subsection in toc}{sections numbered}
 {\leavevmode\leftskip=2.5em\inserttocsubsection\par}
 
+\defbeamertemplate{subsubsection in toc}{sections numbered}
+{\leavevmode\normalsize\usebeamerfont{subsection in toc}\leftskip=3.5em\usebeamerfont{subsubsection in toc}%
+  \inserttocsubsubsection\par}
+
 
 
 
@@ -198,6 +202,11 @@
 
 \defbeamertemplate{subsection in toc}{subsections numbered}
 {\leavevmode\leftskip=2em\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
+
+\defbeamertemplate{subsubsection in toc}{subsections numbered}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+  \inserttocsubsubsection\par}
 
 
 
@@ -221,6 +230,11 @@
 \defbeamertemplate{subsection in toc}{circle}
 {\leavevmode\leftskip=2em\inserttocsubsection\par}
 
+\defbeamertemplate{subsubsection in toc}{circle}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+  \inserttocsubsubsection\par}
+
 
 
 
@@ -241,6 +255,13 @@
     \usebeamercolor[bg]{subsection number projected}%
     \vrule width1ex height1ex\kern1ex}\inserttocsubsection\par}
 
+\defbeamertemplate{subsubsection in toc}{square}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=7ex\usebeamerfont{subsubsection in toc}%
+  \llap{%
+    \usebeamercolor[bg]{subsubsection number projected}%
+    \vrule width0.75ex height0.75ex\kern1ex}\inserttocsubsubsection\par}
+
 
 
 
@@ -252,6 +273,12 @@
 \defbeamertemplate{subsection in toc}{ball unnumbered}
 {\leavevmode\leftskip=1.5em\raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}%
   \kern1ex\inserttocsubsection\par}
+
+\defbeamertemplate{subsubsection in toc}{ball unnumbered}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+  \beamer@usesphere{subsubsection number projected}{smallsphere}%
+  \kern0.75ex\inserttocsubsubsection\par}
 
 
 
@@ -280,6 +307,13 @@
 {\leavevmode\leftskip=5ex%
   \llap{\raise0.1ex\beamer@usesphere{subsection number projected}{bigsphere}\kern1ex}%
   \inserttocsubsection\par%
+}
+
+\defbeamertemplate{subsubsection in toc}{ball}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=7ex\usebeamerfont{subsubsection in toc}%
+  \llap{\beamer@usesphere{subsubsection number projected}{bigsphere}\kern0.75ex}%
+  \inserttocsubsubsection\par%
 }
 
 

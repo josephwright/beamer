@@ -53,6 +53,7 @@
 \newbox\beamer@linebox
 
 \newcount\beamer@sectioncount
+\newcount\beamer@subsubsectionmax
 \newcount\beamer@subsectionmax
 \newcount\beamer@sectionmax
 \newcount\beamer@totalheads

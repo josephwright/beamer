@@ -8,6 +8,7 @@
 \mode<presentation>
 
 % Calculate maximum number of sections/subsections per part
+\beamer@subsubsectionmax=0\relax
 \beamer@subsectionmax=0\relax
 \beamer@sectionmax=0\relax
 \beamer@sectioncount=0\relax
@@ -34,6 +35,7 @@
 \def\beamer@initsectionentry#1#2#3#4#5{\advance\beamer@sectioncount by1\relax%
   \ifnum\beamer@sectionmax<\beamer@sectioncount\beamer@sectionmax=\beamer@sectioncount\fi}
 \def\beamer@initslideentry#1#2#3#4#5#6{\ifnum\beamer@subsectionmax<#2\relax\beamer@subsectionmax=#2\fi}
+\def\beamer@initsubsubsectionentry#1#2#3#4#5#6{\ifnum\beamer@subsubsectionmax<#4\relax\beamer@subsectionmax=#4\fi}
 \def\beamer@framepages#1#2{}
 \def\beamer@subsectionpages#1#2{}
 \def\beamer@sectionpages#1#2{}
@@ -69,11 +71,14 @@
   \@input{\jobname.nav}
   \let\beamer@sectionentryorig=\sectionentry
   \let\beamer@slideentryorig=\slideentry
+  \let\beamer@subsubsectionentryorig=\beamer@subsubsectionentry
   \let\sectionentry=\beamer@initsectionentry
   \let\slideentry=\beamer@initslideentry
+  \let\beamer@subsubsectionentry=\beamer@initsubsubsectionentry
   \dohead
   \let\sectionentry=\beamer@sectionentryorig
   \let\slideentry=\beamer@slideentryorig
+  \let\beamer@subsubsectionentry=\beamer@subsubsectionentryorig
   \beamer@calculateheadfoot
   \ifbeamer@draftmode
     \setbeamertemplate{footline}{

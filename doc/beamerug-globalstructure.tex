@@ -308,11 +308,50 @@ why; comments would be appreciated).
 \end{verbatim}
 \end{command}
 
+\begin{command}{\subsubsection\sarg{mode specification}\oarg{short
+      subsubsection name}\marg{subsubsection name}}
+  This command works the like |\subsection|. However, subsubsections
+  are supported less well than subsections. For example, in the table
+  of contents subsubsections are always shown with the same
+  shading/hiding parameters as the subsection.
+
+  I \emph{strongly} discourage the use of subsubsections in
+  presentations. If you do not use them, you will give a better
+  presentation.
+  
+  \example|\subsubsection[Applications]{Applications to the Reduction of Pollution}|
+  
+  \begin{element}{subsubsection in toc}\yes\yes\yes
+    Like |subsection in toc|, only for subsection.
+
+    In addition to the inserts for the |subsection in toc| template, the
+    following commands are available for this template: 
+    \begin{templateinserts}
+      \iteminsert{\inserttocsubsubsection}
+      inserts the table of contents version of the current subsubsection
+      name.
+
+      \iteminsert{\inserttocsubsubsectionnumber}
+      inserts the number of the current subsubsection (in the table of contents).
+    \end{templateinserts}
+  \end{element}
+
+  \begin{element}{subsubsection in toc shaded}\yes\yes\yes
+    Like |subsection in toc shaded|, only for subsubsections.
+  \end{element}
+\end{command}
+
+\begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsubsection name}} 
+  Starts a subsection without an entry in the table of contents. No
+  heading is created, but the \meta{subsubsection name} is shown in
+  a possible sidebar.
+\end{command}
+
 Often, you may want a certain type of frame to be shown directly after
 a section or subsection starts. For example, you may wish every
 subsection to start with a frame showing the table of contents with
 the current subsection hilighted. To facilitate this, you can use the
-following two commands.
+following  commands.
 
 
 \begin{command}{\AtBeginSection\oarg{special star text}\marg{text}}
@@ -358,6 +397,11 @@ following two commands.
   \end{frame}
 }
 \end{verbatim}
+\end{command}
+
+
+\begin{command}{\AtBeginSubsubsection\oarg{special star text}\marg{text}}
+  Like |\AtBeginSubsection|, only for subsubsections.
 \end{command}
 
 

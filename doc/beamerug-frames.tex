@@ -240,7 +240,7 @@ otherwise it contains only one slide.
     character codes can be reset. The price of switching to another
     internal mechanism is that either you cannot use overlays or an
     external file needs to be written and read back (which is not
-    always desirable) or that you need to use $\epsilon$-\LaTeX.
+    always desirable).
 
     In detail, the following happens when this option is given for
     normal (pdf)\LaTeX: The contents of the frame is scanned and then
@@ -250,12 +250,6 @@ otherwise it contains only one slide.
     frame is started anew and the content of this file is read
     back. Since, upon reading of a file, the character codes can be
     modified, this allows you to use both verbatim text and overlays.
-
-    If you use $\epsilon$-(pdf)\LaTeX, the writing and reading of files
-    is not done. Instead the special primitive |\scantokens| is used
-    to achieve the desired effect. This is a cleaner solution and
-    avoids problems with characters outside the standard
-    \textsc{ascii} range.
 
     To determine the end of the frame, the following rule is used: The
     first occurence of a single line containing exactly
@@ -435,28 +429,7 @@ otherwise it contains only one slide.
   \end{element}
 \end{environment}
 
-\begin{command}{\frame\sarg{overlay specification}%
-    \opt{|[<|\meta{default overlay
-        specification}|>]|}\oarg{options}\marg{contents}}
-  This command does the same as putting the \meta{contents} in a
-  |frame| environment called.
-
-  \example The following two frame will be identical:
-\begin{verbatim}
-\frame{Hi!}
-
-\begin{frame}
-  Hi!
-\end{frame}
-\end{verbatim}
-\end{command}
-
-Internally, the |\frame| command is what is actually executed. The
-|frame| environment just collects its environment contents and then
-calls the |\frame| command; except if the option |fragile=singleslide|
-is specified, in which case the contents is not collected, but
-control is nevertheless passed on the |\frame| (the internals are a
-bit obscure). You \emph{can} use the |frame| environment inside other
+You \emph{can} use the |frame| environment inside other
 environments like this
 \begin{verbatim}
 \newenvironment{myframe}[1]{\begin{frame}\frametitle{#1}}{\end{frame}}
@@ -652,6 +625,9 @@ following templates:
     options as for |\insertshortauthor| may be given. 
 
     \iteminsert{\insertsubsection}
+    Inserts the current subsection into a template.
+
+    \iteminsert{\insertsubsubsection}
     Inserts the current subsection into a template.
 
     \iteminsert{\insertsubsectionnavigation}\marg{width}
@@ -1190,9 +1166,40 @@ can use it to jump to the different subsections.
   subsections. 
 \end{element}
 
-\begin{element}{subsection in head/foot shaded}\yes\no\no
+\begin{element}{subsection in sidebar shaded}\yes\no\no
   This template behaves exactly like |section in sidebar shaded|,
   only for subsections. 
+\end{element}
+
+\begin{element}{subsubsection in head/foot}\yes\yes\yes
+  This template behaves exactly like |section in head/foot|, only for
+  subsubsections. Currently, it is not used by the default themes.
+  \begin{itemize}
+    \iteminsert{\insertsubsubsectionhead}
+    works like |\insertsectionhead|.
+
+    \iteminsert{\insertsubsubsectionheadnumber}
+    works like |\insertsectionheadnumber|.
+  \end{itemize}
+\end{element}
+
+\begin{element}{subsubsection in head/foot shaded}\yes\no\no
+  This template behaves exactly like |section in head/foot shaded|,
+  only for subsubsections. 
+  \begin{templateoptions}
+    \itemoption{default}{\oarg{percentage}}
+    works like the corresponding option for sections.
+  \end{templateoptions}
+\end{element}
+
+\begin{element}{subsubsection in sidebar}\yes\yes\yes
+  This template behaves exactly like |section in sidebar|, only for
+  subsubsections. 
+\end{element}
+
+\begin{element}{subsubsection in sidebar shaded}\yes\no\no
+  This template behaves exactly like |section in sidebar shaded|,
+  only for subsubsections. 
 \end{element}
 
 By clicking on the document title in a navigation bar (not all themes

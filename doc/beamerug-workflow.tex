@@ -143,23 +143,6 @@ to view the resulting presentation.
 > acroread main.pdf
 \end{verbatim}
 
-When printing a presentation using Acrobat, make sure that the option
-``expand small pages to paper size'' in the printer dialog is
-enabled. This is necessary, because slides are only 128mm times 96mm.
-
-To put several slides onto one page (useful for the handout version)
-or to enlarge the slides, you can use the program |pdfnup|. Also, many
-commercial programs can perform this task. If you put several slides
-on one page and if these slides normally have a white background, it
-may be useful to write the following in your preamble:
-
-\begin{verbatim}
-\mode<handout>{\beamertemplatesolidbackgroundcolor{black!5}}
-\end{verbatim}
-
-This will cause the slides of the handout version to have a very
-light gray background. This makes it easy to discern the slides'
-border if several slides are put on one page.
 
 \lyxnote
 Choose ``View pdf'' to view your presentation.
@@ -193,45 +176,19 @@ The option (|-P pdf|) tells |dvips| to use
 Type~1 outline fonts instead of the usual Type~3 bitmap fonts. You may
 wish to omit this option if there is a problem with it. 
 
-If you wish each slide to completely fill a letter-sized page, use the
-following commands instead:
-
-\begin{verbatim}
-> dvips -P pdf -tletter main.dvi -o main.temp.ps
-> psnup -1 -W128mm -H96mm -pletter main.temp.ps main.ps
-\end{verbatim}
-
-For A4-sized paper, use:
-
-\begin{verbatim}
-> dvips -P pdf -ta4 main.dvi -o main.temp.ps
-> psnup -1 -W128mm -H96mm -pa4 main.temp.ps main.ps
-\end{verbatim}
-
-In order to create a white margin around the whole page (which is sometimes
-useful for printing), add the option |-m 1cm| to the options of
-|psnup|. 
-
-To put two or four slides on one page, use |-2|, respectively
-|-4| instead of |-1| as the first parameter for
-|psnup|. In this case, you may wish to add the option
-|-b 1cm| to add a bit of space around the individual slides. The same
-trick as for the \pdf-version can be used to make the borders of
-slides more pronounced in the handout version.
-
 You can convert a PostScript file to a pdf file using
 
 \begin{verbatim}
 > ps2pdf main.ps main.pdf
 \end{verbatim}
 
-
 \lyxnote
 Use ``View Postscript'' to view the PostScript version.
 
 
 
-\subsubsection*{Ways of Improving Compilation Speed}
+
+\subsubsection{Ways of Improving Compilation Speed}
 \label{section-speedup}
 
 While working on your presentation, it may sometimes be useful to
@@ -316,13 +273,15 @@ test and retest the talk and modify it as needed.
 
 
 
-\subsection{Step Six: Optionally Create a Handout or an Article Version}
+\subsection{Step Six: Create a Handout}
+
+\subsubsection{Creating the Handout}
 
 Once your talk is fixed, you can create a handout, if this seems
-appropriate. For this, use the class option |handout| as
+appropriate. For this, you can use the class option |handout| as
 explained in Section~\ref{handout}. Typically, you might wish
-to put several handout slides on one page. See
-Section~\ref{section-postscript} on how to do this.
+to put several handout slides on one page, see below on how to do
+this easily.
 
 You may also wish to create an article version of your talk. An
 ``article version'' of your presentation is a normal \TeX\ text
@@ -338,6 +297,90 @@ Section~\ref{section-article}.
 Creating an article version is not really possible in \LyX. You
 can \emph{try}, but I would not advise it.
 
+
+\subsubsection{Printing the Handout}
+\label{section-printing-version}
+
+The easiest way to print a presentation is to user the Acrobat Reader
+with the option ``expand small pages to paper size'' form the printer
+dialog enabled. This is necessary, because slides are only 128mm times
+96mm.
+
+For the PostScript version and for printing multiple slides on a
+single page this simple approach does not work. In such cases you can
+use the |pgfpages| package, which works directly both with |pdflatex|
+and |latex| plus |dvips|. Note however \emph{that this package
+  destroys hyperlinks}. This is due to fundamental flaws in the
+\pdf-specification and not likely to change.
+
+The |pgfpages| can do all sorts of tricks with pages. The most
+important one for printing \beamer\ slides is the following command:
+
+\begin{verbatim}
+\usepackage{pgfpages}
+\pgfpagelayout{resize}[a4paper,border shrink=5mm,landscape]
+\end{verbatim}
+
+This says ``Resize all pages to landscape A4 pages, no what their
+original size was, but shrink the pages by 5mm, so that there is a bit
+of a border around everything.'' Naturally, instead of |a4paper| you
+can also use |letterpaper| or any of the other standard paper
+sizes. For further options and details see the documentation of
+|pgfpages|.
+
+The second thing you might wish to do is to put several slides on a
+single page. This can be done as follows:
+
+\begin{verbatim}
+\usepackage{pgfpages}
+\pgfpagelayout{2 on 1}[a4paper,border shrink=5mm]
+\end{verbatim}
+
+This says ``Put two pages on one page and then resize everything so
+that it fits on A4 paper.'' Note that this time we do not need
+landscape as the resulting page is, after all, not in landscape mode.
+
+Instead of |2 on 1| you can also use |4 on 1|, but then with
+|landscape| once more, and also |8 on 1| and even |16 on 1| to get a
+grand (though unreadable) overview.
+
+If you put several slides on one page and if these slides normally
+have a white background, it may be useful to write the following in
+your preamble: 
+
+\begin{verbatim}
+\mode<handout>{\setbeamercolor{background canvas}{bg=black!5}}
+\end{verbatim}
+
+This will cause the slides of the handout version to have a very
+light gray background. This makes it easy to discern the slides'
+border if several slides are put on one page.
+
+%% If you wish each slide to completely fill a letter-sized page, use the
+%% following commands instead:
+
+%% \begin{verbatim}
+%% > dvips -P pdf -tletter main.dvi -o main.temp.ps
+%% > psnup -1 -W128mm -H96mm -pletter main.temp.ps main.ps
+%% \end{verbatim}
+
+%% For A4-sized paper, use:
+
+%% \begin{verbatim}
+%% > dvips -P pdf -ta4 main.dvi -o main.temp.ps
+%% > psnup -1 -W128mm -H96mm -pa4 main.temp.ps main.ps
+%% \end{verbatim}
+
+%% In order to create a white margin around the whole page (which is sometimes
+%% useful for printing), add the option |-m 1cm| to the options of
+%% |psnup|. 
+
+%% To put two or four slides on one page, use |-2|, respectively
+%% |-4| instead of |-1| as the first parameter for
+%% |psnup|. In this case, you may wish to add the option
+%% |-b 1cm| to add a bit of space around the individual slides. The same
+%% trick as for the \pdf-version can be used to make the borders of
+%% slides more pronounced in the handout version.
 
 
 
