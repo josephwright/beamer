@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/11/12 v1.00 Class for Typesetting a Beamer Presentation]
+[2003/11/12 v1.00-dev Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -185,6 +185,9 @@
 
 \RequirePackage{keyval}
 % For \tableofcontents parameters
+
+\RequirePackage{beamertemplates}
+% For default templates
 
 
 %
@@ -2605,9 +2608,9 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamerframenavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinkframeendprev{\kern4pt}%
-  \hyperlinkframestart{\kern5.5pt}%
-  \hyperlinkframeend{\kern5.5pt}%
+  \hyperlinkframeendprev{\kern5pt}%
+  \hyperlinkframestart{\kern5pt}%
+  \hyperlinkframeend{\kern5pt}%
   \hyperlinkframestartnext{\kern5pt}}
 
 \pgfdefobject{beamersubsectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
@@ -2645,9 +2648,9 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamersubsectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinksubsectionendprev{\kern4pt}%
-  \hyperlinksubsectionstart{\kern5.5pt}%
-  \hyperlinksubsectionend{\kern5.5pt}%
+  \hyperlinksubsectionendprev{\kern5pt}%
+  \hyperlinksubsectionstart{\kern5pt}%
+  \hyperlinksubsectionend{\kern5pt}%
   \hyperlinksubsectionstartnext{\kern5pt}}
 
 \pgfdefobject{beamersectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
@@ -2686,9 +2689,9 @@
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamersectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
-  \hyperlinksectionendprev{\kern4pt}%
-  \hyperlinksectionstart{\kern5.5pt}%
-  \hyperlinksectionend{\kern5.5pt}%
+  \hyperlinksectionendprev{\kern5pt}%
+  \hyperlinksectionstart{\kern5pt}%
+  \hyperlinksectionend{\kern5pt}%
   \hyperlinksectionstartnext{\kern5pt}}
 
 \ifx\beamer@startpageofappendix\@empty
@@ -3013,37 +3016,9 @@
 %
 %
  
-                                % Title page  
-\usetitlepagetemplate{
-  \vbox{}
-  \vfill
-  \begin{centering}
-    \Large\structure{\inserttitle}
-    \vskip1em\par
-    \normalsize\insertauthor\vskip1em\par
-    {\scriptsize\insertinstitute\par}\par\vskip1em
-    \insertdate\par\vskip1.5em
-    \inserttitlegraphic
-  \end{centering}
-  \vfill
-  }
-
-                                % Part page  
-\usepartpagetemplate{
-  \begin{centering}
-    \Large\structure{\partname~\insertromanpartnumber}
-    \vskip1em\par
-    \insertpart\par
-  \end{centering}
-  }
-
-                                % Frametitles
-\useframetitletemplate{%
-  \begin{centering}
-    \structure{\textbf{\insertframetitle}}
-    \par
-  \end{centering}
-}
+\beamertemplatelargetitlepage
+\beamertemplatelargepartpage
+\beamertemplateboldcenterframetitle
 
                                 % Sections in headline
 \usesectionheadtemplate
@@ -3055,27 +3030,7 @@
 {\color{structure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
 
                                 % Mini slides in headline
-\def\sphereradius{0.05cm}
-\useminislidetemplate
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{structure}
-    \pgfcircle[fillstroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{structure}
-    \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{structure!50!averagebackgroundcolor}
-    \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }
-{.14cm}{.03cm}
+\beamertemplatesphereminiframe
 
                                 % Entries in table of contents
 \usetemplatetocsection[50!averagebackgroundcolor]
@@ -3093,11 +3048,7 @@
   \vskip1.5pt%
   \insertvrule{0.4pt}{structure!50!averagebackgroundcolor}}%
 }
-
-                                % Footline
 \usefoottemplate{}
-
-                                % Background
 \usebackgroundtemplate{}
 
                                 % Blocks
@@ -3118,46 +3069,8 @@
 \useitemizetemplate{}{}
 \usesubitemizetemplate{\begin{small}}{\end{small}}
 
-
-                                % Buttons
-\usebuttontemplate{%
-  \setbox\beamer@tempbox=\hbox{\tiny\color{white}\insertbuttontext}%
-  \ht\beamer@tempbox=6pt%
-  \dp\beamer@tempbox=0pt%
-  \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
-  \beamer@tempdim=\wd\beamer@tempbox%
-  \newdimen\dima
-  \newdimen\dimb
-  \dima=\beamer@tempdim\advance\dima by2.2pt
-  \dimb=\beamer@tempdim\advance\dimb by4pt
-  \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
-    \color{structure!50!averagebackgroundcolor}
-    \pgfsetlinewidth{0.8pt}
-    \pgfqmoveto{0}{0}
-    \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
-    \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
-    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
-    \pgfcurveto%
-    {\pgfpoint{\the\dima}{8pt}}%
-    {\pgfpoint{\the\dimb}{6.2pt}}%
-    {\pgfpoint{\the\dimb}{4pt}}
-    \pgfcurveto%
-    {\pgfpoint{\the\dimb}{1.8pt}}%
-    {\pgfpoint{\the\dima}{0pt}}%
-    {\pgfpoint{\the\beamer@tempdim}{0pt}}
-    \pgffill
-  \end{pgfpicture}%
-  \hskip-\beamer@tempdim%
-  \box\beamer@tempbox%
-  \kern4pt}
-
-\usenavigationsymbolstemplate{\hbox{%
-  \hbox{\insertslidenavigationsymbol}
-  \hbox{\insertframenavigationsymbol}
-  \hbox{\insertsubsectionnavigationsymbol}
-  \hbox{\insertsectionnavigationsymbol}
-  \hbox{\insertdocnavigationsymbol}
-  \hbox{\insertbackfindforwardnavigationsymbol}}}
+\beamertemplatesolidbuttons
+\beamertemplatenavigationsymbolshorizontal
 
 %%% Local Variables: 
 %%% mode: latex
