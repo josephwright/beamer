@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[notes]{beamer}
 
 
 % Try the class options [notes], [notes=only], [trans], [handout],
@@ -586,7 +586,8 @@
   \end{Theorem}
 }
 
-\frame{
+\frame[<+->]
+{
   \frametitle{Metalinear Languages\\ Can Be Accepted in an
     Overhead-Free Way}
 
@@ -595,12 +596,10 @@
     linear languages.
   \end{Definition}
 
-  \pause
   \begin{Example}
     $\Lang{triple-palindrome} = \Set{uvw \mid \text{$u$, $v$, and $w$ are palindromes}}$.
   \end{Example}  
 
-  \pause
   \begin{Theorem}
     Every metalinear language is in $\NOFpoly$.
   \end{Theorem}
@@ -638,13 +637,10 @@
 
   \begin{Definition}
     A Turing machine is \alert{almost-overhead-free} if
-    \begin{enumerate}
-    \item<1-| alert@1>
-      it has only a single tape,
-    \item<2-| alert@2>
-      writes only on input cells,
-    \item<3-| alert@3>
-      writes only symbols drawn from the input alphabet\\
+    \begin{enumerate}[<+-| alert@+>]
+    \item it has only a single tape,
+    \item writes only on input cells,
+    \item writes only symbols drawn from the input alphabet\\
       plus one special symbol.
     \end{enumerate}
   \end{Definition}

@@ -126,8 +126,10 @@ Style BeginFrame
     \long\def\lyxframe#1{\@lyxframe#1\@lyxframestop}%
     \def\@lyxframe{\@ifnextchar<{\@@lyxframe}{\@@lyxframe<*>}}%
     \def\@@lyxframe<#1>{\@ifnextchar[{\@@@lyxframe<#1>}{\@@@lyxframe<#1>[]}}
-    \long\def\@@@lyxframe<#1>[#2]#3\@lyxframestop#4\lyxframeend{%
-      \frame<#1>[#2]{\frametitle{#3}#4}}
+    \def\@@@lyxframe<#1>[{\@ifnextchar<{\@@@@@lyxframe<#1>[}{\@@@@lyxframe<#1>[<*>][}}
+    \def\@@@@@lyxframe<#1>[#2]{\@ifnextchar[{\@@@@lyxframe<#1>[#2]}{\@@@@lyxframe<#1>[#2][]}}
+    \long\def\@@@@lyxframe<#1>[#2][#3]#4\@lyxframestop#5\lyxframeend{%
+      \frame<#1>[#2][#3]{\frametitle{#4}#5}}
     \makeatother
   EndPreamble
 End

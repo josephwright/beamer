@@ -65,7 +65,7 @@
   \ifx\beamer@ovmode\beamer@ovmodestop%
     \expandafter\beamer@@decode\beamer@decodefound,!%
     \let\beamer@next=\relax%
-    \ifbeamer@plusencountered\global\advance\beamer@pausecount by1\relax\fi%
+    \ifbeamer@plusencountered\global\advance\c@beamerpauses by1\relax\fi%
   \else
     \ifx\beamer@ovmode\beamer@currentmode%
       \beamer@@decodefound%
@@ -126,11 +126,6 @@
   \fi%
 }
 
-%\AtBeginDocument{
-%\def\beamer@decodeplus#1+#2:{%
-%  \def\temp{#1}\def\tempa{#2}\show\temp\show\tempa}}
-%\def\beamer@decodeplus#1+#2:{}%
-
 \def\beamer@decodeplus{%
   \def\beamer@spec{}\beamer@@decodeplus}
 \def\beamer@@decodeplus#1+#2:{%
@@ -138,18 +133,13 @@
   \beamer@ifempty{#2}{}
   {% ok, check if followed by number:
     \beamer@plusencounteredtrue%
-    \beamer@@@decodeplus0#2:}}
-\def\beamer@@@decodeplus#1{%
-  \@ifnextchar,{\beamer@relnumber{#1}}%
-  {\@ifnextchar-{\beamer@relnumber{#1}}%
-  {\@ifnextchar+{\beamer@relnumber{#1}}%
-    {% have to read following number
-      \beamer@scannumberrel{#1}}}}}    
-\def\beamer@scannumberrel#1#2{\beamer@@@decodeplus{#1#2}}
-\def\beamer@relnumber#1{%
+    \beamer@@@decodeplus#2:}}
+\def\beamer@@@decodeplus{%
+  \@ifnextchar({\beamer@relnumber}{\beamer@relnumber(0)}}
+\def\beamer@relnumber(#1){%
   \beamer@plusencounteredtrue%
   \beamer@tempcount=#1\relax
-  \advance\beamer@tempcount by\beamer@pausecount\relax%
+  \advance\beamer@tempcount by\c@beamerpauses\relax%
   \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
   \beamer@@decodeplus}
 

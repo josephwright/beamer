@@ -161,7 +161,7 @@
 \def\plainframe{\frame[plain]}%obsolete
 \def\pgfonly{\only}%obsolete
 \AtBeginDocument{\newcommand{\nameslide}{\alt{\beamer@nameslide}{\@gobble}}}%obsolete
-\newenvironment{pauses}[1][\beamer@pausecount]{\global\beamer@pausecount=#1\relax}{}%obsolete
+\newenvironment{pauses}[1][\c@beamerpauses]{\setcounter{beamerpauses}{#1}}{}%obsolete
 \def\newoverlaycommand#1#2#3{\def#1{\alt{#2}{#3}}}
 \def\newoverlayenvironment#1#2#3#4#5{\newenvironment{#1}{\begin{altenv}{#2}{#3}{#4}{#5}}{\end{altenv}}}
 \newenvironment{columnsonlytextwidth}{\begin{columns}[onlytextwidth]}{\end{columns}}

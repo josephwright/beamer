@@ -49,7 +49,7 @@
 
 \newenvironment{beamer@frameslide}{%
   {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
-  \global\beamer@pausecount=1\relax%
+  \global\c@beamerpauses=1\relax%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
     \refstepcounter{subsectionslide}%
     \xdef\beamer@framestartpage{\the\c@page}% only first time
@@ -126,15 +126,17 @@
 \define@key{beamerframe}{template}{%
   \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
 \define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
-\define@key{beamerframe}{defaultospec}{\def\beamer@defaultospec{#1}}
 
 \newif\ifbeamer@containsverbatim
 
 % Check for old version:
 
-\def\frame{\@ifnextchar<\beamer@frame\beamer@checkoldframe}
+\def\frame{%
+  \def\beamer@defaultospec{<*>}%
+  \@ifnextchar<\beamer@frame\beamer@checkoldframe}
 \def\beamer@checkoldframe{\@ifnextchar[\beamer@@checkoldframe{\beamer@frame<*>}}
-\def\beamer@@checkoldframe[#1#2]{%
+\def\beamer@@checkoldframe[{\@ifnextchar<{\beamer@frame<*>[}{\beamer@@@checkoldframe[}}
+\def\beamer@@@checkoldframe[#1#2]{%
   \let\beamer@next=\beamer@newframesyntax%
   \ifcat#11% a number-like first letter in argument
     \let\beamer@next=\beamer@oldframesyntax%
@@ -147,15 +149,18 @@
 \def\beamer@newframesyntax#1{\beamer@@@frame<*>[#1]}
 \def\beamer@oldframesyntax#1{\beamer@@@frame<#1>[]}
 
-\def\beamer@frame{\begingroup\catcode`:=12\catcode`|=12\beamer@@frame}% Hackery for french style
-\def\beamer@@frame<#1>{\endgroup%
+\def\beamer@framedefaultospec<#1>[#2]{%
+  \def\beamer@defaultospec{#2}%
+  \@ifnextchar[{\beamer@@@@frame<#1>}{\beamer@@@@frame<#1>[]}}
+
+\def\beamer@frame<#1>{
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
-\def\beamer@@@frame<#1>[#2]{%
+\def\beamer@@@frame<#1>[{\@ifnextchar<{\beamer@framedefaultospec<#1>[}{\beamer@@@@frame<#1>[}}
+\def\beamer@@@@frame<#1>[#2]{%
   \beamer@savemode%
   \def\beamer@mode{\mode<all>}%
   \def\beamer@frametemplate{}%
   \def\beamer@againname{}%
-  \def\beamer@defaultospec{<*>}%
   \beamer@containsverbatimfalse%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
@@ -380,15 +385,17 @@
 % Again frame
 %
 
-\def\againframe{\@ifnextchar<{\begingroup\catcode`:=12\catcode`|=12\beamer@againframe}{\beginroup\beamer@againframe<*>}}
-\def\beamer@againframe<#1>{\endgroup\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
-\def\beamer@@againframe<#1>[#2]#3{%
-  \@ifundefined{beamer@again@#3}%
+\def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<*>}}
+\def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
+\def\beamer@@againframe<#1>[{\@ifnextchar<{\beamer@@@@againframe<#1>[}{\beamer@@@againframe<#1>[<*>][}}
+\def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[#2]}{\beamer@@@againframe<#1>[#2][]}}
+\def\beamer@@@againframe<#1>[#2][#3]#4{%
+  \@ifundefined{beamer@again@#4}%
   {\ClassError{beamer}{No frame has been designated to resume under
-      the name "#3"}{}}%
+      the name "#4"}{}}%
   {%
-  \def\beamer@temp{\frame<#1>[#2,label=#3]}%
-  \expandafter\let\expandafter\beamer@templet\csname beamer@again@#3\endcsname%
+  \def\beamer@temp{\frame<#1>[#2][#3,label=#4]}%
+  \expandafter\let\expandafter\beamer@templet\csname beamer@again@#4\endcsname%
   \expandafter\beamer@temp\beamer@templet}%
 }
 
@@ -397,7 +404,9 @@
 {
   \def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<>}}
   \def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
-  \def\beamer@@againframe<#1>[#2]#3{} % do nothing
+  \def\beamer@@againframe<#1>[{\@ifnextchar<{\beamer@@@@againframe<#1>[}{\beamer@@againframe<#1>[<*>][}}
+  \def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[#2]}{\beamer@@@againframe<#1>[#2][]}}
+  \def\beamer@@@againframe<#1>[#2][#3]#4{} % do nothing
 }
 
 

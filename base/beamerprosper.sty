@@ -9,17 +9,43 @@
 
 \let\beamerprosper@entry=\@gobble
 
-\DeclareOption{framesassubsections}{\def\beamerprosper@entry#1{%
-    \beamer@ifempty{#1}{}{\subsection{#1}}}}
+\DeclareOption{framesassubsections}{\mode<presentation>
+  {\def\beamerprosper@entry#1{\beamer@ifempty{#1}{}{\subsection{#1}}}}}
 
 \ProcessOptions
 
+% Redefine \institution inside \author
+\mode<presentation>
+{
+\def\author{\@dblarg\beamer@author}
+\def\beamer@author[#1]#2{%
+  \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}%
+    \let\institution=\beamer@institution#2}%
+  \def\beamer@shortauthor{\let\institution=\beamer@shortinstitution#1}%
+}
+\def\beamer@institution#1{\footnotesize #1}
+\def\beamer@shortinstitution#1{\ }
 
 \def\institution{\institute}
+}
 
-\def\subtitle#1{%
+\mode<article>
+{
+  \def\institution#1{#1}
+}
+
+\mode<presentation>
+{
+\long\def\subtitle#1{%
   \expandafter\def\expandafter\beamer@renewtitle\expandafter{\inserttitle\\{\small#1}}%
   \expandafter\title\expandafter[\beamer@shorttitle]{\beamer@renewtitle}}
+}
+
+\mode<article>
+{
+  \def\subtitle#1{\expandafter\gdef\expandafter\@title\expandafter{\@title\\{\normalsize#1}}}
+}
+
 \newcommand\email[1]{\texttt{#1}}
 
 \define@key{beamerprosper}{toc}{\def\beamerprosper@toc{#1}}
@@ -46,16 +72,16 @@
 \newcommand{\onlyInPS}[1]{\ifx\pdfoutput#1\@undefined\fi}
 
 
-\def\overlays#1#2{%
+\long\def\overlays#1#2{%
   % Extract frame title (evil trickery necessary to do this, before the frame starts...)
   \beamerprosper@extractor#2\beamerprosper@ender}
-\def\beamerprosper@extractor#1#2{%
+\long\def\beamerprosper@extractor#1#2{%
   \ifx#1\begin%
   \else%
     \PackageError{beamerprosper}{Sorry, this overlays command does not start with begin; I'm confused}{}
   \fi%
   \@ifnextchar[\beamerprosper@extractora{\beamerprosper@extractora[]}}
-\def\beamerprosper@extractora[#1]#2#3\beamerprosper@ender{%
+\long\def\beamerprosper@extractora[#1]#2#3\beamerprosper@ender{%
   \def\beamerprosper@toc{#2}
   \def\beamerprosper@trans{}%
   \setkeys{beamerprosper}{#1}%    
@@ -97,7 +123,9 @@
 \newenvironment{Itemize}{\begin{itemize}}{\end{itemize}}
 \newenvironment{itemstep}[1][]{\begin{itemize}[<+->]}{\end{itemize}}
 \newenvironment{enumstep}[1][]{\begin{enumerate}[<+->]}{\end{enumerate}}
-\newcommand\prosperpart[2][]{\begin{slide}[#1]{}\begin{centering}#2\par\end{centering}\end{slide}}
+\newcommand\prosperpart[2][]{\begin{slide}[#1]{}\begin{centering}\Large\structure{#2}\par\end{centering}\end{slide}}
+\newcommand{\hiddenitem}{\addtocounter{beamerpauses}{1}}
+
 
 \newcommand{\FontTitle}[2]{}
 \newcommand{\FontText}[2]{}
@@ -126,20 +154,46 @@
   \def\beamerprosper@trans{}%
   \setkeys{beamerprosper}{#1}%
   \expandafter\section\expandafter{\beamerprosper@toc}
-  \expandafter\prosperpart\expandafter[\beamerprosper@trans]{#2}}
+  \mode<presentation>{\expandafter\prosperpart\expandafter[\beamerprosper@trans]{#2}}}
 
 \newbox\beamerprosper@notebox
 
 \newenvironment{notes}[1]{%
   \begingroup%
   \textwidth=10.8cm\hsize=\textwidth\setbox\beamerprosper@notebox=\vbox\bgroup
-  \textbf{#1}\par\medskip}
-{\egroup\note{\box\beamerprosper@notebox}
+  \begin{small}\textbf{#1}\par\medskip}
+{\par\end{small}\egroup\note{\box\beamerprosper@notebox}
   \endgroup}
 
 \let\wideslide=\slide
 \let\endwideslide=\endslide
+\let\HAPsetup=\@gobble
 
+\newdimen\beamerprosper@leftwidth
+\newdimen\beamerprosper@rightwidth
+
+\define@key{beamerprosper}{lcolwidth}{\beamerprosper@leftwidth=#1\relax}
+\define@key{beamerprosper}{rcolwidth}{\beamerprosper@rightwidth=#1\relax}
+\define@key{beamerprosper}{lfrheight}{}
+\define@key{beamerprosper}{rfrheight}{}
+\define@key{beamerprosper}{frsep}{}
+\define@key{beamerprosper}{colsep}{}
+\define@key{beamerprosper}{topsep}{}
+\define@key{beamerprosper}{bottomsep}{}
+\define@key{beamerprosper}{indent}{}
+
+\def\dualslide{\@ifnextchar[{\beamerprosper@gobble}{\beamerprosper@dual}}
+\long\def\beamerprosper@gobble[#1]{\dualslide}
+\long\def\beamerprosper@dual#1#2#3{%
+  \beamerprosper@leftwidth=0.47\linewidth%
+  \beamerprosper@rightwidth=0.47\linewidth%
+  \setkeys{beamerprosper}{#1}%
+  \begin{columns}[t,onlytextwidth]%
+    \column{\beamerprosper@leftwidth}%
+    #2%
+    \column{\beamerprosper@rightwidth}%
+    #3%
+  \end{columns}\bigskip}
 
 %%% Local Variables: 
 %%% mode: latex

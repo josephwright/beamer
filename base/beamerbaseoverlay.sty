@@ -362,17 +362,16 @@
 
 \newenvironment{beamer@framepauses}%internal
 {%
-  \global\beamer@pausecount=1\relax%
+  \global\c@beamerpauses=1\relax%
   \gdef\beamer@endpause{}%
 }
 {\beamer@endpause}
 
 \newcommand{\pause}[1][]{%
-%  \beamer@endpause%
   \beamer@ifempty{#1}%
-    {\global\advance\beamer@pausecount by1\relax}%
-    {\global\beamer@pausecount=#1\relax}%
-  \onslide<\beamer@pausecount->%
+    {\global\advance\c@beamerpauses by1\relax}%
+    {\global\c@beamerpauses=#1\relax}%
+  \onslide<\c@beamerpauses->%
 }%
 
 \newcommand<>{\onslide}{%
@@ -420,10 +419,11 @@
 
 \def\beamer@parseitem<#1>{%
   \gdef\beamer@closeitem{\end{actionenv}}%
-  \begin{actionenv}<#1>\beamer@origitem}
+\begin{actionenv}<#1>\beamer@origitem}
 
-\def\beamerdefaultoverlayspecification#1{\def\beamer@defaultospec{#1}}
-\def\beamercleardefaultoverlayspecification{\def\beamer@defaultospec{<*>}}
+
+\def\beamerdefaultoverlayspecification#1{%
+  \beamer@ifempty{#1}{\def\beamer@defaultospec{<*>}}{\def\beamer@defaultospec{#1}}}
 
 
 \newcount\beamer@trivlistdepth

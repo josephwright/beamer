@@ -16,7 +16,8 @@
 \beamer@blockstrue
 
 \newcount\beamer@tempcount
-\newcount\beamer@pausecount
+
+\newcounter{beamerpauses}
 
 
 
@@ -127,6 +128,8 @@
 \beamer@draftmodefalse
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
+
+\DeclareOptionBeamer{nodefaultblocks}{\beamer@blocksfalse}
 
 \DeclareOptionBeamer{compress}
 {\beamer@compresstrue}
@@ -277,15 +280,15 @@
   \ifx\pdfoutput\@undefined
     \def\beamer@loaducs{
       \RequirePackage{ucs}%
-      \PreloadUnicodePage{0}%
-      \PreloadUnicodePage{1}%
+      \AtBeginDocument{\PreloadUnicodePage{0}}%
+      \AtBeginDocument{\PreloadUnicodePage{1}}%
     }
   \else
     \PassOptionsToPackage{pdftex,unicode}{hyperref}
     \def\beamer@loaducs{
       \RequirePackage[hyperref]{ucs}%
-      \PreloadUnicodePage{0}%
-      \PreloadUnicodePage{1}%
+      \AtBeginDocument{\PreloadUnicodePage{0}}%
+      \AtBeginDocument{\PreloadUnicodePage{1}}%
     }
   \fi
 }
@@ -430,10 +433,7 @@
 \beamertemplatesolidbackgroundcolor{white}
 
                                 % Blocks
-\useblocktemplate{\medskip{\color{structure}\textbf{\insertblockname}}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\textbf{\insertblockname}}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\textbf{\insertblockname}}\par%
-\color{black!50!green}}{\endgroup\medskip}
+\beamertemplateboldblocks
 
                                 % Enumerations
 \beamertemplateenumeratealpha

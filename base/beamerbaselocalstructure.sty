@@ -59,11 +59,11 @@
 {
 \newenvironment{alertenv}{\begin{altenv}%
     {\beamer@templatestartalert}
-    {\beamer@templateendalert}{}{}}{\end{altenv}}
+    {\beamer@templateendalert}{\color{.}}{}}{\end{altenv}}
 
 \newenvironment{structureenv}{\begin{altenv}%
     {\beamer@templatestartstructure}
-    {\beamer@templateendstructure}{}{}}{\end{altenv}}
+    {\beamer@templateendstructure}{\color{.}}{}}{\end{altenv}}
 
 \newcommand<>{\alert}[1]{\begin{alertenv}#2#1\end{alertenv}}
 \newcommand<>{\structure}[1]{\begin{structureenv}#2#1\end{structureenv}}
@@ -153,34 +153,36 @@
   \useexampleblocktemplate{\par\medskip{\noindent\emph{\insertblockname}}\par\noindent\ignorespaces}{\medskip}
 }
 
-\newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
-\newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}
-\newenvironment{Definition}{\begin{block}{Definition}}{\end{block}}
-\newenvironment{Satz}{\begin{block}{Satz}}{\end{block}}
-\newenvironment{Beweis}{\begin{block}{Beweis.}}{\end{block}}
-\newenvironment{Folgerung}{\begin{block}{Folgerung}}{\end{block}}
-\newenvironment{Lemma}{\begin{block}{Lemma}}{\end{block}}
-\newenvironment{Fakt}{\begin{block}{Fakt}}{\end{block}}
-\newenvironment{Beispiel}{\begin{exampleblock}{Beispiel}}{\end{exampleblock}}
-\newenvironment{Beispiele}{\begin{exampleblock}{Beispiele}}{\end{exampleblock}}
+\ifbeamer@blocks
+  \newenvironment{Problem}{\begin{block}{Problem}}{\end{block}}
+  \newenvironment{Loesung}{\begin{block}{L\"osung}}{\end{block}}
+  \newenvironment{Definition}{\begin{block}{Definition}}{\end{block}}
+  \newenvironment{Satz}{\begin{block}{Satz}}{\end{block}}
+  \newenvironment{Beweis}{\begin{block}{Beweis.}}{\end{block}}
+  \newenvironment{Folgerung}{\begin{block}{Folgerung}}{\end{block}}
+  \newenvironment{Lemma}{\begin{block}{Lemma}}{\end{block}}
+  \newenvironment{Fakt}{\begin{block}{Fakt}}{\end{block}}
+  \newenvironment{Beispiel}{\begin{exampleblock}{Beispiel}}{\end{exampleblock}}
+  \newenvironment{Beispiele}{\begin{exampleblock}{Beispiele}}{\end{exampleblock}}
 
-\newenvironment{Theorem}{\begin{block}{Theorem}}{\end{block}}
-\newenvironment{Proof}{\begin{block}{Proof.}}{\end{block}}
-\newenvironment{Corollary}{\begin{block}{Corollary}}{\end{block}}
-\newenvironment{Fact}{\begin{block}{Fact}}{\end{block}}
-\newenvironment{Example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
-\newenvironment{Examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+  \newenvironment{Theorem}{\begin{block}{Theorem}}{\end{block}}
+  \newenvironment{Proof}{\begin{block}{Proof.}}{\end{block}}
+  \newenvironment{Corollary}{\begin{block}{Corollary}}{\end{block}}
+  \newenvironment{Fact}{\begin{block}{Fact}}{\end{block}}
+  \newenvironment{Example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+  \newenvironment{Examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
 
-\newenvironment{definition}{\begin{block}{Definition}}{\end{block}}
-\newenvironment{definitions}{\begin{block}{Definitions}}{\end{block}}
-\newenvironment{theorem}{\begin{block}{Theorem}}{\end{block}}
-\newenvironment{proof}{\begin{block}{Proof.}}{\end{block}}
-\newenvironment{corollary}{\begin{block}{Corollary}}{\end{block}}
-\newenvironment{fact}{\begin{block}{Fact}}{\end{block}}
-\newenvironment{lemma}{\begin{block}{Lemma}}{\end{block}}
-\newenvironment{problem}{\begin{block}{Problem}}{\end{block}}
-\newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
-\newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+  \newenvironment{definition}{\begin{block}{Definition}}{\end{block}}
+  \newenvironment{definitions}{\begin{block}{Definitions}}{\end{block}}
+  \newenvironment{theorem}{\begin{block}{Theorem}}{\end{block}}
+  \newenvironment{proof}{\begin{block}{Proof.}}{\end{block}}
+  \newenvironment{corollary}{\begin{block}{Corollary}}{\end{block}}
+  \newenvironment{fact}{\begin{block}{Fact}}{\end{block}}
+  \newenvironment{lemma}{\begin{block}{Lemma}}{\end{block}}
+  \newenvironment{problem}{\begin{block}{Problem}}{\end{block}}
+  \newenvironment{example}{\begin{exampleblock}{Example}}{\end{exampleblock}}
+  \newenvironment{examples}{\begin{exampleblock}{Examples}}{\end{exampleblock}}
+\fi
 
 \newcommand{\BeispielInline}[1]{{\color{black!50!green}Beispiel: \ignorespaces#1}}
 \newcommand{\ExampleInline}[1]{{\color{black!50!green}Example: \ignorespaces#1}}
@@ -210,7 +212,7 @@
     \newtheorem{examples}[theorem]{Examples}
 
     \newenvironment{Beweis}{\begin{proof}[Beweis.]}{\end{proof}}
-    \newenvironment{Lemma}{\begin{leamm}}{\end{lemma}}
+    \newenvironment{Lemma}{\begin{lemma}}{\end{lemma}}
     \newenvironment{Proof}{\begin{proof}}{\end{proof}}
     \newenvironment{Theorem}{\begin{theorem}}{\end{theorem}}
     \newenvironment{Problem}{\begin{problem}}{\end{problem}}
@@ -336,8 +338,8 @@
 %
 %
 
-\renewcommand{\itemize}[1][<*>]{%
-  \def\beamer@defaultospec{#1}%
+\renewcommand{\itemize}[1][]{%
+  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
   \ifnum \@itemdepth >2\relax\@toodeep\else
     \advance\@itemdepth\@ne
     \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
