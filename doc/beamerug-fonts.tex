@@ -1,0 +1,694 @@
+
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\section{Fonts}
+
+Text and fonts literally surround us constantly. Try to think of the
+last time when  there was no text around you within ten
+meters. Likely, this has never happened in your life! 
+(Whenever you wear clothing, even a swim suit, there is a lot of text
+right next to your body.) The history of fonts is nearly as long as
+the history of civilization itself. There are tens of thousands of fonts
+available these days, some of which are the product of hundreds of
+years of optimization.
+
+Choosing the right fonts for a presentation is by no means
+trivial and wrong choices will either just ``look bad'' or, worse,
+make the audience having trouble reading your slides.
+This user's guide cannot replace a good book on typography, but in the
+present section you'll find several hints that should help you setup 
+fonts for a \beamer\ presentation that look good.
+
+This section is organized as follows. The first subsection 
+describes the different attributes a font can have and tells you what
+choices there are. The next subsection introduces the predefined font
+themes that come with \beamer\ and which make it easy to change the
+fonts used in a presentation. The next subsection describes further
+special commands for changing some basic attributes of the fonts used in a
+presentation. The last subsection explains how you can get a much more
+fine-grained control over the fonts used for every individual element
+of a presentation. 
+
+
+
+\subsection{A Review of Font Attributes}
+
+A font has numerous attributes like weight, family, or size. All of
+these have an impact on the usability of the font in
+presentations. In the following, these attributes are described and
+advantages and disadvantages of the different choices are sketched.
+A description of how to actually change font attributes globally or
+locally is given in the next sections.
+
+
+\subsubsection{The Font Size}
+
+\label{section-sizes}
+
+Perhaps the most obvious attribute of a font is its size. Fonts are
+traditionally measured in ``points.'' How much a point is depends on
+whom you ask. \TeX\ thinks a point is the 72.27th part of an inch,
+which is 2.54 cm. On the other hand, PostScript and Adobe think a
+point is the 72th part of an inch (\TeX\ calls this a big point). The
+are differences between American and European points. Once it is
+settled how much a point is, claiming that a text is in ``11pt'' means
+that the ``height'' of the letters in the font are 11pt. However, this
+``height'' stems from the time when letters where still cast in lead
+and refers to the the vertical size of the lead letters. It thus does
+not need to have any correlation with the actual height of, say, the
+letter x or even the letter M. The letter x of an 11pt Times from
+Adobe will have a different height than the letter x of an 11pt Times
+from UTCs and it will have a totally different height than the letter
+x of an 11pt Helvetica from Adobe.
+
+Summing up, the font size has little to do with the actual size of
+letters. Rather, these days it is a convention that 10pt or 11pt is
+the size a font should be printed for ``normal reading.'' Fonts are
+designed so that they can optimally be read at these sizes.
+
+In a presentation the classical font sizes obviously loose their
+meaning. Nobody could read a projected text if it were actually
+11pt. Instead, the projected letters need to be several centimeters
+high. Thus, it does not really make sense to specify ``font sizes''
+for presentations in the usual way. Instead, you should try to think
+of the number of lines that will fit on a slide if you were to fill
+the whole slide with line-by-line text (you are never going to do that
+in practice, though). Depending on how far your audience is removed
+from the projection on on large the projection is, between 10 and 20
+lines should fit on a slide. The less lines, the more readable your
+text will usually be.
+
+In \beamer, the default sizes of the fonts are chosen in a way that
+makes it difficult to fit ``too much'' onto a slide. Also, it will
+ensure that your slides are readable even under bad conditions like a
+large room and a small only a small projection area. However, you may
+wish to enlarge or shrink the fonts a bit if you know this to be more
+appropriate in your presentation environment.
+
+Once the size of the normal text is settled, all other sizes are
+usually defined relative to that size. For this reason, \LaTeX\ has 
+commands like |\large| or |\small|. The actual size these commands
+select depends on the size of normal text.
+
+In a presentation, you will want to use a very small font for text in
+headlines, footlines, or sidebars since the text shown there is not
+vital and is read at the audience leasure. Naturally, the text should
+still be large enough that it actually \emph{can} be read without
+binoculars. However, in a normal presentation environment the audience
+will still be able to even |\tiny| text from time to time.
+
+However, using small fonts can be tricky. Many PostScript fonts are
+just scaled down when used at small sizes. When a font is
+used at less than its normal size, the characters should actually be
+stroked using a slightly thicker ``pen'' than the one would expect
+when just scaling down characters. For this reason, high quality
+multiple master fonts or the Computer Modern fonts use a differents
+fonts for small characters and for normal characters. However, when
+you use a normal Helvetica or Times font, the characters are just
+scaled down. A similar problem arises when you use a light font on a
+dark background. Even when printed on paper in high resolution,
+light-on-dark text tends to be ``overflooded'' by the dark
+background. When light-on-dark text is rendered in a presentation this
+effect can be much worse, making the text almost impossible to read.
+
+You can counter both nagative effects by using a bold versions for
+small text.
+
+In the other direction, you can use larger text for titles. However,
+using a larger font does not always have the desired effect. Just
+because a frame title is printed in large letters does not
+mean that is read first. Indeed, have a look at the cover of your
+favorite magazine. Most likely, the magazine's name is the typeset in the
+largest font, but you your attention will nevertheless first go to the
+topics advertised on the cover. Likewise, in the table of contents you
+are likely to first focus on the entries, not on the words ``Table of
+Contents.'' Most likely, you would not spot a spelling mistake there
+(a friend of mine actually managed to misspell \emph{his own name} on
+the cover of his master's thesis and nobody noticed until a year
+later). In essence, large text at the top of a page signals
+``unimportant since I know what to expect.'' So, instead of using a
+very large frame title, also consider using a normal size frame title
+that is typeset in bold or in italics. 
+
+
+
+
+
+\subsubsection{The Font Family}
+
+The other central property of any font is its family. Examples of font
+families are Times or Helvetica or Futura. As the name suggests, a lot
+of different fonts can belong to the same family. For example, Times
+comes in different sizes, there is a bold version of Times, an
+italics version, and so on. To confuse matters, font families like
+Times are often just called the ``font Times.''
+
+The are two large classes of font families: serif fonts and
+sans-serif fonts. A sans-serif font is a font in
+which the letters do not have serifs (from French \emph{sans}, which
+means ``without''). Serifs are the little hooks at the ending of the
+strokes that make up a letter. The font you are currently reading is a
+serif font. \textsf{By comparison, this text is in a sans-serif font.}
+Sans-serif fonts are (generally considered to be) easier to read
+when used in a presentation. In low resolution rendering, serifs
+decrease the legibility of a font. However, on projectors with very
+high resolution serif text is just as readable as sans-serif text. A
+presentation typeset in a serif font creates a more conservative
+impression, which might be exactly what you wish to create. 
+
+Most likely, you'll have a lot of different font families preinstalled
+on you system. The default font used by \TeX\ (and \beamer) is the
+Computer Modern font. It  is the original font family designed by Donald
+Knuth himself for the \TeX\ program. It is a mature font that comes
+with just about everything you could wish for: extensive mathematical
+alphabets, outline PostScript versions, real small caps, real oldstyle
+numbers, specially designed small and large letters, and so on.
+
+However, there are reasons using other font families than Computer
+Modern: 
+\begin{itemize}
+\item
+  The Computer Modern fonts are a bit boring if you have seen them too
+  often. Using another font (but not Times!) can give a fresh look.
+\item
+  Other fonts, especially Times and Helvetica, are sometime rendered
+  better since they seem to have better internal hinting.
+\item
+  The sans-serif version of Computer Modern is not nearly as
+  well-designed as the serif version. Indeed, the sans-serif version
+  is, in essence, the serif version with different design parameters,
+  not an independent design.
+\item
+  Computer modern needs much more space than more economic fonts like
+  Times (this explains why Times is so popular with people who need
+  to sqeeze their great paper into just twelve pages). To be fair,
+  Times was specifically designed to be economic.
+\end{itemize}
+
+A small selection of alternatives to Computer Modern:
+\begin{itemize}
+\item
+  Helvetica is a very often-used alternative. However, Helvetica also
+  tends to look boring (since we see it everywhere) and it has a very
+  large x-height (the height of the letter~x in comparison to a letter
+  like~M). A large x-height is usually considered good for languages
+  (like English) that use uppercase letters seldomly and not-so-good
+  for languages (like German) that use uppercase letters a lot. (I
+  have never been quite convinced by the argument for this, though.)
+  Be warned: the x-height of Helvetica is so different from the
+  x-height of Times that mixing the two in a single line looks
+  strange.
+\item
+  Futura is, in my opinion, a beautiful font that is very well-suited
+  for presentations. It's thick letters make it robust against
+  scaling, inversion, and low contrast. Unfortunately, while it is
+  most likely installed on your system somewhere in some for, getting
+  \TeX\ to work with it is a complicated process.
+\item
+  Times is a possible alternative to Computer Modern. Its main
+  disadvantage is that it is a serif font, which requires a
+  high-resolution projector. Naturally, it also used very often, so we
+  all know it very well.
+\end{itemize}
+
+Families that you should \emph{not} use for normal text include:
+\begin{itemize}
+\item
+  All monospaced fonts (like Courier).
+\item
+  Script fonts (which look like handwriting). Their stroke width is
+  way too small for a presentation.
+\item
+  More delicate serif fonts like Stempel and possibly even Garamond.
+\item
+  Gothic fonts. Only a small fraction of your audience will be able to
+  read them fluently. 
+\end{itemize}
+
+There is one popular font that is a bit special: Microsoft's Comic
+Sans. On the one hand, there is a website lobbying for banning the use
+of this font. Indeed, the main trouble with the font is that it is not
+particularly well-readable and that math typeset partly using this
+font looks terrible. On the other hand, this font \emph{does} create
+the impression of a slide ``written by hand,'' which gives the
+presentation a natural look. Think twice before using this font, but
+do not let yourself be intimidated.
+
+One of the most important rules of typography is that you should use
+as little fonts as possible in a text. In particular, typographic
+wisdom dictates that you should not use more than two different
+families on one page. However, when typesetting
+mathematical text, it is often necessary and useful to use different
+font families. For example, it used to be common practice to use
+Gothic letters do denote vectors. Also, program texts are often
+typeset in monospace fonts. If your audience is used to a certain font
+family for a certain type of text, use that family, regardless of what
+typographic wisdom says.
+
+A common practice in typography is to use a sans serif fonts for
+titles and serif fonts for normal text (check your favorite
+magazine). You can \emph{also} use two different sans serif fonts or
+two differen serif fonts, but you then have to make sure that the
+fonts look ``sufficiently different.'' If they look only slightly
+different, the page will look ``somehow strange,'' but the audience
+will not be able to tell why. For example, do not mix Arial and
+Helvetica (they are almost identical) or Computer Modern and
+Baskerville (they are quite similar). A combination of Gills Sans and
+Helvetica is dangerous but perhaps possible. A combination like Futura
+and Optima is certainly ok, at least with respect to the fonts being
+very different.
+
+
+
+
+\subsubsection{The Font Shape: Italics and Small Capitals}
+
+\label{section-italics}
+\label{section-smallcaps}
+
+\LaTeX\ introduces the concept of the \emph{shape} of a font. The only
+really important ones are italic and small caps.
+An \emph{italic} font is a font in which the text is slightly slanted
+to the right \emph{like this}. Things to know about
+italics:
+\begin{itemize}
+\item
+  Italics are commonly used in novels to express emphasis. However,
+  especially with sans-serif fonts, italics are typically not ``strong
+  enough'' and the emphasis gets lost. Using a different color or bold
+  text seems better suited for presentations to create emphasis.
+\item
+  If you look closely, you'll notice that italic text is not only
+  slanted but that different letters are actually used (compare a and
+  \emph{a}, for example). However, this is only true for serif text,
+  not for sans-serif text. Text that is only slanted without using
+  different characters is called  ``slanted'' instead of ``italic.''
+  Sometimes, the word ``oblique'' is also used for slanted, but it
+  sometimes also used for italics, so it is perhaps best to avoid
+  it. Using slanted serif text is very much frowned upon by
+  typographers and is considered ``cheap computer typography.''
+  However, people who use slanted text in their books include Donald
+  Knuth.
+
+  In a presentation, if you go into the trouble of using a serif font
+  for some part of it, you should also use italics, not slanted text.
+\item
+  The different characters used for serif italics have changed much
+  less  from the original handwritten letters they are based on than
+  normal serif text. For this reason, serif italics creates the
+  impression of handwritten text, which may be desirable to give a
+  presentation a more ``personal touch'' (although you can't get very
+  personal using Times italics, which everyone has seen a thousand
+  times). However, it is harder to read than normal text, so do not
+  use it for text more than a line long.
+\end{itemize}
+
+The second font shape supported by \TeX\ are small capital
+letters. Using them can create a conservative, even formal
+impression, but some words of caution:
+
+\begin{itemize}
+\item
+  Small capitals are different from all-uppercase text. A small caps
+  text leaves normal uppercase letters unchanged and uses smaller
+  versions of the uppercase letters for normal typesetting lowercase
+  letters. Thus the word ``German'' is typeset as \textsc{German}
+  using small caps, but as \uppercase{German} using all uppercase
+  letters.
+\item
+  Small caps either come as ``faked'' small caps or as ``real''
+  small caps. Faked small caps are created by just scaling down
+  normal uppercase letters. This leads to letters the look too
+  thin. Real small caps are specially designed smaller versions of
+  the uppercase letters that have the same stroke width as normal
+  text.
+\item
+  Computer Modern fonts and expert version of PostScript fonts come
+  with real small caps (though the small caps of Computer Modern are
+  one point size too large for some unfathomable reason---but your
+  audience is going to pardon this since it will not notice
+  anyway). ``Simple'' PostScript fonts like Helvetica or Times only
+  come with faked small caps.
+\item
+  Text typeset in small caps is harder to read than normal text. The
+  reason is that we read by seeing the ``shape'' of words. For
+  example, the word ``shape'' is mainly recognized by seing one
+  normal letter, one ascending letter, a normal letter, one
+  descending letter, and a normal letter. One has much more trouble
+  spotting a misspelling like ``shepe''  than ``spape''. Small caps
+  destroy the shape of words since \textsc{shape}, \textsc{shepe}
+  and \textsc{spape} all have the same shape, thus making it much
+  harder to tell them apart. You audience will read small caps more
+  slowly than normal text. This is, by the way, why legal
+  disclaimers are often written in uppercase letters: not to make
+  them appear more important to you, but to make them much harder to
+  actually read.
+\end{itemize}
+
+
+
+\subsubsection{The Font Weight}
+
+The ``weight'' of a font refers to the thickness of the
+letters. Usually, font come as regular or as bold fonts. There often
+also exist semibold, ultrabold (or black), thin, or ultrathin
+versions.
+
+In typography, using a bold font to create emphasis, especially within
+normal text, is frowned upon (bold words in the middle of a normal
+text are refered to as ``dirt''). For presentations this rule of not
+using bold text does not really apply. On a presentation slide there
+is usually very little text and there are numerous elements that try
+to attract the viewer's attention. Using the traditional italics to
+create emphasis will often be overlooked. So, using bold text, seems a
+good alternative in a presentation. However, an even better
+alternative is using a bright color like red to attract attention.
+
+As pointed out earlier, you should use bold text for small text
+unless you use an especially robust font like Futura.
+
+
+
+
+
+
+\subsection{Font Themes}
+
+\beamer\ comes with a set of font themes. When you use such a thme,
+certain fonts are changed as described below. You can use several font
+themes in concert. For historical reasons, you cannot change all
+aspects of the fonts used using font themes---in same cases special
+commands and options are needed, which are described in the next
+subsection.
+
+The followin font themes only change certain font attributes, they do
+not choose special font families (although that would also be possible
+and themes doing just that might be added in the future). Currently,
+to change the font family, you need to load special packages as
+explained in the next subsection.
+
+
+
+\begin{fontthemeexample}[\oarg{options}]{bold}
+  This font theme will cause titles and text in the headlines,
+  footlines, and sidebars to be typeset in a bold font.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|onlysmall|}
+    will cause only ``small'' text to be typeset in bold. More
+    precisely, only the text in the headline, footline, and sidebars
+    is changed to be typeset in bold. Large titles are not affected.
+  \item
+    \declare{|onlylarge|}
+    will cause only ``large'' text to be typeset in bold. These are
+    the main title, frame titles, and section entries in the table of
+    contents.     
+  \end{itemize}
+
+  As pointed out in Section~\ref{section-sizes}, you should use this
+  theme (possibly with the |onlysmall| option) if your font is not
+  scaled down properly or for light-on-dark text.
+
+  The normal themes do not install this theme by default, while the
+  old compatibility themes do. Since you can reload the theme once it
+  has been loaded, you cannot use this theme with the old
+  compatibility themes to set also titles to a bold font. 
+\end{fontthemeexample}
+
+\begin{fontthemeexample}[\oarg{options}]{italics}
+  This theme does exactly the same as the |bold| font theme, only
+  instead of making text bold, text is set in italics. The same
+  \meta{options} as for the |bold| theme are supported. See
+  Section~\ref{section-italics} for the pros and cons of using
+  italics. 
+\end{fontthemeexample}
+
+\begin{fontthemeexample}[\oarg{options}]{romanum}
+  Again, this theme does exactly the same as the |bold| font theme,
+  only this time text is set using small caps. The same
+  \meta{options} as for the |bold| theme are supported. See
+  Section~\ref{section-smallcaps} for the pros and cons of using
+  italics.  
+\end{fontthemeexample}
+
+\begin{fontthemeexample}[\oarg{options}]{sansserifstructure}
+  Another theme that works like the |bold| theme and accepts the same
+  options. Instead of making text set on bold, it causes text to be
+  typeset using a sans-serif font. Naturally, using this theme makes
+  only sense if you use the |serif| class option since otherwise is
+  typeset in sans serif anyway. However, when using the |serif|
+  option, it is often a good idea to typeset at least navigation text
+  in headlines or sidebars using sans serif font, which are easier to
+  read at small sizes.
+\end{fontthemeexample}
+
+\begin{fontthemeexample}[\oarg{options}]{serifstructure}
+  Like |sansserifstructure|, except that the text is typeset using a serif
+  font instead of sans serif. Using serif text for small text is
+  dangerous, but using a serif (possibly italic) title over a sans
+  serif text creates an interesting visual effect. Naturally,
+  ``interesting typographic effect'' can mean ``terrible typographic
+  effect'' if you choose the wrong fonts combinations or sizes. You'll
+  need some typographic  experience to judge this correctly. If in
+  doubt, try asking someone who should now.
+\end{fontthemeexample}
+
+
+
+
+
+\subsection{Special Commands for Changing the Fonts Used in A Presentation}
+
+\LaTeX\ offers numerous commands for changing the font
+temporarily. For example, |\bfseries| will switch to boldface,
+|\itshape| will switch to an italic font, and so on. However, to
+globally change the font attributes of all fonts used in a
+presentation, special commands are needed. In the following, these
+commands are described.
+
+
+
+\subsubsection{Choosing Between Serif Sans-Serif Text}
+
+You must globally decide whether normal text should be typeset in
+sans-serif or in serif. To choose this, use either the class option
+|sans| or |serif|. By default, |sans| is selected, so you do not
+need to specify this.
+
+\begin{classoption}{sans}
+  Use a sans-serif font during the presentation. (Default.)
+\end{classoption}
+
+\begin{classoption}{serif}
+  Use a serif font during the presentation.
+\end{classoption}
+
+You can achieve similar effects in other ways, but using these options
+is what I recommend since they take care of several remappings
+``behind the scenes.'' For example, the |sans| option also cause
+sans-serif fonts to be used in mathematical text, which is hard to
+achieve otherwise.
+
+By default, if a sans-serif font is used for the main text,
+mathematical formulas are also typeset using sans-serif letters. In
+most cases, this is visually the most pleasing and easily readable way of
+typesetting mathematical formulas. However, in mathematical texts the
+font used to render, say, a variable is sometimes used to
+differentiate between different meanings of this variable. In such
+case, it may be necessary to typeset mathematical text using serif
+letters. Also, if you have a lot of mathematical text, the audience
+may be quicker to ``parse'' it, if it is typeset the way people
+usually read mathematical text: in a serif font.
+
+You can use the two options |mathsans| and |mathserif| to override the
+overall sans-serif/serif choice for math text. However, using the option
+|mathsans| in a |serif| environment makes little sense in my opinion.
+
+\begin{classoption}{mathsans}
+  Override the math font to be a sans-serif font.
+\end{classoption}
+
+\begin{classoption}{mathserif}
+  Override the math font to be a serif font.
+\end{classoption}
+
+The command |\mathrm| will always produce upright (not slanted), serif
+text and the command |\mathsf| will always produce upright, sans-serif
+text. The command |\mathbf| will produce upright, bold-face,
+sans-serif or serif text, depending on whether |mathsans| or
+|mathserif| is used.
+
+To produce an upright, sans-serif or serif text, depending on
+whether |mathsans| or |mathserif| is used, you can use for instance
+the command |\operatorname| from the |amsmath| package. Using this
+command instead of |\mathrm| or |\mathsf| directly will  automatically
+adjust  upright mathematical text if you switch from sans-serif to
+serif or back.
+
+
+
+
+\subsubsection{Choosing a Font Family}
+
+\label{section-substition}
+
+Independently of the serif/sans-serif choice, you can switch the font
+family of normal text globally. To do so, you can use one of the
+prepared packages of \LaTeX's font mechanism. For example, to change
+to Times/Helvetica, simply add 
+\begin{verbatim}
+\usepackage{mathptmx}
+\usepackage{helvet}
+\end{verbatim}
+in your preamble. Note that if you do not specify |serif| as a
+class option, Helvetica (not Times) will be selected as the text
+font.
+
+There may be many other fonts available on your
+installation. Typically, at least some of the following packages
+should be available: |avant|, |bookman|, |chancery|, |charter|,
+|euler|, |helvet|, |mathtime|, |mathptm|, |mathptmx|, |newcent|,
+|palatino|, |pifont|, |utopia|.
+
+If you use the |mathtime| package (you have to buy some of the fonts),
+you also need to specify the |serif| option.
+
+If you use professional fonts (fonts that you buy and that come with a
+complete set of every symbol in all modes), you may need to specify the
+class option |professionalfont|. This will tell \beamer\ that it
+should not meddle with the fonts you use. The reason is that \beamer\ 
+normally replaces certain character glyphs in mathematical text by
+more appropriate versions. For example, \beamer\ will normally replace
+glyphs such that the italic characters from the main font are used for
+variables in mathematical text. If your professional font package
+takes care of this already, \beamer's meddling should be switched
+off. Note that \beamer's substitution is automatically turned off if
+one of the following packages is loaded: |mathtime|, |mathpmnt|,
+|lucidabr|, |mtpro|, and |hvmath|. If your favorite professional font
+package is not among these, use the |professionalfont| option (and
+write me an email, so that the package can be added).
+
+\begin{classoption}{professionalfont}
+  Deactivates \beamer's internal font replacements for mathematical
+  text. This option should be used if you use a professional font
+  package that sets up all mathematical fonts correctly.
+\end{classoption}
+
+
+
+
+
+\subsubsection{Choosing a Font Size for Normal Text}
+
+As pointed out in Section~\ref{section-sizes}, measuring the default
+font size in points is not really a good idea for
+presentations. Nevertheless, \beamer\ does just that, setting the
+default font size to 11pt as usual. This may seem ridiculously small, but 
+the actual size of each frame is just 128mm times 96mm and the viewer
+application enlarges the font. By specifying a default font size
+smaller than 11pt you can put more onto each slide, by specifying a
+larger font size you can fit on less.
+
+To specify the font size, you can use the following class options:
+
+\begin{classoption}{8pt}
+  This is way too small. Requires that the package |extsize|
+  is installed.
+\end{classoption}
+
+\begin{classoption}{9pt}
+  This is also too small. Requires that the package |extsize|
+  is installed.
+\end{classoption}
+
+\begin{classoption}{10pt}
+  If you really need to fit much onto each frame, use this
+  option. Works without |extsize|.
+\end{classoption}
+
+\begin{classoption}{smaller}
+  Same as the |10pt| option.
+\end{classoption}
+
+\begin{classoption}{11pt}
+  The default font size. You need not specify this option.
+\end{classoption}
+
+\begin{classoption}{12pt}
+  Makes all fonts a little bigger, which makes the text more
+  readable. The downside is that less fits onto each frame.
+\end{classoption}
+
+\begin{classoption}{bigger}
+  Same as the |12pt| option.
+\end{classoption}
+
+\begin{classoption}{14pt}
+  Makes all fonts somewhat bigger. Requires |extsize| to be installed.
+\end{classoption}
+
+\begin{classoption}{17pt}
+  This is about the default size of PowerPoint. Requires |extsize| to
+  be installed. 
+\end{classoption}
+
+\begin{classoption}{20pt}
+  This is really huge. Requires |extsize| to be installed.
+\end{classoption}
+
+
+
+\subsubsection{Choosing a Font Encodings}
+\label{section-font-encoding}
+
+The same font can come in different encodings, which are (very roughly
+spoken) the ways the characters of a text are mapped to glyphs (the
+actual shape of a particular character in a particular font at a
+particular size). In \TeX\ two encodings are often used: the
+T1~encoding and the OT1~encoding (old T1~encoding).
+
+Conceptually, the newer T1~encoding is preferable over the old
+OT1~encoding. For example, hyphenation of words containing umlauts
+(like the famous German word Fr\"aulein) will work only if you use the
+T1~encoding. Unfortunately, only the bitmapped version of the Computer
+Modern fonts are available in this encoding in a standard
+installation. For this reason, using the T1~encoding will produce
+\pdf\ files that render very poorly.
+
+Most standard PostScript fonts are available in T1~encoding. For
+example, you can use Times in the T1~encoding. The package |lmodern|
+makes the standard Computer Modern fonts available in the
+T1~encoding. Furthermore, if you use |lmodern| several extra fonts
+become available (like a sans-serif boldface math) and extra symbols
+(like proper guillemots).
+
+To select the T1 encoding, use |\usepackage[T1]{fontenc}|. Thus, if
+you have the |lmodern| fonts installed, you could write
+\begin{verbatim}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\end{verbatim}
+to get beautiful outline fonts and correct hyphenation. Note, however,
+that some versions of the |lmodern| package do not include correct
+glyphs for ligatures like ``fi,'' which may cause
+trouble. Double-check whether all ligatures are displayed correctly.
+
+
+
+
+
+\subsection{Changing the Fonts Used for the Different Elements of a Presentation}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 
