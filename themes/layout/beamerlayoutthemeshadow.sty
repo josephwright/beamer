@@ -32,11 +32,12 @@
   \vskip-2pt
 }
 
-\useframetitletemplate{%
+
+\beamertemplateoption*{frametitle}{theme}
+{%
   \nointerlineskip%
   \vskip-2pt%
   \hbox{\leavevmode
-    \usebeamercolor[fg]{frametitle}%
     \advance\beamer@leftmargin by -12bp%
     \advance\beamer@rightmargin by -12bp%
     \beamer@tempdim=\textwidth%
@@ -44,10 +45,9 @@
     \advance\beamer@tempdim by \beamer@rightmargin%
     \hskip-\Gm@lmargin\hbox{%
       \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\paperwidth}%
-          \vbox{}\vskip-1ex%
+          \vbox{}\vskip-.75ex%
           \leftskip0.3cm%
           \rightskip0.3cm plus1fil\leavevmode
-          \usebeamerfont{frametitle}%
           \insertframetitle%
           \ifx\insertframesubtitle\@empty%
             \strut\par%
@@ -60,12 +60,10 @@
       \beamer@tempdim=\ht\beamer@tempbox%
       \advance\beamer@tempdim by 2pt%
       \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{\beamer@tempdim}
-        \colorlet{frametitle.bg}{bg}
-        \usebeamercolor{frametitle right}\colorlet{frametitle right.bg}{bg}
+        \usebeamercolor{frametitle right}
         \pgfrect[clip]{\pgforigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
         \pgfbox[left,base]{\pgfuseshading{beamer@frametitleshade}}
       \end{pgfpicture}
-      %\vrule width\paperwidth height \beamer@tempdim%
       \hskip-\paperwidth%
       \box\beamer@tempbox%
     }%

@@ -166,36 +166,30 @@
 \def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
 \def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
 \def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
-\def\beamertemplatelargepartpage{\beamertemplatedefaultpartpage}
+\def\beamertemplatelargepartpage{\setbeamertemplate{part page}[default]}
 \def\beamertemplateboldpartpage{%
   \setbeamerfont{part}{size=\large}%
   \setbeamerfont{partname}{series=\bfseries}%
-  \beamertemplatedefaultpartpage}
+  \setbeamertemplate{part page}[default]}
 \def\beamertemplatelargetitlepage{%
-  \beamertemplatedefaulttitlepage}
+  \setbeamertemplate{title page}[default]}
 \def\beamertemplateboldtitlepage{%
   \setbeamerfont{title}{size=\large,series=\bfseries}%
-  \beamertemplatedefaulttitlepage}
-\@onlypreamble\beamertemplateboldtitlepage
-\@onlypreamble\beamertemplatelargetitlepage
-\@onlypreamble\beamertemplateboldpartpage
-\@onlypreamble\beamertemplatelargepartpage
- 
+  \setbeamertemplate{title page}[default]}
+
 \def\beamertemplateboldcenterframetitle{
   \setbeamerfont{frametitle}{size={},series=\bfseries}
   \setbeamerfont{framesubtitle}{series=\bfseries}
-  \beamertemplatedefaultframetitle[center]}
+  \setbeamertemplate{frametitle}[default][center]}
 \@onlypreamble\beamertemplateboldcenterframetitle
 
 \def\beamertemplateboldframetitle{
   \setbeamerfont{frametitle}{series=\bfseries}
   \setbeamerfont{framesubtitle}{series=\bfseries}
-  \beamertemplatedefaultframetitle[left]}
-\@onlypreamble\beamertemplateboldframetitle
+  \setbeamertemplate{frametitle}[default]}
 
 \def\beamertemplatelargeframetitle{
-  \beamertemplatedefaultframetitle[left]}
-\@onlypreamble\beamertemplatelargeframetitle
+  \setbeamertemplate{frametitle}[default]}
  
 \def\beamertemplateboldblocks{
   \setbeamerfont{block title}{size={},series=\bfseries}
@@ -277,6 +271,11 @@
 \def\insertvrule#1#2{%
   \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
     height #1\hskip-\Gm@rmargin}}
+
+
+\def\usetitlepagetemplate{\setbeamertemplate{title page}}
+\def\usepartpagetemplate{\setbeamertemplate{part page}}
+\def\useframetitletemplate{\setbeamertemplate{frametitle}}
 
 
 \mode

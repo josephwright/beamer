@@ -25,94 +25,96 @@
 \def\beamer@usebeamertemplates#1{\csname beamer@@tmpl@#1\endcsname}
 
 
-\newcommand\setbeamertemplateoption[3]{%
-  \expandafter\newcommand\expandafter{\csname beamer@@tmpop@#1@#2\endcsname}[1]{#3}}
+\newif\ifbeamer@sbt
 
-\newcommand\setbeamertemplate[3]{%
-  \expandafter\expandafter\expandafter%
-    \def\expandafter\expandafter\expandafter\beamer@temp%
-      \expandafter\expandafter\expandafter{\csname beamer@@tmpop@#1@#2\endcsname{#3}}%
-  \expandafter\def\expandafter\beamer@@@temp\expandafter{\csname beamer@@tmpl@#1\endcsname}%
-  \expandafter\expandafter\expandafter\def\expandafter\beamer@@@temp\expandafter{\beamer@temp}%
+\def\beamertemplateoption{\@ifstar{\beamer@sbttrue\beamer@sbtoo}{\beamer@sbtfalse\beamer@sbtoo}}
+\def\beamer@sbtoo#1#2{\@ifnextchar[{\beamer@sbto{#1}{#2}}{\beamer@sbto{#1}{#2}[0]}}
+\def\beamer@sbto#1#2[#3]{\@ifnextchar[{\beamer@@sbto{#1}{#2}[#3]}{\def\beamer@sbtotemp{}\beamer@@@sbto{#1}{#2}[#3]}}
+\long\def\beamer@@sbto#1#2[#3][#4]{\long\def\beamer@sbtotemp{[#4]}\beamer@@@sbto{#1}{#2}[#3]}
+\long\def\beamer@@@sbto#1#2[#3]#4{%
+  \edef\beamer@@sbtoarg{\noexpand\newcommand\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[#3]}
+  \expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
+    \expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname{#4}}%
+  \ifbeamer@sbt%
+    \setbeamertemplate{#1}[#2]\relax%
+  \fi%  
 }
 
+\newcommand\setbeamertemplate[1]{%
+  \@ifnextchar[{\beamer@sbtchoose{#1}}{\expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname}}
+\def\beamer@sbtchoose#1[#2]{\csname beamer@@tmpop@#1@#2\endcsname}
 
 
 
 
-%
-% Title and part page templates
-%
 
-\newcommand{\beamertemplatedefaulttitlepage}[1][]{
-  \usetitlepagetemplate{
-    \vbox{}
-    \vfill
-    \begin{centering}
-      \begin{beamercolorbox}[sep=8pt,center,#1]{title}
-        \usebeamerfont{title}\inserttitle\par%
-        \ifx\insertsubtitle\@empty%
-        \else%
-          \vskip0.25em%
-          {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-        \fi%     
-      \end{beamercolorbox}%
-      \vskip1em\par
-      \begin{beamercolorbox}[sep=8pt,center,#1]{author}
-        \usebeamerfont{author}\insertauthor
-      \end{beamercolorbox}
-      \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
-        \usebeamerfont{institute}\insertinstitute
-      \end{beamercolorbox}
-      \begin{beamercolorbox}[sep=8pt,center,#1]{date}
-        \usebeamerfont{date}\insertdate
-      \end{beamercolorbox}\vskip0.5em
-      {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
-    \end{centering}
-    \vfill
-  }
-}
-\@onlypreamble\beamertemplatedefaulttitlepage
+% Title page
 
-\newcommand{\beamertemplatedefaultpartpage}[1][]{
-  \usepartpagetemplate{
-    \begin{centering}
-      {\usebeamerfont{partname}\usebeamercolor[fg]{partname}\partname~\insertromanpartnumber}
-      \vskip1em\par
-      \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
-        \usebeamerfont{part title}\insertpart\par
-      \end{beamercolorbox}
-    \end{centering}
-  }
-} 
-\@onlypreamble\beamertemplatedefaultpartpage
-
-
-
-%
-% Frame title templates
-%
-
-\newcommand{\beamertemplatedefaultframetitle}[1][left]{%
-  \useframetitletemplate{%
-    \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
-    \@tempdima=\textwidth%
-    \advance\@tempdima by\beamer@leftmargin%
-    \advance\@tempdima by\beamer@rightmargin%
-    \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
-      \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
-      {\usebeamerfont{frametitle}\insertframetitle\par}%
-      {%
-        \ifx\insertframesubtitle\@empty%
-        \else%
-        {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
-        \fi
-      }%
-      \if@tempswa\else\vskip-.3cm\fi%
+\beamertemplateoption*{title page}{default}[1][]
+{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
     \end{beamercolorbox}%
-  }%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \end{centering}
+  \vfill
 }
-\@onlypreamble\beamertemplatedefaultframetitle
+
+
+% Part page
+
+\beamertemplateoption*{part page}{default}[1][]
+{
+  \begin{centering}
+    {\usebeamerfont{partname}\usebeamercolor[fg]{partname}\partname~\insertromanpartnumber}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
+      \usebeamerfont{part title}\insertpart\par
+    \end{beamercolorbox}
+  \end{centering}
+} 
+
+
+
+
+% Frame title templates
+
+\beamertemplateoption*{frametitle}{default}[1][left]
+{
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}
+    \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
+    {\usebeamerfont{frametitle}\insertframetitle\par}%
+    {%
+      \ifx\insertframesubtitle\@empty%
+      \else%
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
+      \fi
+    }%
+    \if@tempswa\else\vskip-.3cm\fi%
+  \end{beamercolorbox}%
+}
 
 \def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip by1.7cm}
 
@@ -121,6 +123,7 @@
 %
 % Side bars
 %
+
 \newcommand{\beamertemplaterightsidebarlogonavigation}{
   \usesidebartemplate[right]{0cm}{%
     \vfill%

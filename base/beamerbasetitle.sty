@@ -17,27 +17,18 @@
 %
 \def\maketitle{\ifbeamer@inframe\titlepage\else\frame{\titlepage}\fi}
 
-%
-%
-% The \titlepage and \usetitlepagetemplate command
-%
-%
-\def\titlepage{{\beamer@titlepagetemplate}}
-\long\def\usetitlepagetemplate#1{\def\beamer@titlepagetemplate{#1}}
 
 %
 %
-% The \partpage and \usepartpagetemplate command
+% The \titlepage and \partpage
 %
 %
-\def\partpage{{\beamer@partpagetemplate}}
-\long\def\usepartpagetemplate#1{\def\beamer@partpagetemplate{#1}}
+\def\titlepage{\usebeamertemplate{title page}}
+\def\partpage{\usebeamertemplate{part page}}
 
 \mode
 <article>
-{
-  \def\partpage{}
-}
+{\providecommand\partpage{}}
 
 
 %
