@@ -109,14 +109,14 @@ item symbol template to the other symbol:
 \begin{verbatim}
 \newenvironment{ballotenv}
 {\only{%
-  \useitemizeitemtemplate{code for showing a ballot}%
-  \usesubitemizeitemtemplate{code for showing a smaller ballot}%
-  \usesubsubitemizeitemtemplate{code for showing a smaller ballot}}}
+  \setbeamertemplate{itemize item}{code for showing a ballot}%
+  \setbeamertemplate{itemize subitem}{code for showing a smaller ballot}%
+  \setbeamertemplate{itemize subsubitem}{code for showing a smaller ballot}}}
 {}
 
-\useitemizeitemtemplate{code for showing a check mark}
-\usesubitemizeitemtemplate{code for showing a smaller check mark}
-\usesubsubitemizeitemtemplate{code for showing a smaller check mark}
+\setbeamertemplate{itemize item}{code for showing a check mark}
+\setbeamertemplate{itemize subitem}{code for showing a smaller check mark}
+\setbeamertemplate{itemize subsubitem}{code for showing a smaller check mark}
 \end{verbatim}
 
 The effect of the code is to install a check mark as the default

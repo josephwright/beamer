@@ -1,8 +1,8 @@
 \RequirePackage{beamerbasercs}
-\def\beamer@version{2.99}
+\def\beamer@version{3.00}
 
 \ProvidesClassRCS $Header$
-[release version \beamer@version\space A class for typesetting presentations]
+[cvs version \beamer@version\space A class for typesetting presentations]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -348,6 +348,9 @@
 % Parts, sections, subsections, appendix
 
 \RequirePackage{beamerbaseframe}
+% Commands for constructing frames
+
+\RequirePackage{beamerbaseverbatim}
 % Commands for constructing frames
 
 \RequirePackage{beamerbaseframesize}

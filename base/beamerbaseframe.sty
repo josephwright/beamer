@@ -196,9 +196,11 @@
 \define@key{beamerframe}{plain}[true]{%
   \beamer@plainframetrue%
   \def\beamer@frametemplate{\beamer@frametemplate@plain}}
-%\define@key{beamerframe}{template}{%
-%  \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
-\define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
+\define@key{beamerframe}{containsverbatim}[true]{%
+  \beamer@containsverbatimfalse%
+  \beamer@containsverbatimandoverlaysfalse%
+  \csname beamer@containsverbatim#1\endcsname}
+\def\beamer@containsverbatimoverlays{\beamer@containsverbatimandoverlaystrue}
 \define@key{beamerframe}{c}[true]{% centered
   \beamer@frametopskip=0pt plus 1fill\relax%
   \beamer@framebottomskip=0pt plus 1.5fill\relax%
@@ -220,6 +222,7 @@
 }
 
 \newif\ifbeamer@containsverbatim
+\newif\ifbeamer@containsverbatimandoverlays
 \newif\ifbeamer@autobreak
 \newif\ifbeamer@shrink
 \newif\ifbeamer@plainframe
@@ -357,6 +360,7 @@
   \beamer@autobreakcount=0\relax%
   \beamer@zoomcount=0\relax%
   \beamer@containsverbatimfalse%
+  \beamer@containsverbatimandoverlaysfalse%
   \beamer@autobreakfalse%
   \beamer@shrinkfalse%
   \beamer@plainframefalse%
@@ -396,6 +400,9 @@
       \fi%
       \ifbeamer@autobreak%
         \let\beamer@howtotreatframe\beamer@autobreakframe%
+      \fi%
+      \ifbeamer@containsverbatimandoverlays%
+        \let\beamer@howtotreatframe\beamer@doexternalframe%
       \fi%
     \else% no slides in frame
       \let\beamer@howtotreatframe\beamer@donoframe%
@@ -453,6 +460,13 @@
 \def\beamer@endslide{\end{beamer@frameslide}\beamer@writeslidentry\beamer@reseteecodes}
 \def\beamer@singletoken{\beamer@next\egroup}
 
+\def\beamer@doexternalframe{\expandafter\beamer@verbatimreadframe\@gobble}
+% will return to following command with frame contents written to \jobname.vrb
+\def\beamer@afterexternalframe{%
+  \expandafter\beamer@stripframeoptions\beamer@frameoptions%
+  \expandafter\expandafter\expandafter\frame\expandafter\expandafter\expandafter<\expandafter\beamer@whichframes\expandafter>%
+  [\beamer@@frameoptions,containsverbatim=false]{\input\jobname.vrb}\beamer@reseteecodes}
+\def\beamer@stripframeoptions[#1]{\def\beamer@@frameoptions{#1}}
 
 \def\beamer@writeslidentry{%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally

@@ -364,7 +364,17 @@ or enumerates.
   to specify the width, you may wish to use the following command
   shortly before the environment:
 
-  |\setbeamermargin{descriptionwidthof}|\marg{text}
+  |\setbeamersize{description width of={|\marg{text}|}}|
+
+  \example
+\begin{verbatim}
+\setbeamersize{description width of={longest label}}
+\begin{description}
+\item<1->[short] Some text.
+\item<2->[longest label] Some text.
+\item<3->[long label] Some text.
+\end{description}
+\end{verbatim}
   
   \begin{element}{description item}\yes\yes\yes
     This template is used to typeset the description items. When this
@@ -384,26 +394,6 @@ or enumerates.
     \end{templateinserts}
   \end{element}
 \end{environment}
-
-
-\begin{command}{\beamersetusedescriptionitemofwidthas\marg{long text}}
-  This command overrides the default width of the
-  description label by the width of \meta{long text} for the current
-  \TeX\ group. You should only use this command if, for some reason or
-  another, you cannot give the \meta{long text} as an argument to the
-  |description| environment. This happens, for example, if you create a
-  |description| environment in \LyX.
-
-  \example
-\begin{verbatim}
-\usedescriptionitemofwidthas{longest label}
-\begin{description}
-\item<1->[short] Some text.
-\item<2->[longest label] Some text.
-\item<3->[long label] Some text.
-\end{description}
-\end{verbatim}
-\end{command}
 
 
 
@@ -902,7 +892,7 @@ name}\sarg{action specification}}
   completely suppress the symbol, write |\def\qedsymbol{}| in 
   your preamble. To get an closed rectangle, say
 \begin{verbatim}
-\useqedsymboltemplate{\color{beamerstructure}\vrule width1.5ex height1.5ex depth0pt}
+\setbeamertemplate{qed symbol}{\vrule width1.5ex height1.5ex depth0pt}
 \end{verbatim}
 
   If you use |babel| and a different language, the text ``Proof'' is
@@ -914,6 +904,10 @@ name}\sarg{action specification}}
   Suppose ...
 \end{proof}
 \end{verbatim}
+
+  \begin{element}{qed symbol}\yes\yes\yes
+    The symbol is shown at the end of every proof.
+  \end{element}
 \end{environment}
 
 You can define new environments using the following command:
