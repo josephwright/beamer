@@ -40,7 +40,7 @@
 }
 
 \def\beamer@thc@usecolor#1{%
-  {%
+  \begingroup%
     \beamer@thc@prepcolor%
     \beamer@thc@docolor{#1}%
     \ifx\beamer@thc@fg\@empty\def\beamer@thc@fg{fg}\fi%
@@ -50,7 +50,7 @@
     \globalcolorstrue%
     \colorlet{#1.fg}{\beamer@thc@gfg}%
     \colorlet{#1.bg}{\beamer@thc@gbg}%
-  }%
+  \endgroup%
 }
 
 \def\setbeamercolor{\@ifstar{\beamer@clearbeamercolor}{\beamer@setbeamercolor}}
@@ -96,10 +96,10 @@
   \@namelet{\string\color@ parent.bg}{\string\color@ bg}%
   \@namelet{\string\color@ fg}{\string\color@ temp@fg}%  
   \@namelet{\string\color@ bg}{\string\color@ temp@bg}%
-  {%
+  \begingroup%
     \global\@namelet{\string\color@ #2.fg}{\string\color@ temp@fg}%  
     \global\@namelet{\string\color@ #2.bg}{\string\color@ temp@bg}%
-  }%
+  \endgroup%
   \def\beamer@temp{#1}%
   \ifx\beamer@temp\@empty%
   \else%

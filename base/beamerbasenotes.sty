@@ -43,19 +43,23 @@
     \color{black}%
     \nointerlineskip
     \hbox{\hskip-\Gm@lmargin\hskip1cm\vbox to\textheight{%
-        %pretend to have in a ``standard'' margins
-        \def\Gm@lmargin{1cm}\def\Gm@rmargin{1cm}%
-      \textwidth=10.8cm\hsize=\textwidth%
-      \vskip-\headheight%
-      \def\insertnote{\vbox{}%
-        \beamer@noteenvstart#2\beamer@noteenvend%
-      }%
-      \usebeamertemplate*{note page}%
-      \vfil%
-      \vskip-4pt% foot separator
-      \vskip-\footheight}\hskip-\Gm@lmargin\hskip1cm}%
+                                %pretend to have ``standard'' margins
+        \edef\beamer@origlmargin{\Gm@lmargin}%
+        \edef\beamer@origrmargin{\Gm@rmargin}%
+        \def\Gm@lmargin{1cm}%
+        \def\Gm@rmargin{1cm}%
+        \textwidth=10.8cm%
+        \hsize=\textwidth%
+        \vskip-\headheight%
+        \def\insertnote{\vbox{}%
+          \beamer@noteenvstart#2\beamer@noteenvend%
+        }%
+        \usebeamertemplate*{note page}%
+        \vfil%
+        \vskip-4pt% foot separator
+        \vskip-\footheight}\hskip-\Gm@lmargin\hskip1cm}%
     \clearpage
-  \endgroup
+    \endgroup
   \fi%
   \beamer@resumemode}
 
@@ -143,7 +147,7 @@
       \color[gray]{0.8}
       \pgfrect[fill]{\pgforigin}{\pgfpoint{\paperwidth}{\paperheight}}
       \color{black}
-      \pgfputat{\pgfpoint{\Gm@lmargin}{\footheight}}{\pgfbox[left,bottom]{\copy\beamer@frameboxcopy}}
+      \pgfputat{\pgfpoint{\beamer@origlmargin}{\footheight}}{\pgfbox[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgfmagnify}
   \end{pgfpicture}%
   }}
