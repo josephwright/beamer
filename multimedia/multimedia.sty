@@ -1,0 +1,169 @@
+\ProvidesPackage{multimedia}[2004/04/10 ver 0.01]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\RequirePackage{keyval}[1997/11/10]
+\RequirePackage{pgf}
+
+\ifx\pdfoutput\@undefined
+  \let\mm@psorpdf\@firstoftwo
+\else
+  \let\mm@psorpdf\@secondoftwo
+\fi
+
+\define@key{multimedia}{height}{\@tempdimb=#1\relax}
+\define@key{multimedia}{width}{\@tempdima=#1\relax}
+\define@key{multimedia}{depth}{\@tempdimc=#1\relax}
+\define@key{multimedia}{label}{\def\mm@label{#1}}
+\define@key{multimedia}{once}[]{\def\mm@playmode{/Mode /Once}}
+\define@key{multimedia}{repeat}[]{\def\mm@playmode{/Mode /Repeat}}
+\define@key{multimedia}{loop}[]{\def\mm@playmode{/Mode /Repeat}}
+\define@key{multimedia}{palindrome}[]{\def\mm@playmode{/Mode /Palindrome}}
+\define@key{multimedia}{autostart}[]{\mm@autostarttrue}
+\define@key{multimedia}{borderwidth}{\pgf@x=#1\relax\pgf@bpcorr\pgf@x\def\mm@bw{\pgfget x}}
+\define@key{multimedia}{start}{%
+  \pgf@x=#1pt%
+  \@tempcnta=\pgf@x\relax%
+  \divide\@tempcnta by 512%
+  \edef\mm@start{/Start [\the\@tempcnta\space 128]}}
+\define@key{multimedia}{duration}{%
+  \pgf@x=#1pt%
+  \@tempcnta=\pgf@x\relax%
+  \divide\@tempcnta by 512%
+  \edef\mm@duration{/Duration [\the\@tempcnta\space 128]}}
+
+\newif\ifmm@autostart
+\newcount\mm@movie
+
+\newcommand\movie[3][]{%
+  \leavevmode%
+  % Sanity check
+  \IfFileExists{\@currdir #2}{}{%
+    \PackageWarning{multimedia}{The movie file ``#2'' could not be
+      found in the current directory, where it must reside for
+      viewing.}%
+  }%
+  {%
+    % Calculate size of the poster
+    \setbox\@tempboxa=\hbox{#3}%
+    \@tempdima=\wd\@tempboxa%
+    \@tempdimb=\ht\@tempboxa%
+    \@tempdimc=\dp\@tempboxa%
+    \def\mm@label{mmdefaultlabel}%
+    \def\mm@playmode{}%
+    \def\mm@duration{}%
+    \def\mm@start{}%
+    \global\advance\mm@movie by1\relax%
+    \mm@autostartfalse%
+    \def\mm@bw{0}%
+    \setkeys{multimedia}{#1}%
+    \wd\@tempboxa=\@tempdima%
+    \ht\@tempboxa=\@tempdimb%
+    \dp\@tempboxa=\@tempdimc%
+    \mm@psorpdf{}{%  
+      \pdfannot width \@tempdima height \@tempdimb depth \@tempdimc
+      {
+        /Subtype /Movie
+        /T (mmmovie\the\mm@movie)
+        /Border [0 0 \mm@bw]
+        /Movie << /F (#2) >>
+        /A << \mm@start\space \mm@duration\space \mm@playmode\space >>
+      }%
+    }%
+    \expandafter\xdef\csname mm@\mm@label\endcsname{mmmovie\the\mm@movie}%
+    \box\@tempboxa%
+    \ifmm@autostart%
+      \xdef\mm@pdfpageadditionalactionopen{/S /Movie /T (\csname mm@\mm@label\endcsname) /Operation /Play}%
+    \fi%
+  }%  
+}
+
+\define@key{multimedia}{play}[]{\def\mm@do{/Operation /Play}}
+\define@key{multimedia}{stop}[]{\def\mm@do{/Operation /Stop}}
+\define@key{multimedia}{resume}[]{\def\mm@do{/Operation /Resume}}
+\define@key{multimedia}{pause}[]{\def\mm@do{/Operation /Pause}}
+
+\newcommand\hyperlinkmovie[3][]{%
+  {\def\mm@playmode{}\def\mm@start{}\def\mm@duration{}\def\mm@do{}%
+  \setkeys{multimedia}{#1}%
+  \mm@psorpdf{#3}{%
+    \pdfstartlink
+    attr{%
+      /Border [\@pdfborder]
+      /H \@pdfhighlight\space
+      /C [\@menubordercolor]%
+    }%
+    user{
+      /Subtype /Link
+      /A <<
+        /S /Movie /T (\csname mm@#2\endcsname) 
+        \mm@do\space \mm@start\space \mm@duration\space \mm@playmode\space
+      >>
+    }%
+  #3\pdfendlink}%
+  }%
+}
+
+\newcommand\speakersymbol{%
+  \begin{pgfpicture}{0pt}{0pt}{2ex}{1.5ex}
+    \pgfsetroundjoin\pgfsetroundcap
+    \pgfmoveto{\pgfpoint{0cm}{.5\pgfex}}
+    \pgflineto{\pgfpoint{.5\pgfex}{.5\pgfex}}
+    \pgflineto{\pgfpoint{\pgfex}{0pt}}
+    \pgflineto{\pgfpoint{\pgfex}{1.5\pgfex}}
+    \pgflineto{\pgfpoint{.5\pgfex}{\pgfex}}
+    \pgflineto{\pgfpoint{0pt}{\pgfex}}
+    \pgfclosepath
+    \pgfmoveto{\pgfpoint{1.25\pgfex}{.5\pgfex}}
+    \pgfcurveto{\pgfpoint{1.4\pgfex}{.6\pgfex}}{\pgfpoint{1.4\pgfex}{.9\pgfex}}{\pgfpoint{1.25\pgfex}{1\pgfex}}
+    \pgfmoveto{\pgfpoint{1.5\pgfex}{.25\pgfex}}
+    \pgfcurveto{\pgfpoint{1.7\pgfex}{.5\pgfex}}{\pgfpoint{1.7\pgfex}{1\pgfex}}{\pgfpoint{1.5\pgfex}{1.25\pgfex}}
+    \pgfmoveto{\pgfpoint{1.75\pgfex}{0pt}}
+    \pgfcurveto{\pgfpoint{2\pgfex}{.25\pgfex}}{\pgfpoint{2\pgfex}{1.25\pgfex}}{\pgfpoint{1.75\pgfex}{1.5\pgfex}}
+    \pgfstroke
+  \end{pgfpicture}}
+
+
+
+% Copyright Notice: The following code is based on code from hyperref.sty
+\def\mm@pageadditionalaction{%
+  \ifx\mm@pdfpageadditionalactionopen\relax
+  \else
+    \expandafter\mm@RemoveAAPageAttr\the\pdfpageattr^^J/AA << /O <<{}>> >>\END
+    \ifx\mm@pdfpageadditionalaction\@empty
+    \else
+      \edef\@processme{%
+        \global\pdfpageattr{%
+          \the\pdfpageattr
+          ^^J/AA << /O << \mm@pdfpageadditionalactionopen\space >> >>%
+        }%
+      }%
+      \@processme
+    \fi
+    \global\let\mm@pdfpageadditionalactionopen=\@empty% not on next page
+  \fi
+}
+\gdef\mm@RemoveAAPageAttr#1^^J/AA << /O <<#2#3>> >>#4\END{%
+  \ifx\\#2\\%
+    \global\pdfpageattr{#1}%
+  \else
+    \mm@RemoveAAPageAttr#1#4\END
+  \fi
+}
+\let\mm@pdfpageadditionalactionopen=\relax
+
+% This is *not* the way to do it, but it'll have to do for now:
+\let\mm@orighyper@pagetransition=\hyper@pagetransition
+\AtBeginDocument{\def\hyper@pagetransition{\mm@orighyper@pagetransition\mm@pageadditionalaction}}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 

@@ -9483,7 +9483,7 @@ A note on the |\pause| command: Both \beamer\ and \texpower\ implement
 this command and they have the same semantics; so there is no need to
 map this command to anything different in |beamertexpower|. However, a
 difference is that |\pause| can be used almost anywhere in \beamer,
-whereas is may only be used in nested situtations in \texpower. Since
+whereas is may only be used in non-nested situtations in \texpower. Since
 \beamer\ is only more flexible than \texpower\ here, this will not
 cause problems when porting.
 
@@ -9519,7 +9519,7 @@ listed.
 
 \begin{command}{\steponce\marg{text}}
   This is either mapped to |\only<+(1)>|\meta{text} or to
-  |\uncover<+(1)|\meta{text}, depending on whether this command is
+  |\uncover<+(1)>|\meta{text}, depending on whether this command is
   used inside a |\stepwise| environment or inside a |\parstepwise|
   environment. 
 \end{command}
@@ -9534,7 +9534,7 @@ listed.
 \end{command}
 
 \begin{command}{\dstep}
-  This just proceeds the counter |beamerpauses| by one. It has no
+  This just advances the counter |beamerpauses| by one. It has no
   other effect.
 \end{command}
 
