@@ -172,7 +172,8 @@
     \setbox\bmb@box=\hbox{}%
     \ht\bmb@box=1.5pt%
     \bmb@prevheight=-4.5pt%
-  \else%    
+  \else%
+    \wd\bmb@box=\bmb@width%
     \bmb@temp=\dp\bmb@box%
     \ifdim\bmb@temp<1.5pt%
       \bmb@temp=1.5pt%
@@ -228,6 +229,7 @@
 
 \def\endbeamerboxesrounded{%
   \end{minipage}\egroup%
+  \wd\bmb@box=\bmb@width%
   \bmb@temp=\dp\bmb@box%
   \advance\bmb@temp by.5pt%
   \setbox\bmb@box=\hbox{\raise\bmb@temp\hbox{\box\bmb@box}}%

@@ -1,0 +1,72 @@
+\documentclass[serif]{beamer}
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+%
+% The purpose of this example is to show how \part can be used to
+% organize a lecture.
+%
+
+\usepackage{beamerthemeplain}
+\usepackage{times}
+\usepackage[latin1]{inputenc}
+
+\hypersetup{%
+  pdftitle={Beamer Animation Example},%
+  pdfauthor={Till Tantau}}
+
+\title{Beamer Animation Example}
+\author{Till~Tantau}
+\institute{
+  Fakultät für Elektrotechnik und Informatik\\
+  Technical University of Berlin}
+
+
+\begin{document}
+
+% View this in acroread with "loop after last page option" in full screen mode.
+
+\newcount\opaqueness
+\plainframe{
+  \itshape
+  \animate<1-30>
+  \Large
+
+  \only<1-10>{
+  \animatevalue<1-10>{\opaqueness}{100}{10}
+  \begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
+    \begin{centering}
+      \Huge Urfaust\par
+    \end{centering}
+  \end{colormixin}
+  }
+ 
+  \only<11-20>{
+  \animatevalue<11-20>{\opaqueness}{100}{10}
+  \begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
+    \begin{centering}
+      Hab nun, ach! die Philosophey,\par
+      Medizin und Juristerey \par
+      Und leider auch die Theologie\par
+      Durchaus studirt mit heisser Müh.\par
+  \end{centering}
+  \end{colormixin}
+  }
+ 
+  \only<21-30>{
+  \animatevalue<21-30>{\opaqueness}{100}{10}
+  \begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
+    \begin{centering}
+    Da steh ich nun, ich armer Tohr,\par
+    Und binn so klug als wie zuvor.\par
+    \end{centering}
+  \end{colormixin}}
+}
+
+\end{document}
+
+

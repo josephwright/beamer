@@ -10,6 +10,8 @@
 
 \presentation
 
+\RequirePackage{enumerate}
+
 
 %
 % Alerting
@@ -187,18 +189,44 @@
 %
 
 \def\enumerate{%
-  \ifnum\@enumdepth>1\relax\@toodeep\else
-    \advance\@enumdepth\@ne
+  \ifnum\@enumdepth>1\relax\@toodeep
+  \else%
+    \advance\@enumdepth\@ne%
     \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
-    \csname\@enumctr starttemplate\endcsname%
-      \expandafter
-      \list
-        \csname label\@enumctr\endcsname
-        {\usecounter\@enumctr%
-          \def\makelabel##1{{\hss\llap{##1}}}}%
   \fi%
+  \@ifnextchar[{\beamer@@enum@}{\beamer@enum@}}
+\def\beamer@@enum@[#1]{% partly copied from enumerate.sty
+  \@enLab{}\let\@enThe\@enQmark
+  \@enloop#1\@enum@
+  \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
+   ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
+  \expandafter\def\csname label\@enumctr\endcsname{\def\insertenumlabel{\the\@enLab}\beamer@autoenumtemplate}%
+  \expandafter\let\csname the\@enumctr\endcsname\@enThe
+  \csname c@\@enumctr\endcsname7
+  \expandafter\settowidth
+            \csname leftmargin\romannumeral\@enumdepth\endcsname
+            {\the\@enLab\hspace{\labelsep}}%
+  \beamer@enum@}
+\def\beamer@enum@{%
+  \csname\@enumctr starttemplate\endcsname%
+  \expandafter
+    \list
+      \csname label\@enumctr\endcsname
+      {\usecounter\@enumctr%
+        \def\makelabel##1{{\hss\llap{##1}}}}%
   \begin{pauses}\raggedright}
-\def\endenumerate{\end{pauses}\endlist\csname\@enumctr endtemplate\endcsname}
+\def\endenumerate{\ifhmode\unskip\fi\end{pauses}\endlist\csname\@enumctr endtemplate\endcsname}
+
+\def\useenumerateoptionalitemtemplate#1{%
+  \gdef\beamer@autoenumtemplate{#1}}
+\useenumerateoptionalitemtemplate{\color{structure}\insertenumlabel}
+
+
+%
+%
+% Itemize
+%
+%
 
 \def\itemize{%
   \ifnum \@itemdepth >1\relax\@toodeep\else
@@ -213,7 +241,7 @@
   \fi%
   \begin{pauses}\raggedright}
     
-\def\enditemize{\end{pauses}\endlist\csname\@itemctr endtemplate\endcsname}
+\def\enditemize{\ifhmode\unskip\fi\end{pauses}\endlist\csname\@itemctr endtemplate\endcsname}
 
 \def\useenumerateitemtemplate#1{% 
   \gdef\labelenumi{\def\insertenumlabel{\theenumi}#1}}
@@ -250,7 +278,7 @@
   \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
 \def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
   \begin{pauses}\raggedright}
-\def\enddescription{\end{pauses}\endlist}
+\def\enddescription{\ifhmode\unskip\fi\end{pauses}\endlist}
 \long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
 
@@ -290,7 +318,7 @@
       \sfcode`\.\@m}
      {\def\@noitemerr
        {\@latex@warning{Empty `thebibliography' environment}}%
-      \end{pauses}\endlist}
+      \ifhmode\unskip\fi\end{pauses}\endlist}
 
 \long\def\beamer@biblabeltemplate#1{\def\insertbiblabel{#1}\biblabeltemplate\hfil}
 
