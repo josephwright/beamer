@@ -19,9 +19,10 @@
   \vbox{}
   \vfill
   \begin{centering}
-    \Large\structure{\textrm{\textit{{\inserttitle}}}}
+    {\Large\structure{\textrm{\textit{{\inserttitle}}}}}
+    \ifx\insertsubtitle\@empty\else\vskip0.25em{\structure{\textrm{\textit{{\insertsubtitle}}}}}\par\fi
     \vskip1em\par
-    \normalsize\insertauthor\vskip1em\par
+    \insertauthor\vskip1em\par
     {\scriptsize\insertinstitute\par}\par\vskip1em
     \insertdate\par\vskip1.5em
     \inserttitlegraphic

@@ -41,6 +41,7 @@
 {
   % Things to be done at the beginning of the document
   \def\beamer@lastminutepatches{}
+  \def\beamer@firstminutepatches{}
 }
 
 %
@@ -48,6 +49,7 @@
 %
 \let\beamer@origdocument\document
 \def\document{%
+  \beamer@firstminutepatches%
   \endgroup%
 %  \recalculatefoot%
 %  \recalculatehead%

@@ -29,7 +29,7 @@
 % Versioning stuff
 %
 \newdimen\beamer@version
-\beamer@version=2.10pt % It is only fitting, that the version should
+\beamer@version=2.11pt % It is only fitting, that the version should
                        % be given in points...
 \def\beamer@endinputifotherversion#1{%
   \let\beamer@next=\relax%
@@ -111,7 +111,7 @@
 \newif\ifbeamer@suppressreplacements % decides whether fonts should be substituted
 \newif\ifbeamer@frameswithnotesonly
 \newif\ifbeamer@ignorenonframe
-
+\newif\ifbeamer@autopdfinfo
 
 \RequirePackage{beamerbaseoptions}
 % For option management
@@ -132,7 +132,9 @@
 \beamer@draftmodefalse
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
+\beamer@autopdfinfotrue
 
+\DeclareOptionBeamer{nopdfinfo}{\beamer@autopdfinfofalse}
 \DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
 \DeclareOptionBeamer{notheorems}{\beamer@blocksfalse}
 \DeclareOptionBeamer{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}
@@ -335,7 +337,7 @@
 \RequirePackage[implicit=false]{hyperref}
 % For hyperlinks
 
-\hypersetup{pdfcreator={LaTeX with beamer class version 2.01}}
+\hypersetup{pdfcreator={LaTeX with beamer class version \strip@pt\beamer@version}}
 
 % Coding stuff
 \beamer@loaducs

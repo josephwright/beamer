@@ -16,7 +16,9 @@
     \vfill
     \begin{centering}
       \begin{beamerboxesrounded}[shadow=true,scheme=title]{}
-        \begin{centering}\Large\color{white}\inserttitle\par\end{centering}
+        \begin{centering}\Large\color{white}\inserttitle\par%
+          \normalsize\ifx\insertsubtitle\@empty\else\vskip0.25em\insertsubtitle\par\fi
+        \end{centering}
       \end{beamerboxesrounded}
       \vskip1em\par
       \normalsize\insertauthor\vskip1em\par

@@ -70,6 +70,51 @@
 }
 
 
+
+%
+%
+% The \subtitle command
+%
+%
+\newcommand{\subtitle}{\@dblarg\beamer@subtitle}
+\long\def\beamer@subtitle[#1]#2{%
+  \def\insertsubtitle{#2}%
+  \def\beamer@shortsubtitle{#1}%
+  }
+\subtitle{}
+
+\newcommand\insertshortsubtitle[1][]{%
+  \beamer@setupshort{#1}%
+  \ifnum\c@page=1%
+    \hyperlinkpresentationend{\beamer@insertshort{\beamer@shortsubtitle}}%
+  \else%
+    \hyperlinkpresentationstart{\beamer@insertshort{\beamer@shortsubtitle}}%
+  \fi}
+
+\ifbeamer@autopdfinfo%
+  \g@addto@macro\beamer@firstminutepatches
+  {
+    \begingroup
+      \let\beamer@saved@hook\pdfstringdefPreHook
+      \pdfstringdefDisableCommands{%
+        \let\\=\ 
+        \let\newline=\\%
+      }%
+      \hypersetup{pdftitle={\inserttitle\ifx\insertsubtitle\@empty\else\ - \insertsubtitle\fi}}
+      \global\let\pdfstringdefPreHook\beamer@saved@hook
+    \endgroup
+  }
+\fi%
+
+\mode
+<article>
+{
+  \ifx\subtitle\@undefined%
+    \newcommand{\subtitle}[2][]{\g@addto@macro\@title{\\{\normalsize#2}}}
+  \fi
+}
+
+
 %
 %
 % The \date command
@@ -106,8 +151,25 @@
 \long\def\beamer@author[#1]#2{%
   \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}#2}%
   \def\beamer@shortauthor{#1}%
+  \ifbeamer@autopdfinfo%
+    \def\beamer@andstripped{}%
+    \beamer@stripands#1 \and\relax
+    {\let\inst=\@gobble\def\and{, }\hypersetup{pdfauthor={\beamer@andstripped}}}
+  \fi%
 }
+
+\def\beamer@stripands#1 \and#2\relax{%
+  \def\beamer@temp{#2}%
+  \ifx\beamer@temp\@empty
+    \expandafter\def\expandafter\beamer@andstripped\expandafter{\beamer@andstripped#1}
+  \else
+    \expandafter\def\expandafter\beamer@andstripped\expandafter{\beamer@andstripped#1, }
+    \beamer@stripands#2\relax%
+  \fi
+}
+
 \author{}
+
 
 % Aux commands for \author
 \def\beamer@insttitle#1{$^{#1}$}
@@ -137,8 +199,29 @@
 % The \titlegraphic command
 %
 %
-\long\def\titlegraphic#1{\def\inserttitlegraphic{#1}}
-\titlegraphic{}
+\mode
+<all>
+{
+  \newcommand\titlegraphic[1]{\def\inserttitlegraphic{#1}}
+  \titlegraphic{}
+}
+
+
+
+%
+%
+% The \subject command
+%
+%
+\mode
+<all>
+{
+  \ifx\subject\@undefined
+    \newcommand\subject[1]{\hypersetup{pdfsubject={#1}}}
+  \fi
+}
+
+
 
 
 %

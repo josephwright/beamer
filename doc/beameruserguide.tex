@@ -91,7 +91,6 @@
 \newcommand\ssarg[1]{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}
 
 \providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
-\pdfstringdef{\LyX}{LyX} 
 
 \newcommand{\beamernote}{\par\noindent\llap{\color{blue}\textsc{beamer}\ \ }}
 \newcommand{\articlenote}{\par\smallskip\noindent\llap{\color{blue}\textsc{article}\ \ }}
@@ -202,7 +201,7 @@ To structure your text, you can use the commands |\section| and
 table of contents, but will also in the navigation bars.
 
 
-\subsection{Getting Started with the Beamer Class and \LyX}
+\subsection{Getting Started with the Beamer Class and \texorpdfstring{\LyX}{LyX}}
 
 Once installed (see Section~\ref{section-installation}), using the
 \beamer\ class  together with \LyX\ is quite easy: You open a new file
@@ -791,7 +790,7 @@ last frame before the appendix must be ended this way.
 
 \begin{itemize}
 \item
-  \emph{Never} use a smaller font size to ``squeeze more on a frame.''
+  \emph{Never} use a smaller font size to ``fit more on a frame.''
 \item
   Prefer enumerations and itemize environments over plain text. Do not
   use long sentences.
@@ -1395,9 +1394,9 @@ contain multiple slides; otherwise it contains only one slide.
   the text does not fit on a slide being too high, it will be
   squeezed as much as possible, a warning issued, and the text
   just extends unpleasantly over the bottom. You can use the option
-  |autobreak| to cause the \meta{frame text} to be split among several
+  |allowframebreaks| to cause the \meta{frame text} to be split among several
   slides, though you cannot use overlays then. See the explanation of
-  the |autobreak| option for details. 
+  the |allowframebreaks| option for details. 
   
   The \meta{default overlay specification} is an optional argument
   that is ``detected'' according to the following rule: If the first
@@ -1443,7 +1442,16 @@ contain multiple slides; otherwise it contains only one slide.
   The following \meta{options} may be given:
   \begin{itemize}
   \item
-    \declare{|autobreak|}\opt{|=|\meta{fraction}}. When this option is
+    \declare{|allowdisplaybreaks|}\opt{|=|\meta{break
+    desirability}} causes the AMS\TeX\ command
+    |\allowdisplaybreaks|\penalty0|[|\meta{break desirability}|]| to be issued
+    for the current frame. The \meta{break desirability} can be a
+    value between 0 (meaning formulas may never be broken) and 4 (the
+    default, meaning that formulas can be broken anywhere without any
+    penalty). The option is just a convenience and makes sense only
+    together with the |allowsframebreaks| option.  
+  \item
+    \declare{|allowframebreaks|}\opt{|=|\meta{fraction}}. When this option is
     given, the frame will be automatically broken up into several
     frames, if is does not fit on a single slide. In detail, when this
     option is given, the following things happen:
@@ -1491,12 +1499,11 @@ contain multiple slides; otherwise it contains only one slide.
     \declare{|\string\framebreak|} is a shorthand for
     |\pagebreak<presentation>| and \declare{|\string\noframebreak|} is
     a shorthand for |\nopagebreak<presentation>|.
-    
-    Let me point out that I consider the (excessive) use of this
-    option \emph{evil}. In a (good) presentation you
+
+    The use of this  option \emph{evil}. In a (good) presentation you
     prepare each slide carefully and think twice before putting something
     on a certain slide rather than on some different slide. Using the
-    |autobreak| option invites the creation of horrible, endless
+    |allowframebreaks| option invites the creation of horrible, endless
     presentations that resemble more a ``paper projected on the wall''
     than a presentation. Nevertheless, the option does have its
     uses. Most noticably, it can be convenient for automatically
@@ -1504,7 +1511,7 @@ contain multiple slides; otherwise it contains only one slide.
 
     \example
 \begin{verbatim}
-\frame[autobreak]
+\frame[allowframebreaks]
 {
   \frametitle{References}
 
@@ -1519,11 +1526,10 @@ contain multiple slides; otherwise it contains only one slide.
 \end{verbatim}
     \example
 \begin{verbatim}
-\frame[autobreak]
+\frame[allowframebreaks,allowdisplaybreaks]
 {
   \frametitle{A Long Equation}
 
-  \allowdisplaybreaks
   \begin{align}
     \zeta(2) &= 1 + 1/4 + 1/9 + \cdots \\
     &= ... \\
@@ -1590,10 +1596,54 @@ contain multiple slides; otherwise it contains only one slide.
 \frame[plain]{\titlepage}
 \end{verbatim}
   \item
-    \declare{|squeeze|} causes the text on the frame to be squeezed
-    together as much as possible. Currently, this just causes the
-    vertical space in enumerations or itemizations to be reduced to
-    zero.    
+    \declare{|shrink|}\opt{|=|\meta{minimum shrink percentage}}. This
+    option will cause the text of the frame to be shrunken if it is
+    too large to fit on the frame. \beamer\ will first normally
+    typeset the whole frame. Then it has a look at vertical size of
+    the frame text (excluding the frame title). If this vertical size
+    is larger than  the text height minus the frame title height,
+    \beamer\ computes a shrink factor and scales down the frame text
+    by this factor such that the frame text then fills the frame
+    completely. Using this option will automatically cause the
+    |squeeze| option to be used, also.
+
+    Since the shrinking takes place only after everything has been
+    typeset, shrunken frame text will not fill the frame completely
+    horizontally. For this reason, you can specify a \meta{minimum
+    shrink percentage} like |20|. If this percentage is specified, the
+    frame will be shrunk by \emph{at least} by this percentage. Since
+    \beamer\ knows this, it can increase the horizontal width
+    proportionally such that the shrunken text once more fills the
+    entire frame. If, however, the percentage is not enough, the text
+    will be shrunken as needed and you will be punished by a warning
+    message.
+
+    The best way to use this option is to identify frames that are
+    overly full, but in which all text absolutely has to be fit on a
+    single frame. Then start specifying first |shrink=5|, then
+    |shrink=10|, and so on, until no warning is issued any more (or
+    just ignore the warning when things look satisfactory).
+
+    Using this option is \emph{very evil}. It will
+    result in changes of the font size from slide to slide, which is a
+    typographic nightmare. Its usage can always be avoided by
+    restructuring and simplifying frames, which will result in a
+    better presentation.
+
+    \example
+\begin{verbatim}
+\frame[shrink=5]
+{
+  Some evil endless slide that is 5\% too large.
+}
+\end{verbatim}
+  \item
+    \declare{|squeeze|} causes all vertical spaces in the text to be
+    squeezed together as much as possible. Currently, this just causes
+    the vertical space in enumerations or itemizations to be reduced
+    to zero.
+
+    Using this option is not good, but also not evil.   
   \end{itemize}
 
   \lyxnote
@@ -1780,7 +1830,7 @@ be specified with the following command:
 }
 \end{verbatim}
 
-  If you are using the |autobreak| option with the current frame,
+  If you are using the |allowframebreaks| option with the current frame,
   a continuation text (like ``(cont.)'' or something similar,
   depending on the continuation template) is automatically added to
   the \meta{frame title text} at the end.
@@ -2751,6 +2801,22 @@ commands:
   The short form is ignored in |article| mode.
 \end{command}
 
+\begin{command}{\subtitle\oarg{short subtitle}\marg{subtitle}}
+  The \meta{subshort tile} is not used by default, but is available
+  via the insert |\insertshortsubtitle|. The subtitle is shown below
+  the title in a smaller font.
+  \example
+\begin{verbatim}
+\title{The Beamer Class}
+\subtitle{An easily paced introduction with many examples.}
+\end{verbatim}
+
+  \articlenote
+  This command causes the subtitle to be appended to the title with a
+  linebreak and a |\normalsize| command issued before it. This may or
+  may not be what you would like to happen.
+\end{command}
+
 \begin{command}{\author\oarg{short author names}\marg{author names}}
   The names should be separated using the
   command |\and|. In case authors have different affiliations,
@@ -2796,6 +2862,25 @@ commands:
   \articlenote
   The command is  ignored in |article| mode.
 \end{command}
+
+
+\begin{command}{\subject\marg{text}}
+  Enters the \meta{text} as the subject text in the \pdf\ document
+  info. It currently has no other effect.
+\end{command}
+
+
+By default, the |\title| and |\author| commands will also insert their
+arguments into a resulting \pdf-file in the document information
+fields. This may cause problems if you use complicated things like
+boxes as arguments to these commands. In this case, you might wish to
+switch off the automatic generation of these entries using the
+following class option:
+
+\begin{classoption}{nopdfinfo}
+  Suppresses the automatic generation of title and author entries in
+  the \pdf\ document information.
+\end{classoption}
 
 
 
@@ -4229,11 +4314,12 @@ name}\sarg{action specification}}
 
   At the end of the theorem, a |\qed| symbol is shown, except if you
   say |\qedhere| earlier in the proof (this is exactly as in
-  |amsthm|). The default |\qed| symbol is a filled rectangle. To
+  |amsthm|). The default |\qed| symbol is an open rectangle. To
   completely suppress the symbol, write |\def\qedsymbol{}| in 
-  your preamble. To get an open rectangle, say
-  |\def\qedsymbol{\openbox}|. Adding |\color{beamerstructure}| might
-  also be a good idea.
+  your preamble. To get an closed rectangle, say
+\begin{verbatim}
+\useqedsymboltemplate{\color{beamerstructure}\vrule width1.5ex height1.5ex depth0pt}
+\end{verbatim}
 
   If you use |babel| and a different language, the text ``Proof'' is
   replaced by whatever is appropriate in the selected language.
@@ -7132,6 +7218,11 @@ If you wish to suppress the head- and footline in the title page, use
   useful for the title page. 
 \end{command}
 
+\begin{command}{\insertsubtitle}
+  Inserts a version of the document subtitle into a template that is
+  useful for the title page. 
+\end{command}
+
 \begin{command}{\inserttitlegraphic}
   Inserts the title graphic into a template.
 \end{command}
@@ -7503,7 +7594,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 \begin{command}{\usecontinuationtemplate\marg{template}}
   The \meta{template} will be added at the end of the text inserted by
-  the |\insertframetitle| text if a frame has the |autobreak| option
+  the |\insertframetitle| text if a frame has the |allowframebreaks| option
   set. 
   \example
 \begin{verbatim}
@@ -7517,7 +7608,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 \begin{command}{\insertframetitle}
   Inserts the current frame title into a template. If the current
-  frame has the option |autobreak| set, at the end of this insert the
+  frame has the option |allowframebreaks| set, at the end of this insert the
   template that has been set using |\usecontinuationtemplate| will be
   appended.
 \end{command}
@@ -7534,7 +7625,7 @@ If you wish to suppress the head- and footline in the title page, use
 
 \begin{command}{\insertcontinuationcount}
   Inserts which page of the current frame is currently presented. If
-  the |autobreak| option is \emph{not} set, this number is 0.
+  the |allowframebreaks| option is \emph{not} set, this number is 0.
 \end{command}
 
 \begin{command}{\insertcontinuationcountroman}
@@ -7693,6 +7784,10 @@ or
   options as for |\insertshortauthor| may be given. 
 \end{command}
 
+\begin{command}{\insertshortsubtitle\oarg{options}}
+  Inserts the short version of the document subtitle. Same
+  options as for |\insertshortauthor| may be given. 
+\end{command}
 
 \begin{command}{\insertsubsection}
   Inserts the current subsection into a template.
@@ -9920,7 +10015,7 @@ The workflow for the migration is the following:
 \item
   If the command |\foilhead| is used inside a |\frame| command, it
   behaves like |\frametitle|. If it used outside a frame, it will
-  start a new frame (with the |autobreak| option, thus no
+  start a new frame (with the |allowframebreaks| option, thus no
   overlays are allowed). This frame will persist till the next occurence
   of |\foilhead| or of the new command |\endfoil|. Note that a
   |\frame| command will \emph{not} end a frame started using
@@ -10013,7 +10108,7 @@ listed.
 \begin{command}{\foilhead\oarg{dimension}\marg{frame title}}
   If used inside a |\frame| command, this is mapped to
   |\frametitle{|\meta{frame title}|}|. If used outside any frames, a
-  new frame is started with the option |autobreak|. If a frame was
+  new frame is started with the option |allowframebreaks|. If a frame was
   previously started using this command, it will be closed before the
   next frame is started. The \meta{dimension} is ignored.
 \end{command}

@@ -25,7 +25,8 @@
     \vbox{}
     \vfill
     \begin{centering}
-      \Large\structure{\inserttitle}
+      {\Large\structure{\inserttitle}}\par
+      \ifx\insertsubtitle\@empty\else\vskip0.25em{\structure{\insertsubtitle}}\par\fi
       \vskip1em\par
       \normalsize\insertauthor\vskip1em\par
       {\scriptsize\insertinstitute\par}\par\vskip1em
@@ -41,7 +42,8 @@
     \vbox{}
     \vfill
     \begin{centering}
-      \large\structure{\textbf{\inserttitle}}
+      {\large\structure{\textbf{\inserttitle}}}\par
+      \ifx\insertsubtitle\@empty\else\vskip0.25em{\structure{\insertsubtitle}}\par\fi
       \vskip1em\par
       \normalsize\insertauthor\vskip1em\par
       {\scriptsize\insertinstitute\par}\par\vskip1em

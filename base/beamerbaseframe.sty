@@ -21,6 +21,7 @@
 \mode<presentation>
 
 \newbox\beamer@framebox
+\newbox\beamer@frametitlebox
 
 \mode
 <all>
@@ -62,6 +63,7 @@
   \hypersetup{pdfpageduration=}%
   \xdef\beamer@frameendpage{\the\c@page}% every time
   \beamer@setuplinks%
+  \beamer@displaybreak%
   \let\beamer@startcomment=\beamer@startcommentinframe%
   % Insert labels if necessary:
   \ifx\beamer@againname\@empty\else%
@@ -75,18 +77,29 @@
     \global\setbox\beamer@framebox=\vbox\bgroup%
     \beamer@inframetrue%
     \let\frame=\framelatex% inside frames, use LaTeX's \frame command
-    \begin{beamer@framepauses}}%
+    \begin{beamer@framepauses}%
+      \ifbeamer@shrink%
+        \hsize=\beamer@shrinkfactorinv\hsize%
+        \textwidth=\beamer@shrinkfactorinv\textwidth%
+        \linewidth=\beamer@shrinkfactorinv\linewidth%
+      \fi%
+      \vbox{}}%
   {\end{beamer@framepauses}%
   \egroup%
+  \ifx\beamer@frametitle\@empty%
+    \setbox\beamer@frametitlebox=\box\voidb@x%
+  \else%
+    \setbox\beamer@frametitlebox=\vbox{%
+      \vbox{}%
+      \beamer@headrenderer%
+    }%
+  \fi%
+  \ifbeamer@shrink%
+    \beamer@shrinkframebox%
+  \fi%
   \setbox\beamer@framebox=\vbox{%
     \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
-    \ifx\beamer@frametitle\@empty%
-    \else%
-      \nointerlineskip%
-      \vbox{\vbox{}%
-        \beamer@headrenderer%
-      }% add headder
-    \fi%
+    \nointerlineskip\unvbox\beamer@frametitlebox%
     \nobreak\beamer@frametopskip\nobreak%
     \unvbox\beamer@framebox%
     % bottom skip is added in autobreakframebox
@@ -98,10 +111,11 @@
 
 
 
+
+
 %
 % Resetting counters
 %  
-
 \def\resetcounteronoverlays#1{%
   \@cons\beamer@overlaycounterresets{{c@#1}}%  
 }
@@ -167,11 +181,29 @@
   \def\beamer@frametopskip{\vfill}%
   \def\beamer@framebottomskip{}%
 }
-\define@key{beamerframe}{autobreak}[0.95]{\def\beamer@autobreakfactor{#1}\beamer@autobreaktrue}
-\define@key{beamerframe}{squeeze}[]{\def\beamer@cramped{\itemsep0pt\topsep0.5pt\relax}}
+\define@key{beamerframe}{allowdisplaybreaks}[4]{%
+  \def\beamer@displaybreak{\allowdisplaybreaks[#1]}}
+\define@key{beamerframe}{allowframebreaks}[0.95]{%
+  \def\beamer@autobreakfactor{#1}\beamer@autobreaktrue}
+\define@key{beamerframe}{squeeze}[]{%
+  \def\beamer@cramped{\itemsep0pt\topsep0.5pt\relax}}
+\define@key{beamerframe}{shrink}[0]{%
+  \def\beamer@shrinkpercentage{#1}%
+  \@tempdima=-#1pt%
+  \@tempdima=0.01\@tempdima%
+  \advance\@tempdima by1pt%
+  \edef\beamer@shrinkfactor{\strip@pt\@tempdima}%
+  \@tempcnta=\@tempdima%
+  \divide\@tempcnta by256\relax%
+  \@tempdima=256pt%
+  \divide\@tempdima by\@tempcnta%
+  \edef\beamer@shrinkfactorinv{\strip@pt\@tempdima}%
+  \beamer@shrinktrue%
+  \def\beamer@cramped{\itemsep0pt\topsep0.5pt\relax}}
 
 \newif\ifbeamer@containsverbatim
 \newif\ifbeamer@autobreak
+\newif\ifbeamer@shrink
 
 % Check for old version:
 
@@ -210,9 +242,11 @@
   \def\beamer@againname{}%
   \def\beamer@undolabels{}%
   \def\beamer@cramped{}%
+  \def\beamer@displaybreak{}%
   \beamer@autobreakcount=0\relax%
   \beamer@containsverbatimfalse%
   \beamer@autobreakfalse%
+  \beamer@shrinkfalse%
   \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
@@ -401,6 +435,43 @@
 \newcommand\insertcontinuationtext{(cont.)}
 
 
+
+
+%
+% Shrink stuff
+%
+
+\def\beamer@shrinkframebox{%
+  \@tempdima=\ht\beamer@framebox%
+  \@tempdimb=\textheight%
+  \advance\@tempdimb by-\ht\beamer@frametitlebox%
+  \advance\@tempdimb by-\dp\beamer@frametitlebox%
+  \ifdim\@tempdima>\@tempdimb%
+    \@tempcnta=\@tempdima%
+    \divide\@tempcnta by 65536\relax%
+    \@tempdimc=\@tempdimb%
+    \divide\@tempdimc by\@tempcnta\relax%
+    \ifdim\@tempdimc>\beamer@shrinkfactor pt%
+      \@tempdimc=\beamer@shrinkfactor pt%
+    \else%
+      \@tempdima=-100\@tempdimc%
+      \advance\@tempdima by100pt%
+      \ClassWarning{beamer}{Frame text is shrunk by a factor of %
+      \strip@pt\@tempdima\space percent instead of
+      \beamer@shrinkpercentage\space percent}%
+    \fi%
+    \edef\beamer@factortemp{\strip@pt\@tempdimc}%
+    \setbox\beamer@framebox=\vbox to\@tempdimb{%
+      \begin{pgfpicture}{0pt}{-\@tempdimb}{0pt}{0pt}
+        \begin{pgfmagnify}{\beamer@factortemp}{\beamer@factortemp}
+          \pgfbox[left,top]{\box\beamer@framebox}
+        \end{pgfmagnify}
+      \end{pgfpicture}%
+    }%
+  \fi%
+}
+
+
 %
 % \includeonlyframes
 %
@@ -508,8 +579,9 @@
 \mode
 <article>
 {
-  \let\beamer@origbreak=\\
-  \def\\{\beamer@ifnextcharospec{\beamer@breaker}{\beamer@@breaker}}
+  \expandafter\let\expandafter\beamer@origbreak\expandafter=%
+    \csname\expandafter\@gobble\string\\ \endcsname% evil trickery to add a space to the name
+  \DeclareRobustCommand\\{\beamer@ifnextcharospec{\beamer@breaker}{\beamer@@breaker}}
   \def\beamer@breaker<#1>{\only<#1>{\beamer@origbreak}}
   \def\beamer@@breaker{\ifbeamer@inframe\else\expandafter\beamer@origbreak\fi}
 
