@@ -10,10 +10,10 @@
 \beamer\ is a \LaTeX\ class for creating presentations that are 
 held using a projector, but it can also be used to create transparency
 slides. Preparing presentations with \beamer\ is different from
-preparing with \textsc{wysiwyg} programs like OpenOffice's Impress, 
+preparing them with \textsc{wysiwyg} programs like OpenOffice's Impress, 
 Apple's Keynotes, or KOffice's KPresenter. A \beamer\ presentation is
 created like any other \LaTeX\ document: It has a preamble and a body,
-the doby contains |\section|'s and |\subsections|'s, the different
+the body contains |\section|s and |\subsection|s, the different
 slides (called \emph{frames} in \beamer) are put in environments, they
 are structured using |itemize| and |enumerate| environments, and so
 on. The obvious disadvantage of this approach is that you have to know
@@ -24,15 +24,15 @@ presentation, not only when writing papers.
 
 \subsection{Main Features}
 
-The list of features supported by \beamer\ is quite long (so is,
-presumably, the list of bugs sported by \beamer). The most important
-features, in my opinion, are:
+The list of features supported by \beamer\ is quite long
+(unfortunately, so is presumably the list of bugs supported by
+\beamer). The most important features, in my opinion, are:
 \begin{itemize}
 \item
   You can use \beamer\ both with |pdflatex| and |latex|+|dvips|.
 \item
   The standard commands of \LaTeX\ still work. A |\tableofcontents| will
-  still create a table of contents, a |\section| is still used create
+  still create a table of contents, |\section| is still used to create
   structure, and |itemize| still creates a list.
 \item
   You can easily create overlays and dynamic effects.
@@ -41,7 +41,7 @@ features, in my opinion, are:
   suit you purposes.
 \item
   The themes are designed to be usable in practice, they are not just
-  for show. You will not find such nonsense as green text on
+  for show. You will not find such nonsense as a green body text on
   a picture of a green meadow.
 \item
   The layout, the colors, and the fonts used in a presentation can
@@ -85,13 +85,13 @@ colleagues. After that, things somehow got out of hand.
 
 \subsection{How to Read this User's Guide}
 
-You should start with this first part. If you have not yet installed
+You should start with the first part. If you have not yet installed
 the package, please read Section~\ref{section-installation} first. If 
-you are knew to \beamer, you should next read the tutorial in
-Section~\ref{section-tutorial}. When you set down to create you first
+you are new to \beamer, you should next read the tutorial in
+Section~\ref{section-tutorial}. When you set down to create your first
 real presentation using \beamer, read Section~\ref{section-workflow}
 where the technical details of a possible workflow are
-discussed. If you still new to creating presentations in general, you
+discussed. If you are still new to creating presentations in general, you
 might find Section~\ref{section-guidelines} helpful, where many
 guidelines are given on what to do and what not to do. Finally, you
 should browse through Section~\ref{section-solutions}, where you will
@@ -99,8 +99,8 @@ find ready-to-use solution templates for creating talks, possibly even
 in the language you intend to use.
 
 The second part of this user's guide goes into the details of all the
-commands defined in \beamer, but it also addresses other issues that
-have to do with creating a presentation (like how to include
+commands defined in \beamer, but it also addresses  other technical
+issues having to do with creating presentations (like how to include
 graphics or animations).
 
 The third part explains how you can change the appearance of your
@@ -111,6 +111,8 @@ used for the numbers in an enumerate).
 The last part contains ``howtos,'' which are explanations of how to
 get certain things done using \beamer.
 
+\medskip
+\noindent
 This user's guide contains descriptions of all ``public''
 commands provided by the |beamer| class. In each description, the
 described command, environment, or option is printed  in red. Text
