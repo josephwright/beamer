@@ -311,7 +311,8 @@
   vmargin=0cm,%
   head=0.5cm,% will be changed later
   headsep=0pt,%
-  foot=0.5cm% will be changed later
+  foot=0.5cm,% will be changed later
+  dvips% will be ignored by pdflatex
   ]{geometry}
 % For the page layout
 

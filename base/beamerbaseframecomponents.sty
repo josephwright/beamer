@@ -184,12 +184,12 @@
 
 \newcommand{\beamer@usefoot}[1]{
   \long\def\beamer@@foottemplate{#1}
-  \def\beamer@foottemplate{\offinterlineskip{\usebeamerfont*{footline}\def\\{,}\beamer@@foottemplate}}}%
+  \def\beamer@foottemplate{\parskip0pt\offinterlineskip{\usebeamerfont*{footline}\def\\{,}\beamer@@foottemplate}}}%
 
 \newcommand{\beamer@usefoots}[1]{
   \long\def\beamer@@foottemplate{#1}
   \def\beamer@foottemplate{%
-    \offinterlineskip{%
+    \offinterlineskip{\parskip0pt%
       \hbox{\hskip-\Gm@lmargin\hbox{\vbox{\hsize=\paperwidth\textwidth=\paperwidth%
             \usebeamerfont*{footline}\def\\{,}\beamer@@foottemplate%
             }}\hskip-\Gm@rmargin%
@@ -207,12 +207,12 @@
 
 \newcommand{\beamer@usehead}[1]{
   \long\def\beamer@@headtemplate{#1}
-  \def\beamer@headtemplate{\offinterlineskip{\usebeamerfont*{headline}\beamer@@headtemplate}}}%
+  \def\beamer@headtemplate{\offinterlineskip{\parskip0pt\usebeamerfont*{headline}\beamer@@headtemplate}}}%
 
 \newcommand{\beamer@useheads}[1]{
   \long\def\beamer@@headtemplate{#1}
   \def\beamer@headtemplate{%
-    \offinterlineskip{%
+    \offinterlineskip{\parskip0pt%
       \hbox{\hskip-\Gm@lmargin\hbox{\vbox{\hsize=\paperwidth\textwidth=\paperwidth%
             \usebeamerfont*{headline}\beamer@@headtemplate%
             }}\hskip-\Gm@rmargin%
