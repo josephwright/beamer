@@ -13,7 +13,7 @@ colorthemes = default Kranich
 
 layoutthemes = miniframes shadow sidebar smoothbars smoothtree split tree
 
-elementthemes = circles rectangles rounded
+elementthemes = default circles rectangles rounded
 
 all: $(doc).pdf
 

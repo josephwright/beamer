@@ -7,65 +7,440 @@
 
 \section{Themes}
 
+\subsection{The Five Different Kinds of Themes}
 
-\subsection{Font Themes}
+\emph{Themes} make it easy to change the appearance of a
+presentation. The \beamer\ class uses five different kinds of themes:
+\begin{description}
+\item[Presentation Themes]
+  Conceptually, a presentation theme dictates for every single detail
+  of a presentation what it looks like. Thus, choosing a particular
+  presentation theme will setup for, say, the numbers in enumeration
+  what color they have, what color their background has, what font is
+  used to render them, whether a circle or ball or rectangle or
+  whatever is drawn behind them, and so forth. Thus, when you choose
+  a presentation theme, your presentation will look they way someone
+  (the creator of the theme) thought that a presentation should look
+  like. Presentation themes typically only choose a particular color
+  theme, font theme, element theme, and layout theme that go well
+  together. 
+\item[Color Themes]
+  A color theme only dictates which colors are used in a
+  presentation. If you have choosen a particular presentation theme
+  and then choose a color theme, only the colors of your presentation
+  will change. A color theme can specify colors in a very detailed
+  way: For example, a color theme can specifically change the colors
+  used to render, say, the border of a button, the background of a
+  button, and the text on a button.
+\item[Font Themes]
+  A font theme dictates which fonts or font attributes are used in a
+  presentation. As for colors, the font of all text elements used in a
+  presentation can be specified independently.
+\item[Element Themes]
+  An element theme specifies how certain ``elements'' of a
+  presentation are rendered. ``Elements'' are everything that needs to
+  be typeset and that is not part of the headlines, footlines, and
+  sidebars. This includes all enumerations, itemize environments,
+  block environments, theorem environments, or the table of
+  contents. For each of these, an element theme dictates how these
+  ``elements'' should be typeset. For example, an element theme might
+  specify that in an enumeration the number should be typeset without
+  a dot and that a small circle should be shown behind it. The element
+  theme would \emph{not} specify what color should be used for the
+  number or the circle (this is the job of the color theme) nor which font
+  should be used (this is the job of the font theme).
+\item[Layout Themes]
+  A layout theme specifies what the layout of the presentation slides
+  should look like. Thus, it specifies whether there are head- and
+  footlines, what is shown in them, whether there is a sidebar, where
+  the logo goes, where the navigation symbols and bars go, and so
+  on. It also specifies where the frametitle is put and how it is
+  rendered. 
+\end{description}
 
-\fontthemeexample{bold}
-\fontthemeexample{italics}
-\fontthemeexample{romanum}
-\fontthemeexample{sansserifstructure}
-\fontthemeexample{serifstructure}
+The different themes reside in the four subdirectories |theme|, |color|,
+|font|, |elements|, and |layout| of the directory
+|beamer/themes|. Internally, a theme is stored as a normal style
+file. However, to use a theme, the following special commands should
+be used:
+
+\begin{command}{\usetheme\oarg{options}\marg{name}}
+  Installs the presentation theme named \meta{name}. Currently, the
+  effect of this command is the same as saying |\usepackage| for the
+  style file named |beamertheme|\meta{name}|.sty|.
+\end{command}
 
 
-\subsection{Color Themes}
+\begin{command}{\usecolortheme\oarg{options}\marg{name}}
+  Installs the color theme named \meta{name}. Currently, the effect of this
+  command is the same as saying |\usepackage| for the style file named
+  |beamercolortheme|\meta{name}|.sty|.
+\end{command}
 
-\colorthemeexample{Kranich}
+\begin{command}{\usefonttheme\oarg{options}\marg{name}}
+  Installs the font theme named \meta{name}. Currently, the effect of this
+  command is the same as saying |\usepackage| for the style file named
+  |beamerfonttheme|\meta{name}|.sty|.
+\end{command}
+
+\begin{command}{\useelementtheme\oarg{options}\marg{name}}
+  Installs the element theme named \meta{name}. Currently, the effect of this
+  command is the same as saying |\usepackage| for the style file named
+  |beamerelementtheme|\meta{name}|.sty|.
+\end{command}
+
+\begin{command}{\uselayouttheme\oarg{options}\marg{name}}
+  Installs the layout theme named \meta{name}. Currently, the effect of this
+  command is the same as saying |\usepackage| for the style file named
+  |beamerlayouttheme|\meta{name}|.sty|.
+\end{command}
+
+If you do not use any of these commands, a sober \emph{default} theme
+is used for all of them. In the following, the presentation, element,
+and layout themes that come with the \beamer\ class are described. The
+color themes and font themes are discussed in the sections on colors
+and fonts, respectively.
+
+
+\subsection{Presentation Themes}
+
+A presentation theme dictates for every single detail
+of a presentation what it looks like. Normally, having chosen a
+particular presentation theme, you do not need to specify anything
+else having to do with the appearence of your presentation---the
+creator of the theme should have taken of the for you. However, you
+still \emph{can} change things afterward either by using a different
+color, font, element, or even layout theme; or by changing specific
+colors, fonts, or templates directly.
+
+When I started naming the presentation themes, I soon ran out of ideas
+on how to call them. Instead of giving them more and more cumbersome
+names, I decided to switch to a different naming convention:
+Except for two exceptions, all presentation themes are named after
+cities. These cities happen to be cities in which or near which there
+was a conference or workshop that I attended or that a
+co-author of mine attended. 
+
+
+\subsubsection{Presentation Themes Without Navigation Bars}
+
+\begin{themeexample}{default}
+As the name suggests, this theme is installed by default. It is a
+sober no-nonsense theme that makes minimal use of color or font
+variations. This theme is useful for all kinds of talks, except for
+very long talks.
+\end{themeexample}
+
+
+\begin{themeexample}[{\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}]{boxes}
+  For this theme, you can specify an arbitrary number of templates for
+  the boxes in the headline and in the footline. You can add a
+  template for another box by using the following commands.
+\end{themeexample}
+
+\begin{command}{\addheadboxtemplate%
+    \marg{background color command}\marg{box template}}
+  Each time this command is invoked, a new box is added to the head
+  line, with the first added box being shown on the left. All boxes
+  will have the same size.
+  \example
+\begin{verbatim}
+\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+\addheadboxtemplate{\usebeamercolor[bg]{normal text}}
+  {\usebeamercolor[fg]{structure}\tiny\quad 2. Box}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\addfootboxtemplate%
+    \marg{background color command}\marg{box template}}
+  \example
+\begin{verbatim}
+\addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+\addheadboxtemplate{\usebeamercolor[bg]{normal text}}
+  {\usebeamercolor[fg]{structure}\tiny\quad 2. Box}
+\end{verbatim}
+\end{command}
+
+
+
+\begin{themeexample}{Pittsburgh}
+  A sober theme. The right-flushed frame titles cause a certain
+  ``tension'' inside each frame.
+\end{themeexample}
+
+
+\begin{themeexample}[\oarg{options}]{Rochester}
+  A dominant theme without any navigational elements. Can be made less
+  dominant by using a different color theme.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|height=|\meta{dimension}} sets the height of the
+    frame title bar.
+  \end{itemize}
+\end{themeexample}
+
+
+
+
+\subsubsection{Presentation Themes with a Tree-Like Navigation Bar}
+
+\begin{themeexample}{Antibes}
+  A dominant theme with a tree-like navigation at the top. The 
+  rectangular elements mirror the rectangular navigation at the
+  top. The theme can be made less dominant by using a different color
+  theme. 
+\end{themeexample}
+
+\begin{themeexample}{JuanLesPins}
+  A variation on the |Antibes| theme that has a much ``smoother''
+  appearence. It can be made less dominant by chosing a different
+  color theme.
+\end{themeexample}
+
+
+\begin{themeexample}{Montpellier}
+  A sober theme giving basic navigational hints. The headline can be
+  made more dominant by using a different color theme.
+\end{themeexample}
+
+
+
+\subsubsection{Presentation Themes with a Table of Contents Sidebar}
+
+\begin{themeexample}[\oarg{options}]{Berkeley}
+  A dominant theme. If the navigation bar is on the left, it dominates
+  since it is seen first. The height of the frame title is fixed to
+  two and a half lines, thus you should be careful with overly long
+  titles. A logo will be put in the corner area. Rectangular areas
+  dominate the layout. The theme can be made less dominant by using a
+  different color theme.
+
+  This theme is useful for long talks like lectures that require a
+  table of contents to be visible all the time.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be
+    shown in the sidebar. This is useful, if you need to save
+    space.
+  \item \declare{|hideothersubsections|} causes only the subsections
+    of the current section to be shown. This is useful, if you need to
+    save  space.      
+  \item \declare{|left|} puts the sidebar on the left (default).
+  \item \declare{|right|} puts the sidebar on the right.
+  \item \declare{|width=|\meta{dimension}} sets the width of the
+    sidebar.
+  \end{itemize}
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{PaloAlto}
+  A variation in the |Berkeley| theme with less dominance of
+  rectangular areas. The same \meta{options} as for the |Berkeley|
+  theme can be given. 
+\end{themeexample}
+
+
+
+\begin{themeexample}[\oarg{options}]{Goettingen}
+  A relatively sober theme useful for a longer talk that demands a
+  sidebar with a full table of contents.
+
+  
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be
+    shown in the sidebar. This is useful, if you need to save
+    space.
+  \item \declare{|hideothersubsections|} causes only the subsections
+    of the current section to be shown. This is useful, if you need to
+    save  space.      
+  \item \declare{|left|} puts the sidebar on the left (default).
+  \item \declare{|right|} puts the sidebar on the right.
+  \item \declare{|width=|\meta{dimension}} sets the width of the
+    sidebar.
+  \end{itemize}
+\end{themeexample}
+
+\begin{themeexample}[\meta{options}]{Marburg}
+  A very dominat variation of the |Goettingen| theme. The same
+  \meta{options} may be given, plus the following option:
+  \begin{itemize}
+  \item \declare{|tab|} causes the current section or subsection to
+    be hilight by moving a tabbing indicator under it, rather
+    that hilighting it using a different text color.
+  \end{itemize}
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Hannover}
+  In this theme, the sidebar on the left is balanced by
+  right-flushed frame titles.
+    
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be
+    shown in the sidebar. This is useful, if you need to save
+    space.
+  \item \declare{|hideothersubsections|} causes only the subsections
+    of the current section to be shown. This is useful, if you need to
+    save  space.      
+  \item \declare{|width=|\meta{dimension}} sets the width of the
+    sidebar.
+  \end{itemize}
+\end{themeexample}
+
+
+
+
+\subsubsection{Presentation Themes with a Mini Frame Navigation}
+
+\begin{themeexample}[\oarg{options}]{Berlin}
+  A dominant theme with strong colors and dominating rectangular
+  areas. The head- and footlines give lot's of information and leave
+  little space for the actual slide contents. This theme is useful for
+  conferences where the audience is not likely to know the title of
+  the talk or who is presenting it.  The theme can be made less
+  dominant by using a different color theme.
+  
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|compress|} causes the mini frames in the headline to
+    use only a single line. This is useful for saving space.
+  \end{itemize}
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Ilmenau}
+  A variation on the |Berlin| theme. The same \meta{options} may be
+  given.  
+\end{themeexample}
+
+\begin{themeexample}{Dresden}
+  A variation on the |Berlin| theme with a strong separtion into
+  navigational stuff at the top/bottom and a sober main text. The same
+  \meta{options} may be given.  
+\end{themeexample}
+
+
+\begin{themeexample}{Darmstadt}
+  A theme with a strong separation into a navigational upper part and
+  an informational main part. By using a different color theme, this
+  separation can be lessened. 
+\end{themeexample}
+
+
+\begin{themeexample}{Frankfurt}
+  A variaton on the |Darmstadt| theme that is slightly less cluttered
+  by leaving out the subsection information.
+\end{themeexample}
+
+\begin{themeexample}{Singapore}
+  A not-too-sober theme with navigation that does not dominate.
+\end{themeexample}
+
+\begin{themeexample}{Szeged}
+  A sober theme with a strong dominance of horizontal lines. 
+\end{themeexample}
+
+
+
+
+\subsubsection{Presentation Themes with Section and Subsection Tables}
+
+\begin{themeexample}{Copenhagen}
+  A not-quite-too-dominant theme. This theme gives compressed
+  information about the current section and subsection at the top and
+  about the title and the author at the bottom. No shadows are used,
+  giving the presentation a ``flat'' look. The theme can be made less
+  dominant by using a different color theme.
+\end{themeexample}
+
+
+\begin{themeexample}{Luebeck}
+  A variation on the |Copenhagen| theme.
+\end{themeexample}
+
+\begin{themeexample}{Malmoe}
+  A more sober variation of the |Copenhagen| theme.
+\end{themeexample}
+
+
+\begin{themeexample}{Warsaw}
+  A dominant variation of the |Copenhagen| theme.
+\end{themeexample}
+
+
+
+
+
+
+
 
 
 \subsection{Element Themes}
 
-\elementthemeexample{circles}
-\elementthemeexample{rectangles}
-\elementthemeexample{rounded}
+An element theme installs templates that dictate how the following
+``elements'' are typeset:
+\begin{itemize}
+\item Title and part pages.
+\item Itemize environments.
+\item Enumerate environments.
+\item Descrition environments.
+\item Block environments.
+\item Theorem and proof environments.
+\item Figures and tables.
+\item Footnotes.
+\item Bibliography entries.
+\end{itemize}
+
+
+\begin{elementthemeexample}{default}
+  The default element theme is quite sober. The only extravagance is
+  the fact that a little trianlge is used in |itemize| environments
+  instead of the usual dot.
+
+  In some cases the theme will honour background color specifications
+  for elements. For example, if you set the background color for block
+  titles to green, block titles will have a green background. The
+  background specifications are honoured for the following elements:
+  \begin{itemize}
+  \item Title, author, institute, and date fields in the title
+    page.
+  \item Block environments, both for the title and for the body.
+  \end{itemize}
+\end{elementthemeexample}
+
+\begin{elementthemeexample}{circles}
+  In this theme, |itemize| and |enumerate| items start with a small
+  circle. Likewise, entries in the table of contents start with
+  circles. 
+\end{elementthemeexample}
+
+\begin{elementthemeexample}{rectangles}
+  In this theme, |itemize| and |enumerate| items and table of contents
+  entries  start with small rectangles. 
+\end{elementthemeexample}
+
+\begin{elementthemeexample}[\oarg{options}]{rounded}
+  In this theme, |itemize| and |enumerate| items and table of contents
+  entries start with small balls. If a background is specified for
+  blocks, then the corners of the background rectangles will be
+  rounded off. The following \meta{options} may be given:
+
+  \begin{itemize}
+  \item \declare{|shadow|} adds a shadow to all blocks.
+  \end{itemize}
+\end{elementthemeexample}
 
 
 \subsection{Layout Themes}
 
 \layoutthemeexample{miniframes}
-\layoutthemeexample{shadow}
-\layoutthemeexample{sidebar}
 \layoutthemeexample{smoothbars}
-\layoutthemeexample{smoothtree}
+\layoutthemeexample{sidebar}
 \layoutthemeexample{split}
+\layoutthemeexample{shadow}
 \layoutthemeexample{tree}
-
-
-\subsection{Presentation Themes}
-
-\themeexample{default}
-\themeexample{boxes}
-
-\themeexample{Antibes}
-\themeexample{Berkeley}
-\themeexample{Berlin}
-\themeexample{Copenhagen}
-\themeexample{Darmstadt}
-\themeexample{Dresden}
-\themeexample{Frankfurt}
-\themeexample{Goettingen}
-\themeexample{Hannover}
-\themeexample{Ilmenau}
-\themeexample{JuanLesPins}
-\themeexample{Luebeck}
-\themeexample{Malmoe}
-\themeexample{Marburg}
-\themeexample{Montpellier}
-\themeexample{PaloAlto}
-\themeexample{Pittsburgh}
-\themeexample{Rochester}
-\themeexample{Singapore}
-\themeexample{Szeged}
-\themeexample{Warsaw}
+\layoutthemeexample{smoothtree}
 
 %%% Local Variables: 
 %%% mode: latex
