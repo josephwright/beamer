@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[class=article]{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [class=article] and see what happens!
@@ -155,6 +155,7 @@
   Technical University of Berlin}
 \date[DLT 2003]{Developments in Language Theory Conference, 2003}
 
+
 \begin{document}
 
 \presentation
@@ -163,9 +164,14 @@
 
 \section[Outline]{}
 
+\subsection{Part I: Review of Last Lecture}
+
 \frame{
+  \nameslide{outline}
   \frametitle{Part I: Review of Last Lecture}
   \tableofcontents[pausesections,part=1]}
+
+\subsection{Part II: Today's Lecture}
 \frame{
   \frametitle{Part II: Today's Lecture}
   \tableofcontents[pausesections,part=2]}
@@ -708,7 +714,7 @@
   \vskip1em
 
   \hyperlink{proofdetails}{\beamergotobutton{Proof details}}
-  \hypertarget{backfromproofdetails}{}
+  \nameslide{backfromproofdetails}
 }
 
 
@@ -907,7 +913,7 @@
     \end{itemize}
   \end{proof}
 
-  \hfill\hyperlink{backfromproofdetails}{\beamerreturnbutton{Return}}
+  \hfill\hyperlinkbackfromproofdetails{\beamerreturnbutton{Return}}
 }
 
 \subsection{Improvements for Context-Free Languages}
@@ -1014,6 +1020,20 @@ have hidden constants tucked away inside their definitions.
 Polynomial-time algorithms with a time bound of $n^{100}$ and
 linear-space algorithms that need one megabyte of extra memory per
 input bit will typically be unhelpful from a practical point of view.
+
+\begin{figure}
+  \begin{centering}
+    \leavevmode\insertslide[]{outline}\par
+  \end{centering}
+  \caption{The outline.}
+\end{figure}
+
+\begin{figure}
+  \begin{centering}
+    \leavevmode\insertslide[]{backfromproofdetails}\par
+  \end{centering}
+  \caption{A jump back.}
+\end{figure}
 
 \dots
 
