@@ -472,9 +472,343 @@ template:
   makes the placement easier.
 \end{itemize}
 
+
+
+
 \subsubsection{Using Beamer's Templates}
 
+As a user of the \beamer\ class you typically do not ``use'' or
+``invoke'' templates yourself, directly. For example, the frame title
+template is automatically invoked by \beamer\ somewhere deep inside
+the frame typesetting process. The same is true of most other
+templates. However, if, for whatever reason, you wish to invoke a
+template yourself, you can use the following command.
+
+\begin{command}{\usebeamertemplate\opt{|***|}\marg{element name}}
+  If none of the stars is given, the text of the \meta{element name}
+  is directly inserted at the current position. This text should
+  previously have been specified using the |\setbeamertemplate|
+  command. No text is inserted if this command has not been called
+  before.
+  \example
+\begin{verbatim}
+\setbeamertemplate{my template}{correct}
+...
+Your answer is \usebeamertemplate{my template}.
+\end{verbatim}
+
+  If you add one star, three things happen. First, the template is put
+  inside a \TeX-group, thereby limiting most side effects of commands
+  used insider the template. Second, inside this group the
+  \beamer-color named \meta{element name} is used and the foreground
+  color is selected. Third, the \beamer-font \meta{element name} is
+  also used. This one-starred version is usually the best version to
+  use.
+
+  If you add a second star, nearly the same happens as with only one
+  star. However, in addition, the color is used with the command
+  |\setbeamercolor*|. This causes the colors to be reset to the normal
+  text color if no special foreground or background is specified by
+  the \beamer-color \meta{element name}. Thus, in this twice-starred
+  version, the color used for the template is guaranteed to be
+  independent of the color that was currently in use when the template
+  is used.
+
+  Finally, adding a third star will also cause a start to be added to
+  the |\setbeamerfont*| command. This causes the font used for the
+  template also to be reset to normal text, unless the \beamer-font
+  \meta{element name} specifies things differently. This three-star
+  version is the ``most protected'' version avialable.
+\end{command}
+
+
+
 \subsubsection{Setting Beamer's Templates}
+
+To set  a \beamer-template, you can use the following command:
+
+\begin{command}{\setbeamertemplate\marg{element name}\oarg{predefined option}\meta{args}}
+  In the simplest case, if no \meta{predefined option} is given, the
+  \meta{args} must be a single argument and the text of the template
+  \meta{element name} is setup to be this text. Upon later invocation
+  of the template by the command |\usebeamertemplate| this text is
+  used. 
+
+  \example
+\begin{verbatim}
+\setbeamertemplate{answer}{correct}
+...
+Your answer is \usebeamertemplate*{answer}.
+\end{verbatim}
+
+  If you specify a \meta{predefined option}, this command behaves
+  slightly differently. In this case, someone has used the command
+  |\defbeamertemplate| to predefined a template for you. By giving the
+  name of this predefined template as the optional parameter
+  \meta{predefined option}, you cause the template \meta{element name}
+  to be set to this template.
+
+  \example |\setbeamertemplate{bibliography item}[book]| causes the
+  bibliography items to become little book icons. This command cause a
+  subsequent call of |\usebeamertemplate{bibliography item}| to insert
+  the predefined code for inserting a book.
+
+  Some predefined template options take parameters themselves. In such
+  a case, the parameters are given as \meta{args}.
+
+  \example
+  The \meta{predefined option} |grid| for the template |background|
+  takes an optional argument:
+\begin{verbatim}
+\setbeamertemplate{background}[grid][step=1cm]
+\end{verbatim}
+  In the example, the second argument in square brackets is the
+  optional argument.
+
+  In the descriptions of elements, if there are possible
+  \meta{predefined option}, the description shows how the
+  \meta{predefined option} can be used together with its arguments,
+  but the |\setbeamertemplate{xxxx}| is omitted. Thus, the above
+  example would be documented in the description of the |background|
+  element like this:
+  \begin{itemize}
+    \itemoption{grid}{\oarg{step options}} causes a light grid to be
+    \dots
+  \end{itemize}
+\end{command}
+
+\begin{command}{\addtobeamertemplate\marg{element
+      name}\marg{pre-text}\marg{post-text}}
+  This command adds the \meta{pre-text} before the text that is
+  currently installed as the template \meta{element name} and the
+  \meta{post-text} after it. This allows you a limited form of
+  modification of existing templates.
+
+  \example The following commands have the same effect:
+\begin{verbatim}
+\setbeamertemplate{my template}{Hello world!}
+
+\setbeamertemplate{my template}{world}
+\addtobeamertemplate{my template}{Hello }{!}
+\end{verbatim}
+
+  If a new template is installed, any additions will be deleted. On
+  the other hand, you can repeatedly use this command to add multiple
+  things. 
+\end{command}
+
+\begin{command}{\defbeamertemplate\sarg{mode specification}\opt{|*|}%
+    \marg{element name}\marg{predefined option}\\
+    \oarg{argument number}\oarg{default optional argument}\marg{predefined
+      text}\\
+    \opt{|[action]|\marg{action command}}}
+  This command installs a \emph{predefined option} for the template
+  \meta{element name}. Once this command has been used, users can
+  access the predefined template using the |\setbeamertemplate|
+  command.
+
+  \example
+  |\defbeamertemplate{itemize item}{double arrow}{$\Rightarrow$}|
+
+  After the above command has been invoked, the following two commands
+  will have the same effect:
+\begin{verbatim}
+\setbeamertemplate{itemize item}{$\Rightarrow$}
+\setbeamertemplate{itemize item}[double arrow]
+\end{verbatim}
+
+  Sometimes, a predefined template needs to get an argument when it is
+  installed. Suppose, for example, we want to define a predefined
+  template that draws a square as the itemize item and we want to make
+  this size of this square configurable. In this case, we can specify
+  the \meta{argument number} of the predefined option the same way one
+  does for the |\newcommand| command:
+
+\begin{verbatim}
+\defbeamertemplate{itemize item}{square}[1]{\hrule width #1 height #1}
+
+%% The following have the same effect:
+\setbeamertemplate{itemize item}[square]{3pt}
+\setbeamertemplate{itemize item}{\hrule width 3pt height 3pt}
+\end{verbatim}
+
+  As for the |\newcommand| command, you can also specify a
+  \meta{default optional argument}:
+  
+\begin{verbatim}
+\defbeamertemplate{itemize item}{square}[1][1ex]{\hrule width #1 height #1}
+
+%% The following have the same effect:
+\setbeamertemplate{itemize item}[square][3pt]
+\setbeamertemplate{itemize item}{\hrule width 3pt height 3pt}
+
+%% So do the following:
+\setbeamertemplate{itemize item}[square]
+\setbeamertemplate{itemize item}{\hrule width 1ex height 1ex}
+\end{verbatim}
+
+  The starred version of the command installs the predefined template
+  option, but then immediately calls |\setbeamertemplate| for this
+  option. This is useful for the default templates. If there are any
+  arguments necessary, these are set to |\relax|.
+
+  In certain cases, if a predefined template option is chosen, you do
+  not only wish the template text to be installed, but certain extra
+  ``actions'' must also be taken once. For example, a shading must be
+  defined that should not be redefined every time the shading is used
+  later on. To implement such ``actions,'' you can use the optional
+  argument \meta{action} following the keyword |[action]|. Thus, after
+  the normal use of the |\defbeamertemplate| you add the text
+  |[action]| and then any commands that should be executed once when
+  the \meta{predefined option} is selected by the |\setbeamertemplate|
+  command.
+
+  \example
+\begin{verbatim}
+\defbeamertemplate{background canvas}{my shading}[2]
+{
+  \pgfuseshading{myshading}% simple enough
+}
+[action]
+{
+  \pgfdeclareverticalshading{myshading}{\the\paperwidth}
+  {color(0cm)=(#1); color(\the\paperheight)=(#2)}
+}
+...
+
+\setbeamertemplate{background canvas}{myshading}{red!10}{blue!10}
+%% Defines the shading myshading right here. Subsequent calls the
+%% \usebeamertemplate{background canvas} will yield
+%% ``\pgfuseshading{myshading}''.
+\end{verbatim}
+      
+  \articlenote
+  Normally, this command has no effect in |article| mode. However, if
+  a \meta{mode specification} is given, this command is applied for
+  the specified modes. Thus, this command behaves like the |\\|
+  command, which also gets the implicit mode speicification
+  |<presentation>| if no other specification is given.
+
+  \example |\defbeamertemplate{my template}{default}{something}| has no effect
+  in |article| mode.
+
+  \example |\defbeamertemplate<article>{my template}{default}{something}| has
+  no effect in |presentation| modes, but has an effect in |article|
+  mode.
+
+  \example |\defbeamertemplate<all>{my template}{default}{something}| applies
+  to all modes.  
+\end{command}
+
+It is often useful to have access to the same template option via
+different names. For this, you can use the following command to create
+aliases:
+\begin{command}{\defbeamertemplatealias\marg{element name}\marg{new
+      predefined option name}\marg{existing predefined option  name}}
+  Causes the two predefined options to have the same effect.  
+\end{command}
+
+There is no inheritance relation among templates as there is for
+colors and fonts. This is due to the fact the templates for one
+element seldom make sense for another. However, sometimes certain
+elements ``behave similarly'' and one would like a
+|\setbeamertemplate| to apply to a whole set of templates via
+inheritance. For example, one might want that
+|\setbeamertemplate{items}[circle]| causes all items to use the
+|circle| option, though the effects for the |itemize item| as opposed
+to the |itemize subsubitem| as opposed to |enumerate item| must be
+slightly different.
+
+The \beamer-template mechanism implements a simple form of inheritance
+via \emph{parent templates}. In element descriptions, parent templates
+are indicated via a check mark in parantheses.
+
+\begin{command}{\defbeamertemplateparent\marg{parent template
+name}\oarg{predefined option name}\marg{child template
+list}\\
+\oarg{argument number}\oarg{default optional
+argument}\marg{arguments for children}}
+  The effect of this command is that whenever someone calls
+  |\setbeamertemplate{|\meta{parent template name}|}{|\meta{args}|}|,
+  the command |\setbeamertemplate{|\meta{child template
+      name}|}{|\meta{args}|}| is called for each \meta{child
+    template name} in the \meta{child template list}.
+
+  The \meta{arguments for children} come into play if the
+  |\setbeamertemplate| command is called with a predefined option name
+  (not necessarily the same as the \meta{predefined option name},
+  we'll come to that). If |\setbeamertemplate| is called with some
+  predefined option name, the children are called with the
+  \meta{arguments for children} instead. Let's look at two examples:
+  
+  \example The following is the typical, simple usage:
+\begin{verbatim}
+\defbeamertemplateparent{itemize items}{itemize item,itemize subitem,itemize subsubitem}
+{}
+
+%% The following command has the same effect as the three commands below:
+\setbeamertemplate{itemize items}[circle]
+
+\setbeamertemplate{itemite item}[circle] % actually, the ``empty'' argument is added
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[circle]
+\end{verbatim}
+
+  \example In the following case, an argument is passed to the
+  children:
+\begin{verbatim}
+\defbeamertemplateparent{sections/subsections in toc shaded}
+{section in toc shaded,subsection in toc shaded}[1][20]
+{[#1]}
+
+%% The following command has the same effect as the two commands below:
+\setbeamertemplate{sections/subsection in toc shaded}[default][35]
+
+\setbeamertemplate{section in toc shaded}[default][35]
+\setbeamertemplate{subsection in toc shaded}[default][35]
+
+
+%% Again:
+\setbeamertemplate{sections/subsection in toc shaded}[default]
+
+\setbeamertemplate{section in toc shaded}[default][20]
+\setbeamertemplate{subsection in toc shaded}[default][20]
+\end{verbatim}
+
+  In detail, the following happens: When |\setbeamertemplate| is
+  encountered for a parent template, \beamer\ first checks whether a
+  predefined option follows. If not, a single argument is read and
+  |\setbeamertemplate| is called for all children for this
+  template. If there is a predefined template option set, \beamer\
+  evaluates the \meta{argument for children}. It may contain
+  parameters like |#1| or |#2|. These parameters are filled with the
+  arguments that follow the call of |\setbeamertemplate| for the
+  parent template. The number of arguments must be the number given
+  as \meta{argument number}. An optional argument can also be
+  specified in the usual way. Once the \meta{arguments for the
+  children} have been computed, |\setbeamertemplate| is called for all
+  children for the predefined template and with the computed
+  arguments.
+
+  You may wonder what happens when certain predefined options take a
+  certain number of arguments, but another predefined option takes a
+  different number of arguments. In this case, the above-described
+  mechanism cannot differentiate between the predefined options and it
+  is unclear which or even how many arguments should be contained in
+  \meta{arguments for children}. For this reason, you can give the
+  optional argument \meta{predefined option name} when calling
+  |\defbeamertemplateparent|. If this optional argument is specified,
+  the parenthood of the template applies only to this particular
+  \meta{predefined option name}. Thus, if someone calls
+  |\setbeamertemplate| for this \meta{predefined option name}, the
+  given \meta{argument for children} is used. For other predefined
+  option names a possibly different definition is used. You can
+  imaging that leaving out the optional \meta{predefined option name}
+  means ``this \meta{argument for children} applies to all predefined
+  option names that have not been specially defined differently.''     
+\end{command}
+
+
 
 
 

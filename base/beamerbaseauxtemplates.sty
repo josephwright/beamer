@@ -217,6 +217,13 @@
 
 
 
+% Itemize items, circle
+
+\defbeamertemplatealias{itemize item}{triangle}{default}
+\defbeamertemplatealias{itemize subitem}{triangle}{default}
+\defbeamertemplatealias{itemize subsubitem}{triangle}{default}
+
+
 
 % Itemize items, circle
 
@@ -416,8 +423,30 @@
 % Frame title continutations
 %
 
+\defbeamertemplatealias{frametitle continuation}{roman}{default}
+
 \defbeamertemplate{frametitle continuation}{from second}[1][\insertcontinuationtext]
 {\expandafter\ifnum\insertcontinuationcount>1\relax#1\fi}
+
+
+
+
+
+% Bibliography items
+
+\defbeamertemplatealias{bibliography item}{article}{default}
+
+\defbeamertemplate{bibliography item}{book}
+{\lower2pt\hbox{\pgfuseimage{beamericonbook}}}
+
+\defbeamertemplate{bibliography item}{text}
+{\insertbiblabel}
+
+\defbeamertemplate{bibliography item}{triangle}
+{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+
+
+
 
 
 %
@@ -534,49 +563,6 @@
 
 
 
-%
-% Bibliography templates
-%
-
-\pgfdeclareimage[width=14pt,height=12pt]{beamericonbook}{beamericonbook}
-\pgfdeclareimage[width=14pt,height=12pt]{beamericonbookshaded}{beamericonbook.20}
-\pgfaliasimage{beamericonbook.!20opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.!15opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.!10opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.!5opaque}{beamericonbookshaded}
-\pgfaliasimage{beamericonbook.!2opaque}{beamericonbookshaded}
-\pgfdeclareimage[width=11pt,height=14pt]{beamericonarticle}{beamericonarticle}
-\pgfdeclareimage[width=11pt,height=14pt]{beamericonarticleshaded}{beamericonarticle.20}
-\pgfaliasimage{beamericonarticle.!20opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.!15opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.!10opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.!5opaque}{beamericonarticleshaded}
-\pgfaliasimage{beamericonarticle.!2opaque}{beamericonarticleshaded}
-
-\newcommand{\beamertemplatebookbibitems}{
-  \usebibitemtemplate{\lower2pt\hbox{\pgfuseimage{beamericonbook}}}
-}
-
-\newcommand{\beamertemplatearticlebibitems}{
-  \usebibitemtemplate{\lower3.5pt\hbox{\hskip2pt\pgfuseimage{beamericonarticle}\hskip1pt}}
-}
-
-\newcommand{\beamertemplatetextbibitems}{
-  \usebibitemtemplate{\insertbiblabel}
-}
-
-\newcommand{\beamertemplatearrowbibitems}{
-  \usebibitemtemplate{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-}
-
-\mode
-<article>
-{
-  \newcommand{\beamertemplatebookbibitems}{}
-  \newcommand{\beamertemplatearticlebibitems}{}
-  \newcommand{\beamertemplatetextbibitems}{}
-  \newcommand{\beamertemplatearrowbibitems}{}  
-}
 
 
 %

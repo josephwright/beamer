@@ -166,13 +166,51 @@ indicates special mode considerations.
   have an underlying template.
 
   How to use and change templates is explained in
-  Section~\ref{section-templates}.
+  Section~\ref{section-templates}. Here is the essence: If
+  ``template'' is checked, you can say
+\begin{verbatim}
+\setbeamertemplate{some beamer element}{your definition for this template}
+\end{verbatim}
+  Unfortunately, it is not quite trivial to come up with a good definition for
+  the template. Fortunately, there are often \emph{predefined options}
+  for a template. These are indicated like this:
+  \begin{itemize}
+    \itemoption{square}{}
+    causes a small square to be used to render the template.
+    \itemoption{circle}{\marg{radius}}
+    causes circles of the given radius to be used to render the template.
+  \end{itemize}
+  You can install such a predefined option like this:
+\begin{verbatim}
+\setbeamertemplate{some beamer element}[square]
+%% Now squares are used
 
+\setbeamertemplate{some beamer element}[cirlce]{3pt}
+%% New a circle is used
+\end{verbatim}
+  
   How to use and change colors is explained in
-  Section~\ref{section-colors}.
+  Section~\ref{section-colors}. Here is the essence: To change the
+  foreground of the color to, say, red, use
+\begin{verbatim}
+\setbeamercolor{some beamer element}{fg=red}
+\end{verbatim}
+  To change the background to, say, black, use:
+\begin{verbatim}
+\setbeamercolor{some beamer element}{bg=black}
+\end{verbatim}
+  You can also change them together using |fg=red,bg=black|.
 
   How to use and change fonts is explained in
-  Section~\ref{section-fonts}. 
+  Section~\ref{section-fonts}. Here is the essence: To change the size
+  of the font to, say, large, use:
+\begin{verbatim}
+\setbeamerfont{some beamer element}{size=\large}
+\end{verbatim}
+  In addition to the size, you can use things like |series=\bfseries|
+  to set the series, |shape=\itshape| to change the shape, 
+  |family=\sffamily| to change the family, and you can use them in
+  conjunction. Add a star to the command to first ``reset'' the font.
 \end{element}
 
 

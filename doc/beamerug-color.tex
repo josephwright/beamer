@@ -326,9 +326,9 @@ changes during the presentation, the derived colors automatically also
 change.
 
 The default color theme, which is always loaded, installs numerous
-\beamer-colors and inheritance relations between them. See
-Section~\ref{section-color-listing} for details.
-
+\beamer-colors and inheritance relations between them. These colors
+are explained throughout this guide. The color used for, say,
+frametitles is discussed in the section on frametitles, and so on.  
 
 
 \subsubsection{Using Beamer's Colors}
@@ -344,6 +344,9 @@ then say |\color{fg}| the install the foreground color and
 colors |fg| and |bg| in any context in which you normally use a color
 like, say, |red|. If a \beamer-color does not have a foreground or a
 background, the colors |fg| or |bg| (or both) remain unchanged. 
+
+Inside templates, this command will typically have already been called
+for you with the option |[fg]|. 
 
 \begin{command}{\usebeamercolor\opt{|*|}\oarg{fg or
       bg}\marg{beamer-color name}}

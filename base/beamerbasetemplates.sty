@@ -59,6 +59,10 @@
   \expandafter\expandafter\expandafter\renewcommand\expandafter\beamer@@sbtoarg\beamer@sbtotemp{}
 }
 
+\def\defbeamertemplatealias#1#2#3{%
+  \edef\beamer@@temp{\def\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname{\expandafter\noexpand\csname beamer@@tmpop@#1@#3\endcsname}}%
+  \beamer@@temp}
+
 
 \def\defbeamertemplateparent#1{\@ifnextchar[{\beamer@sbtoparo{#1}}{\beamer@sbtoparo{#1}[*]}}
 \def\beamer@sbtoparo#1[#2]#3{\@ifnextchar[{\beamer@sbtopar{#1}[#2]{#3}}{\beamer@sbtopar{#1}[#2]{#3}[0]}}

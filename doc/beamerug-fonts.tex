@@ -187,7 +187,7 @@ explained in the next subsection.
 
 
 
-\subsection{Font Changes That Cannot Be Made Using Font Themes} 
+\subsection{Font Changes Made Without Using Font Themes} 
 
 While most font decisions can be made using font themes, for
 historical reasons some changes can only be made using class
@@ -320,9 +320,168 @@ This section explains how \beamer's font management works.
 
 \subsubsection{Overview of Beamer's Font Management}
 
+\beamer's font mechanism is somewhat similar to \beamer's color
+mechanism, but not quite the same. As for colors, every \beamer\
+element, like the frame titles, the document title, the footnotes, and
+so on has a certain \beamer-font. As for colors, on the one hand you
+can specify the font of each element individually; on the other hand
+fonts also use inheritance, thereby making it easy to globally change
+the fonts used for, say, ``titlelike things'' or for ``itemizelike
+things.''
+
+While a \beamer-color has a certain foreground and a certain
+background, either of which may be empty, a \beamer-font has a size, a
+shape, a series, and a family, each of which may be emtpy. The
+inheritance relation among \beamer-fonts is not necessarily the same
+as between \beamer-colors, though I have tried to match them whenever
+possible. 
+
+Multiple inheritance plays a more important rule for
+fonts than it does for colors. A font might inherit the attributes of
+two different fonts. If one of them specifies that the font should be,
+say, boldface and the other specifies that the font should be, say,
+large, then the child font will be both large and bold. 
+
+As for fonts, the description of the font used for an element is given
+after the description of the element. 
+
+
 \subsubsection{Using Beamer's Fonts}
 
+To use a \beamer-font, you can use the command
+|\usebeamerfont|. Inside the templates for elements, this command will
+(typically) have already been called for you, so you will only
+seldomly have to use this command. 
+
+\begin{command}{\usebeamerfont\opt{|*|}\marg{beamer-font name}}
+  This command changes the current font to the font specified by the
+  \meta{beamer-font name}. The \meta{beamer-font name} can be a
+  not-too-fancyful text and may contain spaces. Typical exmaples are
+  |frametitle| or |section in toc| or |My Font 1|. \beamer-fonts can
+  have (and should) have the same name as \beamer-templates and
+  \beamer-colors.
+
+  \example |\usebeamerfont{frametitle}|
+
+  In the unstarred version of this command, the font is changed
+  according to the attributes specified in the \meta{beamer-font
+  name}, but unspecified attributes remain unchanged. For example, if
+  the font specifies that the font should be ``bold,'' but specifies
+  nothing else, and if the current font is large, then
+  |\usebeamerfont| causes the the current font to become large and
+  bold.
+
+  In the starred version of this command, the font is first reset
+  before the font's attributes are applied. Thus, in the above example
+  of a \beamer-font having only the attribute ``boldface'' set, saying
+  |\usebeamerfont*| will \emph{always} cause the current font to
+  become a normal-size, normal-shape, bold, default-family font.
+\end{command}
+
+
 \subsubsection{Setting Beamer's Fonts}
+
+As for \beamer-colors, there exists a central command for setting and
+changing \beamer-fonts.
+
+\begin{command}{\setbeamerfont\opt{|*|}\marg{beamer-font
+      name}\marg{attributes}}
+  This command sets or resets certain attributes of the \beamer-font
+  \meta{beamer-font name}. In the unstarred version, this command just
+  adds those attribuates that have not been mentioned in a previous
+  call and overwrites those that have been mentioned. Thus, the
+  following two command blocks have the same effect:
+
+  \example
+\begin{verbatim}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{frametitle}{series=\bfseries}
+
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\end{verbatim}
+
+  In the starred version, the font attributes are first completely
+  reset, that is, set to be empty.
+
+  The following \meta{attributes} may be given:
+  \begin{itemize}
+  \item \declare{|size=|\meta{size command}} sets the size
+    attribute of the \beamer font. The \meta{size command} should be a
+    normal \LaTeX-command used for setting the font size or it should
+    be empty. Useful commands include |\tiny|, |\scriptsize|,
+    |\footnotesize|, |\small|, |\normalsize|, |\large|, |\Large|,
+    |\huge|, and |\Huge|. \beamer\ also introduces the two font sizes
+    |\Tiny| and |\TINY| for \emph{really} small text. But you should
+    know \emph{exactly} what you are doing if you use them. You have
+    been warned.
+
+    Note that there is a different between
+    specifying and empty command and specifying |\normalsize|: Making
+    the size attribuate ``empty'' means that the font size should not
+    be changed when this font is used, while specifying |\normalsize|
+    means that the size should be set to the normal size whenever this
+    font is used.
+  \item \declare{|size*=|\marg{size in pt}\marg{baselineskip}} sets
+    the size attribute of   the font to the given \meta{size in pt}
+    and the baseline skip to the given value. Note that, depending on
+    what  kind of font you use, not  all font sizes may be
+    available. Also,  certain font sizes are much less desirable than
+    other ones; the standard commands take care of choosing
+    appropriate sizes for you. Do not use this options unless you have
+    a good reason. This command has the same effect as
+    |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.  
+  \item \declare{|shape=|\meta{shape command}} sets the shape
+    attribute of the font. The command should be command like
+    |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
+  \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets
+    the shape attribute of the font using the \LaTeX's abbriviations
+    for attribuates. This command has the same effect as
+    |shape={\fontshape|\marg{shape attribuates abbreviation}|}|.  
+  \item \declare{|series=|\meta{series command}} sets the ``series''
+    attribute of the font. The command should be command like
+    |\bfseries|.
+  \item \declare{|series*=|\marg{series attribute abbreviation}} has
+    the same effect as |series={\fontseries|\marg{series attribuates
+        abbreviation}|}|.
+  \item \declare{|family=|\meta{family command}} sets the font family
+    attribute. The command should be a \LaTeX-font command like
+    |\rmfamily| or |\sffamily|. 
+  \item \declare{|family*=|\marg{family name}} sets the font family
+    attribute to the given \meta{family name}. The command has the
+    same effect as |family={\fontfamily|\marg{family name}|}|. The
+    \meta{family name} is, normally, a somewhat cryptic abbreviation
+    of a font family name that installed somewhere on the system. For
+    example, the \meta{family name} for Times happens to be
+    |ptm|. No one can remember these names, so its perfectly normal if
+    you have to look them up laborously.
+  \item \declare{|parent=|\marg{parent list}} specifies a list of
+    parent fonts. When the \beamer-font is used, the parents are used
+    first. Thus, any font attributes set by one of the parents is
+    inherited by the \beamer-font, except if this attribute is
+    overwritten by the font.
+  \end{itemize}
+
+  \example
+\begin{verbatim}
+\setbeamerfont{parent A}{size=\large}
+\setbeamerfont{parent B}{series=\bfseries}
+\setbeamerfont{child}{parent={parent A, parent B},size=\small}
+
+\normalfont
+This text is in a normal font.
+\usebeamerfont{parent A}
+This text is large.
+\usebeamerfont{parent B}
+This text is large and bold.
+\usebeamerfont{parent B}
+This text is still large and bold.
+\usebeamerfont*{parent B}
+This text is only bold, but not large.
+\usebeamerfont{child}
+This text is small and bold.
+\end{verbatim}
+\end{command}
+
 
 
 

@@ -1,0 +1,931 @@
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\section{Structuring a Presentation: The Static Global Structure}
+
+This section lists the commands that are used for structuring a
+presentation ``globally'' using commands like |\section| or
+|\part|. These commands are use to create a \emph{static} structure,
+meaning that the resulting presentation is normally presented one slide
+after the other in the order the slides occur. 
+Section~\ref{section-nonlinear} explains which commands can be used to
+create the \emph{interactive} structure. For the interactive structure,
+you must interact with the presentation program, typically by clicking
+on hyperlinks, to advance the presentation. 
+
+\subsection{Adding a Title Page}
+
+You can use the |\titlepage| command to insert a title page into
+a frame. By default, it will arrange the following elements on
+the title page: the document title, the author(s)'s names, their
+affiliation, a title graphic, and a date.
+
+\begin{command}{\titlepage}
+  Inserts the text of a title page into the current frame.
+  \example |\frame{\titlepage}|
+  \example |\frame[plain]{\titlepage}| for a titlepage that fills the
+  whole frame.
+
+  \lyxnote
+  If you use the ``Title'' style in your presentation, a title page is
+  automatically inserted.
+
+  \begin{element}{title page}\yes\yes\yes
+    This template is invoked when the |\titlepage| command is used.
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{orientation}}
+      The title page is typeset showing the title, followed by the
+      author, his or her affiliation, the date, and a titlegraphic. If
+      any of these are missing, they are not shown. Except for the
+      titlegraphic, if the \beamer-color |title|, |author|, |institute|,
+      or |date| is defined, respectively, it is used to as textcolor for
+      these entries. If a background color is defined for them, a
+      colored bar in the corresponding color is drawn behind them,
+      spanning the text width. The corresponding \beamer-fonts are used
+      for these entries.
+
+      The \meta{orientation} option is passed on the |beamercolorbox|
+      and can be used, for example, to flush the title page to the left
+      by specifying |left| here.
+    \end{templateoptions}
+
+    The following commands are useful for this template:
+    \begin{templateinserts}
+      \iteminsert{\insertauthor} inserts a version of the author's name
+      that is useful for the title page.
+      \iteminsert{\insertdate} inserts the date.
+      \iteminsert{\insertinstitute} inserts the institute.
+      \iteminsert{\inserttitle} inserts a version of the document title
+      that is useful for the title page.
+      \iteminsert{\insertsubtitle} inserts a version of the document title
+      that is useful for the title page.
+      \iteminsert{\inserttitlegraphic} inserts the title graphic into a
+      template. 
+    \end{templateinserts}
+  \end{element}
+\end{command}
+
+For compatibility with other classes, in |article| mode the following
+command is also provided: 
+
+\begin{command}{\maketitle}
+  \beamernote
+  If used inside a frame, it has the same effect as |\titlepage|. If
+  used outside a frame, it has the same effect as
+  |\frame{\titlepage}|; in other words, a frame is added if necessary.
+\end{command}
+
+
+Before you invoke the title page command, you must specify all
+elements you wish to be shown. This is done using the following
+commands: 
+
+\begin{command}{\title\oarg{short title}\marg{title}}
+  The \meta{short tile} is used in headlines and footlines. Inside
+  the \meta{title} line breaks can be inserted using the
+  double-backslash command.
+  \example
+\begin{verbatim}
+\title{The Beamer Class}
+\title[Short Version]{A Very Long Title\\Over Several Lines}
+\end{verbatim}
+
+  \articlenote
+  The short form is ignored in |article| mode.
+\end{command}
+
+\begin{command}{\subtitle\oarg{short subtitle}\marg{subtitle}}
+  The \meta{subshort tile} is not used by default, but is available
+  via the insert |\insertshortsubtitle|. The subtitle is shown below
+  the title in a smaller font.
+  \example
+\begin{verbatim}
+\title{The Beamer Class}
+\subtitle{An easily paced introduction with many examples.}
+\end{verbatim}
+
+  \articlenote
+  This command causes the subtitle to be appended to the title with a
+  linebreak and a |\normalsize| command issued before it. This may or
+  may not be what you would like to happen.
+\end{command}
+
+\begin{command}{\author\oarg{short author names}\marg{author names}}
+  The names should be separated using the
+  command |\and|. In case authors have different affiliations,
+  they should be suffixed by the command |\inst| with different
+  parameters.
+  \example|\author[Hemaspaandra et al.]{L. Hemaspaandra\inst{1} \and T. Tantau\inst{2}}|
+
+  \articlenote
+  The short form is ignored in |article| mode.
+\end{command}
+
+\begin{command}{\institute\oarg{short institute}\marg{institute}}
+  If more than one institute is given, they should be separated using
+  the command |\and| and they should be prefixed by the command
+  |\inst| with different parameters.
+  \example
+\begin{verbatim}
+\institute[Universities of Rochester and Berlin]{
+  \inst{1}Department of Computer Science\\
+  University of Rochester
+  \and
+  \inst{2}Fakult\"at f\"ur Elektrotechnik und Informatik\\
+  Technical University of Berlin}
+\end{verbatim}
+
+  \articlenote
+  The short form is ignored in |article| mode. The long form is also
+  ignored, except if the document class (like |llncs|) defines it.
+\end{command}
+
+\begin{command}{\date\oarg{short date}\marg{date}}
+  \example|\date{\today}| or |\date[STACS 2003]{STACS Conference, 2003}|.
+
+  \articlenote
+  The short form is ignored in |article| mode.
+\end{command}
+
+\begin{command}{\titlegraphic\marg{text}}
+  The \meta{text} is shown as title graphic. Typically, a picture
+  environment is used as \meta{text}.
+  \example|\titlegraphic{\pgfuseimage{titlegraphic}}|
+
+  \articlenote
+  The command is  ignored in |article| mode.
+\end{command}
+
+
+
+
+\begin{command}{\subject\marg{text}}
+  Enters the \meta{text} as the subject text in the \pdf\ document
+  info. It currently has no other effect.
+\end{command}
+
+\begin{command}{\keywords\marg{text}}
+  Enters the \meta{text} as keywords in the \pdf\ document
+  info. It currently has no other effect.
+\end{command}
+
+
+By default, the |\title| and |\author| commands will also insert their
+arguments into a resulting \pdf-file in the document information
+fields. This may cause problems if you use complicated things like
+boxes as arguments to these commands. In this case, you might wish to
+switch off the automatic generation of these entries using the
+following class option:
+
+\begin{classoption}{usepdftitle=false}
+  Suppresses the automatic generation of title and author entries in
+  the \pdf\ document information.
+\end{classoption}
+
+
+
+
+
+\subsection{Adding Sections and Subsections}
+
+You can structure your text using the commands |\section| and
+|\subsection|. Unlike standard \LaTeX, these commands will not
+create a heading at the position where you use them. Rather, they will
+add an entry to the table of contents and also to the navigation
+bars.
+
+In order to create a line break in the table of contents (usually not
+a good idea), you can use the command |\breakhere|. Note that the
+standard command |\\| does not work (actually, I do not really know
+why; comments would be appreciated).
+
+\begin{command}{\section\sarg{mode specification}\oarg{short section name}\marg{section name}}
+  Starts a section. No heading is created. The \meta{section name}
+  is shown in the table of contents and in the navigation bars, except
+  if \meta{short section name} is specified. In this case, \meta{short
+    section name} is used in the navigation bars instead. If a
+    \meta{mode specification} is given, the command only has an effect
+    for the specified modes.
+    
+  \example|\section[Summary]{Summary of Main Results}|
+
+  \articlenote
+  The \meta{mode specification} allows you to provide an alternate
+  section command in |article| mode. This is necessary for example if
+  the \meta{short section name} is unsuitable for the table of
+  contents:
+
+  \example
+\begin{verbatim}
+\section<presentation>[Results]{Results on the Main Problem}
+\section<article>{Results on the Main Problem}
+\end{verbatim}
+
+  \begin{element}{section in toc}\yes\yes\yes
+    This template is used when a section entry is to be typeset. For
+    the permissible \meta{options} see the parent template
+    |table of contents|.
+
+    The following commands are useful for this template:
+    \begin{templateinserts}
+      \iteminsert{\inserttocsection}
+      inserts the table of contents version of the current section name.
+
+      \iteminsert{\inserttocsectionnumber}
+      inserts the number of the current section (in the table of contents).
+    \end{templateinserts}
+  \end{element}
+
+  \begin{element}{section in toc shaded}\yes\yes\yes
+    This template is used instead of the previous one if the section
+    should be shown in a shaded way, because it is not the current
+    section.  For the permissible \meta{options} see the parent
+    template |table of contents|.
+  \end{element}
+\end{command}
+
+\begin{command}{\section\sarg{mode specification}\declare{|*|}\marg{section name}}
+  Starts a section without an entry in the table of contents. No
+  heading is created, but the \meta{section name} is shown in the
+  navigation bar. 
+  \example|\section*{Outline}|
+  \example|\section<beamer>*{Outline}|
+\end{command}
+
+\begin{command}{\subsection\sarg{mode specification}\oarg{short
+  subsection name}\marg{subsection name}} 
+  This command works the same way as the |\section| command.
+  \example|\subsection[Applications]{Applications to the Reduction of Pollution}|
+
+  \begin{element}{subsection in toc}\yes\yes\yes
+    Like |section in toc|, only for subsection.
+
+    In addition to the inserts for the |section in toc| template, the
+    following commands are available for this template: 
+    \begin{templateinserts}
+      \iteminsert{\inserttocsubsection}
+      inserts the table of contents version of the current subsection
+      name.
+
+      \iteminsert{\inserttocsubsectionnumber}
+      inserts the number of the current subsection (in the table of contents).
+    \end{templateinserts}
+  \end{element}
+
+  \begin{element}{subsection in toc shaded}\yes\yes\yes
+    Like |section in toc shaded|, only for subsections.
+  \end{element}
+\end{command}
+
+\begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsection name}} 
+  Starts a subsection without an entry in the table of contents. No
+  heading is created, but the \meta{subsection name} is shown in the
+  navigation bar, \emph{except} if \meta{subsection name} is empty. In
+  this case, neither a table of contents entry nor a navigation bar
+  entry is created, \emph{but} any frames in this ``empty'' subsection
+  are shown in the navigation bar.
+
+  \example
+\begin{verbatim}
+\section{Summary}
+
+  \frame{This frame is not shown in the navigation bar}
+
+  \subsection*{}
+
+  \frame{This frame is shown in the navigation bar, but no subsection
+    entry is shown.}
+
+  \subsection*{A subsection}
+
+  \frame{Normal frame, shown in navigation bar. The subsection name is
+    also shown in the navigation bar, but not in the table of contents.} 
+\end{verbatim}
+\end{command}
+
+Often, you may want a certain type of frame to be shown directly after
+a section or subsection starts. For example, you may wish every
+subsection to start with a frame showing the table of contents with
+the current subsection hilighted. To facilitate this, you can use the
+following two commands.
+
+
+\begin{command}{\AtBeginSection\oarg{special star text}\marg{text}}
+  The given text will be inserted at the beginning of every
+  section. If the \meta{special star text} parameter is specified,
+  this text will be used for starred sections instead. Different calls
+  of this command will not ``add up'' the given texts (like the
+  |\AtBeginDocument| command does), but will  overwrite any previous
+  text. 
+  
+  \example
+\begin{verbatim}
+\AtBeginSection[] % Do nothing for \section*
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+\end{verbatim}
+
+  \articlenote
+  This command has no effect in |article| mode.
+
+  \lyxnote
+  You have to insert this command using a \TeX-mode text.
+\end{command}
+
+
+\begin{command}{\AtBeginSubsection\oarg{special star text}\marg{text}}
+  The given text will be inserted at the beginning of every
+  subsection. If the \meta{special star text} parameter is specified,
+  this text will be used for starred subsections instead. Different calls
+  of this command will not ``add up'' the given texts.
+  
+  \example
+\begin{verbatim}
+\AtBeginSubsection[] % Do nothing for \subsection*
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+\end{verbatim}
+\end{command}
+
+
+
+
+\subsection{Adding Parts}
+
+If you give a long talk (like a lecture), you may wish to break up
+your talk into several parts. Each such part acts like a little ``talk
+of its own'' with its own table of contents, its own navigation bars,
+and so on. Inside one part, the sections and subsections of the other
+parts are not shown at all.
+
+To create a new part, use the |\part| command. All sections and
+subsections following this command will be ``local'' to that part.
+Like the |\section| and |\subsection| command, the |\part| command
+does not cause any frame or special text to be produced. However,
+it is often advisable for the start of a new part to use the command
+|\partpage| to insert some text into a frame that ``advertises'' the
+beginning of a new part. See |beamerexample3.tex| for an example.
+
+\begin{command}{\part\sarg{mode specification}\oarg{short part name}\marg{part name}}
+  Starts a part. The \meta{part name} will be shown when the
+  |\partpage| command is used. The \meta{shown part name} is not shown
+  anywhere by default, but it is accessible via the command
+  |\insertshortpart|.
+  \example
+\begin{verbatim}
+\begin{document}
+  \frame{\titlepage}
+
+  \section*{Outlines}
+  \subsection{Part I: Review of Previous Lecture}
+  \frame{
+    \frametitle{Outline of Part I}
+    \tableofcontents[part=1]}
+  \subsection{Part II: Today's Lecture}
+  \frame{
+    \frametitle{Outline of Part II}
+    \tableofcontents[part=2]}
+
+  \part{Review of Previous Lecture}
+  \frame{\partpage}
+  \section[Previous Lecture]{Summary of the Previous Lecture}
+  \subsection{Topics}
+  \frame{...}
+  \subsection{Learning Objectives}
+  \frame{...}
+  
+  \part{Today's Lecture}
+  \frame{\partpage}
+  \section{Topic A}
+  \frame{\tableofcontents[currentsection]}
+  \subsection{Foo}
+  \frame{...}
+  \section{Topic B}
+  \frame{\tableofcontents[currentsection]}
+  \subsection{bar}
+  \frame{...}
+\end{document}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\partpage}
+  Works like |\titlepage|, only that the current part, not the current
+  presentation is ``advertised.''
+  \example |\frame{\partpage}|
+  
+  \begin{element}{part page}\yes\yes\yes
+    This template is invoked when the |\partpage| command is used.
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{orientation}}
+      The part page is typeset showing the current part number and,
+      below, the current part title. The \beamer-color and -font
+      |part page| are used, including the background color of
+      |part page|. As for the |title page| template, the
+      \meta{orientation} option is passed on the |beamercolorbox|.
+    \end{templateoptions}
+
+    The following commands are useful for this template:
+    \begin{templateinserts}
+      \iteminsert{\insertpart}
+      inserts the current part name.
+      \iteminsert{\insertpartnumber}
+      inserts the current part number as an Arabic number into a template.
+      \iteminsert{\insertpartromannumber}
+      inserts the current part number as a Roman number into a template.
+    \end{templateinserts}
+  \end{element}
+\end{command}
+
+\begin{command}{\AtBeginPart\marg{text}}
+  The given text will be inserted at the beginning of every
+  part.
+  
+  \example
+\begin{verbatim}
+\AtBeginPart{\frame{\partpage}}
+\end{verbatim}
+\end{command}
+
+
+\subsection{Splitting a Course Into Lectures}
+
+When using \beamer\ with the |article| mode, you may wish to have the
+lecture notes of a whole course reside in one file. In this case, only
+a few frames are actually part of any particular lecture.
+
+The |\lecture| command makes it easy to select only a certain set of
+frames from a file to be presented. This command takes (among other
+things) a label name. If you say |\includeonlylecture| with this label
+name, then only the frames following the corresponding |\lecture|
+command are shown. The frames following other |\lecture| commands are
+suppressed. 
+
+By default, the |\lecture| command has no other effect. It does not
+create any frames or introduce entries in the table of
+contents. However, you can use |\AtBeginLecture| to have \beamer\
+insert, say, a title page at the beginning of (each) lecture.
+
+\begin{command}{\lecture\oarg{short lecture name}\marg{lecture
+  name}\marg{lecture label}} 
+  Starts a lecture. The \meta{lecture name} will be available via the
+  |\insertlecture| command. The \meta{short lecture name} is available
+  via the |\insertshortlecture| command.
+  
+  \example
+\begin{verbatim}
+\begin{document}
+\lecture{Vector Spaces}{week 1}
+
+\section{Introduction}
+...
+\section{Summary}
+
+\lecture{Scalar Products}{week 2}
+
+\section{Introduction}
+...
+\section{Summary}
+
+\end{document}
+\end{verbatim}
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+\begin{command}{\includeonlylecture\meta{lecture label}}
+  Causes all |\frame|, |frame|, |\section|, |\subsection|, and |\part|
+  commands following a |\lecture| command to be suppressed, except if the
+  lecture's label matches the \meta{lecture label}. Frames before any
+  |\lecture| commands are always included. This command should be
+  given in the preamble.
+
+  \example |\includeonlylecture{week 1}|
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+\begin{command}{\AtBeginLecture\marg{text}}
+  The given text will be inserted at the beginning of every
+  lecture.
+  
+  \example
+\begin{verbatim}
+\AtBeginLecture{\frame{\Large Today's Lecture: \insertlecture}}
+\end{verbatim}
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+
+\subsection{Adding a Table of Contents}
+
+You can create a table of contents using the command
+|\tableofcontents|. Unlike the normal \LaTeX\ table of contents
+command, this command takes an optional parameter in square brackets
+that can be used to create certain special effects.
+
+\begin{command}{\tableofcontents\oarg{comma-separated option list}}
+  Inserts a table of contents into the current frame.
+  \example
+\begin{verbatim}
+\section*{Outline}
+\frame{\tableofcontents}
+
+\section{Introduction}
+\frame{\tableofcontents[currentsection]}
+\subsection{Why?}
+\frame{...}
+\frame{...}
+\subsection{Where?}
+\frame{...}
+
+\section{Results}
+\frame{\tableofcontents[currentsection]}
+\subsection{Because}
+\frame{...}
+\subsection{Here}
+\frame{...}
+\end{verbatim}
+
+  The following options can be given:
+  \begin{itemize}
+  \item
+    \declare{|currentsection|} causes all sections but the current to
+    be shown in a semi-transparent way. Also, all subsections but
+    those in the current section are shown in the semi-transparent
+    way. This command is a shorthand for specifying the following
+    options: 
+\begin{verbatim}
+sectionstyle=show/shaded,subsectionstyle=show/show/shaded
+\end{verbatim}
+  \item
+    \declare{|currentsubsection|} causes all subsections but the
+    current subsection in the current section to be shown in a
+    semi-transparent way. This command is a shorthand for specifying
+    the option |subsectionstyle=show/shaded|.
+  \item
+    \declare{|firstsection=|\meta{section number}} specifies which
+    section should be numbered as section~``1.''  This is useful if
+    you have a first section (like an overview section) that should
+    not receive a number. Section numbers are not shown by default. To
+    show them, you must install a different table of contents
+    templates.
+  \item
+    \declare{|hideallsubsections|} causes all subsections to be
+    hidded. This command is a shorthand for specifying
+    the option |subsectionstyle=hide|.
+  \item
+    \declare{|hideothersubsections|} causes the subsections of
+    sections other than the current one to be hidded. This command is
+    a shorthand for specifying the option |subsectionstyle=show/show/hide|.
+  \item
+    \declare{|part=|\meta{part number}} causes the table of contents
+    of part \meta{part number} to be shown, instead of the table of
+    contents of the current part (which is the default). This option
+    can be combined with the other options, although combining it with
+    the |current| option obviously makes no sense.
+  \item
+    \declare{|pausesections|} causes a |\pause| command to
+    be issued before each section. This is useful if you wish to show
+    the table of contents in an incremental way.
+  \item
+    \declare{|pausesubsections|} causes a |\pause| command to
+    be issued before each subsection.
+  \item
+    \declare{|sections=|\marg{overlay specification}} causes only the
+    sections mentioned in the \meta{overlay specification} to be
+    shown. For example, \verb/sections={<2-4| handout:0>}/ causes only the second,
+    third, and fourth section to be shown in the normal version,
+    nothing to be shown in the handout version, and everything to be
+    shown in all other versions. For convenience, if you omit the
+    pointed brackets, the specification is assumed to apply to all
+    versions. Thus |sections={2-4}| causes sections two, three, and
+    four to be shown in all versions.
+  \item
+    \declare{|sectionstyle=|\meta{style for current
+      section}|/|\meta{style for other sections}} specifies how
+    sections should be displayed. Allowed \meta{styles} are |show|,
+    |shaded|, and |hide|. The first will show the section title
+    normally, the second will show it in a semi-transparent way, and
+    the third will completely suppress it. You can
+    also omit the second style, in which case the first is used for
+    all sections (this is not really useful). 
+  \item
+    \declare{|subsectionstyle=|\meta{style for current
+      subsection}|/|\meta{style for other subsections in current
+      section}|/|\\\meta{style for subsections in other sections}}
+    specifies how subsections should be displayed. The same styles as
+    for the |sectionstyle| option may be given. You can omit the last
+    style, in which case the second also applies to the last, and you can
+    omit the last two, in which case the first applies to all.
+    \example |subsectionstyle=shaded| causes all subsections to be
+    shaded.
+    \example |subsectionstyle=hide| causes all subsections to be
+    hidden.
+    \example |subsectionstyle=show/shaded| causes all subsections but the
+    current subsection in the current section to be shown in a
+    semi-transparent way.
+    \example |subsectionstyle=show/show/hide| causes all
+    subsections outside the current section to be suppressed.
+    \example |subsectionstyle=show/shaded/hide| causes all
+    subsections outside the current section to be suppressed and only
+    the current subsection in the current section to be hilighted.
+  \end{itemize}
+  The last examples are useful if you do not wish to show
+  too many details when presenting the talk outline.
+
+  \articlenote
+  The options are ignored in |article| mode.
+
+  \lyxnote
+  You can give options to the |\tableofcontents| command by 
+  inserting a \TeX-mode text with the options in square brackets
+  directly after the table of contents.
+
+  \begin{element}{sections/subsections in toc}\semiyes\no\no
+    This is a parent template, whose children are
+    |section in toc| and |subsection in toc|. This means that if you
+    use the |\setbeamertemplate| command on this template, the command
+    is instead called for both of these children (with the same arguments).
+
+    \begin{templateoptions}
+      \itemoption{default}{}
+      In the default setting, the sections and subsections are typeset
+      using the fonts and colors |section in toc| and
+      |subsection in toc|, though the background colors are ignored. The
+      subsections are indented.
+      \itemoption{sections numbered}{}
+      Similar to the default setting, but the section numbers are also
+      shown. The subsections are not numbered.
+      \itemoption{subsections numbered}{}
+      This time, the subsections are numbered, but not the
+      sections. Nevertheless, since the subsections are ``fully
+      numbered'' as in ``1.2'' or ``3.2,'' if every section has at least
+      one subsection, the section numbered will not really be missed.
+      \itemoption{circle}{}
+      Draws little circles before the sections. Inside
+      the circles the section number is shown. The \beamer-font and
+      color |section number projected| is used for typesetting the
+      circles, that is, the circle gets the background color and the
+      text inside the circle the foreground color.
+      \itemoption{square}{}
+      Similar to the |circle| option, except that small squares are
+      used instead of circles. Small, unnumbered squares are shown in
+      front of the subsections.
+      \itemoption{ball}{}
+      Like |square|, the only difference being the balls are used
+      instead of squares.
+      \itemoption{ball unnumbered}{}
+      Similar to |ball|, except that no numbering is used. This option
+      makes the table of contents look more like an |itemize|.
+    \end{templateoptions}
+
+    If none of the above options suits you, you have to change the
+    templates |section in toc| and |subsection in toc| directly.
+  \end{element}
+
+  \begin{element}{sections/subsections in toc shaded}\semiyes\no\no
+    A parent template with children
+    |section in toc shaded| and |subsection in toc shaded|. They are
+    used to render section and subsection entries when 
+    they are currently shaded; like all non-current subsections in
+    |\tableofcontents[currentsubsection]|. 
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{opaquness}}
+      In the default setting, the templates |section in toc shaded| and
+      |subsection in toc shaded| just show whatever the nonshaded
+      versions of these templates show, but only \meta{opaquness}\%
+      opaque. The default is 20\%.
+
+      \example |\setbeamertemplate{table of contents shaded}[default][50]|
+      makes dimmed entries 50\% transparent. 
+    \end{templateoptions}
+  \end{element}
+\end{command}
+
+
+
+
+
+\subsection{Adding a Bibliography}
+
+You can use the bibliography environment and the |\cite| commands
+of \LaTeX\ in a \beamer\ presentation. You will typically have to
+typeset your bibliography items partly ``by hand.'' Nevertheless, you
+\emph{can} use |bibtex| to create a ``first approximation'' of the
+bibliography. Copy the content of the file |main.bbl| into your
+presentation. If you are not familiar with |bibtex|, you may wish
+to consult its documentation. It is a  powerful tool for
+creating high-quality citations.
+
+Using |bibtex| or your editor, place your bibliographic
+references in the environment |thebibliography|. This
+(standard \LaTeX) environment takes one parameter, which should be the
+longest |\bibitem| label in the following list of bibliographic
+entries.
+
+\begin{environment}{{thebibliography}\marg{longest label text}}
+  Inserts a bibliography into the current frame. The \meta{longest
+    label text} is used to determine the indent of the list. However,
+  several predefined options for the typesetting of the bibliography
+  ignore this parameter since they replace the references by a symbol.
+
+  Inside the environment, use a (standard \LaTeX) |\bibitem| command
+  for each reference item. Inside each item, use a (standard \LaTeX)
+  |\newblock| command to separate the authors's names, the title, the
+  book/journal reference, and any notes. Each of these commands may
+  introduce a new line or color or other formatting, as specified by
+  the template for bibliographies.
+
+  The environment must be placed inside a frame. If the bibliography
+  does not fit on one frame, you should 
+  split it (create a new frame and a second |thebibliography|
+  environment) or use the |allowframebreaks| option. Even better, you
+  should reconsider whether it is a good idea to present so many
+  references. 
+  \example
+\begin{verbatim}
+\begin{frame}
+  \frametitle{For Further Reading}
+
+  \begin{thebibliography}{Dijkstra, 1982}
+  \bibitem[Solomaa, 1973]{Solomaa1973}
+    A.~Salomaa.
+    \newblock {\em Formal Languages}.
+    \newblock Academic Press, 1973.
+
+  \bibitem[Dijkstra, 1982]{Dijkstra1982}
+    E.~Dijkstra.
+    \newblock Smoothsort, an alternative for sorting in situ.
+    \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
+  \end{thebibliography}
+\end{frame}
+\end{verbatim}
+
+  Four templates govern the appearance of the author, title, journal,
+  and note text. These author templates are inserted before the first block
+  of the entry (the first block is all text before the first occurrence of a 
+  |\newblock| command). The title template is inserted before
+  the second block (the text between the first and second occurrence
+  of |\newblock|). Likewise for the journal and note tempaltes.
+
+  The templates are inserted \emph{before} the blocks and you do not
+  have access to the blocks themselves via insert commands. The
+  corresponding \beamer-color and -font are also installed before the
+  blocks.
+
+  \begin{element}{bibliography entry author}\yes\yes\yes
+    This template is inserted before the author of a bibliography
+    entry. The color and font are also installed. Note that the effect
+    of this template will persist until the end of the bibliography
+    item or until one of the following templates undo the effect.
+
+    By default, this template does nothing. The default color is the
+    structure color.
+  \end{element}
+
+  \begin{element}{bibliography entry title}\yes\yes\yes
+    This template is inserted before the title of a bibliography
+    entry (more precisely, it is inserted after the first occurence of
+    the |\newblock| command). By default, this template starts a new
+    paragraph, causing a line break. The default color is the normal
+    text color.
+  \end{element}
+  
+  \begin{element}{bibliography entry journal}\yes\yes\yes
+    This template is inserted before the journal of a bibliography
+    entry (the second |\newblock|). By default, this template starts a
+    new paragraph. The default color is a slightly transparent version
+    of the structure color.
+  \end{element}
+  
+  
+  \begin{element}{bibliography entry note}\yes\yes\yes
+    This template is inserted before any note text at the end of a
+    bibliography entry (it is inserted before the third
+    |\newblock|). By default, this template starts a new
+    paragraph. The default color is the same as for the journal.
+  \end{element}  
+\end{environment}
+
+
+\begin{command}{\bibitem\sarg{overlay specification}%
+    \oarg{citation text}\marg{label name}}
+  The \meta{citation text} is inserted into the text when the item is
+  cited using |\cite{|\meta{label name}|}| in the main presentation
+  text. For a \beamer\ presentation, this should usually be as long as
+  possible.  
+
+  Use |\newblock| commands to separate the authors's names, the title, the
+  book/journal reference, and any notes. If the \meta{overlay specification}
+  is present, the entry will only be shown on the
+  specified slides.
+  \example
+\begin{verbatim}
+\bibitem[Dijkstra, 1982]{Dijkstra1982}
+  E.~Dijkstra.
+  \newblock Smoothsort, an alternative for sorting in situ.
+  \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
+\end{verbatim}
+
+  \begin{element}{bibliography item}\yes\yes\yes
+    \colorfontparents{item}
+    This template is used to render the bibliography item.   Unlike
+    normal \LaTeX, the default template for the bibliography does not
+    repeat the citation text (like ``[Dijkstra, 1982]'') before each
+    item in the bibliography. Instead, a cute, small article symbol is
+    drawn. The rationale is that the audience will not be able to
+    remember any abbreviated citation texts till the end of the
+    talk.
+    \begin{templateoptions}
+      \itemoption{default}{}
+      Draws a cute little article icon as the reference. Use this for
+      journal articles, parts of books (like conference proceedings),
+      or technical reports.
+      
+      \itemoption{article}{}
+      Alias for the default.
+      
+      \itemoption{book}{}
+      Draws a cute little book icon as the reference. Use this for,
+      well, books.
+
+      \itemoption{triangle}{}
+      Draws a triangle as the reference. This is more in keeping with
+      the standard itemize items.
+
+      \itemoption{text}{}
+      Uses the reference text (like ``[Dijkstra, 1982]'') as the
+      reference text. Be sure you what you are doing if you use this. 
+    \end{templateoptions}
+    The following insert is useful for the template:
+    \begin{itemize}
+      \iteminsert{\insertbiblabel}
+      inserts the current citation label.
+    \end{itemize}
+  \end{element}
+\end{command}
+
+
+
+\subsection{Adding an Appendix}
+
+You can add an appendix to your talk by using the |\appendix|
+command. You should put frames and perhaps whole subsections into the
+appendix that you do not intend to show during your presentation, but
+which might be useful to answer a question. The |\appendix| command
+essentially just starts a new part named |\appendixname|. However, it
+also sets up certain hyperlinks. 
+Like other parts, the appendix is kept separate of your actual
+talk.
+
+\begin{command}{\appendix\sarg{mode specification}}
+  Starts the appendix in the specified modes. All frames, all
+  |\subsection| commands, and all |\section| commands used after this
+  command will not be shown as part of the normal navigation bars.
+  \example
+\begin{verbatim}
+\begin{document}
+\frame{\titlepage}
+\section*{Outline}
+\frame{\tableofcontents}
+\section{Main Text}
+\frame{Some text}
+\section*{Summary}
+\frame{Summary text}
+
+\appendix
+\section{\appendixname}
+\frame{\tableofcontents}
+\subsection{Additional material}
+\frame{Details}
+\frame{Text omitted in main talk.}
+\subsection{Even more additional material}
+\frame{More details}
+\end{document}
+\end{verbatim}
+\end{command}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

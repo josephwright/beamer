@@ -258,6 +258,12 @@
   \@usetemplatetocsubsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}
 \long\def\@usetemplatetocsubsection#1#2{\setbeamertemplate{subsection in toc}{#1}%
   \setbeamertemplate{subsection in toc shaded}{#2}}
+\def\usebibitemtemplate{\setbeamertemplate{bibliography item}}
+\newcommand\usebibliographyblocktemplate[4]{%
+  \setbeamertemplate{bibliography entry author}{#1}%
+  \setbeamertemplate{bibliography entry title}{#2}%
+  \setbeamertemplate{bibliography entry location}{#3}%
+  \setbeamertemplate{bibliography entry note}{#4}}
 
 
 
@@ -315,6 +321,10 @@
   \newcommand{\beamertemplateshadingbackground}[2]{\setbeamertemplate{background canvas}[vertical shading][bottom=#1,top=#2]}
   \newcommand\usealerttemplate[2]{\setbeamertemplate{alerted text begin}{#1}\setbeamertemplate{alerted text end}{#2}}
   \newcommand\usestructuretemplate[2]{\setbeamertemplate{structure begin}{#1}\setbeamertemplate{structure end}{#2}}
+  \newcommand{\beamertemplatebookbibitems}{\setbeamertemplate{bibliography item}[book]}
+  \newcommand{\beamertemplatearticlebibitems}{\setbeamertemplate{bibliography item}[article]}
+  \newcommand{\beamertemplatetextbibitems}{\setbeamertemplate{bibliography item}[text]}
+  \newcommand{\beamertemplatearrowbibitems}{\setbeamertemplate{bibliography item}[triangle]}  
 }
 
 \mode

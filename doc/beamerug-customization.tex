@@ -10,143 +10,6 @@
 \label{section-customization}
 
 
-%% \subsection{Themes}
-
-%% Just like \LaTeX\ in general, the \beamer\ class tries to separate the
-%% contents of a text from the way it is typeset (displayed). There are two ways in
-%% which you can change how a presentation is typeset: you can specify a
-%% different theme and you can specify different templates. A theme is
-%% a predefined collection of templates.
-
-%% There exist a number of different predefined themes that can be used
-%% together with the \beamer\ class. Feel free to add further themes.
-%% Themes are used by including an appropriate \LaTeX\ style file, using
-%% the standard |\usepackage| command.
-
-
-%% \begin{smallpackage}{{beamerthemebars}}
-%%   \example
-
-%%   \pgfuseimage{themebars}\quad\pgfuseimage{themebars2}
-%% \end{smallpackage}
-
-
-%% \begin{package}{{beamerthemeboxes}\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}
-%%   \example
-
-%%   \pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}
-
-%%   \example
-%% \begin{verbatim}
-%% \usepackage[headheight=12pt,footheight=12pt]{beamerthemeboxes}
-%% \end{verbatim}
-
-%%   For this theme, you can specify an arbitrary number of templates for
-%%   the boxes in the headline and in the footline. You can add a
-%%   template for another box by using the following commands.
-%% \end{package}
-
-%% \begin{command}{\addheadboxtemplate%
-%%     \marg{background color command}\marg{box template}}
-%%   Each time this command is invoked, a new box is added to the head
-%%   line, with the first added box being shown on the left. All boxes
-%%   will have the same size.
-%%   \example
-%% \begin{verbatim}
-%% \addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
-%% \addheadboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
-%% \addheadboxtemplate{\color{structure!50}}{\color{white}\tiny\quad 3. Box}
-%% \end{verbatim}
-%% \end{command}
-
-%% \begin{command}{\addfootboxtemplate%
-%%     \marg{background color command}\marg{box template}}
-%%   \example
-%% \begin{verbatim}
-%% \addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
-%% \addfootboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
-%% \end{verbatim}
-%% \end{command}
-
-
-%% \begin{smallpackage}{{beamerthemeclassic}}
-%%   \example
-
-%%   \pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}
-%% \end{smallpackage}
-
-
-%% \begin{smallpackage}{{beamerthemelined}}
-%%   \example
-
-%%   \pgfuseimage{themelined}\quad\pgfuseimage{themelined2}
-%% \end{smallpackage}
-
-
-%% \begin{smallpackage}{{beamerthemeplain}}
-%%   \example
-
-%%   \pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}
-%% \end{smallpackage}
-
-
-%% \begin{package}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
-%%         width}|,dark,tab]|}}
-%%   The option |width| sets the width of the sidebar to \meta{sidebar
-%%     width}. The option |dark| makes the sidebar and the whole theme
-%%   darked. The option |tab| causes the current section or subsection to
-%%   be hilighted by changing the background behind the entry, rather
-%%   than hilighting the entry itself.
-  
-%%   \example |\usepackage{beamerthemesidebar}|
-
-%%   \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
-
-%%   \example |\usepackage[tab]{beamerthemesidebar}|
-
-%%   \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
-
-%%   \example |\usepackage[dark]{beamerthemesidebar}|
-
-%%   \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
-
-%%   \example |\usepackage[dark,tab]{beamerthemesidebar}|
-
-%%   \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
-%% \end{package}
-
-
-%% \begin{smallpackage}{{beamerthemeshadow}}
-%%   \example
-
-%%   \pgfuseimage{themeshadow}\quad\pgfuseimage{themeshadow2}
-%% \end{smallpackage}
-
-%% \begin{smallpackage}{{beamerthemesplit}}
-%%   \example
-
-%%   \pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}
-%% \end{smallpackage}
-
-%% \begin{smallpackage}{{beamerthemetree}}
-%%   \example
-
-%%   \pgfuseimage{themetree}\quad\pgfuseimage{themetree2}
-%% \end{smallpackage}
-
-
-%% \begin{smallpackage}{{beamerthemetree}\declare{|[bar]|}}
-%%   \example
-
-%%   \pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}
-%% \end{smallpackage}
-
-
-
-%\subsection{Templates}
-
-%\subsection{Introduction to Templates}
-
 \subsection{Introduction to Templates}
 
 
@@ -497,76 +360,76 @@ default \beamer\ themes are listed in alphabetical order.
 
 
 
-\subsection{Bibliography}
+%% \subsection{Bibliography}
 
-\label{section-bib-templates}
+%% \label{section-bib-templates}
 
-\paragraph{Predefined Templates}\
+%% \paragraph{Predefined Templates}\
 
-\begin{command}{\beamertemplatetextbibitems}
-  Shows the citation text in front of references in a
-  bibliography instead of a small symbol.
-\end{command} 
+%% \begin{command}{\beamertemplatetextbibitems}
+%%   Shows the citation text in front of references in a
+%%   bibliography instead of a small symbol.
+%% \end{command} 
 
-\begin{command}{\beamertemplatearrowbibitems}
-  Changes the symbol before references in a bibliography to
-  a small arrow.
-\end{command}
+%% \begin{command}{\beamertemplatearrowbibitems}
+%%   Changes the symbol before references in a bibliography to
+%%   a small arrow.
+%% \end{command}
 
-\begin{command}{\beamertemplatebookbibitems}
-  Changes the symbol before references in a bibliography to
-  a small book icon.
-\end{command}
+%% \begin{command}{\beamertemplatebookbibitems}
+%%   Changes the symbol before references in a bibliography to
+%%   a small book icon.
+%% \end{command}
 
-\begin{command}{\beamertemplatearticlebibitems}
-  Changes the symbol before references in a bibliography to
-  a small article icon. (Default)
-\end{command}
-
-
-
-\paragraph{Template Installation Commands}\ 
-
-\begin{command}{\usebibitemtemplate\marg{citation template}}
-  Installs a template for the citation text before the entry. (The 
-  ``label'' of the item.)
-  \example |\usebibitemtemplate{\color{structure}\insertbiblabel}|
-\end{command}
+%% \begin{command}{\beamertemplatearticlebibitems}
+%%   Changes the symbol before references in a bibliography to
+%%   a small article icon. (Default)
+%% \end{command}
 
 
-\begin{command}{\usebibliographyblocktemplate%
-    \marg{template 1}\marg{template 2}%
-    \marg{template 3}\marg{template 4}}
-  The text \meta{template~1} is inserted before the first block of the
-  entry (the first block is all text before the first occurrence of a 
-  |\newblock| command). The text \meta{template~2} is inserted before
-  the second block (the text between the first and second occurrence
-  of |\newblock|). Likewise for \meta{template~3} and \meta{template~4}. 
 
-  The templates are inserted \emph{before} the blocks and you do not
-  have access to the blocks themselves via insert commands. In the
-  following example, the first |\par| commands ensure that the
-  author, the title, and the journal are put on different lines. The
-  color commands cause the author (first block) to be typeset using
-  the theme color, the second block (title of the paper) to be typeset
-  in black, and all other lines to be typeset in a washed-out version
-  of the theme color. 
-  \example
-\begin{verbatim}
-  \usebibliographyblocktemplate
-  {\color{structure}}
-  {\par\color{black}}
-  {\par\color{structure!75}}
-  {\par\color{structure!75}}
-\end{verbatim}
-\end{command}
+%% \paragraph{Template Installation Commands}\ 
+
+%% \begin{command}{\usebibitemtemplate\marg{citation template}}
+%%   Installs a template for the citation text before the entry. (The 
+%%   ``label'' of the item.)
+%%   \example |\usebibitemtemplate{\color{structure}\insertbiblabel}|
+%% \end{command}
 
 
-\paragraph{Inserts for these Templates}\ 
+%% \begin{command}{\usebibliographyblocktemplate%
+%%     \marg{template 1}\marg{template 2}%
+%%     \marg{template 3}\marg{template 4}}
+%%   The text \meta{template~1} is inserted before the first block of the
+%%   entry (the first block is all text before the first occurrence of a 
+%%   |\newblock| command). The text \meta{template~2} is inserted before
+%%   the second block (the text between the first and second occurrence
+%%   of |\newblock|). Likewise for \meta{template~3} and \meta{template~4}. 
 
-\begin{command}{\insertbiblabel}
-  Inserts the current citation label into a template.
-\end{command}
+%%   The templates are inserted \emph{before} the blocks and you do not
+%%   have access to the blocks themselves via insert commands. In the
+%%   following example, the first |\par| commands ensure that the
+%%   author, the title, and the journal are put on different lines. The
+%%   color commands cause the author (first block) to be typeset using
+%%   the theme color, the second block (title of the paper) to be typeset
+%%   in black, and all other lines to be typeset in a washed-out version
+%%   of the theme color. 
+%%   \example
+%% \begin{verbatim}
+%%   \usebibliographyblocktemplate
+%%   {\color{structure}}
+%%   {\par\color{black}}
+%%   {\par\color{structure!75}}
+%%   {\par\color{structure!75}}
+%% \end{verbatim}
+%% \end{command}
+
+
+%% \paragraph{Inserts for these Templates}\ 
+
+%% \begin{command}{\insertbiblabel}
+%%   Inserts the current citation label into a template.
+%% \end{command}
 
 
 

@@ -135,7 +135,7 @@
 \define@key{beamercolbox}{sep}{\def\beamer@colbox@sep{#1}}
 \define@key{beamercolbox}{colsep}{\def\beamer@colbox@colsep{#1}}
 \define@key{beamercolbox}{colsep*}{\def\beamer@colbox@colseps{#1}}
-\define@key{beamercolbox}{shadow}{\def\beamer@colbox@shadow{#1}}
+\define@key{beamercolbox}{shadow}[true]{\def\beamer@colbox@shadow{#1}}
 \define@key{beamercolbox}{rounded}{\csname beamer@colbox@rounded#1\endcsname}
 \define@key{beamercolbox}{ignorebg}[true]{\csname beamer@colbox@ignorebg#1\endcsname}
 \define@key{beamercolbox}{vmode}[]{\def\beamer@vmode{}}
@@ -157,7 +157,7 @@
     \ifbeamer@colbox@ignorebg\@tempswafalse\fi%
     \def\beamer@colbox@color{#2}%
     \hsize=\beamer@colbox@wd%
-    \setbox\beamer@tempbox=\hbox\bgroup\vbox\bgroup%
+    \setbox\beamer@tempbox=\hbox\bgroup\vbox\bgroup\begingroup%
       \leftskip=\beamer@colbox@ls%
       \advance\leftskip by\beamer@colbox@sep%
       \rightskip=\beamer@colbox@rs%
@@ -180,7 +180,7 @@
       \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
       \if@tempswa\ifdim\beamer@colbox@colsep=0pt\else\vskip\beamer@colbox@colsep\fi\fi%
       \if@tempswa\ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi\fi%
-    \egroup\egroup%
+    \endgroup\egroup\egroup%
     \wd\beamer@tempbox=\hsize%
     \@tempdima=\wd\beamer@tempbox%
     \ifx\beamer@colbox@ht\@empty%

@@ -416,8 +416,7 @@
        {\@latex@warning{Empty `thebibliography' environment}}%
       \ifhmode\unskip\fi\endlist}
 
-\long\def\beamer@biblabeltemplate#1{\def\insertbiblabel{#1}{%
-  \usebeamercolor[fg]{bibliography item}\biblabeltemplate}\hfil}
+\long\def\beamer@biblabeltemplate#1{\def\insertbiblabel{#1}\usebeamertemplate*{bibliography item}\hfil}
 
 \def\bibitem{\@ifnextchar<{\beamer@bibitem@store}{\gdef\beamer@bibstore{}\beamer@plainbibitem}}
 \def\beamer@bibitem@store<#1>{\gdef\beamer@bibstore{<#1>}\beamer@plainbibitem}
@@ -430,7 +429,7 @@
     \global\@namedef{beamerbib@#2@\the\c@framenumber}{\relax}%
     \hypertarget{beamerbib#2}{}%
     }{}%
-  \def\newblock{\@newblock}\newblock%
+  \def\newblock{\beamer@newblock}\newblock%
   \hbox{}\ignorespaces}
 \def\beamer@bibitem#1{\@bibitem{#1}\ignorespaces}
 \def\@bibitem#1{\expandafter\item\beamer@bibstore\@ifundefined{beamerbib@#1@\the\c@framenumber}%
@@ -439,29 +438,26 @@
     \global\@namedef{beamerbib@#1@\the\c@framenumber}{\relax}%
     \hypertarget{beamerbib#1}{}}%
   {}%
-  \def\newblock{\@newblock}\newblock}
+  \def\newblock{\beamer@newblock}\newblock}
 
-\def\@newblock{\firstblocktemplate%
-  \def\newblock{\secondblocktemplate%
-    \def\newblock{\thirdblocktemplate%
-      \def\newblock{\otherblocktemplate}}}%
+\def\beamer@newblock{%
+  \usebeamercolor[fg]{bibliography entry author}%
+  \usebeamerfont{bibliography entry author}%
+  \usebeamertemplate{bibliography entry author}%
+  \def\newblock{%
+    \usebeamercolor[fg]{bibliography entry title}%
+    \usebeamerfont{bibliography entry title}%
+    \usebeamertemplate{bibliography entry title}%
+    \def\newblock{%
+      \usebeamercolor[fg]{bibliography entry location}%
+      \usebeamerfont{bibliography entry location}%
+      \usebeamertemplate{bibliography entry location}%
+      \def\newblock{%
+        \usebeamercolor[fg]{bibliography entry note}%
+        \usebeamerfont{bibliography entry note}%
+        \usebeamertemplate{bibliography entry note}}}}%
   \leavevmode\setbox\beamer@tempbox=\hbox{}\ht\beamer@tempbox=1.5em\box\beamer@tempbox}
 
-\long\def\usebibitemtemplate#1{%
-  \def\biblabeltemplate{#1}}
-
-\long\def\usebibliographyblocktemplate#1#2#3#4{%
-  \def\firstblocktemplate{#1}%
-  \def\secondblocktemplate{#2}%
-  \def\thirdblocktemplate{#3}%
-  \def\otherblocktemplate{#4}}
-
-\beamertemplatearticlebibitems
-\usebibliographyblocktemplate
-  {\usebeamercolor[fg]{bibliography entry author}}
-  {\par\usebeamercolor[fg]{bibliography entry title}}
-  {\par\usebeamercolor[fg]{bibliography entry location}}
-  {\par\usebeamercolor[fg]{bibliography entry note}}
 
 
 \mode
