@@ -190,9 +190,10 @@
 \define@key{beamer@col}{totalwidth}{%
   \def\beamer@colentrycode{\hbox to#1\bgroup\ignorespaces}%
   \def\beamer@colexitcode{\unskip\egroup}}
-\define@key{beamer@col}{c}[true]{\def\beamer@colalign{c}}
-\define@key{beamer@col}{t}[true]{\def\beamer@colalign{t}}
-\define@key{beamer@col}{b}[true]{\def\beamer@colalign{b}}
+\define@key{beamer@col}{c}[true]{\def\beamer@colmode{c}\def\beamer@colalign{c}\def\beamer@colheadskip{}}
+\define@key{beamer@col}{t}[true]{\def\beamer@colmode{t}\def\beamer@colalign{t}\def\beamer@colheadskip{}}
+\define@key{beamer@col}{T}[true]{\def\beamer@colmode{T}\def\beamer@colalign{t}\def\beamer@colheadskip{\vskip-1ex\nointerlineskip}}
+\define@key{beamer@col}{b}[true]{\def\beamer@colmode{b}\def\beamer@colalign{b}\def\beamer@colheadskip{}}
 
 \newenvironment<>{columns}[1][]{%
   \begin{actionenv}#2%
@@ -245,23 +246,24 @@
   \beamer@next}
 }
 
-\newenvironment<>{beamer@columnenv}[2][\beamer@colalign]{%
+\newenvironment<>{beamer@columnenv}[2][\beamer@colmode]{%
   \beamer@colclose\def\beamer@colclose{}%
   \begin{actionenv}#3%
-  \begin{minipage}[#1]{#2}%
-    \leavevmode\raggedright\ignorespaces}
-  {\end{minipage}\hfill\end{actionenv}\@ignoretrue}
+    \setkeys{beamer@col}{#1}%
+    \begin{minipage}[\beamer@colalign]{#2}%
+      \leavevmode\raggedright\beamer@colheadskip\ignorespaces}
+    {\end{minipage}\hfill\end{actionenv}\@ignoretrue}
 \let\endcolumn\endbeamer@columnenv
 
-\newcommand<>\beamer@columncom[2][\beamer@colalign]{%
+\newcommand<>\beamer@columncom[2][\beamer@colmode]{%
   \beamer@colclose%
   \def\beamer@colclose{\end{minipage}\hfill\end{actionenv}\ignorespaces}%
-  \begin{actionenv}#3%
-  \begin{minipage}[#1]{#2}%
-    \leavevmode\raggedright\ignorespaces
-}
+\begin{actionenv}#3%
+  \setkeys{beamer@col}{#1}%
+  \begin{minipage}[\beamer@colalign]{#2}%
+    \leavevmode\raggedright\beamer@colheadskip\ignorespaces}
   
-   
+  
 \mode
 <article>
 {

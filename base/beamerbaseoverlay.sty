@@ -452,16 +452,16 @@
 %
 
 \let\beamer@origitem=\item
-\def\beamer@callorigitem{\@ifnextchar\relax\beamer@origitem\beamer@@callorigitem}
-\def\beamer@@callorigitem{\@ifnextchar[\beamer@@@callorigitem{\beamer@origitem\leavevmode\ignorespaces}}
-\def\beamer@@@callorigitem[#1]{\beamer@origitem[#1]\leavevmode\ignorespaces}
+\def\beamer@callorigitem{\@ifnextchar[\beamer@@callorigitem{\beamer@origitem\leavevmode\ignorespaces}}
+\def\beamer@@callorigitem[#1]{\beamer@origitem[#1]\leavevmode\ignorespaces}
 
 \def\item{%
+  \@ifnextchar\relax\beamer@origitem{%
   \ifhmode%
     \unskip\unskip\par%
   \fi%
   \beamer@closeitem\gdef\beamer@closeitem{}%
-  \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}
+  \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}}
 \def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{%
     \ifx\beamer@defaultospec\beamer@emptyospec%
       \let\next=\beamer@callorigitem%

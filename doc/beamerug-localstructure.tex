@@ -1379,6 +1379,13 @@ create new columns.
     \declare{|t|} will cause the first lines of the columns to be
     aligned. Default if global option |t| is used.
   \item
+    \declare{|T|} is similar to the |t| option, but |T| aligns the
+    tops of the first lines while |t| aligns the so-called baselines
+    of the first lines. If strange things seem to happen in
+    conjunction with the |t| option (for example if a graphic suddenly
+    ``drops down'' with the |t| option instead of ``going up,''), try
+    using this option instead.
+  \item
     \declare{|totalwidth=|\meta{width}} will cause the columns to occupy
     not the whole page width, but only \meta{width}, all told.
   \end{itemize}
@@ -1401,8 +1408,8 @@ create new columns.
   \column{5cm}
     Two\\lines.
 
-  \column{5cm}
-    One line (but aligned).
+  \column[T]{5cm}
+    \includegraphis[height=3cm]{mygraphic.jpg}
 \end{columns}
 \end{verbatim}
 
@@ -1421,8 +1428,8 @@ To create a column, you can either use the |column| environment or the
 \begin{environment}{{column}\oarg{placement}\marg{column width}}
   Creates a single column of width \meta{column width}. The vertical
   placement of the enclosing |columns| environment can be overruled by
-  specifying a specific \meta{placement} (|t| for top, |c| for
-  centered, and |b| for bottom). 
+  specifying a specific \meta{placement} (|t| and |T| for the two top
+  modes, |c| for centered, and |b| for bottom). 
 
   \example The following code has the same effect as the above examples:
 \begin{verbatim}
