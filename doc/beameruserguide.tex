@@ -232,7 +232,9 @@ as follows:
   Use the Itemize style to create the itemized text.
 \item
   Add the overlay specifications (the texts like |<1->|) to the items
-  by placing them at the beginning of the item. 
+  by entering \TeX-mode (press on the little \TeX\ icon) and writing
+  |<1->|. This \TeX\ text should be placed right at the beginning of
+  the item.
 \item
   You must end this frame using the style EndFrame (sadly, the end of
   the document and also the beginning of the appendix do not
@@ -1146,9 +1148,13 @@ slides 1, 2, 3, 6, 7, 8, 10, 12, 13, 14, and 15.
 
 
 \lyxnote
-Overlay specifications can also be given in \LyX. Just type them right
-at the beginning of a style. You can, but need not, put them in
-\TeX-mode. 
+Overlay specifications can also be given in \LyX. You must give them
+in \TeX-mode (otherwise the pointed brackets will be ``escaped'' by
+\LyX). For example, to add an overlay specification to an item, simply
+insert a \TeX-mode text like |<3>| as the first thing in that
+item. Likewise, you can add an overlay specification to environments
+like |{theorem}| by giving them in \TeX-mode right at the start of the
+environment. 
 
 
 \subsubsection{Mode Specifications}
@@ -1414,10 +1420,10 @@ contain multiple slides; otherwise it contains only one slide.
   of a new frame and by the start of a new section or subsection (but
   not by the end of the document!).
 
-  You can pass  an overlay specification to a frame by writing it at
-  the beginning of the frame title. To pass an option, you must pass
-  the option in \TeX-mode, that is, the option's text and the square
-  brakets must in a little \TeX-box (press the \TeX-icon).
+  You can pass options and an overlay specification to a frame by
+  giving these in \TeX-mode as the first thing in the frame
+  title. (Some magic is performed to extract them in \LyX\ mode from
+  there.)
 
   The style ``BeginPlainFrame'' is included as a convenience. It
   passes the |plain| option to the frame. To pass further options to a
@@ -1516,7 +1522,8 @@ how to implement it.
   \lyxnote
   Use the style ``AgainFrame'' to insert an |\againframe| command. The
   \meta{label name} is the text on following the style name
-  and is \emph{not} put in \TeX-mode.
+  and is \emph{not} put in \TeX-mode. However, an overlay specification
+  must be given in \TeX-mode and it must preceed the label name.
 \end{command}
 
 
@@ -2029,6 +2036,10 @@ special:
 
   \articlenote
   The \meta{action specification} is currently completely ignored.
+
+  \lyxnote
+  The \meta{action specification} must be given in \TeX-mode and it
+  must be given at the very start of the item.
 \end{command}
 
 The related command |\bibitem| is also overlay-specification-aware
@@ -3745,6 +3756,11 @@ their usage.
   \end{example}
 }
 \end{verbatim}
+
+
+\lyxnote
+Overlay specifications must be given right at the beginning of the
+environments and in \TeX-mode.
 
 \articlenote
 The predefined environments are typeset using the package
