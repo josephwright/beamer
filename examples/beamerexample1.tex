@@ -51,11 +51,20 @@
 \newcommand{\Nat}{\mathbb{N}}
 \newcommand{\Set}[1]{\{#1\}}
 
-\pgfdeclareimage[width=1.8361cm,height=2cm]{computerimage}{computer}
-\pgfdeclareimage[width=1.8361cm,height=2cm]{computerworkingimage}{computerred}
-\pgfdeclareimage[width=1.625cm,height=2cm]{apple}{g4}
-\pgfdeclareimage[width=1.625cm,height=2cm]{appleworking}{g4red}
-\pgfdeclareimage[width=3.811cm,height=1cm]{ram}{ram}
+\pgfdeclaremask{computer}{computer.mask}
+\pgfdeclaremask{apple}{g4.mask}
+\pgfdeclaremask{ram}{ram.mask}
+
+\pgfdeclareimage[interpolate=true,mask=computer,%
+                 width=1.8361cm,height=2cm]{computerimage}{computer}
+\pgfdeclareimage[interpolate=true,mask=computer,%
+                 width=1.8361cm,height=2cm]{computerworkingimage}{computerred}
+\pgfdeclareimage[interpolate=true,mask=apple,%
+                 width=1.625cm,height=2cm]{apple}{g4}
+\pgfdeclareimage[interpolate=true,mask=apple,%
+                 width=1.625cm,height=2cm]{appleworking}{g4red}
+\pgfdeclareimage[interpolate=true,mask=ram,%
+                 width=3.811cm,height=1cm]{ram}{ram}
 
 \newcommand{\tape}[9]{%
   \pgfputat{#1}{%
@@ -146,8 +155,12 @@
   Technical University of Berlin}
 \date[DLT 2003]{Developments in Language Theory Conference, 2003}
 
-%\pgfdeclareimage[height=0.5cm]{logo}{tu-logo}
-%\logo{\pgfuseimage{logo}}
+\pgfdeclaremask{tu}{tu-logo.mask}
+\pgfdeclaremask{ur}{ur-logo.mask}
+\pgfdeclareimage[mask=tu,width=0.6cm]{tu-logo}{tu-logo}
+\pgfdeclareimage[mask=ur,width=1cm]{ur-logo}{ur-logo}
+
+\logo{\vbox{\hbox to 1cm{\hfil\pgfuseimage{tu-logo}}\vskip0.1cm\hbox{\pgfuseimage{ur-logo}}}}
 
 
 \begin{document}
