@@ -1,22 +1,13 @@
-% $Source$
-% $Revision$
-% $Date$
-% $Author$
-% $Name$
-% $State$
+\RequirePackage{beamerbasercs}
+\def\beamer@version{2.99}
+
+\ProvidesClassRCS $Header$
+[release version \beamer@version\space A class for typesetting presentations]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
-
-\RequirePackage{beamerbasercs}
-
-
-\def\beamer@version{2.99}
-
-\ProvidesClassRCS $Id$
-[release version \beamer@version\space A class for typesetting presentations]
 
 
 
