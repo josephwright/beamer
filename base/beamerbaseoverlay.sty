@@ -426,7 +426,16 @@
 
 
 \def\beamerdefaultoverlayspecification#1{%
-  \beamer@ifempty{#1}{\def\beamer@defaultospec{<*>}}{\def\beamer@defaultospec{#1}}}
+  \beamer@ifempty{#1}%
+  {%
+    \def\beamer@gdefaultospec{<*>}%
+    \def\beamer@defaultospec{<*>}}%
+  {%
+    \def\beamer@gdefaultospec{#1}%
+    \def\beamer@defaultospec{#1}%
+  }
+}
+\beamerdefaultoverlayspecification{}
 
 
 \newcount\beamer@trivlistdepth

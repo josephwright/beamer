@@ -62,6 +62,7 @@
   \beameratdecodeaction{#2}%
   \expandafter\futurelet\expandafter\next\expandafter\beamer@checkcat\beamer@spec:%
   \expandafter\beamer@decodeplus\beamer@spec+:%
+  \expandafter\beamer@decodedot\beamer@spec.:%
   \ifx\beamer@ovmode\beamer@ovmodestop%
     \expandafter\beamer@@decode\beamer@decodefound,!%
     \let\beamer@next=\relax%
@@ -142,6 +143,19 @@
   \advance\beamer@tempcount by\c@beamerpauses\relax%
   \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
   \beamer@@decodeplus}
+
+\def\beamer@decodedot{%
+  \def\beamer@spec{}\beamer@@decodedot}
+\def\beamer@@decodedot#1.#2:{%
+  \edef\beamer@spec{\beamer@spec#1}% everything up to first .
+  \beamer@ifempty{#2}{}{\beamer@@@decodedot#2:}}
+\def\beamer@@@decodedot{%
+  \@ifnextchar({\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
+\def\beamer@relnumberdot(#1){%
+  \beamer@tempcount=#1\relax
+  \advance\beamer@tempcount by\c@beamerpauses\relax%
+  \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
+  \beamer@@decodedot}
 
 \def\beamer@doifnotinframe{}
 \def\beamer@@decode{%

@@ -85,12 +85,10 @@
     \begin{centering}
       \structure{\textbf{\insertframetitle}}
       \par
-      {\footnotesize\structure{\textbf{\insertframesubtitle}}\par}
+      \ifx\insertsubtitle\@empty\else{\footnotesize\structure{\textbf{\insertframesubtitle}}\par}\fi
     \end{centering}
   }
 }
-
-  
 \newcommand{\beamertemplateboldframetitle}{
   \useframetitletemplate{%
     \vskip0.25em%
@@ -98,7 +96,8 @@
      \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
       \color{beamerstructure}
       \Large\bfseries\insertframetitle\par%
-      {\footnotesize\structure{\textbf{\insertframesubtitle}}\par}}%
+      {\footnotesize\structure{\textbf{\insertframesubtitle}}\par}
+    }%
     }
 }
 \newcommand{\beamertemplatelargeframetitle}{

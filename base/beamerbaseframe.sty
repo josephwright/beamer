@@ -97,7 +97,7 @@
         \fi%
         }\nointerlineskip%
       \fi%
-      \vbox{}\ifbeamer@plainframe\nointerlineskip\fi}%
+      \vskip-\parskip\vbox{}\ifbeamer@plainframe\nointerlineskip\fi}%
     {\end{beamer@framepauses}%
   \egroup%
   \ifx\beamer@frametitle\@empty%
@@ -308,7 +308,7 @@
 % Check for old version:
 
 \def\beamer@framecommand{%
-  \def\beamer@defaultospec{<*>}%
+  \edef\beamer@defaultospec{\beamer@gdefaultospec}%
   \@ifnextchar<\beamer@frame\beamer@checkoldframe}
 \def\beamer@checkoldframe{\@ifnextchar[\beamer@@checkoldframe{\beamer@frame<*>}}
 \def\beamer@@checkoldframe[{\@ifnextchar<{\beamer@frame<*>[}{\beamer@@@checkoldframe[}}

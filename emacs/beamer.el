@@ -1,8 +1,7 @@
-;;; -*- emacs-lisp -*-
-;;; beamer.el -- AUC TeX style for the latex-beamer class
+;;; beamer.el --- AUCTeX style for the latex-beamer class
 
 ;; Copyright (C) 2004 Thomas Baumann
-;; License: GPL, see the file COPYING in the base directory of AUC TeX
+;; License: GPL, see the file COPYING in the base directory of AUCTeX
 
 ;; Author: Thomas Baumann <thomas.baumann@ch.tum.de>
 ;; Created: 2003-12-20
@@ -13,18 +12,14 @@
 
 ;; This file adds support for the latex-beamer class.
 ;;
-;; This file is intended to be used with the AUC TeX-Package by Per
-;; Abrahamsen. Put this File into your TeX-style-path. You may also
+;; This file is intended to be used with the AUCTeX-Package.
+;; Put this File into your TeX-style-path. You may also
 ;; byte-compile this file.
 
 ;;; Code:
 (TeX-add-style-hook "beamer"
  (function
   (lambda ()
-    (font-lock-add-keywords 
-     nil
-     '(("\\(<.*>\\)" 1 font-lock-variable-name-face t)))
-
     (defvar beamer-use-section-labels-flag nil
       "Controls whether section labels are added")
     (unless beamer-use-section-labels-flag
@@ -33,10 +28,12 @@
              '(LaTeX-section-heading
                LaTeX-section-title
                LaTeX-section-section)))
+
     (setq LaTeX-item-list
           (append '(("itemize" . LaTeX-item-beamer)
                     ("enumerate" . LaTeX-item-beamer))
                   LaTeX-item-list))
+
     (TeX-add-symbols
      '("alert" 1)
      '("alt" TeX-arg-beamer-overlay-spec 2)
@@ -64,6 +61,7 @@
      '("invisible" TeX-arg-beamer-overlay-spec 1)
      '("label" TeX-arg-beamer-overlay-spec 1)
      '("logo" 1)
+     '("note" TeX-arg-beamer-note 1)
      '("only" TeX-arg-beamer-overlay-spec 1)
      '("onslide" TeX-arg-beamer-overlay-spec)
      '("partpage")
@@ -97,14 +95,16 @@
                        env
                        (let ((overlay (read-input "Overlay: ")))
                          (if (not (zerop (length overlay)))
-                             (format "{%s}" overlay))))))
-     ))))
+                             (format "{%s}" overlay)))))))
+
+    )))
 
 (defun TeX-arg-beamer-overlay-spec (optional &optional prompt)
   "Prompt for overlay specification." 
   (let ((overlay (read-input "Overlay: ")))
     (if (not (zerop (length overlay)))
-        (progn (insert "<" overlay ">")))))
+        (progn (insert "<" overlay ">")))
+    (indent-according-to-mode)))
 
 (defun TeX-arg-beamer-frametitle (optional &optional prompt)
   "Prompt for the frametitle."
@@ -119,6 +119,16 @@
   (TeX-insert-macro "item")
   (delete-horizontal-space)
   (TeX-arg-beamer-overlay-spec 0)
-  (insert " "))
+  (insert " ")
+  (indent-according-to-mode))
   
+(defun TeX-arg-beamer-note (optional &optional prompt)
+  "Prompt for overlay specification and optional argument."
+  (let ((overlay (read-input "Overlay: "))
+        (options (read-input "Options: ")))
+    (if (not (zerop (length overlay)))
+        (progn (insert "<" overlay ">")))
+    (if (not (zerop (length options)))
+        (progn (insert "[" options "]")))
+    (indent-according-to-mode)))
 

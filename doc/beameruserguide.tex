@@ -1286,6 +1286,10 @@ The whole action mechanism is base on the following environment:
   |itemize|, |enumerate|, and |description|. You will only have to use
   this command if you wish to do funny things.
 
+  If given outside any frame, this command sets the default overlay
+  specification for all following frames for which you do not override
+  the default overlay specification.
+
   \example |\beamerdefaultoverlayspecification{<+->}|
 
   \example |\beamerdefaultoverlayspecification{}| clears the default
@@ -1375,6 +1379,24 @@ Any occurence of a |+|-sign may be followed by an \emph{offset} in
 round brackets. This offset will be added to the value of
 |beamerpauses|. Thus, if |beamerpauses| is 2, then |<+(1)->| expands to
 |<3->| and |<+(-1)-+>| expands to |<1-2>|. 
+
+There is another special sign you can use in an overlay specification
+that behaves similarly to the |+|-sign: a dot. When you write |<.->|,
+the say thing as in |<+->| happens \emph{except that the counter
+  |beamerpauses| is not incremented}. Thus a dot, possibly followed by
+an offset, just expands to the current value of the counter
+|beamerpauses|, possibly offset. This dot notation can be useful in
+case like the following:
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item Apple
+\item<.-> Peach
+\item Plum
+\item Orange
+\end{itemize}
+\end{verbatim}
+In the example, the second item is shown at the same time as the third
+one since it does not update the counter.
 
 
 
@@ -2145,14 +2167,26 @@ the following example (but there are exceptions to this rule):
 For the following commands, the effect of an overlay specification is
 special:
 
-\begin{command}{\onslide\sarg{overlay specification}}
-  All text following this command will only be shown  (uncovered) on
-  the specified slides. On non-specified slides, the text still
+\begin{command}{\onslide\opt{\meta{modifier}}\sarg{overlay specification}\opt{\marg{text}}}
+  The behaviour of this command depends on whether the optional
+  argument \meta{text} is given or not (note that the optional
+  argument is given in \emph{normal} braces, not in square
+  brackets). If present, the \meta{modifier} can be either a~|+| or
+  a~|*|.
+
+  If no \meta{text} is given, the following happens: All text
+  following this command will only be shown  (uncovered) on the
+  specified slides. On non-specified slides, the text still 
   occupies space. If no slides are specified, the following
   text is always shown. You need not call this command in the same
   \TeX\ group, its effect transcends block groups. However, this
   command has a \emph{different} effect inside an |overprint|
   environment, see the description of |overprint|.
+
+  If the \meta{modifier} |+| is given, hidden text will not be treated
+  as covered, but as invisible. The difference is the same as the
+  difference between |\uncover| and |\visible|. The modifier |*| may
+  not be given if not \meta{text} argument is present.
   
   \example
 \begin{verbatim}
@@ -2163,13 +2197,31 @@ special:
   \begin{itemize}
   \item
     Still shown on the second and third slide.
-  \onslide<4->
+  \onslide+<4->
   \item
     Shown from slide 4 on.
   \end{itemize}
   Shown from slide 4 on.
   \onslide
   Shown on all slides.
+\end{frame}
+\end{verbatim}
+
+  If a \meta{text} argument is present, |\onslide| (without a
+  \meta{modifier}) is mapped to |\uncover|, |\onslide+|
+  is mapped to |\visible|, and |\onslide*| is mapped to |\only|.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \onslide<1>{Same effect as the following command.}
+  \uncover<1>{Same effect as the previous command.}
+
+  \onslide+<2>{Same effect as the following command.}
+  \visible<2>{Same effect as the previous command.}
+
+  \onslide*<3>{Same effect as the following command.}
+  \only<3>{Same effect as the previous command.}  
 \end{frame}
 \end{verbatim}
 \end{command}
@@ -5098,16 +5150,24 @@ Graphics often convey concepts or ideas much more efficiently than
 text: A picture can say more than a thousand words. (Although,
 sometimes a word can say more than a thousand pictures.) In the
 following, the advantages and disadvantages of different possible ways
-of creating graphics for \beamer\ presentations are discussed.
+of creating graphics for \beamer\ presentations are discussed. Much of
+the information presented in the following is not really special to
+\beamer, but applies to any other document class as well.
 
 
 
-\subsubsection{Including External Graphic Files}
+\subsubsection{External Graphic Files Versus Inlined Graphics}
 
-One way of creating graphics for a presentation is to  use an 
-external program, like |xfig| or the Gimp. These programs
-have an option to \emph{export} graphic files in a format that can
-then be inserted into the presentation.
+There are two principal ways of creating \TeX-documents that include
+graphics: Either the graphic resides in an external file that is
+\emph{included} or the graphic is \emph{inlined}, which means that
+\TeX-file contains a bunch commands like ``draw a red line from
+here to there.'' In the following, the advantages and disadvantages of
+these two approaches are discussed.
+
+You can use an external program, like |xfig| or the Gimp, to create a
+graphic. These programs have an option to \emph{export} graphic files
+in a format that can then be inserted into the presentation.
 
 The main advantage is:
 \begin{itemize}
@@ -5168,7 +5228,10 @@ include:
   convert such PostScript output to \pdf\ on-the-fly. This is a nifty
   feature since it allows you to use MetaPost output for both \pdf\ and
   PostScript. The extension of the file must be |.mps| for this to
-  work. 
+  work.
+\item
+  For including files in Multi-MetaPost format (|.mmp|), please see 
+  Section~\ref{section-mmp}. 
 \end{itemize}
 
 Note that, frustratingly, most graphics format cannot be read by
@@ -5186,15 +5249,13 @@ different file:
 
 \begin{verbatim}
 \begin{frame}
-  \includegraphics<1>[height=2cm]{step1.pdf}
-  \includegraphics<2>[height=2cm]{step2.pdf}
-  \includegraphics<3>[height=2cm]{step3.pdf}
+  \includegraphics<1>[height=2cm]{step1.pdf}%
+  \includegraphics<2>[height=2cm]{step2.pdf}%
+  \includegraphics<3>[height=2cm]{step3.pdf}%
 \end{frame}
 \end{verbatim}
 
 
-
-\subsubsection{Inlining Graphic Commands}
 
 A different way of creating graphics is to insert
 graphic drawing commands directly into your \LaTeX\ file. There are numerous
@@ -5232,6 +5293,152 @@ easy to use, but it should be sufficient in most cases.
 \lyxnote
 Inlined graphics must currently by inserted in a large \TeX-mode
 box. This is not very convenient.
+
+
+\subsubsection{Including Multi-MetaPost Graphics}
+\label{section-mmp}
+
+As you know, \TeX\ is a program that converts simple plain text into
+beautifully typeset documents. The MetaPost program is similar, only
+it converts simple plain text into beautiful graphics. While it is
+a pain to create graphics in \TeX\ and always fun to create
+text, it is a pain to create text in MetaPost and always fun to create
+graphics.
+
+The MetaPost program converts a plain text file ending |.mp|
+into an encapsulated PostScript file (|.eps| or |.mps|, although for
+some unfathomable reason the extension is not added). The |.mp| file
+must contain text written in the MetaFont programming language. To
+include the resulting |.eps| file, you can use the normal
+|\includegraphics| command. As a special bonus, you can \emph{also}
+include such an file when using pdf\LaTeX. Normally, pdf\LaTeX\ cannot
+handle |.eps| files, but the |.eps| files produced by MetaPost have
+such a simple structure that this possible. For this to work, the file
+should end |.mps| instead of |.eps|.
+
+However, MetaPost can do even more: you can have multiple graphics
+reside in a single |.mp| file, which is then usually called a
+Multi-MetaPost file, ending |.mmp|. When running MetaPost on such a
+file, it will create not a single encapsulated PostScript file, but
+several, ending |.0|, |.1|, |.2|, and so on. The idea is that |.0|
+might contain a main graphics and the following pictures contain
+overlay material that should be incrementally added to this graphic.
+
+The obvious problem is how to include the overlays in a presentation
+in a convenient way. To solve this problem, you can use |mpmulti.sty|
+from the ppower4 package. This style, written by Klaus Guntermann,
+introduces a command called |\multiinclude| that takes the base name
+of a graphic file like |mygraphic| and will then search for files
+called |mygraphic.0|, |mygraphic.1|, and so on, till no more files are
+found. It will then include these graphics files using the
+|\includegraphics| command, but will put these graphics ``on top of
+each other.'' Furthermore, and this is the important part,
+it inserts a |\pause| command after each graphic. This command is
+defined in the ppower4 package and has the same effect as the |\pause|
+command of \beamer. For this reason, both ppower4 and also \beamer\
+will first display the basic graphic and will then additionally show
+the next graphic on each slide.
+
+You cannot directly use |mpmulti.sty| since it includes a file called
+|pause.sty|, which is part of the ppower4 package and which clashes
+with \beamer. Essentially, |pause.sty| just defines the
+ppower4-version of |\pause| and is thus not needed in conjunction with
+\beamer. So, in order to use |mpmulti.sty| in \beamer, you either have
+to comment out the line in |mpmulti.sty| reading
+|\RequirePackage{pause}| and somehow make |mpmulti.sty| believe that
+this file has already been included. Alternatively, you can also save
+\beamer's definition of |\pause| and restore it after |mpmulti.sty|
+has been loaded.
+
+If you do not have a working ppower4 installation, you might also
+consider using the style |xmpmulti.sty| that comes with \beamer. This
+file is mainly identical to |mpmulti|, except for two differences:
+First, it does not include |pause.sty|. Second, it extends the
+|\multiinclude| command by allowing a special default overlay
+specification to be given. The effect of this is explained below. Note
+that |xmpmulti.sty| can be used independently from ppower4, but I
+would once more like to stress that the code is essentially due to
+Klaus Guntermann.
+
+\begin{package}{{xmpmulti}}
+  Defines the command |\multiinclude|. The code of this package is
+  mostly due to Klaus Guntermann.
+\end{package}
+
+\begin{command}{\multiinclude\opt{|[<|\meta{default overlay
+        specification}|>]|}\oarg{options}\marg{base file name}}
+  Except for the possibility of specifying a \meta{default overlay
+    specification}, this command is identical to the |\multiinclude|
+  command from the ppower4 package.
+
+  If no overlay specification is given, the command will search for
+  files called \meta{base file name}|.|\meta{number} for increasing
+  numbers \meta{number}, starting with zero. As long as it finds these
+  files, it issues an |\includegraphics| command on them. The files
+  following the first one are put ``on top'' of the first one. Between
+  any two invocations of |\includegraphics|, a |\pause| command is
+  inserted. You can modify this behaviour is different ways by given
+  suitable \meta{options}, see below.
+
+  \example Assume that MetaPost has created files called |gra.0|,
+  |gra.1|, and |gra.2|. You can then create frame consisting of three
+  slides that incrementally show the graphic as follows:
+
+\begin{verbatim}
+\begin{frame}
+  \multiinclude{gra}
+\end{frame}
+\end{verbatim}
+  
+  The effect of providing a \meta{default overlay specification} is
+  the following: First, no |\pause| command is inserted between
+  graphics. Instead, each graphic is surrounded by an |actionenv|
+  environment with the overlay specification set to \meta{default
+    overlay specification}.
+
+  \example You can create the same effect as in the previous example
+  using |\multiinclude[<+->]{gra}|.
+
+  \example For a more interesting usage of the \meta{default overlay
+    specification}, consider the following usage:
+\begin{verbatim}
+\multiinclude[<alert@+| +->]{gra}
+\end{verbatim}
+  This will always paint the most recently added part of the graphic
+  in red (assuming you do not use special colors in the graphic
+  itself).
+
+  \example In order to have each graphic completely \emph{replace} the
+  previous one, you could use |\multiinclude[<+>]{gra}|.
+
+  The following \meta{options} may be given (these are the same as for
+  the original command from the ppower4 package):
+  \begin{itemize}
+  \item
+    \declare{|pause=|\meta{command}} replaces the default pausing
+    command |\pause| by \meta{command}. If a \meta{default overlay
+      specification} is given, the default pausing command is empty;
+    otherwise it is |\pause|. Note that commands like |\pauselevel|
+    are not available in |\beamer|.
+  \item
+    \declare{|graphics=|\meta{options}} passes the \meta{options} to
+    the |\includegraphics| command.
+
+    \example |\multiinclude[graphics={height=5cm}]{gra}|
+  \item
+    \declare{|format=|\meta{extension}} will cause the file names for
+    which we search change from \meta{base file name}|.|\meta{number}
+    to \meta{base file name}|-|\meta{number}|.|\meta{extension}. Note
+    the change from the dot to a hyphen. This option allows you to
+    include, say, |.jpg| files.
+  \item
+    \declare{|start=|\meta{number}} specifies the start
+    \meta{number}. The default is zero.
+  \item
+    \declare{|end=|\meta{number}} specifies the end 
+    \meta{number}. The default is infinity.
+  \end{itemize}  
+\end{command}
 
 
 
@@ -5502,9 +5709,6 @@ namely a hyperlink introduced using the following command:
 \end{command}
 
 
-
-
-
 \subsubsection{Animations Created by Showing Slides in Rapid Succession}
 
 You can create an animation in a portable way by using the
@@ -5608,6 +5812,8 @@ following commands can be used: |\animate| and |\animatevalue|.
   \articlenote
   This command is ignored in |article| mode.
 \end{command}
+
+
 
 
 
