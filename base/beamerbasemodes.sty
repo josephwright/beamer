@@ -38,10 +38,11 @@
 %
 \def\beamer@endinputifotherversion#1{%
   \let\beamer@next=\relax%
-  \ifdim#1<\beamer@version%
+  \@tempdima=\beamer@version pt\relax%
+  \ifdim\@tempdima<#1%
     \let\beamer@next=\endinput%
   \else%
-    \ifdim#1>\beamer@version%
+    \ifdim\@tempdima>#1%
       \let\beamer@next=\endinput%
     \fi%
   \fi%

@@ -1,10 +1,3 @@
-% $Source$
-% $Revision$
-% $Date$
-% $Author$
-% $Name$
-% $State$
-
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
@@ -13,31 +6,26 @@
 
 % Get date and version from RCS Ids
 \def\beamer@parseid $#1: #2.#3,v #4 #5/#6/#7 #8${%
-  \def\beamer@rcsfile{#2}
+  \beamer@parsercsfile$#2/$
   \def\beamer@rcsrevision{#4}
   \def\beamer@rcsdate{#5/#6/#7}
 }
-
-\newdimen\beamer@version
-\def\beamer@getrcsname $#1: #2${%
-  \def\beamer@temp{#2}\ifx\beamer@temp\@empty%
-    \beamer@name=0pt
-    \def\beamer@rcsname{cvs-name-\beamer@rcsdate}
+\def\beamer@parsercsfile$#1/#2${
+  \def\beamer@temp{#2}
+  \ifx\beamer@temp\@empty
+    \def\beamer@rcsfile{#1}
   \else
-    \beamer@@getrcsname$#2$
+    \beamer@parsercsfile$#2$
   \fi}
-\def\beamer@@getrcsname$#1-#2-#3${\beamer@version=#2.#3pt\def\beamer@rcsname{#1 #2.#3}}
 
-
-\def\ProvidesPackageRCS $#1${%
-  \beamer@parseid$#1$%
-  \ProvidesPackage{\beamer@rcsfile}[\beamer@rcsdate\space revision \beamer@rcsrevision]
+\def\ProvidesPackageRCS $#1${
+  \beamer@parseid $#1$
+  \ProvidesPackage{\beamer@rcsfile}[\beamer@rcsdate\space (rcs-revision \beamer@rcsrevision)]
 }
 
-\def\ProvidesClassRCS $#1$ $#2$ [#3]{%
-  \beamer@getrcsname $#1$
-  \beamer@parseid $#2$
-  \ProvidesClass{\beamer@rcsfile}[\beamer@rcsdate\space\beamer@rcsname\space#3]
+\def\ProvidesClassRCS $#1$ [#2]{%
+  \beamer@parseid $#1$
+  \ProvidesClass{\beamer@rcsfile}[\beamer@rcsdate\space#2\space (rcs-revision \beamer@rcsrevision)]
 }
 
 \ProvidesPackageRCS $Id$

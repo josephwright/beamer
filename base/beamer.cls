@@ -10,11 +10,13 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-
 \RequirePackage{beamerbasercs}
 
-\ProvidesClassRCS $Name$ $Id$
-[A class for typesetting presentations]
+
+\def\beamer@version{2.99}
+
+\ProvidesClassRCS $Id$
+[release version \beamer@version\space A class for typesetting presentations]
 
 
 
@@ -318,7 +320,7 @@
 \RequirePackage[implicit=false]{hyperref}
 % For hyperlinks
 
-\hypersetup{pdfcreator={LaTeX with beamer class version \strip@pt\beamer@version}}
+\hypersetup{pdfcreator={LaTeX with beamer class version \beamer@version}}
 
 % Coding stuff
 \beamer@loaducs
@@ -338,8 +340,8 @@
 \normalfont
 \raggedright
 
-\addtocontents{toc}{\protect\beamer@endinputifotherversion{\the\beamer@version}}
-\addtocontents{nav}{\protect\beamer@endinputifotherversion{\the\beamer@version}}
+\addtocontents{toc}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
+\addtocontents{nav}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
 
 
 \RequirePackage{beamerbasemisc}
