@@ -105,14 +105,15 @@
 \newcommand{\lyxnote}{\par\smallskip\noindent\llap{\color{blue}\textsc{lyx}\ \ }}
 
 
-\newcommand{\themeexample}[1]{%
-  \hbox to \textwidth{%
-    \pgfimage[width=.3\textwidth,page=1]{beamerug#1}
-    \hfill
-    \pgfimage[width=.3\textwidth,page=2]{beamerug#1}
-    \hfill
-    \pgfimage[width=.3\textwidth,page=3]{beamerug#1}    
-  }}
+\newcommand{\genericthemeexample}[1]{%
+  \smallskip\par\noindent
+  \pgfimage[height=5cm,page=1]{beamerug#1}\qquad\pgfimage[height=5cm,page=2]{beamerug#1}
+  \smallskip\par}
+\newcommand{\themeexample}[1]{\genericthemeexample{theme#1}}
+\newcommand{\fontthemeexample}[1]{\genericthemeexample{fonttheme#1}}
+\newcommand{\colorthemeexample}[1]{\genericthemeexample{colortheme#1}}
+\newcommand{\layoutthemeexample}[1]{\genericthemeexample{layouttheme#1}}
+\newcommand{\elementthemeexample}[1]{\genericthemeexample{elementtheme#1}}
 
 
 
@@ -6822,6 +6823,7 @@ descriptions of the commands to which you wish to apply them.
   \end{itemize}
 \end{frame}
 \end{document}
+\end{verbatim}
 \end{package}
 
 There is one remaining problem: While the |article| version can easily
@@ -7256,9 +7258,39 @@ Extra text in article version.
 
 
 
+\section{Themes}
 
 
+\themeexample{Antibes}
+\themeexample{Berkeley}
+\themeexample{Berlin}
+\themeexample{Copenhagen}
+\themeexample{Darmstadt}
+\themeexample{Dresden}
+\themeexample{Frankfurt}
+\themeexample{Goettingen}
+\themeexample{Hannover}
+\themeexample{Ilmenau}
+\themeexample{JuanLesPins}
+\themeexample{Luebeck}
+\themeexample{Malmoe}
+\themeexample{Marburg}
+\themeexample{Montpellier}
+\themeexample{PaloAlto}
+\themeexample{Pittsburgh}
+\themeexample{Rochester}
+\themeexample{Singapore}
+\themeexample{Szeged}
+\themeexample{Warsaw}
+\themeexample{default}
+\themeexample{boxes}
 
+\fontthemeexample{bold}
+\fontthemeexample{default}
+\fontthemeexample{italics}
+\fontthemeexample{romanum}
+\fontthemeexample{sansserifstructure}
+\fontthemeexample{serifstructure}
 
 \section{Customization}
 

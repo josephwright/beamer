@@ -280,8 +280,8 @@
 \def\beamer@startcovered{%
   \beamer@smuggle{%
   \global\advance\beamer@coveringdepth by 1\relax%
-  \beamer@actions{\pgfsys@begininvisible}{%
-     \pgfsys@endinvisible%
+  \beamer@actions{\pgfsys@begininvisible\aftergroup\beamer@@spacingcover}{%
+     \pgfsys@endinvisible\aftergroup\beamer@@spacingcover%
      }%
   \def\opaqueness<##1>##2{%
     \only<##1>{%
@@ -337,10 +337,6 @@
 
 \newcolormixin\beamer@colorhook
 
-%\newenvironment{colormixin}[1]%
-%{\edef\colorcurrentmixin{!#1\colorcurrentmixin}\color{.}}{}
-
-%\def\colorhook{\colorlet{@}{.\colorcurrentmixin\beamer@colorhook}}
 \def\pgfalternateextension{\colorcurrentmixin\beamer@pgfextension}
 
 \def\beamer@colorhook{}
@@ -405,8 +401,8 @@
 \newcommand<>{\beamer@noargsvisibleonslide}{%
   \beamer@endpause%
   \alt#1%
-  {\beamer@spacingcoverb\gdef\beamer@endpause{\beamer@spacingcoverb}}%
-  {\pgfsys@begininvisible\gdef\beamer@endpause{\pgfsys@endinvisible}}%
+  {\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
+  {\beamer@begininvisible\gdef\beamer@endpause{\beamer@endinvisible}}%
 }
           
 \mode
@@ -554,16 +550,19 @@
 
 \def\beamer@@spacingcover{\beamer@smuggle{\pgfsys@begininvisible\pgfsys@endinvisible}}
 \def\beamer@spacingcover{\beamer@@spacingcover\aftergroup\beamer@@spacingcover}
-\def\beamer@spacingcoverb{\pgfsys@begininvisible\pgfsys@endinvisible}
+
+\def\beamer@begininvisible{\beamer@smuggle{\pgfsys@begininvisible\aftergroup\beamer@@spacingcover}}
+\def\beamer@endinvisible{\beamer@smuggle{\pgfsys@endinvisible\aftergroup\beamer@@spacingcover}}
+
 \long\def\beamer@fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
 \long\def\beamer@makecovered#1{\beamer@startcovered#1\beamer@endcovered}
-\long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
+\long\def\beamer@reallymakeinvisible#1{\beamer@begininvisible#1\beamer@endinvisible}
 
 \newcommand{\uncover}{\alt{\beamer@fakeinvisible}{\beamer@makecovered}}
 \newcommand{\visible}{\alt{\beamer@fakeinvisible}{\beamer@reallymakeinvisible}}
 \newcommand{\invisible}{\alt{\beamer@reallymakeinvisible}{\beamer@fakeinvisible}}
-\newenvironment{visibleenv}{\begin{altenv}{\beamer@spacingcoverb}{\beamer@spacingcoverb}{\pgfsys@begininvisible}{\pgfsys@endinvisible}}{\end{altenv}}
-\newenvironment{invisibleenv}{\begin{altenv}{\pgfsys@begininvisible}{\pgfsys@endinvisible}{\beamer@spacingcoverb}{\beamer@spacingcoverb}}{\end{altenv}}
+\newenvironment{visibleenv}{\begin{altenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@begininvisible}{\beamer@endinvisible}}{\end{altenv}}
+\newenvironment{invisibleenv}{\begin{altenv}{\beamer@begininvisible}{\beamer@endinvisible}{\beamer@spacingcover}{\beamer@spacingcover}}{\end{altenv}}
 \newenvironment{uncoverenv}{\begin{altenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}}{\end{altenv}}
 \newenvironment{onlyenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
 \renewcommand<>{\color}{\alt#1{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}}

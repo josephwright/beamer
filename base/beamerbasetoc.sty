@@ -50,8 +50,8 @@
 \def\beamer@@parsetocsections#1[]{\def\beamer@tocsections{#1}}
 \def\beamer@@@parsetocsections#1[]{\def\beamer@tocsections{<all:#1>}}
 
-\def\tableofcontents{\@ifnextchar[{\@tableofcontents}{\@tableofcontents[]}}
-\def\@tableofcontents[#1]{%
+\def\tableofcontents{\@ifnextchar[{\beamer@tableofcontents}{\beamer@tableofcontents[]}}
+\def\beamer@tableofcontents[#1]{%
   \def\beamer@toc@cs{show}%
   \def\beamer@toc@os{show}%
   \def\beamer@toc@css{show}%
