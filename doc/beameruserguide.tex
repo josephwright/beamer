@@ -70,7 +70,6 @@
 
 \section{Introduction}
 
-
 \subsection{Overview}
 
 This user's guide explains the functionality of the \beamer\ class.
@@ -155,8 +154,8 @@ slide, a slide showing only the first of the three items, a slide
 showing the first two of them, and a slide showing all three items.
  
 To structure your text, you can use the commands \verb!\section! and
-\verb!\subsection!. These commands will not only create a table of
-contents, but will also create navigation bars.
+\verb!\subsection!. These commands will not only create entries in the
+table of contents, but will also in the navigation bars.
 
 
 
@@ -208,7 +207,7 @@ shell):
 \end{verbatim}
 
 Naturally, if the \texttt{TEXINPUTS} variable is already defined
-differently, you should \emph{add} the two directories to the list. Do
+differently, you should \emph{add} the three directories to the list. Do
 not forget to place a colon at the end (corresponding to an empty
 path), which will include all standard directories.
 
@@ -228,11 +227,11 @@ are simply huge directories that contain these files. By default,
 \begin{itemize}
 \item
   The root \texttt{texmf} tree, which is usually located at
-  \texttt{/usr/share/}, \verb!c:\texmf\!, or\\
+  \texttt{/usr/share/texmf/}, \verb!c:\texmf\!, or\\
   \verb!c:\Program Files\TeXLive\texmf\!.
 \item
   The local  \texttt{texmf} tree, which is usually located at
-  \texttt{/usr/local/share/}, \verb!c:\localtexmf\!, or\\
+  \texttt{/usr/local/share/texmf/}, \verb!c:\localtexmf\!, or\\
   \verb!c:\Program Files\TeXLive\texmf-local\!.
 \item
   Your personal  \texttt{texmf} tree, which is located in your home
@@ -278,7 +277,7 @@ the file and check whether the resulting \texttt{beamerexample.pdf}
 looks correct. If so, you are all set.
 
 If you have updated from a previous version and you have trouble
-\TeX ing some old file, it sometimes help to delete all the extra
+\TeX ing some old file, it sometimes helps to delete all the extra
 files \TeX\ creates automatically (like the \texttt{.aux} and
 \texttt{.head} files).
 
@@ -793,11 +792,11 @@ sentence. Otherwise, there should not be a period.
 \subsubsection{Restricting the Slides of a Frame}
 \label{subsection-restriction}
 
-As mentioned above, the number of slides in a frame is automatically
+The number of slides in a frame is automatically
 calculated. If the largest number mentioned in any
-specification is 4, four slides are introduced (despite the fact
-that a specification like \verb!<4->! might suggest that more than
-four slides would be possible).
+overlay specification inside the frame is 4, four slides are
+introduced (despite the fact that a specification like \verb!<4->!
+might suggest that more than four slides would be possible).
 
 You can also specify the number of slides in the frame ``by hand.'' To
 do so, you pass an optional argument to the \verb!\frame! command,
@@ -817,14 +816,20 @@ will contain the text ``This is slide number~1,'' the second ``This is
 slide number~2,'' the third ``This is slide number~4,'' and the fourth
 ``This is slide number~5.''
 
+A useful specification is just \texttt{[0]}, which causes the frame to
+have to no slides at all. For example, \verb!\frame[handout:0]! causes
+the frame to be suppressed in the handout version, but to be shown
+normally in all other versions.
 
 
 \subsubsection{Verbatim Commands and Listings inside Frames}
 
-The \verb!\verb! command, the verbatim environment, the lstlisting
-environment, and related environments work only in frames that contain
-a single slide. Furthermore, you must explicitly specify that the
-frame contains only one slide; like this: 
+The \verb!\verb! command, the \texttt{verbatim} environment, the
+\texttt{lstlisting} environment, and related environments that allow
+you to typeset arbitrary text work only in
+frames that contain a single slide or that are suppressed
+altogether. Furthermore, you must explicitly specify that the frame
+contains only one slide; like this:
 \begin{verbatim}
 \frame[all:1]
 {
@@ -838,7 +843,7 @@ frame contains only one slide; like this:
         return i;
   }
 \end{verbatim}
-\unskip\verb!  \end{verbatim}!
+\unskip\verb!\end{verbatim}!
 \begin{verbatim}
 }
 \end{verbatim}
@@ -905,8 +910,10 @@ int main (void)
   return 0;
 }
 \end{verbatim}
-\unskip\verb!\end{verbatim}}!
+\unskip\verb!\end{verbatim}!
 \begin{verbatim}
+}
+
 \frame
 {
   Our algorithm:
@@ -979,11 +986,11 @@ in square brackets.
 \Description{
   The content of the environment is shown piecewise. Each
   \texttt{pause} command used inside uncovers a bit more of the
-  environment's text. The optional parameter's main use is to set is
+  environment's text. The optional parameter's main use is to set it
   to~0. The effect of this is that the first \texttt{pause} has no
   effect, which can be useful if the \texttt{pauses} environment
   immediately starts with a \texttt{pause} command. This happens
-  sometimes, when the environment's content is created automatically.
+  sometimes when the environment's content is created automatically.
 }
 \Example
 \begin{verbatim}
@@ -1806,8 +1813,8 @@ presentation. If you are not familiar with \verb!bibtex!, you may wish
 to consult its documentation. It is a  powerful tool for
 creating high-quality citations.
 
-Using \verb!bibtex! or just your editor, you place your bibliographic
-references into an environment called \verb!thebibliography!. This
+Using \verb!bibtex! or your editor, place your bibliographic
+references in the environment \verb!thebibliography!. This
 (standard \LaTeX) environment takes one parameter, which should be the
 longest \verb!bibitem! label in the following list of bibliographic
 entries.
@@ -2046,7 +2053,7 @@ structure your text.
 
 There are three predefined environments for creating lists, namely
 \verb!enumerate!, \verb!itemize!, and \verb!description!. The first
-two of there can be nested to depth two, but not further (this would
+two can be nested to depth two, but not further (this would
 create totally unreadable slides).
 
 The \verb!\item! command is overlay-specification-aware. If an overlay
@@ -2221,7 +2228,7 @@ same. The following German block environments are also predefined:
 \verb!Problem!, \verb!Loesung!, \verb!Definition!, \verb!Satz!,
 \verb!Beweis!, \verb!Folgerung!, \verb!Lemma!, \verb!Fakt!,
 \verb!Beispiel!, and \verb!Beispiele!. See the following example for
-their usage
+their usage.
 
 \begin{verbatim}
 \frame
@@ -2488,9 +2495,9 @@ color. One can then, for example, mix a color with the background
 color to create a ``transparent'' color.
 
 Unfortunately, it is not always clear what exactly the background
-color is. If the background is a shading or a picture, the color
-changes all the time. In these cases, one can at least try to mix-in
-an \emph{average} background color, called
+color is. If the background is a shading or a picture, different parts
+of a slide have different background colors. In these cases, one can
+at least try to mix-in an \emph{average} background color, called
 \texttt{averagebackgroundcolor}. If a shading or picture is not too
 colorful, this works fairly well.
 
@@ -2653,8 +2660,8 @@ been shown.
 \subsection{Animations}
 
 A word of warning first: Animations can be very distracting. No matter
-how cute a rotating, flying theorem looks like to you and no matter
-how badly you feel your audience needs some action to keep happy,
+how cute a rotating, flying theorem seems to look and no matter
+how badly you feel your audience needs some action to keep it happy,
 most people in the audience will typically feel you are making fun of
 them. 
 
@@ -2688,8 +2695,8 @@ presentation (for the Acrobat Reader this works only in full-screen
 mode). By setting the number of seconds to zero, you can create a
 rapid succession of slides.
 
-To facilitate the creating of animations in using the feature, you can
-use two commands: \verb!\animate! and \verb!\animatevalue!.
+To facilitate the creation of animations using this feature, commands
+can be used: \verb!\animate! and \verb!\animatevalue!.
 
 \Command{animate}
 \Description{
@@ -2708,7 +2715,7 @@ use two commands: \verb!\animate! and \verb!\animatevalue!.
   fourth slides ``flash by.'' At the end, the content of the fifth
   slide is shown.
 
-  ... code for creating an animation...
+  ... code for creating an animation with five slides ...
 }
 \end{verbatim}
 
@@ -2725,7 +2732,7 @@ use two commands: \verb!\animate! and \verb!\animatevalue!.
   last slide of the range.
 }
 \Description{
-  That command allows you to vary a counter or dimension between two
+  The command allows you to vary a counter or dimension between two
   values. For the slides in the specified range, the counter or
   dimension is set to an interpolated value that depends on the
   current slide number.
@@ -2927,17 +2934,19 @@ using the following overlay-specification-aware command:
 
 
 
-\section{Creating Handouts, Transparencies, and Notes}
+\section{Managing Non-Presentation Versions and Material}
 
 The \beamer\ package offers different ways of creating special
-versions of your talk that can be used in different contexts. You can
-easily create a \emph{handout} version of the presentation that can be
-distributed to the audience. You can also create a version that is
-more suitable for a presentation using an overhead projector. Finally,
-you can add notes for yourself that help you remember what to say
-for specific slides. All of these versions coexist in your main
-file. They are created by specifying different class
-options and rerunning \TeX\ on the main file.
+versions of your talk and adding material that are not shown during
+the presentation. You can create a \emph{handout} version of the
+presentation that can be distributed to the audience. You can also
+create a version that is more suitable for a presentation using an
+overhead projector. You can add notes for yourself that help
+you remember what to say for specific slides. Finally, you can have a
+completely independent ``article'' version of your presentation 
+coexist in your main file. All special versions are created by
+specifying different class options and rerunning \TeX\ on the main
+file. 
 
 
 \subsection{Creating Handouts}
@@ -3109,6 +3118,131 @@ parsed, but not displayed. This is useful for printing the notes.
 
 
 
+\subsection{Creating an Article Version}
+
+\label{section-article}
+
+In the following, the ``article version'' of your presentation refers
+to a normal \TeX\ text typeset using, for example, the document class
+\texttt{article} or perhaps \texttt{lncs} or a similar document
+class. This version of the presentation will typically follow
+different typesetting rules and may even have a different
+structure. Nevertheless, you may wish to have this version coexist
+with your presentation in one file and you may wish to share some part
+of it (like a figure or a formula) with your presentation.
+
+To achieve this, a special class option and three commands can be
+used. The class option is the option \texttt{class=xxx}, where
+\texttt{xxx} is the name of another document class like
+\texttt{article} or \texttt{report}. If this class option is given,
+the beamer class will almost immediately transfer control to this
+class. None of the normal commands defined by the beamer class will be
+defined, except for the three commands listed in the following. All
+class options passed to the beamer class will be passed on to the
+class \texttt{xxx}, \emph{except}, naturally, for the option
+\texttt{class=xxx} itself. Consider the following example:
+\begin{verbatim}
+\documentclass[class=article,a4paper]{beamer}
+\end{verbatim}
+
+This will cause the rest of the text to be typeset using the
+\texttt{article} class with the only class option being
+\texttt{a4paper}.
+
+You can use three commands to specify which part of your text belong
+to the article version, which belongs to the actual presentation, and
+which belongs to both. These command switch between three different
+modes: article mode, presentation mode, and common mode. While \TeX\
+scans text in the article mode, this text is read normally when an
+article is requested, but thrown away if a presentation is
+requested. In presentation mode, the behavior is the other way
+round. In common mode, the text is always inserted.
+
+Right after the \texttt{documentclass} command and right after the
+\verb!\begin{document}!, \TeX\ is always in common mode.
+
+\Command{article}
+\Description{
+  All text following this command will only be present in the article
+  version. For the presentation version, this text will be completely
+  ignored. This command must be the only command in a line and it must
+  start the line.
+  }
+
+\Command{presentation}
+\Description{
+  All text following this command will only be present in the
+  presentation version. For the article version, the text will be
+  completely ignored. This command must be the only command in a line
+  and it must start the line.
+  }
+
+\Command{common}
+\Description{
+  All text following this command will be present in both the article
+  and the presentation version. This command must be the only command in
+  a line and it must start the line.
+  }
+
+\Example
+\begin{verbatim}
+\documentclass[class=article,a4paper]{beamer}
+%\documentclass[red]{beamer}
+
+\article
+\usepackage{fullpage}
+
+\common
+\usepackage[english]{babel}
+\usepackage{pgf}
+
+\presentation
+\usepackage{beamerthemesplit}
+
+\begin{document}
+  \pgfdeclareimage{myimage}{1cm}{}{filename}
+
+\presentation
+  \frame{
+
+\common
+    \begin{figure}
+      \pgfuseimage{myimage}
+    \end{figure}
+  
+\presentation
+    }
+\end{document}
+\end{verbatim}
+
+The above commands cannot be used inside macros (they are implemented
+similarly to \texttt{verbatim} environments, only that the contents is
+sometimes thrown away instead of rendered). However, there is one
+exception: Inside a \verb!\frame!, these commands can be used,
+provided they ``balance'' inside the frame and provided you switch
+back to presentation mode by the end of the frame (as in the above
+example). If you have problems with these commands inside 
+a frame, try using a \verb!\def! command outside the frame as in the 
+following example:
+\begin{verbatim}
+\begin{document}
+...
+\common
+  \pgfdeclareimage{myimage}{1cm}{}{filename}
+  \def\myfigure{
+    \begin{figure}
+      \pgfuseimage{myimage}
+    \end{figure}}
+
+\article
+  \myfigure
+
+\presentation
+  \frame{\myfigure}
+\end{document}
+\end{verbatim}
+
+
 \section{Customization}
 
 
@@ -3229,6 +3363,12 @@ Class options are listed right behind the command \verb!\documentclass!
 in square brackets. Class options, see the following list, govern
 certain global behaviors of the presentation.
 
+\ClassOption{class=xxx}
+\Description{
+  Transfer control to document class \texttt{xxx}. See
+  Section~\ref{section-article} for details.
+}
+
 \ClassOption{notes}
 \Description{
   Include notes in the output file. Normally, notes are not included.
@@ -3329,7 +3469,17 @@ the standard \verb!\usepackage! command.
 
 \subsubsection{Bars Theme}
 
+\vbox{
 \Theme{beamerthemebars}
+
+\Example
+
+\hbox{\pgfuseimage{themebars}\quad\pgfuseimage{themebars2}}
+}
+
+\subsubsection{Boxes Theme}
+
+\Theme{beamerthemeboxes}
 \Parameters{
 \item Package option \texttt{headheight}, which specifies the height
 of the head line. Specified in a key~=~value fashion.
@@ -3337,24 +3487,13 @@ of the head line. Specified in a key~=~value fashion.
 of the foot line. Specified in a key~=~value fashion.
 }
 \Example
-\begin{verbatim}
-\usepackage[headheight=2cm,footheight=1cm]{beamerthemeboxes}
-\end{verbatim}
-
-\Example
-
-\hbox{\pgfuseimage{themebars}\quad\pgfuseimage{themebars2}}
-
-
-\subsubsection{Boxes Theme}
-
-\vbox{
-\Theme{beamerthemeboxes}
-
-\Example
 
 \hbox{\pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}}
-}
+
+\Example
+\begin{verbatim}
+\usepackage[headheight=12pt,footheight=12pt]{beamerthemeboxes}
+\end{verbatim}
 
 For this theme, you can specify an arbitrary number of templates for
 the boxes in the head line and in the foot line. You can add a
@@ -3372,8 +3511,9 @@ template for another box by using the following commands.
 }
 \Example
 \begin{verbatim}
-\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad Left Box}
-\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad Right Box}
+\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+\addheadboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
+\addheadboxtemplate{\color{structure!50}}{\color{white}\tiny\quad 3. Box}
 \end{verbatim}
 
 \Command{addfootboxtemplate}
@@ -3383,9 +3523,9 @@ template for another box by using the following commands.
   }
 \Example
 \begin{verbatim}
-\addheadfoottemplate{\color{black}}{\color{white}\tiny\quad Big Box}
+\addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
+\addfootboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
 \end{verbatim}
-
 
 
 

@@ -1,6 +1,6 @@
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
 [2003/10/23 v0.92-dev Class for Typesetting a Beamer Presentation]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -79,7 +79,7 @@
   \next}
 \def\common{\beamer@closer\gdef\beamer@closer{}}
 \def\beamer@enddocument{\beamer@closer\end{document}}
-\def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}\presentation}
+\def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}}
 \def\beamer@closer{}
 {\escapechar=-1\relax%
   \xdef\beamer@stoparticle{\string\\article}
@@ -104,41 +104,25 @@
 % Extract class name, if present
 \def\beamer@classname{}
 \def\beamer@classoptions{}
-\def\beamer@findclassname#1,#2!{
-  \def\beamer@temp{#1}
-  \ifx\beamer@temp\@empty
-  \else
-    \beamer@parseclass#1=!
-  \fi
-  \def\beamer@temp{#2}
-  \ifx\beamer@temp\@empty
-    \let\next=\@gobble 
-  \else
-  \let\next=\beamer@findclassname
-  \fi
-  \next#2!}
 \def\beamer@classnamename{class}
-\def\beamer@optionname{option}
-\def\beamer@parseclass#1=#2!{
+\def\beamer@eq{=,}
+\def\beamer@findclassname#1=#2,#3!{
   \def\beamer@temp{#1}
   \ifx\beamer@temp\beamer@classnamename
-    \beamer@extractclassname#2
+    \def\beamer@classname{#2}
+    \beamer@stripsign#3!
+  \fi}
+\def\beamer@stripsign#1!{%
+  \def\beamer@temp{#1}
+  \ifx\beamer@temp\beamer@eq
+  % nothing to do
   \else
-    \ifx\beamer@temp\beamer@optionname
-      \beamer@extractoption#2
-    \fi
-  \fi  
-}
-\def\beamer@extractclassname#1={
-  \def\beamer@classname{#1}
-}
-\def\beamer@extractoption#1={
-  \ifx\beamer@classoptions\@empty
-    \def\beamer@classoptions{#1}
-  \else
-    \edef\beamer@classoptions{\beamer@classoptions,#1}  
+  \beamer@@stripsign#1!
   \fi
 }
+\def\beamer@@stripsign#1,=,!{
+  \def\beamer@classoptions{#1}
+  }
 
 \def\beamer@transfer{
   \beamer@inpresentationfalse
@@ -147,7 +131,7 @@
   \endinput
   }
 
-\expandafter\beamer@findclassname\@classoptionslist,!
+\expandafter\beamer@findclassname\@classoptionslist,=,!
 \ifx\beamer@classname\@empty
   \let\next=\relax
 \else
