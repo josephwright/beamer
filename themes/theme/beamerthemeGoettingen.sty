@@ -7,21 +7,21 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections}{beamerouterthemesidebar}}
 
-\PassOptionsToPackage{right}{beamerlayoutthemesidebar}
-\PassOptionsToPackage{width=2cm}{beamerlayoutthemesidebar}
+\PassOptionsToPackage{right}{beamerouterthemesidebar}
+\PassOptionsToPackage{width=2cm}{beamerouterthemesidebar}
 
-\DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerouterthemesidebar}}
 
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
-\uselayouttheme[height=0pt]{sidebar}
+\useoutertheme[height=0pt]{sidebar}
 
 \setbeamercolor{sidebar top}{use=structure,bg=structure.fg!25}
 \setbeamercolor{sidebar bottom}{use=structure,bg=structure.fg!10}
