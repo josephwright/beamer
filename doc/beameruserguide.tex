@@ -4937,7 +4937,8 @@ You can use the usual |\footnote| command. It has been augmented to
 take an additional option, for placing footnotes at the frame
 bottom instead of at the bottom of the current minipage.
 
-\begin{command}{\footnote\oarg{options}\marg{text}}
+\begin{command}{\footnote\sarg{overlay
+      specification}\oarg{options}\marg{text}} 
   Inserts a footnote into the current frame. Footnotes will always be
   shown at the bottom of the current frame; they will never be
   ``moved'' to other frames. As usual, one can give a number as
@@ -4951,8 +4952,13 @@ bottom instead of at the bottom of the current minipage.
     rather than as part of the frame.
   \end{itemize}
 
+  If an \meta{overlay specification} is given, this causes the
+  footnote \meta{text} to be shown only on the specified slides. The
+  footnote symbol in the text is shown on all slides.
+
   \example |\footnote{On a fast machine.}|
   \example |\footnote[frame,2]{Not proved.}|
+  \example |\footnote<.->{Der Spiegel, 4/04, S.\ 90.}|
 \end{command}
 
 You can change the way footnotes are typeset by changing the footnote
