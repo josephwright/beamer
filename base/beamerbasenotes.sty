@@ -49,7 +49,7 @@
 % Notes in frames
 %
 
-\newoverlaycommand{\note}{\beamer@note}{\@gobble}
+\newcommand{\note}{\alt{\beamer@note}{\@gobble}}
 \def\beamer@note#1{%
   \expandafter\gdef\expandafter\beamer@notes\expandafter{\beamer@notes%
     #1}}
@@ -57,7 +57,7 @@
 \let\beamer@noteorig=\note% will be reset at beginning of frame
 \def\note{\ClassWarning{beamer}{\noexpand\note should not be used outside frames. Use \noexpand\notes instead}\notes}
 
-\newoverlaycommand{\noteitem}{\beamer@noteitem}{\@gobble}
+\newcommand{\noteitem}{\alt{\beamer@noteitem}{\@gobble}}
 \def\beamer@noteitem#1{%
   \expandafter\gdef\expandafter\beamer@noteitems\expandafter{\beamer@noteitems%
     \item#1}}

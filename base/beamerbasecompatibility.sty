@@ -43,12 +43,13 @@
   \recalculatehead%
   %
 
-  \AtBeginDocument{% fix frenchb.ldf's meddling with itemize
+  \AtBeginDocument{% fix frenchb.ldf's meddling with itemize and :
     \let\labelitemi\beamer@labelitemi
     \let\labelitemii\beamer@labelitemii
     \let\itemize\beamer@itemize
     \let\list\beamer@list
-    \let\@trivlist\beamer@@trivlist}
+    \let\@trivlist\beamer@@trivlist%
+    \catcode`:=12\catcode`|=12}
   
   \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
     %
@@ -125,8 +126,10 @@
 %
 \def\plainframe{\frame[plain]}%obsolete
 \def\pgfonly{\only}%obsolete
-\AtBeginDocument{\newoverlaycommand{\nameslide}{\beamer@nameslide}{\@gobble}}%obsolete
+\AtBeginDocument{\newcommand{\nameslide}{\alt{\beamer@nameslide}{\@gobble}}}%obsolete
 \newenvironment{pauses}[1][\beamer@pausecount]{\global\beamer@pausecount=#1\relax}{}%obsolete
+\def\newoverlaycommand#1#2#3{\def#1{\alt{#2}{#3}}}
+\def\newoverlayenvironment#1#2#3#4#5{\newenvironment{#1}{\begin{altenv}{#2}{#3}{#4}{#5}}{\end{altenv}}}
 
 
 %%% Local Variables: 

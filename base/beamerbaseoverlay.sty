@@ -232,59 +232,57 @@
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
 \long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
 
-\newoverlaycommand{\uncover}{\@firstofone}{\makeinvisible}
-\newoverlaycommand{\visible}{\@firstofone}{\beamer@reallymakeinvisible}
-\newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\@firstofone}
-\newoverlayenvironment{visibleenv}{}{}{\pgfsys@begininvisible}{\pgfsys@endinvisible}
-\newoverlayenvironment{invisibleenv}{\pgfsys@begininvisible}{\pgfsys@endinvisible}{}{}
-\newoverlayenvironment{uncoverenv}{}{}{\beamer@startcovered}{\beamer@endcovered}
-\newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
-\renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}
+\newcommand{\uncover}{\alt{\@firstofone}{\makeinvisible}}
+\newcommand{\visible}{\alt{\@firstofone}{\beamer@reallymakeinvisible}}
+\newcommand{\invisible}{\alt{\beamer@reallymakeinvisible}{\@firstofone}}
+\newenvironment{visibleenv}{\begin{altenv}{}{}{\pgfsys@begininvisible}{\pgfsys@endinvisible}}{\end{altenv}}
+\newenvironment{invisibleenv}{\begin{altenv}{\pgfsys@begininvisible}{\pgfsys@endinvisible}{}{}}{\end{altenv}}
+\newenvironment{uncoverenv}{\begin{altenv}{}{}{\beamer@startcovered}{\beamer@endcovered}}{\end{altenv}}
+\newenvironment{onlyenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
+\renewcommand<>{\color}{\alt#1{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}}
 
 \article
 {
-  \newoverlaycommand{\uncover}{\@firstofone}{\@gobble}
-  \newoverlaycommand{\visible}{\@firstofone}{\@gobble}
-  \newoverlaycommand{\invisible}{\@gobble}{\@firstofone}
-  \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
-  \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
-  \newoverlayenvironment{visibleenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
-  \newoverlayenvironment{invisibleenv}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}{}{}
+  \newcommand{\uncover}{\alt{\@firstofone}{\@gobble}}
+  \newcommand{\visible}{\alt{\@firstofone}{\@gobble}}
+  \newcommand{\invisible}{\alt{\@gobble}{\@firstofone}}
+  \newenvironment{onlyenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
+  \newenvironment{uncoverenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
+  \newenvironment{visibleenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
+  \newenvironment{invisibleenv}{\begin{altenv}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}{}{}}{\end{altenv}}
 
   \AtBeginDocument{
     % These have to be done late...
-    \renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}
+    \renewcommand<>{\color}{\alt#1{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}}
   }
 }
 
 \common
 {
-  \newoverlaycommand{\only}{\@firstofone}{\@gobble}
-  \renewoverlaycommand{\textbf}{\beameroriginal{\textbf}}{}
-  \renewoverlaycommand{\textit}{\beameroriginal{\textit}}{}
-  \renewoverlaycommand{\textsl}{\beameroriginal{\textsl}}{}
-  \renewoverlaycommand{\textsf}{\beameroriginal{\textsf}}{}
-  \renewoverlaycommand{\textrm}{\beameroriginal{\textrm}}{}
+  \renewcommand<>{\textbf}{\only#1{\beameroriginal{\textbf}}}
+  \renewcommand<>{\textit}{\only#1{\beameroriginal{\textit}}}
+  \renewcommand<>{\textsl}{\only#1{\beameroriginal{\textsl}}}
+  \renewcommand<>{\textsf}{\only#1{\beameroriginal{\textsf}}}
+  \renewcommand<>{\textrm}{\only#1{\beameroriginal{\textrm}}}
 }
 
-\renewoverlaycommand{\hypertarget}{\beameroriginal{\hypertarget}}{\@gobble}
+\renewcommand<>{\hypertarget}[2]{\only#3{\beameroriginal{\hypertarget}{#1}{#2}}}
 
 \article
 {
   \AtBeginDocument{
     % These have to be done late...
-    \renewoverlaycommand{\hypertarget}{\beameroriginal{\hypertarget}}{\@gobble}
+    \renewcommand<>{\hypertarget}[2]{\only#3{\beameroriginal{\hypertarget}{#1}{#2}}}
   }
 }
 
 
 
-\newoverlaycommand{\emph}{\@emph}{}
-\def\@emph#1{{\itshape#1}}
+\newcommand<>{\emph}[1]{{\only#2{\itshape}#1}}
 
 \article
 {
-  \renewoverlaycommand{\emph}{\beameroriginal{\emph}}{}
+  \renewcommand<>{\emph}{\only#1{\beameroriginal\emph}}
 }
 
 
@@ -380,24 +378,24 @@
 
 \common
 {
-  \newcommand<>{\transblindshorizontal}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /H}}}
-  \newcommand<>{\transblindsvertical}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /V}}}
-  \newcommand<>{\transboxin}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /I}}}
-  \newcommand<>{\transboxout}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /O}}}
-  \newcommand<>{\transcover}[1][]{\only#2{\beamer@dotrans[#1]{Cover}}}
-  \newcommand<>{\transdissolve}[1][]{\only#2{\beamer@dotrans[#1]{Dissolve}}}
-  \newcommand<>{\transfade}[1][]{\only#2{\beamer@dotrans[#1]{Fade}}}
-  \newcommand<>{\transglitter}[1][]{\only#2{\beamer@dotrans[#1]{Glitter}}}
-  \newcommand<>{\transpush}[1][]{\only#2{\beamer@dotrans[#1]{Push}}}
-  \newcommand<>{\transsplitverticalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /I}}}
-  \newcommand<>{\transsplitverticalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /O}}}
-  \newcommand<>{\transsplithorizontalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /I}}}
-  \newcommand<>{\transsplithorizontalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /O}}}
-  \newcommand<>{\transuncover}[1][]{\only#2{\beamer@dotrans[#1]{Uncover}}}
-  \newcommand<>{\transwipe}[1][]{\only#2{\beamer@dotrans[#1]{Wipe}}}
+  \newcommand{\transblindshorizontal}[1][]{\only{\beamer@dotrans[#1]{Blinds /Dm /H}}}
+  \newcommand{\transblindsvertical}[1][]{\only{\beamer@dotrans[#1]{Blinds /Dm /V}}}
+  \newcommand{\transboxin}[1][]{\only{\beamer@dotrans[#1]{Box /M /I}}}
+  \newcommand{\transboxout}[1][]{\only{\beamer@dotrans[#1]{Box /M /O}}}
+  \newcommand{\transcover}[1][]{\only{\beamer@dotrans[#1]{Cover}}}
+  \newcommand{\transdissolve}[1][]{\only{\beamer@dotrans[#1]{Dissolve}}}
+  \newcommand{\transfade}[1][]{\only{\beamer@dotrans[#1]{Fade}}}
+  \newcommand{\transglitter}[1][]{\only{\beamer@dotrans[#1]{Glitter}}}
+  \newcommand{\transpush}[1][]{\only{\beamer@dotrans[#1]{Push}}}
+  \newcommand{\transsplitverticalin}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /V /M /I}}}
+  \newcommand{\transsplitverticalout}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /V /M /O}}}
+  \newcommand{\transsplithorizontalin}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /H /M /I}}}
+  \newcommand{\transsplithorizontalout}[1][]{\only{\beamer@dotrans[#1]{Split /Dm /H /M /O}}}
+  \newcommand{\transuncover}[1][]{\only{\beamer@dotrans[#1]{Uncover}}}
+  \newcommand{\transwipe}[1][]{\only{\beamer@dotrans[#1]{Wipe}}}
 }
 
-\newcommand<>{\transduration}[1]{\only#2{\hypersetup{pdfpageduration=#1}}}
+\newcommand{\transduration}[1]{\only{\hypersetup{pdfpageduration=#1}}}
 
 \article
 {
@@ -460,7 +458,7 @@
 {
   \AtBeginDocument{
     % Has to be done late...
-    \newoverlaycommand{\label}{\beameroriginal{\label}}{}
+    \newcommand<>{\label}{\alt#1{\beameroriginal{\label}}{\@gobble}}
   }
 }
 

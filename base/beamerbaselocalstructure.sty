@@ -52,13 +52,13 @@
 % Alerting
 %
 
-\newoverlayenvironment{alertenv}{%
-  \beamer@templatestartalert}
-  {\beamer@templateendalert}{}{}
+\newenvironment{alertenv}{\begin{altenv}%
+    {\beamer@templatestartalert}
+    {\beamer@templateendalert}{}{}}{\end{altenv}}
 
-\newoverlayenvironment{structureenv}{%
-  \beamer@templatestartstructure}
-  {\beamer@templateendstructure}{}{}
+\newenvironment{structureenv}{\begin{altenv}%
+    {\beamer@templatestartstructure}
+    {\beamer@templateendstructure}{}{}}{\end{altenv}}
 
 \newcommand<>{\alert}[1]{\begin{alertenv}#2#1\end{alertenv}}
 \newcommand<>{\structure}[1]{\begin{structureenv}#2#1\end{structureenv}}
@@ -78,11 +78,13 @@
 
 \article
 {
-  \newoverlayenvironment{alertenv}{\begin{itshape}}{\end{itshape}}{}{}
-  \newoverlayenvironment{structureenv}{\begin{bfseries}}{\end{bfseries}}{}{}
+  \newenvironment{alertenv}{\begin{altenv}%
+    {\begin{itshape}}{\end{itshape}}{}{}}{\end{altenv}}
+  \newenvironment{alertenv}{\begin{altenv}%
+    {\begin{bfseries}}{\end{bfseries}}{}{}}{\end{altenv}}
   
-  \newoverlaycommand{\alert}{\emph}{}
-  \newoverlaycommand{\structure}{\textbf}{}
+  \newcommand{\alert}{\only{\emph}}
+  \newcommand{\structure}{\only{\textbf}}
 }
 
 
@@ -380,9 +382,9 @@
 
 \article
 {
-  \renewoverlayenvironment{verse}{\begin{originalverse}}{\end{originalverse}}{\begin{onlyenv}<all:0>}{\end{onlyenv}}
-  \renewoverlayenvironment{quotation}{\begin{originalquotation}}{\end{originalquotation}}{\begin{onlyenv}<all:0>}{\end{onlyenv}}
-  \renewoverlayenvironment{quote}{\begin{originalquote}}{\end{originalquote}}{\begin{onlyenv}<all:0>}{\end{onlyenv}}
+  \renewenvironment<>{verse}{\begin{actionenv}#1\begin{originalverse}}{\end{originalverse}\end{actionenv}}
+  \renewenvironment<>{quotation}{\begin{actionenv}#1\begin{originalquotation}}{\end{originalquotation}\end{actionenv}}
+  \renewenvironment<>{quote}{\begin{actionenv}#1\begin{originalquote}}{\end{originalquote}\end{actionenv}}
 }
 
     
@@ -454,9 +456,7 @@
 \article
 {
   \AtBeginDocument{
-    \renewoverlaycommand{\bibitem}%
-    {\beameroriginal{\bibitem}}%
-    {\beameroriginal{\bibitem}}%should actually suppress
+    \renewcommand<>{\bibitem}{\beameroriginal{\bibitem}}%should actually suppress
   }
 }
 

@@ -36,19 +36,28 @@
 	  frames that contain a note.
 	- Added options to all \insertshortxxx commands.
 	- Added option for passing arguments to color, xcolor, pgf, and
-	  hyperref. 
+	  hyperref.
+	- Added \action and actionenv environments.
+	- Added the concept of actions to overlay specifications. For example,
+	  \item<alert@2> will alert the item on the second slide and
+	  \item<2-| alert@2> will furthermore have the item covered before
+	  that.  
+	- Added <> option to \newcommand and \newenvironment to make the
+	  defined commands overlay-specification aware.
+	- \only and \alt will now also accept an overlay specification
+	  "at the end".
+	- Block environments now accept overlay specification also before
+	  the argument.
 	
 	Changed:
 	- Every frame is now put into a box internally. Slides will never
 	  be split over two pages.
 	- \pause commands now transcends blocks (very useful!)
-	- Extended syntax of \item: A second overlay specification will
-	  now cause the item to be alerted (very useful!).
 	- Balls are now also used for enumerations, not just for itemize
 	  in shadow theme. Use \beamertemplateenumeratealpha to get old
 	  behaviour. 
 	- Changed syntax of alert and structure templates.
-	- Partly reworked internals of overlay management. Should produce
+	- Reworked internals of overlay management. Should produce
 	  slightly shorter files.
 	- Changed file names of .jpg and .png images to start with "beamer-"
 	  to avoid name clashes.
@@ -76,7 +85,8 @@
 	- Removed \invisibleon command (was superfluous anyway).
 	- Removed \mixinon command (was not very useful and clashes with
 	  new \pause command; use \opaqueness instead).
-	
+	- Removed \newoverlaycommand and \renewoverlaycommand. Can be
+	  better implemented using \newcommand<>.
 	
 	LyX:
 	- Added a big example file beamerlyxexample1.lyx.

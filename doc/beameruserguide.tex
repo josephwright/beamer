@@ -349,7 +349,10 @@ options or precautions may be necessary.
   When using the French style, certain features that clash with the
   functionality of the beamer class will be turned off. For example,
   enumerations are still produced the way the theme dictates, not the
-  way the French style does.
+  way the French style does. Also, the character |:| will not be an
+  active character. This means, that the little space the is inserted
+  before it in the |french| style is not inserted. You have to do this
+  ``by hand.''
 \end{package}
 
 \begin{package}{{babel}|[|\declare{|spanish|}|]|}
@@ -439,6 +442,17 @@ options or precautions may be necessary.
   should use the class option |professionalfont| to suppress any font
   substitution. See Section~\ref{section-substition} for details.
 \end{package}
+
+\begin{package}{{textpos}}
+  \beamer\ automatically installs a white background behind
+  everything, unless use install a different background
+  template. Because of this, you must use the |overlay| option when
+  using |textpos|, so that it will place boxes \emph{before}
+  everything. Alternatively, you can install an empty background
+  template, but this may result in an incorrect display in certain
+  situtations with older versions of the Acrobat Reader. 
+\end{package}
+
 
 \begin{package}{{ucs}}
   See |\usepackage[utf8]{inputenc}|.
