@@ -790,7 +790,7 @@
   \usenavigationsymbolstemplate{}}
 
 \newcommand{\beamertemplatenavigationsymbolsframe}{
-  \usenavigationsymbolstemplate{\insertframenavigationsymbols}}
+  \usenavigationsymbolstemplate{\insertframenavigationsymbol}}
 
 \newcommand{\beamertemplatenavigationsymbolsvertical}{%
   \usenavigationsymbolstemplate{
@@ -819,54 +819,54 @@
 
 \newcommand{\beamertemplatedefaultblocks}{
   \useblocktemplate{%
-    \par\medskip%
+    \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title}
       \usebeamerfont{block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title}{}{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip}}%
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}\vskip-.75ex\vbox{}%
-    }{\end{beamercolorbox}\smallskip}
+    }{\end{beamercolorbox}\vskip\smallskipamount}
   \usealertblocktemplate{%
-    \par\medskip%
+    \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
       \usebeamerfont{block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip}}%
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}\vskip-.75ex\vbox{}%
-    }{\end{beamercolorbox}\smallskip}
+    }{\end{beamercolorbox}\vskip\smallskipamount}
   \useexampleblocktemplate{%
-    \par\medskip%
+    \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title example}
       \usebeamerfont{block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip}}%
     \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}\vskip-.75ex\vbox{}%
-    }{\end{beamercolorbox}\smallskip}
+    }{\end{beamercolorbox}\vskip\smallskipamount}
 }
 \@onlypreamble\beamertemplatedefaultblocks
 
 \newcommand{\beamertemplateroundedblocks}[1][shadow=false]{
   \useblocktemplate{%
-    \par\medskip%
+    \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
       {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%      
-    {\end{beamerboxesrounded}\smallskip}
+    {\end{beamerboxesrounded}\vskip\smallskipamount}
   \usealertblocktemplate{%
-    \par\medskip%
+    \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
       {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%
-    {\end{beamerboxesrounded}\smallskip}
+    {\end{beamerboxesrounded}\vskip\smallskipamount}
   \useexampleblocktemplate{%
-    \par\medskip%
+    \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
       {\usebeamerfont{block title}\insertblockname}%
       \raggedright}%
-    {\end{beamerboxesrounded}\smallskip}
+    {\end{beamerboxesrounded}\vskip\smallskipamount}
 }
 \@onlypreamble\beamertemplateboxesblocks
 
