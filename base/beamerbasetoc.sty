@@ -70,8 +70,8 @@
   }
 
 
-\def\beamer@tocaction@show#1{\csname #1\endcsname}
-\def\beamer@tocaction@shaded#1{\csname #1shaded\endcsname}
+\def\beamer@tocaction@show#1{\usebeamertemplate{#1}}
+\def\beamer@tocaction@shaded#1{\usebeamertemplate{#1 shaded}}
 \def\beamer@tocaction@hide#1{}
 
 \def\beamer@tocact#1#2{\csname beamer@tocaction@#1\endcsname{#2}}
@@ -102,8 +102,10 @@
         \else
           \vfill
         \fi
-        {\usebeamerfont{section in toc}\usebeamercolor[fg]{section in toc}%
-         \hbox{\vbox{\beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{sectiontemplate}}}
+        {%
+          \hbox{\vbox{%
+              \def\beamer@breakhere{\\}%
+              \beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{section in toc}}}%
          \par%
         }%
       }%
@@ -138,9 +140,10 @@
       \def\inserttocsubsectionnumber{#2}%
       \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@oss\else\beamer@toc@ooss\fi}%
-      {\usebeamerfont{subsection in toc}\usebeamercolor[fg]{subsection in toc}%
+      {%
+        \def\beamer@breakhere{\\}%              
         \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
-        {beamer@subsectiontemplate}%
+        {subsection in toc}%
       }%
     }}%
     \beamer@restoreanother%

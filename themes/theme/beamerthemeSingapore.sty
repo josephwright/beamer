@@ -7,13 +7,17 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
+\DeclareOptionBeamer{compress}{\beamer@compresstrue}
+\ProcessOptionsBeamer
+  
 
 \mode<presentation>
 
 \setbeamercolor{palette secondary}{use=structure,bg=structure.fg!25!bg}
 
 \uselayouttheme[subsection=false]{miniframes}
-\beamertemplatedefaultframetitle[center]
+
+\setbeamertemplate{frametitle}[default][center]
 
 \AtBeginDocument{%
   {

@@ -1,0 +1,37 @@
+\ProvidesPackage{beamerbaseexercise}[2004/01/10 ver 1.20]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\renewcommand{\exerSolnInput}
+{%
+    \let\webnewpage=\relax
+    \immediate\closeout\ex@solns
+    \ifeq@nosolutions\else
+        \iftherearesolutions%
+            \eqsolutionshook
+            \input{\jobname.sol}%
+        \fi
+    \fi
+}
+\renewcommand{\quizSolnInput}
+{%
+    \let\webnewpage=\relax
+    \immediate\closeout\quiz@solns
+    \ifeq@noquizsolutions\else
+        \iftherearequizsolutions%
+            \input{\jobname.qsl}%
+        \fi
+    \fi
+}
+\def\eqEXt{\frame[containsverbatim]\bgroup}
+\def\endeqEXt{\egroup}
+\def\eqSQt{\frame[containsverbatim]\bgroup}
+\def\endeqSQt{\egroup}
+\def\eqQt{\frame[containsverbatim]\bgroup}
+\def\endeqQt{\egroup}
+
+
