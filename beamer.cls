@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/11/20 v1.02 Class for Typesetting a Beamer Presentation]
+[2003/11/20 v1.03 Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -204,7 +204,6 @@
   headsep=0pt,%
   foot=0.5cm]{geometry}
 
-
 %
 % Fix for older versions of geometry
 %
@@ -404,9 +403,9 @@
 \ExecuteOptions{blue,sans,slidescentered}
 
 \ProcessOptions
-
+  
 \expandafter\input\beamer@size
-
+\geometry{headsep=0pt}
 
 %
 %
@@ -576,9 +575,13 @@
   \AtBeginDocument{% fix french.ldf's meddling with \itemize and \trivlist
     \ifx\bbl@nonfrenchitemize\@undefined\else\bbl@nonfrenchitemize\fi%
     \ifx\bbl@nonfrenchlistspacing\@undefined\else\bbl@nonfrenchlistspacing\fi}%
+  \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
+    \@ifundefined{deactivatequoting}{}{\deactivatequoting}}
   \begingroup\beamer@origdocument}
 
 \definecolor{alert}{rgb}{1,0,0}
+
+\AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize 
 
 %
 %
@@ -826,6 +829,9 @@
   \beamer@partstartpage=\c@page%
   \beamer@sectionstartpage=\c@page%
   \beamer@subsectionstartpage=\c@page%
+  \def\insertsection{}%
+  \def\insertsubsection{}%
+  \def\lastsubsection{}%
   \def\insertpart{\expandafter\hyperlink\partlink}%
   \def\insertshortpart{\expandafter\hyperlink\partlinkshort}}%
 \def\insertpart{}
@@ -3047,7 +3053,7 @@
 {\color{structure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
 
                                 % Mini slides in headline
-\beamertemplatesphereminiframe
+\beamertemplatecircleminiframe
 
                                 % Entries in table of contents
 \usetemplatetocsection[50!averagebackgroundcolor]

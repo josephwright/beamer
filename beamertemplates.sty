@@ -1,4 +1,4 @@
-\ProvidesPackage{beamertemplates}[2003/10/29 ver 0.92]
+\ProvidesPackage{beamertemplates}[2003/10/29 ver 1.03]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 \RequirePackage{pgfshade}
@@ -117,7 +117,8 @@
     color(1.28pt)=(structure!70!black);
     color(1.76pt)=(structure!50!black);
     color(2.08pt)=(averagebackgroundcolor)}
-  \begin{colormixin}{15!averagebackgroundcolor}
+  
+  \begin{colormixin}{20!averagebackgroundcolor}
   \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
   {color(0cm)=(structure!15);
     color(0.8pt)=(structure!75);
@@ -132,25 +133,86 @@
     color(2.08pt)=(averagebackgroundcolor)}
   \end{colormixin}
   \pgfaliasshading{bigsphere!20!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{smallsphere!20!averagebackgroundcolor}{smallsphereshaded}
+  
+  \begin{colormixin}{15!averagebackgroundcolor}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(structure!15);
+    color(0.8pt)=(structure!75);
+    color(1.6pt)=(structure!70!black);
+    color(2.2pt)=(structure!50!black);
+    color(2.6pt)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(structure!15);
+    color(0.64pt)=(structure!75);
+    color(1.28pt)=(structure!70!black);
+    color(1.76pt)=(structure!50!black);
+    color(2.08pt)=(averagebackgroundcolor)}
+  \end{colormixin}
   \pgfaliasshading{bigsphere!15!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{smallsphere!15!averagebackgroundcolor}{smallsphereshaded}
+  
+  \begin{colormixin}{10!averagebackgroundcolor}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(structure!15);
+    color(0.8pt)=(structure!75);
+    color(1.6pt)=(structure!70!black);
+    color(2.2pt)=(structure!50!black);
+    color(2.6pt)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(structure!15);
+    color(0.64pt)=(structure!75);
+    color(1.28pt)=(structure!70!black);
+    color(1.76pt)=(structure!50!black);
+    color(2.08pt)=(averagebackgroundcolor)}
+  \end{colormixin}
   \pgfaliasshading{bigsphere!10!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{smallsphere!10!averagebackgroundcolor}{smallsphereshaded}
+  
+  \begin{colormixin}{5!averagebackgroundcolor}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(structure!15);
+    color(0.8pt)=(structure!75);
+    color(1.6pt)=(structure!70!black);
+    color(2.2pt)=(structure!50!black);
+    color(2.6pt)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(structure!15);
+    color(0.64pt)=(structure!75);
+    color(1.28pt)=(structure!70!black);
+    color(1.76pt)=(structure!50!black);
+    color(2.08pt)=(averagebackgroundcolor)}
+  \end{colormixin}
   \pgfaliasshading{bigsphere!5!averagebackgroundcolor}{bigsphereshaded}
-  \pgfaliasshading{bigsphere!2!averagebackgroundcolor}{bigsphereshaded}  
+  \pgfaliasshading{smallsphere!5!averagebackgroundcolor}{smallsphereshaded}
+  
+  \begin{colormixin}{2!averagebackgroundcolor}
+  \pgfdeclareradialshading{bigsphereshaded}{\pgfpoint{-0.9pt}{1.1pt}}%
+  {color(0cm)=(structure!15);
+    color(0.8pt)=(structure!75);
+    color(1.6pt)=(structure!70!black);
+    color(2.2pt)=(structure!50!black);
+    color(2.6pt)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{smallsphereshaded}{\pgfpoint{-0.72pt}{0.89pt}}%
+  {color(0cm)=(structure!15);
+    color(0.64pt)=(structure!75);
+    color(1.28pt)=(structure!70!black);
+    color(1.76pt)=(structure!50!black);
+    color(2.08pt)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \pgfaliasshading{bigsphere!2!averagebackgroundcolor}{bigsphereshaded}
+  \pgfaliasshading{smallsphere!2!averagebackgroundcolor}{smallsphereshaded}
   \pgfaliasshading{bigsphere!20!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
   \pgfaliasshading{bigsphere!15!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
   \pgfaliasshading{bigsphere!10!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
   \pgfaliasshading{bigsphere!5!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}
   \pgfaliasshading{bigsphere!2!averagebackgroundcolor,15!averagebackgroundcolor}{bigsphereshaded}  
-  \pgfaliasshading{smallsphere!20!averagebackgroundcolor}{smallsphereshaded}
-  \pgfaliasshading{smallsphere!15!averagebackgroundcolor}{smallsphereshaded}
-  \pgfaliasshading{smallsphere!10!averagebackgroundcolor}{smallsphereshaded}
-  \pgfaliasshading{smallsphere!5!averagebackgroundcolor}{smallsphereshaded}
-  \pgfaliasshading{smallsphere!2!averagebackgroundcolor}{smallsphereshaded}  
   \pgfaliasshading{smallsphere!20!averagebackgroundcolor,15!averagebackgroundcolor}{smallsphereshaded}
   \pgfaliasshading{smallsphere!15!averagebackgroundcolor,15!averagebackgroundcolor}{smallsphereshaded}
   \pgfaliasshading{smallsphere!10!averagebackgroundcolor,15!averagebackgroundcolor}{smallsphereshaded}
   \pgfaliasshading{smallsphere!5!averagebackgroundcolor,15!averagebackgroundcolor}{smallsphereshaded}
-  \pgfaliasshading{smallsphere!2!averagebackgroundcolor,15!averagebackgroundcolor}{smallsphereshaded}  
+  \pgfaliasshading{smallsphere!2!averagebackgroundcolor,15!averagebackgroundcolor}{smallsphereshaded}
+  
   \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bigsphere}}}
   \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{smallsphere}}}
   }
@@ -177,6 +239,64 @@
 %
 
 \newcommand{\beamertemplatesphereminiframe}{
+  \pgfdeclareradialshading{minispherehilight}{\pgfpoint{-0.63pt}{0.77pt}}%
+  {color(0cm)=(white);
+    color(0.56pt)=(white);
+    color(1.12pt)=(structure!25);
+    color(1.54pt)=(structure!30!black);
+    color(1.82pt)=(averagebackgroundcolor)}
+  \pgfdeclareradialshading{minispheresemidull}{\pgfpoint{-0.63pt}{0.77pt}}%
+  {color(0cm)=(structure!15);
+    color(0.56pt)=(structure!50);
+    color(1.12pt)=(structure!70!black);
+    color(1.54pt)=(structure!50!black);
+    color(1.82pt)=(averagebackgroundcolor)}
+  \begin{colormixin}{25!averagebackgroundcolor}
+  \pgfdeclareradialshading{minispheredull}{\pgfpoint{-0.63pt}{0.77pt}}%
+  {color(0cm)=(structure!15);
+    color(0.56pt)=(structure!50);
+    color(1.12pt)=(structure!70!black);
+    color(1.54pt)=(structure!50!black);
+    color(1.82pt)=(averagebackgroundcolor)}
+  \end{colormixin}
+  \def\beamer@sphereradius{0.05cm}
+  \useminislidetemplate
+  {\pgfuseshading{minispherehilight}}
+  {\pgfuseshading{minispheresemidull}}
+  {\pgfuseshading{minispheredull}}
+  {.14cm}{.03cm}
+}
+
+\newcommand{\beamertemplatesphereminiframeinverted}{
+  \pgfdeclareradialshading{minispherehilight}{\pgfpoint{-0.63pt}{0.77pt}}%
+  {color(0cm)=(white);
+    color(0.56pt)=(structure!25);
+    color(1.12pt)=(structure!30);
+    color(1.54pt)=(structure!30!black);
+    color(1.82pt)=(black)}
+  \pgfdeclareradialshading{minispheresemidull}{\pgfpoint{-0.63pt}{0.77pt}}%
+  {color(0cm)=(structure!15);
+    color(0.56pt)=(structure!50);
+    color(1.12pt)=(structure!70!black);
+    color(1.54pt)=(structure!50!black);
+    color(1.82pt)=(black)}
+  \begin{colormixin}{25!structure}
+  \pgfdeclareradialshading{minispheredull}{\pgfpoint{-0.63pt}{0.77pt}}%
+  {color(0cm)=(structure!15);
+    color(0.56pt)=(structure!50);
+    color(1.12pt)=(structure!70!black);
+    color(1.54pt)=(structure!50!black);
+    color(1.82pt)=(black)}
+  \end{colormixin}
+  \def\beamer@sphereradius{0.05cm}
+  \useminislidetemplate
+  {\pgfuseshading{minispherehilight}}
+  {\pgfuseshading{minispheresemidull}}
+  {\pgfuseshading{minispheredull}}
+  {.14cm}{.03cm}
+}
+
+\newcommand{\beamertemplatecircleminiframe}{
   \def\beamer@sphereradius{0.05cm}
   \useminislidetemplate
   {%
@@ -200,7 +320,7 @@
   {.14cm}{.03cm}
 }
 
-\newcommand{\beamertemplatesphereminiframeinverted}{
+\newcommand{\beamertemplatecircleminiframeinverted}{
   \def\beamer@sphereradius{0.05cm}
   \useminislidetemplate
   {%

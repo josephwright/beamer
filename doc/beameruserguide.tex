@@ -86,7 +86,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 1.02\\
+\title{User's Guide to the Beamer Class, Version 1.03\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -467,7 +467,7 @@ might  look like this:
 
 \begin{verbatim}
 \documentclass{beamer}
-% This is the file main.tex
+%% This is the file main.tex
 
 \usepackage{beamerthemesplit}
 
@@ -504,8 +504,8 @@ might  look like this:
 To create a |PDF| version of this file, run the program
 |pdflatex| on |main.tex| at least twice. Your need to run it twice, so
 that \TeX\ can create the table of contents. (It may even be necessary
-to run it more often since there are all sorts of auxilliary files
-created.) In the following example, the greater-than sign is the prompt. 
+to run it more often since all sorts of auxilliary files are
+created.) In the following example, the greater-than-sign is the prompt. 
 
 \begin{verbatim}
 > pdflatex main.tex
@@ -702,7 +702,9 @@ Section~\ref{section-graphics}.
 \item
   Background shadings decrease the legibility without increasing the
   information content. Do not add a background shading just because it
-  ``somehow looks nicer.''
+  ``somehow looks nicer.'' In the examples that come along with the
+  \beamer\ class, the backgrounds are intended as demonstrations, not
+  as recommendations.
 \item
   Inverse video (bright text on dark background) can be a problem
   during presentations in bright environments since only a small
@@ -2562,6 +2564,54 @@ their usage.
 \end{verbatim}
 
 
+\subsubsection{Framed Text}
+
+In order to draw a frame (a rectangle) around some text, you can use
+\LaTeX s standard command |\fbox|. More frame types are offered by the
+package |fancybox|, which defines the following commands:
+|\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult
+the \LaTeX\ Companion for details on how to use these commands.
+
+The style file |beamerboxes| implements the following further commands
+for creating framed text:
+
+\begin{environment}{{beamerboxesrounded}\oarg{options}\marg{head}}
+  The text inside the environment is framed by a rectangular area with
+  rounded corners. The background of the rectangular area is filled
+  with a certain color, which depends on the current color scheme (see
+  below). If the \meta{head} is not empty, \meta{head} is drawn in the
+  upper part of the box in a different color, which also depends on
+  the scheme. The following options can be given:
+  \begin{itemize}
+  \item |scheme=|\meta{name} causes the color scheme \meta{name} to be
+    used. A color scheme must previously be defined using the command
+    |\beamerboxesdeclarecolorscheme|.
+  \item |width=|\meta{dimension} causes the width of the text inside
+    the box to be the specified \meta{dimension}. By default, the
+    |\textwidth| is used. Note that the box will protrude 4pt to the
+    left and right.
+  \item |shadow=|\meta{true or false}. If set to |true|, a shadow will
+    be drawn.    
+  \end{itemize}
+  A color scheme dictates the background colors used in the head part
+  and in the body of the box. If no \meta{head} is given, the head
+  part is completely suppressed.
+  \example
+\begin{verbatim}
+\begin{beamerboxesrounded}[scheme=alert,shadow=true]{Theorem}
+  $A = B$.
+\end{beamerboxesrounded}
+\end{verbatim}
+\end{environment}
+
+\begin{command}{\beamerboxesdeclarecolorscheme\marg{scheme
+      name}\marg{head color}\marg{body color}}
+  Declares a color scheme for later use in a |beamerboxesrounded|
+  environment.
+  \example |\beamerboxesdeclarecolorscheme{alert}{red}{red!15!averagebackgroundcolor}|
+\end{command}
+
+
 
 \subsubsection{Figures and Tables}
 
@@ -4056,7 +4106,7 @@ template:
 \item
   The left and right margins of the head and foot line templates are
   the same as of the normal text. In order to start the head line and
-  foot line at the right page margin, you must insert a negative
+  foot line at the page margin, you must insert a negative
   horizontal skip using |\hskip-\Gm@lmargin|. You may wish to add a
   |\hskip-\Gm@rmargin| at the end to avoid having \TeX\ complain about
   overfull boxes.
@@ -4071,6 +4121,17 @@ template:
 
 
 \subsubsection{Title Page}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatelargetitlepage}
+  Causes the title page to be typeset with a large font for the title.
+\end{command}
+
+\begin{command}{\beamertemplateboldtitlepage}
+  Causes the title page to be typeset with a bold font for the title.
+\end{command}
+
 
 
 \paragraph{Template Installation Commands}\ 
@@ -4127,6 +4188,17 @@ If you wish to suppress the head and foot line in the title page, use
 \subsubsection{Part Page}
 
 \label{section-part-page-template}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatelargepartpage}
+  Causes the part pages to be typeset with a large font for the part name.
+\end{command}
+
+\begin{command}{\beamertemplateboldpartpage}
+  Causes the part pages to be typeset with a bold font for the part name.
+\end{command}
+
 
 \paragraph{Template Installation Commands}\ 
 
@@ -4338,6 +4410,17 @@ If you wish to suppress the head and foot line in the title page, use
 
 
 \subsubsection{Frame Titles}
+
+\paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplateboldcenterframetitle}
+  Typesets the frame title using a bold face and centers it.
+\end{command}
+
+\begin{command}{\beamertemplatelargeframetitle}
+  Typesets the frame title using a large face and flushes it left.
+\end{command}
+
 
 \paragraph{Template Installation Commands}\ 
 
@@ -4731,6 +4814,28 @@ You can redefine these commands to change these symbols.
 
 \paragraph{Predefined Templates}\ 
 
+\begin{command}{\beamertemplatecircleminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small circle.
+\end{command}
+
+\begin{command}{\beamertemplatecircleminiframeinverted}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small circle, but with the colors inverted. Use this if
+  the navigation bar is shown on a dark background.
+\end{command}
+
+\begin{command}{\beamertemplatesphereminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small spheres.
+\end{command}
+
+\begin{command}{\beamertemplatesphereminiframeinverted}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small spheres, but with the colors inverted. Use this if
+  the navigation bar is shown on a |structure| background.
+\end{command}
+
 \begin{command}{\beamertemplateboxminiframe}
   Changes the symbols in a navigation bar used to represent
   a frame to a small box.
@@ -5104,9 +5209,22 @@ The following inserts are useful for the navigation symbols template:
 
 \paragraph{Predefined Templates}\
 
+\begin{command}{\beamertemplateboldblocks}
+  Block titles are printed in bold.
+\end{command}
+
+\begin{command}{\beamertemplatelargeblocks}
+  Block titles are printed slightly larger.
+\end{command}
+
 \begin{command}{\beamertemplateroundedblocks}
   Changes the block templates such that they are printed on a
-  rectangular area with rounded corners. Quite cute.
+  rectangular area with rounded corners.
+\end{command}
+
+\begin{command}{\beamertemplateshadowblocks}
+  Changes the block templates such that they are printed on a
+  rectangular area with rounded corners and a shadow.
 \end{command}
 
 
