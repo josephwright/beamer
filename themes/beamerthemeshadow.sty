@@ -118,17 +118,19 @@
     \else%
     \multiply\tempdimen by\beamer@subsectionmax%
     \fi%
-    \advance\tempdimen by 1.125ex%
-    \setbox\beamer@linebox=\hbox to\paperwidth{%
-      \vbox to \tempdimen{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
-      \vbox to \tempdimen{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
-    \hbox to\textwidth{%
-      {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
-        height\ht\beamer@linebox\color{structure}\vrule width.5\paperwidth
-        height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
-      \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin%
-    }
-    \vskip-0.2pt
+    \ifdim\tempdimen>0pt%
+      \advance\tempdimen by 1.125ex%
+      \setbox\beamer@linebox=\hbox to\paperwidth{%
+        \vbox to \tempdimen{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
+        \vbox to \tempdimen{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
+      \hbox to\textwidth{%
+        {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
+          height\ht\beamer@linebox\color{structure}\vrule width.5\paperwidth
+          height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+        \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin%
+      }
+      \vskip-0.2pt%
+    \fi%
     \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
     \vskip-2pt
   }%

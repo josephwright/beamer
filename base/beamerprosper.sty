@@ -1,0 +1,91 @@
+\ProvidesPackage{beamerprosper}[2004/02/27 ver 0.01]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\def\institution{\institute}
+
+\def\subtitle#1{%
+  \expandafter\def\expandafter\beamer@renewtitle\expandafter{\inserttitle\\{\small#1}}%
+  \expandafter\title\expandafter[\beamer@shorttitle]{\beamer@renewtitle}}
+\newcommand\email[1]{\texttt{#1}}
+
+\newenvironment{slide}[2][]{\frame[containsverbatim]\bgroup\PDFtransition{#1}\frametitle{#2}}{\egroup}
+\newcommand{\PDForPS}[2]{\ifx\pdfoutput\@undefined#2\else#1\fi}
+\newcommand{\onlyInPDF}[1]{\ifx\pdfoutput\@undefined\else#1\fi}
+\newcommand{\onlyInPS}[1]{\ifx\pdfoutput#1\@undefined\fi}
+
+\newcommand\overlays[2]{%
+  \begingroup
+  \renewenvironment{slide}[2][]{\PDFtransition{#1}\frametitle{##2}}{}
+  \frame<-#1>{#2}
+  \endgroup}
+
+\def\fromSlide{\@ifstar{\beamer@sfromSlide}{\beamer@fromSlide}}
+\newcommand{\beamer@fromSlide}[2]{\uncover<#1->{#2}}
+\newcommand{\beamer@sfromSlide}[2]{\only<#1->{#2}}
+
+\def\onlySlide{\@ifstar{\beamer@sonlySlide}{\beamer@onlySlide}}
+\newcommand{\beamer@onlySlide}[2]{\uncover<#1>{#2}}
+\newcommand{\beamer@sonlySlide}[2]{\only<#1>{#2}}
+
+\def\untilSlide{\@ifstar{\beamer@suntilSlide}{\beamer@untilSlide}}
+\newcommand{\beamer@untilSlide}[2]{\uncover<-#1>{#2}}
+\newcommand{\beamer@suntilSlide}[2]{\only<-#1>{#2}}
+
+\newcommand\FromSlide[1]{\pause[#1]}
+\newcommand\OnlySlide[1]{\beamer@endpause%
+  \alt<#1>{\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
+  {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
+}
+\newcommand\UntilSlide[1]{\beamer@endpause%
+  \alt<-#1>{\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
+  {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
+}
+
+\newcommand\slideCaption[1]{\date{#1}}
+\def\Logo{\@ifnextchar(\beamer@Logo\logo}
+\def\beamer@Logo(#1,#2){\logo}
+
+\newcommand\DefaultTransition[1]{}
+\newcommand\NoFrenchBabelItemize{}
+
+\newenvironment{Itemize}{\begin{itemize}}{\end{itemize}}
+\newenvironment{itemstep}{% not really nice...
+  \let\beamer@steporigitem=\item%
+  \let\item=\beamer@itemstepitem%
+  \begin{itemize}\global\advance\beamer@pausecount by-1\relax%
+  }{\end{itemize}}
+\def\beamer@itemstepitem{\pause\beamer@steporigitem}
+
+\newcommand\prosperpart[2][]{\frame{\begin{centering}#2\par\end{centering}}}
+
+\newcommand{\FontTitle}[2]{}
+\newcommand{\FontText}[2]{}
+\newcommand{\fontTitle}[1]{#1}
+\newcommand{\fontText}[1]{#1}
+\newcommand{\ColorFoot}[1]{}
+\newcommand{\PDFtransition}[1]{\csname beamer@trans#1\endcsname}
+\def\beamer@trans{}
+\def\beamer@transR{}
+\def\beamer@transReplace{}
+\def\beamer@transSplit{\transsplithorizontalout}
+\def\beamer@transBlinds{\transblindshorizontal}
+\def\beamer@transBox{\transboxout}
+\def\beamer@transWipe{\transwipe}
+\def\beamer@transDissolve{\transdissolve}
+\def\beamer@transGlitter{\transglitter}
+
+\newcommand{\myitem}[2]{}
+
+
+  
+  
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: ../test/testprosper.tex
+%%% End: 

@@ -270,6 +270,28 @@
 \DeclareOptionBeamer{color}{\PassOptionsToPackage{#1}{color}}
 \DeclareOptionBeamer{xcolor}{\PassOptionsToPackage{#1}{xcolor}}
 
+\def\beamer@loaducs{}
+
+\DeclareOptionBeamer{ucs}{%
+  \ifx\pdfoutput\@undefined
+    \def\beamer@loaducs{
+      \RequirePackage{ucs}%
+      \PreloadUnicodePage{0}%
+      \PreloadUnicodePage{1}%
+    }
+  \else
+    \PassOptionsToPackage{pdftex,unicode}{hyperref}
+    \def\beamer@loaducs{
+      \RequirePackage[hyperref]{ucs}%
+      \PreloadUnicodePage{0}%
+      \PreloadUnicodePage{1}%
+    }
+  \fi
+}
+\DeclareOptionBeamer{utf8}{\ExecuteOptionsBeamer{ucs}%
+  \g@addto@macro\beamer@loaducs{\RequirePackage[utf8]{inputenc}}%
+}
+
 %
 % Process Options
 %
@@ -306,6 +328,8 @@
 
 \hypersetup{pdfcreator={LaTeX with beamer class version 2.01}}
 
+% Unicode stuff
+\beamer@loaducs
 
 \expandafter\input\beamer@size
 \geometry{headsep=0pt}

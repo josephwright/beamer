@@ -16,8 +16,6 @@
 
 \def\headcommand#1{\global\advance\beamer@totalheads by1\relax%
   \expandafter\gdef\csname @@head\the\beamer@totalheads\endcsname{#1}}
-\beamer@activecjk
-\@input{\jobname.nav}
 \def\dohead{\beamer@headcounter=0\loop\ifnum\beamer@headcounter<\beamer@totalheads%
   \advance\beamer@headcounter by1\relax%
   \csname @@head\the\beamer@headcounter\endcsname\repeat}
@@ -35,16 +33,16 @@
 \def\inserttotalframenumber{1}
 
 \def\partentry#1#2{\beamer@sectioncount=0}
-\def\sectionentry#1#2#3#4#5{\advance\beamer@sectioncount by1\relax%
+\def\beamer@initsectionentry#1#2#3#4#5{\advance\beamer@sectioncount by1\relax%
   \ifnum\beamer@sectionmax<\beamer@sectioncount\beamer@sectionmax=\beamer@sectioncount\fi}
-\def\slideentry#1#2#3#4#5#6{\ifnum\beamer@subsectionmax<#2\relax\beamer@subsectionmax=#2\fi}
+\def\beamer@initslideentry#1#2#3#4#5#6{\ifnum\beamer@subsectionmax<#2\relax\beamer@subsectionmax=#2\fi}
 \def\beamer@framepages#1#2{}
 \def\beamer@subsectionpages#1#2{}
 \def\beamer@sectionpages#1#2{}
 \def\beamer@partpages#1#2{}
 \def\beamer@appendixpages#1{\gdef\beamer@startpageofappendix{#1}}
 \def\beamer@documentpages#1{\gdef\beamer@endpageofdocument{#1}}
-\dohead
+
 \setlength\lineskip{1\p@}
 \setlength\normallineskip{1\p@}
 \renewcommand\baselinestretch{}
@@ -66,6 +64,21 @@
 \@beginparpenalty -\@lowpenalty
 \@endparpenalty   -\@lowpenalty
 \@itempenalty     -\@lowpenalty
+
+\g@addto@macro\beamer@lastminutepatches{
+  \beamer@activecjk
+  \makeatletter
+  \@input{\jobname.nav}
+  \let\beamer@sectionentryorig=\sectionentry
+  \let\beamer@slideentryorig=\slideentry
+  \let\sectionentry=\beamer@initsectionentry
+  \let\slideentry=\beamer@initslideentry
+  \dohead
+  \let\sectionentry=\beamer@sectionentryorig
+  \let\slideentry=\beamer@slideentryorig
+  \beamer@calculateheadfoot
+  \makeatother
+}
 
 
 \setcounter{tocdepth}{2}

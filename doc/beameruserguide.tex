@@ -544,10 +544,28 @@ options or precautions may be necessary.
 
 \begin{package}{{inputenc}|[|\declare{|utf8|}|]|}
   \beamernote
-  Currently, you cannot use utf8 encoded text in |\section| and
-  |\subsection| commands, if that text uses characters outside the
-  lower ASCII range. Thus you have to write |\section{\"Uberschrift}|
-  instead of |\section{Überschrift}|.
+  When using Unicode, you may wish to use one of the following class
+  options: 
+  \begin{classoption}{{ucs}}
+    Loads the package |ucs| and passes the correct Unicode options to
+    |hyperref|. Also, it preloads the Unicode code pages zero and
+    one.
+  \end{classoption}
+  
+  \begin{classoption}{{utf8}}
+    Same as the option |ucs|, but also sets the input encoding to
+    |utf8|. You could also use the option |ucs| and say
+    |\usepackage[utf8]{inputenc}| in the preamble..
+  \end{classoption}
+
+  If you use a Unicode character outside the first two code pages
+  (which includes the Latin alphabet and the extended Latin alphabet)
+  in a section or subsection heading, you have to use the command
+  |\PreloadUnicodePage{|\meta{code  page}|}| to give |ucs| a chance to
+  preload these code pages. You will know that a character has not
+  been preloaded, if you get a message like ``Please insert into
+  preamble.'' The code page of a character is given by the unicode
+  number of the character divided by 256.
 \end{package}
 
 \begin{package}{{listings}}
@@ -577,7 +595,6 @@ options or precautions may be necessary.
   template, but this may result in an incorrect display in certain
   situtations with older versions of the Acrobat Reader. 
 \end{package}
-
 
 \begin{package}{{ucs}}
   See |\usepackage[utf8]{inputenc}|.
@@ -6095,12 +6112,10 @@ template:
 \item
   The height of the head line and foot line templates is calculated
   automatically. This is done by typesetting the templates and then
-  ``having a look'' at their heights. This recalculation of the
-  heights takes place several times, but at least twice: once directly
-  after a call to |\useheadtemplate|, respectively |\usefoottemplate|,
-  and once before the |\begin{document}|. Because of this, your
-  templates must be ``typesettable'' inside the preamble. In
-  particular, any images you use must already be declared.
+  ``having a look'' at their heights. This recalculation is done right
+  at the beginning of the document, \emph{after} all packages have
+  been loaded and even \emph{after} these have executed their
+  |\AtBeginDocument| initialization. 
 \item
   The left and right margins of the head and foot line templates are
   the same as of the normal text. In order to start the head line and

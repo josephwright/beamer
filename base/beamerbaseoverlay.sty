@@ -370,7 +370,7 @@
     {\global\advance\beamer@pausecount by1\relax}%
     {\global\beamer@pausecount=#1\relax}%
   \alt<\beamer@pausecount->%
-  {\gdef\beamer@endpause{}}%
+  {\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
   {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
 }
 
@@ -498,7 +498,7 @@
 \newcommand{\invisible}{\alt{\beamer@reallymakeinvisible}{\beamer@fakeinvisible}}
 \newenvironment{visibleenv}{\begin{altenv}{\beamer@spacingcoverb}{\beamer@spacingcoverb}{\pgfsys@begininvisible}{\pgfsys@endinvisible}}{\end{altenv}}
 \newenvironment{invisibleenv}{\begin{altenv}{\pgfsys@begininvisible}{\pgfsys@endinvisible}{\beamer@spacingcoverb}{\beamer@spacingcoverb}}{\end{altenv}}
-\newenvironment{uncoverenv}{\begin{altenv}{\beamer@spacingcoverb}{\beamer@spacingcoverb}{\beamer@startcovered}{\beamer@endcovered}}{\end{altenv}}
+\newenvironment{uncoverenv}{\begin{altenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}}{\end{altenv}}
 \newenvironment{onlyenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
 \renewcommand<>{\color}{\alt#1{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}}
 

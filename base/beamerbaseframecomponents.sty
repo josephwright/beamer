@@ -195,38 +195,61 @@
   \def\@oddfoot{\hypertarget{Navigation\the\c@page}{}\hfil}
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
-\def\recalculatefoot{%
-  \beamer@activecjk%
+\def\beamer@calculateheadfoot{%
   \setbox\beamer@tempbox=\hbox{\beamer@foottemplate}%
   \footheight=\ht\beamer@tempbox%
   \advance\footheight by \dp\beamer@tempbox%
   \advance\footheight by 4pt%
-  \geometry{foot=\the\footheight}%
-  \advance\footheight by -4pt%
-  \sidebarheight=\paperheight%
-  \advance\sidebarheight by-\headheight%
-  \advance\sidebarheight by\headdp%
-  \advance\sidebarheight by-\footheight}
-\def\recalculatehead{%
-  \beamer@activecjk%
   \setbox\beamer@tempbox=\hbox{\beamer@headtemplate}%
   \headheight=\ht\beamer@tempbox%
   \headdp=\dp\beamer@tempbox%
   \advance\headheight by\headdp%
-  \geometry{head=\the\headheight}%
   \sidebarheight=\paperheight%
   \advance\sidebarheight by-\headheight%
   \advance\sidebarheight by\headdp%
-  \advance\sidebarheight by-\footheight}%
+  \advance\sidebarheight by-\footheight%
+  \advance\sidebarheight by 4pt%
+  \footskip=\footheight%
+  \textheight=\paperheight%
+  \advance\textheight by-\footheight%
+  \advance\textheight by-\headheight%
+  \@colht\textheight%
+  \@colroom\textheight%
+  \vsize\textheight%  
+  }
+
+%\def\recalculatefoot{%
+%  \beamer@activecjk%
+%  \setbox\beamer@tempbox=\hbox{\beamer@foottemplate}%
+%  \footheight=\ht\beamer@tempbox%
+%  \advance\footheight by \dp\beamer@tempbox%
+%  \advance\footheight by 4pt%
+%  \geometry{foot=\the\footheight}%
+%  \advance\footheight by -4pt%
+%  \sidebarheight=\paperheight%
+%  \advance\sidebarheight by-\headheight%
+%  \advance\sidebarheight by\headdp%
+%  \advance\sidebarheight by-\footheight}
+%\def\recalculatehead{%
+%  \beamer@activecjk%
+%  \setbox\beamer@tempbox=\hbox{\beamer@headtemplate}%
+%  \headheight=\ht\beamer@tempbox%
+%  \headdp=\dp\beamer@tempbox%
+%  \advance\headheight by\headdp%
+%  \geometry{head=\the\headheight}%
+%  \sidebarheight=\paperheight%
+%  \advance\sidebarheight by-\headheight%
+%  \advance\sidebarheight by\headdp%
+%  \advance\sidebarheight by-\footheight}%
 
 \long\def\usefoottemplate#1{%
-  \gdef\beamer@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}%
-  \recalculatefoot}
+  \gdef\beamer@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}}
+%  \recalculatefoot}
 \def\insertpagenumber{\thepage}
 
 \long\def\useheadtemplate#1{%
-  \gdef\beamer@headtemplate{\offinterlineskip\reset@font#1}%
-  \recalculatehead} 
+  \gdef\beamer@headtemplate{\offinterlineskip\reset@font#1}}%
+%  \recalculatehead} 
 
 \def\insertvrule#1#2{%
   \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
