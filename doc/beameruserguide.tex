@@ -128,10 +128,17 @@
     \example\genericthemeexample{elementtheme#2}
   }
 {\end{theme}}
+\newenvironment{layoutthemeexample}[2][]
+{\begin{theme}{uselayouttheme}{{#2}#1}
+    \example\genericthemeexample{layouttheme#2}
+  }
+{\end{theme}}
+\newenvironment{colorthemeexample}[2][]
+{\begin{theme}{usecolortheme}{{#2}#1}
+    \example\genericthemeexample{colortheme#2}
+  }
+{\end{theme}}
 \newcommand{\fontthemeexample}[2][]{\genericthemeexample[#1]{fonttheme#2}}
-\newcommand{\colorthemeexample}[2][]{\genericthemeexample[#1]{colortheme#2}}
-\newcommand{\layoutthemeexample}[2][]{\genericthemeexample[#1]{layouttheme#2}}
-%\newcommand{\elementthemeexample}[2][]{\genericthemeexample[#1]{elementtheme#2}}
 
 \def\partname{Part}
 

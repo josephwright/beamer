@@ -9,9 +9,9 @@ themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
 
 fontthemes = bold default italics romanum sansserifstructure serifstructure
 
-colorthemes = default Kranich
+colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily
 
-layoutthemes = miniframes shadow sidebar smoothbars smoothtree split tree
+layoutthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
 
 elementthemes = default circles rectangles rounded
 

@@ -9,23 +9,28 @@
 
 \mode<presentation>
 
-\setbeamercolor*{normal text}{fg=yellow!50!white}
+\setbeamercolor*{normal text}{fg=yellow!50!white,bg=blue!50!black}
 \beamertemplatesolidbackgroundcolor{blue!50!black}
+
+\setbeamercolor*{example text}{fg=green!65!black}
 
 \setbeamercolor*{structure}{fg=blue!25!white}
 
-\setbeamercolor{palette primary}{use=structure,fg=blue!25!black,bg=blue!25!white}
-\setbeamercolor{palette secondary}{use=structure,fg=black,bg=blue!30!white}
-\setbeamercolor{palette ternary}{use=structure,fg=black,bg=blue!35!white}
-\setbeamercolor{palette fourth}{use=structure,fg=black,bg=blue!40!white}
+\setbeamercolor{palette primary}{use={structure,normal text},fg=structure.fg,bg=normal text.bg!75!black}
+\setbeamercolor{palette secondary}{use={structure,normal text},fg=structure.fg,bg=normal text.bg!60!black}
+\setbeamercolor{palette ternary}{use={structure,normal text},fg=structure.fg,bg=normal text.bg!45!black}
+\setbeamercolor{palette fourth}{use={structure,normal text},fg=structure.fg,bg=normal text.bg!30!black}
 
-\setbeamercolor{block title}{use=structure,fg=blue!25!black,bg=structure.fg}
-\setbeamercolor{block title alerted}{use=alerted text,fg=blue!25!black,bg=red!75!white}
-\setbeamercolor{block title example}{use={example text,structure},fg=blue!25!black,bg=structure.fg!50!green}
+\setbeamercolor*{block body}{bg=normal text.bg!90!black}
+\setbeamercolor*{block body alerted}{bg=normal text.bg!90!black}
+\setbeamercolor*{block body example}{bg=normal text.bg!90!black}
+\setbeamercolor*{block title}{parent=structure,bg=normal text.bg!75!black}
+\setbeamercolor*{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+\setbeamercolor*{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!black}
 
-\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
-\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
-\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+\setbeamercolor{item projected}{fg=black}
+\setbeamercolor{subitem projected}{fg=black}
+\setbeamercolor{subsubitem projected}{fg=black}
 
 \setbeamercolor*{sidebar}{parent=palette primary}
 

@@ -39,6 +39,8 @@
     \let\@evenhead\@oddhead
     \let\@evenfoot\@oddfoot
     \def\beamer@backgroundtemplate{}%
+    \setbeamercolor{item}{fg=black,bg=white}
+    \color{black}%
     \nointerlineskip
     \hbox{\hskip-\Gm@lmargin\hskip1cm\vbox to\textheight{%
         %pretend to have in a ``standard'' margins
@@ -140,7 +142,7 @@
     \begin{pgfmagnify}{#1}{#1}
       \color[gray]{0.8}
       \pgfrect[fill]{\pgforigin}{\pgfpoint{\paperwidth}{\paperheight}}
-      \normalcolor
+      \color{black}
       \pgfputat{\pgfpoint{\Gm@lmargin}{\footheight}}{\pgfbox[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgfmagnify}
   \end{pgfpicture}%

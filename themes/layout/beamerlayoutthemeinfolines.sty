@@ -9,12 +9,12 @@
 
 \mode<presentation>
 
-\setbeamercolor{author in head/foot}{parent=palette ternary}
-\setbeamercolor{title in head/foot}{parent=palette secondary}
-\setbeamercolor{date in head/foot}{parent=palette primary}
+\setbeamercolor*{author in head/foot}{parent=palette ternary}
+\setbeamercolor*{title in head/foot}{parent=palette secondary}
+\setbeamercolor*{date in head/foot}{parent=palette primary}
 
-\setbeamercolor{section in head/foot}{parent=palette ternary}
-\setbeamercolor{subdate in head/foot}{parent=palette primary}
+\setbeamercolor*{section in head/foot}{parent=palette ternary}
+\setbeamercolor*{subsection in head/foot}{parent=palette primary}
 
 \usefoottemplate*{
   \leavevmode%
@@ -26,7 +26,7 @@
     \usebeamerfont{title in head/foot}\insertshorttitle
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-    \usebeamerfont{date in head/foot}\insertdate{}\hspace*{2em}
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
     \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
   \end{beamercolorbox}}%
   \vskip0pt%
@@ -53,6 +53,7 @@
   \vskip2pt}
 
 \beamersetleftmargin{1em}
+\beamersetrightmargin{1em}
 
 
 \mode

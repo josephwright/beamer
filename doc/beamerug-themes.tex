@@ -162,6 +162,17 @@ very long talks.
 \end{command}
 
 
+\begin{themeexample}[\oarg{options}]{Madrid}
+  A theme giving much information on little space. The present form
+  was slightly adapted from a theme contributed by Manuel Carro.
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|secheader|} causes a headline to be inserted the
+    shows the current section and subsection. By default, this
+    headline is not shown.
+  \end{itemize}
+\end{themeexample}
+
 
 \begin{themeexample}{Pittsburgh}
   A sober theme. The right-flushed frame titles cause a certain
@@ -216,6 +227,18 @@ very long talks.
   dominate the layout. The theme can be made less dominant by using a
   different color theme.
 
+  By default, the current entry of the table of contents in the
+  sidebar will be hilighted by using a more vibrant color. A good
+  alternative is to hilight the current entry by using a different
+  color for the background of the current point. The color theme
+  |sidebartab| installs the appropriate colors, so you just have to
+  say
+\begin{verbatim}
+\usecolorhteme{sidebartab}
+\end{verbatim}
+  This color theme works with all themes that show a table of contents
+  in the sidebar.
+
   This theme is useful for long talks like lectures that require a
   table of contents to be visible all the time.
 
@@ -230,7 +253,7 @@ very long talks.
   \item \declare{|left|} puts the sidebar on the left (default).
   \item \declare{|right|} puts the sidebar on the right.
   \item \declare{|width=|\meta{dimension}} sets the width of the
-    sidebar.
+    sidebar. If set to zero, no sidebar is created.
   \end{itemize}
 \end{themeexample}
 
@@ -240,36 +263,15 @@ very long talks.
   theme can be given. 
 \end{themeexample}
 
-
-
 \begin{themeexample}[\oarg{options}]{Goettingen}
   A relatively sober theme useful for a longer talk that demands a
-  sidebar with a full table of contents.
-
-  
-  The following \meta{options} may be given:
-  \begin{itemize}
-  \item \declare{|hideallsubsections|} causes only sections to be
-    shown in the sidebar. This is useful, if you need to save
-    space.
-  \item \declare{|hideothersubsections|} causes only the subsections
-    of the current section to be shown. This is useful, if you need to
-    save  space.      
-  \item \declare{|left|} puts the sidebar on the left (default).
-  \item \declare{|right|} puts the sidebar on the right.
-  \item \declare{|width=|\meta{dimension}} sets the width of the
-    sidebar.
-  \end{itemize}
+  sidebar with a full table of contents.  The same \meta{options} as
+  for the |Berkeley| theme can be given. 
 \end{themeexample}
 
 \begin{themeexample}[\meta{options}]{Marburg}
   A very dominat variation of the |Goettingen| theme. The same
-  \meta{options} may be given, plus the following option:
-  \begin{itemize}
-  \item \declare{|tab|} causes the current section or subsection to
-    be hilight by moving a tabbing indicator under it, rather
-    that hilighting it using a different text color.
-  \end{itemize}
+  \meta{options} may be given.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Hannover}
@@ -326,7 +328,6 @@ very long talks.
   an informational main part. By using a different color theme, this
   separation can be lessened. 
 \end{themeexample}
-
 
 \begin{themeexample}{Frankfurt}
   A variaton on the |Darmstadt| theme that is slightly less cluttered
@@ -393,6 +394,12 @@ An element theme installs templates that dictate how the following
 \end{itemize}
 
 
+In the following examples, the color themes |seahorse| and |rose| are
+used to show where and how background colors are
+honoured. Furthermore, background colors have been specified for all
+elements the honour them in the default theme. In the default color
+theme, all of the large rectangular areas are transparent.
+
 \begin{elementthemeexample}{default}
   The default element theme is quite sober. The only extravagance is
   the fact that a little trianlge is used in |itemize| environments
@@ -401,12 +408,14 @@ An element theme installs templates that dictate how the following
   In some cases the theme will honour background color specifications
   for elements. For example, if you set the background color for block
   titles to green, block titles will have a green background. The
-  background specifications are honoured for the following elements:
+  background specifications are currently honoured for the following
+  elements: 
   \begin{itemize}
   \item Title, author, institute, and date fields in the title
     page.
   \item Block environments, both for the title and for the body.
   \end{itemize}
+  This list may increase in the future.
 \end{elementthemeexample}
 
 \begin{elementthemeexample}{circles}
@@ -432,15 +441,215 @@ An element theme installs templates that dictate how the following
 \end{elementthemeexample}
 
 
+
+
 \subsection{Layout Themes}
 
-\layoutthemeexample{miniframes}
-\layoutthemeexample{smoothbars}
-\layoutthemeexample{sidebar}
-\layoutthemeexample{split}
-\layoutthemeexample{shadow}
-\layoutthemeexample{tree}
-\layoutthemeexample{smoothtree}
+A layout theme dictates (roughly) the overall layout of frames. It
+specifies where any navigational elements should go (like a mini table
+of contents or navigational mini frames) and what they should look
+like. Typically, a layout theme specifies how the following parts of a
+frame are rendered:
+\begin{itemize}
+\item The head- and footline.
+\item The sidebars.
+\item The logo.
+\item The frame title.  
+\end{itemize}
+
+A layout theme will not specify how things like |itemize| environments
+should be rendered---that is the job an element theme.
+
+In the following examples the color theme |seahorse| is
+used. Since the default color theme leaves most backgrounds empty,
+most of the layout themes will look too unstructured with the default
+color theme. 
+
+
+\begin{layoutthemeexample}{default}
+  The default layout theme is the most sober and minimalistic theme
+  around. It will flush left the frame title and it will not install
+  any head- or footlines. However, even this theme honours the
+  background color specified for the frame title. If a color is
+  specified, a bar occupying the whole page width is put behind the
+  frame title. A background color the frame subtitle is ignored.
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{infolines}
+  This theme installs a headline showing the current section and the
+  current subsection. It installs a footline showing the author's
+  name, the institution, the presentation's title, the current date,
+  and a frame count. This theme uses only little space.
+
+  The colors used in the headline and footline are drawn from
+  |palette primary|, |palette secondary|, and |primary ternary| (see
+  Section~\ref{section-colors} for details on how to change these).
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{miniframes}
+  This theme installs a headline in which a horizontal navigational
+  bar is shown. This bar contains one entry for each section of the
+  presentation. Below each section entry, small circles are shown that
+  represent the different frames in the section. The frames are
+  arranged subsection-wise, that is, there is a line of frames for
+  each subsection. If the class  option |compress| is given, the
+  frames will instead be arranged in a single row for each
+  section. The navigation bars draws its color from
+  |section in head/foot|.
+
+  Below the navigation bar, a line is put showing the title of the
+  current subsection. The color is drawn from |subsection in head/foot|.
+
+  At the bottom, two lines are put that contain information such as
+  the author's name, the institution, or the paper's title. What is
+  shown exactly is influenced by the \meta{options} given. The colors
+  are drawn from the appropriate \beamer-colors like
+  |author in head/foot|.
+
+  At the top and bottom of both the head- and footline and between the
+  navigation bar and the subsection name, separation lines are drawn
+  \emph{if} the background color of |separation line| is set. This
+  separation line will have a height of 3pt. You can get even more
+  fine-grained control over the colors of the separation lines by
+  setting appropriate colors like |lower separation line head|.
+
+  The following \meta{options} can be given:
+  \begin{itemize}
+  \item \declare{|footline=empty|} suppressed the footline (default).
+  \item \declare{|footline=authorinstitute|} shows the author's name
+    and the institute in the footline.
+  \item \declare{|footline=authortitle|} shows the author's name
+    and the title in the footline.
+  \item \declare{|footline=institutetitle|} shows the institute
+    and the title in the footline.
+  \item \declare{|footline=authorinstitutetitle|} shows the author's
+    name, the institute, and the title in the footline.
+  \item \declare{|subsection=|\meta{true or false}} shows or supresses
+    line showing the subsection in the headline. It is shown by
+    default.
+  \end{itemize}  
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{smoothbars}
+  This theme behaves very much like the |miniframes| theme, at least
+  with respect to the headline. There, the only difference is the
+  smooth transitions are installed between the background colors of
+  the navigation bar, the (optional) bar for the subsection name, and
+  the background of the frame title. No footline is created. You can
+  get the footlines of the |miniframes| theme by first loading the
+  theme and then loading the |smoothbars| theme.
+
+  The following \meta{options} can be given:
+  \begin{itemize}
+  \item \declare{|subsection=|\meta{true or false}} shows or supresses
+    line showing the subsection in the headline. It is shown by
+    default.
+  \end{itemize}  
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{sidebar}
+  In this layout, a sidebar is shown that contains a small table of
+  contents with the current section or subsection is hilighted. The
+  frame title is vertically centered in a rectangular area at the top
+  that always occupies the same amount of space in all
+  frames. Finally, the logo is shown in the ``corner'' resulting from
+  the sidebar and the frame title rectangle.
+
+  There are several ways of modifying the layout using the
+  \meta{options}. If you set the width of the sidebar to 0pt, it is
+  not shown, giving you a layout in which the frame title does not
+  ``wobble'' since it always occupies the same amount of space on all
+  slides. Conversely, if you set the height of the frame title
+  rectangle to 0pt, the rectangular area is not used and the frame
+  title is inserted normally (occupying as much space as needed on
+  each slide).
+
+  The background color of the sidebar is taken from |sidebar|, the
+  background color of the frame title from |frametitle|, and the
+  background color of the logo corner from |logo|.
+
+  The colors of the entries in the table of contents are drawn from
+  the \beamer-color |section in sidebar| and |section in sidebar current| as well as the
+  corresponding \beamer-colors for subsections. If an entry does not
+  fit on a single line it is automatically ``linebroken.'' 
+
+  The following \meta{options} maybe given:
+  \begin{itemize}
+  \item
+    \declare{|height=|\meta{dimension}} specifies the height of the
+    frame title rectangle. If it is set to 0pt, no frame title
+    rectangle is created. Instead, the frame title is inserted
+    normally into the frame. The default is 2.5 base line heights of
+    the frame title font. Thus, there is about enough space for a
+    two-line frame title plus a one-line subtitle.
+  \item
+    \declare{|hideothersubsections|} causes all subsections except
+    those of the current section to be supressed in the table of
+    contents. This is useful if you have lot's of subsections.
+  \item
+    \declare{|hideallsubsections|} causes all subsections to be
+    supressed in the table of contents.
+  \item
+    \declare{|left|} puts the sidebar on the left side. Note that in a
+    left-to-right reading culture this is side people look first. Note
+    also that this table of contents is usually \emph{not} the most
+    important part of the frame, so you do not necessarily want people
+    to look at is first. Nevertheless, it is the default.
+  \item
+    \declare{|right|} puts the sidebar of the right side.
+  \item
+    \declare{|width=|\meta{dimension}} specifies the width of the
+    sidebar. If it is set to 0pt, it is completely supressed. The
+    default is 2.5 base line heights of the frame title font.
+  \end{itemize}
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{split}
+  This theme installs a headline in which, on the left, the sections
+  of the talk are shown and, on the right, the subsections of the
+  current section. If the class option |compress| has been given,
+  the sections and subsections will be put in one line; normally there
+  is one line per section or subsection.
+
+  The footline shows the author on the left and the talk's title on
+  the right.
+
+  The colors are taken from |palette primary| and |palette fourth|.
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{shadow}
+  This layout theme extends the |split| theme by putting a horizontal
+  shading behind the frame title and adding a little ``shadow'' at the
+  bottom of the headline.
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}[\oarg{options}]{tree}
+  In this layout, the headline contains three lines that show the
+  title of the current talk, the current section in this talk, and the
+  current subsection in the section. The colors are drawn from
+  |title in head/foot|, |section in head/foot|, and
+  |subsection in head/foot|.
+
+  In addition, separation lines of height 3pt are shown above and
+  below the three lines \emph{if} the background of |separation line|
+  is set. More fine-grained control of the colors of these lines can
+  be gained by setting |upper separation line head| and
+  |lower separation line head|.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|hooks|} causes little ``hooks'' to be drawn in front of
+    the section and subsection entries. These are supposed to increase
+    the tree-like appearance. 
+  \end{itemize}
+\end{layoutthemeexample}
+
+\begin{layoutthemeexample}{smoothtree}
+  This layout is similar to the |tree| layout. The main difference is
+  that the background colors change smoothly.
+\end{layoutthemeexample}
+
 
 %%% Local Variables: 
 %%% mode: latex

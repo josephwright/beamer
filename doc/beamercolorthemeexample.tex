@@ -9,7 +9,15 @@
   \def\themename{default}
 \fi
 
+\uselayouttheme[height=0pt]{sidebar}
 \usecolortheme{\themename}
+
+\def\specialtreatment{albatross}
+\ifx\themename\specialtreatment
+\makeatletter
+\let\beamertemplatesolidbackgroundcolor=\@gobble
+\makeatother
+\fi
 
 \input{beamerthemeexamplebase}
 
