@@ -14,7 +14,9 @@
 
 \ProcessOptions
 
-\article
+\mode<article>
+{  
+\RequirePackage{keyval}
 
 \ifbeamer@articlexcolor
   \RequirePackage[override]{xcolor}
@@ -23,6 +25,9 @@
   
 \RequirePackage{beamerbasemisc}
 % Miscellaneous commands
+
+\RequirePackage{beamerbaseoverlay}
+% Overlay stuff
 
 \RequirePackage{beamerbasetitle}
 % Commands for constructing the title page
@@ -33,20 +38,14 @@
 \RequirePackage{beamerbaseframe}
 % Commands for constructing frames
 
-\RequirePackage{beamerbasenotes}
-% Commands for constructing frames
-
 \RequirePackage{beamerbaseframecomponents}
 % Headlines, sidebars, columns
 
 \RequirePackage{beamerbasecolor}
 % Headlines, sidebars, columns
 
-\RequirePackage{beamerbasedecode}
-% Overlay stuff
-
-\RequirePackage{beamerbaseoverlay}
-% Overlay stuff
+\RequirePackage{beamerbasenotes}
+% Commands for constructing frames
 
 \RequirePackage{beamerbasetoc}
 % Table of Contents Format
@@ -59,10 +58,7 @@
 
 \RequirePackage{beamerbasenavigation}
 % Navigation buttons
-
-\common
-
-\endinput
+}
 
 %%% Local Variables: 
 %%% mode: latex

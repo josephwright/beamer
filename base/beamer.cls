@@ -104,6 +104,7 @@
 \newif\ifbeamer@draftmode
 \newif\ifbeamer@suppressreplacements % decides whether fonts should be substituted
 \newif\ifbeamer@frameswithnotesonly
+\newif\ifbeamer@ignorenonframe
 
 
 \RequirePackage{beamerbaseoptions}
@@ -124,6 +125,7 @@
 \beamer@compressfalse
 \beamer@draftmodefalse
 \beamer@frameswithnotesonlyfalse
+\beamer@ignorenonframefalse
 
 \DeclareOptionBeamer{compress}
 {\beamer@compresstrue}
@@ -189,6 +191,8 @@
 \DeclareOptionBeamer{dvipsone}{}% Used by hyperref
 \DeclareOptionBeamer{vtex}{}% Used by hyperref
 \DeclareOptionBeamer{ps2pdf}{}% Used by hyperref
+
+\DeclareOptionBeamer{ignorenonframetext}{\beamer@ignorenonframetrue}
 
 \def\beamer@size{{size11.clo}}
 \DeclareOptionBeamer{bigger}{\def\beamer@size{{size12.clo}}}
@@ -320,9 +324,6 @@
 
 \RequirePackage{beamerbasemisc}
 % Miscellaneous commands
-
-\RequirePackage{beamerbasedecode}
-% Overlay stuff
 
 \RequirePackage{beamerbaseoverlay}
 % Overlay stuff

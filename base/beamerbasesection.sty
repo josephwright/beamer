@@ -8,7 +8,15 @@
 % of the GNU Public License, version 2.
 
 
-\presentation
+\mode<presentation>
+
+
+\mode
+<all>
+{
+  \def\beamer@secgobble{\@ifnextchar*{\beamer@secstargobble}{\beamer@gobbleoptional}}
+  \def\beamer@secstargobble*{\beamer@gobbleoptional}
+}
 
 
 %
@@ -18,9 +26,8 @@
 \renewcommand\thepart{\@arabic\c@part}
 \beamer@partstartpage=1
 
-\def\part{\@ifnextchar[\@part\@@part}
-\long\def\@@part#1{\@part[#1]{#1}}
-\long\def\@part[#1]#2{%
+\newcommand<>{\part}{\alt#1{\@dblarg\beamer@part}{\beamer@gobbleoptional}}
+\long\def\beamer@part[#1]#2{%
   \beamer@savemode%
   \refstepcounter{part}%
   \def\beamer@partname{#2}%
@@ -29,9 +36,12 @@
   \xdef\partlink{{Navigation\the\c@page}{\noexpand\beamer@partname}}%
   \xdef\partlinkshort{{Navigation\the\c@page}{\noexpand\beamer@partnameshort}}%
   \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
-  \addtocontents{nav}{\protect\headcommand{\protect\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}%
-  \addtocontents{nav}{\protect\headcommand{\protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
-  \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
+  \addtocontents{nav}{\protect\headcommand{%
+      \protect\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}%
+  \addtocontents{nav}{\protect\headcommand{%
+      \protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
+  \addtocontents{nav}{\protect\headcommand{%
+      \protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
   \beamer@partstartpage=\c@page%
   \beamer@sectionstartpage=\c@page%
   \beamer@subsectionstartpage=\c@page%
@@ -54,11 +64,22 @@
     \beamer@insertshort{\expandafter\hyperlink\partlinkshort}%
   }}
 
-\common
+\mode
+<all>
 {
   \long\def\AtBeginPart#1{%
     \def\beamer@atbeginpart{#1}}
   \AtBeginPart{}
+}
+
+
+\mode
+<article>
+{
+  \ifx\part\@undefined%
+  \else
+    \renewcommand<>{\part}{\alt#1{\beameroriginal\part}{\beamer@gobbleoptional}}
+  \fi
 }
 
 
@@ -71,11 +92,12 @@
 \beamer@sectionstartpage=1\relax
 \beamer@tocsectionnumber=0\relax
 
-\def\section{\@ifnextchar[\@section\@@section}
-\def\@@section{\@ifnextchar*\@@ssection\@@@section}
-\long\def\@@ssection*#1{\@section[#1]{}}
-\long\def\@@@section#1{\@section[#1]{#1}}
-\long\def\@section[#1]#2{%
+\newcommand<>{\section}{\alt#1{\@ifnextchar[\beamer@section\beamer@@section}{\beamer@secgobble}}
+
+\def\beamer@@section{\@ifnextchar*\beamer@@ssection\beamer@@@section}
+\long\def\beamer@@ssection*#1{\beamer@section[#1]{}}
+\long\def\beamer@@@section#1{\beamer@section[#1]{#1}}
+\long\def\beamer@section[#1]#2{%
   \beamer@savemode%
   \refstepcounter{section}%
   \beamer@ifempty{#2}%
@@ -104,7 +126,8 @@
 \def\beamer@breakhere{}
 
 
-\common
+\mode
+<all>
 {
   \def\AtBeginSection{\@ifnextchar[{\beamer@AtBeginSection}{\beamer@@AtBeginSection}}
   \long\def\beamer@@AtBeginSection#1{\beamer@AtBeginSection[#1]{#1}}
@@ -112,6 +135,12 @@
     \def\beamer@atbeginsection{#2}%
     \def\beamer@atbeginsections{#1}}
   \AtBeginSection{}
+}
+
+\mode
+<article>
+{
+  \renewcommand<>{\section}{\alt#1{\beameroriginal\section}{\beamer@secgobble}}
 }
 
 
@@ -123,12 +152,13 @@
 
 \beamer@subsectionstartpage=1
 
-\def\subsection{\@ifnextchar[\@subsection\@@subsection}
-\def\@@subsection{\@ifnextchar*\@@ssubsection\@@@subsection}
-\long\def\@@ssubsection*#1{%
-  \beamer@ifempty{#1}{\beamer@untitledsubsection}{\@subsection[#1]{}}}
-\def\@@@subsection#1{\@subsection[#1]{#1}}
-\def\@subsection[#1]#2{%
+\newcommand<>{\subsection}{\alt#1{\@ifnextchar[\beamer@subsection\beamer@@subsection}{\beamer@secgobble}}
+
+\def\beamer@@subsection{\@ifnextchar*\beamer@@ssubsection\beamer@@@subsection}
+\long\def\beamer@@ssubsection*#1{%
+  \beamer@ifempty{#1}{\beamer@untitledsubsection}{\beamer@subsection[#1]{}}}
+\def\beamer@@@subsection#1{\beamer@subsection[#1]{#1}}
+\def\beamer@subsection[#1]#2{%
   \beamer@savemode%
   \refstepcounter{subsection}%
   \beamer@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}
@@ -154,7 +184,8 @@
   \def\lastsubsection{}}
 
 
-\common
+\mode
+<all>
 {
   \def\AtBeginSubsection{\@ifnextchar[{\beamer@AtBeginSubsection}{\beamer@@AtBeginSubsection}}
   \long\def\beamer@@AtBeginSubsection#1{\beamer@AtBeginSubsection[#1]{#1}}
@@ -164,16 +195,33 @@
   \AtBeginSubsection{}
 }
 
+\mode
+<article>
+{
+  \renewcommand<>{\subsection}{\alt#1{\beameroriginal\subsection}{\beamer@secgobble}}
+}
+
 
 %
 % Appendix stuff
 %
-\def\appendix{%
-  \part{\appendixname}
-  \addtocontents{nav}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}}
+
+\newcommand<>\appendix{%
+  \only#1{\part{\appendixname}
+  \addtocontents{nav}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}}}
+
+\mode
+<article>
+{
+  \ifx\appendix\@undefined
+  \else
+    \renewcommand<>{\appendix}{\only#1{\beameroriginal\appendix}}
+  \fi
+}
 
 
-\common
+\mode
+<all>
 
 %%% Local Variables: 
 %%% mode: latex

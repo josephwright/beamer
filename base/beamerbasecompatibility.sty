@@ -56,7 +56,10 @@
     % Fix spanish.ldf's meddling with < and > 
     %
     \@ifundefined{deactivatequoting}{}{\deactivatequoting}}
-  \begingroup\beamer@origdocument}
+  \begingroup\beamer@origdocument%
+  \ifbeamer@ignorenonframe%
+    \expandafter\mode\expandafter*%
+  \fi}
 
 \AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize 
 

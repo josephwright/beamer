@@ -7,6 +7,7 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\RequirePackage{beamerbasedecode}
 
 %
 % Presentation/article stuff
@@ -30,26 +31,30 @@
     \endlinechar`\^^M \catcode`\^^M=12 \beamer@processline}
 
 {\catcode`\^^M=12\endlinechar=-1%
- \long\gdef\beamer@processline#1^^M{%
-   \def\beamer@test{#1}%
-    \ifx\beamer@test\beamer@stoparticle%
-      \let\next=\article%
+  \long\gdef\beamer@processline#1^^M{%
+    \def\beamer@test{#1}%
+    \ifx\beamer@test\beamer@stopmode%
+      \let\next=\mode%
     \else%
-      \ifx\beamer@test\beamer@stoppresentation%
-        \let\next=\presentation%
+      \ifx\beamer@test\beamer@stoparticle%
+        \let\next=\article%
       \else%
-        \ifx\beamer@test\beamer@stopcommon%
-          \let\next=\common%
+        \ifx\beamer@test\beamer@stoppresentation%
+          \let\next=\presentation%
         \else%
-          \ifx\beamer@test\beamer@stopdocument%
-            \let\next=\beamer@enddocument%
-          \else
-            \ifx\beamer@test\beamer@begindocument%
-              \let\next=\beamer@startdocument%
+          \ifx\beamer@test\beamer@stopcommon%
+            \let\next=\common%
+          \else%
+            \ifx\beamer@test\beamer@stopdocument%
+              \let\next=\beamer@enddocument%
             \else
-              \let\next=\beamer@processline%
-          \fi%  
-          \fi%  
+              \ifx\beamer@test\beamer@begindocument%
+                \let\next=\beamer@startdocument%
+              \else
+                \let\next=\beamer@processline%
+              \fi%  
+            \fi%  
+          \fi%
         \fi%
       \fi%
     \fi%
@@ -60,15 +65,12 @@
 \def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}\common}
 \def\beamer@closer{}
 {\escapechar=-1\relax%
+  \xdef\beamer@stopmode{\string\\mode}
   \xdef\beamer@stoparticle{\string\\article}
   \xdef\beamer@stoppresentation{\string\\presentation}
   \xdef\beamer@stopcommon{\string\\common}
   \xdef\beamer@stopdocument{\string\\end\string\{document\string\}}
   \xdef\beamer@begindocument{\string\\begin\string\{document\string\}}
-  \xdef\beamer@stopsection{\string\\section}
-  \xdef\beamer@stopsubsection{\string\\subsection}
-  \xdef\beamer@stoppart{\string\\part}
-  \xdef\beamer@stopframe{\string\\frame}
 }
 \newbox\beamer@commentbox
 \def\beamer@startcommentinframe{%
@@ -78,19 +80,19 @@
 
 \def\beamer@outsidemode{\afterassignment\beamer@treat\let\beamer@nexttoken=}
 \def\beamer@treat{%
-  \ifx\beamer@nexttoken\frame\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\note\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\noteitems\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\appendix\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\againframe\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\section\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\subsection\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\part\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\article\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\common\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\presentation\let\next=\beamer@stopoutsidemode%
-  \else\ifx\beamer@nexttoken\end\let\next=\beamer@checkenddoc%
-  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
+  \ifx\beamer@nexttoken\frame\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\notes\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\noteitems\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\appendix\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\againframe\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\section\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\subsection\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\part\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\article\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\mode\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\common\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\presentation\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\end\let\next=\beamer@checkenddoc\fi%
   \next}
 
 \def\beamer@stopoutsidemode{\beamer@nexttoken}
@@ -104,9 +106,9 @@
   \next}
 \def\beamer@enddoc{document}
 
-\def\articleoutsideframe{%
+\def\beamer@modeoutsideframe{%
   \beamer@closer%
-  \gdef\beamer@mode{\articleoutsideframe}%
+  \gdef\beamer@mode{\beamer@modeoutsideframe}%
   \ifbeamer@inpresentation%
     \let\next=\beamer@outsidemode%
     \gdef\beamer@closer{}%
@@ -159,8 +161,34 @@
   \beamer@mode\par}
 \def\beamer@common{\gdef\beamer@mode{\common}}
 
+%
+% Mode command
+%
+\def\mode{\@ifstar\beamer@modeoutsideframe\beamer@@@mode}
+\def\beamer@@@mode<#1>{\beamer@closer\@ifnextchar\bgroup{\beamer@modeinline<#1>}{\beamer@switchmode<#1>}}
+\long\def\beamer@modeinline<#1>#2{%
+  \gdef\beamer@closer{}%
+  \def\beamer@doifnotinframe{\@gobble}\def\beamer@doifinframe{\@firstofone}%
+  {\beamer@saveanother\beamer@slideinframe=1\relax%
+   \setbox0=\hbox{\beamer@decode#1| stop:0| }%
+   \beamer@restoreanother}\beamer@donow{#2}%
+  \beamer@mode\par}
+\def\beamer@switchmode<#1>{%
+  \gdef\beamer@mode{\beamer@switchmode<#1>}%
+  \def\beamer@doifnotinframe{%
+    \let\next=\beamer@startcomment%
+    \gdef\beamer@closer{\endgroup}%
+  }%
+  \def\beamer@doifinframe{%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+   }%
+  {\beamer@saveanother\beamer@slideinframe=1\relax%
+   \setbox0=\hbox{\beamer@decode#1| stop:0| }%
+   \beamer@restoreanother}\beamer@donow%
+  \next}
 
-\common
+\mode<all>
 
 \def\beamer@savemode{\expandafter\gdef\expandafter\beamer@savedmode\expandafter{\beamer@mode}}
 \def\beamer@resumemode{\beamer@savedmode}

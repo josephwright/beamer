@@ -8,7 +8,7 @@
 
 
 
-\presentation
+\mode<presentation>
 
 \newbox\beamer@frameboxcopy
 
@@ -174,18 +174,19 @@
 }
 
 
-\article
+\mode
+<article>
 {
   \long\def\note#1{}
-  \long\def\notes#1{}
   \long\def\noteitems#1{}
-  \long\def\noteitem#1{}
+  \newcommand<>\note[1]{}
+  \newcommand<>\noteitem[1]{}
 }
 
 
 
-\common
-% End in common mode
+\mode
+<all>
 
 
 %%% Local Variables: 

@@ -6,19 +6,8 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-
-
-\presentation
-
-%
-%
-% Empty test
-%
-%
-\long\def\beamer@ifempty#1{\beamer@xifempty#1@@..\@nil}
-\long\def\beamer@xifempty#1#2@#3#4#5\@nil{%
-  \ifx#3#4\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
-
+\mode
+<presentation>
 
 % Calculate maximum number of sections/subsections per part
 \beamer@subsectionmax=0\relax
@@ -195,9 +184,9 @@
   \beamer@ststart#1\beamer@stend%
 }
 
+\mode
+<all>
 
-
-\common
 
 %%% Local Variables: 
 %%% mode: latex

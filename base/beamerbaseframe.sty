@@ -18,7 +18,7 @@
 % 
 
 
-\presentation
+\mode<presentation>
 
 \newbox\beamer@framebox
 
@@ -135,7 +135,7 @@
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
 \def\beamer@@@frame<#1>[#2]{%
   \beamer@savemode%
-  \def\beamer@mode{\common}%
+  \def\beamer@mode{\mode<all>}%
   \def\beamer@frametemplate{}%
   \def\beamer@againname{}%
   \setkeys{beamerframe}{#2}%
@@ -237,7 +237,8 @@
     \clearpage\beamer@notesactions%
   }
 }
-\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\beamer@resumemode}
+\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}%
+  \beamer@slideinframe=1\relax\beamer@resumemode}
 
 \def\beamer@checkifinlist#1,#2\relax{
   \def\beamer@temp{#1}%
@@ -255,12 +256,12 @@
 
 
 
-\article
+\mode
+<article>
 {
   \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<+>}}
-  \def\beamer@frame{\begingroup\catcode`:=12\catcode`|=12\beamer@@@frame}% Hackery for french style
-  \def\beamer@@@frame<#1>{\endgroup\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
-  \def\beamer@@frame<#1>[#2]{%
+  \def\beamer@frame<#1>{\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
+  \long\def\beamer@@frame<#1>[#2]{%
     \beamer@slideinframe=1\relax%
     \refstepcounter{framenumber}%
     \beamer@slideinframe=0\relax%
@@ -294,10 +295,20 @@
   \def\includeonlyframes#1{}% no effect
 }
 
+
+\mode
+<all>
+{
+  \beamer@slideinframe=1\relax%
+}
+
+
+
 %
 % Frame counter
 %
-\common
+\mode
+<all>
 {
   \newcounter{framenumber}
   \def\insertframenumber{\@arabic\c@framenumber}
@@ -330,7 +341,8 @@
   \expandafter\beamer@temp\beamer@templet}%
 }
 
-\article
+\mode
+<article>
 {
   \def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<>}}
   \def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
@@ -339,7 +351,8 @@
 
 
 
-\common
+\mode
+<all>
 % End in common mode
 
 

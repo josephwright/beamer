@@ -8,7 +8,7 @@
 
 
 
-\presentation
+\mode<presentation>
 
 \RequirePackage{enumerate}
 
@@ -39,7 +39,8 @@
   }}
 
 
-\article
+\mode
+<article>
 {
   \newcommand\frametitle[2][]{\gdef\insertframetitle{#2}\beamer@headrenderer}
   \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
@@ -76,11 +77,12 @@
 \usestructuretemplate{\color{beamerstructure}}{}
 
 
-\article
+\mode
+<article>
 {
   \newenvironment{alertenv}{\begin{altenv}%
     {\begin{itshape}}{\end{itshape}}{}{}}{\end{altenv}}
-  \newenvironment{alertenv}{\begin{altenv}%
+  \newenvironment{structureenv}{\begin{structureenv}%
     {\begin{bfseries}}{\end{bfseries}}{}{}}{\end{altenv}}
   
   \newcommand{\alert}{\only{\emph}}
@@ -95,7 +97,8 @@
 %
 %
 
-\common
+\mode
+<all>
 {
   \long\def\useblocktemplate#1#2{%
     \def\beamer@beginblocktemplate{#1}
@@ -138,14 +141,16 @@
 }
 
 
-\article
+\mode
+<article>
 {
   \useblocktemplate{\par\medskip{\noindent\textbf{\insertblockname}}\par\noindent\ignorespaces}{\medskip}
   \usealertblocktemplate{\par\medskip{\noindent\textbf{\emph{\insertblockname}}}\par\noindent\ignorespaces}{\medskip}
   \useexampleblocktemplate{\par\medskip{\noindent\emph{\insertblockname}}\par\noindent\ignorespaces}{\medskip}
 }
 
-\common
+\mode
+<all>
 {
 
   \ifbeamer@blocks
@@ -380,7 +385,8 @@
 \usetemplatequotation{\itshape}{}
 
 
-\article
+\mode
+<article>
 {
   \renewenvironment<>{verse}{\begin{actionenv}#1\begin{originalverse}}{\end{originalverse}\end{actionenv}}
   \renewenvironment<>{quotation}{\begin{actionenv}#1\begin{originalquotation}}{\end{originalquotation}\end{actionenv}}
@@ -453,7 +459,8 @@
   {\par\color{beamerstructure!65}}
 
 
-\article
+\mode
+<article>
 {
   \AtBeginDocument{
     \renewcommand<>{\bibitem}{\beameroriginal{\bibitem}}%should actually suppress
@@ -525,7 +532,8 @@
   {\small\structure{\insertcaptionname:} \insertcaption}}
 
 
-\common
+\mode
+<all>
 
 
 %%% Local Variables: 

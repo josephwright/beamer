@@ -2,7 +2,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 
-\presentation
+\mode<presentation>
 
 
 \RequirePackage{pgfshade}
@@ -517,7 +517,8 @@
   \end{pgfpicture}%    
   }}
 
-\article
+\mode
+<article>
 {
   \newcommand{\beamertemplatesolidbackgroundcolor}[1]{}
   \newcommand{\beamertemplateshadingbackground}[2]{}
@@ -560,7 +561,8 @@
   \usebibitemtemplate{\color{beamerstructure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
 }
 
-\article
+\mode
+<article>
 {
   \newcommand{\beamertemplatebookbibitems}{}
   \newcommand{\beamertemplatearticlebibitems}{}
@@ -622,7 +624,8 @@
   {\opaqueness<1->{2}}}
 
 
-\article
+\mode
+<article>
 {
   \def\beamertemplatetransparentcovereddynamic{}
   \def\beamertemplatetransparentcovereddynamicmedium{}
@@ -816,4 +819,7 @@
   \insertnote
 }
 }
-\common
+
+\mode
+<all>
+

@@ -8,7 +8,7 @@
 
 
 
-\presentation
+\mode<presentation>
 
 %
 % Setting the left and right margin
@@ -34,7 +34,8 @@
 }
 
 
-\article
+\mode
+<article>
 {
   \def\beamersetleftmargin#1{}
   \def\beamersetrightmargin#1{}
@@ -128,7 +129,8 @@
 % Background management
 %
 %
-\common
+\mode
+<all>
 {
   \long\def\usebackgroundtemplate#1{%
     \gdef\beamer@backgroundtemplate{#1}}
@@ -268,10 +270,11 @@
   \def\beamer@colclose{}\ignorespaces}%
   {\beamer@colclose\def\beamer@colclose{}\beamer@colexitcode\end{actionenv}}%
   
-\article
+\mode
+<article>
 {
   % do sth. more intelligent in the future
-  \newenvironment{columns}[1][]{}{}
+  \newenvironment<>{columns}[1][]{}{}
 }
 
 
@@ -283,7 +286,8 @@
 %
 %
 
-\common
+\mode
+<all>
 {
 \def\beamer@columnname{column}
 \def\column{%
@@ -308,12 +312,15 @@
   \def\beamer@colclose{\end{minipage}\hfill\end{actionenv}\ignorespaces}%
   \begin{actionenv}#3%
   \begin{minipage}[#1]{#2}%
-    \raggedright}
+    \raggedright
+}
+  
    
-\article
+\mode
+<article>
 {
-  \newenvironment{beamer@columnenv}[2][]{}{}
-  \newcommand{\beamer@columncom}[2][]{}
+  \newenvironment<>{beamer@columnenv}[2][]{}{}
+  \newcommand<>{\beamer@columncom}[2][]{}
 }
 
    
@@ -337,7 +344,8 @@
 
 
 
-\common
+\mode
+<all>
 
 %%% Local Variables: 
 %%% mode: latex
