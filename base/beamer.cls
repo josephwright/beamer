@@ -420,6 +420,7 @@
 
                                 % Navigation symbols
 \beamertemplatenavigationsymbolshorizontal
+\beamertemplaterightsidebarlogonavigation
 
 %%% Local Variables: 
 %%% mode: latex

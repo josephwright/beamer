@@ -125,7 +125,8 @@
 
 \def\subsection{\@ifnextchar[\@subsection\@@subsection}
 \def\@@subsection{\@ifnextchar*\@@ssubsection\@@@subsection}
-\long\def\@@ssubsection*#1{\@subsection[#1]{}}
+\long\def\@@ssubsection*#1{%
+  \beamer@ifempty{#1}{\beamer@untitledsubsection}{\@subsection[#1]{}}}
 \def\@@@subsection#1{\@subsection[#1]{#1}}
 \def\@subsection[#1]#2{%
   \beamer@savemode%
@@ -145,12 +146,12 @@
   \hyper@anchorstart{Outline\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
   \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}%
   \beamer@resumemode}
+\def\insertsubsection{}
 
-\def\untitledsubsection{%
+\def\beamer@untitledsubsection{%
   \refstepcounter{subsection}%
   \def\insertsubsection{}%
   \def\lastsubsection{}}
-\def\insertsubsection{}
 
 
 \common

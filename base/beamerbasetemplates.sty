@@ -311,7 +311,7 @@
 {
   \usesectionheadtemplate
   {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
-  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white!50!structure}\tiny\textbf{\insertsectionhead}}
 
   \usesubsectionheadtemplate
   {\color{white}\tiny\textbf{\insertsubsectionhead}}
@@ -321,12 +321,12 @@
 \newcommand{\beamertemplatedarksectionheads}
 {
   \usesectionheadtemplate
-  {\color{structure}\tiny\insertsectionhead}
-  {\color{structure!50!averagebackgroundcolor}\tiny\insertsectionhead}
+  {\color{beamerstructure}\tiny\insertsectionhead}
+  {\color{beamerstructure!50!averagebackgroundcolor}\tiny\insertsectionhead}
 
   \usesubsectionheadtemplate
-  {\color{structure}\tiny\insertsubsectionhead}
-  {\color{structure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
+  {\color{beamerstructure}\tiny\insertsubsectionhead}
+  {\color{beamerstructure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
 }
 
 
@@ -738,23 +738,23 @@
 
 \newcommand{\beamertemplateboldblocks}{
   \useblocktemplate{\medskip{\color{beamerstructure}\textbf{\insertblockname}}\par}{\medskip}
-  \usealertblocktemplate{\medskip{\alert{\textbf{\insertblockname}}}\par}{\medskip}
-  \useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\textbf{\insertblockname}}\par%
-    \color{black!50!green}}{\endgroup\medskip}
+  \usealertblocktemplate{\medskip{\alert{\textbf{\insertblockname}}}\colorlet{beamerstructure}{beameralert}\par}{\medskip}
+  \useexampleblocktemplate{\medskip\begingroup{\color{beamerstructure!50!green}\textbf{\insertblockname}}\par%
+    \color{black!50!green}\colorlet{beamerstructure}{beamerstructure!50!green}}{\endgroup\medskip}
 }
 
 \newcommand{\beamertemplatelargeblocks}{
   \useblocktemplate{\medskip{\color{beamerstructure}\large{\insertblockname}}\par}{\medskip}
-  \usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
-  \useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
-    \color{black!50!green}}{\endgroup\medskip}
+  \usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\colorlet{beamerstructure}{beameralert}\par}{\medskip}
+  \useexampleblocktemplate{\medskip\begingroup{\color{beamerstructure!50!green}\large{\insertblockname}}\par%
+    \color{black!50!green}\colorlet{beamerstructure}{beamerstructure!50!green}}{\endgroup\medskip}
 }
 
 
 \newcommand{\beamertemplatesetupshadings}{
   \beamerboxessetupshadows
-  \beamerboxesdeclarecolorscheme{block}{structure!75!averagebackgroundcolor}{structure!10!averagebackgroundcolor}
-  \beamerboxesdeclarecolorscheme{alert}{alert!75!averagebackgroundcolor}{alert!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{block}{beamerstructure!75!averagebackgroundcolor}{beamerstructure!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{alert}{beameralert!75!averagebackgroundcolor}{beameralert!10!averagebackgroundcolor}
   \beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
 }
 

@@ -96,7 +96,7 @@ End
 Style BeginFrame
   KeepEmpty	1
   LatexType	Command
-  LatexName	lyxframe
+  LatexName	lyxframeend{}\lyxframe
   Margin            First_Dynamic
   NextNoIndent      1
   ParSkip           0
@@ -135,7 +135,7 @@ End
 Style BeginPlainFrame
   KeepEmpty	1
   LatexType	Command
-  LatexName	lyxplainframe
+  LatexName	lyxframeend{}\lyxplainframe
   Margin            First_Dynamic
   NextNoIndent      1
   ParSkip           0
@@ -224,7 +224,7 @@ Style Pause
 End
 
 Counter
-  Name                 section
+  Name                 section 
 End
 
 Counter
@@ -258,7 +258,7 @@ End
 Style Section
   Margin		First_Dynamic
   LatexType		Command
-  LatexName		section
+  LatexName		lyxframeend{}\section
   NeedProtect		1
   NextNoIndent		1
   LabelSep		xxx
@@ -287,7 +287,7 @@ End
 Style Section*
   CopyStyle		Section
   Margin		Static
-  LatexName		section*
+  LatexName		lyxframeend{}\section*
   LabelType		No_Label
   OptionalArgs		0
 End
@@ -296,7 +296,7 @@ End
 Style Subsection
   Margin		First_Dynamic
   LatexType		Command
-  LatexName		subsection
+  LatexName		lyxframeend{}\subsection
   NeedProtect		1
   NextNoIndent		1
   LabelSep		xxx
@@ -326,7 +326,7 @@ End
 Style Subsection*
   CopyStyle		Subsection
   Margin		Static
-  LatexName		subsection*
+  LatexName		lyxframeend{}\subsection*
   LabelType		No_Label
   OptionalArgs		0
 End
@@ -334,7 +334,7 @@ End
 Style AgainFrame
   KeepEmpty	    0
   LatexType	    Command
-  LatexName	    lyxagainframe
+  LatexName	    lyxframeend{}\lyxagainframe
   Margin            First_Dynamic
   NextNoIndent      1
   ParSkip           0
@@ -348,6 +348,9 @@ Style AgainFrame
   LeftMargin        M
   LabelString       "Again frame with label   "
 
+  Font
+    Color           latex
+  EndFont
 
   LabelFont 
     Family          Roman

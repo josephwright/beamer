@@ -2047,8 +2047,27 @@ why; comments would be appreciated).
 \end{command}
 
 \begin{command}{\subsection\declare{|*|}\marg{subsection name}}
-  Like |\subsection*|, except for subsections.
-  \example|\subsection*{Further Reading}|
+  Starts a subsection without an entry in the table of contents. No
+  heading is created, but the \meta{subsection name} is shown in the
+  navigation bar, \emph{except} if \meta{subsection name} is empty. In
+  this case, neither a table of contents entry nor a navigation bar
+  entry is created, \emph{but} any frames in this ``empty'' subsection
+  are shown in the navigation bar.
+
+  \example
+\section{Summary}
+
+  \frame{This frame is not shown in the navigation bar}
+
+  \subsection*{}
+
+  \frame{This frame is shown in the navigation bar, but no subsection
+    entry is shown.}
+
+  \subsection*{A subsection}
+
+  \frame{Normal frame, shown in navigation bar. The subsection name is
+    also shown in the navigation bar, but not in the table of contents.} 
 \end{command}
 
 Often, you may want a certain type of frame to be shown directly after
