@@ -1,4 +1,4 @@
-\documentclass[class=article]{beamer}
+\documentclass{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
@@ -12,14 +12,15 @@
 % For a green structure color use:
 %\colorlet{structure}{green!50!black}
 
-\usepackage{beamerbasearticle}
+%\article
+%{
+%  \usepackage{beamerbasearticle}
+%  \usepackage{fullpage}
+%}
 
 \beamertemplateshadingbackground{red!10}{blue!10}
 
-\presentation
-{
-  \usepackage{beamerthemeshadow}
-}
+\usepackage{beamerthemeshadow}
 
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
@@ -33,10 +34,7 @@
 %\usepackage{times}
 
 % Use some nice templates
-\presentation
-{
 \beamertemplatetransparentcovereddynamic
-}
 
 %
 % The following defintions are peculiar to this particular
@@ -143,14 +141,11 @@
 % The following info should normally be given in you main file:
 %
 
-\presentation
-{
 \hypersetup{%
   pdftitle={Computation with Absolutely No Space Overhead},%
   pdfauthor={Lane Hemaspaandra, Proshanto Mukherji, and Till Tantau},
   pdfsubject={Theoretical Computer Science},
   pdfkeywords={overhead-free, context-free, linear space}}
-}
 
 \title[Computation with Absolutely No~Space~Overhead]{Computation~with Absolutely~No~Space~Overhead}
 \author[Hemaspaandra, Mukherji, Tantau]{%
@@ -174,9 +169,8 @@
 
 \logo{\vbox{\hbox to 1cm{\hfil\pgfuseimage{tu-logo}}\vskip0.1cm\hbox{\pgfuseimage{ur-logo}}}}
 
-\begin{document}
 
-\articleoutsideframe
+\begin{document}
 
 \frame{\titlepage}
 
@@ -196,7 +190,6 @@
     \tableofcontents[current,currentsubsection]
   }
 }
-
 
 \part{Main Talk}
 
@@ -917,6 +910,7 @@
 \appendix
 
 \AtBeginSubsection{}
+
 
 \section{\appendixname}
 

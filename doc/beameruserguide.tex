@@ -373,7 +373,7 @@ options or precautions may be necessary.
   Use this option only with fonts that have outline fonts available in
   the T1 encoding like Times or the lmodern fonts. In a standard
   installation the standard Computer Modern fonts (the fonts Donald
-  Knuth orginally designed and which are used by default) are
+  Knuth originally designed and which are used by default) are
   \emph{not} available in the T1 encoding. Using this  option with
   them will result in very poor rendering of your presentation when
   viewed with \pdf\ viewer applications like Acrobat or |xpdf|. To use
@@ -554,7 +554,7 @@ might  look like this:
 To create a |PDF| version of this file, run the program
 |pdflatex| on |main.tex| at least twice. Your need to run it twice, so
 that \TeX\ can create the table of contents. (It may even be necessary
-to run it more often since all sorts of auxilliary files are
+to run it more often since all sorts of auxiliary files are
 created.) In the following example, the greater-than-sign is the prompt. 
 
 \begin{verbatim}
@@ -790,12 +790,13 @@ Section~\ref{section-graphics}.
 \end{itemize}
 
 
-\subsubsection{Using the Draft Option}
+\subsubsection{Ways of Improving Compilation Speed}
 
 While working on your presentation, it may sometimes be useful to
 \TeX\ your |.tex| file quickly and have the presentation contain only
 the most important information. This is especially true if you have a
-slow machine. In this case, the |draft| class option is useful.
+slow machine. In this case, you can do several things to speedup the
+compilation. First, you can use the |draft| class option.
 
 \begin{classoption}{{draft}}
   Causes the head lines, foot lines, and sidebars to be replaced by
@@ -803,6 +804,38 @@ slow machine. In this case, the |draft| class option is useful.
   other packages, including |pgf| and |hyperref|, also ``speedup''
   when this option is given.
 \end{classoption}
+
+Second, you can use the following command:
+
+\begin{command}{{\includeonlyframes}\marg{frame label list}}
+  This command behaves a little bit like the |\includeonly| command:
+  Only the frames mentioned in the list are included. All other frames
+  are suppressed. Nevertheless, the section and subsection commands
+  are still executed, so that you still have the correct navigation
+  bars. By labeling the current frame as, say, |current| and then
+  saying |\includeonlyframes{current}|, you can work on a single frame
+  quickly.  
+
+  The \meta{frame label list} is a comma-separated list (without
+  spaces) of the names of frames that have been labeled. To label a
+  frame, you must pass the option |label=|\meta{name} to the |\frame|
+  command.
+
+  \example
+\begin{verbatim}
+\includeonlyframes{example1,example3}
+
+\frame[label=example1]
+{This frame will be included. }
+
+\frame[label=example2]
+{This frame will not be included. }
+
+\frame{This frame will not be included.}
+
+\resumeframe{example1} % Will be included
+\end{verbatim}
+\end{command}
 
 
 
@@ -916,9 +949,11 @@ slides of the frame.
     normally. See also |\resumeframe|.
 
     Furthermore, on each slide of the frame a label with the name
-    \meta{name}|<|\meta{slide number}|>| is created. Note that labels
-    in general, and these labels in particular, can be used as targets
-    for hyperlinks. 
+    \meta{name}|<|\meta{slide number}|>| is created. On the
+    \emph{first} slide, furthermore, a label with the name \meta{name}
+    is created (so the labels \meta{name} and \meta{name}|<1>| point
+    to the same slide). Note that labels in general, and these labels
+    in particular, can be used as targets for hyperlinks. 
   \end{itemize}
 \end{command}
 
@@ -930,18 +965,19 @@ to check whether this argument ``looks like'' an overlay
 specification. If so, it is assumed to be an overlay specification.
 
 Note that there is \emph{no} environment for creating frames. The
-reason is that I have simply not been able to come up with any idea of
+reason is that I simply have not been able to come up with an idea of
 how to implement it.
 
 
 \begin{command}{\resumeframe\sarg{overlay
       specification}\oarg{options}\marg{name}}
   Resumes a frame that was previously created using |\frame|
-  with the option |label=|\meta{name}. You can use this
-  command to ``continue'' a frame that has been interrupted by another
-  frame. The effect of this command is to call the |\frame| command
-  with the given \meta{overlay specification} and \meta{options} (if
-  present) and with the original frame's contents.
+  with the option |label=|\meta{name}. You must have used this option,
+  just placing a label inside a frame ``by hand'' is not enough. You
+  can use this command to ``continue'' a frame that has been
+  interrupted by another frame. The effect of this command is to call
+  the |\frame| command with the given \meta{overlay specification} and
+  \meta{options} (if present) and with the original frame's contents.
 
   \example
 \begin{verbatim}
@@ -963,7 +999,7 @@ how to implement it.
 \end{verbatim}
   The effect of the above code is to create four slides. In the first
   two, the items 1 and~2 are hilighted. The third slide contains the
-  text ``Some stuff explaining more on the second matter.'' The fourht
+  text ``Some stuff explaining more on the second matter.'' The fourth
   slide is identical to the first two slides, except that the third
   point is now hilighted.
 
@@ -977,18 +1013,18 @@ how to implement it.
     $\alpha < 2^\alpha$ for all ordinals~$\alpha$.
   \end{Theorem}
 
-  \only<1>
-  {
+  \begin{overprint}
+  \onslide<1>
     \hyperlink{Cantor<2>}{\beamergotobutton{Proof details}}
-  }
-  \only<2>
-  {% this is only shown in the appendix, where this frame is resumed.
+
+  \onslide<2->
+    % this is only shown in the appendix, where this frame is resumed.
     \begin{proof}
       As shown by Cantor, ...
     \end{proof}
 
     \hfill\hyperlink{Cantor<1>}{\beamerreturnbutton{Return}}
-  }
+  \end{overprint}
 }
 
 ...
@@ -1479,7 +1515,12 @@ in the same way as |\item|.
   set to just `1' and the label is thus inserted only on the first
   slide. This is typically the desired behaviour since it does not
   really matter on which slide the label is inserted, \emph{except} if
-  you use an |\only| command. Then you need to specifiy a slide.
+  you use an |\only| command and \emph{except} if you wish to use that
+  lable as a hyperjump target. Then you need to specifiy a slide.
+
+  Labels can be used as target of hyperjumps. A convenient way of
+  labelling a frame is to use the |label=|\meta{name} option of the
+  |\frame| command.
   \example
 \begin{verbatim}
 \frame
@@ -1495,6 +1536,8 @@ in the same way as |\item|.
 }
 \end{verbatim}
 \end{command}
+
+
 
 \subsubsection{Environments with Overlay Specifications}
 
@@ -1816,6 +1859,14 @@ affiliation, a title graphic, and a date.
   \example |\frame{\titlepage}|
 \end{command}
 
+For compatibility with other classes in article mode, the following
+command is also provided: 
+
+\begin{command}{\maketitle}
+  Same as |\frame{titlepage}|.
+\end{command}
+
+
 Before you invoke the title page command, you must specify all
 elements you wish to be shown. This is done using the following
 commands: 
@@ -2129,7 +2180,7 @@ to keep in mind:
 \begin{itemize}
 \item
   It is a bad idea to present a long bibliography in a 
-  beamer presentation. Present only very few references.
+  presentation. Present only very few references.
 \item
   Present references only if they are intended as ``further reading,''
   for example at the end of a lecture.
@@ -2143,7 +2194,7 @@ to keep in mind:
   If you want to be modest, you can abbreviate your name when citing
   yourself as in ``[Nickelsen and T., 2003]'' or ``[Nickelsen and T,
   2003]''. However, this can be confusing for the audience since it is
-  often not immediately clear who exactly ``T.'' might be. I recommand
+  often not immediately clear who exactly ``T.'' might be. I recommend
   using the full name.
 \end{itemize}
 
@@ -2230,7 +2281,7 @@ article symbol is drawn. The rationale is that the audience will not be
 able to remember any abbreviated citation texts till the end of the
 talk. If you really insist on using abbreviations, you can use the
 command |\beamertemplatetextbibitems| to restore the default
-bevahior, see also Section~\ref{section-bib-templates}.
+behavior, see also Section~\ref{section-bib-templates}.
 
 
 
@@ -2241,7 +2292,7 @@ You can add an appendix to your talk by using the |\appendix|
 command. You should put frames and perhaps whole subsections into the
 appendix that you do not intend to show during your presentation, but
 which might be useful to answer a question. The |\appendix| command
-essentially just start a new part named |\appendixname|. However, it
+essentially just starts a new part named |\appendixname|. However, it
 also sets up certain hyperlinks. 
 Like other parts, the appendix is kept separate of your actual
 talk.
@@ -2286,8 +2337,9 @@ presentation to some other slide. Creating such a button is a
 three-step process: 
 \begin{enumerate}
 \item
-  You specify a target using the command |\hypertarget|. In some
-  cases, see below, this step may be skipped.
+  You specify a target using the command |\hypertarget| or (easier)
+  the command |\label|. In some cases, see below, this step may be
+  skipped. 
 \item
   You render the button using |\beamerbutton| or a similar
   command. This will \emph{render} the button, but clicking it will
@@ -2320,6 +2372,25 @@ three-step process:
 }
 \end{verbatim}
 \end{command}
+
+The |\label| command creates a hypertarget as a side-effect and the
+|label=|\meta{name} option of the |\frame| command creates a label
+named \meta{name}|<|\meta{slide number}|>| for each slide of the frame
+as a side-effect. Thus the above example could be written more easily
+as: 
+\begin{verbatim}
+\frame[label=threeitems]{
+  \begin{itemize}
+  \item<1-> First item.
+  \item<2-> Second item.
+  \item<3-> Third item.
+  \end{itemize}
+
+  \hyperlink{threeitems<2>}{\beamergotobutton{Jump to second slide}}
+}
+\end{verbatim}
+
+
 
 The following commands can be used to specify in an abstract way what
 a button will be used for. How exactly these buttons are rendered is
@@ -2369,22 +2440,24 @@ governed by a template, see Section~\ref{section-navigation-buttons}.
 
   \example
 \begin{verbatim}
-\frame{
+\frame<1>[label=mytheorem]
+{
   \begin{theorem}
     ...
   \end{theorem}
 
-  \hyperlink{detour}{\beamergotobutton{Go to proof details}}
-  \hypertarget{returnhere}{}
+  \begin{overprint}
+  \onslide<1>
+    \hfill\hyperlink{mytheorem<2>}{\beamergotobutton{Go to proof details}}
+  \onslide<2>
+    \begin{proof}
+      ...
+    \end{proof}
+    \hfill\hyperlink{mytheorem<1>}{\beamerreturnbutton{Return}}
+  \end{overprint}
 }
 \appendix
-\frame{
-  \hypertarget{detour}{}
-  \begin{proof}
-    ...
-  \end{proof}
-  \hfill\hyperlink{returnhere}{\beamerreturnbutton{Return}}
-}  
+\resumeframe<2>{mytheorem}
 \end{verbatim}
 \end{command}
 
@@ -2684,7 +2757,7 @@ or come last as in |\item[Cat]<1>|.
 \begin{environment}{{itemize}}
   Used to display a list of items that do not have a special
   ordering. Inside the environment, use an |\item| command for
-  each topic. The appearence of the items can be changed using
+  each topic. The appearance of the items can be changed using
   templates, see Section~\ref{section-templates}.
   \example
 \begin{verbatim}
@@ -2920,11 +2993,16 @@ Section~\ref{section-template-caption}.
 
 \subsubsection{Splitting a Frame into Multiple Columns}
 
-Three environments are used to create columns on a slide. Columns are
-especially useful for placing a graphic next to a description/explanation.
-The main environment for creating columns is called
-|columns|. Inside this environment, you can place several
-|column| environments. Each will create a new column.
+The \beamer\ class offers several commands and environments for
+splitting (perhaps only part of) a frame into multiple columns. These
+commands have nothing to do with \LaTeX's commands for creating
+columns. Columns are especially useful for placing a graphic next to a
+description/explanation.
+
+The main environment for creating columns is called |columns|. Inside
+this environment, you can either place several |column| environments,
+each of which creates a new column, or use the |\column| command to
+create new columns.
 
 \begin{environment}{{columns}\oarg{options}}
   A multi-column area. Inside the environment you should place only
@@ -2997,7 +3075,7 @@ To create a column, you can either use the |column| environment or the
 \begin{command}{{\column}\oarg{placement}\marg{column width}}
   Starts a single column. The parameters and options are the same as
   for the |column| environment. The column automatically ends with the
-  next occurence of |\column| or of a |column| environment or of the
+  next occurrence of |\column| or of a |column| environment or of the
   end of the current |columns| environment.
 
   \example 
@@ -3090,6 +3168,9 @@ include:
   different format, you have to convert it.
 \end{itemize}
 
+Note that, most frustratingly, there is no graphic format that can be
+read by \emph{both} |pdflatex| \emph{and} |dvips|.
+
 
 
 \subsubsection{Inlining Graphic Commands}
@@ -3134,9 +3215,9 @@ easy to use, but it should be sufficient in most cases.
 \subsection{Color Management}
 
 The color management of the \beamer\ class relies on the packages
-|xcolor|, which is an extension of the |color| package,
+|xcolor|, which is a stand-alone extension of the |color| package, 
 and on |xxcolor|, which in turn is an extension of
-|xcolor|. Hopefully, in the future |xxcolor| and
+|xcolor| and is part of \pgf. Hopefully, in the future |xxcolor| and
 |xcolor| will merge into one package and perhaps they will
 someday also merge together with |color|.
 
@@ -3246,18 +3327,36 @@ more. The transparency effect will automatically apply to all colors,
 shadings there is a workaround, see the documentation of the
 \pgf\ package. 
 
-As a convenience, two commands install a predefined uncovering
+As a convenience, several commands install a predefined uncovering
 behavior.
 
 \begin{command}{\beamertemplatetransparentcovered}
-  Makes all covered text nearly transparent. 
+  Makes all covered text quite transparent. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcoveredmedium}
+  Makes all covered text even more transparent. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcoveredhigh}
+  Makes all covered text highly transparent. 
+\end{command}
+
+\begin{command}{\beamertemplatetransparentcoveredhigh}
+  Makes all covered text extremely transparent, but not totally. 
 \end{command}
 
 \begin{command}{\beamertemplatetransparentcovereddynamic}
-  Makes all covered text nearly transparent, but is a dynamic way. The
+  Makes all covered text quite transparent, but is a dynamic way. The
   longer it will take till the text is uncovered, the stronger the
   transparency. 
 \end{command}
+
+\begin{command}{\beamertemplatetransparentcovereddynamicmedium}
+  Like the previous command, only it the ``range'' of dynamics is
+  smaller. 
+\end{command}
+
 
 \begin{command}{\beamersetuncovermixins\marg{not yet list}%
     \marg{once more list}}
@@ -3392,8 +3491,8 @@ presentation (for the Acrobat Reader this works only in full-screen
 mode). By setting the number of seconds to zero, you can create a
 rapid succession of slides.
 
-To facilitate the creation of animations using this feature, commands
-can be used: |\animate| and |\animatevalue|.
+To facilitate the creation of animations using this feature, the
+following commands can be used: |\animate| and |\animatevalue|.
 
 \begin{command}{\animate\ssarg{overlay specification}}
   The slides specified by \meta{overlay specification} will be shown
@@ -3529,7 +3628,7 @@ options are possible:
   |duration=|\meta{seconds}. Specifies the number of \meta{seconds}
   the transition effect needs. Default is one second, but often a
   shorter one (like 0.2 seconds) is more appropriate. Viewer
-  applications, especially Acrobat, may interprete this option in
+  applications, especially Acrobat, may interpret this option in
   slightly strange ways.
 \item
   |direction=|\meta{degree}. For ``directed'' effects, this option
@@ -3816,7 +3915,7 @@ card.
 
 In the following, the ``article version'' of your presentation refers
 to a normal \TeX\ text typeset using, for example, the document class
-|article| or perhaps |lncs| or a similar document
+|article| or perhaps |llncs| or a similar document
 class. This version of the presentation will typically follow
 different typesetting rules and may even have a different
 structure. Nevertheless, you may wish to have this version coexist
@@ -3860,7 +3959,7 @@ article is requested, but thrown away if a presentation is
 requested. In presentation mode, the behavior is the other way
 round. In common mode, the text is always inserted.
 
-Right after the |documentclass| command and right after the
+Right after the |\documentclass| command and right after the
 |\begin{document}| (provided it is the sole entry on a line with no
 comments following and no leading spaces), \TeX\ is always in common
 mode. If you do not wish this to be the case, simply append a comment
@@ -3980,7 +4079,7 @@ creation of the article version.
 
 The command |\setjobnamebeamerversion| tells the article version where
 to find the presentation version. This is necessary if you wish to include
-slides from the presentattion version in an article as figures.
+slides from the presentation version in an article as figures.
 
 \begin{command}{\setjobnamebeamerversion\marg{filename without extension}}
   Tells the beamer class where to find the presentation version of the
@@ -4077,7 +4176,7 @@ By default, the beamer class uses the Computer Modern sans-serif fonts
 for typesetting a presentation. The Computer Modern font family is the
 original font family designed by Donald Knuth himself for the \TeX\
 program. A sans-serif font is a font in which the letters do not have
-serifs (from Frensh \emph{sans}, which means ``without''). Serifs are
+serifs (from French \emph{sans}, which means ``without''). Serifs are
 the little hooks at the ending of the strokes that make up a
 letter. The font you are currently reading is a serif font. \textsf{By
   comparison, this text is in a sans-serif font.}
@@ -4260,12 +4359,12 @@ The same font can come in different encodings, which are (very roughly
 spoken) the ways the characters of a text are mapped to glyphs (the
 actual shape of a particular character in a particular font at a
 particular size). In \TeX\ two encodings are often used: the
-T1~encoding and the OT1~endocding (old T1~encoding).
+T1~encoding and the OT1~encoding (old T1~encoding).
 
 Conceptually, the newer T1~encoding is preferable over the old
 OT1~encoding. For example, hyphenation of words containing umlauts
 (like the famous German work Fr\"aulein) will work only if you use the
-T1~encoding. Unfotunately, only the bitmapped version of the Computer
+T1~encoding. Unfortunately, only the bitmapped version of the Computer
 Modern fonts are available in this encoding in a standard
 installation. For this reason, using the T1~encoding will produce
 \pdf\ files that render very poorly.
@@ -4277,6 +4376,13 @@ T1~encoding. Furthermore, if you use |lmodern| several extra fonts
 become available (like a sans-serif boldface math) and extra symbols
 (like proper guillemots).
 
+To select the T1 encoding, use |\usepackage[T1]{fontenc}|. Thus, if
+you have the |lmodern| fonts installed, you could write
+\begin{verbatim}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\end{verbatim}
+to get beautiful outline fonts and correct hyphenation.
 
 
 \subsection{Margin Sizes}
@@ -4528,8 +4634,10 @@ alongside the templates for which they make the most sense, you can
 
 Some of the below subsections start with commands for using
 \emph{predefined} templates. Calling one of them will change a template in
-a predefined way. Using them, you can use, for example, your favorite
-theme together with a predefined background. 
+a predefined way, making it unnecessary to worry about how exactly one
+creates, say, these cute little balls in different sizes. Using them,
+you can use, for example, your favorite theme together with a
+shading background and a numbered table of contents.
 
 Here are a few hints that might be helpful when you wish to redefine a
 template: 
@@ -4537,7 +4645,8 @@ template:
 \item
   Usually, you might wish to copy code from an existing template. The
   code often takes care of some things that you may not yet have
-  thought about.
+  thought about. The file |beamerbasetemplates| might be useful
+  starting point.
 \item
   When copying code from another template and when inserting this code
   in the preamble of your document (not in another style file), you may
@@ -4555,7 +4664,7 @@ template:
   heights takes place several times, but at least twice: once directly
   after a call to |\useheadtemplate|, respectively |\usefoottemplate|,
   and once before the |\begin{document}|. Because of this, your
-  templates must be ``typesetable'' inside the preamble. In
+  templates must be ``typesettable'' inside the preamble. In
   particular, any images you use must already be declared.
 \item
   The left and right margins of the head and foot line templates are

@@ -211,7 +211,7 @@
     \inserttocsection\par}
   
   \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=2em\color{black}\llap{\raise0.2ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}\ }\inserttocsubsection\par}
+    {\leavevmode\leftskip=2em\color{black}\llap{\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\ }\inserttocsubsection\par}
 }
 
 \newcommand{\beamertemplateballtoc}{
@@ -552,10 +552,41 @@
   {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}%
   {\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}}
 
+\newcommand{\beamertemplatetransparentcovereddynamicmedium}{
+  \beamersetuncovermixins
+  {\opaqueness<1>{10}\opaqueness<2->{5}}%
+  {\opaqueness<1>{10}\opaqueness<2>{5}}}
+
 \newcommand{\beamertemplatetransparentcovered}{
   \beamersetuncovermixins%
   {\opaqueness<1->{15}}
   {\opaqueness<1->{15}}}
+
+\newcommand{\beamertemplatetransparentcoveredmedium}{
+  \beamersetuncovermixins%
+  {\opaqueness<1->{10}}
+  {\opaqueness<1->{10}}}
+
+\newcommand{\beamertemplatetransparentcoveredhigh}{
+  \beamersetuncovermixins%
+  {\opaqueness<1->{5}}
+  {\opaqueness<1->{5}}}
+
+\newcommand{\beamertemplatetransparentcoveredhighest}{
+  \beamersetuncovermixins%
+  {\opaqueness<1->{2}}
+  {\opaqueness<1->{2}}}
+
+
+\article
+{
+  \def\beamertemplatetransparentcovereddynamic{}
+  \def\beamertemplatetransparentcovereddynamicmedium{}
+  \def\beamertemplatetransparentcovered{}
+  \def\beamertemplatetransparentcoveredmedium{}
+  \def\beamertemplatetransparentcoveredhigh{}
+  \def\beamertemplatetransparentcoveredhighest{}
+}
 
 
 
@@ -684,22 +715,22 @@
 \newcommand{\beamertemplateroundedblocks}{
   \beamertemplatesetupshadings
 
-  \useblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=block]{\color{white}\insertblockname}}%
+  \useblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=block]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}\smallskip}
-  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=alert]{\color{white}\insertblockname}}%
+  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=alert]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}\smallskip}
-  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=example]{\color{white}\insertblockname}}%
+  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=example]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}\smallskip}
 }
 
 \newcommand{\beamertemplateshadowblocks}{
   \beamertemplatesetupshadings
 
-  \useblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=block]{\color{white}\insertblockname}}%
+  \useblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=block]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}}
-  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=alert]{\color{white}\insertblockname}}%
+  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=alert]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}}
-  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=example]{\color{white}\insertblockname}}%
+  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=example]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}}
 }
 

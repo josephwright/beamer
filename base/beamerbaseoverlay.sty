@@ -162,6 +162,19 @@
 \let\beamer@@trivlist=\@trivlist
 
 
+\article
+{
+  \AtBeginDocument{%
+    \let\beamer@origitem=\item
+    \def\item{\@ifnextchar<\beamer@@item\beamer@item}
+    \def\beamer@@item<#1>{\beamer@item}
+    \def\beamer@item{\@ifnextchar[\beamer@@@item\beamer@origitem}
+    \def\beamer@@@item[#1]{\@ifnextchar<{\beamer@@@@item[#1]}{\beamer@origitem[#1]}}
+    \def\beamer@@@@item[#1]<#2>{\beamer@origitem[#1]}
+  }
+}
+
+
 
 
 %
@@ -206,6 +219,8 @@
 
   \long\def\beamer@insp#1{\ignorespaces#1\ignorespaces}
   \long\def\beamer@gobbleis#1{\ignorespaces}
+
+  \long\def\beamer@unbrace#1{#1}
 }
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
@@ -220,8 +235,8 @@
 
 \article
 {
-  \newoverlaycommand{\uncover}{}{\@gobble}
-  \newoverlaycommand{\invisible}{\@gobble}{}
+  \newoverlaycommand{\uncover}{\beamer@unbrace}{\@gobble}
+  \newoverlaycommand{\invisible}{\@gobble}{\beamer@unbrace}
   \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
   \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
 
@@ -234,7 +249,7 @@
 \common
 {
   \newoverlaycommand{\pgfonly}{\beamer@insp}{\beamer@gobbleis}
-  \newoverlaycommand{\only}{}{\@gobble}
+  \newoverlaycommand{\only}{\beamer@unbrace}{\@gobble}
   \renewoverlaycommand{\textbf}{\beameroriginal{\textbf}}{}
   \renewoverlaycommand{\textit}{\beameroriginal{\textit}}{}
   \renewoverlaycommand{\textsl}{\beameroriginal{\textsl}}{}

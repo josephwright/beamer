@@ -6,8 +6,6 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\article
-
 \newif\ifbeamer@articlexcolor
 \beamer@articlexcolortrue
 
@@ -15,6 +13,8 @@
 \DeclareOption{nodefaultblocks}{\beamer@blocksfalse}
 
 \ProcessOptions
+
+\article
 
 \ifbeamer@articlexcolor
   \RequirePackage[override]{xcolor}

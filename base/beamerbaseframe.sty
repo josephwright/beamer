@@ -50,7 +50,10 @@
   \beamer@setuplinks%
   \let\beamer@startcomment=\beamer@startcommentinframe%
   \ifx\beamer@resumename\@empty\else%
-  \label<\the\beamer@slideinframe>{\beamer@resumename<\the\beamer@slideinframe>}%
+    \label<\the\beamer@slideinframe>{\beamer@resumename<\the\beamer@slideinframe>}%
+    \ifnum\beamer@slideinframe=1\relax%
+      \label<1>{\beamer@resumename}%
+    \fi%
   \fi%
   \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
   {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
@@ -78,7 +81,7 @@
 {
   \long\def\frametitle#1{\gdef\insertframetitle{#1}\beamer@headrenderer}
   \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
-  \useframetitletemplate{\textbf{\insertframetitle}}
+  \useframetitletemplate{\paragraph{\insertframetitle}\ \par}
 }
 
 
@@ -157,6 +160,9 @@
   \gdef\insertframetitle{}%
   \gdef\beamer@framestartpage{}%
   \gdef\beamer@whichframes{#1}%
+  \ifx\beamer@framerestriction\@undefined\else% restriction stuff
+    \expandafter\beamer@checkifinlist\beamer@framerestriction\relax%
+  \fi%
   \ifx\beamer@resumename\@empty%
     \beamer@slideinframe=0\relax%
     \beamer@anotherslidefalse%
@@ -189,8 +195,11 @@
     \afterassignment\beamer@checknoslide\let\beamer@next}
 \def\beamer@checknoslide{%
   \ifcat\bgroup\noexpand\beamer@next%
-  \let\beamer@do\beamer@reseteecodes%
-  \else\let\beamer@do\beamer@noframesingletoken\fi%
+    \let\beamer@do\relax%
+    \aftergroup\beamer@reseteecodes%
+  \else%
+    \let\beamer@do\beamer@noframesingletoken%
+  \fi%
   \beamer@do}
 \def\beamer@noframesingletoken{\beamer@next\egroup\beamer@reseteecodes}
 
@@ -241,6 +250,21 @@
 }
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\beamer@resumemode}
 
+\def\beamer@checkifinlist#1,#2\relax{
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\beamer@resumename\else
+    \def\beamer@temp{#2}%
+    \ifx\beamer@temp\@empty
+      \gdef\beamer@whichframes{all:0}%
+    \else%
+      \beamer@checkifinlist#2\relax%
+    \fi%
+  \fi%
+}
+
+\def\includeonlyframes#1{\def\beamer@framerestriction{#1,}}
+
+
 
 \article
 {
@@ -276,13 +300,9 @@
     \beamer@templateframeend\egroup}
 
   \long\def\useframetemplate#1#2{\gdef\beamer@templateframestart{#1}\gdef\beamer@templateframeend{#2}}
-  \useframetemplate{\medskip
-    \begin{minipage}{12.6cm}
-      \hrule
-      \smallskip}{\smallskip
-      \par\hrule
-    \end{minipage}%
-    \medskip}
+  \useframetemplate{}{}
+
+  \def\includeonlyframes#1{}% no effect
 }
 
 %
