@@ -96,7 +96,7 @@
       % possibly suppress this slide
       \ifbeamer@frameswithnotesonly
         % suppress frame
-        \setbox\beamer@framebox=\box\voidb@x%
+        \global\setbox\beamer@framebox=\box\voidb@x%
       \fi%
     \else%
       \beamer@setupnote%
@@ -106,7 +106,7 @@
   \fi
   \ifbeamer@notesnormals%
   \else%
-    \setbox\beamer@framebox=\box\voidb@x%
+    \global\setbox\beamer@framebox=\box\voidb@x%
   \fi%
 }
 

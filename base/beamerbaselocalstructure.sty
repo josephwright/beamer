@@ -18,18 +18,16 @@
 % The \frametitle command
 %
 %
-\newcommand<>\frametitle{\alt#1{\@dblarg\beamer@frametitle}{\beamer@gobbleoptional}}
-\long\def\beamer@frametitle[#1]#2{%
+\newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
+\long\def\beamer@@frametitle[#1]#2{%
   \beamer@ifempty{#2}{}{%
-  \beamer@frameundotopskip%
-  {\gdef\insertframetitle{#2}\beamer@headrenderer}
+  \gdef\insertframetitle{#2\beamer@autobreaktemplate}%
+  \gdef\beamer@frametitle{#2}%
   \gdef\beamer@shortframetitle{#1}%
-  \vskip0.25em%
-  \beamer@frametopskip%
 }%
 }
 
-\long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
+\newcommand\useframetitletemplate[1]{\def\beamer@headrenderer{#1\vskip0.25em}}
 
 \newcommand\insertshortframetitle[1][]{%
   {%
@@ -167,17 +165,17 @@
 \renewcommand\theenumiii{\@arabic\c@enumiii}
 
 \def\@listi{\leftmargin\leftmargini
-            \topsep 4\p@ \@plus2\p@ \@minus\p@
+            \topsep 3\p@ \@plus2\p@ \@minus2.5\p@
             \parsep 0\p@
-            \itemsep4\p@ \@plus2\p@ \@minus2\p@}
+            \itemsep3\p@ \@plus2\p@ \@minus3\p@}
 \let\@listI\@listi
 \def\@listii{\leftmargin\leftmarginii
-              \topsep    2\p@ \@plus2\p@ \@minus\p@
-              \parsep    0\p@   \@plus\p@  \@minus\p@
+              \topsep    2\p@ \@plus1\p@ \@minus2\p@
+              \parsep    0\p@   \@plus\p@
               \itemsep   \parsep}
 \def\@listiii{\leftmargin\leftmarginiii
-              \topsep    2\p@ \@plus2\p@ \@minus\p@
-              \parsep    0\p@   \@plus\p@  \@minus\p@
+              \topsep    2\p@ \@plus1\p@ \@minus2\p@
+              \parsep    0\p@   \@plus\p@
               \itemsep   \parsep}
 
             
@@ -217,6 +215,7 @@
       \csname label\@enumctr\endcsname
       {\usecounter\@enumctr%
         \def\makelabel##1{{\hss\llap{##1}}}}%
+  \beamer@cramped%
   \raggedright}
 \def\endenumerate{\ifhmode\unskip\fi\endlist\csname\@enumctr endtemplate\endcsname}
 
@@ -243,6 +242,7 @@
       \csname\@itemitem\endcsname
       {\def\makelabel##1{{\hss\llap{##1}}}}
   \fi%
+  \beamer@cramped%
   \raggedright}
     
 \def\enditemize{\ifhmode\unskip\fi\endlist\csname\@itemctr endtemplate\endcsname}
@@ -308,6 +308,7 @@
 \def\@description[#1]{\setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
   \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
 \def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
+  \beamer@cramped%
   \raggedright}
 \def\enddescription{\ifhmode\unskip\fi\endlist}
 \long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
@@ -406,6 +407,7 @@
             \advance\leftmargin\labelsep
             \itemsep=0pt%
             \partopsep=0pt%
+            \topsep=0pt%
             \usecounter{enumiv}%
             \let\p@enumiv\@empty
             \renewcommand\theenumiv{\@arabic\c@enumiv}

@@ -187,7 +187,7 @@
 %
 \def\ps@empty{%
   \let\@mkboth\@gobbletwo%
-  \def\@oddhead{\setbox\beamer@tempbox=\hbox{\beamer@backgroundtemplate\hyper@pagetransition\hyper@pageduration}%
+  \def\@oddhead{\setbox\beamer@tempbox=\hbox{{\beamer@backgroundtemplate}\hyper@pagetransition\hyper@pageduration}%
     \beamer@tempdim=\ht\beamer@tempbox%
     \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
     \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
@@ -339,9 +339,11 @@
   \parindent 1em\noindent%
   \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
 
+\newbox\beamer@footins
+
 \long\def\beamer@framefootnotetext#1{%
-  \global\setbox\footins\vbox{%
-    \unvbox\footins
+  \global\setbox\beamer@footins\vbox{%
+    \unvbox\beamer@footins
     \reset@font\footnotesize
     \hsize\columnwidth
     \@parboxrestore
@@ -356,7 +358,7 @@
 
 \define@key{beamerfootnote}{frame}[true]{\let\beamer@footnotetext=\beamer@framefootnotetext\def\beamer@mpfn{footnote}\def\beamer@thempfn{\thefootnote}}
 
-\renewcommand\footnote[1][]{%
+\renewcommand{\footnote}[1][]{%
   \let\beamer@footnotetext=\@footnotetext%
   \let\beamer@mpfn=\@mpfn%
   \let\beamer@thempfn=\thempfn%

@@ -466,6 +466,9 @@
 \beamertemplatenavigationsymbolshorizontal
 \beamertemplaterightsidebarlogonavigation
 
+                                % Continuations
+\beamertemplatecontinuationroman
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"

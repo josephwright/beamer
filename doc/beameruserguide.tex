@@ -1391,6 +1391,14 @@ contain multiple slides; otherwise it contains only one slide.
 }
 \end{verbatim}
 
+  Normally, the complete \meta{frame text} is put on a slide. If
+  the text does not fit on a slide being too high, it will be
+  squeezed as much as possible, a warning issued, and the text
+  just extends unpleasantly over the bottom. You can use the option
+  |autobreak| to cause the \meta{frame text} to be split among several
+  slides, though you cannot use overlays then. See the explanation of
+  the |autobreak| option for details. 
+  
   The \meta{default overlay specification} is an optional argument
   that is ``detected'' according to the following rule: If the first
   optional argument in square brackets starts with a |<|, then this
@@ -1435,11 +1443,100 @@ contain multiple slides; otherwise it contains only one slide.
   The following \meta{options} may be given:
   \begin{itemize}
   \item
+    \declare{|autobreak|}\opt{|=|\meta{fraction}}. When this option is
+    given, the frame will be automatically broken up into several
+    frames, if is does not fit on a single slide. In detail, when this
+    option is given, the following things happen:
+    \begin{enumerate}
+    \item
+      The option |containsverbatim| is automatically selected, as a
+      side-effect. Thus, frames with this option set may contain
+      verbatim text.
+    \item
+      Consequently, overlays are not supported.
+    \item
+      Any notes for the frame created using the |\note| command will
+      be inserted after the first page of the frame.
+    \item
+      Any footnotes for the frame will be inserted at the last page of
+      the frame.
+    \item
+      If there is a frame title, each of the pages will have this
+      frame title, with a special note added indicating which page of
+      the frame that page is. By default, this special note is a
+      Roman number. However, this can be changed by changing the
+      continutation template, see Section~\ref{section-continuation}. 
+    \end{enumerate}
+    If a frame needs to be broken into several pages, the material on
+    all but the last page fills only 95\% of each page by
+    default. Thus, there will be some space left at the top and/or
+    bottom, depending on the vertical placement option for the
+    frame. This yields a better visual result than a 100\% filling,
+    which typically looks crowded. However, you can change this
+    percentage using the optional argument \meta{fraction}, where 1
+    means 100\% and 0.5 means 50\%. This percentage includes
+    the frame title. Thus, in order to split a frame ``roughly in
+    half,'' you should give 0.6 as \meta{fraction}.
+
+    Most of the fine details of normal \TeX\ page breaking also apply
+    to this option. For example, when you wish equations to be broken
+    automatically, be sure to use the |\allowdisplaybreaks|
+    command. You can insert |\break|, |\nobreak|, and |\penalty|
+    commands to control where breaks should occur. The commands 
+    |\pagebreak| and |\nopagebreak| also work, including their
+    options. Since you typically do not want page breaks for the frame
+    to apply also to the |article| mode, you can add a mode
+    specification like |<presentation>| to make these commands apply
+    only to the presentation modes. The command
+    \declare{|\string\framebreak|} is a shorthand for
+    |\pagebreak<presentation>| and \declare{|\string\noframebreak|} is
+    a shorthand for |\nopagebreak<presentation>|.
+    
+    Let me point out that I consider the (excessive) use of this
+    option \emph{evil}. In a (good) presentation you
+    prepare each slide carefully and think twice before putting something
+    on a certain slide rather than on some different slide. Using the
+    |autobreak| option invites the creation of horrible, endless
+    presentations that resemble more a ``paper projected on the wall''
+    than a presentation. Nevertheless, the option does have its
+    uses. Most noticably, it can be convenient for automatically
+    splitting bibliographies or long equations.
+
+    \example
+\begin{verbatim}
+\frame[autobreak]
+{
+  \frametitle{References}
+
+  \begin{thebibliography}{XX}
+
+  \bibitem...
+  \bibitem...
+    ...
+  \bibitem...
+  \end{thebibliography}
+}
+\end{verbatim}
+    \example
+\begin{verbatim}
+\frame[autobreak]
+{
+  \frametitle{A Long Equation}
+
+  \allowdisplaybreaks
+  \begin{align}
+    \zeta(2) &= 1 + 1/4 + 1/9 + \cdots \\
+    &= ... \\
+    ...
+    &= \pi^2/6.
+  \end{align}
+}
+\end{verbatim}
+  \item
     \declare{|b|}, \declare{|c|}, \declare{|t|} will cause the frame
     to be vertically aligned at the bottom/center/top. This overrides
     the global placement policy, which is governed by the class
     options |slidestop| and |slidescentered|.
-    
   \item
     \declare{|containsverbatim|} tells \beamer\ that the frame
     contains verbatim commands. In this case, only one slide of
@@ -1465,9 +1562,9 @@ contain multiple slides; otherwise it contains only one slide.
     in particular, can be used as targets for hyperlinks.
   \item
     \declare{|plain|} causes  the headlines, footlines,
-  and sidebars to be suppressed. This is useful for creating single
-  frames with different head- and footlines or for creating frames
-  showing big pictures that completely fill the frame.
+    and sidebars to be suppressed. This is useful for creating single
+    frames with different head- and footlines or for creating frames
+    showing big pictures that completely fill the frame.
 
   \example A frame with a picture completely filling the frame:  
 \begin{verbatim}
@@ -1492,6 +1589,11 @@ contain multiple slides; otherwise it contains only one slide.
 }
 \frame[plain]{\titlepage}
 \end{verbatim}
+  \item
+    \declare{|squeeze|} causes the text on the frame to be squeezed
+    together as much as possible. Currently, this just causes the
+    vertical space in enumerations or itemizations to be reduced to
+    zero.    
   \end{itemize}
 
   \lyxnote
@@ -7308,6 +7410,8 @@ If you wish to suppress the head- and footline in the title page, use
 
 \subsubsection{Frame Titles}
 
+\label{section-continuation}
+
 \paragraph{Predefined Templates}\
 
 \begin{command}{\beamertemplateboldcenterframetitle}
@@ -7316,6 +7420,25 @@ If you wish to suppress the head- and footline in the title page, use
 
 \begin{command}{\beamertemplatelargeframetitle}
   Typesets the frame title using a large face and flushes it left.
+\end{command}
+
+\begin{command}{\beamertemplatecontinuationroman}
+  Causes the text in the frame title informing that the
+  current frame has been broken up into several pages to be Roman
+  numbers. Thus if you have a frame with title ``Foo'' that is broken
+  up into two pages, the first page will have the title ``Foo~I'' and the
+  second will have ``Foo~II''. 
+\end{command}
+
+\begin{command}{\beamertemplatecontinuationtext}
+  Causes the text in the frame title informing that the
+  current frame has been broken up into several pages to be the text
+  |\insertcontinuationtext| on all pages but the first. This text
+  inserted by this insert is ``(cont.)'' by default. Thus if you have
+  a frame with title ``Foo'' that is broken up into two pages, the
+  first page will have the title ``Foo'' and the 
+  second will have ``Foo~(cont.)'' or ``Foo~(Forts.)'' if you have
+  redefined |\insertcontinuationtext| to ``(Forts.)''.
 \end{command}
 
 
@@ -7338,12 +7461,44 @@ If you wish to suppress the head- and footline in the title page, use
   simply suppress the frame title.
 \end{command}
 
+
+
+\begin{command}{\usecontinuationtemplate\marg{template}}
+  The \meta{template} will be added at the end of the text inserted by
+  the |\insertframetitle| text if a frame has the |autobreak| option
+  set. 
+  \example
+\begin{verbatim}
+\usecontinuationtemplate{ \ifnum\insertcontinuationcount>1(Forts.)\fi}
+\end{verbatim}
+\end{command}
+
+
+
 \paragraph{Inserts for these Templates}\ 
 
 \begin{command}{\insertframetitle}
-  Inserts the current frame title into a template.
+  Inserts the current frame title into a template. If the current
+  frame has the option |autobreak| set, at the end of this insert the
+  template that has been set using |\usecontinuationtemplate| will be
+  appended.
 \end{command}
 
+\begin{command}{\insertcontinuationtext}
+  Inserts the text ``(cont.)'' into a template. Redefine this insert
+  if you use a different language. This insert is used by the template
+  installed by the command |\beamertemplatecontinuationtext|.
+\end{command}
+
+\begin{command}{\insertcontinuationcount}
+  Inserts which page of the current frame is currently presented. If
+  the |autobreak| option is \emph{not} set, this number is 0.
+\end{command}
+
+\begin{command}{\insertcontinuationcountroman}
+  Inserts which page of the current frame is currently presented as a
+  Roman number.
+\end{command}
 
 
 

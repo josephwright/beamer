@@ -893,6 +893,18 @@
   }{\end{\inserttheoremblockenv}}
 }
 
+%
+% Continutation templates
+%
+\newcommand\beamertemplatecontinuationroman{
+  \usecontinuationtemplate{ \insertcontinuationcountroman}
+}
+
+\newcommand\beamertemplatecontinuationtext{
+  \usecontinuationtemplate{ \expandafter\ifnum\insertcontinuationcount>1\insertcontinuationtext\fi}
+}
+
+
 
 %
 % Forget about certain template installation commands once the

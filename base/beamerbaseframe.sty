@@ -72,21 +72,28 @@
   \fi%
   % Start slide:
   \beamer@framenotesbegin%
-    \setbox\beamer@framebox=\vbox to\textheight\bgroup\vbox{}\par%
+    \global\setbox\beamer@framebox=\vbox\bgroup%
     \beamer@inframetrue%
     \let\frame=\framelatex% inside frames, use LaTeX's \frame command
-    \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
-    \beamer@frametopskip}%
-  {\beamer@exitcode\beamer@framebottomskip%
-  \ifvoid\footins\else%
-    \normalcolor%
-    \footnoterule%
-    \unvbox \footins%
-  \fi%
-  \end{beamer@framepauses}%
+    \begin{beamer@framepauses}}%
+  {\end{beamer@framepauses}%
   \egroup%
+  \setbox\beamer@framebox=\vbox{%
+    \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+    \ifx\beamer@frametitle\@empty%
+    \else%
+      \nointerlineskip%
+      \vbox{\vbox{}%
+        \beamer@headrenderer%
+      }% add headder
+    \fi%
+    \nobreak\beamer@frametopskip\nobreak%
+    \unvbox\beamer@framebox%
+    % bottom skip is added in autobreakframebox
+    }%
   \beamer@undolabels%
-  \beamer@framenotesend%  
+  \beamer@autobreakframebox%
+  \beamer@framenotesend%
   \box\beamer@framebox}
 
 
@@ -152,19 +159,25 @@
   \def\beamer@frametopskip{\vfill}%
   \def\beamer@frameundotopskip{\vskip0pt plus -1fill}%
   \def\beamer@framebottomskip{\vskip0pt plus 1.5fill}%
+  \def\beamer@frameundobottomskip{\vskip0pt plus -1.5fill}%
 }
 \define@key{beamerframe}{t}[true]{% top
-  \def\beamer@frametopskip{\vskip0.25em}%
-  \def\beamer@frameundotopskip{\vskip-0.25em}%
+  \def\beamer@frametopskip{\vskip0.25em plus 3cm}%
+  \def\beamer@frameundotopskip{\vskip-0.25em plus -3cm}%
   \def\beamer@framebottomskip{\vfill}%
+  \def\beamer@frameundobottomskip{\vskip0pt plus -1fill}%
 }
 \define@key{beamerframe}{b}[true]{% bottom
   \def\beamer@frametopskip{\vfill}%
   \def\beamer@frameundotopskip{\vskip0pt plus -1fill}%
   \def\beamer@framebottomskip{}%
+  \def\beamer@frameundobottomskip{}%
 }
+\define@key{beamerframe}{autobreak}[0.95]{\def\beamer@autobreakfactor{#1}\beamer@autobreaktrue}
+\define@key{beamerframe}{squeeze}[]{\def\beamer@cramped{\itemsep0pt\topsep0.5pt\relax}}
 
 \newif\ifbeamer@containsverbatim
+\newif\ifbeamer@autobreak
 
 % Check for old version:
 
@@ -202,14 +215,20 @@
   \def\beamer@frametemplate{}%
   \def\beamer@againname{}%
   \def\beamer@undolabels{}%
+  \def\beamer@cramped{}%
+  \beamer@autobreakcount=0\relax%
   \beamer@containsverbatimfalse%
+  \beamer@autobreakfalse%
   \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
   \refstepcounter{framenumber}%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\insertframetitle{}%
+  \gdef\insertframesubtitle{}%
+  \gdef\beamer@frametitle{}%
   \gdef\beamer@shortframetitle{}%
+  \gdef\beamer@framesubtitle{}%
   \gdef\beamer@framestartpage{}%
   \gdef\beamer@whichframes{#1}%
   \ifx\beamer@framerestriction\@undefined\else% restriction stuff
@@ -238,16 +257,15 @@
       \ifbeamer@containsverbatim%
         \let\beamer@howtotreatframe\beamer@dosingleframe%
       \fi%
+      \ifbeamer@autobreak%
+        \let\beamer@howtotreatframe\beamer@autobreakframe%
+      \fi%
     \else% no slides in frame
       \let\beamer@howtotreatframe\beamer@donoframe%
     \fi%
   \else% again mode
     \let\beamer@howtotreatframe\beamer@doseveralframes%
-  \fi%
-%  \ifbeamer@notesnormals%
-%  \else%
-%    \let\beamer@howtotreatframe\beamer@donoframe%
-%  \fi%
+  \fi%  
   \beamer@howtotreatframe}
 \long\def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
@@ -298,6 +316,7 @@
 \def\beamer@endslide{\end{beamer@frameslide}\beamer@writeslidentry\beamer@reseteecodes}
 \def\beamer@singletoken{\beamer@next\egroup}
 
+
 \def\beamer@writeslidentry{%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
   {%else
@@ -314,6 +333,91 @@
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}%
   \beamer@slideinframe=1\relax\beamer@resumemode}
 
+
+
+
+%
+% Auto break stuff
+%
+
+\splittopskip=10pt
+\newbox\beamer@splitbox
+\newcount\beamer@autobreakcount
+
+\def\beamer@autobreakframe{%
+  \beamer@slideinframe=1\relax%
+  \advance\beamer@autobreakcount by1\relax%
+  \begin{beamer@frameslide}%
+    \bgroup\aftergroup\beamer@endautobreak\let\beamer@next% gobble opening brace
+  }
+\def\beamer@endautobreak{\end{beamer@frameslide}%
+  \beamer@writeslidentry%
+  \ifvoid\beamer@splitbox%
+    \beamer@reseteecodes%
+    \let\beamer@next=\relax%  
+  \else%
+    \let\beamer@next=\beamer@continueautobreak%
+  \fi%      
+  \beamer@next%  
+}
+
+\def\beamer@autobreakframebox{%
+  \global\setbox\beamer@splitbox=\box\voidb@x%
+  \ifbeamer@autobreak%
+    \@tempdima=\ht\beamer@framebox%
+    \ifdim\@tempdima>\textheight%
+      % Ok, frame was overful -> split it!
+      \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
+      \global\setbox\beamer@splitbox=\box\beamer@framebox%
+      \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa\beamer@framebottomskip\vfil%
+        \beamer@exitcode}%
+    \else%
+      \setbox\beamer@framebox=\vbox to\textheight{\unvbox\beamer@framebox%
+        \beamer@framebottomskip%
+        \ifvoid\beamer@footins%
+        \else%
+          \normalcolor%
+          \footnoterule%
+          \unvbox \beamer@footins%
+        \fi%
+        \beamer@exitcode%
+        }%
+      \global\setbox\beamer@footins=\box\voidb@x%
+    \fi%
+  \else%
+    \setbox\beamer@framebox=\vbox to\textheight{\unvbox\beamer@framebox%
+      \beamer@framebottomskip%
+      \ifvoid\beamer@footins%
+      \else%
+        \normalcolor%
+        \footnoterule%
+        \unvbox \beamer@footins%
+      \fi%
+      \beamer@exitcode}%
+    \global\setbox\beamer@footins=\box\voidb@x%
+  \fi%
+  }
+
+\def\beamer@continueautobreak{%
+  \refstepcounter{framenumber}%
+  \beamer@autobreakframe{%
+    \edef\beamer@args{[\beamer@shortframetitle]{\beamer@frametitle}}%
+    \expandafter\frametitle\beamer@args%
+    \unvbox\beamer@splitbox%
+  }%
+}
+
+
+\newcommand\usecontinuationtemplate[1]{\def\beamer@autobreaktemplate{\ifnum\beamer@autobreakcount>0\relax{#1}\fi}}
+\newcommand\insertcontinuationcount{\the\beamer@autobreakcount}
+\newcommand\insertcontinuationcountroman{\@Roman\beamer@autobreakcount}
+\newcommand\insertcontinuationtext{(cont.)}
+
+
+%
+% \includeonlyframes
+%
+
 \def\beamer@checkifinlist#1,#2\relax{
   \def\beamer@temp{#1}%
   \ifx\beamer@temp\beamer@againname\else
@@ -329,6 +433,10 @@
 \def\includeonlyframes#1{\def\beamer@framerestriction{#1,}}
 
 
+
+%
+% Frames in article mode
+%
 
 \mode
 <article>
@@ -390,6 +498,18 @@
   \def\insertframenumber{\@arabic\c@framenumber}
 }
 
+
+%
+% Pagebreak command
+%
+\mode
+<all>
+{
+  \renewcommand<>{\pagebreak}[1][4]{\only#2{\beameroriginal\pagebreak[#1]}}
+  \renewcommand<>{\nopagebreak}[1][4]{\only#2{\beameroriginal\nopagebreak[#1]}}
+  \def\framebreak{\pagebreak<presentation>}
+  \def\noframebreak{\nopagebreak<presentation>}
+}
 
 
 %
