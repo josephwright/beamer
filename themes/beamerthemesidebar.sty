@@ -7,8 +7,6 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\RequirePackage{pgfshade}
-
 \newif\ifbeamer@sidebartab
 \newif\ifbeamer@sidebardark
 
@@ -23,6 +21,10 @@
 \DeclareOptionBeamer{dark}[true]{\csname beamer@sidebardark#1\endcsname}
 
 \ProcessOptionsBeamer
+
+\mode<presentation>
+
+\RequirePackage{pgfshade}
 
 \ifbeamer@sidebardark
   \beamertemplateboldtitlepage
@@ -40,21 +42,21 @@
 
 \ifbeamer@sidebardark
   \usetemplatetocsection[50!averagebackgroundcolor]
-  {\color{structure}\textbf{\inserttocsection}}
+  {\color{beamerstructure}\textbf{\inserttocsection}}
 
-  \def\beamernavigationcolorlight{structure!65!white}
-  \def\beamernavigationcolorstrong{structure!50!white}
+  \def\beamernavigationcolorlight{beamerstructure!65!white}
+  \def\beamernavigationcolorstrong{beamerstructure!50!white}
 
   \ifbeamer@sidebartab
     {\tiny\global\beamer@tempdim=2.4375ex}
 
     \pgfdeclarehorizontalshading{beamer@tabmain}{\the\beamer@tempdim}
     {color(0pt)=(white);
-      color(\beamer@sidebarwidth)=(structure!50!averagebackgroundcolor)}
+      color(\beamer@sidebarwidth)=(beamerstructure!50!averagebackgroundcolor)}
     \pgfdeclarehorizontalshading{beamer@tab}{\the\beamer@tempdim}{%
       color(0pt)=(white);
-      color(9pt)=(structure!50!averagebackgroundcolor);
-      color(\beamer@sidebarwidth)=(structure)}
+      color(9pt)=(beamerstructure!50!averagebackgroundcolor);
+      color(\beamer@sidebarwidth)=(beamerstructure)}
   \fi
 \fi
   
@@ -68,11 +70,11 @@
         \ifbeamer@sidebardark%
           \color[gray]{0.3}\lower0.5ex\hbox{\pgfuseshading{beamer@tab}}%
           \hskip-\beamer@sidebarwidth%
-          \color{structure!50!black}\bfseries%
+          \color{beamerstructure!50!black}\bfseries%
         \else%
           \color[gray]{0.9}\lower0.375ex\hbox{\vrule width\beamer@sidebarwidth height 2.4375ex}%
           \hskip-\beamer@sidebarwidth%
-          \color{structure}%
+          \color{beamerstructure}%
         \fi%
       \else%
         \ifbeamer@sidebardark%
@@ -90,9 +92,9 @@
   {\tiny
     \setbox\beamer@tempbox=\hbox{%
       \ifbeamer@sidebartab%
-        \ifbeamer@sidebardark\color{structure!50}\bfseries\else\color{structure}\fi%
+        \ifbeamer@sidebardark\color{beamerstructure!50}\bfseries\else\color{beamerstructure}\fi%
       \else%
-        \ifbeamer@sidebardark\color{structure!80}\bfseries\else\color{structure!75}\fi%
+        \ifbeamer@sidebardark\color{beamerstructure!80}\bfseries\else\color{beamerstructure!75}\fi%
       \fi{\kern1.125ex\insertsectionhead}}%
   \ht\beamer@tempbox=3ex%
   \dp\beamer@tempbox=0.75ex%
@@ -152,10 +154,10 @@
     \hskip3pt\color{white}\bfseries\insertshorttitle%
       [width=\beamer@tempdim,center,respectlinebreaks]\par%
     \vskip1.5em
-    \hskip3pt\color{structure!50}\insertshortauthor%
+    \hskip3pt\color{beamerstructure!50}\insertshortauthor%
       [width=\beamer@tempdim,center,respectlinebreaks]\par
   \else%
-    \hskip3pt\color{structure}\insertshorttitle%
+    \hskip3pt\color{beamerstructure}\insertshorttitle%
       [width=\beamer@tempdim,center,respectlinebreaks]\par%
     \vskip1.5em
     \hskip3pt\color{black!75}\insertshortauthor%
@@ -172,15 +174,19 @@
 
                                 % Side bar background
 \ifbeamer@sidebardark
-  \userightsidebarverticalshadingtemplate{structure}{black}
+  \userightsidebarverticalshadingtemplate{beamerstructure}{black}
 \else
   \ifbeamer@sidebartab
-    \userightsidebarverticalshadingtemplate{structure!90!white}{white!95!structure}
+    \userightsidebarverticalshadingtemplate{beamerstructure!90!white}{white!95!beamerstructure}
   \else
-    \userightsidebarverticalshadingtemplate{white}{structure!50!averagebackgroundcolor}
+    \userightsidebarverticalshadingtemplate{white}{beamerstructure!50!averagebackgroundcolor}
   \fi
 \fi
   
                                 % Margins
 \beamersetleftmargin{0.5cm}
 \beamersetrightmargin{0.5cm}
+
+\mode
+<all>
+

@@ -11,88 +11,80 @@
 % The purpose of this example is to demonstrate the usage of the
 % nameslide command
 %
-\common
 
-\usepackage[english]{babel}
-  
-\article
-
+\mode<article>
+{
   \usepackage{fullpage}
   \usepackage{pgf}
+  \usepackage{hyperref}
   \setjobnamebeamerversion{beamerexample2.beamer}
+}
 
-\presentation
-
-  \usepackage{beamerthemetreebars}
+\mode<presentation>
+{
+  \usepackage[bars]{beamerthemetree}
 
   \beamertemplatetransparentcovereddynamic
   \beamertemplateballitem
+}
 
-  \hypersetup{%
-    pdftitle={Second Beamer Example},%
-    pdfauthor={Till Tantau},
-    pdfsubject={Presentation Programs}}
+\usepackage[english]{babel}
 
-\common
+\hypersetup{%
+  pdftitle={Second Beamer Example},%
+  pdfauthor={Till Tantau},
+  pdfsubject={Presentation Programs}}
 
-  \title{Second Beamer Example}
-  \author{Till~Tantau}
+\title{Second Beamer Example}
+\author{Till~Tantau}
 
-\presentation
-  
-  \institute{
-    Fakultät für Elektrotechnik und Informatik\\
-    Technical University of Berlin}
+\institute{
+  Fakultät für Elektrotechnik und Informatik\\
+  Technical University of Berlin}
 
 
 \begin{document}
 
-\article
+\frame{\maketitle}
 
-  \maketitle
+\section{The first section}
 
-\presentation
+This is the first section of the article version. In the
+presentation, there is a frame containing an overlay. The exact two
+slides of this overlay are shown in Figures~\ref{figure-example1}
+and~\ref{figure-example2}.
 
-  \frame{\titlepage}
+\begin{figure}[ht]
+  \begin{center}
+    \includeslide{exampleframe<1>}
+  \end{center}
+  \caption{The first slide. Note the partly covered second item.}
+  \label{figure-example1}
+\end{figure}
 
-\common
+\begin{figure}[ht]
+  \begin{center}
+    \includeslide{exampleframe<2>}
+  \end{center}
+  \caption{The second slide. Now the second item is also shown.}
+  \label{figure-example2}
+\end{figure}
 
-  \section{The first section}
+We can also include the frame in the article version ``just like
+this'': 
 
-\article
+\frame[label=exampleframe]{
+  \frametitle{This is a frame with two overlays.}
 
-  This is the first section of the article version. In the
-  presentation, there is a frame containing an overlay. The two slides
-  of this overlay are shown in Figures~\ref{figure-example1}
-  and~\ref{figure-example2}.
+  \begin{itemize}
+  \item The first item$\dots$
+    \pause
+  \item $\dots$ and the second one.
+  \end{itemize}
+}
 
-  \begin{figure}[ht]
-    \begin{center}
-      \includeslide{exampleframe<1>}
-    \end{center}
-    \caption{The first slide. Note the partly covered second item.}
-    \label{figure-example1}
-  \end{figure}
-
-  \begin{figure}[ht]
-    \begin{center}
-      \includeslide{exampleframe<2>}
-    \end{center}
-    \caption{The second slide. Now the second item is also shown.}
-    \label{figure-example2}
-  \end{figure}
-  
-\presentation
-
-  \frame[label=exampleframe]{
-    \frametitle{This is a frame with two overlays.}
-
-    \begin{itemize}
-    \item The first item$\dots$
-      \pause
-    \item $\dots$ and the second one.
-    \end{itemize}
-  }
+We could have suppressed the frame in the article version by adding
+the overlay specification \verb!<presentation>!.
 
 \end{document}
 
