@@ -7,6 +7,8 @@
 % of the GNU Public License, version 2.
 
 
+\mode<presentation>
+
 %
 % Font size stuff - redefinition for oversized fonts. Not used if
 % other packages like lmodern kick in.
@@ -229,6 +231,22 @@
 \DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
 
+
+\newcommand\Tiny{\@setfontsize\Tiny{4}{5}}
+\newcommand\TINY{\@setfontsize\Tiny{3}{4}}
+
+
+\mode
+<article>
+{
+  \let\Tiny=\tiny
+  \let\TINY=\tiny
+}
+
+
+
+\mode
+<all>
 
 %%% Local Variables: 
 %%% mode: latex

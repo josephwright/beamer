@@ -5299,9 +5299,6 @@ include:
   feature since it allows you to use MetaPost output for both \pdf\ and
   PostScript. The extension of the file must be |.mps| for this to
   work.
-\item
-  For including files in Multi-MetaPost format (|.mmp|), please see 
-  Section~\ref{section-mmp}. 
 \end{itemize}
 
 Note that, frustratingly, most graphics format cannot be read by
@@ -5384,7 +5381,13 @@ include the resulting |.eps| file, you can use the normal
 include such an file when using pdf\LaTeX. Normally, pdf\LaTeX\ cannot
 handle |.eps| files, but the |.eps| files produced by MetaPost have
 such a simple structure that this possible. For this to work, the file
-should end |.mps| instead of |.eps|.
+should end |.mps| instead of |.eps|. The following command can be used
+to make the |graphics| package just \emph{assume} the extension |.mps|
+for any file it knows nothing about (like files ending with |.1|,
+which is what MetaPost loves to produce):
+\begin{verbatim}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\end{verbatim}
 
 However, MetaPost can do even more: you can have multiple graphics
 reside in a single |.mp| file, which is then usually called a

@@ -237,12 +237,16 @@
   \fi%
   }
 
+\newtoks\beamer@frametitletoks
+\newtoks\beamer@framesubtitletoks
+  
 \def\beamer@continueautobreak{%
   \refstepcounter{framenumber}%
-  \expandafter\def\expandafter\beamer@savedframetitle\expandafter{\beamer@frametitle}%
-  \expandafter\def\expandafter\beamer@savedshortframetitle\expandafter{\beamer@shortframetitle}%
-  \beamer@autobreakframe{%
-    \frametitle[\beamer@savedshortframetitle]{\beamer@savedframetitle}%
+  \expandafter\beamer@frametitletoks\expandafter{\beamer@frametitle}%
+  \expandafter\beamer@framesubtitletoks\expandafter{\beamer@shortframetitle}%
+  \edef\beamer@callframetitle{\noexpand\frametitle[\the\beamer@framesubtitletoks]{\the\beamer@frametitletoks}}
+  \expandafter\beamer@autobreakframe\expandafter{%
+    \beamer@callframetitle%
     \expandafter\framesubtitle\expandafter{\insertframesubtitle}%
     \unvbox\beamer@splitbox}%
 }
