@@ -196,22 +196,22 @@ Outline
 
 \layout Section
 
-<First Section Name>
+First Section Name
 \begin_inset OptArg
 collapsed false
 
 \layout Standard
 
-<Short First Section Name (Optional)>
+Short First Section Name (Optional)
 \end_inset 
 
 
 \layout Subsection
 
-<First Subsection Name>
+First Subsection Name
 \layout BeginFrame
 
-<Frame Title>
+Frame Title
 \layout Itemize
 
 Shown from first slide on.
@@ -231,15 +231,23 @@ Shown from second slide on.
 Shown from third slide on.
 \layout BeginFrame
 
-<Frame Title>
+Frame Title
 \layout Block
+
+<1->
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
 
 
 \begin_inset ERT
-status Inlined
+status Collapsed
 
 \layout Standard
-{}<1->
+}
 \end_inset 
 
 
@@ -253,12 +261,20 @@ Shown on all slides.
 \end_deeper 
 \layout ExampleBlock
 
-
+<2->
 \begin_inset ERT
-status Inlined
+status Collapsed
 
 \layout Standard
-{Some Example Block Title}<2->
+{
+\end_inset 
+
+Some Example Block Title
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
 \end_inset 
 
 
@@ -283,34 +299,19 @@ status Inlined
 <Second Subsection Name>
 \layout BeginFrame
 
-<Frame Title>
+Frame Title
 \layout Example
 
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-<1->
-\end_inset 
-
- On first slide.
+<1-> On first slide.
+ 
 \layout Standard
 
 \layout Example
 
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-<2->
-\end_inset 
-
- On second slide.
+<2-> On second slide.
 \layout BeginFrame
 
-<Frame Title>
+Frame Title
 \layout Theorem
 
 On first slide.
@@ -321,7 +322,7 @@ On first slide.
 On second slide.
 \layout BeginFrame
 
-<Frame Title>
+Frame Title
 \layout ColumnsTopAligned
 
 \begin_deeper 
@@ -330,29 +331,13 @@ On second slide.
 5cm
 \layout Theorem
 
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-<1->
-\end_inset 
-
-In left column.
+<1-> In left column.
 \layout Column
 
 5cm
 \layout Corollary
 
-
-\begin_inset ERT
-status Collapsed
-
-\layout Standard
-<2->
-\end_inset 
-
-In right column.
+<2-> In right column.
 \newline 
 New line
 \end_deeper 
