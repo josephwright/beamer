@@ -646,14 +646,14 @@ use. If \beamer\ implements all or most of the features some other
 class also offers, albeit under a different name, it is possible to
 \emph{emulate} that class using \beamer. Such an emulation is not a
 perfect substitute for the original (emulations seldomly are), but it
-can help speed up porting since parts of old presentations can simply be
-copied verbatim, without having to worry about the subtle differences
-in syntax.
+can help speed up creating \beamer\ presentations that use  parts of
+old presentations. You can simply copy these parts in verbatim,
+without having to worry about the subtle differences in syntax.
 
 An useful effect of using an emulation layer is that you get access to
 all the features of \beamer\ while using the syntax of another
-class. In particular, you can still use the |article| mode to create a
-nice article version from a \prosper\ talk.
+class. For example, you can use the |article| mode to create a
+nice article version of a \prosper\ talk.
 
 
 \subsubsection{Prosper and HA-Prosper}
@@ -1029,7 +1029,7 @@ listed.
   If the \meta{PDF text} contains an |\includegraphics| command (which
   is its usual use), you should change the name of the graphic file
   that is included to a name ending |.pdf|, |.png|, or
-  |.jpg|. Typically, you will have to convert you graphic to this
+  |.jpg|. Typically, you will have to convert your graphic to this
   format.
 \end{command}
 
@@ -1105,7 +1105,7 @@ The workflow for the migration is the following:
   the environment, unless you use the |accumulate| option.
 \item
   If you use pdf\LaTeX\ to typeset the presentation, than you cannot
-  include PostScript file. You should convert them to |.pdf| or to
+  include PostScript files. You should convert them to |.pdf| or to
   |.png| and adjust any usage of |\includegraphics| accordingly.
 \item
   When starting to change things, you can use all of \beamer's
@@ -1168,18 +1168,18 @@ problems:
 
 \newcommand{\sref}[1]{SLIDE \ref{#1}}
 
-% CHANGED: different definition of \heading
-%\newcommand{\heading}[1]{\begin{center}\large\bf #1\end{center}}
+%% CHANGED: different definition of \heading
+%%\newcommand{\heading}[1]{\begin{center}\large\bf #1\end{center}}
 \let\heading=\frametitle
 
-% CHANGED: Commented:
-%\newpagestyle{MH}%
-%  {University of Guaduas, March 13, 1998\hfil\thepage}{}
-%\pagestyle{MH}
+%% CHANGED: Commented:
+%%\newpagestyle{MH}%
+%%  {University of Guaduas, March 13, 1998\hfil\thepage}{}
+%%\pagestyle{MH}
 
 \begin{document}
 
-% CHANGED: Added \frame
+%% CHANGED: Added \frame
 \frame{
 \maketitle         
 }
@@ -1187,7 +1187,7 @@ problems:
 This is a lot of gobbledy-gook intended only to illustrate some of the
 features of seminar.sty.
 
-% CHANGED: Added \frame
+%% CHANGED: Added \frame
 \frame{
 \begin{slide}\label{too_much}%
 \begin{center}
@@ -2309,6 +2309,35 @@ contain multiple slides; otherwise it contains only one slide.
   The following \meta{options} may be given:
   \begin{itemize}
   \item
+    \declare{|b|}, \declare{|c|}, \declare{|t|} will cause the frame
+    to be vertically aligned at the bottom/center/top. This overrides
+    the global placement policy, which is governed by the class
+    options |slidestop| and |slidescentered|.
+    
+  \item
+    \declare{|containsverbatim|} tells \beamer\ that the frame
+    contains verbatim commands. In this case, only one slide of
+    the frame is typeset (unless all slides are suppressed by the
+    \meta{overlay specification}). If you wish to use verbatim text in
+    a frame with several slides, a more roundabout approach is
+    necessary, see Section~\ref{section-verbatim}. This option cannot
+    be used together with the |label| option.
+    
+  \item
+    \declare{|label=|\meta{name}} causes the frame's contents to
+    be stored under the name \meta{name} for later resumption using
+    the command |\againframe|. If this option is given, you cannot
+    include verbatim text in the frame, even if you specify an overlay
+    specification like |<1>|. The frame is still rendered
+    normally. See also |\againframe|.
+
+    Furthermore, on each slide of the frame a label with the name
+    \meta{name}|<|\meta{slide number}|>| is created. On the
+    \emph{first} slide, furthermore, a label with the name \meta{name}
+    is created (so the labels \meta{name} and \meta{name}|<1>| point
+    to the same slide). Note that labels in general, and these labels
+    in particular, can be used as targets for hyperlinks.
+  \item
     \declare{|plain|} causes  the head lines, foot lines,
   and side bars to be suppressed. This is useful for creating single
   frames with different head and foot lines or for creating frames
@@ -2337,29 +2366,6 @@ contain multiple slides; otherwise it contains only one slide.
 }
 \frame[plain]{\titlepage}
 \end{verbatim}
-  \item
-    \declare{|label=|\meta{name}} causes the frame's contents to
-    be stored under the name \meta{name} for later resumption using
-    the command |\againframe|. If this option is given, you cannot
-    include verbatim text in the frame, even if you specify an overlay
-    specification like |<1>|. The frame is still rendered
-    normally. See also |\againframe|.
-
-    Furthermore, on each slide of the frame a label with the name
-    \meta{name}|<|\meta{slide number}|>| is created. On the
-    \emph{first} slide, furthermore, a label with the name \meta{name}
-    is created (so the labels \meta{name} and \meta{name}|<1>| point
-    to the same slide). Note that labels in general, and these labels
-    in particular, can be used as targets for hyperlinks.
-    
-  \item
-    \declare{|containsverbatim|} tells \beamer\ that the frame
-    contains verbatim commands. In this case, only one slide of
-    the frame is typeset (unless all slides are suppressed by the
-    \meta{overlay specification}). If you wish to use verbatim text in
-    a frame with several slides, a more roundabout approach is
-    necessary, see Section~\ref{section-verbatim}. This option cannot
-    be used together with the |label| option.
   \end{itemize}
 
   \lyxnote
@@ -2561,12 +2567,14 @@ change this using the following class options:
 
 \begin{classoption}{slidestop}
   Place text of slides at the (vertical) top of the slides. This
-  corresponds to a vertical ``flush.''
+  corresponds to a vertical ``flush.'' You can override this for
+  individual frames using the |c| or |b| option.
 \end{classoption}
 
 \begin{classoption}{slidescentered}
   Place text of slides at the (vertical) center of the slides. This is
-  the default.
+  the default. You can override this for
+  individual frames using the |t| or |b| option.
 \end{classoption}
 
 
@@ -6395,12 +6403,12 @@ The following example shows a simple usage of the article mode:
 
 \begin{verbatim}
 \documentclass[class=article,a4paper]{beamer}
-%\documentclass[ignorenonframetext,red]{beamer}
+%%\documentclass[ignorenonframetext,red]{beamer}
 
 \mode<article>{\usepackage{fullpage}}
 \mode<presentation>{\usepackage{beamerthemesplit}}
 
-% everyone:
+%% everyone:
 \usepackage[english]{babel}
 \usepackage{pgf}
 
@@ -7145,19 +7153,19 @@ the standard |\usepackage| command.
   be hilighted by changing the background behind the entry, rather
   than hilighting the entry itself.
   
-  \example |\usepackage{beamersidebar}|
+  \example |\usepackage{beamerthemesidebar}|
 
   \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
 
-  \example |\usepackage[tab]{beamersidebar}|
+  \example |\usepackage[tab]{beamerthemesidebar}|
 
   \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
 
-  \example |\usepackage[dark]{beamersidebar}|
+  \example |\usepackage[dark]{beamerthemesidebar}|
 
   \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
 
-  \example |\usepackage[dark,tab]{beamersidebar}|
+  \example |\usepackage[dark,tab]{beamerthemesidebar}|
 
   \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
 \end{package}
@@ -7478,7 +7486,7 @@ If you wish to suppress the head and foot line in the title page, use
   \example
 \begin{verbatim}
 \beamertemplateshadingbackground{red!10}{blue!10}
-% Bottom is light red, top is light blue
+%% Bottom is light red, top is light blue
 \end{verbatim}
 \end{command}
 

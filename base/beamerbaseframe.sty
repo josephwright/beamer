@@ -72,8 +72,8 @@
     \beamer@inframetrue%
     \let\frame=\framelatex% inside frames, use LaTeX's \frame command
     \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
-    \vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill%
+    \beamer@frametopskip}%
+  {\beamer@exitcode\beamer@framebottomskip%
   \ifvoid\footins\else%
     \normalcolor%
     \footnoterule%
@@ -127,6 +127,21 @@
 \define@key{beamerframe}{template}{%
   \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
 \define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
+\define@key{beamerframe}{c}[true]{% centered
+  \def\beamer@frametopskip{\vfill}%
+  \def\beamer@frameundotopskip{\vskip0pt plus -1fill}%
+  \def\beamer@framebottomskip{\vskip0pt plus 1.5fill}%
+}
+\define@key{beamerframe}{t}[true]{% top
+  \def\beamer@frametopskip{\vskip0.25em}%
+  \def\beamer@frameundotopskip{\vskip-0.25em}%
+  \def\beamer@framebottomskip{\vfill}%
+}
+\define@key{beamerframe}{b}[true]{% bottom
+  \def\beamer@frametopskip{\vfill}%
+  \def\beamer@frameundotopskip{\vskip0pt plus -1fill}%
+  \def\beamer@framebottomskip{}%
+}
 
 \newif\ifbeamer@containsverbatim
 
@@ -166,6 +181,7 @@
   \def\beamer@frametemplate{}%
   \def\beamer@againname{}%
   \beamer@containsverbatimfalse%
+  \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
   \refstepcounter{framenumber}%

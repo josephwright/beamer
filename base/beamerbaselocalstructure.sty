@@ -21,13 +21,11 @@
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@frametitle}{\beamer@gobbleoptional}}
 \long\def\beamer@frametitle[#1]#2{%
   \beamer@ifempty{#2}{}{%
-  \vskip0pt plus -1fill%
+  \beamer@frameundotopskip%
   {\gdef\insertframetitle{#2}\beamer@headrenderer}
   \gdef\beamer@shortframetitle{#1}%
   \vskip0.25em%
-  \ifbeamer@centered
-  \vfill%
-  \fi
+  \beamer@frametopskip%
 }%
 }
 
