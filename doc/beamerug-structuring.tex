@@ -1763,11 +1763,15 @@ or enumerates.
 \end{template}
 
 
+\label{section-descriptions}
   
 \begin{environment}{{description}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{long text}} 
   Like |itemize|, but used to display a list that explains or defines
-  labels. The width of \meta{long text} is used to set the indent. Normally,
-  you choose the widest label in the description and copy it here.
+  labels. The width of \meta{long text} is used to set the
+  indentation. Normally, you choose the widest label in the
+  description and copy it here. If you do not give this argument, the
+  default width is used, which can be changed using |\setbeamermargin|
+  with the argument |descriptionwidth=|\meta{width}.
 
   As for |enumerate|, the \meta{default overlay specification} is
   detected by an opening~|<|. The effect is the same as for
@@ -1797,13 +1801,32 @@ or enumerates.
 
   \lyxnote
   Since you cannot specify the optional argument in \LyX, if you wish
-  to specify the width, you must use the command
-  |\usedescriptionitemofwidthas|, which you must insert in \TeX-mode
-  shortly before the environment.
+  to specify the width, you may wish to use the following command
+  shortly before the environment:
+
+  |\setbeamermargin{descriptionwidthof}|\marg{text}
+  
+  \begin{template*}{description item}
+    This template is used to typeset the description items. When this
+    template is called, the \beamer-font and -color |description item|
+    are installed.
+    
+    \begin{templateoptions}
+      \itemoption{default}{}
+      By default, the description item text is just inserted without
+      any modification.
+    \end{templateoptions}
+
+    The main insert that is useful inside this template is:
+    \begin{templateinserts}
+      \iteminsert{\insertdescriptionitem} inserts the text of the
+      current description item.
+    \end{templateinserts}
+  \end{template*}
 \end{environment}
 
 
-\begin{command}{\usedescriptionitemofwidthas\marg{long text}}
+\begin{command}{\beamersetusedescriptionitemofwidthas\marg{long text}}
   This command overrides the default width of the
   description label by the width of \meta{long text} for the current
   \TeX\ group. You should only use this command if, for some reason or

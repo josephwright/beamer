@@ -246,8 +246,8 @@
 \def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
 \def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
 \def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
-\def\usedescriptionitemtemplate#1#2{\setbeamertemplate{description item}{#1}\setbeamertemplate{description item width}{#2}}
-\def\usedescriptionitemofwidthas{\setbeamertemplate{description item width}[widthof]}%
+\def\usedescriptionitemtemplate#1#2{\setbeamertemplate{description item}{#1}\setbeamermargin{descriptionwidth={#2}}}
+\def\usedescriptionitemofwidthas#1{\setbeamermargin{descriptionwidthof={#1}}}%
 \def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
 \long\def\@@usetemplatetocsection[#1]#2{
   \@usetemplatetocsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}

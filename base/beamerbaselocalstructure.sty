@@ -325,8 +325,14 @@
   \def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep{\usebeamertemplate**{description item}}}
 
-
-\def\beamersetdescriptionwidth#1{\beamer@descriptionwidth=#1}
+\beamer@descriptionwidth=2cm
+\define@key{beamer@margin}{descriptionwidth}{%
+  \beamer@descriptionwidth=#1\relax%
+}
+\define@key{beamer@margin}{descriptionwidthof}{%
+  \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\usebeamertemplate**{description item}}%
+  \beamer@descriptionwidth=\wd\beamer@tempbox\relax%
+}
 
 
 \mode

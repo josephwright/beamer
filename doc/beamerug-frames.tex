@@ -577,9 +577,6 @@ default to 1cm. To change them, you should use the following
 command:
 
 \begin{command}{\setbeamermargin\marg{options}}
-  This command can only be used in the preamble (before the |document|
-  environment is used).
-  
   The following options can be given:
   \begin{itemize}
   \item
@@ -590,6 +587,14 @@ command:
   \item
     \declare{|right=|\meta{\TeX\ dimension}} sets a new right
     margin.
+  \item
+    \declare{|descriptionwidth=|\meta{\TeX\ dimension}} sets the
+    default width of description labels, see
+    Section~\ref{section-descriptions}. 
+  \item
+    \declare{|descriptionwidthof=|\meta{text}} sets the
+    default width of description labels to the width of the
+    \meta{text}, see  Section~\ref{section-descriptions}. 
   \end{itemize}
 
   \articlenote
