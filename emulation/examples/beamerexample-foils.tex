@@ -1,0 +1,407 @@
+% This file is a demonstration on how a foils file should be
+% changed to make it work with beamer.
+
+
+% Copyright notice:
+
+% Except for the changes indicated by CHANGED, this file is the original
+% file foiltex/sampfoils.tex, which is part of the
+% examples of the sampfoils package. 
+
+
+ %%%% sample and should not be included in your foils document.  %%%%%
+ % Start with a \documentclass declaration.  The [20pt] is optional
+ % as that is the default.  The [dvips] option is supplied here even
+ % though it really belongs in the {foiltex.cfg} file for the site/user.
+\documentclass[20pt,dvips]{foils}
+ %
+ % An alternate uses smaller fonts, passes the draft mode to other
+ % included packages (e.g., graphics packages) and does everything
+ % in landscape mode.
+ % \documentclass[17pt,draft,landscape]{foils}
+ %
+ % This next version declares the setup for Rokicki's dvips so that we
+ % can support rotated foils and the use of color names.
+ %\documentclass[20pt,dvips]{foils}
+ %
+ % Add other packages you might want to use here.  E.g., you can
+ % use the \usepackage{graphics} or \usepackage{graphicx} to include
+ % figures (e.g., postscript figures) or \usepackage{color} for color.
+ % See the \FoilTeX documentation for use of color.
+ % \usepackage{graphicx}
+ % \usepackage[usenames]{color}
+ % Use this package file for the special \LaTeX symbols.
+ %
+\usepackage{latexsym}
+ %
+ % Declare the title, author and date as you would in regular \LaTeX.
+ %
+\title{A Sample Foils Document}
+ %
+\author{Jim Hafner\\
+        IBM Research Division\\
+        Almaden Research Center\\
+        \texttt{hafner@almaden.ibm.com}
+        }
+ % This is optional
+\date{\today}
+ %
+ % We set up the header and footer information now.  \Restriction is
+ % always placed next to \MyLogo on the bottom left corner of the
+ % page.  The other macros have their obvious placement.  If you want
+ % nothing, leave the contents of these declarations empty.  Note that
+ % ``-- Typeset by FoilTeX --'' logo will print automatically, unless
+ % controlled by redefining \MyLogo or by using the switches \LogoOn
+ % and \LogoOff.
+ %
+ %\MyLogo{-- Typeset by \FoilTeX\ --}   % this is the default
+ %\rightfooter{quad\textsf{\thepage}}   % this is the default
+\leftheader{Jim Hafner}
+\rightheader{\foiltexdate}                % \foiltexdate is defined above
+\Restriction{Is this for a restricted audience?}
+ %
+\newcommand\bs{\char '134}   %  a backslash character for the \tt font
+ %
+ % Now we can begin the document.  The first thing is the title page
+ % on which we might put a VERY short abstract.
+\begin{document}
+\maketitle
+ %
+\begin{abstract}
+This is where an abstract might go if you want one.  There is usually
+not a lot of room for much here.
+\end{abstract}
+ %
+ % Now we can begin to start the individual foils.  Note that we let
+ % \LaTeX split the pages and don't force each foil to be a separate
+ % page.   We use \foilhead to start a new foil or foil topic.
+\foilhead{Colors}
+
+\FoilTeX\ (version 2) is fully integrated with \LaTeXe\ so that the
+supported \texttt{color} package (part of the \texttt{graphics}
+package) is the preferred way to use colors.
+
+For examples, see the \texttt{graphics} package documentation.
+
+You can still use the old \texttt{colordvi} package that comes with
+Rokicki's \texttt{dvips}, but some things won't work exactly as
+expected (except in compatibility mode).
+
+\foilhead[-.5in]{Itemize}
+\LogoOff  % We decided to turn the logo off on this page.
+          % The rest of the footer and header will stay the same.
+ % This foil has a lot on it so we used the [-.5in] option to move the
+ % body of the foil closer to the foilhead.  We could move it down with
+ % a positive length.
+ %
+ % By default there is large item separation at the first level (equal
+ % to \parsep).  At the lower levels, it decreases to 0.  To change
+ % you can either try to redefine \@listii and \@listiii in a style
+ % file or you can change it internally to an item list.  See comment
+ % below at second level.
+
+\begin{itemize}
+\item
+This is the first level of an itemize.
+  \begin{itemize}     % \itemsep 20pt % this stretches the space
+                      % between items but only at this level. We leave
+                      % the default here.
+  \item Here we jump to second level
+     \begin{itemize}
+     \item Even third level (and there is a fourth level as well).
+     \item The second item at third level.
+     \end{itemize}
+  \item The second item at second level.
+  \item A third item at second level.
+  \end{itemize}
+\item The second item at first level.
+\item A third item at first level.
+\end{itemize}
+
+Note that we have turned off the logo on this page.  It returns on the
+next page.
+
+\foilhead{}
+\LogoOn
+
+This should be a \emph{new foil} with no header, followed by a quote:
+\begin{quote}
+\ldots it's a good idea to make your input file as easy to
+read as possible.
+\end{quote}
+and some enumerating:
+\begin{enumerate}
+\item this is enumerated
+\item this is also enumerated
+\end{enumerate}
+
+\begin{center}
+\framebox{\parbox{5.5in}{Above, we used \texttt{\bs emph\{new foil\}}
+instead of the old \texttt{\{\bs em new foil\bs/\}}!}}
+\end{center}
+
+On the following page we decided to stop the headers from appearing
+and move the date to the footline.
+
+ % Here are more samples of font actions, particularly size changing.
+ % We retained the ability to get a true Roman font via \textrm.
+
+\foilhead{Fonts}
+\rightheader{}   % These cancel the headlines from now on
+\leftheader{}    %
+\rightfooter{\foiltexdate\quad\textsf{\thepage}}
+
+\begin{itemize}
+\item This shows \textit{italics}, \textsl{slanted}, \textbf{boldface},
+\texttt{typewriter}, \textrm{roman}, and \textsc{small caps}.
+\item Unslanted \emph{emphasize} and
+      \textsl{slanted \emph{emphasize}}.
+\item \texttt{\bs textrm} means \textrm{roman and
+      \texttt{\bs textsf} means \textsf{sans serif}}.
+\item size changing from {\tiny tiny},
+      {\scriptsize scriptsize},
+      {\footnotesize footnotesize},
+      {\small small}, {\normalsize
+      normalsize},\,{\large large},%
+      {\Large Large},\,{\LARGE LARGE},
+      {\huge huge}, and {\Huge Huge}.
+\item 12pt is the smallest preloaded.
+\item 43pt is the largest preloaded in compatibility mode.
+\item 51pt is the largest preloaded in normal mode.
+\end{itemize}
+
+\foilhead{Special Characters and Accents}
+
+\begin{itemize}
+\item Here is a list of accents:
+  \begin{itemize}
+   \item \`{o}, \'{o}, \^{o}, \"{o}, \~{o}, \={o}, \.{o}, \u{o},
+         \v{o}, \H{o}, \t{oo}, \c{o}, \d{o}, \b{o}.
+  \end{itemize}
+\item First in paragraph mode (with \verb|\copyright|):
+  \begin{itemize}
+  \item \dag, \ddag, \S, \P, \pounds, 0123456789, \copyright
+  \end{itemize}
+\item Then in math mode: (numerals are different!)
+  \begin{itemize}
+  \item $\dag$, $\ddag$, $\S$, $\P$, $\pounds$,
+        $0123456789$
+  \end{itemize}
+\item Here are more non-english language symbols:
+  \begin{itemize}
+  \item \oe, \OE, \ae, \AE, \aa,   \AA, \o, \O, \l, \L, \ss, ?`, !`
+  \end{itemize}
+\item \textrm{\TeX}'s special symbols: \#, \$, \%, \&, \_, \{, \}.
+\end{itemize}
+
+\foilhead{Some Mathematics}
+
+$$
+{\cal F}\cdots\frac{x+y}{1+\frac{y}{z+1}} =\sqrt{x+y}\times \sqrt[n]{2}
+$$
+
+Here are some funny math symbols (we needed the \texttt{latexsym}
+package for a couple of these):
+$$
+\forall\exists\flat\natural\sharp\partial\angle\Re\mho\jmath\aleph
+$$
+$$
+\infty\Diamond\clubsuit\diamondsuit\spadesuit\heartsuit\ell
+$$
+$$
+\bigcap\bigcup\bigvee\bigwedge\bigodot\bigotimes\bigoplus\biguplus
+\sum\prod\coprod\int\oint
+$$
+$$
+\sum_{i=1}^nx_i =\int_0^1 f[x]dx.
+$$
+and $\gcd(m,n)$ and $x\equiv y\pmod{a+b}$.
+
+\foilhead{More Math: arrays}
+
+$$
+\begin{array}{clcr}
+a+b+c & uv    & x-y & 27 \\
+a+b   & u+v   & z   & 134  \\
+a     & 3u+vw & xyz & 2,978
+\end{array}
+$$
+
+$$
+\left( \begin{array}{c}
+    \left| \begin{array}{cc}
+            x_{11} & x_{12} \\
+            x_{21} & x_{22}
+           \end{array}
+     \right| \\
+      y \\
+      z
+      \end{array}
+\right)
+$$
+
+$$
+x=\left\{ \begin{array}{ll}
+             y & \mbox{if $y>0$} \\
+             z+y & \mbox{otherwise}
+          \end{array}
+   \right.
+$$
+
+\foilhead{More Math: \texttt{equation} and \texttt{array} Numbering}
+
+Here is a numbered equation
+\begin{equation}
+  E=mc^2
+\end{equation}
+and a numbered array
+\begin{eqnarray}
+ x & = & 17y \\
+ y & > & a+b+c+d+e+f+\nonumber \\
+   &   & k+l+m+n+o+p
+\end{eqnarray}
+
+More math accents: $\hat{a}$, $\check{a}$, $\breve{a}$, $\acute{a}$,
+$\grave{a}$, $\tilde{a}$, $\bar{a}$, $\vec{a}$, $\dot{a}$, $\ddot{a}$.
+
+Over and underline:
+$$
+  \overline{\overline{x}^{2} + 1}
+\qquad
+\overbrace{a+\underbrace{b+c}_{25}+d}^{16\alpha}
+$$
+
+\foilhead{Bold Mathematics}
+
+The \verb|boldequation| environment, with
+numbering yields
+\begin{boldequation} \label{eq:bold}
+   2\sqrt{x} \Pi^y \sim\pi\times x
+\end{boldequation}
+and without numbering yields
+\begin{boldequation*}
+   2\sqrt{x} \Pi^y \sim\pi\times x
+\end{boldequation*}
+We can reference bold equations like (\ref{eq:bold}).
+
+There is also \verb|\mathbf| and \verb|\bm| in the middle of a formula,
+with \hfil\break \verb|\mathbf{a +} a + \bm{a+x\pi-\rho} -\rho|
+$$
+\mathbf{a +}a+\bm{a+x\pi-\rho} -\rho
+$$
+Note the difference between the two bold ``a'' in result.
+
+\foilhead{Theorem and Proof Environments}
+
+\begin{Theorem}[TUG'92]
+There are some \TeX\ tools that are easier to use than others.  This
+theorem is numbered and has an optional acknowledgement.
+\end{Theorem}
+
+\begin{Corollary*}
+This obvious corollary is not numbered because it uses the *-form.
+\end{Corollary*}
+
+\begin{Proof}
+The details of the proof are left to the reader.  Note that the
+environment names are case sensitive.
+\end{Proof}
+
+We put a header back on the next foil to see that it is correctly
+rotated.
+
+\rotatefoilhead{Rotated Foils}
+\leftheader{I'm rotated!}
+
+This entire page will (should?)~be rotated if we declared the
+\verb|\documentclass| option \texttt{dvips} or other supported driver
+option.  (For \texttt{pdflatex}, this works without giving any
+options!)  In the other cases, this is not supported and the user is
+warned.
+
+The next foil will return to normal.  Only foils that begin with
+\verb|\rotatefoilhead| will be rotated.  If \LaTeX\ needs to split a
+rotated foil into two foils, \emph{both} will be rotated.
+
+\foilhead{Tables and Figures}
+\leftheader{}
+
+Here is a short table:
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|c|r|} \hline
+First stuff & Second stuff & Third Stuff \\ \hline\hline
+foo & bar & bug \\ \hline
+foofoo & barbar & bugbug \\ \hline
+\end{tabular}
+\caption{\label{tab:one}This is the first table.}
+\end{center}
+\end{table}
+
+The above table is Table~\ref{tab:one}.  It is a ``nonfloat'', since
+it doesn't float at all, but appears right where it was placed in the
+document.
+
+ % In the picture environment, we have put the fonts back to \LaTeX's
+ % normal size.  This may have been a mistake but ...
+\foilhead{\texttt{picture} Environments}
+
+\begin{figure}
+\begin{center}
+\setlength{\unitlength}{.08in}
+\begin{picture}(50,50)(0,0)
+ %\thicklines         % don't know why it looks worse with this
+\put(10,35){\framebox(10,10){gnat}}
+\put(30,20){\circle{20}}
+\put(30,20){\vector(0,1){2}}
+\put(45,35){\circle*{5}}
+\put(30,20){\oval(20,30)}
+\end{picture}
+\end{center}
+\caption{Isn't this a pretty picture?}
+\end{figure}
+
+\verb|\thicklines| would be nice here but the picture doesn't look as
+good that way (why?).  We should use the \texttt{graphics} package to
+load our graphics pictures here.  Note that this Figure doesn't float!
+
+\foilhead{Marginal Notes, Footnotes and Citations}
+
+A marginal note\footnote{This is a footnote.}
+is made with the \verb|\marginpar| command, having the
+text as its argument.  The note\marginpar{This is a mar\-gin\-al note}
+is placed in the margin, its first line even with the line of the text
+containing the command\footnote{This is a second footnote.}.
+
+This is shows \fbox{frameboxes} at work. We can even cite references
+like \cite{rocky} and \cite{bullwinkle}.
+
+ % We can use any bibliography mechanism, including BibTeX.
+\begin{thebibliography}{99}
+
+\bibitem{rocky} Rocky and Bullwinkle, Open problems, in \textsl{Mr.
+Know-it-all's Rock Encyclopedia}.
+
+\bibitem{bullwinkle} Bullwinkle, Getting things out of hats,
+\textsl{Annals} \textbf{1} (1990BC), 1--2.
+
+\end{thebibliography}
+
+\foilhead{Other Features}
+\raggedright
+
+\begin{itemize}
+\item \verb|\raggedright| can be used in the preamble to get this
+      effect throughout as we did on this page.
+\item Access to the AMS Fonts symbols and Euler fonts can easily be
+      obtained with the \texttt{amsmath} packages.  You might not get
+      fonts at the largest sizes however.
+\item \textsc{PostScript} fonts can used just by adding any of the
+      package files from the PSNFSS package.
+\end{itemize}
+
+\end{document}
+\endinput
+%%
+%% End of file `sampfoil.tex'.
