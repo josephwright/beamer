@@ -101,6 +101,7 @@
 \newif\ifbeamer@centered
 \newif\ifbeamer@draftmode
 \newif\ifbeamer@compressnotes
+\newif\ifbeamer@suppressreplacements % decides whether fonts should be substituted
 
 
 
@@ -143,6 +144,7 @@
 %
 %
 
+\beamer@suppressreplacementsfalse
 \beamer@altmodefalse
 \beamer@notesfalse
 \beamer@notesnormalstrue
@@ -200,6 +202,8 @@
 
 \DeclareOption{mathsans}{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
 \DeclareOption{mathserif}{\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
+
+\DeclareOption{professionalfont}{\beamer@suppressreplacementstrue}
 
 \DeclareOption{nodefaultblocks}{\beamer@blocksfalse}
 
@@ -382,14 +386,12 @@
 \color{black!50!green}}{\endgroup\medskip}
 
                                 % Enumerations
-\useenumerateitemtemplate{\color{structure}\insertenumlabel.}
-\usesubenumerateitemtemplate{\color{structure}\insertenumlabel.\insertsubenumlabel}
+\beamertemplateenumeratealpha
 \useenumeratetemplate{}{}
 \usesubenumeratetemplate{\begin{small}}{\end{small}}
 
                                 % Itemize
-\useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\color{structure}$\blacktriangleright$}}
-\usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
+\beamertemplatetriangleitem
 \useitemizetemplate{}{}
 \usesubitemizetemplate{\begin{small}}{\end{small}}
 

@@ -296,8 +296,8 @@
         computed efficiently on average,
       \item
         approximated, or
-      \item
-        \alert{enumerated.}
+      \item<1-><1->
+        enumerated.
       \end{itemize}
     \end{block}
   \end{overprint}
@@ -364,16 +364,16 @@
     \begin{column}{6.5cm}
       \begin{block}{Definition (1987, 1989, 1994, 2001)}
         An \alert{$m$-enumerator} for a function~$f$
-        \begin{itemize}
-        \item
-          \alert<1-4>{reads $n$ input words $w_1$, \dots, $w_n$,}
-        \item
-          \alert<5>{does a computation},
-        \item
-          \alert<6-8>{outputs at most $m$ values},
-        \item
-          \alert<9>{one of which is $f(w_1,\dots,w_n)$}.
-        \end{itemize}
+        \begin{enumerate}
+        \item<1-><1-4>
+          reads $n$ input words $w_1$, \dots, $w_n$,
+        \item<1-><5>
+          does a computation,
+        \item<1-><6-8>
+          outputs at most $m$ values,
+        \item<1-><9>
+          one of which is $f(w_1,\dots,w_n)$.
+        \end{enumerate}
       \end{block}
     \end{column}
   \end{columns}
@@ -411,18 +411,20 @@
     recursive.
   \end{block}
 
-  \begin{block}{Weak Cardinality Theorems (\uncover<2->{\alert<1-2>{1987},} \uncover<3->{\alert<3>{1989},} \uncover<4->{\alert<4>{1992}})}<2->
-    \begin{itemize}
-    \item<2->
-      \alert<1-2>{If $\chi_A^n$ is $n$-enumerable by a Turing machine, then $A$ is
-        recursive.}
-    \item<3->
-      \alert<3>{If $\NumA^2$ is $2$-enumerable by a Turing machine, then $A$ is
-        recursive.}
-    \item<4->
-      \alert<4>{If $\NumA^n$ is $n$-enumerable by a Turing machine that never
-        enumerates both $0$ and~$n$, then $A$ is recursive.}
-    \end{itemize}
+  \begin{block}{Weak Cardinality Theorems
+      (\uncover<2->{\alert<1-2>{1987},} \uncover<3->{\alert<3>{1989},}
+      \uncover<4->{\alert<4>{1992}})}<2-> 
+    \begin{enumerate}
+    \item<2-><2>
+      If $\chi_A^n$ is $n$-enumerable by a Turing machine, then $A$ is
+        recursive.
+    \item<3-><3>
+      If $\NumA^2$ is $2$-enumerable by a Turing machine, then $A$ is
+        recursive.
+    \item<4-><4>
+      If $\NumA^n$ is $n$-enumerable by a Turing machine that never
+        enumerates both $0$ and~$n$, then $A$ is recursive.
+    \end{enumerate}
   \end{block}
 }
 
@@ -438,7 +440,7 @@
   \end{alertblock}
 
   \begin{block}{Weak Cardinality Theorems (2001, 2002)}
-    \begin{itemize}
+    \begin{enumerate}
     \item
       If $\chi_A^n$ is $n$-enumerable by a \alert{finite automaton}, then $A$ is
       \alert{regular}.
@@ -448,7 +450,7 @@
     \item
       If $\NumA^n$ is $n$-enumerable by a \alert{finite automaton} that never
       enumerates both $0$ and~$n$, then $A$ is \alert{regular}.
-    \end{itemize}
+    \end{enumerate}
   \end{block}
 }
 
@@ -523,12 +525,12 @@
   \begin{definition}
     A relation~$R$ is \alert{elementarily definable in a
     logical structure~$\mathcal S$} if
-    \begin{itemize}
+    \begin{enumerate}
     \item
       there exists a first-order formula~$\phi$,
     \item
       that is true exactly for the elements of~$R$.
-    \end{itemize}    
+    \end{enumerate}    
   \end{definition}
 
   \begin{example}
@@ -685,12 +687,12 @@
     Let $\mathcal S$ be a logical structure with universe~$U$ and let
     $A \subseteq U$. If
     
-    \begin{itemize}
+    \begin{enumerate}
     \item
       $\mathcal S$ is well-orderable and
     \item
       \alert{$\chi_A^n$} is elementarily \alert{$n$}-enumerable in~$\mathcal S$,
-    \end{itemize}
+    \end{enumerate}
     
     then \alert{$A$ is elementarily definable} in~$\mathcal S$.    
   \end{theorem}
@@ -717,7 +719,7 @@
     Let $\mathcal S$ be a logical structure with universe~$U$ and let
     $A \subseteq U$. If
     
-    \begin{itemize}
+    \begin{enumerate}
     \item
       $\mathcal S$ is well-orderable,
     \item
@@ -725,7 +727,7 @@
       in~$\mathcal S$, and
     \item
       \alert{$\NumA^2$} is elementarily \alert{$2$}-enumerable in~$\mathcal S$,
-    \end{itemize}
+    \end{enumerate}
     
     then \alert{$A$ is elementarily definable} in~$\mathcal S$.    
   \end{theorem}
@@ -752,7 +754,7 @@
     Let $\mathcal S$ be a logical structure with universe~$U$ and let
     $A \subseteq U$. If
     
-    \begin{itemize}
+    \begin{enumerate}
     \item
       $\mathcal S$ is well-orderable,
     \item
@@ -761,7 +763,7 @@
     \item
       \alert{$\NumA^n$} is elementarily \alert{$n$}-enumerable in~$\mathcal S$ via a
       relation that \alert{never `enumerates' both $0$ and~$n$},
-    \end{itemize}
+    \end{enumerate}
     
     then \alert{$A$ is elementarily definable} in~$\mathcal S$.    
   \end{theorem}
@@ -830,20 +832,23 @@
     \pgfnodeconncurve{recX}{recC}{-50}{5}{10pt}{30pt}
 
     \pgfonly<2>{%
-    \alert{\pgfnodeconnline{logX}{autX}
-    \pgfnodeconncurve{logX}{logA}{-60}{0}{10pt}{10pt}
-    \pgfnodeconncurve{logX}{logB}{-55}{0}{10pt}{20pt}
-    \pgfnodeconncurve{logX}{logC}{-50}{0}{10pt}{30pt}
-    \pgfnodeconncurve{autX}{autA}{-60}{11}{10pt}{10pt}
-    \pgfnodeconncurve{autX}{autB}{-55}{11}{10pt}{20pt}
-    \pgfnodeconncurve{autX}{autC}{-50}{11}{10pt}{30pt}}}%
-    %
+      \pgfalert{
+        \pgfnodeconnline{logX}{autX}
+        \pgfnodeconncurve{logX}{logA}{-60}{0}{10pt}{10pt}
+        \pgfnodeconncurve{logX}{logB}{-55}{0}{10pt}{20pt}
+        \pgfnodeconncurve{logX}{logC}{-50}{0}{10pt}{30pt}
+        \pgfnodeconncurve{autX}{autA}{-60}{11}{10pt}{10pt}
+        \pgfnodeconncurve{autX}{autB}{-55}{11}{10pt}{20pt}
+        \pgfnodeconncurve{autX}{autC}{-50}{11}{10pt}{30pt}
+      }
+    }
+
     \pgfsetdash{{3pt}{3pt}}{0pt}
     \pgfnodeconnline{logB}{recB}
     \pgfnodeconnline{logC}{recC}
 
     \pgfonly<2>{%
-    \alert{\pgfnodeconnline{logX}{recX}}}%
+    \pgfalert{\pgfnodeconnline{logX}{recX}}}
   \end{pgfpicture}
 }
 

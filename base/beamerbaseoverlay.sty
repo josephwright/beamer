@@ -131,10 +131,22 @@
   \beamer@closeitem\gdef\beamer@closeitem{}%
   \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}
 \def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{\beamer@origitem}}
-\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{\beamer@origitem[#1]}}
-\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[#1]}
+\long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{\beamer@origitem[#1]}}
+\long\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[#1]}
+\def\beamer@parseitem<#1>{\@ifnextchar<{\beamer@parseitemalert<#1>}{\beamer@itemcheckoptb<#1>}}
+\def\beamer@itemcheckoptb<#1>{\@ifnextchar[{\beamer@itemcheckoptc<#1>}{\beamer@itemuncover<#1>}}
+\long\def\beamer@itemcheckoptc<#1>[#2]{\@ifnextchar<{\beamer@itemreversea<#1>[#2]}{\beamer@itemuncover<#1>[#2]}}
+\def\beamer@itemreversea<#1>[#2]<#3>{\beamer@parseitemalert<#1><#3>[#2]}
+
 \def\beamer@closeitem{}
-\def\beamer@parseitem<#1>{%
+\def\beamer@parseitemalert<#1><#2>{%
+  \alt<#1>{\beamer@spacingcover%for spacing reasons
+    \alt<#2>{\begin{alertenv}\gdef\beamer@closeitem{\end{alertenv}\beamer@spacingcover}}%
+    {\gdef\beamer@closeitem{\beamer@spacingcover}}%
+    \beamer@origitem}%
+  {\beamer@startcovered\gdef\beamer@closeitem{\beamer@endcovered}\beamer@origitem}%
+  }
+\def\beamer@itemuncover<#1>{%
   \alt<#1>{\beamer@spacingcover%for spacing reasons
     \gdef\beamer@closeitem{\beamer@spacingcover}\beamer@origitem}%
   {\beamer@startcovered\gdef\beamer@closeitem{\beamer@endcovered}\beamer@origitem}%
@@ -196,12 +208,16 @@
     \expandafter\setbox\csname @verb\string#1\endcsname=\hbox\bgroup
     \verb}
 
-
-  \long\def\defverbatim#1{%
-    \expandafter\newbox\csname @verb\string#1\endcsname%
-    \def#1{{\expandafter\beamer@setb\csname @verb\string#1\endcsname\unvbox0}}%
-    \expandafter\setbox\csname @verb\string#1\endcsname=\vbox\bgroup
-    \def\set@color{}\def\reset@color{}\let\@next=}
+  \define@key{beamerverb}{colored}[true]{\def\beamer@colorsup{}}
+  
+  \newcommand*{\defverbatim}[2][]{%
+    \def\beamer@colorsup{\def\set@color{}\def\reset@color{}}%
+    \setkeys{beamerverb}{#1}%
+    \expandafter\newbox\csname @verb\string#2\endcsname%
+    \def#2{{\expandafter\beamer@setb\csname @verb\string#2\endcsname\unvbox0}\color{.}}%
+    \expandafter\setbox\csname @verb\string#2\endcsname=\vbox\bgroup
+    \beamer@colorsup%
+    \let\@next=}
 }
 
 
@@ -221,8 +237,6 @@
 
   \long\def\beamer@insp#1{\ignorespaces#1\ignorespaces}
   \long\def\beamer@gobbleis#1{\ignorespaces}
-
-  \long\def\beamer@unbrace#1{#1}
 }
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
@@ -240,9 +254,9 @@
 
 \article
 {
-  \newoverlaycommand{\uncover}{\beamer@unbrace}{\@gobble}
-  \newoverlaycommand{\pgfuncover}{\beamer@unbrace\ignorespaces}{\beamer@gobbleis}
-  \newoverlaycommand{\invisible}{\@gobble}{\beamer@unbrace}
+  \newoverlaycommand{\uncover}{\@firstofone}{\@gobble}
+  \newoverlaycommand{\pgfuncover}{\@firstofone\ignorespaces}{\beamer@gobbleis}
+  \newoverlaycommand{\invisible}{\@gobble}{\@firstofone}
   \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
   \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
 
@@ -255,7 +269,7 @@
 \common
 {
   \newoverlaycommand{\pgfonly}{\beamer@insp}{\beamer@gobbleis}
-  \newoverlaycommand{\only}{\beamer@unbrace}{\@gobble}
+  \newoverlaycommand{\only}{\@firstofone}{\@gobble}
   \renewoverlaycommand{\textbf}{\beameroriginal{\textbf}}{}
   \renewoverlaycommand{\textit}{\beameroriginal{\textit}}{}
   \renewoverlaycommand{\textsl}{\beameroriginal{\textsl}}{}

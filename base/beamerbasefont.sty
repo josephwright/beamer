@@ -119,8 +119,6 @@
 
   
 \AtBeginDocument{%
-\newif\ifbeamer@suppressreplacements % decides whether fonts should be substituted
-\beamer@suppressreplacementsfalse
 \def\beamer@cmr{cmr}
 \edef\beamer@fmdef{\mathfamilydefault}
 
@@ -129,7 +127,10 @@
 
 % supress for mathtime serif and math minion serif
 \@ifpackageloaded{mathtime}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{mathpmnt}{\if@sansmath\else\@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mathpmnt}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{lucidabr}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mtpro}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{hvmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
 
 \ifbeamer@suppressreplacements\else
   \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{m}{n}

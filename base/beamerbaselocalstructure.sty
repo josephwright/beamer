@@ -17,28 +17,44 @@
 % Alerting
 %
 
-\newoverlaycommand{\alert}{\@alert}{\beamer@unbrace}
-\def\@alert#1{\def\insertalert{#1}\beamer@alerttemplate}
+\newoverlayenvironment{alertenv}{%
+  \beamer@templatestartalert}
+  {\beamer@templateendalert}{}{}
 
-\newoverlaycommand{\pgfalert}{\@alertinsp}{\beamer@insp}
-\def\@alertinsp#1{\def\insertalert{#1\ignorespaces}\beamer@alerttemplate\ignorespaces}
+\newoverlayenvironment{structureenv}{%
+  \beamer@templatestartstructure}
+  {\beamer@templateendstructure}{}{}
 
-\newoverlaycommand{\structure}{\@structure}{\beamer@unbrace}
-\def\@structure#1{\def\insertstructure{#1}\beamer@structuretemplate}
+\newoverlaycommand{\alert}{\beamer@alert}{}
+\def\beamer@alert#1{\begin{alertenv}#1\end{alertenv}}
 
-\newoverlaycommand{\pgfstructure}{\@structureinsp}{\beamer@insp}
-\def\@structureinsp#1{\def\insertstructure{#1\ignorespaces}\beamer@structuretemplate\ignorespaces}
+\newoverlaycommand{\pgfalert}{\beamer@alertinsp}{\beamer@insp}
+\def\beamer@alertinsp#1{\begin{alertenv}#1\ignorespaces\end{alertenv}\ignorespaces}
 
-\long\def\usealerttemplate#1{%
-  \gdef\beamer@alerttemplate{#1}}
-\long\def\usestructuretemplate#1{%
-  \gdef\beamer@structuretemplate{#1}}
+\newoverlaycommand{\structure}{\beamer@structure}{}
+\def\beamer@structure#1{\begin{structureenv}#1\end{structureenv}}
 
-\usealerttemplate{{\begin{colormixin}{15!alert}\insertalert\end{colormixin}}}
-\usestructuretemplate{{\color{structure}\insertstructure}}
+\newoverlaycommand{\pgfstructure}{\beamer@structureinsp}{\beamer@insp}
+\def\beamer@structureinsp#1{\begin{structureenv}#1\ignorespaces\end{structureenv}\ignorespaces}
+
+\long\def\usealerttemplate#1#2{%
+  \gdef\beamer@templatestartalert{#1}\gdef\beamer@templateendalert{#2}}
+\long\def\usestructuretemplate#1#2{%
+  \gdef\beamer@templatestartstructure{#1}\gdef\beamer@templateendstructure{#2}}
+
+\usealerttemplate{%
+  \def\bmb@scheme{alert}%
+  \colorlet{beamerstructure}{beameralert!85!beamerstructure}%
+  \colorlet{beamerexample}{beameralert!85!beamerexample}%
+  \color{beameralert}}{}
+\usestructuretemplate{\color{beamerstructure}}{}
+
 
 \article
 {
+  \newoverlayenvironment{alertenv}{\begin{itshape}}{\end{itshape}}{}{}
+  \newoverlayenvironment{structureenv}{\begin{bfseries}}{\end{bfseries}}{}{}
+  
   \newoverlaycommand{\alert}{\emph}{}
   \newoverlaycommand{\structure}{\textbf}{}
   \newoverlaycommand{\pgfalert}{\beamer@emphinsp}{\beamer@insp}
@@ -193,6 +209,7 @@
   \else%
     \advance\@enumdepth\@ne%
     \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \advance\@itemdepth\@ne%
   \fi%
   \@ifnextchar[{\beamer@@enum@}{\beamer@enum@}}
 \def\beamer@@enum@[#1]{% partly copied from enumerate.sty
@@ -217,9 +234,9 @@
   \begin{pauses}\raggedright}
 \def\endenumerate{\ifhmode\unskip\fi\end{pauses}\endlist\csname\@enumctr endtemplate\endcsname}
 
-\def\useenumerateoptionalitemtemplate#1{%
+\def\useenumerateitemminitemplate#1{%
   \gdef\beamer@autoenumtemplate{#1}}
-\useenumerateoptionalitemtemplate{\color{structure}\insertenumlabel}
+\useenumerateitemminitemplate{\color{beamerstructure}\insertenumlabel}
 
 
 %
@@ -284,7 +301,7 @@
 
 \def\usedescriptionitemtemplate#1#2{\gdef\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
   \global\advance\beamer@descdefaulttemp by \labelsep}
-\usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}
+\usedescriptionitemtemplate{\color{beamerstructure}\insertdescriptionitem}{2cm}
 
 \def\usedescriptionitemofwidthas#1{%
   \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
@@ -355,10 +372,10 @@
 
 \beamertemplatearticlebibitems
 \usebibliographyblocktemplate
-  {\color{structure}}
+  {\color{beamerstructure}}
   {\par\color{black}}
-  {\par\color{structure!65}}
-  {\par\color{structure!65}}
+  {\par\color{beamerstructure!65}}
+  {\par\color{beamerstructure!65}}
 
 
 \article

@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[professionalfont]{beamer}
 
 % Try the class options [notes], [notesonly], [trans], [handout],
 % [red], [compress], [draft] and see what happens!
@@ -31,7 +31,7 @@
 %\usepackage{lmodern}
 %\usepackage[T1]{fontenc}
 
-%\usepackage{times}
+\usepackage{times}
 
 % Use some nice templates
 \beamertemplatetransparentcovereddynamic
@@ -364,14 +364,14 @@
 
   \begin{Definition}
     A Turing machine is \alert{overhead-free} if
-    \begin{itemize}
+    \begin{enumerate}
     \item
       it has only a single tape,
     \item
       writes only on input cells,
     \item
       writes only symbols drawn from the input alphabet.
-    \end{itemize}
+    \end{enumerate}
   \end{Definition}
 }
 
@@ -639,17 +639,15 @@
 
   \begin{Definition}
     A Turing machine is \alert{almost-overhead-free} if
-    \begin{itemize}
-    \item
+    \begin{enumerate}
+    \item<1-><1>
       it has only a single tape,
-      \pause
-    \item
+    \item<2-><2>
       writes only on input cells,
-      \pause
-    \item
+    \item<3-><3>
       writes only symbols drawn from the input alphabet\\
-      \alert{plus one special symbol}.
-    \end{itemize}
+      plus one special symbol.
+    \end{enumerate}
   \end{Definition}
 }
 
@@ -716,7 +714,7 @@
   \only<2>
   {% this is only shown in the appendix, where this frame is resumed.
     \begin{proof}
-      \begin{itemize}
+      \begin{enumerate}
       \item
         Let $A \in \Class{DLINSPACE}$ be $\Class{PSPACE}$-complete.\\
         Such languages are known to exist.
@@ -729,7 +727,7 @@
       \item
         Then $h(L)$ is in $\Class{DOF}$ and it is
         $\Class{PSPACE}$-complete. 
-      \end{itemize}
+      \end{enumerate}
     \end{proof}
 
     \hfill\hyperlink{pspacecomplete<1>}{\beamerreturnbutton{Return}}

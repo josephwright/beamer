@@ -224,7 +224,7 @@
 
 
 %
-% Itemize templates
+% Item templates
 %
 
 \newcommand{\beamertemplatedotitem}{%
@@ -235,8 +235,41 @@
 \newcommand{\beamertemplateballitem}{%
   \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}}
   \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}}
+
+  \useenumerateitemtemplate{
+    \color{structure}%
+    \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+      \begin{pgfmagnify}{1.75}{1.75}
+        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+      \end{pgfmagnify}
+      \pgfbox[center,center]{\color{white}\tiny\textbf{\insertenumlabel}}
+    \end{pgfpicture}}
+  \usesubenumerateitemtemplate{%
+    \color{structure}%
+    \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+      \begin{pgfmagnify}{1.4}{1.4}
+        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+      \end{pgfmagnify}
+      \pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}
+    \end{pgfpicture}}
+  \AtBeginDocument{\beamertemplatesetupshadings}
+}
+
+\newcommand{\beamertemplatetriangleitem}{%
+  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\color{structure}$\blacktriangleright$}}
+  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
   }
 
+
+%
+% Enumerate Item templates
+%
+
+\newcommand{\beamertemplateenumeratealpha}{
+  \useenumerateitemtemplate{\color{structure}\insertenumlabel.}
+  \usesubenumerateitemtemplate{\color{structure}\insertenumlabel.\insertsubenumlabel}
+  }
+  
 %
 % Head templates
 %
@@ -713,7 +746,7 @@
 }
 
 \newcommand{\beamertemplateroundedblocks}{
-  \beamertemplatesetupshadings
+  \AtBeginDocument{\beamertemplatesetupshadings}
 
   \useblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=block]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}\smallskip}
@@ -724,7 +757,7 @@
 }
 
 \newcommand{\beamertemplateshadowblocks}{
-  \beamertemplatesetupshadings
+  \AtBeginDocument{\beamertemplatesetupshadings}
 
   \useblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=block]{\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}}

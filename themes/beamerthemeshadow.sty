@@ -155,4 +155,10 @@
 
 
 \beamertemplateshadowblocks
-\beamerboxesdeclarecolorscheme{block}{structure!75!black}{structure!10!averagebackgroundcolor}
+
+\renewcommand{\beamertemplatesetupshadings}{
+  \beamerboxessetupshadows
+  \beamerboxesdeclarecolorscheme{block}{structure!75!black}{structure!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{alert}{alert!75!averagebackgroundcolor}{alert!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
+}

@@ -79,6 +79,8 @@
 \def\beamer@outsidemode{\afterassignment\beamer@treat\let\beamer@nexttoken=}
 \def\beamer@treat{%
   \ifx\beamer@nexttoken\frame\let\next=\beamer@stopoutsidemode%
+  \else\ifx\beamer@nexttoken\note\let\next=\beamer@stopoutsidemode%
+  \else\ifx\beamer@nexttoken\noteitems\let\next=\beamer@stopoutsidemode%
   \else\ifx\beamer@nexttoken\appendix\let\next=\beamer@stopoutsidemode%
   \else\ifx\beamer@nexttoken\againframe\let\next=\beamer@stopoutsidemode%
   \else\ifx\beamer@nexttoken\section\let\next=\beamer@stopoutsidemode%
@@ -88,7 +90,7 @@
   \else\ifx\beamer@nexttoken\common\let\next=\beamer@stopoutsidemode%
   \else\ifx\beamer@nexttoken\presentation\let\next=\beamer@stopoutsidemode%
   \else\ifx\beamer@nexttoken\end\let\next=\beamer@checkenddoc%
-  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
   \next}
 
 \def\beamer@stopoutsidemode{\beamer@nexttoken}

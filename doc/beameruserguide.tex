@@ -390,10 +390,33 @@ options or precautions may be necessary.
   package. 
 \end{package}
 
+\begin{package}{{inputenc}|[|\declare{|utf8|}|]|}
+  Currently, you cannot use utf8 encoded text in |\section| and
+  |\subsection| commands, if that text uses characters outside the
+  lower ASCII range. Thus you have to write |\section{\"Uberschrift}|
+  instead of |\section{Überschrift}|.
+\end{package}
+
 \begin{package}{{listings}}
   Note that you must treat |lstlisting| environments exactly the same
-  way as you would treat |verbatim| environments.
+  way as you would treat |verbatim| environments. When using
+  |\defverbatim| that contains a colored |lstlisting|, use the
+  |colored| option of |\defverbatim|.
 \end{package}
+
+\begin{package}{{\normalfont\meta{professional font package}}}
+  If you use a professional font package, \beamer's internal
+  redefinition of how variables are typeset may interfere with the
+  font package's superior way of typesetting them. In this case, you
+  should use the class option |professionalfont| to suppress any font
+  substitution. See Section~\ref{section-substition} for details.
+\end{package}
+
+\begin{package}{{ucs}}
+  See |[utf8]{inputenc}|.
+\end{package}
+
+
 
 
 
@@ -1204,16 +1227,30 @@ done using two special commands:
 \end{command}
 
 
-\begin{command}{\defverbatim\marg{command name}\marg{text}}
+\begin{command}{\defverbatim\oarg{options}\marg{command name}\marg{text}}
   The \meta{text} may contain a |verbatim|,  |verbatim*|,
   |lstlisting|, or a related environment. The command \marg{command
     name} can be used later inside frames. The declaration
   should be done outside the frame. Once declared, the text can be
   used in overlays like normal text.
-  
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|colored|} declares that the verbatim text will have
+    its ``own'' colors. Normally, the verbatim text is typeset using
+    the current color, which allows you to use commands like |\alert|
+    to make verbatim text red on certain slides. However, if the
+    verbatim text has, say, a special background color or different
+    parts of it a colored differently (the |lstlisting| environment
+    does this), then you do \emph{not} want the verbatim text to
+    inherit its color from the ``outside.'' In this case, you should
+    give the |colored| option.
+  \end{itemize}  
+
   \example
 \begin{verbatim}
-\defverbatim\algorithm{
+\defverbatim\algorithmA{
 \begin{verbatim}
 int main (void)
 {
@@ -1225,11 +1262,27 @@ int main (void)
 \begin{verbatim}
 }
 
+\defverbatim[colored]\algorithmB{
+\begin{lstlisting}[language={C++},backgroundcolor=\color{yellow}]
+int main (void)
+{
+  cout << "Hello world." << endl;
+  return 0;
+}
+\end{lstlisting}
+}
+
 \frame
 {
   Our algorithm:
-  \alert<1>{\algorithm}
+  \alert<1>{\algorithmA}
   \uncover<2>{Note the return value.}
+}
+
+\frame
+{
+  Same algorithm typeset using the lstlisting environment:
+  \algorithmB
 }
 \end{verbatim}
 \end{command}
@@ -1458,13 +1511,21 @@ commands that are needed by \pgf.
 \end{command}
 
 
-\begin{command}{\item\sarg{overlay specification}\oarg{item label}}
-  Adding an \meta{overlay specification} to an item in a list causes
-  this item to be uncovered only on the specified slides. This is
-  useful for creating lists that are uncovered piecewise. Note that
+\begin{command}{\item\sarg{uncover overlay specification}\sarg{alert
+      overlay specification}\oarg{item label}} 
+  Adding an \meta{uncover overlay specification} to an item in a list
+  causes this item to be uncovered only on the specified slides. This
+  is useful for creating lists that are uncovered piecewise. Note that
   you are not required to stick to an order in which items are
-  uncovered. If present, the optional \meta{item label} comes after
-  the overlay specification. 
+  uncovered. You can \emph{additionally} add a second \meta{alert
+    overlay specification}. This overlay specification will hilight
+  uncovered items on the specificed slides. If only one specification
+  is given, it always refers to uncovering. So, in order to alert an
+  item on, say, slide 5, but have it uncovered on all slides, you
+  would have to write |\item<1-><5>|.
+
+  The optional \meta{item label} may also be given before the overlay
+  specifications. 
   
   \example
 \begin{verbatim}
@@ -1495,17 +1556,17 @@ commands that are needed by \pgf.
 {
   The advantages of the beamer class are
   \begin{enumerate}
-  \item<1-> \alert<1>{It is easy to use.}
-  \item<2-> \alert<2>{It is easy to extend.}
-  \item<3-> \alert<3>{It works together with \texttt{pdflatex}.}
-  \item<4-> \alert<4>{It has nice overlays.}
+  \item<1-><1> It is easy to use.
+  \item<2-><2> It is easy to extend.
+  \item<3-><3> It works together with \texttt{pdflatex}.
+  \item<4-><4> It has nice overlays.
   \end{enumerate}
 }
 \end{verbatim}
 \end{command}
 
 The related command |\bibitem| is also overlay-specification-aware
-in the same way as |\item|.
+in the same way as |\item|, but no alert specification may be given. 
 
 \begin{command}{\label\sarg{overlay specification}\marg{label name}}
   If the \meta{overlay specification} is present, the label is only
@@ -2724,6 +2785,8 @@ structure your text.
 
 \subsubsection{Itemizations, Enumerations, and Descriptions}
 
+\label{section-enumerate}
+
 There are three predefined environments for creating lists, namely
 |enumerate|, |itemize|, and |description|. The first
 two can be nested to depth two, but not further (this would
@@ -2769,13 +2832,42 @@ or come last as in |\item[Cat]<1>|.
 \end{environment}
 
 
-\begin{environment}{{enumerate}}
-  Like |itemize|, except that the list is ordered.
+\begin{environment}{{enumerate}\oarg{mini template}}
+  Used to display a list of items that are ordered.  Inside the
+  environment, use an |\item| command for each topic. By default,
+  before each item increasing arabic numbers  followed by a dot are
+  printed (as in ``1.'' and ``2.''). This can be changed by specifying
+  a different template,  see
+  Section~\ref{section-template-enumerate}.
+
+  Alternatively, you can specify a \meta{mini template}, whose syntax
+  is the same as the syntax of mini 
+  templates in the |enumerate| package (you do not need to include the
+  |enumerate| package, this is done automatically). Roughly spoken,
+  the text of the \meta{mini template} is printed before each item,
+  but any occurence of a |1| in the mini template is replaced by the
+  current item number, an occurence of the letter |A| is replaced by
+  the $i$th letter of the alphabet (in uppercase) for the $i$th item,
+  and the letters |a|, |i|, and |I| are replaced by the corresponding
+  lowercase letters, lowercase Roman letters, and uppercase Roman
+  letters, respectively. So the mini template |(i)| would yield the
+  items (i), (ii), (iii), (iv), and so on. The mini template |A.)|
+  would yield the items A.), B.), C.), D.) and so on. For more details
+  on the possible mini templates, see the documentation of the
+  |enumerate| package. Note that there is also a template that governs
+  the appearance of the mini template (for example, to change its
+  color), see Section~\ref{section-template-enumerate}.
+  
   \example
 \begin{verbatim}
 \begin{enumerate}
 \item This is important.
 \item This is also important.
+\end{enumerate}
+
+\begin{enumerate}[(i)]
+\item First Roman point.
+\item Second Roman point.
 \end{enumerate}
 \end{verbatim}
 \end{environment}
@@ -4203,8 +4295,11 @@ While these reasons are pretty good, you still might wish to change the font:
   Other fonts, especially Times, are sometime rendered better since
   they seem to have better internal hinting.
 \item
-  A presentation typeset in a serif font  creates a conservative
+  A presentation typeset in a serif font creates a conservative
   impression, which might be exactly what you wish to create.
+\item
+  On projections with a very high resolutions serif text is just as
+  readable as sans serif text.
 \end{itemize}
 
 You must decide whether the text should be typeset in sans-serif or in
@@ -4266,6 +4361,8 @@ serif or back.
 
 \subsubsection{Font Families}
 
+\label{section-substition}
+
 Independently of the serif/sans-serif choice, you can switch the
 document font. To do so, you should use one of the prepared packages
 of \LaTeX's font mechanism. For example, to change to Times/Helvetica,
@@ -4287,6 +4384,27 @@ If you use |times| together with the |serif| option, you
 may wish to include also the package |mathptm|. If you use the
 |mathtime| package (you have to buy some of the fonts), you
 also need to specify the |serif| option.
+
+If you use professional fonts (fonts that you buy and that come with a
+complete set of every symbol in all modes), you may need to specify the
+class option |professionalfont|. This will tell \beamer\ that it
+should not meddle with the fonts you use. The reason is that \beamer\ 
+normally replaces certain character glyphs in mathematical text by
+more appropriate versions. For example, \beamer\ will normally replace
+glyphs such that the italic characters from the main font are used for
+variables in mathematical text. If your professional font package
+takes care of this already, \beamer's meddling should be switched
+off. Note that \beamer's substitution is automatically turned off if
+one of the following packages is loaded: |mathtime|, |mathpmnt|,
+|lucidabr|, |mtpro|, and |hvmath|. If your favorite professional font
+package is not among these, use the |professionalfont| option (and
+write me an email, so that the package can be added).
+
+\begin{classoption}{professionalfont}
+  Deactivates \beamer's internal font replacements for mathematical
+  text. This option should be used if you use a professional font
+  package that sets up all mathematical fonts correctly.
+\end{classoption}
 
 
 \subsubsection{Font Sizes}
@@ -5684,17 +5802,31 @@ The following inserts are useful for the navigation symbols template:
 
 \subsubsection{Lists (Itemizations, Enumerations, Descriptions)}
 
+\label{section-template-enumerate}
+
 \paragraph{Predefined Templates}\
+
+\begin{command}{\beamertemplateballitem}
+  Changes the symbols shown in an |itemize| and an |enumerate|
+  environment to small plastic balls.
+\end{command}
 
 \begin{command}{\beamertemplatedotitem}
   Changes the symbols shown in an |itemize|
   environment to dots.
 \end{command}
 
-\begin{command}{\beamertemplateballitem}
+\begin{command}{\beamertemplatetriangleitem}
   Changes the symbols shown in an |itemize|
-  environment to small plastic balls.
+  environment to triangles.
 \end{command}
+
+\begin{command}{\beamertemplateenumeratealpha}
+  Changes the labels of first-level enumerations to ``1.'', ``2.'',
+  ``3.'', and so on, and to ``1.1'', ``1.2'', ``1.3'', and so on for
+  the second level.
+\end{command}
+
 
 
 \paragraph{Template Installation Commands}\
@@ -5738,6 +5870,15 @@ The following inserts are useful for the navigation symbols template:
   \example
   |\useenumerateitemtemplate{\insertenumlabel}|
 \end{command}
+
+\begin{command}{\useenumerateitemminitemplate\marg{template}}
+  The \meta{template} is used to render the items in an enumeration
+  where the optional argument \meta{mini template} is used (see
+  Section~\ref{section-enumerate}). 
+  \example
+  |\useenumerateitemminitemplate{\color{structure}\insertenumlabel}|
+\end{command}
+
 \begin{command}{\usesubenumerateitemtemplate\marg{template}}
   The \meta{template} is used to render the default item in the second
   level of an enumeration. 
@@ -5751,13 +5892,11 @@ The following inserts are useful for the navigation symbols template:
   \example |\useenumeratetemplate{}{}|
 \end{command}
 
-
 \begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
   The \meta{begin text} is inserted at the beginning of a second-level
   enumeration, the \meta{end text} at its end.
   \example |\usesubenumeratetemplate{\begin{small}}{\end{small}}|
 \end{command}
-
 
 \begin{command}{\usedescriptiontemplate\marg{description
       template}\marg{default width}}
@@ -5777,10 +5916,14 @@ The following inserts are useful for the navigation symbols template:
 \end{command}
 
 \begin{command}{\insertenumlabel}
-  Inserts the current number of the top-level enumeration (as an
-  Arabic number) into a template.
+  Normally, this command inserts the current number of the top-level
+  enumeration (as an Arabic number) into a template. However, in an
+  enumeration where the optional \meta{mini template} option is used,
+  this command inserts the current number rendered by this mini
+  template. For example, if the \meta{mini template} is |(i)| and this
+  command is used in the fourth item, |\insertenumlabel| would yield
+  |(iv)|. 
 \end{command}
-
 
 \begin{command}{\insertsubenumlabel}
   Inserts the current number of the second-level enumeration (as an
@@ -5793,29 +5936,24 @@ The following inserts are useful for the navigation symbols template:
 
 \subsubsection{Hilighting Commands}
 
+
 \paragraph{Template Installation Commands}\
 
-\begin{command}{\usealerttemplate\marg{alert template}}
-  \example |\usealerttemplate{{\color{red}\insertalert}}|
+\begin{command}{\usealerttemplate\marg{alert template
+      begin}\marg{alert template end}}
+  In an |\alert| command and in an |alertenv| environment, the text
+  \meta{alert template begin} is inserted at the beginning, the text
+  \meta{alert template end} at the end.
+  
+  \example |\usealerttemplate{\color{red}}{}|
 \end{command}
 
-
-\begin{command}{\usestructuretemplate\marg{structure template}}
-  \example |\usestructuretemplate{{\color{structure}\insertstructure}}|
+\begin{command}{\usestructuretemplate\marg{structure template
+      begin}\marg{structure template end}}
+  Same as for alerts.
+  
+  \example |\usestructuretemplate{\color{blue}}{}|
 \end{command}
-
-
-\paragraph{Inserts for these Templates}\
-
-\begin{command}{\insertalert}
-  Inserts the current alerted text into a template.
-\end{command}
-
-\begin{command}{\insertstructure}
-  Inserts the current structure text into a template.
-\end{command}
-
-
 
 
 
