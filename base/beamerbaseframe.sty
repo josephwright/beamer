@@ -70,6 +70,7 @@
   \beamer@displaybreak%
   \global\setbox\beamer@zoombox=\box\voidb@x%
   \def\beamer@zoomer{}%
+  \beamer@slidehaszoomfalse%
   \gdef\insertframetitle{}%
   \gdef\insertframesubtitle{}%
   \gdef\beamer@frametitle{}%
@@ -96,7 +97,7 @@
         \fi%
         }\nointerlineskip%
       \fi%
-      \vbox{}}%
+      \vbox{}\ifbeamer@plainframe\nointerlineskip\fi}%
     {\end{beamer@framepauses}%
   \egroup%
   \ifx\beamer@frametitle\@empty%
@@ -114,6 +115,8 @@
   \fi%
   \advance\beamer@frametextheight by-\ht\beamer@frametitlebox%
   \advance\beamer@frametextheight by-\dp\beamer@frametitlebox%
+%  \advance\beamer@frametextheight by-\beamer@frametopskip%
+%  \advance\beamer@frametextheight by-\beamer@framebottomskip%
   \ifbeamer@shrink%
     \beamer@shrinkframebox%
   \fi%
@@ -121,10 +124,10 @@
     \setbox\beamer@framebox=\vbox{%
       \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
       \nointerlineskip\unvbox\beamer@frametitlebox%
-      \nobreak%
+      \nobreak\vskip\beamer@frametopskip\nobreak%
       \nointerlineskip\box\beamer@zoombox\nointerlineskip%
-      \nobreak\beamer@frametopskip\nobreak%
-      \unvbox\beamer@framebox%
+      \nobreak%
+      \ifbeamer@slidehaszoom\box\beamer@framebox\else\unvbox\beamer@framebox\fi%
       % bottom skip is added in autobreakframebox
     }%
     \beamer@autobreakframebox%
@@ -183,6 +186,14 @@
 }
 
 
+
+%
+% Skips
+%
+\newskip\beamer@frametopskip
+\newskip\beamer@framebottomskip
+
+
 %
 % Keys
 %
@@ -199,16 +210,16 @@
 %  \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
 \define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
 \define@key{beamerframe}{c}[true]{% centered
-  \def\beamer@frametopskip{\vfill}%
-  \def\beamer@framebottomskip{\vskip0pt plus 1.5fill}%
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt plus 1.5fill\relax%
 }
 \define@key{beamerframe}{t}[true]{% top
-  \def\beamer@frametopskip{\vskip0.25em plus 8cm}%
-  \def\beamer@framebottomskip{\vfill}%
+  \beamer@frametopskip=.2cm plus 8cm\relax%
+  \beamer@framebottomskip=0pt plus 1fill\relax%
 }
 \define@key{beamerframe}{b}[true]{% bottom
-  \def\beamer@frametopskip{\vfill}%
-  \def\beamer@framebottomskip{}%
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt\relax%
 }
 \define@key{beamerframe}{allowdisplaybreaks}[4]{%
   \def\beamer@displaybreak{\allowdisplaybreaks[#1]}}
@@ -234,6 +245,7 @@
 \newif\ifbeamer@autobreak
 \newif\ifbeamer@shrink
 \newif\ifbeamer@plainframe
+\newif\ifbeamer@slidehaszoom
 
 % Check for old version:
 
@@ -399,6 +411,8 @@
 
 \def\framezoom<#1><#2>{\@ifnextchar[{\beamer@framezoom<#1><#2>}{\beamer@framezoom<#1><#2>[]}}
 \def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){%
+  \par\nointerlineskip%
+  \global\beamer@slidehaszoomtrue%
   \advance\beamer@zoomcount by1\relax%
   \def\beamer@zoomborderwidth{0}%
   \edef\beamer@labelzoomed{beamer@labelzoomed@\the\beamer@zoomframecount @\the\beamer@zoomcount}%
@@ -423,18 +437,6 @@
       \expandafter\gdef\csname\beamer@labelzoomed\endcsname{}%
     }{}%
     \gdef\beamer@zoomer{%
-      \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
-        \nointerlineskip\beamer@frametopskip\nobreak\nointerlineskip%
-        \unvbox\beamer@framebox\nobreak\nointerlineskip%
-        \beamer@framebottomskip\vfil%
-        \ifvoid\beamer@footins%
-        \else%
-          \normalcolor%
-          \footnoterule%
-          \unvbox \beamer@footins%
-          \global\setbox\beamer@footins=\box\voidb@x%
-        \fi%
-      }%
       % compute zoom factor
       \@tempdima=\beamer@frametextheight%
       \@tempdimb=#7\relax%
@@ -489,11 +491,21 @@
         \nobreak%
         \box\beamer@framebox%
         \nobreak%
+        \vss%
         \beamer@exitcode%
       }%
+      \global\setbox\beamer@footins=\box\voidb@x% no footnotes in zoomed slides
     }%
   }%
 }
+
+\mode
+<article>
+{
+  \def\framezoom<#1><#2>{\@ifnextchar[{\beamer@framezoom<#1><#2>}{\beamer@framezoom<#1><#2>[]}}
+  \def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){}
+}
+
 
 
 %
@@ -528,7 +540,7 @@
     \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
     \global\setbox\beamer@splitbox=\box\beamer@framebox%
     \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa%
-      \beamer@framebottomskip\vfil%
+      \vskip\beamer@framebottomskip\vfil%
       \ifvoid\beamer@splitbox%
         \ifvoid\beamer@footins%
         \else%
@@ -542,7 +554,7 @@
     }%
   \else%
     \setbox\beamer@framebox=\vbox to\textheight{\unvbox\beamer@framebox%
-      \beamer@framebottomskip%
+      \vskip\beamer@framebottomskip%
       \ifvoid\beamer@footins%
       \else%
         \normalcolor%
