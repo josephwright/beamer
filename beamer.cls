@@ -1,5 +1,5 @@
 \ProvidesClass{beamer}
-[2003/10/23 v0.92-dev Class for Typesetting a Beamer Presentation]
+[2003/11/07 v0.93 Class for Typesetting a Beamer Presentation]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -244,8 +244,8 @@
 \newif\if@notesnormals
 \@notesnormalstrue
 
-\newif\ifsubsectionrows
-\subsectionrowsfalse
+\newif\ifbeamer@compress
+\beamer@compressfalse
 
 \newif\ifbeamer@centered
 
@@ -257,7 +257,10 @@
 %
 
 \DeclareOption{inrow}
-{\subsectionrowstrue}
+{\ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
+
+\DeclareOption{compress}
+{\beamer@compresstrue}
 
 \DeclareOption{slidescentered}
 {\beamer@centeredtrue}
@@ -334,7 +337,8 @@
 %
 
 % Public
-\newdimen\headheight    % Height of the headline
+\newdimen\headheight    % Total height of the headline (including depth)
+\newdimen\headdp        % Depth of the headline
 \newdimen\footheight    % Height of the footline
 \newdimen\sidebarheight % Height of the sidebars
 
@@ -527,6 +531,15 @@
   \advance\headcounter by1\relax%
   \csname head\the\headcounter\endcsname\repeat}
 
+\def\beamer@startpageofframe{1}
+\def\beamer@endpageofframe{1}
+\def\beamer@startpageofsubsection{1}
+\def\beamer@endpageofsubsection{1}
+\def\beamer@startpageofsection{1}
+\def\beamer@endpageofsection{1}
+\def\beamer@endpageofdocument{1}
+\def\beamer@startpageofappendix{}
+
 \def\sectionentry#1#2#3#4{\ifnum\section@max<#1\relax\section@max=#1\fi}
 \def\slideentry#1#2#3#4#5{\ifnum\subsection@max<#2\relax\subsection@max=#2\fi}
 \def\appendixslideentry#1#2#3#4#5{\ifnum\subsection@max<#2\relax\subsection@max=#2\fi}
@@ -715,7 +728,9 @@
 \long\def\@@section#1{\@section[#1]{#1}}
 \long\def\@section[#1]#2{%
   \refstepcounter{section}%
-  \@ifempty{#2}{\long\def\secname{#1}}{\long\def\secname{#2}\addtocontents{toc}{\protect\sectionintoc{\thesection}{#2}{\thepage}}}%
+  \@ifempty{#2}%
+  {\long\def\secname{#1}}%
+  {\long\def\secname{#2}\addtocontents{toc}{\protect\sectionintoc{\thesection}{#2}{\thepage}}}%
   \addtocontents{head}{\protect\headcommand{\protect\sectionentry{\thesection}{#1}{\thepage}{\secname}}}%
   {\let\\=\relax\xdef\sectionlink{{Navigation\thepage}{\noexpand\secname}}}%
   \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
@@ -749,8 +764,7 @@
 \def\@@subsection#1{\@subsection[#1]{#1}}
 
 \def\@subsection[#1]#2{%
-  \ifsubsectionrows\ifnum0=\c@subsection\refstepcounter{subsection}\fi%
-  \else\refstepcounter{subsection}\fi%
+  \refstepcounter{subsection}%
   \@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}
   {%
     \long\def\subsecname{#2}%
@@ -772,8 +786,7 @@
 
 
 \def\untitledsubsection{%
-  \ifsubsectionrows\ifnum0=\c@subsection\refstepcounter{subsection}\fi%
-  \else\refstepcounter{subsection}\fi%
+  \refstepcounter{subsection}%
   \def\insertsubsection{}%
   \def\lastsubsection{}}
 \def\insertsubsection{}
@@ -1552,19 +1565,21 @@
   \advance\footheight by \dp\tempbox%
   \advance\footheight by 4pt%
   \geometry{foot=\the\footheight}%
+  \advance\footheight by -4pt%
   \sidebarheight=\paperheight%
   \advance\sidebarheight by-\headheight%
-  \advance\sidebarheight by-\footheight%
-  \advance\footheight by -4pt}
+  \advance\sidebarheight by\headdp%
+  \advance\sidebarheight by-\footheight}
 \def\recalculatehead{%
   \setbox\tempbox=\hbox{\@headtemplate}%
   \headheight=\ht\tempbox%
-  \advance\headheight by\dp\tempbox%
+  \headdp=\dp\tempbox%
+  \advance\headheight by\headdp%
   \geometry{head=\the\headheight}%
   \sidebarheight=\paperheight%
   \advance\sidebarheight by-\headheight%
-  \advance\sidebarheight by-\footheight%
-  \advance\footheight by -4pt}%
+  \advance\sidebarheight by\headdp%
+  \advance\sidebarheight by-\footheight}%
 
 \long\def\usefoottemplate#1{%
   \gdef\@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}%
@@ -1579,6 +1594,13 @@
   \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
     height #1\hskip-\Gm@rmargin}}
 
+%
+% Inserting navigation bars
+%
+
+\newcount\beamer@xpos
+\newcount\beamer@ypos
+
 \def\insertnavigation#1{%
   \vbox{%
     \ifbeamer@inappendix%
@@ -1588,6 +1610,8 @@
     \def\appendixsectionentry##1##2##3##4{}%
     \def\appendixslideentry{\fakeslideentry}%
     \fi%
+    \beamer@xpos=0\relax%
+    \beamer@ypos=1\relax%
     \hbox to #1{\hskip.3cm\tiny\setbox\sectionbox=\hbox{}%
         \hskip-5pt plus-1fill\dohead%
       \box\sectionbox\hfil\hskip.3cm}%
@@ -1595,6 +1619,8 @@
 
 \def\sectionentry#1#2#3#4{% section name, section title, page
   \box\sectionbox\hskip5pt plus 1fill%
+  \beamer@xpos=0\relax%
+  \beamer@ypos=1\relax%
   \setbox\sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \ifnum\thesection=#1%
@@ -1604,6 +1630,8 @@
 
 \def\appendixsectionentry#1#2#3#4{% section name, section title, page
   \box\sectionbox\hskip5pt plus 1fill%
+  \beamer@xpos=0\relax%
+  \beamer@ypos=1\relax%
   \setbox\sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \ifnum\thesection=#1%
@@ -1661,12 +1689,20 @@
 \def\slideentry#1#2#3#4#5{%
   %section number, subsection number, slide number, first/last frame page number
   \ifnum#2>0\ifnum#3>0%
+  \ifbeamer@compress%
+  \advance\beamer@xpos by1\relax%
+  \else
+  \beamer@xpos=#3\relax%
+  \beamer@ypos=#2\relax%
+  \fi
   \hbox to 0pt{%
-    \postemp=-#2\vboxoffset%
-    \advance\postemp by -#2\beamer@boxsize%
+    \postemp=-\vboxoffset%
+    \advance\postemp by-\beamer@boxsize%
+    \multiply\postemp by\beamer@ypos%
     \advance\postemp by -.05cm%
     \raise\postemp\hbox{%
-      \postemp=#3\beamer@boxsize%
+      \postemp=\beamer@boxsize%
+      \multiply\postemp by\beamer@xpos%
       \advance\postemp by -\beamer@boxsize%
       \advance\postemp by 1pt%
       \kern\postemp\hbox{\beamer@link(#4){%
@@ -1675,27 +1711,19 @@
         }}}\hskip-10cm plus 1fil
   }\fi\fi\ignorespaces}
 
-\def\appendixslideentry#1#2#3#4#5{%
-  %section number, subsection number, slide number, first/last frame page number
-  \ifnum#2>0\ifnum#3>0%
-  \hbox to 0pt{%
-    \postemp=-#2\vboxoffset%
-    \advance\postemp by -#2\beamer@boxsize%
-    \advance\postemp by -.05cm%
-    \raise\postemp\hbox{%
-      \postemp=#3\beamer@boxsize%
-      \advance\postemp by -\beamer@boxsize%
-      \advance\postemp by 1pt%
-      \kern\postemp\hbox{\beamer@link(#4){%
-        \ifnum\thesection=#1\ifnum\thesubsection=#2\ifnum\thesubsectionslide=#3%
-        \@minislidehilight\else\@minisliderowhilight\fi\else\@minislide\fi\else\@minislide\fi%
-        }}}\hskip-10cm plus 1fil
-  }\fi\fi\ignorespaces}
+\let\appendixslideentry=\slideentry
 
 \def\fakeslideentry#1#2#3#4#5{%
   \ifnum#2>0\ifnum#3>0%
-  \hbox to 0pt{\postemp=-#2\vboxoffset%
-    \advance\postemp by -#2\beamer@boxsize%
+  \ifbeamer@compress%
+  \advance\beamer@xpos by1\relax%
+  \else%
+  \beamer@xpos=#3\relax%
+  \beamer@ypos=#2\relax%
+  \fi%
+  \hbox to 0pt{\postemp=-\vboxoffset%
+    \advance\postemp by -\beamer@boxsize%
+    \multiply\postemp by\beamer@ypos%
     \advance\postemp by -.05cm%
     \raise\postemp\hbox{}}\fi\fi\ignorespaces}
   
@@ -2405,15 +2433,6 @@
     \fi%
   \fi%
 }
-
-\def\beamer@startpageofframe{1}
-\def\beamer@endpageofframe{1}
-\def\beamer@startpageofsubsection{1}
-\def\beamer@endpageofsubsection{1}
-\def\beamer@startpageofsection{1}
-\def\beamer@endpageofsection{1}
-\def\beamer@endpageofdocument{1}
-\def\beamer@startpageofappendix{}
 
 \def\beamer@nextpage#1{%
   \beamer@tempcount=#1%

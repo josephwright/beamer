@@ -50,6 +50,23 @@
 
 \newdimen\tempdimen
                                 % Head
+\ifbeamer@compress
+\useheadtemplate{%
+  \vbox{%
+    \setbox\linebox=\hbox to\paperwidth{%
+      \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
+      \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}\hfil}%
+    \ht\linebox=7pt
+    \dp\linebox=0pt
+    \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
+    \hbox to\textwidth{%
+      {\color{black}\hskip-1cm\vrule width.5\paperwidth height\ht\linebox
+      \color{structure}\vrule width.5\paperwidth height\ht\linebox\hskip-\paperwidth\hskip1cm}%
+      \hskip-1cm\box\linebox\hfill\hskip-1cm%
+      }%
+  }%
+}
+\else
 \useheadtemplate{%
   \vbox{%
     \tempdimen=6.5pt%
@@ -70,7 +87,7 @@
       }%
   }%
 }
-
+\fi
                                 % Footline
 \usefoottemplate{%
   \hbox{%

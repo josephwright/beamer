@@ -65,11 +65,11 @@
 \def\endclassoption{\endlist}
 
 
-\def\smalltheme{\vbox\bgroup\theme}
-\def\endsmalltheme{\egroup\endtheme}
-\def\theme#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
-\item\extracttheme#1@\par\topsep=0pt}
-\def\endtheme{\endlist}
+\def\smallpackage{\vbox\bgroup\package}
+\def\endsmallpackage{\egroup\endpackage}
+\def\package#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\extracttheme#1@\par\topsep=0pt}
+\def\endpackage{\endlist}
 \def\extracttheme#1#2@{%
 \item{{{\ttfamily\char`\\usepackage}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}}
 
@@ -79,9 +79,12 @@
 \newcommand\sarg[1]{\opt{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}}
 \newcommand\ssarg[1]{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}
 
+
+
+
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 0.92-dev\\
+\title{User's Guide to the Beamer Class, Version 0.93\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -182,28 +185,48 @@ To structure your text, you can use the commands |\section| and
 table of contents, but will also in the navigation bars.
 
 
+\subsection{How to Read this User's Guide}
 
-\subsection{Getting Started: Installation}
+This user guide is both intended as a tutorial and as a reference
+guide. If you have not yet installed the package, please read
+Section~\ref{section-installation} first. If you do not have much
+experience with preparing presentations, the
+Section~\ref{section-workflow} might be especially helpful. The later
+sections explain the basic usage of the |beamer| class as well as
+advanced features. If you wish to adjust the way your presentations
+look (for example, if you wish to add a default logo of your
+institution to every presentation in the future), please read the last
+section. 
+
+In this guide you will find the descriptions of all ``public''
+commands provided by the |beamer| class. In each such
+description, the described command, environment or option is printed 
+in red. Text shown in green is optional and can be left out.
+
+
+\section{Installation and Compatibility}
+
+\label{section-installation}
+
 
 To use the beamer class, you just need to put the files of the
 \beamer\ package in a directory that is read by \TeX. To uninstall the
 class, simply remove these files once more. The same is true of the
 \textsc{pgf} package, which you will also need.
 
-
 Unfortunately, there are different ways of making \TeX\ ``aware'' of
 the files in the \beamer\ package. Which way you should choose depends
 on how permanently you intend to use the class.
 
 
-\subsubsection{Installing Debian and Red Hat Packages}
+\subsection{Installing Debian and Red Hat Packages}
 
 Currently, there are no out-of-the-box Debian or Red Hat packages of
 the beamer class available.
 
 
 
-\subsubsection{Temporary Installation}
+\subsection{Temporary Installation}
 
 If you only wish to install the beamer class for a quick appraisal, do
 the following: Obtain the latest source version (ending
@@ -237,7 +260,7 @@ path), which will include all standard directories.
 
 
 
-\subsubsection{Installation in a texmf Tree}
+\subsection{Installation in a texmf Tree}
 
 For a more permanent installation, you can place the files of the
 \beamer\ package and of the \textsc{pgf} package (see the previous
@@ -306,25 +329,27 @@ files \TeX\ creates automatically (like the |.aux| and
 |.head| files).
 
 
+\subsection{Compatibility}
 
-\subsection{How to Read this User's Guide}
+When using certain packages together with the |beamer| class, there
+may be incompatibilities.
 
-This user guide is both intended as a tutorial and as a reference
-guide. If you do not have much experience with preparing
-presentations, the next section might be especially helpful. The
-following sections explain the basic usage of the |beamer| class as
-well as advanced features. If you wish to adjust the way your
-presentations look (for example, if you wish to add a default logo of
-your institution to every presentation in the future), please read the
-last section.
+\begin{package}{{CJK}}
+  When using the |CJK| package, you should write
+\begin{verbatim}
+\hypersetup{CJKbookmarks}
+\end{verbatim}
+  somewhere in your preamble.
+\end{package}
 
-In this guide you will find the descriptions of all ``public''
-commands provided by the |beamer| class. In each such
-description, the described command, environment or option is printed 
-in red. Text shown in green is optional and can be left out.
+
+
+
 
 
 \section{Workflow}
+
+\label{section-workflow}
 
 This section presents a possible workflow for creating a beamer
 presentation and possibly a handout to go along with it. Technical
@@ -783,6 +808,9 @@ slides of the frame.
 \end{verbatim}
 \end{command}
 
+
+
+
 \subsubsection{Components of a Frame}
 
 Each frame consists of up to six components:
@@ -816,6 +844,20 @@ be specified with the following command:
 }
 \end{verbatim}
 \end{command}
+
+Be default, all material for a slide is vertically centered. You can
+change this using the following class options:
+
+\begin{classoption}{slidestop}
+  Place text of slides at the (vertical) top of the slides. This
+  corresponds to a vertical ``flush.''
+\end{classoption}
+
+\begin{classoption}{slidescentered}
+  Place text of slides at the (vertical) center of the slides. This is
+  the default.
+\end{classoption}
+
 
 
 \subsubsection{Restricting the Slides of a Frame}
@@ -2071,6 +2113,16 @@ up quite a bit of space, they are often useful for two reasons:
   has asked about.
 \end{itemize}
 
+Some navigation bars can be ``compressed'' using the following option:
+
+\begin{classoption}{compress}
+  Tries to make all navigation bars as small as possible. For example,
+  all small frame representation in the navigation bars for a single
+  section are shown alongside each other. Normally, the representation
+  for different subsections are shown in different lines. Furthermore,
+  section ans subsection navigations are compressed into one line.
+\end{classoption}
+
 When you click on one of the icons representing a frame in a
 navigation bar (by default this is icon is a small circle), the
 following happens: 
@@ -2115,7 +2167,6 @@ show it), you will jump to the first slide of your presentation
 slide. On the first slide, clicking on the document title will jump to
 the appendix, if there is one. Thus by \emph{double} clicking the
 document title in a navigation bar, you can jump to the appendix.
-
 
 
 
@@ -2611,8 +2662,8 @@ By default, the following colors are used in a presentation:
   titles, and so on, are typeset using the color
   |structure|. By default, this color is bluish. Using one of
   the class options |red|, |gray|, or |brown|
-  changes this. You can also simply redefine this color to a different
-  color using the |\definecolor| command.
+  changes this. You can also change this color simply be redefining
+  the color |structure|.
 \item
   All ``alert'' text is typeset by mixing in 85\% of red. To change
   this, you can either redefine the color |alert|, or you can
@@ -2622,7 +2673,20 @@ By default, the following colors are used in a presentation:
   must change the example templates.
 \end{itemize}
 
+\begin{classoption}{brown}
+  Changes the main color of the navigation and title bars
+  to a brownish color.
+\end{classoption}
 
+\begin{classoption}{red}
+  Changes the main color of the navigation and title bars
+  to a reddish color.
+\end{classoption}
+
+\begin{classoption}{gray}
+  Changes the main color of the navigation and title bars
+  to monochrome.
+\end{classoption}
 
 \subsubsection{Average Background Color}
 
@@ -3046,6 +3110,10 @@ In order to create a handout, specify the class option
 all overlay specifications to be suppressed. For most cases this will
 create exactly the desired result.
 
+\begin{classoption}{handout}
+  Create a version that uses the |handout| overlay specifications.
+\end{classoption}
+
 In some cases, you may want a more complex behaviour. For example, if
 you use many |\only| commands to draw an animation. In this case,
 suppressing all overlay specifications is not such a good idea, since
@@ -3118,6 +3186,8 @@ so by specifying |all:| as the version. For example,
 ensures that the frame has two slides in all versions. 
 
 
+
+
 \subsection{Creating Transparencies}
 
 \label{trans}
@@ -3137,6 +3207,11 @@ specifications for the |trans| version as needed. An elaborated
 example of different overlay specifications for the presentation, the
 handout, and the transparencies can be found in the file
 |beamerexample.tex|.
+
+\begin{classoption}{trans}
+  Create a version that uses the |trans| overlay
+  specifications. 
+\end{classoption}
 
 
 
@@ -3166,6 +3241,14 @@ presentation, you must explicitly specify the class option
 are suppressed. If you specify |notesonly| instead of
 |notes|, only notes will be included and all normal frames are
 parsed, but not displayed. This is useful for printing the notes.
+
+\begin{classoption}{notes}
+  Include notes in the output file. Normally, notes are not included.
+\end{classoption}
+
+\begin{classoption}{notesonly}
+  Include only the notes in the output file. Useful for printing them.
+\end{classoption}
 
 \begin{command}{\note\marg{note text}}
   Creates a note page. Should be given right after a frame.
@@ -3201,22 +3284,29 @@ with your presentation in one file and you may wish to share some part
 of it (like a figure or a formula) with your presentation.
 
 To achieve this, a special class option and three commands can be
-used. The class option is the option |class=xxx|, where
-|xxx| is the name of another document class like
+used. The class option is the option |class=|\meta{class name}, where
+\meta{class name} is the name of another document class like
 |article| or |report|. If this class option is given,
 the beamer class will almost immediately transfer control to this
 class. None of the normal commands defined by the beamer class will be
 defined, except for the three commands listed in the following. All
 class options passed to the beamer class will be passed on to the
-class |xxx|, \emph{except}, naturally, for the option
-|class=xxx| itself. Consider the following example:
+class \meta{class name}, \emph{except}, naturally, for the option
+|class=|\meta{class name} itself.
+
+\begin{classoption}{class={\normalfont\meta{another class
+        name}}{\opt{,{\normalfont\meta{options for another class}}}}}
+  Transfer control to document class \meta{another class name} with
+  the options \meta{options for another class}. See
+  Section~\ref{section-article} for details.
+  \example
 \begin{verbatim}
 \documentclass[class=article,a4paper]{beamer}
 \end{verbatim}
-
-This will cause the rest of the text to be typeset using the
-|article| class with the only class option being
-|a4paper|.
+  This will cause the rest of the text to be typeset using the
+  |article| class with the only class option being
+  |a4paper|.
+\end{classoption}
 
 You can use three commands to specify which part of your text belong
 to the article version, which belongs to the actual presentation, and
@@ -3228,7 +3318,9 @@ requested. In presentation mode, the behavior is the other way
 round. In common mode, the text is always inserted.
 
 Right after the |documentclass| command and right after the
-|\begin{document}|, \TeX\ is always in common mode.
+|\begin{document}| (provided it is the sole entry on a line with no
+comments following and no leading spaces), \TeX\ is always in common
+mode. 
 
   
 \begin{command}{\article}
@@ -3315,6 +3407,8 @@ following example:
 
 \subsection{Fonts}
 
+\subsubsection{Serif Fonts and Sans Serif Fonts}
+
 By default, the beamer class uses the Computer Modern sans-serif fonts
 for typesetting a presentation. The Computer Modern font family is the
 original font family designed by Donald Knuth himself for the \TeX\
@@ -3350,17 +3444,35 @@ While these reasons are pretty good, you still might wish to change the font:
   impression, which might be exactly what you wish to create.
 \end{itemize}
 
-There are two ways of changing the document font: First, you must
-decide whether the text should be typeset in sans serif or in
+You must decide whether the text should be typeset in sans serif or in
 serif. To choose this, use either the class option |sans| or
 |serif|. By default, |sans| is selected, so you do not
 need to specify this. Furthermore, you can specify one of the two
 options |mathsans| or |mathserif|. These options
 override the overall sans-serif/serif choice for math text.
 
-Second, you can independently switch the document font. To do so, you
-should use one of the prepared packages of \LaTeX's font
-mechanism. For example, to change to Times/Helvetica, simply add
+\begin{classoption}{sans}
+  Use a sans-serif font during the presentation. (Default.)
+\end{classoption}
+
+\begin{classoption}{serif}
+  Use a serif font during the presentation.
+\end{classoption}
+
+\begin{classoption}{mathsans}
+  Override the math font to be a sans-serif font.
+\end{classoption}
+
+\begin{classoption}{mathserif}
+  Override the math font to be a serif font.
+\end{classoption}
+
+\subsubsection{Font Families}
+
+Independently of the serif/sans-serif choice, you can switch the
+document font. To do so, you should use one of the prepared packages
+of \LaTeX's font mechanism. For example, to change to Times/Helvetica,
+simply add 
 \begin{verbatim}
 \usepackage{times}
 \end{verbatim}
@@ -3380,8 +3492,29 @@ may wish to include also the package |mathptm|. If you use the
 also need to specify the |serif| option.
 
 
+\subsubsection{Font Sizes}
 
-\subsection{Margins and Sizes}
+The default sizes of the fonts are chosen in a way that makes it
+difficult to fit ``too much'' onto a slide. Also, it will ensure that 
+your slides are readable even under bad conditions like a large
+room and a small only a small projection area. However, you may wish
+to enlarge or shrink the fonts a bit if you know this to be more
+appropriate in your presentation environment. You can use the
+following two options to achieve this:
+
+\begin{classoption}{bigger}
+  Makes all fonts a little bigger, which makes the text more
+  readable. The downside is that less fits onto each frame.
+\end{classoption}
+
+\begin{classoption}{smaller}
+  Makes all fonts a little smaller, which allows you to fit more onto
+  frames. Normally, this is not a good idea.
+\end{classoption}
+
+
+
+\subsection{Margin Sizes}
 
 The ``paper size'' of a beamer presentation is fixed to 128mm times
 96mm. The aspect ratio of this size is 4:3, which is exactly what most
@@ -3409,94 +3542,8 @@ commands:
   Like |\beamersetleftmargin|, only for the right margin.
 \end{command}
 
-For more information on side bars, see Section~\ref{section-sidebar-templates}.
-
-
-
-\subsection{Class Options}
-
-Class options are listed right behind the command |\documentclass|
-in square brackets. Class options, see the following list, govern
-certain global behaviors of the presentation.
-
-\begin{classoption}{bigger}
-  Makes all fonts a little bigger, which makes the text more
-  readable. The downside is that less fits onto each frame.
-\end{classoption}
-
-\begin{classoption}{brown}
-  Changes the main color of the navigation and title bars
-  to a brownish color. Other options are \declare{gray} and
-  \declare{red}. Further colors can be setup by redefining the color
-  |structure|. 
-\end{classoption}
-
-\begin{classoption}{class={\normalfont\meta{another class
-        name}}{\opt{,{\normalfont\meta{options for another class}}}}}
-  Transfer control to document class \meta{another class name} with
-  the options \meta{options for another class}. See
-  Section~\ref{section-article} for details.
-  \example |\documentclass[class=article,a4paper]{beamer}|
-\end{classoption}
-
-\begin{classoption}{handout}
-  Create a version that uses the \texttt{handout} overlay
-  specifications. See subsection~\ref{handout}.
-\end{classoption}
-
-\begin{classoption}{inrow}
-  All small frame representation in the navigation bars for a single
-  section are shown alongside each other. Normally, the representation
-  for different subsections are shown in different lines.
-\end{classoption}
-
-\begin{classoption}{mathsans}
-  Override the math font to be a sans-serif font.
-\end{classoption}
-
-\begin{classoption}{mathserif}
-  Override the math font to be a serif font.
-\end{classoption}
-
-\begin{classoption}{notes}
-  Include notes in the output file. Normally, notes are not included.
-\end{classoption}
-
-\begin{classoption}{notesonly}
-  Include only the notes in the output file. Useful for printing them.
-\end{classoption}
-
-\begin{classoption}{sans}
-  Use a sans-serif font during the presentation. (Default.)
-\end{classoption}
-
-\begin{classoption}{serif}
-  Use a serif font during the presentation.
-\end{classoption}
-
-\begin{classoption}{slidescentered}
-  Place text of slides at the (vertical) center of the slides. This is
-  the default.
-\end{classoption}
-
-\begin{classoption}{slidestop}
-  Place text of slides at the (vertical) top of the slides. This
-  corresponds to a vertical ``flush.''
-\end{classoption}
-
-\begin{classoption}{smaller}
-  Makes all fonts a little smaller, which allows you to fit more onto
-  frames. Normally, this is not a good idea.
-\end{classoption}
-
-\begin{classoption}{trans}
-  Create a version that uses the \texttt{trans} overlay
-  specifications. See subsection~\ref{trans}.
-\end{classoption}
-
-
-
-
+For more information on side bars, see
+Section~\ref{section-sidebar-templates}. 
 
 
 
@@ -3514,14 +3561,14 @@ Themes are used by including an appropriate \LaTeX\ style file, using
 the standard |\usepackage| command.
 
 
-\begin{smalltheme}{{beamerthemebars}}
+\begin{smallpackage}{{beamerthemebars}}
   \example
 
   \pgfuseimage{themebars}\quad\pgfuseimage{themebars2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{theme}{{beamerthemeboxes}\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}
+\begin{package}{{beamerthemeboxes}\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}
   \example
 
   \pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}
@@ -3534,7 +3581,7 @@ the standard |\usepackage| command.
   For this theme, you can specify an arbitrary number of templates for
   the boxes in the head line and in the foot line. You can add a
   template for another box by using the following commands.
-\end{theme}
+\end{package}
 
 \begin{command}{\addheadboxtemplate%
     \marg{background color command}\marg{box template}}
@@ -3559,28 +3606,28 @@ the standard |\usepackage| command.
 \end{command}
 
 
-\begin{smalltheme}{{beamerthemeclassic}}
+\begin{smallpackage}{{beamerthemeclassic}}
   \example
 
   \pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemelined}}
+\begin{smallpackage}{{beamerthemelined}}
   \example
 
   \pgfuseimage{themelined}\quad\pgfuseimage{themelined2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemeplain}}
+\begin{smallpackage}{{beamerthemeplain}}
   \example
 
   \pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar width}|]|}}
+\begin{smallpackage}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar width}|]|}}
   \example
 
   \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
@@ -3589,60 +3636,60 @@ the standard |\usepackage| command.
 \begin{verbatim}
 \usepackage[width=3cm]{beamerthemesidebar}
 \end{verbatim}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemesidebartab}\opt{|[width=|\meta{sidebar width}|]|}}
+\begin{smallpackage}{{beamerthemesidebartab}\opt{|[width=|\meta{sidebar width}|]|}}
   \example
 
   \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemesidebardark}\opt{|[width=|\meta{sidebar width}|]|}}
+\begin{smallpackage}{{beamerthemesidebardark}\opt{|[width=|\meta{sidebar width}|]|}}
   \example
 
   \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemesidebartabdark}\opt{|[width=|\meta{sidebar width}|]|}}
+\begin{smallpackage}{{beamerthemesidebartabdark}\opt{|[width=|\meta{sidebar width}|]|}}
   \example
 
   \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemesplit}}
+\begin{smallpackage}{{beamerthemesplit}}
   \example
 
   \pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}
-\end{smalltheme}
+\end{smallpackage}
+\medskip
 
+The theme |beamerthemesplitcondensed| is no longer
+supported. Use |beamerthemesplit| with the |compress| class option
+instead. 
 
-\begin{smalltheme}{{beamerthemesplitcondensed}}
-  \example
-
-  \pgfuseimage{themesplitcondensed}\quad\pgfuseimage{themesplitcondensed2}
-\end{smalltheme}
-
-\begin{smalltheme}{{beamerthemetree}}
+\begin{smallpackage}{{beamerthemetree}}
   \example
 
   \pgfuseimage{themetree}\quad\pgfuseimage{themetree2}
-\end{smalltheme}
+\end{smallpackage}
 
 
-\begin{smalltheme}{{beamerthemetreebars}}
+\begin{smallpackage}{{beamerthemetreebars}}
   \example
 
   \pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}
-\end{smalltheme}
+\end{smallpackage}
 
 
 
 \subsection{Templates}
 \label{section-templates}
+
+\subsubsection{Introduction to Templates}
 
 If you only wish to modify a small part of how your presentation is
 rendered, you do not need to create a whole new theme. Instead, you
@@ -3711,6 +3758,47 @@ Some of the below subsections start with commands for using
 |beamertemplates|. Calling one of them will change a template in
 a predefined way. Using them, you can use, for example, your favorite
 theme together with a predefined background.
+
+Here are a few hints that might be helpful when you wish to redefine a
+template: 
+\begin{itemize}
+\item
+  Usually, you might wish to copy code from an existing template. This
+  code often takes care of some things that you may not yet have
+  thought about.
+\item
+  When copying code from another template and when inserting this code
+  in the preamble of you document (not in another style file), you may
+  have to ``switch on'' the at-character (|@|). To do so, add the
+  command |\makeatletter| before the |\usexxxtemplate| command and the
+  command |\makeatother| afterward.
+\item
+  Most templates having to do with the frame components (head lines,
+  side bars, etc.) can only be changed in the preamble. Other
+  templates can be changed during the document.
+\item
+  The height of the head line and foot line templates is calculated
+  automatically. This is done by typesetting the templates and then
+  ``having a look'' at their heights. This recalculation of the
+  heights takes place several times, but at least twice: once directly
+  after a call to |\useheadtemplate|, respectively |\usefoottemplate|,
+  and once before the |\begin{document}|. Because of this, your
+  templates must be ``typesetable'' inside the preamble. In
+  particular, any images you use must already be declared.
+\item
+  The left and right margins of the head and foot line templates are
+  the same as of the normal text. In order to start the head line and
+  foot line at the right page margin, you must insert a negative
+  horizontal skip using |\hskip-\Gm@lmargin|. You may wish to add a
+  |\hskip-\Gm@rmargin| at the end to avoid having \TeX\ complain about
+  overfull boxes.
+\item
+  Getting the boxes right inside any template is often a bit of a
+  hassle. You may wish to consult the \TeX\ book for the glorious
+  details on ``Making Boxes.'' If your headline is simple, you might
+  also try putting everything into a |pgfpicture| environment, which
+  makes the placement easier.
+\end{itemize}
 
 
 

@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemelined}[2003/10/29 ver 0.92]
+\ProvidesPackage{beamerthemelined}[2003/11/07 ver 0.93]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -60,13 +60,18 @@
                                 % Footline
 \usefoottemplate{%
   \vbox{%
-    \insertvrule{4pt}{structure!50!averagebackgroundcolor}%
-    \vskip1.5pt
     \setbox\tempbox=\hbox{\tiny\insertshortauthor: \insertshorttitle\hskip1.5cm\insertshortinstitute}%
     \ifdim\wd\tempbox>\paperwidth%
+    \insertvrule{4pt}{structure!50!averagebackgroundcolor}%
+    \vskip1.5pt
     \tinyline{\color{structure}\insertshortauthor:\hfill\insertshortinstitute}%
-    \tinyline{\color{structure}\insertshorttitle\hfill}%
+    \tinyline{\color{structure}\insertshorttitle\hfill\lower1pt\hbox{\insertnavigationsymbols}}%
     \else%
+    \setbox\tempbox=\hbox{\beamerline{\hbox to\paperwidth{\hfill\lower1pt\hbox{\insertnavigationsymbols}}}}%
+    \ht\tempbox=0pt%
+    \box\tempbox%
+    \insertvrule{4pt}{structure!50!averagebackgroundcolor}%
+    \vskip1.5pt
     \tinyline{\color{structure}\insertshortauthor: \insertshorttitle\hfill\insertshortinstitute}%
     \fi}%
   }
