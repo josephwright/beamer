@@ -281,6 +281,12 @@
 \def\beamer@usefoots{\setbeamertemplate{footline}}
 \def\usecaptiontemplate{\setbeamertemplate{caption}}
 \def\insertblockname{\insertblocktitle}
+\long\def\usesectionheadtemplate#1#2{%
+  \setbeamertemplate{section in head/foot}{#1}%
+  \setbeamertemplate{section in head/foot shaded}{#2}}
+\long\def\usesubsectionheadtemplate#1#2{%
+  \setbeamertemplate{subsection in head/foot}{#1}%
+  \setbeamertemplate{subsection in head/foot shaded}{#2}}
 \newcommand\usetheoremtemplate[2]{%
   \setbeamertemplate{theorem begin}{#1}
   \setbeamertemplate{theorem end}{#2}}
@@ -359,6 +365,12 @@
 \def\beamertemplatenavigationsymbolsframe{\setbeamertemplate{navigation symbols}[only frame symbol]}
 \def\beamertemplatenavigationsymbolsvertical{\setbeamertemplate{navigation symbols}[vertical]}
 \def\beamertemplatenavigationsymbolshorizontal{\setbeamertemplate{navigation symbols}[horizontal]}
+\def\beamertemplatedefaultsectionheads{%
+  \setbeamertemplate{section in head/foot}[default]
+  \setbeamertemplate{subsection in head/foot}[default]
+  \setbeamertemplate{section in head/foot shaded}[default]
+  \setbeamertemplate{subsection in head/foot shaded}[default]
+}
 
 
 

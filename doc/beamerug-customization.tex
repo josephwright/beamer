@@ -164,37 +164,6 @@ with ``left'' replaced by ``right'' everywhere.
 \end{command}
 
 
-\paragraph{Template Installation Commands}\ 
-
-\begin{command}{\usesectionheadtemplate\marg{current section
-      template}\marg{other section template}}
-  The templates are used to render the section names in a navigation
-  bar. 
-  \example
-\begin{verbatim}
-\usesectionheadtemplate
-  {\hfill\color{white}\tiny\textbf{\insertsectionheadnumber.\ \
-    \insertsectionhead}}
-  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionheadnumber.\ \ 
-    \insertsectionhead}}
-\end{verbatim}
-\end{command}
-  
-
-\begin{command}{\usesubsectionheadtemplate\marg{current subsection
-      template}\marg{other subsection template}}
-  See |\usesectionheadtemplate|.
-  \example
-\begin{verbatim}
-\usesubsectionheadtemplate{\color{white}%
-  \tiny\textbf{\insertsectionheadnumber.\insertsubsectionheadnumber\ \
-  \insertsubsectionhead}}%
-  {\color{white!50!beamerstructure}%
-  \tiny\textbf{\insertsectionheadnumber.\insertsubsectionheadnumber\ \ 
-  \insertsubsectionhead}}
-\end{verbatim}
-\end{command}
-
 \begin{command}{\useminislidetemplate%
     \marg{template current frame icon}%
     \marg{template current subsection frame icon}\\%
@@ -221,35 +190,6 @@ with ``left'' replaced by ``right'' everywhere.
   {.1cm}
   {.05cm}
 \end{verbatim}
-\end{command}
-
-
-\paragraph{Inserts}\
-
-
-\begin{command}{\insertsectionhead}
-  Inserts the text of the section that is to be typeset in a
-  navigation bar.
-\end{command}
-
-\begin{command}{\insertsubsectionhead}
-  Inserts the text of the subsection that is to be typeset in a
-  navigation bar. 
-\end{command}
-
-\begin{command}{\insertsectionheadnumber}
-  Inserts the number of the section that is to be typeset in a
-  navigation bar. 
-\end{command}
-
-\begin{command}{\insertsubsectionheadnumber}
-  Inserts the number of the subsection that is to be typeset in a
-  navigation bar. 
-\end{command}
-
-\begin{command}{\insertpartheadnumber}
-  Inserts the number of the part of the current section of subsection
-  that is to be typeset in a navigation bar. 
 \end{command}
 
 

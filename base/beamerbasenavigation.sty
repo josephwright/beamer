@@ -515,7 +515,7 @@
 %
 
 \def\insertnavigation#1{%
-  \vbox{%
+  \vbox{{%
     \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
     \beamer@xpos=0\relax%
     \beamer@ypos=1\relax%
@@ -524,7 +524,7 @@
       \dp\beamer@sectionbox=0.75ex%
         \hskip-1.875ex plus-1fill\dohead%
       \box\beamer@sectionbox\hfil\hskip.3cm}%
-  }}
+  }}}
 
 \def\sectionentry#1#2#3#4#5{% section number, section title, page
   \ifnum#5=\c@part%
@@ -535,15 +535,18 @@
   \hbox{\def\insertsectionhead{#2}%
     \def\insertsectionheadnumber{#1}%
     \def\insertpartheadnumber{#5}%
-    \ifnum\c@section=#1%
-    \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
-    \hyperlink{Navigation#3}{\beamer@sectionheadhilight}\else%
-    \hyperlink{Navigation#3}{\beamer@sectionheadnohilight}\fi}%
+    {%
+      \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+      \ifnum\c@section=#1%
+        \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot}}}%
+      \else%
+        \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot shaded}}}%
+      \fi}%
+  }%
   \ht\beamer@sectionbox=1.875ex%
   \dp\beamer@sectionbox=0.75ex%
   \fi\ignorespaces}
 
-\def\usesectionheadtemplate#1#2{\gdef\beamer@sectionheadhilight{#1}\gdef\beamer@sectionheadnohilight{#2}}
 \def\usesectionsidetemplate#1#2{\gdef\beamer@sectionsidehilight{#1}\gdef\beamer@sectionsidenohilight{#2}}
 
 \def\beamer@nav@subsectionstyle#1{\beamer@toc@sprocess\beamer@nav@css\beamer@nav@oss\beamer@nav@ooss#1///}
@@ -556,7 +559,7 @@
       \def\insertsectionhead{##2}%
       \def\insertsectionheadnumber{##1}%
       \def\insertpartheadnumber{##5}%
-      \hbox{%
+      \hbox{{%
         \usebeamerfont{section in sidebar}\usebeamercolor[fg]{section in sidebar}%
           \hyperlink{Navigation##3}{%
           \ifnum\c@section=##1%
@@ -567,7 +570,7 @@
             \fi%
           \else
             {\beamer@sectionsidenohilight}%
-          \fi}}%
+          \fi}}}%
       \beamer@currentsubsection=0\relax\fi}%
     \def\slideentry##1##2##3##4##5##6{%
       \ifnum##6=\c@part%
@@ -578,7 +581,7 @@
       \def\insertsubsectionheadnumber{##2}%
       \def\insertpartheadnumber{##6}%
       \beamer@tocifnothide{\ifnum\c@section=##1\ifnum\c@subsection=##2\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
-      {\hbox{%
+      {\hbox{{%
         \usebeamerfont{subsection in sidebar}\usebeamercolor[fg]{subsection in sidebar}%
           \beamer@link(##4){%
           \ifnum\c@section=##1%
@@ -589,7 +592,7 @@
             \fi%
           \else%
             {\beamer@subsectionsidenohilight}%
-          \fi}}%
+          \fi}}}%
       }%
       \fi\fi}%
     \beamer@currentsubsection=0\relax%
@@ -674,7 +677,7 @@
 
 \def\insertsectionnavigation#1{%
   \hbox to #1{%
-    \vbox{\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+    \vbox{{\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
      \vskip0.5625ex%
      \def\slideentry##1##2##3##4##5##6{}%
      \def\sectionentry##1##2##3##4##5{%
@@ -684,14 +687,18 @@
        \def\insertpartheadnumber{##5}%
        \setbox\beamer@tempbox=\hbox{%
          \hyperlink{Navigation##3}{\hbox to #1{%
-           \hskip0.3cm\ifnum\c@section=##1%
-           \beamer@sectionheadhilight\else\beamer@sectionheadnohilight\fi\hskip0.3cm}}}%
+             \hskip0.3cm%
+             \ifnum\c@section=##1%
+               {\usebeamertemplate{section in head/foot}}%
+             \else%
+               {\usebeamertemplate{section in head/foot shaded}}%
+             \fi\hskip0.3cm}}}%
        \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%        
        \box\beamer@tempbox\fi}%
-     \dohead\vskip0.5625ex}\hfil}}
+     \dohead\vskip0.5625ex}}\hfil}}
 
 \def\insertsectionnavigationhorizontal#1#2#3{%
-  \hbox to #1{%
+  \hbox to #1{{%
      \def\slideentry##1##2##3##4##5##6{}%
      #2\hskip.3cm%
      \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
@@ -700,11 +707,11 @@
      \dp\beamer@sectionbox=0.75ex%
      \hskip-1.875ex plus-1fill\dohead%
      \box\beamer@sectionbox\hfil\hskip.3cm%
-     #3}}
+     #3}}}
 
 \def\insertsubsectionnavigation#1{%
   \hbox to #1{%
-    \vbox{%
+    \vbox{{%
       \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
       \vskip0.5625ex%
       \beamer@currentsubsection=0%
@@ -717,14 +724,18 @@
         \def\insertsubsectionheadnumber{##2}%
         \def\insertpartheadnumber{##6}%
         \setbox\beamer@tempbox=\hbox{\beamer@link(##4){%
-          \hbox to #1{\hskip0.3cm\ifnum\c@subsection=##2%
-          \beamer@subsectionheadhilight\else\beamer@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
+            \hbox to #1{\hskip0.3cm%
+              \ifnum\c@subsection=##2%
+                {\usebeamertemplate{subsection in head/foot}}%
+              \else%
+                {\usebeamertemplate{subsection in head/foot shaded}}%
+              \fi\hfil\hskip0.3cm}}}%
         \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%
         \box\beamer@tempbox\fi\fi\fi}%
-      \dohead\vskip0.5625ex}\hfil}}
+      \dohead\vskip0.5625ex}\hfil}}}
 
 \def\insertsubsectionnavigationhorizontal#1#2#3{%
-  \hbox to #1{%
+  \hbox to #1{{%
     \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
     \beamer@currentsubsection=0%
     \def\sectionentry##1##2##3##4##5{}%
@@ -738,17 +749,17 @@
          \def\insertsubsectionheadnumber{##2}%
          \def\insertpartheadnumber{##6}%
          \ifnum\c@subsection=##2%
-        \beamer@link(##4){\beamer@subsectionheadhilight}\else%
-        \beamer@link(##4){\beamer@subsectionheadnohilight}\fi}%
+        \beamer@link(##4){{\usebeamertemplate{subsection in head/foot}}}\else%
+        \beamer@link(##4){{\usebeamertemplate{subsection in head/foot shaded}}}\fi}%
       \ht\beamer@sectionbox=1.875ex%
       \dp\beamer@sectionbox=0.75ex%
       \fi\fi\fi\ignorespaces}%
     #2\hskip.3cm\setbox\beamer@sectionbox=\hbox{}%
     \hskip-1.875ex plus-1fill\dohead%
     \box\beamer@sectionbox\hfil\hskip.3cm%
-    #3}}
+    #3}}}
 
-\def\usesubsectionheadtemplate#1#2{\gdef\beamer@subsectionheadhilight{#1}\gdef\beamer@subsectionheadnohilight{#2}}
+
 \def\usesubsectionsidetemplate#1#2{\gdef\beamer@subsectionsidehilight{#1}\gdef\beamer@subsectionsidenohilight{#2}}
 
 

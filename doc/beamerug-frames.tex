@@ -722,6 +722,86 @@ following templates:
 \end{element}
 
 
+\begin{element}{section in head/foot}\yes\yes\yes
+  This template is used to render a section entry if it occurs in the
+  headline or the footline. The background of the \beamer-color is
+  typically used as the background of the whole ``area'' where section
+  entries are shown in the headline. You cannot usually use this
+  template yourself since the insert |\insertsectionhead| is setup
+  correctly only when a list of sections is being typeset in the
+  headline. 
+
+  The default template just inserts the section name. The following
+  inserts are useful for this template:
+  \begin{itemize}
+    \iteminsert{\insertsectionhead}
+    inserts the name of the section that is to be typeset in a
+    navigation bar. 
+
+    \iteminsert{\insertsectionheadnumber}
+    inserts the number of the section that is to be typeset in a
+    navigation bar. 
+
+    \iteminsert{\insertpartheadnumber}
+    inserts the number of the part of the current section or subsection
+    that is to be typeset in a navigation bar. 
+  \end{itemize}
+\end{element}
+
+\begin{element}{section in head/foot shaded}\yes\no\no
+  This template is used instead of |section in head/foot| for
+  typesetting sections that are currently shaded. Such shading is
+  usually applied to all sections but the current one.
+
+  Note that this template does \emph{not} have its own color and
+  font. When this template is called, the \beamer-font and color
+  |section in head/foot| will have been setup. Then, at the start of
+  the template, you will typically change the current color or start a
+  |colormixin| environment.
+
+  \begin{templateoptions}
+    \itemoption{default}{\oarg{percentage}}
+    The default template changes the current color to
+    |fg!|\meta{percentage}|!bg|. This causes the current color to
+    become ``washed out'' or ``shaded.'' The default percentage is
+    |50|.
+
+    \example You can use the following command to make the shaded
+    entries very ``light'':
+\begin{verbatim}
+\setbeamertemplate{section in head/foot shaded}[default][20]
+\end{verbatim}
+  \end{templateoptions}
+\end{element}
+
+\begin{element}{subsection in head/foot}\yes\yes\yes
+  This template behaves exactly like |section in head/foot|, only for
+  subsections. 
+  \begin{itemize}
+    \iteminsert{\insertsubsectionhead}
+    works like |\insertsectionhead|.
+
+    \iteminsert{\insertsubsectionheadnumber}
+    works like |\insertsectionheadnumber|.
+  \end{itemize}
+\end{element}
+
+\begin{element}{section in head/foot shaded}\yes\no\no
+  This template behaves exactly like |section in head/foot shaded|,
+  only for subsections. 
+  \begin{templateoptions}
+    \itemoption{default}{\oarg{percentage}}
+    works like the corresponding option for sections.
+
+    \example
+\begin{verbatim}
+\setbeamertemplate{section in head/foot shaded}[default][20]
+\setbeamertemplate{subsection in head/foot shaded}[default][20]
+\end{verbatim}
+  \end{templateoptions}
+\end{element}
+
+
 
 \subsubsection{The Sidebars}
 
