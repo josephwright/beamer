@@ -965,9 +965,10 @@
 \renewoverlaycommand{\color}{\original{\color}}{\gobbleoptional}
 \newoverlayenvironment{uncoverenv}{}{}{\pgfsys@begininvisible}{\pgfsys@endinvisible}
 \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
+\renewoverlaycommand{\hypertarget}{\original{\hypertarget}}{\gobble}
 
 \newoverlaycommand{\emph}{\@emph}{}
-\def\@emph#1{{\slshape#1}}
+\def\@emph#1{{\itshape#1}}
 
 
 

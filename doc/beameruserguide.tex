@@ -141,7 +141,7 @@ total of five slides are produced: a title page slide, an outline
 slide, a slide showing only the first of the three items, a slide
 showing the first two of them, and a slide showing all three items.
  
-To structurize your text, you can use the commands \verb!\section! and
+To structure your text, you can use the commands \verb!\section! and
 \verb!\subsection!. These commands will not only create a table of
 contents, but will also create navigation bars.
 
@@ -890,6 +890,33 @@ item-wise. The last uncovered item is furthermore hilighted.
 }
 \end{verbatim}
 
+\Command{hypertarget}
+\Parameters{
+\item a target name
+\item some text
+}
+\Description{
+  If an overlay specification is present, the text is the specified
+  target for hyperjumps only on the specified slide. On all other
+  slides, the text is shown normally. Note that you \emph{must} add an
+  overlay specification to the \texttt{hypertarget} command whenever
+  you use it on frames that have multiple slides (otherwise
+  \texttt{pdflatex} rightfully complains that you have defined the
+  same target on different slides).}
+\Example
+\begin{verbatim}
+\frame{
+\begin{itemize}
+\item<1-> First item.
+\item<2-> Second item.
+\item<3-> Third item.
+\end{itemize}
+
+\hyperlink{jumptoend}{Jump to last slide of the frame.}
+\hypertarget<3>{jumptoend}{}
+}
+\end{verbatim}
+
 
 \subsection{Environments with Overlay Specifications}
 
@@ -1303,176 +1330,21 @@ int main (void)
 
 
 
-\section{Structurizing the Text}
+\section{Structuring a Presentation}
 
-\subsection{Lists}
+\subsection{Kinds of Global Structures of Presentations}
 
-There are three predefined environments for creating lists, namely
-\verb!enumerate!, \verb!itemize!, and \verb!description!. The first
-two of there can be nested to depth two, but not further (this would
-create totally unreadable slides).
+\subsubsection{Linear Global Structure}
 
-The \verb!\item! command is overlay-specification-aware. If an overlay
-specification is provided, the item will only be shown on the
-specified slides, see the following example. If the \verb!\item!
-command is to take an optional argument and an overlay specification,
-the overlay specification comes first as in \verb!\item<1>[Cat]!.
+%\subsubsection{Pyramidal Global Structures}
 
-\begin{verbatim}
-\frame
-{
-  There are three important points:
-  \begin{enumerate}
-  \item<1-> A first one,
-  \item<2-> a second one with a bunch of subpoints,
-    \begin{itemize}
-    \item first subpoint. (Only shown from second slide on!).
-    \item<3-> second subpoint added on third slide.
-    \item<4-> third subpoint added on fourth slide.
-    \end{itemize}
-  \item<5-> and a third one.
-  \end{enumerate}
-}
-\end{verbatim}
-
-
-\Environment{itemize}
-\Description{
-  Used to display a list of items that do not have a special
-  ordering. Inside the environment, use an \texttt{item} command for
-  each topic. The appearence of the items can be changed using
-  templates, see Section~\ref{section-templates}.}
-\Example
-\begin{verbatim}
-\begin{itemize}
-\item This is important.
-\item This is also important.
-\end{itemize}
-\end{verbatim}
-
-
-\Environment{enumerate}
-\Description{
-  Used to display an ordered list of items. Inside the environment,
-  use an \texttt{item} command for each topic. The appearence of the
-  items can be changed using templates, see
-  Section~\ref{section-templates}.}
-\Example
-\begin{verbatim}
-\begin{enumerate}
-\item This is important.
-\item This is also important.
-\end{enumerate}
-\end{verbatim}
-
-
-\Environment{description}
-\Parameters{
-\item
-  Some text, given as an optional parameter in square brackets. The
-  width of the labels will be set to the width of this text. Normally,
-  you choose the widest label in the description and copy it here.
-  }
-\Description{
-  Used to display an list that explains or defines labels. Inside the
-  environment, use an \texttt{item} with an argument in square brackets
-  for each topic. The appearence of the items can be changed using
-  templates, see Section~\ref{section-templates}.}
-\Example
-\begin{verbatim}
-\begin{description}
-\item[Lion] King of the savanna.
-\item[Tiger] King of the jungle.
-\end{description}
-
-\begin{description}[longest label]
-\item<1->[short] Some text.
-\item<2->[longest label] Some text.
-\item<3->[long label] Some text.
-\end{description}
-\end{verbatim}
+\subsubsection{Nonlinear Global Structure}
 
 
 
-\subsection{Sections and Subsections}
+\subsection{Commands and Environments for Creating Global Structure}
 
-You can structurize your text using the commands \verb!\section! and
-\verb!\subsection!. Unlike standard \LaTeX, these commands will not
-create a heading at the position where you use them. Rather, they will
-add an entry to the table of contents and also to the navigation
-bars.
-
-In order to create a line break in the table of contents (usually not
-a good idea), you can use the command \verb!\breakhere!. Note that the
-standard command \verb!\\! does not work.
-
-\Command{section}
-\Parameters{
-\item (optional, in square brackets) text to be shown in horizontal
-  navigation bars 
-\item text to be shown in the table of contents; if empty, no entry is
-  created.
-}
-\Description{
-  Starts a section. No heading is created, the section name is only
-  shown in the table of contents and in the navigation bar. If the
-  main parameter is empty, but the parameter in square brackets is
-  not, a navigation entry is created, but no entry in the table of
-  contents. This is useful for sections like a ``table of contents
-  section.''} 
-\Example\verb!\section[Summary]{Summary of Main Results}! or
-\verb!\section[Outline]{}! 
-
-
-\Command{subsection}
-\Parameters{
-\item (optional, in square brackets) text to be shown in horizontal
-  navigation bars 
-\item text to be shown in the table of contents; if empty, no entry is
-  created.
-}
-\Description{
-  Starts a subsection. No heading is created, the subsection name is only
-  shown in the table of contents and in the navigation bar. If the
-  main parameter is empty, but the parameter in square brackets is
-  not, a navigation entry is created, but no entry in the table of
-  contents.}
-\Example\verb!\subsection{Some Subsection}!
-
-
-
-\subsection{Table of Contents}
-
-The two commands for creating a table of contents are
-\verb!\tableofcontents! and \verb!\tableofcontentscurrent!. The
-difference between these commands is small: the first inserts the main
-table of contents into the current frame, the second inserts a table
-of contents in which only the current section is highlighted. An
-example usage is given in the following example:
-
-\begin{verbatim}
-\section[Outline]{}
-\frame{\tableofcontents}
-
-\section{Introduction}
-\frame{\tableofcontentscurrent}
-\subsection{Why?}
-\frame{...}
-\frame{...}
-\subsection{Where?}
-\frame{...}
-
-\section{Results}
-\frame{\tableofcontentscurrent}
-\subsection{Because}
-\frame{...}
-\subsection{Here}
-\frame{...}
-\end{verbatim}
-
-
-
-\subsection{Title Page}
+\subsubsection{Title Page}
 
 You can use the \verb!\titlepage! command to insert a title page into
 a frame. 
@@ -1551,49 +1423,88 @@ is done using the following commands:
 
 
 
-\subsection{Columns}
+\subsubsection{Table of Contents}
 
-Three environments are used to create columns on a slide. Columns are
-especially useful for placing a graphic next to a description/explanation.
-The main environment for creating columns is called
-\verb!columns!. Inside this environment, you can place several
-\verb!column! environments. Each will create a new column.
+The two commands for creating a table of contents are
+\verb!\tableofcontents! and \verb!\tableofcontentscurrent!. The
+difference between these commands is small: the first inserts the main
+table of contents into the current frame, the second inserts a table
+of contents in which only the current section is highlighted. An
+example usage is given in the following example:
 
-\Environment{columns}
-\Description{
-  A multi-column area. Inside the environment you should place only
-  \texttt{column} environments.}
-\Example
 \begin{verbatim}
-\begin{columns}
-  \begin{column}{5cm}
-    First column.
-  \end{column}
-  \begin{column}{5cm}
-    Second column.
-  \end{column}
-\end{columns}
+\section[Outline]{}
+\frame{\tableofcontents}
+
+\section{Introduction}
+\frame{\tableofcontentscurrent}
+\subsection{Why?}
+\frame{...}
+\frame{...}
+\subsection{Where?}
+\frame{...}
+
+\section{Results}
+\frame{\tableofcontentscurrent}
+\subsection{Because}
+\frame{...}
+\subsection{Here}
+\frame{...}
 \end{verbatim}
 
-\Environment{columnsonlytextwidth}
-\Description{
-  This command has the same effect as \texttt{columns}, except that the
-  columns will not occupy the whole page width, but only the text
-  width. 
-  }
 
-\Environment{column}
+
+
+
+\subsubsection{Sections and Subsections}
+
+You can structure your text using the commands \verb!\section! and
+\verb!\subsection!. Unlike standard \LaTeX, these commands will not
+create a heading at the position where you use them. Rather, they will
+add an entry to the table of contents and also to the navigation
+bars.
+
+In order to create a line break in the table of contents (usually not
+a good idea), you can use the command \verb!\breakhere!. Note that the
+standard command \verb!\\! does not work.
+
+\Command{section}
 \Parameters{
-\item The width of the column.
+\item (optional, in square brackets) text to be shown in horizontal
+  navigation bars 
+\item text to be shown in the table of contents; if empty, no entry is
+  created.
 }
 \Description{
-  Creates a single column of the specified width. The column is
-  centered vertically relative to the other columns.}
+  Starts a section. No heading is created, the section name is only
+  shown in the table of contents and in the navigation bar. If the
+  main parameter is empty, but the parameter in square brackets is
+  not, a navigation entry is created, but no entry in the table of
+  contents. This is useful for sections like a ``table of contents
+  section.''} 
+\Example\verb!\section[Summary]{Summary of Main Results}! or
+\verb!\section[Outline]{}! 
+
+
+\Command{subsection}
+\Parameters{
+\item (optional, in square brackets) text to be shown in horizontal
+  navigation bars 
+\item text to be shown in the table of contents; if empty, no entry is
+  created.
+}
+\Description{
+  Starts a subsection. No heading is created, the subsection name is only
+  shown in the table of contents and in the navigation bar. If the
+  main parameter is empty, but the parameter in square brackets is
+  not, a navigation entry is created, but no entry in the table of
+  contents.}
+\Example\verb!\subsection{Some Subsection}!
 
 
 
 
-\subsection{Bibliography}
+\subsubsection{Bibliography}
 
 You can use the bibliography environment and the \verb!\cite! commands
 of \LaTeX\ in a \beamer\ presentation. However, there are a few things
@@ -1712,7 +1623,174 @@ bevahior, see also Section~\ref{section-bib-templates}.
 
 
 
-\subsection{Predefined Environments and Commands}
+\subsection{Using the Navigation Bars}
+
+Most themes that come along with the \beamer\ class show some kind of
+navigation bar during your talk. Although these navigation bars take
+up quite a bit of space, they are often useful for two reasons:
+
+\begin{itemize}
+\item
+  They provide the audience with a visual feedback of how much of your
+  talk you have covered and what is yet to come. Without such
+  feedback, an audience will often puzzle whether something you are
+  currently introducing will be explained in more detail later on or
+  not.
+\item
+  You can click on all parts of the navigation bar. This will directly
+  ``jump'' you to the part you have clicked on. This is particularly
+  useful to skip certain parts of your talk and during a ``question
+  session,'' when you wish to jump back to a particular frame someone
+  has asked about.
+\end{itemize}
+
+When you click on one of the icons representing a frame (by default
+this is icon is a small circle), the following happens:
+\begin{itemize}
+\item
+  If you click on (the icon of) any frame other than the current frame, the
+  presentation will jump to the first slide of the frame you clicked
+  on.
+\item
+  If you click on the current frame and you are not on the last slide
+  of this frame, you will jump to the last slide of the frame.
+\item
+  If you click on the current frame and you are on the last slide, you
+  will jump to the first slide of the frame.
+\item
+  If you click on the document title, you will jump to the first slide
+  (usually the title page).
+\end{itemize}
+By the above rules you can:
+\begin{itemize}
+\item
+  Jump to the beginning of a frame from somewhere else by clicking on
+  it once.  
+\item
+  Jump to the end of a frame from somewhere else by clicking on it
+  twice.
+\item
+  Skip the rest of the current frame by clicking on it once.
+\end{itemize}
+
+I also considered tried making a jump to an already-visited slide jump
+automatically to the last slide. However, this turned out to be
+more confusing than helpful. With the current implementation a
+double-click always brings you to the end of a slide, regardless from
+where you ``come.''
+
+
+
+
+
+\subsection{The Local Structure of Frames}
+
+Just like your whole presentation, each frame should also be
+structured. A frame that is solely filled with some long text is very
+hard to follow. It is your job to structure the contents of each frame
+such that, ideally, the audience immediately seems which information
+is important, which information is just a detail, how the presented
+information is related, and so on.
+
+\LaTeX\ provides different commands for structuring text ``locally,''
+for example, via the \texttt{itemize} environment. These environments
+are also available in the beamer class, although their appearance has
+been slightly changed. Furthermore, the \beamer\ class also defines
+some new commands and environments, see below, that may help you to
+structure your text.
+
+
+\subsubsection{Itemizations, Enumerations, and Descriptions}
+
+There are three predefined environments for creating lists, namely
+\verb!enumerate!, \verb!itemize!, and \verb!description!. The first
+two of there can be nested to depth two, but not further (this would
+create totally unreadable slides).
+
+The \verb!\item! command is overlay-specification-aware. If an overlay
+specification is provided, the item will only be shown on the
+specified slides, see the following example. If the \verb!\item!
+command is to take an optional argument and an overlay specification,
+the overlay specification comes first as in \verb!\item<1>[Cat]!.
+
+\begin{verbatim}
+\frame
+{
+  There are three important points:
+  \begin{enumerate}
+  \item<1-> A first one,
+  \item<2-> a second one with a bunch of subpoints,
+    \begin{itemize}
+    \item first subpoint. (Only shown from second slide on!).
+    \item<3-> second subpoint added on third slide.
+    \item<4-> third subpoint added on fourth slide.
+    \end{itemize}
+  \item<5-> and a third one.
+  \end{enumerate}
+}
+\end{verbatim}
+
+
+\Environment{itemize}
+\Description{
+  Used to display a list of items that do not have a special
+  ordering. Inside the environment, use an \texttt{item} command for
+  each topic. The appearence of the items can be changed using
+  templates, see Section~\ref{section-templates}.}
+\Example
+\begin{verbatim}
+\begin{itemize}
+\item This is important.
+\item This is also important.
+\end{itemize}
+\end{verbatim}
+
+
+\Environment{enumerate}
+\Description{
+  Used to display an ordered list of items. Inside the environment,
+  use an \texttt{item} command for each topic. The appearence of the
+  items can be changed using templates, see
+  Section~\ref{section-templates}.}
+\Example
+\begin{verbatim}
+\begin{enumerate}
+\item This is important.
+\item This is also important.
+\end{enumerate}
+\end{verbatim}
+
+
+\Environment{description}
+\Parameters{
+\item
+  Some text, given as an optional parameter in square brackets. The
+  width of the labels will be set to the width of this text. Normally,
+  you choose the widest label in the description and copy it here.
+  }
+\Description{
+  Used to display an list that explains or defines labels. Inside the
+  environment, use an \texttt{item} with an argument in square brackets
+  for each topic. The appearence of the items can be changed using
+  templates, see Section~\ref{section-templates}.}
+\Example
+\begin{verbatim}
+\begin{description}
+\item[Lion] King of the savanna.
+\item[Tiger] King of the jungle.
+\end{description}
+
+\begin{description}[longest label]
+\item<1->[short] Some text.
+\item<2->[longest label] Some text.
+\item<3->[long label] Some text.
+\end{description}
+\end{verbatim}
+
+
+
+
+\subsubsection{Block Environments and Simple Structure Commands}
 \label{predefined}
 
 The \beamer\ class predefines a number of useful environments and
@@ -1824,12 +1902,56 @@ their usage
 
 
 
+\subsubsection{Splitting a Frame into Multiple Columns}
+
+Three environments are used to create columns on a slide. Columns are
+especially useful for placing a graphic next to a description/explanation.
+The main environment for creating columns is called
+\verb!columns!. Inside this environment, you can place several
+\verb!column! environments. Each will create a new column.
+
+\Environment{columns}
+\Description{
+  A multi-column area. Inside the environment you should place only
+  \texttt{column} environments.}
+\Example
+\begin{verbatim}
+\begin{columns}
+  \begin{column}{5cm}
+    First column.
+  \end{column}
+  \begin{column}{5cm}
+    Second column.
+  \end{column}
+\end{columns}
+\end{verbatim}
+
+\Environment{columnsonlytextwidth}
+\Description{
+  This command has the same effect as \texttt{columns}, except that the
+  columns will not occupy the whole page width, but only the text
+  width. 
+  }
+
+\Environment{column}
+\Parameters{
+\item The width of the column.
+}
+\Description{
+  Creates a single column of the specified width. The column is
+  centered vertically relative to the other columns.}
+
+
+
+
+
+
 \section{Graphics, Animations, and Special Effects}
 
 \subsection{Graphics}
 \label{section-graphics}
 
-Graphics can often convey concepts or ideas much more efficiently than
+Graphics often convey concepts or ideas much more efficiently than
 text: A picture can say more than a thousand words. (Although,
 sometimes a word can say more than a thousand pictures.) In the
 following, the advantages and disadvantages of different possible ways
@@ -1841,7 +1963,7 @@ of creating graphics for beamer presentations are discussed.
 
 One way of creating graphics for a presentation is to  use an 
 external program, like \texttt{xfig} or the Gimp. These programs
-have an option to \emph{export} a graphic files in a format that can
+have an option to \emph{export} graphic files in a format that can
 then be inserted into the presentation.
 
 The main advantage is:
@@ -1874,7 +1996,7 @@ inserting graphics, like the command \verb!\includegraphic!. However,
 it may be advisable to use the special commands from the \textsc{pgf}
 package instead for this particular purpose. The reason is that
 \verb!\includegraphic! will put a copy of the graphic into the file
-upon each invocation. In particular, if a frame includes a graphic and
+upon each invocation. If a frame includes a graphic and
 shows this graphic on ten slides, then ten copies of the possibly
 large graphic file will be inserted into the presentation file. This
 can result in huge files.
@@ -2297,8 +2419,8 @@ The choice Computer Modern sans-serif had the following reasons:
 
 \begin{itemize}
 \item
-  The Computer Modern family has a very large of symbols available
-  that go well together.
+  The Computer Modern family has a very large number of symbols
+  available that go well together.
 \item
   Sans-serif fonts are (generally considered to be) easier to read
   when used in a presentation. In low resolution rendering, serifs
