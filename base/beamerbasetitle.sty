@@ -20,7 +20,7 @@
 % The \titlepage and \partpage
 %
 %
-\def\titlepage{\usebeamertemplate*{title page}}
+\def\titlepage{\usebeamertemplate*{title page}\@thanks}
 \def\partpage{\usebeamertemplate*{part page}}
 
 \mode
@@ -42,6 +42,7 @@
 
 \newcommand\insertshorttitle[1][]{%
   \beamer@setupshort{#1}%
+  \let\thanks=\@gobble%
   \ifnum\c@page=1%
     \hyperlinkpresentationend{\beamer@insertshort{\beamer@shorttitle}}%
   \else%
@@ -72,6 +73,7 @@
 \subtitle{}
 
 \newcommand\insertshortsubtitle[1][]{%
+  \let\thanks=\@gobble%
   \beamer@setupshort{#1}%
   \ifnum\c@page=1%
     \hyperlinkpresentationend{\beamer@insertshort{\beamer@shortsubtitle}}%
@@ -88,6 +90,7 @@
         \let\\=\ 
         \let\newline=\\%
       }%
+      \let\thanks=\@gobble%
       \hypersetup{pdftitle={\inserttitle\ifx\insertsubtitle\@empty\else\ - \insertsubtitle\fi}}
       \global\let\pdfstringdefPreHook\beamer@saved@hook
     \endgroup
@@ -116,6 +119,7 @@
 
 \newcommand\insertshortdate[1][]{%
   {%
+    \let\thanks=\@gobble%
     \beamer@setupshort{#1}%
     \beamer@insertshort{\beamer@shortdate}%
   }}
@@ -140,7 +144,7 @@
   \ifbeamer@autopdfinfo%
     \def\beamer@andstripped{}%
     \beamer@stripands#2 \and\relax
-    {\let\inst=\@gobble\def\and{, }\hypersetup{pdfauthor={\beamer@andstripped}}}
+    {\let\inst=\@gobble\let\thanks=\@gobble\def\and{, }\hypersetup{pdfauthor={\beamer@andstripped}}}
   \fi%
 }
 
@@ -165,7 +169,7 @@
 
 \newcommand\insertshortauthor[1][]{%
   {%
-    \def\inst{\beamer@instother}\def\and{\beamer@andother}%
+    \def\inst{\beamer@instother}\def\and{\beamer@andother}\let\thanks=\@gobble%
     \beamer@setupshort{#1}%
     \beamer@insertshort{\beamer@shortauthor}%
   }}
@@ -230,6 +234,7 @@
 
 \newcommand\insertshortinstitute[1][]{%
   {%
+    \let\thanks=\@gobble%
     \def\inst{\beamer@instother}\def\and{\beamer@andother}%
     \beamer@setupshort{#1}%
     \beamer@insertshort{\beamer@shortinstitute}%
