@@ -25,8 +25,8 @@
                                 % Frametitles
 \useframetitletemplate{%
   \vskip4pt
-  {\leftskip-\Geom@lmargin\advance\leftskip by0.3cm%
-   \rightskip-\Geom@rmargin plus1fil\advance\rightskip by0.3cm\leavevmode
+  {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
+   \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
     \color{structure}
     \Large\insertframetitle\par}
   }
@@ -50,7 +50,7 @@
 \useheadtemplate{%
   \vbox{%
     \vskip3pt%
-    \hbox{\hskip-\Geom@lmargin\insertnavigation{\paperwidth}\hskip-\Geom@rmargin}%
+    \beamerline{\insertnavigation{\paperwidth}}%
     \vskip1.5pt%
     \insertvrule{0.4pt}{structureshaded}%
     \vskip1.5pt%

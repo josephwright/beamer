@@ -43,9 +43,11 @@
 %
 % Fix for older versions of geometry
 %
-\ifx\ifGm@compatii\@undefined\else
-\def\Geom@lmargin{\Gm@lmargin}\def\Geom@rmargin{\Gm@rmargin}
-\geometry{includeheadfoot}\fi
+\ifx\ifGm@compatii\@undefined%
+\def\Gm@lmargin{\Geom@lmargin}\def\Gm@rmargin{\Geom@rmargin}
+\else
+\geometry{includeheadfoot}
+\fi
 
 
 %
@@ -225,6 +227,11 @@
 \DeclareOption{bigger}{\def\beamer@size{{size12.clo}}}
 \DeclareOption{smaller}{\def\beamer@size{{size10.clo}}}
 
+%
+%
+% Process Options
+%
+%
 \ExecuteOptions{sans,slidescentered}
 
 \ProcessOptions
@@ -234,15 +241,51 @@
 
 %
 %
+% Declarations used by beamer
+%
+%
+
+% Public
+\newdimen\headheight    % Height of the headline
+\newdimen\footheight    % Height of the footline
+\newdimen\sidebarheight % Height of the sidebars
+
+% Private (will all have prefix beamer@ in the future)
+\newdimen\beamer@tempdim
+\newdimen\beamer@finalheight
+\newdimen\beamer@animht
+\newdimen\beamer@animdp
+\newdimen\beamer@animwd
+\newdimen\beamer@leftmargin
+\newdimen\beamer@rightmargin
+\newdimen\beamer@leftsidebar
+\newdimen\beamer@rightsidebar
+\newdimen\tempheight
+\newdimen\beamer@boxsize
+\newdimen\vboxoffset
+\newdimen\postemp
+\newdimen\originalbaselineskip
+\newdimen\@descdefault
+\newdimen\@descdefaulttemp
+\newdimen\bibindent
+\newbox\beamer@areabox
+\newbox\beamer@animcurrent
+\newbox\beamer@animshowbox
+\newbox\beamer@tempbox
+\newbox\sectionbox
+\newbox\tempbox
+\newbox\navigationbox
+\newbox\logobox
+\newbox\linebox
+
+
+%
+%
 % Hyperlink fix for problem with empty test in pdfmark.def
 %
 %
-\let\@orig@hyperlink\hyperlink
-\newbox\beamer@linkbox
-\def\hyperlink#1#2{%
-  \setbox\beamer@linkbox=\hbox{#2}%
-  \@orig@hyperlink{#1}{\box\beamer@linkbox}}
-
+\let\beamer@orighyperlink\hyperlink
+\def\hyperlink#1#2{\beamer@orighyperlink{#1}{\relax#2}}
 
 
 % Hyperlinks must be suspended until document starts - they are used
@@ -601,7 +644,7 @@
   \@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}
   {%
     \long\def\subsecname{#2}%
-    \long\def\lastsubsection{#2}%
+    \long\def\lastsubsection{#1}%
     \ifbeamer@inappendix%
     \addtocontents{toc}{\protect\appendixsubsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}}%
     \else%
@@ -917,7 +960,7 @@
 
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\pagestyle{navigation}\thispagestyle{navigation}}
 
-\def\pictureframe{%
+\def\plainframe{%
   \def\beamer@entrycode{\vspace*{-\headheight}}%
   \def\beamer@exitcode{\vspace*{-\footheight}\thispagestyle{empty}}\frame}
 
@@ -1058,64 +1101,167 @@
 
 % Insert area
 
-\newbox\areabox
-\newdimen\finalheight
 \newenvironment{overlayarea}[2]{%
-  \finalheight=#2\relax%
-  \advance\finalheight by-\baselineskip%
-  \setbox\areabox=\hbox\bgroup%
+  \beamer@finalheight=#2\relax%
+  \advance\beamer@finalheight by-\baselineskip%
+  \setbox\beamer@areabox=\hbox\bgroup%
   \begin{minipage}[t]{#1}%
   }
   {
   \end{minipage}%
   \egroup%
-  \ht\areabox=0pt%
-  \dp\areabox=\finalheight%
-  \box\areabox%
+  \ht\beamer@areabox=0pt%
+  \dp\beamer@areabox=\beamer@finalheight%
+  \box\beamer@areabox%
 }
 
-\newbox\@animcurrent
-\newbox\@animshowbox
-\newdimen\@animht
-\newdimen\@animdp
-\newdimen\@animwidth
 \def\overprint{\@ifnextchar[{\@overprint}{\@overprint[\textwidth]}}
 \def\@overprint[#1]{%
-  \@animht=0pt%
-  \@animdp=0pt%
-  \@animwidth=#1\relax%
-  \setbox\@animcurrent=\box\@animshowbox% makes animshowbox empty
-  \setbox\@animcurrent=\hbox{}%
+  \beamer@animht=0pt%
+  \beamer@animdp=0pt%
+  \beamer@animwd=#1\relax%
+  \setbox\beamer@animcurrent=\box\beamer@animshowbox% makes animshowbox empty
+  \setbox\beamer@animcurrent=\hbox{}%
   \def\@endaction{}%
 }
 \def\endoverprint{%
   \@endaction%
-  \ifvoid\@animshowbox\setbox\@animshowbox=\hbox{}\fi%
-  \ht\@animshowbox=\@animht%
-  \dp\@animshowbox=\@animdp%
-  \wd\@animshowbox=\@animwidth%
-  \box\@animshowbox%
+  \ifvoid\beamer@animshowbox\setbox\beamer@animshowbox=\hbox{}\fi%
+  \ht\beamer@animshowbox=\beamer@animht%
+  \dp\beamer@animshowbox=\beamer@animdp%
+  \wd\beamer@animshowbox=\beamer@animwd%
+  \box\beamer@animshowbox%
 }
 
 \def\onslide<#1>{%
   \@endaction%
   \alt<#1>{%
-    \ifvoid\@animshowbox\else\ClassError{beamer}{Overprints may not overlap}{}\fi%
+    \ifvoid\beamer@animshowbox\else\ClassError{beamer}{Overprints may not overlap}{}\fi%
     \def\@endaction{%
     \end{minipage}%
     \egroup%
-      \ifdim\@animht<\ht\@animcurrent\@animht=\ht\@animcurrent\fi%
-      \ifdim\@animdp<\dp\@animcurrent\@animdp=\dp\@animcurrent\fi%
-      \setbox\@animshowbox=\copy\@animcurrent}
+      \ifdim\beamer@animht<\ht\beamer@animcurrent\beamer@animht=\ht\beamer@animcurrent\fi%
+      \ifdim\beamer@animdp<\dp\beamer@animcurrent\beamer@animdp=\dp\beamer@animcurrent\fi%
+      \setbox\beamer@animshowbox=\copy\beamer@animcurrent}
   }%
   {\def\@endaction{%
     \end{minipage}%
     \egroup%
-      \ifdim\@animht<\ht\@animcurrent\@animht=\ht\@animcurrent\fi%
-      \ifdim\@animdp<\dp\@animcurrent\@animdp=\dp\@animcurrent\fi}%
+      \ifdim\beamer@animht<\ht\beamer@animcurrent\beamer@animht=\ht\beamer@animcurrent\fi%
+      \ifdim\beamer@animdp<\dp\beamer@animcurrent\beamer@animdp=\dp\beamer@animcurrent\fi}%
   }%
-  \setbox\@animcurrent=\vbox\bgroup\begin{minipage}[t]{\@animwidth}%
+  \setbox\beamer@animcurrent=\vbox\bgroup\begin{minipage}[t]{\beamer@animwd}%
 }
+
+
+%
+%
+% Setting the left and right margin
+%
+%
+\beamer@leftmargin=1cm
+\beamer@rightmargin=1cm
+
+\def\beamersetleftmargin#1{%
+  \beamer@leftmargin=#1\relax%
+  % Reset left margin now
+  \beamer@tempdim=\beamer@leftmargin%
+  \advance\beamer@tempdim by\beamer@leftsidebar%
+  \geometry{left=\the\beamer@tempdim}%
+  }
+\def\beamersetrightmargin#1{%
+  \beamer@rightmargin=#1\relax%
+  % Reset right margin now
+  \beamer@tempdim=\beamer@rightmargin%
+  \advance\beamer@tempdim by\beamer@rightsidebar%
+  \geometry{right=\the\beamer@tempdim}%
+  }
+
+
+%
+%
+% Sidebars
+%
+%
+
+\def\useleftsidebartemplate#1#2{% #1 = size, #2 = text
+  \beamer@leftsidebar=#1\relax%
+  % Reset left margin now
+  \beamer@tempdim=\beamer@leftmargin%
+  \advance\beamer@tempdim by\beamer@leftsidebar%
+  \geometry{left=\the\beamer@tempdim}%
+  \def\beamer@leftsidebartemplate{%
+    \vbox to \sidebarheight{%
+      #2\vfil%
+    }%
+  }}
+\useleftsidebartemplate{0cm}{}
+  
+\def\userightsidebartemplate#1#2{% #1 = size, #2 = text
+  \beamer@rightsidebar=#1\relax%
+  % Reset right margin now
+  \beamer@tempdim=\beamer@rightmargin%
+  \advance\beamer@tempdim by\beamer@rightsidebar%
+  \geometry{right=\the\beamer@tempdim}%
+  \def\beamer@rightsidebartemplate{%
+    \vbox to \sidebarheight{%
+      #2\vfil%
+    }%
+  }}
+\userightsidebartemplate{0cm}{}
+  
+\def\useleftsidebarbackgroundtemplate#1{
+  \def\beamer@leftsidebarbackground{%
+    \vbox to \sidebarheight{%
+      #1\vfil%
+    }}}
+\useleftsidebarbackgroundtemplate{}
+
+% Sets the background of the side bar to a monotone color
+% Usage: usesidebarcolortemplate{\color{red}}
+\def\useleftsidebarcolortemplate#1{
+  \useleftsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@leftsidebar}}
+
+% Sets the background of the side bar to a vertical shading ranging
+% between the parameter colors, given as rgb triples.
+% Example: usesidebarverticalshadingtemplate{\theshadedthemecolor}{1,1,1}
+\def\useleftsidebarverticalshadingtemplate#1#2{%
+  \pgfdeclareverticalshading{beamer@leftsidebar}{\beamer@leftsidebar}{rgb(0cm)=(#1); rgb(\paperheight)=(#2)}%
+  \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
+
+% Sets the background of the side bar to a horizontal shading ranging
+% between the parameter colors, given as rgb triples.
+% Example: \usesidebarhorizontalshadingtemplate{\theshadedthemecolor}{1,1,1}
+\def\useleftsidebarhorizontalshadingtemplate#1#2{%
+  \pgfdeclarehorizontalshading{beamer@leftsidebar}{\textheight}{rgb(0cm)=(#1); rgb(\beamer@leftsidebar)=(#2)}%
+  \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
+
+
+\def\userightsidebarbackgroundtemplate#1{
+  \def\beamer@rightsidebarbackground{%
+    \vbox to \sidebarheight{%
+      #1\vfil%
+    }}}
+\userightsidebarbackgroundtemplate{}
+
+% Sets the background of the side bar to a monotone color
+% Usage: usesidebarcolortemplate{\color{red}}
+\def\userightsidebarcolortemplate#1{
+  \userightsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@rightsidebar}}
+
+% Sets the background of the side bar to a vertical shading ranging
+% between the parameter colors, given as rgb triples.
+% Example: usesidebarverticalshadingtemplate{\theshadedthemecolor}{1,1,1}
+\def\userightsidebarverticalshadingtemplate#1#2{%
+  \pgfdeclareverticalshading{beamer@rightsidebar}{\beamer@rightsidebar}{rgb(0cm)=(#1); rgb(\paperheight)=(#2)}%
+  \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
+
+% Sets the background of the side bar to a horizontal shading ranging
+% between the parameter colors, given as rgb triples.
+% Example: \usesidebarhorizontalshadingtemplate{\theshadedthemecolor}{1,1,1}
+\def\userightsidebarhorizontalshadingtemplate#1#2{%
+  \pgfdeclarehorizontalshading{beamer@rightsidebar}{\textheight}{rgb(0cm)=(#1); rgb(\beamer@rightsidebar)=(#2)}%
+  \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
 
 
 %
@@ -1124,18 +1270,37 @@
 %
 %
 
-
-\newbox\sectionbox
-
-\newbox\tempbox
-\newdimen\tempheight
-
 \let\@mkboth\@gobbletwo
 \def\ps@navigation{
   \def\@oddhead{\setbox\tempbox=\hbox{\@backgroundtemplate\hyper@pagetransition\hyper@pageduration}%
     \tempheight=\ht\tempbox%
     \setbox\tempbox=\hbox{\lower\tempheight\hbox{\box\tempbox}}\wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
-    \vbox{\hbox{\hskip-\Geom@lmargin\box\tempbox}\hbox{\@headtemplate}\hfil}}
+    \vbox{\hbox{\hskip-\Gm@lmargin\box\tempbox}%
+      \hbox{%
+        {%
+          \setbox\tempbox=\hbox{\hskip-\Gm@lmargin%
+            {\setbox\tempbox=\hbox{\beamer@leftsidebarbackground}%
+              \wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
+              \box\tempbox}%
+            \beamer@leftsidebartemplate}%
+          \tempheight=\ht\tempbox%
+          \setbox\tempbox=\hbox{{\lower\tempheight\hbox{\box\tempbox}}}%
+          \wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
+          \box\tempbox%
+        }%        
+        {% print right sidebar first, since it should be overwritten by headline
+          \setbox\tempbox=\hbox{\hskip\textwidth\hskip\beamer@rightmargin%
+            {\setbox\tempbox=\hbox{\beamer@rightsidebarbackground}%
+              \wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
+              \box\tempbox}%
+            \beamer@rightsidebartemplate}%
+          \tempheight=\ht\tempbox%
+          \setbox\tempbox=\hbox{{\lower\tempheight\hbox{\box\tempbox}}}%
+          \wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
+          \box\tempbox%
+        }%
+        \@headtemplate\hfil%
+        }\hfil}}
   \def\@oddfoot{\@foottemplate\hypertarget{Navigation\thepage}{}\hfil}
   \let\@evenhead\@oddhead
   \let\@evenfoot\@oddfoot}
@@ -1146,7 +1311,10 @@
 %
 \def\ps@empty{%
   \let\@mkboth\@gobbletwo%
-  \def\@oddhead{\hyper@pagetransition\hyper@pageduration}
+  \def\@oddhead{\setbox\tempbox=\hbox{\@backgroundtemplate\hyper@pagetransition\hyper@pageduration}%
+    \tempheight=\ht\tempbox%
+    \setbox\tempbox=\hbox{\lower\tempheight\hbox{\box\tempbox}}\wd\tempbox=0pt\ht\tempbox=0pt\dp\tempbox=0pt%
+    \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\tempbox}\hfil}}
   \def\@oddfoot{\hypertarget{Navigation\thepage}{}\hfil}
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
@@ -1154,16 +1322,24 @@
   \def\@backgroundtemplate{#1}}
 
 \def\recalculatefoot{%
-    \setbox\tempbox=\hbox{\@foottemplate}%
-    \footheight=\ht\tempbox%
-    \advance\footheight by \dp\tempbox%
-    \advance\footheight by 4pt%
-    \geometry{foot=\the\footheight}}
+  \setbox\tempbox=\hbox{\@foottemplate}%
+  \footheight=\ht\tempbox%
+  \advance\footheight by \dp\tempbox%
+  \advance\footheight by 4pt%
+  \geometry{foot=\the\footheight}%
+  \sidebarheight=\paperheight%
+  \advance\sidebarheight by-\headheight%
+  \advance\sidebarheight by-\footheight%
+  \advance\footheight by -4pt}
 \def\recalculatehead{%
   \setbox\tempbox=\hbox{\@headtemplate}%
   \headheight=\ht\tempbox%
   \advance\headheight by\dp\tempbox%
-  \geometry{head=\the\headheight}}%
+  \geometry{head=\the\headheight}%
+  \sidebarheight=\paperheight%
+  \advance\sidebarheight by-\headheight%
+  \advance\sidebarheight by-\footheight%
+  \advance\footheight by -4pt}%
 
 \long\def\usefoottemplate#1{%
   \def\@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}%
@@ -1175,10 +1351,9 @@
   \recalculatehead} 
 
 \def\insertvrule#1#2{%
-  \hbox{\color{#2}\hskip-\Geom@lmargin\vrule width \paperwidth
-    height #1\hskip-\Geom@rmargin}}
+  \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth
+    height #1\hskip-\Gm@rmargin}}
 
-\newbox\navigationbox
 \def\insertnavigation#1{%
   \vbox{%
     \ifbeamer@inappendix%
@@ -1212,24 +1387,61 @@
   \ignorespaces}
 
 \long\def\usesectionheadtemplate#1#2{\def\@sectionheadhilight{#1}\def\@sectionheadnohilight{#2}}
+\long\def\usesectionsidetemplate#1#2{\def\@sectionsidehilight{#1}\def\@sectionsidenohilight{#2}}
 
-
-\newdimen\boxsize
-\newdimen\vboxoffset
-\newdimen\postemp
-\newdimen\headheight
-\newdimen\footheight
+\def\insertverticalnavigation#1{%
+  \vbox{%
+    \def\sectionentry##1##2##3##4{%
+      \def\insertsectionhead{##2}%
+      \hbox{\hyperlink{Navigation##3}{%
+          \ifnum\thesection=##1%
+            \ifnum\thesubsection=0\relax%
+              \@sectionsidehilight%
+            \else%
+              \@sectionsidenohilight%
+            \fi%
+          \else
+            \@sectionsidenohilight%
+          \fi}}%
+      \currentsubsection=1\relax}%
+    \def\slideentry##1##2##3##4##5{%
+      \ifnum##2=\currentsubsection%
+      \advance\currentsubsection by1%
+      \def\insertsubsectionhead{##5}%
+      \hbox{\beamer@link(##4){%
+          \ifnum\thesection=##1%
+            \ifnum\thesubsection=##2%
+              \@subsectionsidehilight%
+            \else%
+              \@subsectionsidenohilight%
+            \fi%
+          \else%
+            \@subsectionsidenohilight%
+          \fi}}%
+      \fi}%
+    \let\appendixsectionentry=\sectionentry%
+    \let\appendixslideentry=\slideentry%
+    \ifbeamer@inappendix%
+    \def\sectionentry##1##2##3##4{}%
+    \def\slideentry##1##2##3##4##5{}%
+    \else%
+    \def\appendixsectionentry##1##2##3##4{}%
+    \def\appendixslideentry##1##2##3##4##5{}%
+    \fi%
+    \currentsubsection=1\relax%
+    \dohead%
+  }}
 
 \def\slideentry#1#2#3#4#5{%
   %section number, subsection number, slide number, first/last frame page number
   \ifnum#2>0\ifnum#3>0%
   \hbox to 0pt{%
     \postemp=-#2\vboxoffset%
-    \advance\postemp by -#2\boxsize%
+    \advance\postemp by -#2\beamer@boxsize%
     \advance\postemp by -.05cm%
     \raise\postemp\hbox{%
-      \postemp=#3\boxsize%
-      \advance\postemp by -\boxsize%
+      \postemp=#3\beamer@boxsize%
+      \advance\postemp by -\beamer@boxsize%
       \advance\postemp by 1pt%
       \kern\postemp\hbox{\beamer@link(#4){%
         \ifnum\thesection=#1\ifnum\thesubsection=#2\ifnum\thesubsectionslide=#3%
@@ -1242,11 +1454,11 @@
   \ifnum#2>0\ifnum#3>0%
   \hbox to 0pt{%
     \postemp=-#2\vboxoffset%
-    \advance\postemp by -#2\boxsize%
+    \advance\postemp by -#2\beamer@boxsize%
     \advance\postemp by -.05cm%
     \raise\postemp\hbox{%
-      \postemp=#3\boxsize%
-      \advance\postemp by -\boxsize%
+      \postemp=#3\beamer@boxsize%
+      \advance\postemp by -\beamer@boxsize%
       \advance\postemp by 1pt%
       \kern\postemp\hbox{\beamer@link(#4){%
         \ifnum\thesection=#1\ifnum\thesubsection=#2\ifnum\thesubsectionslide=#3%
@@ -1257,7 +1469,7 @@
 \def\fakeslideentry#1#2#3#4#5{%
   \ifnum#2>0\ifnum#3>0%
   \hbox to 0pt{\postemp=-#2\vboxoffset%
-    \advance\postemp by -#2\boxsize%
+    \advance\postemp by -#2\beamer@boxsize%
     \advance\postemp by -.05cm%
     \raise\postemp\hbox{}}\fi\fi\ignorespaces}
   
@@ -1273,7 +1485,7 @@
 
 
 \long\def\useminislidetemplate#1#2#3#4#5{\def\@minislidehilight{#1}\def\@minisliderowhilight{#2}\def\@minislide{#3}
-\boxsize=#4\vboxoffset=#5}
+\beamer@boxsize=#4\vboxoffset=#5}
 
 \def\insertsectionnavigation#1{%
   \hbox to #1{%
@@ -1282,14 +1494,14 @@
      \def\slideentry##1##2##3##4##5{}%
      \def\appendixslideentry##1##2##3##4##5{}%
      \def\appendixsectionentry##1##2##3##4##5{%
-       \def\insertsectionhead{##4}%
+       \def\insertsectionhead{##2}%
        \setbox\tempbox=\hbox{%
          \hyperlink{Navigation##3}{\hbox to #1{%
            \hskip0.3cm\ifnum\thesection=##1%
            \@sectionheadhilight\else\@sectionheadnohilight\fi\hskip0.3cm}}}%
        \ht\tempbox=4.5pt\dp\tempbox=2pt%        
        \box\tempbox}%
-     \def\sectionentry##1##2##3##4{\def\insertsectionhead{##4}%
+     \def\sectionentry##1##2##3##4{\def\insertsectionhead{##2}%
        \setbox\tempbox=\hbox{%
          \hyperlink{Navigation##3}{\hbox to #1{%
            \hskip0.3cm\ifnum\thesection=##1%
@@ -1386,6 +1598,7 @@
     #3}}
 
 \long\def\usesubsectionheadtemplate#1#2{\def\@subsectionheadhilight{#1}\def\@subsectionheadnohilight{#2}}
+\long\def\usesubsectionsidetemplate#1#2{\def\@subsectionsidehilight{#1}\def\@subsectionsidenohilight{#2}}
 
 
 %
@@ -1472,13 +1685,16 @@
 
 \newenvironment{columns}{%
   \leavevmode%
-  \hskip-\Geom@lmargin%
+  \hskip-\beamer@leftmargin%
   \nobreak%
-  \hbox to\paperwidth\bgroup%
+  \beamer@tempdim=\textwidth%
+  \advance\beamer@tempdim by\beamer@leftmargin%
+  \advance\beamer@tempdim by\beamer@rightmargin%
+  \hbox to\beamer@tempdim\bgroup%
   \hbox{}\hfill\ignorespaces}%
   {\egroup%
     \nobreak%
-    \hskip-\Geom@rmargin}
+    \hskip-\beamer@rightmargin}
   
 \newenvironment{columnsonlytextwidth}%
   {\leavevmode\hbox to\textwidth\bgroup\ignorespaces}
@@ -1640,7 +1856,6 @@
 \onecolumn
 \clubpenalty=2000
 \widowpenalty=900
-\newdimen\originalbaselineskip
 \originalbaselineskip=\baselineskip
 
 \def\enumerate{%
@@ -1699,8 +1914,6 @@
   \def\itemiiendtemplate{#2}}
 
 
-\newdimen\@descdefault
-\newdimen\@descdefaulttemp
 \def\description{\@ifnextchar[{\@description}{\@descdefault\@descdefaulttemp\@@description}}
 \def\@description[#1]{\setbox\tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
   \@descdefault\wd\tempbox\advance\@descdefault by \labelsep\@@description}
@@ -1730,42 +1943,38 @@
 
 \raggedright
 
-\newbox\logobox
-
-\newbox\linebox
 \def\tinyline#1{%
-  \setbox\linebox=\hbox to\textwidth{\hskip-\Geom@lmargin\hskip0.3cm\tiny{#1}\hskip-\Geom@rmargin\hskip0.3cm}%
+  \setbox\linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm\tiny{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
   \ht\linebox=5.5pt%
   \dp\linebox=0pt%
   \box\linebox%
   \vskip3pt}
 \def\tinycolouredline#1#2{%
   \hbox{%
-    \setbox\linebox=\hbox to\textwidth{\hskip-\Geom@lmargin\hskip0.3cm\tiny{#2}\hskip-\Geom@rmargin\hskip0.3cm}%
+    \setbox\linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm\tiny{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
     \ht\linebox=7pt%
     \dp\linebox=0pt%
     \setbox\linebox=\vbox{\box\linebox\vskip3pt}%
-    {\color{#1}\hskip-\Geom@lmargin\vrule width\paperwidth
-      height\ht\linebox\hskip-\paperwidth\hskip\Geom@lmargin}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
     \box\linebox}%
   }
 \def\colouredline#1#2{%
   \hbox{%
-    \setbox\linebox=\hbox to\textwidth{\hskip-\Geom@lmargin\hskip0.3cm{#2}\hskip-\Geom@rmargin\hskip0.3cm}%
+    \setbox\linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
     \setbox\linebox=\vbox{\vskip2pt\box\linebox\vskip2pt}%
-    {\color{#1}\hskip-\Geom@lmargin\vrule width\paperwidth
-      height\ht\linebox\hskip-\paperwidth\hskip\Geom@lmargin}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
     \box\linebox}%
   }
 \def\beamerline#1{%
-  \hbox{\hskip-\Geom@lmargin#1\hskip-\Geom@rmargin}}
+  \hbox{\hskip-\Gm@lmargin#1\hskip-\Gm@rmargin}}
 
 
 %
 % Bibliography code
 %
 
-\newdimen\bibindent
 \setlength\bibindent{1.5em}
 \newenvironment{thebibliography}[1]
 {%\leavevmode\unskip%
@@ -1957,7 +2166,7 @@
 \useheadtemplate{%
   \vbox{%
   \vskip3pt%
-  \hbox{\hskip-\Geom@lmargin\insertnavigation{\paperwidth}\hskip-\Geom@rmargin}%
+  \beamerline{\insertnavigation{\paperwidth}}%
   \vskip1.5pt%
   \insertvrule{0.4pt}{structureshaded}}%
 }

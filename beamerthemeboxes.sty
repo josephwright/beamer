@@ -1,0 +1,177 @@
+\ProvidesPackage{beamerthemeboxes}[2003/10/22 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\RequirePackage{keyval}[1997/11/10]
+
+\def\ProcessOptionsWithKV#1{%
+  \let\@tempa\@empty
+  \@for\CurrentOption:=\@classoptionslist\do{%
+    \@ifundefined{KV@#1@\CurrentOption}%
+    {}{\edef\@tempa{\@tempa,\CurrentOption,}}}%
+  \edef\@tempa{%
+    \noexpand\setkeys{#1}{\@tempa\@ptionlist{\@currname.\@currext}}}%
+  \@tempa
+  \AtEndOfPackage{\let\@unprocessedoptions\relax}}
+
+\newdimen\beamer@boxheadheight
+\newdimen\beamer@boxfootheight
+\beamer@boxheadheight=10pt
+\beamer@boxfootheight=10pt
+\define@key{BeamerBoxes}{headheight}{\beamer@boxheadheight=#1}
+\define@key{BeamerBoxes}{footheight}{\beamer@boxfootheight=#1}
+\ProcessOptionsWithKV{BeamerBoxes}
+
+                                % Title page  
+\usetitlepagetemplate{
+  \vbox{}
+  \vfill
+  \begin{centering}
+    \Large\structure{\inserttitle}
+    \vskip1em\par
+    \normalsize\insertauthor\vskip1em\par
+    {\scriptsize\insertinstitute\par}\par\vskip1em
+    \insertdate\par\vskip1.5em
+    \inserttitlegraphic
+  \end{centering}
+  \vfill
+  }
+
+                                % Frametitles
+\useframetitletemplate{%
+  {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
+   \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
+    \color{structure}
+    \Large\insertframetitle\par}%
+  }
+
+
+                                % Sections in headline
+\usesectionheadtemplate
+{\hfill\color{white}\tiny\textbf{\insertsectionhead}}
+{\hfill\color{shaded}\tiny\textbf{\insertsectionhead}}
+
+\usesubsectionheadtemplate
+{\color{white}\tiny\textbf{\insertsubsectionhead}}
+{\color{structureshaded}\tiny\textbf{\insertsubsectionhead}}
+
+                                % Entries in table of contents
+\usetemplatetocsection
+{{\large\color{structure}\inserttocsection}}
+{{\large\color{structureshaded}\inserttocsection}}
+
+                                % Entries in table of contents
+\usetemplatetocsubsection
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
+
+
+                                % Head
+\newcount\beamer@headboxes
+\newdimen\beamer@headboxsizes
+\newcount\beamer@currentbox
+\def\addheadboxtemplate#1#2{
+  \expandafter\def\csname beamer@headbox\the\beamer@headboxes\endcsname{#2}
+  \expandafter\def\csname beamer@headbg\the\beamer@headboxes\endcsname{#1}
+  \advance\beamer@headboxes by 1\relax
+  \beamer@headboxsizes=\paperwidth
+  \divide\beamer@headboxsizes by\beamer@headboxes
+}
+
+\useheadtemplate{%
+  \vbox{%
+    \hbox{%
+      \hskip-\Gm@lmargin%
+    \hbox{%
+    \beamer@currentbox=0\relax%
+    \loop%
+    \ifnum\beamer@currentbox<\beamer@headboxes%
+    \hbox to\beamer@headboxsizes{%
+     % Background
+      {%
+        \csname beamer@headbg\the\beamer@currentbox\endcsname%
+        \vrule width\beamer@headboxsizes height\beamer@boxheadheight%
+        \hskip-\beamer@headboxsizes%
+      }%
+      % Box
+      {%
+        \setbox\beamer@tempbox=\hbox to\beamer@headboxsizes{%
+          \csname beamer@headbox\the\beamer@currentbox\endcsname\hfil}%
+        \dp\beamer@tempbox=0pt%
+        \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
+        \ht\beamer@tempbox=\beamer@boxheadheight%
+        \dp\beamer@tempbox=0pt%
+        \box\beamer@tempbox%
+      }}%
+    \advance\beamer@currentbox by 1%
+    \repeat%
+    }%
+    \hskip-\Gm@rmargin%
+    }%
+}}
+
+                                % Foot
+\newcount\beamer@footboxes
+\newdimen\beamer@footboxsizes
+\def\addfootboxtemplate#1#2{
+  \expandafter\def\csname beamer@footbox\the\beamer@footboxes\endcsname{#2}
+  \expandafter\def\csname beamer@footbg\the\beamer@footboxes\endcsname{#1}
+  \advance\beamer@footboxes by 1\relax
+  \beamer@footboxsizes=\paperwidth
+  \divide\beamer@footboxsizes by\beamer@footboxes
+}
+
+\usefoottemplate{%
+  \vbox{%
+    \hbox{%
+    \hskip-\Gm@lmargin%
+    \hbox{%
+    \beamer@currentbox=0\relax%
+    \loop%
+    \ifnum\beamer@currentbox<\beamer@footboxes%
+    \hbox to\beamer@footboxsizes{%
+       % Background
+      {%
+        \csname beamer@footbg\the\beamer@currentbox\endcsname%
+        \vrule width\beamer@footboxsizes height\beamer@boxfootheight%
+        \hskip-\beamer@footboxsizes%
+      }%
+      % Box
+      {%
+        \setbox\beamer@tempbox=\hbox to\beamer@footboxsizes{%
+          \csname beamer@footbox\the\beamer@currentbox\endcsname\hfil}%
+        \dp\beamer@tempbox=0pt%
+        \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
+        \ht\beamer@tempbox=\beamer@boxfootheight%
+        \dp\beamer@tempbox=0pt%
+        \box\beamer@tempbox%
+      }%
+    }%
+    \advance\beamer@currentbox by 1%
+    \repeat%
+    }%
+    \hskip-\Gm@rmargin%
+    }%
+}}
+
+                                % Background
+\usebackgroundtemplate{}
+
+                                % Blocks
+\useblocktemplate{\medskip{\color{blockstructure}\large\insertblockname}\par}{\medskip}
+\usealertblocktemplate{\medskip{\alert{\large\insertblockname}}\par}{\medskip}
+\useexampleblocktemplate{\medskip\begingroup\color{darkgreen}{\large\insertblockname}\par}{\endgroup\medskip}
+ 
+
+% For example:
+%\addheadboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertshorttitle}\hskip0.3cm}
+%\addheadboxtemplate{\color{structure}}{\hskip0.3cm\tiny\color{white}\textbf{\insertshortauthor}}
+
+%\addfootboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertshortinstitute}\hskip0.3cm}
+%\addfootboxtemplate{\color{structure}}{}
+%\addfootboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertframenumber}\hskip0.3cm}

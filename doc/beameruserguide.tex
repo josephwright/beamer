@@ -13,14 +13,26 @@
 
 \pgfdeclareimage{themebars}{6.66666cm}{5cm}{themebars}
 \pgfdeclareimage{themebars2}{6.66666cm}{5cm}{themebars2}
+\pgfdeclareimage{themeboxes}{6.66666cm}{5cm}{themeboxes}
+\pgfdeclareimage{themeboxes2}{6.66666cm}{5cm}{themeboxes2}
 \pgfdeclareimage{themeclassic}{6.66666cm}{5cm}{themeclassic}
 \pgfdeclareimage{themeclassic2}{6.66666cm}{5cm}{themeclassic2}
 \pgfdeclareimage{themelined}{6.66666cm}{5cm}{themelined}
 \pgfdeclareimage{themelined2}{6.66666cm}{5cm}{themelined2}
 \pgfdeclareimage{themeplain}{6.66666cm}{5cm}{themeplain}
 \pgfdeclareimage{themeplain2}{6.66666cm}{5cm}{themeplain2}
+\pgfdeclareimage{themesidebar}{6.66666cm}{5cm}{themesidebar}
+\pgfdeclareimage{themesidebar2}{6.66666cm}{5cm}{themesidebar2}
+\pgfdeclareimage{themesidebardark}{6.66666cm}{5cm}{themesidebardark}
+\pgfdeclareimage{themesidebardark2}{6.66666cm}{5cm}{themesidebardark2}
+\pgfdeclareimage{themesidebartab}{6.66666cm}{5cm}{themesidebartab}
+\pgfdeclareimage{themesidebartab2}{6.66666cm}{5cm}{themesidebartab2}
+\pgfdeclareimage{themesidebardarktab}{6.66666cm}{5cm}{themesidebardarktab}
+\pgfdeclareimage{themesidebardarktab2}{6.66666cm}{5cm}{themesidebardarktab2}
 \pgfdeclareimage{themesplit}{6.66666cm}{5cm}{themesplit}
 \pgfdeclareimage{themesplit2}{6.66666cm}{5cm}{themesplit2}
+\pgfdeclareimage{themesplitcondensed}{6.66666cm}{5cm}{themesplitcondensed}
+\pgfdeclareimage{themesplitcondensed2}{6.66666cm}{5cm}{themesplitcondensed2}
 \pgfdeclareimage{themetree}{6.66666cm}{5cm}{themetree}
 \pgfdeclareimage{themetree2}{6.66666cm}{5cm}{themetree2}
 \pgfdeclareimage{themetreebars}{6.66666cm}{5cm}{themetreebars}
@@ -661,7 +673,8 @@ A presentation consists of a series of frames. Each frame consists of
 a series of slides. You create a frame using the command
 \verb!\frame!. This command takes one parameter, namely the
 contents of the frame. All of this text that is not tagged by overlay
-specifications is shown on all slides of the frame. 
+specifications (see Section~\ref{subsection-overlay}) is shown on all
+slides of the frame.  
 
 \Command{frame}
 \Parameters{
@@ -681,7 +694,7 @@ specifications is shown on all slides of the frame.
 }
 \end{verbatim}
 
-\Command{pictureframe}
+\Command{plainframe}
 \Parameters{
 \item
   optional parameter in square brackets: a specification of slides to
@@ -690,34 +703,79 @@ specifications is shown on all slides of the frame.
   the frame's contents.
 }
 \Description{
-  This command creates a frame that can be used to show a big picture
-  that completely fills the frame. All head and foot lines will be
-  suppressed. 
+  This command creates a frame in which the head lines, foot lines,
+  and side bars are suppressed. This is useful for creating single
+  frames with different head and foot lines or for creating frames
+  showing big pictures that completely fill the frame.
   }
-\Example
+\Example A frame with a picture completely filling the frame:  
 \begin{verbatim}
 \pgfdeclareimage{bigimage}{}{9.6cm}{bigimagefilename}
-\pictureframe{\hfill\pgfuseimage{bigimage}\hfill}
+\plainframe{\hfill\pgfuseimage{bigimage}\hfill}
+\end{verbatim}
+
+\Example A title page, in which the head and foot lines are replaced
+by two graphics.
+\begin{verbatim}
+\usetitlepagetemplate{
+  \beamerline{\pgfuseimage{toptitle}}
+  \vskip0pt plus 1filll
+
+  \begin{centering}
+    \Large{\textbf{\inserttitle}}
+    
+    \insertdate
+  \end{centering}
+
+  \vskip0pt plus 1filll
+  \beamerline{\pgfuseimage{bottomtitle}}
+}
+
+\begin{document}
+\plainframe{\titlepage}
 \end{verbatim}
 
 
+\subsection{Components of a Frame}
 
+Each frame consists of up to six components:
+\begin{enumerate}\itemsep=0pt\parskip=0pt
+\item a head line,
+\item a foot line,
+\item a left side bar,
+\item a right side bar,
+\item a frame title, and
+\item some frame contents.
+\end{enumerate}
 
-\subsection{Frame Titles}
+A frame need not have all of these components. Usually, the first four
+components are automatically setup by the theme you are
+using. To change them, you must install an appropriate template, see
+Section~\ref{section-head-templates} for the head and foot lines and
+Section~\ref{section-sidebar-templates} for the side bars.
 
-Each frame typically has an individual frame title, which is shown
-prominently at the top of the frame. This title is created using
-the command \verb!\frametitle!.
+The frame title is shown prominently at the top of the frame. To
+specify the title, use the command \verb!\frametitle!. You should end
+the frame title with a period, if the title is a proper
+sentence. Otherwise, there should not be a period.
 
 \Command{frametitle}
 \Parameters{
 \item a title for the frame.
 }
-\Example \verb!\frametitle{A Frame Title is Important.}!
+\Example
+\begin{verbatim}
+\frame{
+  \frametitle{A Frame Title is Important.}
+
+  Frame contents.
+}
+\end{verbatim}
 
 
 
 \subsection{Commands with Overlay Specifications}
+\label{subsection-overlay}
 
 The number of slides in a frame is calculated automatically from the
 overlay specifications inside the frame, but see below for how to
@@ -2565,15 +2623,31 @@ reasonably sized labels during the presentation.
 
 You should refrain from changing the ``paper size.'' However, you
 \emph{can} change the size of the left and right margins, which
-default to 1cm. To change them, use the command \verb!\geometry!. For
-example, to set the left margin to 0.5cm and the right margin to
-0.25cm, use
-\begin{verbatim}
-\geometry{left=0.5cm,right=0.25cm}
-\end{verbatim}
-somewhere in the preamble. You can also specify the margins
-differently, see the documentation of the \verb!geometry! package for
-details on the different ways. 
+default to 1cm. To change them, you should use the following two
+commands:
+
+\Command{beamersetleftmargin}
+\Parameters{
+\item a new left margin, \emph{excluding} the left side bar, if present.
+  }
+\Description{
+  Sets a new left margin. This excludes the left side bar. Thus, it is
+the distance between the right edge of the left side bar and the left
+edge of the text. This command can only be used in the preamble
+(before the \texttt{document} environment is used).
+  }
+\Example \verb!\beamersetleftmargin{1cm}!
+
+\Command{beamersetrightmargin}
+\Parameters{
+\item a new right margin, excluding the right side bar, if present.
+  }
+\Description{
+  Like \texttt{beamersetleftmargin}, only for the right margin.
+  }
+\Example \verb!\beamersetleftmargin{1cm}!
+
+For more information on side bars, see Section~\ref{section-sidebar-templates}.
 
 
 
@@ -2698,13 +2772,70 @@ together with the \beamer\ class. Feel free to add further themes.
 Themes are used by including an appropriate \LaTeX\ style file, using
 the standard \verb!\usepackage! command.
 
-\vbox{
+
+\subsection{Bars Theme}
+
 \Theme{beamerthemebars}
+\Parameters{
+\item Package option \texttt{headheight}, which specifies the height
+of the head line. Specified in a key~=~value fashion.
+\item Package option \texttt{footheight}, which specifies the height
+of the foot line. Specified in a key~=~value fashion.
+}
+\Example
+\begin{verbatim}
+\usepackage[headheight=2cm,footheight=1cm]{beamerthemeboxes}
+\end{verbatim}
 
 \Example
 
 \hbox{\pgfuseimage{themebars}\quad\pgfuseimage{themebars2}}
+
+
+\subsection{Boxes Theme}
+
+\vbox{
+\Theme{beamerthemeboxes}
+
+\Example
+
+\hbox{\pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}}
 }
+
+For this theme, you can specify an arbitrary number of templates for
+the boxes in the head line and in the foot line. You can add a
+template for another box by using the following commands.
+
+\Command{addheadboxtemplate}
+\Parameters{
+\item a color command for the background of the box
+\item a template for a new box
+  }
+\Description{
+  Each time this command is invoked, a new box is added to the head
+  line, with the first added box being shown on the left. All boxes
+  will have the same size.
+}
+\Example
+\begin{verbatim}
+\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad Left Box}
+\addheadboxtemplate{\color{black}}{\color{white}\tiny\quad Right Box}
+\end{verbatim}
+
+\Command{addfootboxtemplate}
+\Parameters{
+\item a color command for the background of the box
+\item a template for a new box
+  }
+\Example
+\begin{verbatim}
+\addheadfoottemplate{\color{black}}{\color{white}\tiny\quad Big Box}
+\end{verbatim}
+
+
+
+
+\subsubsection{Classic Theme}
 
 \vbox{
 \Theme{beamerthemeclassic}
@@ -2714,6 +2845,9 @@ the standard \verb!\usepackage! command.
 \hbox{\pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}}
 }
 
+
+\subsubsection{Lined Theme}
+
 \vbox{
 \Theme{beamerthemelined}
 
@@ -2721,6 +2855,11 @@ the standard \verb!\usepackage! command.
 
 \hbox{\pgfuseimage{themelined}\quad\pgfuseimage{themelined2}}
 }
+
+
+
+
+\subsubsection{Plain Theme}
 
 \vbox{
 \Theme{beamerthemeplain}
@@ -2730,6 +2869,54 @@ the standard \verb!\usepackage! command.
 \hbox{\pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}}
 }
 
+
+\subsubsection{Side Bar Themes}
+
+\Theme{beamerthemesidebar}
+\Parameters{
+\item Package option \texttt{width}, which specifies the width of 
+of the side bar. Specified in a key~=~value fashion.
+}
+\Example
+\begin{verbatim}
+\usepackage[width=3cm]{beamerthemesidebar}
+\end{verbatim}
+
+\Example
+
+\hbox{\pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}}
+
+
+The following themes take the same parameter as the normal side bar
+theme. They only differ in the coloring of the side bar.
+
+\vbox{
+\Theme{beamerthemesidebartab}
+
+\Example
+
+\hbox{\pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}}
+}
+
+\vbox{
+\Theme{beamerthemesidebardark}
+
+\Example
+
+\hbox{\pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}}
+}
+
+\vbox{
+\Theme{beamerthemesidebartabdark}
+
+\Example
+
+\hbox{\pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}}
+}
+
+
+\subsubsection{Split Theme}
+
 \vbox{
 \Theme{beamerthemesplit}
 
@@ -2738,8 +2925,22 @@ the standard \verb!\usepackage! command.
 \hbox{\pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}}
 }
 
+
+\subsubsection{Condensed Split Theme}
+
+\vbox{
+\Theme{beamerthemesplitcondensed}
+
+\Example
+
+\hbox{\pgfuseimage{themesplitcondensed}\quad\pgfuseimage{themesplitcondensed2}}
+}
 \vbox{
 \Theme{beamerthemetree}
+
+
+
+\subsubsection{Tree Themes}
 
 \Example
 
@@ -2755,7 +2956,7 @@ the standard \verb!\usepackage! command.
 }
 
 
-\subsection{Predefined Templates}
+\subsection{Templates}
 \label{section-templates}
 
 If you only wish to modify a small part of how your presentation is
@@ -2814,113 +3015,18 @@ frame title template to typeset the frame title and it will replace
 every occurrence of \verb!\insertframetitle! by the current frame
 title.
 
-In the next subsection predefined commands are listed that change one
-or more templates. In the two subsequent subsection, complete listings
-of all templates are given and the different \verb!\insertxxxx!
-commands are explained.
+In the following subsections all commands for changing templates are
+listed, like the above-mentioned command
+\verb!\useframetitletemplate!. Inside these commands, you should use
+the \verb!\insertxxxx! commands listed in 
+the next subsection. 
 
-
-
-
-\subsubsection{Backgrounds}
-
-Just as there exist predefined themes, there exist predefined
-templates. They are defined in the package \verb!beamertemplates!.
-Calling one of the following commands will change a template in a
-predefined way. Using them, you can use, for example, your favorite
+Some of the below subsections start with commands for using
+\emph{predefined} templates. These commands are defined in the package
+\verb!beamertemplates!. Calling one of them will change a template in
+a predefined way. Using them, you can use, for example, your favorite
 theme together with a predefined background.
 
-
-\Command{beamertemplateshadingbackground}
-\Parameters{
-\item A comma-separated rgb triple specifying the color at the page
-  bottom.
-\item A comma-separated rgb triple specifying the color at the top of
-  the page.  
-  }
-\Description{Installs a vertically shaded background such that the
-  specified bottom color changes smoothly to the specified top
-  color. \textbf{Use with care: Background shadings are often
-    distracting!} However, a very light shading with warm colors can
-  make a presentation more lively.}
-\Example
-\begin{verbatim}
-\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
-% Bottom is light red, top is light blue
-\end{verbatim}
-
-
-\Command{beamertemplategridbackground}
-\Description{Installs a light grid as background.}
-
-
-
-\subsubsection{Head and Foot Lines}
-
-\Command{beamertemplateheadempty}
-\Description{Makes the head line empty.}
-
-\Command{beamertemplatefootempty}
-\Description{Makes the foot line empty.}
-
-\Command{beamertemplatefootpagenumber}
-\Description{Shows only the page number in the foot line.}
-
-
-
-\subsubsection{Itemizing}
-
-\Command{beamertemplatedotitem}
-\Description{Changes the symbols shown in an \texttt{itemize}
-  environment to dots.}
-
-\Command{beamertemplateballitem}
-\Description{Changes the symbols shown in an \texttt{itemize}
-  environment to small plastic balls.}
-
-
-
-\subsubsection{Bibliography}
-
-\label{section-bib-templates}
-
-\Command{beamertemplatetextbibitems}
-\Description{Shows the citation text in front of references in a
-  bibliography instead of a small symbol.} 
-
-\Command{beamertemplatearrowbibitems}
-\Description{Changes the symbol before references in a bibliography to
-  a small arrow.}
-
-\Command{beamertemplatebookbibitems}
-\Description{Changes the symbol before references in a bibliography to
-  a small book icon.}
-
-\Command{beamertemplatearticlebibitems}
-\Description{Changes the symbol before references in a bibliography to
-  a small article icon. (Default)}
-
-
-
-\subsubsection{Navigation Bars}
-
-\Command{beamertemplateboxminiframe}
-\Description{Changes the symbols in a navigation bar used to represent
-  a frame to a small box.}
-
-\Command{beamertemplateticksminiframe}
-\Description{Changes the symbols in a navigation bar used to represent
-  a frame to a small vertical bar of varying length.}
-
-
-
-
-
-\subsection{Changing Templates}
-
-In the following, all commands that change a template are
-listed. Inside these commands, you should use the 
-\verb!\insertxxxx! commands listed in the next subsection.
 
 
 \subsubsection{Title Page}
@@ -2946,8 +3052,37 @@ listed. Inside these commands, you should use the
 }
 \end{verbatim}
 
+If you wish to suppress the head and foot line in the title page, use
+\verb!\plainframe{\titlepage}!.
+
+
 
 \subsubsection{Background}
+
+\paragraph{Predefined Templates}\ 
+
+\Command{beamertemplateshadingbackground}
+\Parameters{
+\item A comma-separated rgb triple specifying the color at the page
+  bottom.
+\item A comma-separated rgb triple specifying the color at the top of
+  the page.  
+  }
+\Description{Installs a vertically shaded background such that the
+  specified bottom color changes smoothly to the specified top
+  color. \textbf{Use with care: Background shadings are often
+    distracting!} However, a very light shading with warm colors can
+  make a presentation more lively.}
+\Example
+\begin{verbatim}
+\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
+% Bottom is light red, top is light blue
+\end{verbatim}
+
+\Command{beamertemplategridbackground}
+\Description{Installs a light grid as background.}
+
+\paragraph{Template Changing Commands}\ 
 
 \Command{usebackgroundtemplate}
 \Parameters{
@@ -2989,6 +3124,74 @@ listed. Inside these commands, you should use the
 \end{verbatim}
 
 
+\subsubsection{Bibliography}
+
+\label{section-bib-templates}
+
+\paragraph{Predefined Templates}\
+
+\Command{beamertemplatetextbibitems}
+\Description{Shows the citation text in front of references in a
+  bibliography instead of a small symbol.} 
+
+\Command{beamertemplatearrowbibitems}
+\Description{Changes the symbol before references in a bibliography to
+  a small arrow.}
+
+\Command{beamertemplatebookbibitems}
+\Description{Changes the symbol before references in a bibliography to
+  a small book icon.}
+
+\Command{beamertemplatearticlebibitems}
+\Description{Changes the symbol before references in a bibliography to
+  a small article icon. (Default)}
+
+
+
+\paragraph{Template Changes Commands}\ 
+
+\Command{usebibitemtemplate}
+\Parameters{
+\item a template for the citation text before the entry. (The
+  ``label'' of the item.)
+}
+\Description{
+  Use \texttt{insertbiblabel} to insert the label text.
+  }
+\Example \verb!\usebibitemtemplate{\color{structure}\insertbiblabel}!
+
+
+\Command{usebibliographyblocktemplate}
+\Parameters{
+\item a template to be inserted before the first block of the entry
+  (the first block is all text before the first occurrence of a
+  \texttt{newblock} command).
+\item a template to be inserted before the second block (the text
+  between the first and second occurrence of \texttt{newblock})
+\item a template to be inserted before the third block
+\item a template to be inserted before all other blocks
+}
+\Description{
+  The templates are inserted \emph{before} the blocks and you do not
+  have access to the blocks themselves via insert commands. In the
+  following example, the first \texttt{par} commands ensure that the
+  author, the title, and the journal are put on different lines. The
+  color commands cause the author (first block) to be typeset using
+  the theme color, the second block (title of the paper) to be typeset
+  in black, and all other lines to be typeset in a washed-out version
+  of the theme color. 
+  }
+\Example
+\begin{verbatim}
+  \usebibliographyblocktemplate
+  {\color{structure}}
+  {\par\color{black}}
+  {\par\color{structuremedium}}
+  {\par\color{structuremedium}}
+\end{verbatim}
+
+
+
 
 \subsubsection{Frame Titles}
 
@@ -3006,7 +3209,28 @@ listed. Inside these commands, you should use the
 }
 \end{verbatim}
 
-\subsubsection{Headlines, Footlines, and Footnotes}
+
+
+
+
+
+\subsubsection{Head Lines and Foot Lines}
+
+\label{section-head-templates}
+
+\paragraph{Predefined Templates}\ 
+
+\Command{beamertemplateheadempty}
+\Description{Makes the head line empty.}
+
+\Command{beamertemplatefootempty}
+\Description{Makes the foot line empty.}
+
+\Command{beamertemplatefootpagenumber}
+\Description{Shows only the page number in the foot line.}
+
+
+\paragraph{Template Changing Commands}\ 
 
 \Command{usefoottemplate}
 \Parameters{
@@ -3042,23 +3266,155 @@ or
 }
 \end{verbatim}
 
-\Command{usefootnotetemplate}
+
+
+
+
+\subsubsection{Side Bars}
+
+\label{section-sidebar-templates}
+
+Side bars are vertical areas that stretch from the lower end of the
+head line to the top of the foot line. There can be a side bar at the
+left and one at the right (or even both). Side bars can show a table
+of contents, but they could also be added for purely aesthetic
+reasons.
+
+When you install a side bar template, you must explicitly specify the
+horizontal size of the side bar. The vertical size is determined
+automatically. Each side bar can have its own background, which can be
+setup using special side background templates.
+
+Adding a sidebar of a certain size, say 1cm, will make the main text
+1cm narrower. The distance between the inner side of a side
+bar and the outer side of the text, as specified by
+the command \verb!\beamersetleftmargin! and its counterpart for the
+right margin, is not changed when a side bar is installed.
+
+Internally, the sidebars are typeset by showing them as part of the
+headline. The \beamer\ class keeps track of six dimensions, three 
+for each side: the variables \verb!\beamer@leftsidebar! and
+\verb!\beamer@rightsidebar! store the (horizontal) sizes of the side
+bars, the variables \verb!\beamer@leftmargin! and
+\verb!\beamer@rightmargin! store the distance between sidebar and
+text, and the macros \verb!\Gm@lmargin! and  \verb!\Gm@rmargin! store
+the distance from the edge of the paper to the edge of the text. Thus
+the sum \verb!\beamer@leftsidebar! and \verb!\beamer@leftmargin! is
+exactly  \verb!\Gm@lmargin!. Thus, if you wish to put some text right
+next to the left side bar, you might write
+\verb!\hskip-\beamer@leftmargin! to get there.
+
+In the following, only the commands for the left side bars are
+listed. Each of these commands also exists for the right side bar,
+with ``left'' replaced by ``right'' everywhere.
+
+
+\Command{useleftsidebartemplate}
 \Parameters{
-\item A template for formating a footnote.
+\item the horizontal size of the left side bar.
+\item a template for formating the left side bar.
   }
+\Description{
+  When the side bar is typeset, the template is invoked inside a
+  \texttt{vbox} of the height of the side bar. Thus, the below example
+  will produce a side bar of half a centimeter width, in which the word
+  ``top'' is printed just below the head line and ``bottom'' is printed
+  just above the foot line.
+}
 \Example
 \begin{verbatim}
-\usefootnotetemplate{
-  \parindent 1em
-  \noindent
-  \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
+\useleftsidebartemplate{1cm}{
+  top
+  \vfill
+  bottom
+}
+\end{verbatim}
+
+
+\Command{useleftsidebarbackgroundtemplate}
+\Parameters{
+\item a template for the background of  the left side bar.
+  }
+\Description{
+  The template is shown behind whatever is shown in the left side
+  bar. 
+}
+\Example
+\begin{verbatim}
+\useleftsidebarbackgroundtemplate
+  {\color{red}\vrule height\paperheight width\beamer@leftsidebar}
+\end{verbatim}
+
+
+\Command{useleftsidebarcolortemplate}
+\Parameters{
+\item A color command.
+  }
+\Description{
+  Uses the given color as background for the side bar.
+}
+\Example
+\begin{verbatim}
+\useleftsidebarcolortemplate{\color{red}}
+\useleftsidebarcolortemplate{\color[rgb]{1,0,0.5}}
+\end{verbatim}
+
+
+\Command{useleftsidebarverticalshadingtemplate}
+\Parameters{
+\item A comma-separated rgb triple specifying the color at the bottom
+  of the side bar.
+\item A comma-separated rgb triple specifying the color at the top
+  of the side bar.
+  }
+\Description{
+  Installs a smooth vertical transition between the given colors as
+  background for the side bar.
+}
+\Example
+\begin{verbatim}
+\useleftsidebarverticalshadingtemplate{1,1,1}{1,0,0} % white to red
+\end{verbatim}
+
+
+\Command{useleftsidebarhorizontalshadingtemplate}
+\Parameters{
+\item A comma-separated rgb triple specifying the color at the left
+  end of of the side bar.
+\item A comma-separated rgb triple specifying the color at the right
+  end of the side bar.
+  }
+\Description{
+  Installs a smooth horizontal transition between the given colors as
+  background for the side bar.
+}
+\Example
+\begin{verbatim}
+\useleftsidebarhorizontalshadingtemplate{1,1,1}{1,0,0} % white to red
 \end{verbatim}
 
 
 
 
 
+
+
+
 \subsubsection{Navigation Bars}
+
+
+\paragraph{Predefined Templates}\ 
+
+\Command{beamertemplateboxminiframe}
+\Description{Changes the symbols in a navigation bar used to represent
+  a frame to a small box.}
+
+\Command{beamertemplateticksminiframe}
+\Description{Changes the symbols in a navigation bar used to represent
+  a frame to a small vertical bar of varying length.}
+
+
+\paragraph{Template Changes Commands}\ 
 
 \Command{usesectionheadtemplate}
 \Parameters{
@@ -3113,6 +3469,109 @@ or
   {.05cm}
 \end{verbatim}
 
+
+
+
+\subsubsection{Footnotes}
+
+\Command{usefootnotetemplate}
+\Parameters{
+\item A template for formating a footnote.
+  }
+\Example
+\begin{verbatim}
+\usefootnotetemplate{
+  \parindent 1em
+  \noindent
+  \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
+\end{verbatim}
+
+
+
+
+
+\subsubsection{Lists (Itemizations, Enumerations, Descriptions)}
+
+\paragraph{Predefined Templates}\
+
+\Command{beamertemplatedotitem}
+\Description{Changes the symbols shown in an \texttt{itemize}
+  environment to dots.}
+
+\Command{beamertemplateballitem}
+\Description{Changes the symbols shown in an \texttt{itemize}
+  environment to small plastic balls.}
+
+
+\paragraph{Template Changes Commands}\
+
+\Command{useenumerateitemtemplate}
+\Parameters{
+\item a template for the default item in the top level of an
+  enumeration. 
+  }
+\Example \verb!\useenumerateitemtemplate{\insertenumlabel}!
+
+\Command{useitemizeitemtemplate}
+\Parameters{
+\item a template for the default item in the top level of an
+  itemize list.
+  }
+\Example \verb!\useitemizeitemtemplate{\pgfuseimage{mybullet}}!
+
+\Command{usesubitemizeitemtemplate}
+\Parameters{
+\item a template for the default item in the second level of an
+  itemize list.
+  }
+\Example \verb!\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}!
+
+\Command{useitemizetemplate}
+\Parameters{
+\item a template for the beginning a top-level itemize list.
+\item a template for the end of a top-level itemize list.
+  }
+\Example \verb!\useitemizetemplate{}{}!
+
+\Command{usesubitemizetemplate}
+\Parameters{
+\item a template for the beginning a second-level itemize list.
+\item a template for the end of a second-level itemize list.
+  }
+\Example \verb!\usesubitemizetemplate{\begin{small}}{\end{small}}!
+
+\Command{useenumeratetemplate}
+\Parameters{
+\item a template for the beginning a top-level enumeration.
+\item a template for the end of a top-level enumeration.
+  }
+\Example \verb!\useenumeratetemplate{}{}!
+
+\Command{usesubenumerateitemtemplate}
+\Parameters{
+\item a template for the default item in the second level of an
+  enumeration. 
+  }
+\Example
+\verb!\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}!
+
+\Command{usesubenumeratetemplate}
+\Parameters{
+\item a template for the beginning a second-level enumeration.
+\item a template for the end of a second-level enumeration.
+  }
+\Example \verb!\usesubenumeratetemplate{\begin{small}}{\end{small}}!
+
+
+\Command{usedescriptiontemplate}
+\Parameters{
+\item A template for the default item in a description. Use
+  \texttt{insertdescriptionitem} to insert the current item text.
+\item A default width for the default item, if no other width is
+  specified; the width \texttt{labelsep} is automatically added to
+  this parameter.
+  }
+\Example \verb!\usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}!
 
 
 
@@ -3182,122 +3641,6 @@ or
      \endgroup
      \medskip
   }
-\end{verbatim}
-
-
-
-\subsubsection{Lists (Itemizations, Enumerations, Descriptions)}
-
-\Command{useenumerateitemtemplate}
-\Parameters{
-\item a template for the default item in the top level of an
-  enumeration. 
-  }
-\Example \verb!\useenumerateitemtemplate{\insertenumlabel}!
-
-\Command{useitemizeitemtemplate}
-\Parameters{
-\item a template for the default item in the top level of an
-  itemize list.
-  }
-\Example \verb!\useitemizeitemtemplate{\pgfuseimage{mybullet}}!
-
-\Command{usesubitemizeitemtemplate}
-\Parameters{
-\item a template for the default item in the second level of an
-  itemize list.
-  }
-\Example \verb!\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}!
-
-\Command{useitemizetemplate}
-\Parameters{
-\item a template for the beginning a top-level itemize list.
-\item a template for the end of a top-level itemize list.
-  }
-\Example \verb!\useitemizetemplate{}{}!
-
-\Command{usesubitemizetemplate}
-\Parameters{
-\item a template for the beginning a second-level itemize list.
-\item a template for the end of a second-level itemize list.
-  }
-\Example \verb!\usesubitemizetemplate{\begin{small}}{\end{small}}!
-
-\Command{useenumeratetemplate}
-\Parameters{
-\item a template for the beginning a top-level enumeration.
-\item a template for the end of a top-level enumeration.
-  }
-\Example \verb!\useenumeratetemplate{}{}!
-
-\Command{usesubenumerateitemtemplate}
-\Parameters{
-\item a template for the default item in the second level of an
-  enumeration. 
-  }
-\Example
-\verb!\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}!
-
-\Command{usesubenumeratetemplate}
-\Parameters{
-\item a template for the beginning a second-level enumeration.
-\item a template for the end of a second-level enumeration.
-  }
-\Example \verb!\usesubenumeratetemplate{\begin{small}}{\end{small}}!
-
-\Command{usedescriptiontemplate}
-\Parameters{
-\item A template for the default item in a description. Use
-  \texttt{insertdescriptionitem} to insert the current item text.
-\item A default width for the default item, if no other width is
-  specified; the width \texttt{labelsep} is automatically added to
-  this parameter.
-  }
-\Example \verb!\usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}!
-
-
-
-
-\subsubsection{Bibliography}
-
-\Command{usebibitemtemplate}
-\Parameters{
-\item a template for the citation text before the entry. (The
-  ``label'' of the item.)
-}
-\Description{
-  Use \texttt{insertbiblabel} to insert the label text.
-  }
-\Example \verb!\usebibitemtemplate{\color{structure}\insertbiblabel}!
-
-
-\Command{usebibliographyblocktemplate}
-\Parameters{
-\item a template to be inserted before the first block of the entry
-  (the first block is all text before the first occurrence of a
-  \texttt{newblock} command).
-\item a template to be inserted before the second block (the text
-  between the first and second occurrence of \texttt{newblock})
-\item a template to be inserted before the third block
-\item a template to be inserted before all other blocks
-}
-\Description{
-  The templates are inserted \emph{before} the blocks and you do not
-  have access to the blocks themselves via insert commands. In the
-  following example, the first \texttt{par} commands ensure that the
-  author, the title, and the journal are put on different lines. The
-  color commands cause the author (first block) to be typeset using
-  the theme color, the second block (title of the paper) to be typeset
-  in black, and all other lines to be typeset in a washed-out version
-  of the theme color. 
-  }
-\Example
-\begin{verbatim}
-  \usebibliographyblocktemplate
-  {\color{structure}}
-  {\par\color{black}}
-  {\par\color{structuremedium}}
-  {\par\color{structuremedium}}
 \end{verbatim}
 
 
