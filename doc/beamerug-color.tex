@@ -200,13 +200,14 @@ Complete complete themes happen to have names of flying animals.
 \end{colorthemeexample}
 
 
-\subsubsection{Block Color Themes}
+\subsubsection{Inner Color Themes}
 
-Block themes only specify the colors of block environments. They can
+Inner color themes only specify the colors of elements used in inner
+themes. Most noticably, they specify the colors used for blocks. They can
 be used together with other (color) themes. If they are used to change the
-block colors installed by a presentation theme or another color theme,
+inner colors installed by a presentation theme or another color theme,
 they should obviously be specified \emph{after} the other theme has
-been loaded. Block themes happen to have flower names.
+been loaded. Inner color themes happen to have flower names.
 
 \begin{colorthemeexample}{lily}
   This theme is mainly used to \emph{uninstall} any block colors setup
@@ -231,12 +232,13 @@ been loaded. Block themes happen to have flower names.
 \end{colorthemeexample}
 
 
-\subsubsection{Palette Color Themes}
+\subsubsection{Outer Color Themes}
 
-A palette color theme  changes the palette colors, on which the colors
+An outer color theme changes the palette colors, on which the colors
 used in the headline, footline, and sidebar 
-are based by default. Palette color themes do not change block
-titles. They have happen to sea-animal names.
+are based by default. Outer color themes normally do not change the
+color of inner elements, except possibly for |titlelike|. They have
+happen to sea-animal names. 
 
 \begin{colorthemeexample}{whale}
   Installs a white-on-dark palette for the headline, footline, and
@@ -621,11 +623,11 @@ assign them, things will look wrong for certain outer themes.
 To circumvent this problem, \beamer\ uses a layer of \emph{palette
 colors}. Color themes typically only change these palette colors. For
 example, a color theme might make the \beamer-color |palette primary|
-blue, make |palette secondary| a dark blue, and make |palette ternary|
+blue, make |palette secondary| a dark blue, and make |palette tertiary|
 black. Outer themes can now setup things such that whatever they show
-at the top of the headline inherits from |palette ternary|, what comes
+at the top of the headline inherits from |palette tertiary|, what comes
 below inherits from |palette secondary|, and whatever is at the bottom
-inherits from |palette ternary|. This way, color themes can change the
+inherits from |palette tertiary|. This way, color themes can change the
 way even complicated outer themes look and they can do so
 consistently.
 
@@ -643,7 +645,7 @@ In detail, the following palette colors are used by outer themes.
   ``primary'' palette should be used for the most important
   navigational elements, which are usually the ones that change most
   often and hence require the most attention by the audience. The
-  ``secondary'' and ``ternary'' are less important, the ``fourth'' one
+  ``secondary'' and ``tertiary'' are less important, the ``quaternary'' one
   is least important.
 
   By default, the palette colors do not have a background and the
@@ -657,11 +659,11 @@ In detail, the following palette colors are used by outer themes.
   See |palette primary|.
 \end{element}
 
-\begin{element}{palette ternary}\no\yes\no
+\begin{element}{palette tertiary}\no\yes\no
   See |palette primary|.
 \end{element}
 
-\begin{element}{palette fourth}\no\yes\no
+\begin{element}{palette quaternary}\no\yes\no
   See |palette primary|.
 \end{element}
 
@@ -675,11 +677,11 @@ In detail, the following palette colors are used by outer themes.
   See |palette sidebar primary|.
 \end{element}
 
-\begin{element}{palette sidebar ternary}\no\yes\no
+\begin{element}{palette sidebar tertiary}\no\yes\no
   See |palette sidebar primary|.
 \end{element}
 
-\begin{element}{palette sidebar fourth}\no\yes\no
+\begin{element}{palette sidebar quaternary}\no\yes\no
   See |palette sidebar primary|.
 \end{element}
 
