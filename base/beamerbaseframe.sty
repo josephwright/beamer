@@ -48,7 +48,11 @@
 }
 
 \newenvironment{beamer@frameslide}{%
-  {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
+  \ifx\beamer@againname\@empty
+    {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
+  \else%
+    {\let\@elt\beamer@labelrestorecounter\beamer@overlaycounterresets}%      
+  \fi%
   \global\c@beamerpauses=1\relax%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
     \refstepcounter{subsectionslide}%
@@ -81,6 +85,7 @@
   \fi%
   \end{beamer@framepauses}%
   \egroup%
+  \beamer@undolabels%
   \beamer@framenotesend%  
   \box\beamer@framebox}
 
@@ -118,11 +123,27 @@
   \expandafter\global\csname #1\endcsname=\temp}%
 }
 
+\def\beamer@labelsavecounter#1{%
+  \@ifundefined{#1}{}%
+  {\expandafter\xdef\csname saved@\beamer@againname @#1\endcsname%
+    {\expandafter\the\csname #1\endcsname}}%
+}
+\def\beamer@labelrestorecounter#1{%
+  \@ifundefined{#1}{}%
+  {\edef\temp{\csname saved@\beamer@againname @#1\endcsname}%
+  \expandafter\global\csname #1\endcsname=\temp}%
+}
+
 
 %
 % Keys
 %
-\define@key{beamerframe}{label}{\def\beamer@againname{#1}}
+\define@key{beamerframe}{label}{\def\beamer@againname{#1}%
+  {\let\@elt\beamer@labelsavecounter\beamer@overlaycounterresets}%
+}
+\define@key{beamerframe}{relabel}{\def\beamer@againname{#1}%
+  \def\beamer@undolabels{{\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}}%
+}
 \define@key{beamerframe}{plain}[true]{\def\beamer@frametemplate{\beamer@frametemplate@plain}}
 \define@key{beamerframe}{template}{%
   \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
@@ -180,6 +201,7 @@
   \def\beamer@mode{\mode<all>}%
   \def\beamer@frametemplate{}%
   \def\beamer@againname{}%
+  \def\beamer@undolabels{}%
   \beamer@containsverbatimfalse%
   \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
   \setkeys{beamerframe}{#2}%
@@ -414,7 +436,7 @@
   {\ClassError{beamer}{No frame has been designated to resume under
       the name "#4"}{}}%
   {%
-  \def\beamer@temp{\frame<#1>[#2][#3,label=#4]}%
+  \def\beamer@temp{\frame<#1>[#2][#3,relabel=#4]}%
   \expandafter\let\expandafter\beamer@templet\csname beamer@again@#4\endcsname%
   \expandafter\beamer@temp\beamer@templet}%
 }
