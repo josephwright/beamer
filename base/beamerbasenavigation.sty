@@ -580,8 +580,8 @@
 
 \def\beamer@link(#1/#2){%
   \def\beamer@goto{{Navigation#1}}% default: first slide of frame
-  \ifnum\thepage<#2%
-  \ifnum\thepage<#1\else% go to last slide of frame, on all slides of
+  \ifnum\c@page<#2%
+  \ifnum\c@page<#1\else% go to last slide of frame, on all slides of
                                 % the frame, except for the last one
   \def\beamer@goto{{Navigation#2}}% jump to last slide of frame
   \fi\fi%
@@ -668,7 +668,7 @@
 %
 
 \def\beamer@nameslide#1{%
-  \addtocontents{snm}{\protect\beamer@slide{#1}{\thepage}}%
+  \addtocontents{snm}{\protect\beamer@slide{#1}{\the\c@page}}%
   \hypertarget{#1}{}}
 \def\beamer@slide#1#2{\expandafter\def\csname beamer@hyperlink#1\endcsname{%
   \hyperlink{Navigation#2}}}

@@ -26,7 +26,7 @@
   }
   
 \useframetitletemplate{%
-  \nointerlineskip{\tiny\vskip.35em}\vskip-2pt%
+  \nointerlineskip\vskip-2pt%{\tiny\vskip.35em}\vskip-2pt%
   \hbox{\leavevmode
     \advance\beamer@leftmargin by -12bp%
     \advance\beamer@rightmargin by -12bp%
@@ -35,7 +35,7 @@
     \advance\beamer@tempdim by \beamer@rightmargin%
     \hskip-\Gm@lmargin\hbox{%
       \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\paperwidth}%
-          \vskip2pt%
+          \vbox{}\vskip-1ex%
           \leftskip0.3cm%
           \rightskip0.3cm plus1fil\leavevmode
           \color{structure}\Large\color{white}\insertframetitle\strut\par
@@ -64,20 +64,10 @@
 
 \beamertemplateballitem
 \beamertemplatesolidbuttons
-
-                                % Sections in headline
-\usesectionheadtemplate
-  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
-  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
-
-\usesubsectionheadtemplate
-  {\color{white}\tiny\textbf{\insertsubsectionhead}}
-  {\color{white!50!structure}\tiny\textbf{\insertsubsectionhead}}
-
+\beamertemplatelightsectionheads
 
                                 % Entries in table of contents
 \beamertemplatenumberedballsectiontoc
-
 
 \pgfdeclareverticalshading{topshade}{\paperwidth}{%
   color(0pt)=(averagebackgroundcolor);

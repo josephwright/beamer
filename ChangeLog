@@ -1,11 +1,17 @@
 2004-01-19 Till Tantau <tantau@users.sourceforge.net>
 
+	Bugfixes:
 	- Fixed bug with "jumping" blocks in overlays.
 	- Fixed bug with tabbing in beamerbaseboxes.
+	- Added work-around for problem with black background in older
+	  versions of acroread.
+
+	Added:
 	- Added placement options to columns and column commands.
 	- Added \column command.
 	- Added label option to frames.
-	- Added \againframe command for showing a frame again later on.
+	- Added \againframe command for showing a frame again later on
+	  (very useful!). 
 	- Added \includeonlyframe command for typesetting only specific
 	  frames. 
 	- Added \AtBeginSection, \AtBeginSubsection, and \AtBeginPart
@@ -13,43 +19,54 @@
 	- Added \visible command (opposite of \invisible).
 	- Added verse, quotation, and quote environments.
 	- Added abstract environment (not very useful in my opinion).
+	- Added colored option to \defverbatim for use with lstlisting.
+	- Added grid density option to grid background.
+	- Added professionalfont option.
+	- Added automatic support of serif math minion fonts.
+	- Added option to \pause command.
+	- Includes enumerate.sty by default and allows one to use its
+	  functionality in beamer.
+	- Added dark and tab options to beamerthemesidebar. Other sidebar
+	  themes no longer needed.
+
+	Changed:
+	- \pause commands now transcends blocks (very useful!)
+	- Extended syntax of \item: A second overlay specification will
+	  now cause the item to be alerted (very useful!).
 	- Balls are now also used for enumerations, not just for itemize
 	  in shadow theme. Use \beamertemplateenumeratealpha to get old
 	  behaviour. 
 	- Changed syntax of alert and structure templates.
-	- Extended syntax of \item: A second overlay specification will
-	  now cause the item to be alerted.
-	- Includes enumerate.sty by default and allows one to use its
-	  functionality in beamer.
-	- Added colored option to \defverbatim for use with lstlisting.
-	- Added grid density option to grid background.
+	- Partly reworked internals of overlay management. Should produce
+	  slightly shorter files.
+	- Changed file names of .jpg and .png images to start with "beamer-"
+	  to avoid name clashes.
+	- Renamed \original to \beameroriginal because of clash with
+	  lucidia font styles.
+	- "Streamlined" themes to use the same basic templates.
+
+	Removed:
 	- Removed pauses environment (no longer needed).
-	- Added option to \pause command.
-	- \pause commands now transcends blocks (also very useful!)
+	- Improved pgf makes \pgfonly superfluous. Use \only instead.
+	- Removed reproducable .pdf example files from repository for
+	  faster cvs checkout/checkin.
 	- Removed \invisibleon command (was superfluous anyway).
 	- Removed \mixinon command (was not very useful and clashes with
 	  new \pause command; use \opaqueness instead).
 	- \nameslide command is now obsolete. Use the label= option
 	  instead.
-	- Partly reworked internals of overlay management.
-	
-	- Renamed \original to \beameroriginal because of clash with
-	  lucidia font styles.
-	- Added suppression of font replacement for serif math minion
-	  fonts.
-	- Changed file names of .jpg and .png images to start with "beamer-"
-	  to avoid name clashes.
-	- Improved pgf makes \pgfonly superfluous. Use \only instead.
-	- Removed reproducable .pdf example files from repository for
-	  faster cvs checkout/checkin.
-	
-	- LyX: Added a big example file beamerlyxexample1.lyx.
-	- LyX: Changed tableofcontents command so that options can be
-	  given. 
-	- LyX: Changed frame command so that options can be given. 
-	- LyX: Added overprint and overlayarea environments.
-	- LyX: Added againframe command.
-	- LyX: Changed beamer.layout to use new command \column. Old environment
+	- Themes beamerthemesidebartab, beamerthemesidebardark, and
+	  beamerthemesidebardarktab are no obsolete. Use
+	  beamerthesesidebar will appropriate options instead.
+
+	LyX:
+	- Added a big example file beamerlyxexample1.lyx.
+	- Changed \tableofcontents command so that options can be
+	  given in LyX. 
+	- Changed \frame command in LyX so that options can be given. 
+	- Added overprint and overlayarea environments.
+	- Added \againframe command.
+	- Changed beamer.layout to use new command \column. Old environment
  	  no longer supported in lyx.
 
 2004-01-19 Till Tantau <tantau@users.sourceforge.net>

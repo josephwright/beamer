@@ -7,66 +7,14 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-                                % Title page  
-\usetitlepagetemplate{
-  \vbox{}
-  \vfill
-  \begin{centering}
-    \Large\structure{\inserttitle}
-    \vskip1em\par
-    \normalsize\insertauthor\vskip1em\par
-    {\scriptsize\insertinstitute\par}\par\vskip1em
-    \insertdate\par\vskip1.5em
-    \inserttitlegraphic
-  \end{centering}
-  \vfill
-  }
+\beamertemplatelargetitlepage
+\beamertemplatelargepartpage
+\beamertemplatelargeframetitle
+\beamertemplateplaintoc
+\beamertemplatelargeblocks
+\beamertemplaterightsidebarlogonavigation
 
-                                % Frametitles
-\useframetitletemplate{%
-  {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
-   \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
-    \color{structure}
-    \Large\insertframetitle\par}%
-  }
-
-
-                                % Sections in headline
-\usesectionheadtemplate
-{\color{structure}\tiny\insertsectionhead}
-{\color{structure!50!averagebackgroundcolor}\tiny\insertsectionhead}
-
-                                % Mini slides in headline
-\def\sphereradius{0.05cm}
-\useminislidetemplate
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{white}
-    \pgfcircle[fillstroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }  
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{white}
-    \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }
-{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \color{structure!50!averagebackgroundcolor}
-    \pgfcircle[stroke]{\pgfpoint{\sphereradius}{\sphereradius}}{\sphereradius}%
-  \end{pgfpicture}%
-  }
-{.14cm}{.03cm}
-
-                                % Entries in table of contents
-\usetemplatetocsection[50!averagebackgroundcolor]
-{{\large\color{structure}\inserttocsection}}
-
-                                % Entries in table of contents
-\usetemplatetocsubsection[50!averagebackgroundcolor]
-{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-
+  
                                 % Head
 \useheadtemplate{%
   \vbox{%
@@ -80,17 +28,3 @@
 
                                 % Footline
 \usefoottemplate{}
-
-                                % Blocks
-\useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
-\usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
-\useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
-\color{black!50!green}}{\endgroup\medskip}
-
- 
-
-                                % Buttons
-\userightsidebartemplate{0cm}{%
-  \vfill%
-  \llap{\insertlogo\hskip0.1cm}%
-  \llap{\insertnavigationsymbols}}

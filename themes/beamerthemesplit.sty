@@ -8,26 +8,14 @@
 % archives in directory macros/latex/base/lppl.txt.
 
 \beamertemplatelargetitlepage
+\beamertemplatelargepartpage
 \beamertemplatelargeframetitle
+\beamertemplatelightsectionheads
+\beamertemplateplaintoc
+\beamertemplatelargeblocks
+\beamertemplaterightsidebarlogonavigation
 
-                                % Sections in headline
-\usesectionheadtemplate
-  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
-  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
 
-\usesubsectionheadtemplate
-  {\color{white}\tiny\textbf{\insertsubsectionhead}}
-  {\color{white!50!structure}\tiny\textbf{\insertsubsectionhead}}
-
-                                % Entries in table of contents
-\usetemplatetocsection[50!averagebackgroundcolor]
-{{\large\color{structure}\inserttocsection}}
-
-                                % Entries in table of contents
-\usetemplatetocsubsection[50!averagebackgroundcolor]
-{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-
-\newdimen\tempdimen
                                 % Head
 \ifbeamer@compress
 \useheadtemplate{%
@@ -50,16 +38,16 @@
 \useheadtemplate{%
   \vbox{%
     \tiny%
-    \tempdimen=2.4375ex%
+    \beamer@tempdim=2.4375ex%
     \ifnum\beamer@subsectionmax<\beamer@sectionmax%
-    \multiply\tempdimen by\beamer@sectionmax%
+    \multiply\beamer@tempdim by\beamer@sectionmax%
     \else%
-    \multiply\tempdimen by\beamer@subsectionmax%
+    \multiply\beamer@tempdim by\beamer@subsectionmax%
     \fi%
-    \advance\tempdimen by 1.125ex%
+    \advance\beamer@tempdim by 1.125ex%
     \setbox\beamer@linebox=\hbox to\paperwidth{%
-      \vbox to \tempdimen{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
-      \vbox to \tempdimen{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
+      \vbox to \beamer@tempdim{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
+      \vbox to \beamer@tempdim{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
     \hbox to\textwidth{%
       {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
       height\ht\beamer@linebox\color{structure}\vrule width.5\paperwidth
@@ -72,9 +60,6 @@
 
 \usefoottemplate{%
   \vbox{\tiny%
-    \hbox to\textwidth{\hfill%
-      \setbox\beamer@logobox=\hbox{\raise 10pt\hbox{\insertlogo}\llap{\insertnavigationsymbols}}\ht\beamer@logobox=0pt%
-      \box\beamer@logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
   \hbox{%
   \setbox\beamer@linebox=\hbox to\paperwidth{%
     \hbox to.5\paperwidth{\hfill\tiny\color{white}\textbf{\insertshortauthor}\hskip.3cm}%
@@ -86,5 +71,3 @@
   height\ht\beamer@linebox\color{structure}\vrule width.5\paperwidth
   height\ht\beamer@linebox\hskip-\paperwidth% 
   \hbox{\box\beamer@linebox\hfill}\hfill\hskip-\Gm@rmargin}}}
-
-\beamertemplatelargeblocks

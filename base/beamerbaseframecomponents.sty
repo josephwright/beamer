@@ -175,7 +175,7 @@
         \beamer@headtemplate\hfil%
       }%
       \hfil}}
-  \def\@oddfoot{\beamer@foottemplate\hypertarget{Navigation\thepage}{}\hfil}
+  \def\@oddfoot{\beamer@foottemplate\hypertarget{Navigation\the\c@page}{}\hfil}
   \let\@evenhead\@oddhead
   \let\@evenfoot\@oddfoot}
 \pagestyle{navigation}
@@ -190,7 +190,7 @@
     \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
     \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
     \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox}\hfil}}
-  \def\@oddfoot{\hypertarget{Navigation\thepage}{}\hfil}
+  \def\@oddfoot{\hypertarget{Navigation\the\c@page}{}\hfil}
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
 \def\recalculatefoot{%

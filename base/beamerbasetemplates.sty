@@ -79,6 +79,7 @@
 
 \newcommand{\beamertemplateboldcenterframetitle}{
   \useframetitletemplate{%
+    \vskip0.25em%
     \begin{centering}
       \structure{\textbf{\insertframetitle}}
       \par
@@ -87,15 +88,39 @@
 }
 
   
-\newcommand{\beamertemplatelargeframetitle}{
+\newcommand{\beamertemplateboldframetitle}{
   \useframetitletemplate{%
+    \vskip0.25em%
     {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
      \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
-      \color{structure}
+      \color{beamerstructure}
+      \Large\bfseries\insertframetitle\par}%
+    }
+}
+\newcommand{\beamertemplatelargeframetitle}{
+  \useframetitletemplate{%
+    \vskip0.25em%
+    {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
+     \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
+      \color{beamerstructure}
       \Large\insertframetitle\par}%
     }
 }
   
+
+%
+% Side bars
+%
+\newcommand{\beamertemplaterightsidebarlogonavigation}{
+  \userightsidebartemplate{0cm}{%
+    \vfill%
+    \llap{\insertlogo\hskip0.1cm}%
+    \vskip2pt%
+    \llap{\insertnavigationsymbols\hskip0.1cm}%
+    \vskip2pt}
+}
+ 
+
 
 
 %
@@ -104,7 +129,7 @@
 
 \newcommand{\beamertemplateplaintoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-    {\color{structure}\inserttocsection}
+    {\large\color{beamerstructure}\inserttocsection}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
     {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
@@ -112,7 +137,7 @@
 
 \newcommand{\beamertemplatenumberedsubsectiontoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=2em\color{structure}\inserttocsection}
+    {\leavevmode\leftskip=2em\color{beamerstructure}\inserttocsection}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
     {\leavevmode\leftskip=2em\color{black}\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
@@ -120,7 +145,7 @@
 
 \newcommand{\beamertemplatenumberedsectiontoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\color{structure}\inserttocsectionnumber. \inserttocsection\par}
+  {\leavevmode\color{beamerstructure}\inserttocsectionnumber. \inserttocsection\par}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=2.5em\color{black}\inserttocsubsection\par}
@@ -128,7 +153,7 @@
 
 \newcommand{\beamertemplatenumberedcirclesectiontoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=.5em\color{structure}%
+  {\leavevmode\leftskip=.5em\color{beamerstructure}%
     \llap{\begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
       \color{structure!50!averagebackgroundcolor}
       \pgfcircle[fill]{\pgfpoint{0ex}{.75ex}}{1.2ex}
@@ -201,7 +226,7 @@
 
   
   \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=1em\color{structure}%
+  {\leavevmode\leftskip=1em\color{beamerstructure}%
     \llap{%
       \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
         \pgfbox[center,center]{\pgfuseshading{tocsphere}}
@@ -216,7 +241,7 @@
 
 \newcommand{\beamertemplateballtoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-    {\leavevmode\color{structure}\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\ \inserttocsection\par}
+    {\leavevmode\color{beamerstructure}\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\ \inserttocsection\par}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
     {\leavevmode\leftskip=1.5em\color{black}\raise0.2ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}\ \inserttocsubsection\par}
@@ -228,8 +253,8 @@
 %
 
 \newcommand{\beamertemplatedotitem}{%
-  \useitemizeitemtemplate{\small\raise0.5pt\hbox{\color{structure}\textbullet}}
-  \usesubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\color{structure}\textbullet}}
+  \useitemizeitemtemplate{\small\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
+  \usesubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
   }
 
 \newcommand{\beamertemplateballitem}{%
@@ -237,7 +262,7 @@
   \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}}
 
   \useenumerateitemtemplate{
-    \color{structure}%
+    \color{beamerstructure}%
     \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
       \begin{pgfmagnify}{1.75}{1.75}
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
@@ -246,20 +271,19 @@
         {\pgfbox[center,center]{\color{white}\tiny\textbf{\insertenumlabel}}}
     \end{pgfpicture}}
   \usesubenumerateitemtemplate{%
-    \color{structure}%
+    \color{beamerstructure}%
     \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
       \begin{pgfmagnify}{1.4}{1.4}
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
-      \pgfputat{\pgfpoint{0pt}{0.1pt}}
-      {\pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}}
+      \pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}
     \end{pgfpicture}}
   \AtBeginDocument{\beamertemplatesetupshadings}
 }
 
 \newcommand{\beamertemplatetriangleitem}{%
-  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\color{structure}$\blacktriangleright$}}
-  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
+  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
+  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
   }
 
 
@@ -268,8 +292,8 @@
 %
 
 \newcommand{\beamertemplateenumeratealpha}{
-  \useenumerateitemtemplate{\color{structure}\insertenumlabel.}
-  \usesubenumerateitemtemplate{\color{structure}\insertenumlabel.\insertsubenumlabel}
+  \useenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.}
+  \usesubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel}
   }
   
 %
@@ -277,6 +301,34 @@
 %
 
 \newcommand{\beamertemplateheadempty}{\useheadtemplate{}}
+
+
+%
+% Headline stuff
+%
+
+\newcommand{\beamertemplatelightsectionheads}
+{
+  \usesectionheadtemplate
+  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white!50!black}\tiny\textbf{\insertsectionhead}}
+
+  \usesubsectionheadtemplate
+  {\color{white}\tiny\textbf{\insertsubsectionhead}}
+  {\color{white!50!structure}\tiny\textbf{\insertsubsectionhead}}
+}
+
+\newcommand{\beamertemplatedarksectionheads}
+{
+  \usesectionheadtemplate
+  {\color{structure}\tiny\insertsectionhead}
+  {\color{structure!50!averagebackgroundcolor}\tiny\insertsectionhead}
+
+  \usesubsectionheadtemplate
+  {\color{structure}\tiny\insertsubsectionhead}
+  {\color{structure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
+}
+
 
 
 %
@@ -356,13 +408,13 @@
   \useminislidetemplate
   {%
     \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{structure}
+      \color{beamerstructure}
       \pgfcircle[fillstroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
     \end{pgfpicture}%
   }
   {%
     \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{structure}
+      \color{beamerstructure}
       \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
     \end{pgfpicture}%
   }
@@ -402,13 +454,13 @@
 \newcommand{\beamertemplateboxminiframe}{
   \useminislidetemplate{%
     \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \color{structure}
+      \color{beamerstructure}
       \pgfrect[fillstroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
     \end{pgfpicture}%
   }  
   {%
     \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \color{structure}
+      \color{beamerstructure}
       \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
     \end{pgfpicture}%
   }
@@ -424,11 +476,11 @@
 \newcommand{\beamertemplateticksminiframe}{
   \useminislidetemplate
   {%
-    \color{structure}%
+    \color{beamerstructure}%
     \hskip-0.4pt\vrule height\boxsize width1.2pt%
   }  
   {%
-    \color{structure}%
+    \color{beamerstructure}%
     \vrule height\boxsize width0.4pt%
   }
   {%
@@ -501,11 +553,11 @@
 }
 
 \newcommand{\beamertemplatetextbibitems}{
-  \usebibitemtemplate{\color{structure}\insertbiblabel}
+  \usebibitemtemplate{\color{beamerstructure}\insertbiblabel}
 }
 
 \newcommand{\beamertemplatearrowbibitems}{
-  \usebibitemtemplate{\color{structure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
+  \usebibitemtemplate{\color{beamerstructure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
 }
 
 \article
@@ -593,7 +645,7 @@
 
 \newcommand{\beamertemplateoutlinebuttons}
 {\usebuttontemplate{%
-  \color{structure}
+  \color{beamerstructure}
   \setbox\beamer@tempbox=\hbox{\tiny\insertbuttontext}%
   \ht\beamer@tempbox=6pt%
   \dp\beamer@tempbox=0pt%
@@ -652,6 +704,8 @@
   \hskip-\beamer@tempdim%
   \box\beamer@tempbox%
   \kern4pt}}
+
+
 \newcommand{\beamertemplatenavigationsymbolsempty}{
   \usenavigationsymbolstemplate{}}
 
@@ -661,12 +715,12 @@
 \newcommand{\beamertemplatenavigationsymbolsvertical}{%
   \usenavigationsymbolstemplate{
   \vbox{%
-  \hbox{\insertslidenavigationsymbols}
-  \hbox{\insertframenavigationsymbols}
-  \hbox{\insertsubsectionnavigationsymbols}
-  \hbox{\insertsectionnavigationsymbols}
-  \hbox{\insertdocnavigationsymbols}
-  \hbox{\insertbackfindforwardnavigationsymbols}}}}
+  \hbox{\insertslidenavigationsymbol}
+  \hbox{\insertframenavigationsymbol}
+  \hbox{\insertsubsectionnavigationsymbol}
+  \hbox{\insertsectionnavigationsymbol}
+  \hbox{\insertdocnavigationsymbol}
+  \hbox{\insertbackfindforwardnavigationsymbol}}}}
 
 \newcommand{\beamertemplatenavigationsymbolshorizontal}{%
   \usenavigationsymbolstemplate{\hbox{%
@@ -683,14 +737,14 @@
 %
 
 \newcommand{\beamertemplateboldblocks}{
-  \useblocktemplate{\medskip{\color{structure}\textbf{\insertblockname}}\par}{\medskip}
+  \useblocktemplate{\medskip{\color{beamerstructure}\textbf{\insertblockname}}\par}{\medskip}
   \usealertblocktemplate{\medskip{\alert{\textbf{\insertblockname}}}\par}{\medskip}
   \useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\textbf{\insertblockname}}\par%
     \color{black!50!green}}{\endgroup\medskip}
 }
 
 \newcommand{\beamertemplatelargeblocks}{
-  \useblocktemplate{\medskip{\color{structure}\large{\insertblockname}}\par}{\medskip}
+  \useblocktemplate{\medskip{\color{beamerstructure}\large{\insertblockname}}\par}{\medskip}
   \usealertblocktemplate{\medskip{\alert{\large{\insertblockname}}}\par}{\medskip}
   \useexampleblocktemplate{\medskip\begingroup{\color{structure!50!green}\large{\insertblockname}}\par%
     \color{black!50!green}}{\endgroup\medskip}

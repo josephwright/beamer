@@ -20,6 +20,9 @@
 
 \presentation
 
+\newbox\beamer@framebox
+
+
 %
 % Slide Definitions
 %
@@ -42,47 +45,26 @@
   \global\beamer@pausecount=1\relax%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
     \refstepcounter{subsectionslide}%
-    \xdef\beamer@framestartpage{\thepage}% only first time
+    \xdef\beamer@framestartpage{\the\c@page}% only first time
   }{\clearpage}% cleanup from previous slide
   \hypersetup{pdfpagetransition=R}%
   \hypersetup{pdfpageduration=}%
-  \xdef\beamer@frameendpage{\thepage}% every time
+  \xdef\beamer@frameendpage{\the\c@page}% every time
   \beamer@setuplinks%
   \let\beamer@startcomment=\beamer@startcommentinframe%
+  % Insert labels if necessary:
   \ifx\beamer@againname\@empty\else%
     \label<\the\beamer@slideinframe>{\beamer@againname<\the\beamer@slideinframe>}%
     \ifnum\beamer@slideinframe=1\relax%
       \label<1>{\beamer@againname}%
     \fi%
   \fi%
-  \beamer@entrycode\vspace*{-\baselineskip}\begin{beamer@framepauses}\vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill\end{beamer@framepauses}}
-
-
-%
-%
-% The \frametitle command
-%
-%
-\long\def\frametitle#1{%
-  \beamer@ifempty{#1}{}{%
-  \vskip0pt plus -1fill%
-  {\gdef\insertframetitle{#1}\beamer@headrenderer}
-  \vskip0.25em%
-  \ifbeamer@centered
-  \vfill%
-  \fi}%
-}
-
-\long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
-
-
-\article
-{
-  \long\def\frametitle#1{\gdef\insertframetitle{#1}\beamer@headrenderer}
-  \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
-  \useframetitletemplate{\paragraph{\insertframetitle}\ \par}
-}
+  % Start slide:
+  \setbox\beamer@framebox=\vbox to\textheight\bgroup\vbox{}\par%
+  \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
+  \vfill}%
+  {\beamer@exitcode\vskip0pt plus 1.5fill\end{beamer@framepauses}%}%
+  \egroup\box\beamer@framebox}
 
 
 
@@ -236,7 +218,7 @@
 \def\beamer@singletoken{\beamer@next\egroup}
 
 \def\beamer@writeslidentry{%
-  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% nothing to do ...
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
   {%else
     \addtocontents{nav}%
       {\protect\headcommand{%

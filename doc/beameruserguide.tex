@@ -4614,34 +4614,27 @@ the standard |\usepackage| command.
 \end{smallpackage}
 
 
-\begin{smallpackage}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar width}|]|}}
-  \example
+\begin{smallpackage}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar
+        width}|,dark,tab]|}}
+  The option |width| sets the width of the sidebar to \meta{sidebar
+    width}. The option |dark| makes the side bar and the whole theme
+  darked. The option |tab| causes the current section or subsection to
+  be hilighted by changing the background behind the entry, rather
+  than hilighting the entry itself.
+  
+  \example |\usepackage{beamersidebar}|
 
   \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
 
-  \example
-\begin{verbatim}
-\usepackage[width=3cm]{beamerthemesidebar}
-\end{verbatim}
-\end{smallpackage}
-
-
-\begin{smallpackage}{{beamerthemesidebartab}\opt{|[width=|\meta{sidebar width}|]|}}
-  \example
+  \example |\usepackage[tab]{beamersidebar}|
 
   \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
-\end{smallpackage}
 
-
-\begin{smallpackage}{{beamerthemesidebardark}\opt{|[width=|\meta{sidebar width}|]|}}
-  \example
+  \example |\usepackage[dark]{beamersidebar}|
 
   \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
-\end{smallpackage}
 
-
-\begin{smallpackage}{{beamerthemesidebartabdark}\opt{|[width=|\meta{sidebar width}|]|}}
-  \example
+  \example |\usepackage[dark,tab]{beamersidebar}|
 
   \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
 \end{smallpackage}
@@ -4658,11 +4651,6 @@ the standard |\usepackage| command.
 
   \pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}
 \end{smallpackage}
-\medskip
-
-The theme |beamerthemesplitcondensed| is no longer
-supported. Use |beamerthemesplit| with the |compress| class option
-instead. 
 
 \begin{smallpackage}{{beamerthemetree}}
   \example
@@ -4918,6 +4906,12 @@ If you wish to suppress the head and foot line in the title page, use
 \label{section-backgrounds}
 
 \paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatesolidbackgroundcolor\marg{color}}
+  Installs the given color as the background color for every frame.
+  
+  \example |\beamertemplatesolidbackgroundcolor{white!90!red}|
+\end{command}
 
 \begin{command}{\beamertemplateshadingbackground%
     \marg{color expression page bottom}\marg{color expression page top}}

@@ -14,6 +14,33 @@
 
 
 %
+%
+% The \frametitle command
+%
+%
+\long\def\frametitle#1{%
+  \beamer@ifempty{#1}{}{%
+  \vskip0pt plus -1fill%
+  {\gdef\insertframetitle{#1}\beamer@headrenderer}
+  \vskip0.25em%
+  \ifbeamer@centered
+  \vfill%
+  \fi}%
+}
+
+\long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
+
+
+\article
+{
+  \long\def\frametitle#1{\gdef\insertframetitle{#1}\beamer@headrenderer}
+  \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
+  \useframetitletemplate{\paragraph{\insertframetitle}\ \par}
+}
+
+
+
+%
 % Alerting
 %
 
@@ -469,19 +496,17 @@
 % Floats and tables
 %
 
-\def\figure{\@ifnextchar[{\@figure}{\@figure[]}}
-\def\@figure[#1]{% ignores placement specification!
+\newenvironment{figure}[1][]{%
   \def\@captype{figure}%
   \begin{center}}
-\def\endfigure{\end{center}}
+  {\end{center}}
 \newcounter{figure}
 \renewcommand\thefigure{\@arabic\c@figure}
 
-\def\table{\@ifnextchar[{\@table}{\@table[]}}
-\def\@table[#1]{% ignores placement specification!
+\newenvironment{table}[1][]{%
   \def\@captype{table}%
   \begin{center}}
-\def\endtable{\end{center}}
+  {\end{center}}
 \newcounter{table}
 \renewcommand\thetable{\@arabic\c@table}
 

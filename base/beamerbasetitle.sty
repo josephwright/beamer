@@ -49,7 +49,7 @@
 \def\beamer@title[#1]#2{%
   \def\inserttitle{#2}%
   \def\insertshorttitle{\def\\{}%
-    \ifnum\thepage=1%
+    \ifnum\c@page=1%
     \hyperlinkpresentationend{#1}%
     \else%
     \hyperlinkpresentationstart{#1}%
@@ -158,7 +158,7 @@
 % The \logo command
 %
 %
-\def\logo#1{\def\insertlogo{#1}}
+\def\logo#1{\def\insertlogo{\normalcolor#1}}
 \logo{}
 
 \article

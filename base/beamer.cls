@@ -350,13 +350,7 @@
 \beamertemplateboldcenterframetitle
 
                                 % Sections in headline
-\usesectionheadtemplate
-{\color{structure}\tiny\insertsectionhead}
-{\color{structure!50!averagebackgroundcolor}\tiny\insertsectionhead}
-
-\usesubsectionheadtemplate
-{\color{structure}\tiny\insertsubsectionhead}
-{\color{structure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
+\beamertemplatedarksectionheads
 
                                 % Mini slides in headline
 \beamertemplatecircleminiframe
@@ -377,7 +371,7 @@
 \usefoottemplate{}
 
                                 % Background
-\usebackgroundtemplate{}
+\beamertemplatesolidbackgroundcolor{white}
 
                                 % Blocks
 \useblocktemplate{\medskip{\color{structure}\textbf{\insertblockname}}\par}{\medskip}
