@@ -91,12 +91,20 @@
 % Background templates
 %
 
+\newcommand{\beamertemplatesolidbackgroundcolor}[1]{
+  \usebackgroundtemplate{\color{#1}\vrule width \paperwidth height\paperwidth}
+  \beamersetaveragebackground{#1}
+  }
+  
 \newcommand{\beamertemplateshadingbackground}[2]{
   \RequirePackage{pgfshade}
   \pgfdeclareverticalshading{background}{\the\paperwidth}%
   {rgb(0cm)=(#1); rgb(\the\paperheight)=(#2)}
 
-  \usebackgroundtemplate{\pgfuseshading{background}}  
+  \usebackgroundtemplate{\pgfuseshading{background}}%
+  \definecolor{beamer@backgroundshadestart}{rgb}{#1}%
+  \definecolor{beamer@backgroundshadeend}{rgb}{#2}%
+  \beamersetaveragebackground{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
   }
   
 \newcommand{\beamertemplategridbackground}{
@@ -156,7 +164,12 @@
 %
 
 \pgfdeclareimage{beamericonbook}{14pt}{12pt}{beamericonbook}
-
+\pgfdeclareimage{beamericonbookshaded}{14pt}{12pt}{beamericonbook.20}
+\pgfaliasimage{beamericonbook!20!averagebackgroundcolor}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook!15!averagebackgroundcolor}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook!10!averagebackgroundcolor}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook!5!averagebackgroundcolor}{beamericonbookshaded}
+\pgfaliasimage{beamericonbook!2!averagebackgroundcolor}{beamericonbookshaded}
 \newcommand{\beamertemplatebookbibitems}{
   \usebibitemtemplate{\lower2pt\hbox{\pgfuseimage{beamericonbook}}}
 }
@@ -173,3 +186,23 @@
 \newcommand{\beamertemplatearrowbibitems}{
   \usebibitemtemplate{\color{structure}\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
 }
+
+
+%
+% Commands for making covered items transparent
+%
+\newcommand{\beamertemplatetransparentcovereddynamic}{
+  \beamersetuncovermixins
+  {\mixinon<1>{15!averagebackgroundcolor}%
+    \mixinon<2>{10!averagebackgroundcolor}%
+    \mixinon<3>{5!averagebackgroundcolor}%
+    \mixinon<4->{2!averagebackgroundcolor}}%
+  {\mixinon<1>{15!averagebackgroundcolor}%
+    \mixinon<2>{10!averagebackgroundcolor}%
+    \mixinon<3>{5!averagebackgroundcolor}%
+    \mixinon<4->{2!averagebackgroundcolor}}}
+
+\newcommand{\beamertemplatetransparentcovered}{
+  \beamersetuncovermixins%
+  {\mixinon<1->{15!averagebackgroundcolor}}
+  {\mixinon<1->{15!averagebackgroundcolor}}}

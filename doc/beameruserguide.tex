@@ -39,6 +39,7 @@
 \pgfdeclareimage{themetreebars2}{6.66666cm}{5cm}{themetreebars2}
 
 \def\beamer{\textsc{beamer}}
+\def\pdf{\textsc{pdf}}
 \def\pgf{\textsc{pgf}}
 \def\pstricks{\textsc{pstricks}}
 \def\bs{$\backslash$}
@@ -56,7 +57,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 0.91\\
+\title{User's Guide to the Beamer Class, Version 0.91-dev\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -948,6 +949,9 @@ item-wise. The last uncovered item is furthermore hilighted.
 }
 \end{verbatim}
 
+The related command \verb!\bibitem! is also overlay-specification-aware
+in the same way as \verb!\item!.
+
 \Command{hypertarget}
 \Parameters{
 \item a target name
@@ -972,6 +976,36 @@ item-wise. The last uncovered item is furthermore hilighted.
 
 \hyperlink{jumptoend}{Jump to last slide of the frame.}
 \hypertarget<3>{jumptoend}{}
+}
+\end{verbatim}
+
+
+\Command{label}
+\Parameters{
+\item a target
+}
+\Description{
+  If an overlay specification is present, the label is only inserted
+  on the specified slide. Inserting a label on more than one slide
+  will cause a `multiple labels' warning. \emph{However}, if no
+  overlay specification is present, the specification is automatically
+  set to just `1' and the label is thus inserted only on the first
+  slide. This is typically the desired behaviour since it does not
+  really matter on which slide the label is inserted, \emph{except} if
+  you use an \texttt{only} command. Then you need to specifiy a slide.
+}
+\Example
+\begin{verbatim}
+\frame
+{
+  \begin{align}
+    a &= b + c   \label{first}\\ % no specification needed
+    c &= d + e   \label{second}\\% no specification needed
+  \end{align}
+
+  Blah blah, \uncover<2>{more blah blah.}
+
+  \only<3>{Specification is needed now.\label<3>{mylabel}}
 }
 \end{verbatim}
 
@@ -1665,7 +1699,10 @@ as specified by the template for bibliographies.
 \Description{
   Adds a reference item to the bibliography. Use \texttt{newblock}
   commands to  separate the authors's names, the title, the
-  book/journal reference, and any notes. 
+  book/journal reference, and any notes. If an overlay specification
+  is present, it must come directly after the word
+  \texttt{bibitem}. If present, the entry will only be shown on the
+  specified slides.
 }
 \Example
 
@@ -1675,7 +1712,6 @@ as specified by the template for bibliographies.
   \newblock Smoothsort, an alternative for sorting in situ.
   \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
 \end{verbatim}
-
 
 Note that, unlike normal \LaTeX, the default template for the
 bibliography does not repeat the citation text (like ``[Dijkstra,
@@ -2082,7 +2118,7 @@ The main environment for creating columns is called
 
 
 
-\section{Graphics, Animations, and Special Effects}
+\section{Graphics, Colors, Animations, and Special Effects}
 
 \subsection{Graphics}
 \label{section-graphics}
@@ -2206,15 +2242,172 @@ out above, this is because of rather fundamental reasons) and not as
 easy to use, but it should be sufficient in most cases.
 
 
+
+
+
+\subsection{Color Management}
+
+The color management of the \beamer\ class relies on the packages
+\texttt{xcolor}, which is an extension of the \texttt{color} package,
+and on \texttt{xxcolor}, which in turn is an extension of
+\texttt{xcolor}. Hopefully, in the future \texttt{xxcolor} and
+\texttt{xcolor} will merge into one package and perhaps they will
+someday also merge together with \texttt{color}.
+
+
+\subsubsection{The Average Background Color}
+
+
+\subsubsection{Transparency Effects}
+
+By default, \emph{covered} items are not shown during a
+presentation. Thus if you write \verb!\uncover<2>{Text.}!, the text
+is not shown on any but the second slide. Note that the text is not
+simply printed using the background color -- it is not shown at
+all. This effect is most useful if your background does not have a
+uniform color.
+
+Sometimes however, you might prefer that covered items are not
+completely covered. Rather, you would like them to be shown already in
+a very dim or shaded way. This allows your audience to get a feeling
+for what is yet to come, without getting distracted by it. Also, you
+might wish text that is covered ``once more'' still to be visible to
+some degree.
+
+Ideally, there would be an option to make covered text
+``transparent.'' This would mean that when covered text is shown, it
+would instead be mixed with the background behind it. Unfortunately,
+this is more or less impossible to implement since neither PostScript
+nor \pdf\ currently support this.
+
+Nevertheless, you can come ``quite close'' to transparent text using
+the special command
+\begin{verbatim}
+\beamersetuncovermixins{#1}{#2}
+\end{verbatim}
+This commands allows you 
+to specify in a quite general way, how a covered item should be
+rendered. You can even specify different ways of rendering the item,
+depending on how long it will take before this item is shown or for
+how long it has already been covered once more. The transparency
+effect will automatically apply to all colors, \emph{except} for the
+colors in images and shadings. For images there is an awkward
+workaround, see the documentation of the \pgf\ package.
+
+As a convenience, two commands are defined in \texttt{beamertemplates}
+that install a predefined uncovering behavior.
+
+\Command{beamertemplatetransparentcovered}
+\Description{
+  Makes all covered text transparent. 
+}
+
+\Command{beamertemplatetransparentcovereddynamic}
+\Description{
+  Makes all covered text transparent, but is a dynamic way. The longer
+  it will take till the text is uncovered, the stronger the
+  transparency. 
+}
+
+\Command{beamersetuncovermixins}
+\Parameters{
+\item
+  A specification of how to render covered items that have \emph{not
+  yet} been uncovered.
+\item
+  A specification of how to render covered items that have \emph{once
+  more} been covered.
+}
+\Description{
+  The format of the specifications is explained below. If you leave
+one of the specifications empty, the corresponding covered items are
+completely covered, that is, they are invisible.
+}
+\Example
+\begin{verbatim}
+\beamersetuncovermixins
+  {\mixinon<1>{15!averagebackgroundcolor}
+    \mixinon<2>{10!averagebackgroundcolor}
+    \mixinon<3>{5!averagebackgroundcolor}
+    \mixinon<4->{2!averagebackgroundcolor}}
+  {\mixinon<1->{15!averagebackgroundcolor}}
+\end{verbatim}
+
+The specifications passed to \verb!\beamersetuncovermixins! can
+contain any number of the following two commands:
+
+\Command{mixinon}
+\Parameters{
+\item
+  An overlay specification given in brackets.
+\item
+  A mix-in specification.
+}
+\Description{
+  The overlay specification specifies on which slides the second
+parameter should be applied to all colors. Unlike other overlay
+specifications, the first parameter is a ``relative'' overlay
+specification. For example, the specification ``3'' here means
+``things that will be uncovered three slides ahead,'' respectively
+``things that have once more been covered for three slides.'' More
+precisely, if an item is uncovered for more than one slide and then
+covered once more, only the ``first moment of uncovering'' is used for
+the calculation of how long the item has been covered once more.
+
+  A \emph{mix-in} specification is a concept introduced by the
+\texttt{xcolor} package. A mix-in specification specifies how colors
+should be altered by adding another color to them. The specification
+consists of two parts, separated by an exclamation mark. The first
+part is a number between 0 and 100, where 0 means ``do not mix in the
+text color at all'' and 100 means ``use only the text color''. The
+second part is the color that should be mixed in. This second part may
+be omitted (along with the exclamation mark), in which case ``white''
+is used as mix-in color. Any color that has been defined using the
+\texttt{definecolor} command is permissible as a mix-in color.
+}
+\Example
+\begin{verbatim}
+\mixinon<1>{15!averagebackgroundcolor}
+\end{verbatim}
+For all items that become uncovered on the next slide or that have
+just been covered on the previous slide (depending on whether this
+command is used as part of the first or second parameter of the command
+\verb!\beamersetuncovermixins!), use only 15\% of the actual color and
+85\% of the average background color.
+
+\Command{invisibleon}
+\Parameters{
+\item
+  An overlay specification given in brackets.
+}
+\Description{
+  Text that is covered on the specified slides (once more,
+  relative to the current slide), is not shown at all.}
+\Example
+\begin{verbatim}
+\invisibleon<2->
+\end{verbatim}
+Makes everything totally covered that is not shown next or has just
+been shown.
+
+
+
 \subsection{Animations}
 
 There are two ways of creating animations. One way is to use the
 overlay commands of the \beamer\ package to create a series of slides
 that, when shown in rapid succession, present an animation. This is a
 flexible approach, but such animations will typically be rather static
-since it will take at least one second to advance from one slide to
-the next. This approach is mostly useful for animations where you want
+since it will take some time to advance from one slide to the
+next. This approach is mostly useful for animations where you want
 to explain each ``picture'' of the animation.
+
+When you advance ``by hand,'' that is, by pressing a forward
+button, it typically takes at least a second for the next slide to
+show. If you use the command \verb!\transduration{0}!, see the
+next subsection, you can create a much more rapid succession of
+slides. Note however, that each additional slide enlarges the final
+\texttt{.pdf} file quite a bit.
 
 A second way is to include an animation generated using some external
 program (like a renderer) and to then use the capabilities of the
@@ -2235,11 +2428,11 @@ shown before might slowly ``dissolve'' and be replaced by the slide's
 content.
 
 Slide transitions should be used with great care. Most of the time,
-they only distract. However, they can be useful in a limited number of
-situations: For example, you might show a young boy on a slide
-and might wish to dissolve this slide into slide showing a grown man
-instead. In this case, the dissolving gives the audience visual
-feedback that the young boy ``slowly becomes'' the man.
+they only distract. However, they can be useful in some situations:
+For example, you might show a young boy on a slide and might wish to
+dissolve this slide into slide showing a grown man instead. In this
+case, the dissolving gives the audience visual feedback that the young
+boy ``slowly becomes'' the man.
 
 There are a number of commands that can be used to specify what effect
 should be used when the current slide is presented. Consider the
@@ -2351,7 +2544,24 @@ effects are listed.
   thereby ``wiping out'' the previous contents.
 }
 \Example\verb!\transwipe{90}!
-  
+
+
+
+You can also specify how \emph{long} a given slide should be shown,
+using the following overlay-specification-aware command:
+
+\Command{transduration}
+\Parameters{
+\item
+  a number of seconds
+}
+\Description{
+  In full screen mode, show the slide the specified number of seconds.
+  In zero is specified, the slide is shown as short as possible. This
+  can be used to create interesting pseudo-animations.
+}
+\Example\verb!\transduration<2>{1}!
+
 
 
 

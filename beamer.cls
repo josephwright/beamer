@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2003/10/23 v0.91 Class for Typesetting a Beamer Presentation]
+[2003/10/23 v0.91-dev Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -18,7 +18,7 @@
 \RequirePackage{pgf}
 % For all sorts of things...
 
-\RequirePackage{color}
+\RequirePackage{xxcolor}
 % For color management.
 
 \RequirePackage{amssymb}
@@ -81,7 +81,11 @@
 }
 \def\strip@pt@and@otherjunk#1{\expandafter\rem@ptetc\the#1!}
 
-
+%
+% Make the effect of pdfpagetransition and duration global, not local
+%
+\define@key{Hyp}{pdfpagetransition}{\gdef\@pdfpagetransition{#1}}
+\define@key{Hyp}{pdfpageduration}{\gdef\@pdfpageduration{#1}}
 
 %
 %
@@ -695,11 +699,7 @@
   \hypersetup{pdfpageduration=}%
   \xdef\beamer@frameendpage{\thepage}% every time
   \beamer@entrycode\vspace*{-\baselineskip}\vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill%
-  % ``Globalize'' pdfpagetransition and pdfpageduration
-  \expandafter\gdef\expandafter\@pdfpagetransition\expandafter{\@pdfpagetransition}%
-  \expandafter\gdef\expandafter\@pdfpageduration\expandafter{\@pdfpageduration}%
-  }
+  {\beamer@exitcode\vskip0pt plus 1.5fill}
 
 \def\frametitle#1{%
   \vskip0pt plus -1fill%
@@ -862,10 +862,40 @@
 % Uncovering management
 %
 \def\beamer@spacingcover{\pgfsys@begininvisible\pgfsys@endinvisible}%for spacing reasons
-\def\beamer@startcovered{\pgfsys@begininvisible}
-\def\beamer@endcovered{\pgfsys@endinvisible}
+\def\beamer@startcovered{%
+  \gdef\beamer@do{\aftergroup\pgfsys@endinvisible\pgfsys@begininvisible}%
+  \def\mixinon<##1>##2{\only<##1>{\gdef\beamer@do{\XXC@@beginmixinblock{##2}}}\ignorespaces}%
+  \def\invisibleon<##1>{\only<##1>{\gdef\beamer@do{\aftergroup\pgfsys@endinvisible\pgfsys@begininvisible}}\ignorespaces}%
+  \ifnum\serialnumber<\beamer@minimum%ok, at beginning
+  {%
+    \beamer@saveanother%
+    \advance\beamer@minimum by-\serialnumber%
+    \serialnumber=\beamer@minimum%
+    \beamer@uncoverbeforeactions%
+    \beamer@restoreanother%
+  }%
+  \else%
+  {%
+    \beamer@saveanother%
+    \advance\serialnumber by-\beamer@minimum%
+    \beamer@uncoverafteractions%
+    \beamer@restoreanother%
+  }%
+  \fi%
+  \begingroup\beamer@do}
+\def\beamer@endcovered{\endgroup}%
+\def\beamer@saveanother{\let\beamer@savedif=\if@anotherslide}
+\def\beamer@restoreanother{\global\let\if@anotherslide=\beamer@savedif}
 
-\definecolor{back}{rgb}{0.95,0.9,0.95}
+\def\beamersetuncovermixins#1#2{%
+  \gdef\beamer@uncoverbeforeactions{\ignorespaces#1}%
+  \gdef\beamer@uncoverafteractions{\ignorespaces#2}}
+
+\beamersetuncovermixins{}{}
+
+
+
+
 
   
 %
@@ -899,8 +929,9 @@
 \newcounter{framenumber}
 \def\insertframenumber{\@arabic\c@framenumber}
 
-\def\frame{\@ifnextchar[{\@frame}{\@frame[+]}}
-\def\@frame[#1]{%
+\def\frame{\@ifnextchar[{\beamer@frame}{\beamer@frame[+]}}
+\def\beamer@frame{\begingroup\catcode`:=12\catcode`|=12\beamer@@frame}% Hackery for french style
+\def\beamer@@frame[#1]{\endgroup%
   \refstepcounter{framenumber}%
   {\let\@elt\@savecounter\@overlaycounterresets}
   \gdef\insertframetitle{}%
@@ -994,7 +1025,7 @@
 % As a side effect, \@another is called whenever the there is a number
 % in the list that is larger than the current serialnumber
 
-\def\decode{\gdef\@decodefound{+}\@@decodefind}
+\def\decode{\global\beamer@minimum=10000\relax\gdef\@decodefound{+}\@@decodefind}
 \def\@@decodefind{\futurelet\@next\@decodeinsertdefault}
 \def\@decodeinsertdefault{\ifcat\@next a%
   \gdef\@next{}%
@@ -1022,6 +1053,8 @@
   \fi%
   \@next}
 
+\newcount\beamer@minimum
+
 \def\dowhat{}
 \def\@decode{%
   \@ifnextchar!%
@@ -1033,12 +1066,15 @@
       {\@decodeuntil}%
       {\@decodenumber}}}}
 \def\@decodeend!{}
-\def\@decodeall+,{\ifnum1>\serialnumber%
+\def\@decodeall+,{%
+  \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
+  \ifnum1>\serialnumber%
   \global\@anotherslidetrue%
   \@localanotherslidetrue%
   \fi%
   \gdef\dowhat{\doit}\@decode}
 \def\@decodeuntil-#1,{%
+  \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
   \ifnum#1>\serialnumber\global\@anotherslidetrue\@localanotherslidetrue\fi%
   \ifnum\serialnumber>#1\else\gdef\dowhat{\doit}\fi%
   \@decode}
@@ -1055,15 +1091,18 @@
   {\@decodeto{#1}}%
   {\@decodebetween{#1}}}
 \def\@decodeto#1,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
   \ifnum#1>\serialnumber\global\@anotherslidetrue\@localanotherslidetrue\fi%
   \ifnum#1>\serialnumber\else\gdef\dowhat{\doit}\fi%
   \@decode}
 \def\@decodebetween#1#2,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
   \ifnum#1>\serialnumber\global\@anotherslidetrue\@localanotherslidetrue\fi%
   \ifnum#2>\serialnumber\global\@anotherslidetrue\@localanotherslidetrue\fi%
   \ifnum#1>\serialnumber\else\ifnum#2<\serialnumber\else\gdef\dowhat{\doit}\fi\fi%
   \@decode}
 \def\@decodeone#1,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
   \ifnum#1>\serialnumber\global\@anotherslidetrue\@localanotherslidetrue\fi%
   \ifnum#1=\serialnumber\gdef\dowhat{\doit}\fi%
   \@decode}
@@ -1113,9 +1152,9 @@
 \def\@structure#1{\def\insertstructure{#1}\@structuretemplate}
 
 \long\def\usealerttemplate#1{%
-  \def\@alerttemplate{#1}}
+  \gdef\@alerttemplate{#1}}
 \long\def\usestructuretemplate#1{%
-  \def\@structuretemplate{#1}}
+  \gdef\@structuretemplate{#1}}
 
 \usealerttemplate{{\color{red}\insertalert}}
 \usestructuretemplate{{\color{structure}\insertstructure}}
@@ -1212,7 +1251,7 @@
   \beamer@tempdim=\beamer@leftmargin%
   \advance\beamer@tempdim by\beamer@leftsidebar%
   \geometry{left=\the\beamer@tempdim}%
-  \def\beamer@leftsidebartemplate{%
+  \gdef\beamer@leftsidebartemplate{%
     \vbox to \sidebarheight{%
       #2\vfil%
     }%
@@ -1225,7 +1264,7 @@
   \beamer@tempdim=\beamer@rightmargin%
   \advance\beamer@tempdim by\beamer@rightsidebar%
   \geometry{right=\the\beamer@tempdim}%
-  \def\beamer@rightsidebartemplate{%
+  \gdef\beamer@rightsidebartemplate{%
     \vbox to \sidebarheight{%
       #2\vfil%
     }%
@@ -1260,7 +1299,7 @@
 
 
 \def\userightsidebarbackgroundtemplate#1{
-  \def\beamer@rightsidebarbackground{%
+  \gdef\beamer@rightsidebarbackground{%
     \vbox to \sidebarheight{%
       #1\vfil%
     }}}
@@ -1284,6 +1323,24 @@
 \def\userightsidebarhorizontalshadingtemplate#1#2{%
   \pgfdeclarehorizontalshading{beamer@rightsidebar}{\textheight}{rgb(0cm)=(#1); rgb(\beamer@rightsidebar)=(#2)}%
   \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
+
+
+
+
+%
+%
+% Background management
+%
+%
+\long\def\usebackgroundtemplate#1{%
+  \gdef\@backgroundtemplate{#1}}
+
+\def\beamersetaveragebackground#1{%
+  \colorlet{averagebackgroundcolor}{#1}}
+
+\beamersetaveragebackground{white}
+
+
 
 
 %
@@ -1342,9 +1399,6 @@
   \def\@oddfoot{\hypertarget{Navigation\thepage}{}\hfil}
   \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
 
-\long\def\usebackgroundtemplate#1{%
-  \def\@backgroundtemplate{#1}}
-
 \def\recalculatefoot{%
   \setbox\tempbox=\hbox{\@foottemplate}%
   \footheight=\ht\tempbox%
@@ -1366,12 +1420,12 @@
   \advance\footheight by -4pt}%
 
 \long\def\usefoottemplate#1{%
-  \def\@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}%
+  \gdef\@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}%
   \recalculatefoot}
 \def\insertpagenumber{\thepage}
 
 \long\def\useheadtemplate#1{%
-  \def\@headtemplate{\offinterlineskip\reset@font#1}%
+  \gdef\@headtemplate{\offinterlineskip\reset@font#1}%
   \recalculatehead} 
 
 \def\insertvrule#1#2{%
@@ -1410,8 +1464,8 @@
     \hyperlink{Navigation#3}{\@sectionheadnohilight}\fi}%
   \ignorespaces}
 
-\long\def\usesectionheadtemplate#1#2{\def\@sectionheadhilight{#1}\def\@sectionheadnohilight{#2}}
-\long\def\usesectionsidetemplate#1#2{\def\@sectionsidehilight{#1}\def\@sectionsidenohilight{#2}}
+\long\def\usesectionheadtemplate#1#2{\gdef\@sectionheadhilight{#1}\gdef\@sectionheadnohilight{#2}}
+\long\def\usesectionsidetemplate#1#2{\gdef\@sectionsidehilight{#1}\gdef\@sectionsidenohilight{#2}}
 
 \def\insertverticalnavigation#1{%
   \vbox{%
@@ -1508,7 +1562,7 @@
   \expandafter\hyperlink\beamer@goto}
 
 
-\long\def\useminislidetemplate#1#2#3#4#5{\def\@minislidehilight{#1}\def\@minisliderowhilight{#2}\def\@minislide{#3}
+\long\def\useminislidetemplate#1#2#3#4#5{\gdef\@minislidehilight{#1}\gdef\@minisliderowhilight{#2}\gdef\@minislide{#3}
 \beamer@boxsize=#4\vboxoffset=#5}
 
 \def\insertsectionnavigation#1{%
@@ -1621,8 +1675,8 @@
     \box\sectionbox\hfil\hskip.3cm%
     #3}}
 
-\long\def\usesubsectionheadtemplate#1#2{\def\@subsectionheadhilight{#1}\def\@subsectionheadnohilight{#2}}
-\long\def\usesubsectionsidetemplate#1#2{\def\@subsectionsidehilight{#1}\def\@subsectionsidenohilight{#2}}
+\long\def\usesubsectionheadtemplate#1#2{\gdef\@subsectionheadhilight{#1}\gdef\@subsectionheadnohilight{#2}}
+\long\def\usesubsectionsidetemplate#1#2{\gdef\@subsectionsidehilight{#1}\gdef\@subsectionsidenohilight{#2}}
 
 
 %
@@ -1632,16 +1686,16 @@
 %
 
 \long\def\useblocktemplate#1#2{%
-  \def\@beginblocktemplate{#1}
-  \def\@endblocktemplate{#2}}
+  \gdef\@beginblocktemplate{#1}
+  \gdef\@endblocktemplate{#2}}
 
 \long\def\usealertblocktemplate#1#2{%
-  \def\@beginalertblocktemplate{#1}
-  \def\@endalertblocktemplate{#2}}
+  \gdef\@beginalertblocktemplate{#1}
+  \gdef\@endalertblocktemplate{#2}}
 
 \long\def\useexampleblocktemplate#1#2{%
-  \def\@beginexampleblocktemplate{#1}
-  \def\@endexampleblocktemplate{#2}}
+  \gdef\@beginexampleblocktemplate{#1}
+  \gdef\@endexampleblocktemplate{#2}}
 
 \newoverlayenvironment{block}[1]{%
   \def\insertblockname{#1}%
@@ -1741,7 +1795,7 @@
   \def\insertfootnotemark{\@makefnmark}%
   \footnotetemplate}
 \def\usefootnotetemplate#1{%
-  \def\footnotetemplate{#1}}
+  \gdef\footnotetemplate{#1}}
 
 \usefootnotetemplate{
   \parindent 1em\noindent%
@@ -1811,8 +1865,8 @@
 }
 
 \long\def\usetemplatetocsection#1#2{
-  \def\sectiontemplate{\def\@breakhere{\\}#1}
-  \def\sectiontemplateshaded{\def\@breakhere{\\}#2}}
+  \gdef\sectiontemplate{\def\@breakhere{\\}#1}
+  \gdef\sectiontemplateshaded{\def\@breakhere{\\}#2}}
 
 \long\def\subsectionintoc#1#2#3#4{%
     \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
@@ -1843,8 +1897,8 @@
 }
 
 \long\def\usetemplatetocsubsection#1#2{
-  \def\@subsectiontemplate{\def\@breakhere{\\}#1}
-  \def\@subsectiontemplateshaded{\def\@breakhere{\\}#2}}
+  \gdef\@subsectiontemplate{\def\@breakhere{\\}#1}
+  \gdef\@subsectiontemplateshaded{\def\@breakhere{\\}#2}}
 
   
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
@@ -1909,33 +1963,33 @@
 \def\enditemize{\endlist\csname\@itemctr endtemplate\endcsname}
 
 \def\useenumerateitemtemplate#1{% 
-  \def\labelenumi{\def\insertenumlabel{\theenumi}#1}}
+  \gdef\labelenumi{\def\insertenumlabel{\theenumi}#1}}
 
 \def\useenumeratetemplate#1#2{% before and after
-  \def\enumistarttemplate{#1}%
-  \def\enumiendtemplate{#2}}
+  \gdef\enumistarttemplate{#1}%
+  \gdef\enumiendtemplate{#2}}
 
 \def\usesubenumerateitemtemplate#1{%
-  \def\labelenumii{\def\insertenumlabel{\theenumi}\def\insertsubenumlabel{\theenumii}#1}}
+  \gdef\labelenumii{\def\insertenumlabel{\theenumi}\def\insertsubenumlabel{\theenumii}#1}}
 
 \def\usesubenumeratetemplate#1#2{% before and after
-  \def\enumiistarttemplate{#1}%
-  \def\enumiiendtemplate{#2}}
+  \gdef\enumiistarttemplate{#1}%
+  \gdef\enumiiendtemplate{#2}}
 
 
 \def\useitemizeitemtemplate#1{%
-  \def\labelitemi{#1}}%itemilabeltemplate{#1}}
+  \gdef\labelitemi{#1}}%itemilabeltemplate{#1}}
 
 \def\useitemizetemplate#1#2{% before and after
-  \def\itemistarttemplate{#1}%
-  \def\itemiendtemplate{#2}}
+  \gdef\itemistarttemplate{#1}%
+  \gdef\itemiendtemplate{#2}}
 
 \def\usesubitemizeitemtemplate#1{%
-  \def\labelitemii{#1}}%itemiilabeltemplate{#1}}
+  \gdef\labelitemii{#1}}%itemiilabeltemplate{#1}}
 
 \def\usesubitemizetemplate#1#2{% before and after
-  \def\itemiistarttemplate{#1}%
-  \def\itemiiendtemplate{#2}}
+  \gdef\itemiistarttemplate{#1}%
+  \gdef\itemiiendtemplate{#2}}
 
 
 \def\description{\@ifnextchar[{\@description}{\@descdefault\@descdefaulttemp\@@description}}
@@ -1946,8 +2000,8 @@
 \long\def\@descriptionitem#1{\def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
 
-\def\usedescriptionitemtemplate#1#2{\def\descriptionitemtemplate{#1}\@descdefaulttemp=#2%
-  \advance\@descdefaulttemp by \labelsep}
+\def\usedescriptionitemtemplate#1#2{\gdef\descriptionitemtemplate{#1}\global\@descdefaulttemp=#2%
+  \global\advance\@descdefaulttemp by \labelsep}
 \usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}
 
 
@@ -1994,6 +2048,19 @@
 \def\beamerline#1{%
   \hbox{\hskip-\Gm@lmargin#1\hskip-\Gm@rmargin}}
 
+%
+% Label hackery (for using labels in overlays)
+%
+\AtBeginDocument{%
+  \let\beamer@origlabel\label
+  \def\label{\@ifnextchar<{\beamer@label}{\beamer@label<1>}}
+  \def\beamer@label<#1>#2{\alt<#1>{\beamer@origlabel{#2}}{}}
+
+  \let\beamer@origlabel@in@display\label@in@display
+  \def\label@in@display{\@ifnextchar<{\beamer@label@in@display}{\beamer@label@in@display<1>}}
+  \def\beamer@label@in@display<#1>#2{\alt<#1>{\beamer@origlabel@in@display{#2}}{}}  
+}
+
 
 %
 % Bibliography code
@@ -2023,10 +2090,21 @@
 
 \long\def\@biblabeltemplate#1{\def\insertbiblabel{#1}\biblabeltemplate\hfil}
 
-\let\@oldlbibitem\@lbibitem
-\def\@lbibitem[#1]#2{\@oldlbibitem[#1]{#2}\def\newblock{\@newblock}\newblock\hbox{}}
-\let\@oldbibitem\@bibitem
-\def\@bibitem#1{\@oldbibitem{#1}\def\newblock{\@newblock}\newblock}
+\def\bibitem{\@ifnextchar<{\beamer@bibitem@store}{\gdef\beamer@bibstore{}\beamer@plainbibitem}}
+\def\beamer@bibitem@store<#1>{\gdef\beamer@bibstore{<#1>}\beamer@plainbibitem}
+\def\beamer@plainbibitem{\@ifnextchar[\@lbibitem\@bibitem}
+\def\@lbibitem[#1]#2{\expandafter\item\beamer@bibstore[\@biblabel{#1}\hfill]%
+  \@ifundefined{beamerbib@#2@\the\c@framenumber}{\if@filesw
+    {\let\protect\noexpand
+      \immediate
+      \write\@auxout{\string\bibcite{#2}{#1}}}\fi%
+    \global\@namedef{beamerbib@#2@\the\c@framenumber}{\relax}}{}%
+  \def\newblock{\@newblock}\newblock\hbox{}\ignorespaces}
+\def\@bibitem#1{\expandafter\item\beamer@bibstore\@ifundefined{beamerbib@#1@\the\c@framenumber}%
+  {\if@filesw \immediate\write\@auxout
+    {\string\bibcite{#1}{\the\value{\@listctr}}}\fi\global\@namedef{beamerbib@#1@\the\c@framenumber}{\relax}}%
+  {}%
+  \def\newblock{\@newblock}\newblock\ignorespaces}
 
 \def\@newblock{\firstblocktemplate%
   \def\newblock{\secondblocktemplate%
@@ -2035,15 +2113,21 @@
   \setbox\tempbox=\hbox{\ }\hskip-\wd\tempbox\setbox\tempbox=\hbox{}\ht\tempbox=1.5em\box\tempbox}
 
 \long\def\usebibitemtemplate#1{%
-  \def\biblabeltemplate{#1}}
+  \gdef\biblabeltemplate{#1}}
 
 \long\def\usebibliographyblocktemplate#1#2#3#4{%
-  \def\firstblocktemplate{#1}%
-  \def\secondblocktemplate{#2}%
-  \def\thirdblocktemplate{#3}%
-  \def\otherblocktemplate{#4}}
+  \gdef\firstblocktemplate{#1}%
+  \gdef\secondblocktemplate{#2}%
+  \gdef\thirdblocktemplate{#3}%
+  \gdef\otherblocktemplate{#4}}
 
 \pgfdeclareimage{beamericonarticle}{11pt}{14pt}{beamericonarticle}
+\pgfdeclareimage{beamericonarticleshaded}{11pt}{14pt}{beamericonarticle.20}
+\pgfaliasimage{beamericonarticle!20!averagebackgroundcolor}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle!15!averagebackgroundcolor}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle!10!averagebackgroundcolor}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle!5!averagebackgroundcolor}{beamericonarticleshaded}
+\pgfaliasimage{beamericonarticle!2!averagebackgroundcolor}{beamericonarticleshaded}
 \usebibitemtemplate{\lower3pt\hbox{\hskip1.5pt\pgfuseimage{beamericonarticle}}}
 \usebibliographyblocktemplate
   {\color{structure}}
@@ -2071,8 +2155,76 @@
 \def\@transglitter#1{\hypersetup{pdfpagetransition={Glitter /Di #1}}}
 \def\@transwipe#1{\hypersetup{pdfpagetransition={Wipe /Di #1}}}
 
-  
-  
+\newoverlaycommand{\transduration}{\@transdur}{\gobble}
+\def\@transdur#1{\hypersetup{pdfpageduration=#1}}
+
+
+%
+% Floats and tables
+%
+
+\def\figure{\@ifnextchar[{\@figure}{\@figure[]}}
+\def\@figure[#1]{% ignores placement specification!
+  \def\@captype{figure}%
+  \begin{center}}
+\def\endfigure{\end{center}}
+\newcounter{figure}
+\renewcommand\thefigure{\@arabic\c@figure}
+
+\def\table{\@ifnextchar[{\@table}{\@table[]}}
+\def\@table[#1]{% ignores placement specification!
+  \def\@captype{table}%
+  \begin{center}}
+\def\endtable{\end{center}}
+\newcounter{table}
+\renewcommand\thetable{\@arabic\c@table}
+
+\newlength\abovecaptionskip
+\newlength\belowcaptionskip
+\setlength\abovecaptionskip{7pt}
+\setlength\belowcaptionskip{7pt}
+
+\def\caption{
+  \ifx\@captype\@undefined
+    \@latex@error{\noexpand\caption outside figure or table}\@ehd
+    \expandafter\@gobble
+ \else
+   \refstepcounter\@captype
+   \expandafter\@firstofone
+ \fi
+ {\@dblarg{\@caption\@captype}}%
+}
+\long\def\@caption#1[#2]#3{% second argument ignored
+  \par
+  \begingroup
+    \@parboxrestore
+    \if@minipage
+      \@setminipage
+    \fi
+    \normalsize
+    \@makecaption{#1}{\ignorespaces #3}\par
+    \endgroup}
+\long\def\@makecaption#1#2{%
+  \def\insertcaptionname{\csname#1name\endcsname}%
+  \def\insertcaptionnumber{\csname the#1\endcsname}%
+  \def\insertcaption{#2}%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{\beamer@captiontemplate}%
+  \ifdim \wd\@tempboxa >\hsize
+    \beamer@captiontemplate\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\long\def\usecaptiontemplate#1{%
+  \gdef\beamer@captiontemplate{#1}}
+\usecaptiontemplate{%
+  {\small\structure{\insertcaptionname~\insertcaptionnumber:}
+  \insertcaption}}
+
+
 
 %
 % Notes
@@ -2113,6 +2265,38 @@
 
 
 
+%
+%
+% Just for fun! Not really meant seriously... But give it a try with
+% the Acrobat Reader in Fullscreen...
+%
+%
+\def\fadeoutframe#1{%
+  \frame[all:1]{#1}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}}
+\def\fadeinframe#1{%
+  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{#1}}
+\def\fadeinoutframe#1{%
+  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{#1}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{80!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{60!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{40!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{20!averagebackgroundcolor}#1\end{colormixin}}
+  \frame[all:1]{\transduration{0}\begin{colormixin}{5!averagebackgroundcolor}#1\end{colormixin}}}
 
 %
 %

@@ -14,6 +14,7 @@
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{amsmath,amssymb}
 \usepackage[latin1]{inputenc}
+\usepackage{colortbl}
 
 %
 % The following defintions are peculiar to this particular
@@ -133,21 +134,23 @@
 \date[DLT 2003]{Developments in Language Theory Conference, 2003}
 
 % Try this:
-\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
+%\beamertemplateshadingbackground{1,0.9,0.9}{0.9,0.9,1}
+\beamertemplatetransparentcoveredchanging
 
 \begin{document}
 
 \frame{\titlepage}
+% Try this instead: \fadeoutframe{\titlepage}
 
 \section[Outline]{}
 
-\makeatletter
-\frame{\transdissolve\tableofcontents}
+\frame{\tableofcontents}
+% Try this instead: \fadeinframe{\tableofcontents}
 \note{At most 1 minute for the outline.}
 
 \section[Models]{The Model of Overhead-Free Computation}
 
-\frame[handout:0]{\tableofcontentscurrent}
+\frame[handout:0]{\transdissolve\tableofcontentscurrent}
 
 \subsection[Standard Model]{The Standard Model of Linear Space}
 
@@ -506,12 +509,12 @@
 {
   \frametitle{A Review of Linear Grammars}
 
-  \begin{Definition}
+  \begin{Definition}<1>
     A grammar is \alert{linear} if it is context-free and\\ there is
     only one nonterminal per right-hand side.
   \end{Definition}
 
-  \begin{Example}
+  \begin{Example}<1>
     $G_1\colon S \to 00S0 \mid 1$.
     
     $G_2\colon S \to 0S10 \mid 0$.
@@ -594,7 +597,7 @@
 \frame
 {
   \frametitle{Definition of Almost-Overhead-Free Computations}
- 
+
   \begin{Definition}
     A Turing machine is \alert{almost-overhead-free} if
     \begin{itemize}
@@ -796,33 +799,29 @@
   
   \begin{thebibliography}{10}
     
-  \bibitem{sal:b:formal-languages}
+  \bibitem<2->{sal:b:formal-languages}
     A.~Salomaa.
     \newblock {\em Formal Languages}.
     \newblock Academic Press, 1973.
 
-    \beamertemplatearticlebibitems
-
-  \bibitem{dij:j:smoothsort}
+  \beamertemplatearticlebibitems
+  \bibitem<3->{dij:j:smoothsort}
     E.~Dijkstra.
     \newblock Smoothsort, an alternative for sorting in situ.
     \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
 
-  \bibitem{FeldmanO1973}
+  \bibitem<4->{FeldmanO1973}
     E.~Feldman and J.~Owings, Jr.
     \newblock A class of universal linear bounded automata.
     \newblock {\em Information Sciences}, 6:187--190, 1973.
 
-  \bibitem{JancarMPV1995}
+  \bibitem<5->{JancarMPV1995}
     P.~Jan{\v c}ar, F.~Mr{\'a}z, M.~Pl{\'a}tek, and J.~Vogel.
     \newblock Restarting automata.
     \newblock {\em FCT Conference 1995}, LNCS 985, pages
     282--292. 1995.
-
   \end{thebibliography}
 }
-
-
 
 
 %
@@ -879,7 +878,28 @@
     \end{enumerate}
   \end{theorem}
 }
-  
+
+\makeatletter
+\subsection{Abbreviations}
+
+\frame{
+  \frametitle{Explanation of Different Abbreviations}
+
+  \begin{table}
+    \rowcolors[]{1}{structure!25!averagebackgroundcolor}{structure!10!averagebackgroundcolor}
+    \begin{tabular}{ll}
+      \structure{$\DOF$} & \structure{D}eterministic \structure{O}verhead-\structure{F}ree.\\
+      \structure{$\NOF$} & \structure{N}ondeterministic \structure{O}verhead-\structure{F}ree.\\
+      \structure{$\DOFpoly$} & \structure{D}eterministic
+      \structure{O}verhead-\structure{F}ree, \structure{poly}nomial time.\\
+      \structure{$\DOFpoly$} & \structure{N}ondeterministic \structure{O}verhead-\structure{F}ree, \structure{poly}nomial time.
+    \end{tabular}
+    \caption{Explanation of what different abbreviations mean.}
+  \end{table}
+}
+
+
+
 \end{document}
 
 
