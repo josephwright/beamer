@@ -9,20 +9,6 @@
 
 
 
-%
-% Global Declarations used by beamer in all modes
-%
-\newbox\beamer@tempbox
-\newif\ifbeamer@blocks
-\newif\ifbeamer@ams
-\newif\ifbeamer@countsect
-\beamer@blockstrue
-\beamer@amstrue
-\beamer@countsectfalse
-\newcount\beamer@tempcount
-\newcounter{beamerpauses}
-
-
 
 \RequirePackage{beamerbasemodes}
 % Setup modes and check for article option
@@ -240,6 +226,13 @@
       \lowercase{\def~{\kern1ex}}
     }
   }  
+}
+
+\DeclareOptionBeamer{musixtex}
+{% code adapted from patch by Jérôme Marrec
+  \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+  \RequirePackage{etex}
+  \RequirePackage{musixtex}
 }
 
 

@@ -7,6 +7,22 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+
+
+%
+% Global Declarations used by beamer in all modes
+%
+\newbox\beamer@tempbox
+\newif\ifbeamer@blocks
+\newif\ifbeamer@ams
+\newif\ifbeamer@countsect
+\beamer@blockstrue
+\beamer@amstrue
+\beamer@countsectfalse
+\newcount\beamer@tempcount
+\newcounter{beamerpauses}
+
+
 \RequirePackage{beamerbasedecode}
 
 %
@@ -223,7 +239,7 @@
 
 
 %
-% Check whether we should initiate transfer to another class
+% Check whether we should initiate transfer to another class (obsolete)
 %
 
 % Extract class name, if present
@@ -256,7 +272,7 @@
 
   \beamer@inpresentationfalse
 
-  \gdef\beamer@currentmode{article}
+  \def\beamer@currentmode{article}
 
   \common
   

@@ -11,21 +11,10 @@
 \DeclareOption{noamsthm}{\PassOptionsToPackage{noamsthm}{beamerbasearticle}}
 \DeclareOption{envcountsect}{\PassOptionsToPackage{envcountsect}{beamerbasearticle}}
 \DeclareOption{activeospeccharacters}{\PassOptionsToPackage{activeospeccharacters}{beamerbasearticle}}
+\DeclareOption{musixtex}{\def\beamer@musixtex{\RequirePackage{musixtex}\RequirePackage{etex}}}
 
 \ProcessOptions
-
-%
-% Global Declarations used by beamer in all modes
-%
-\newbox\beamer@tempbox
-\newif\ifbeamer@blocks
-\newif\ifbeamer@ams
-\newif\ifbeamer@countsect
-\beamer@blockstrue
-\beamer@amstrue
-\beamer@countsectfalse
-\newcount\beamer@tempcount
-\newcounter{beamerpauses}
+\csname beamer@musixtex\endcsname
 
 \RequirePackage{beamerbasemodes}
 % Setup modes and check for article option
@@ -33,9 +22,11 @@
 \def\beamer@slide#1#2{\expandafter\gdef\csname beamer@slide#1\endcsname{#2}}
 \beamer@inpresentationfalse
 
-\gdef\beamer@currentmode{article}
-
-\common
+\ifx\beamer@currentmode\@undefined
+  \def\beamer@currentmode{article}
+\fi
+  
+\mode<all>
 
 \RequirePackage{beamerbasearticle}
 

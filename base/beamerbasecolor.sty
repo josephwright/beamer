@@ -228,8 +228,12 @@
 %
 
 \AtBeginDocument{\usebeamercolor{normal text}\color{fg}}%
-\AtBeginDocument{\everymath{\usebeamercolor{math text inlined}\ifbeamercolorempty[fg]{math text inlined}{}{\color{fg}}}}%
-\AtBeginDocument{\everydisplay{\@displaytrue}}%\usebeamercolor{math text displayed}\ifbeamercolorempty[fg]{math text displayed}{}{\color{fg}}}}%
+\AtBeginDocument{
+  \everymath\expandafter{\the\everymath
+    \usebeamercolor{math text inlined}\ifbeamercolorempty[fg]{math
+      text inlined}{}{\color{fg}}}}%
+% ``Crashes'' align environment:
+%\AtBeginDocument{\everydisplay\expandafter{\the\everydisplay\usebeamercolor{math text displayed}\ifbeamercolorempty[fg]{math text displayed}{}{\color{fg}}}}%
 
 
 %

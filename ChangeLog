@@ -1,4 +1,4 @@
-2004-04-22 Till Tantau <tantau@users.sourceforge.net>
+2004-07-06 Till Tantau <tantau@users.sourceforge.net>
 
 	CVS
 
@@ -6,10 +6,10 @@
 	- Completely new theme management.
 	- Lot's of new variations of themes.
 	- Font/element/layout/color themes. 
-	- TOCs in sidebar will now do line breaking.
+	- Old themes obsolete, but supported for compatibility.
 	
 	Added:
-	- Added frame environment.
+	- Added frame environment (finally!).
 	- Added the dot notation to overlay specifications. If a dot is
 	  used instead of a plus, the beamerpauses counter is not
 	  incremented. 
@@ -24,18 +24,30 @@
 	  frames. 
 	- Added new version of beamer.el by Thomas Baumann.
 	- \footnote now takes an overlay specification.
-	- Added beamerboxesrect environment.
+	- Added beamercolorbox environment.
 	- Characters like : may now be active (nice for french
 	  style). Only exceptions are < and >.
 	- Added a note on how to use msc.sty with beamer.
+	- TOCs in sidebar will now do line breaking.
+	- Powerful new font management.
+	- Powerful new color management.
+	- \tableofcontents now has more options for showing/not showing
+	  entries.
+	- Same is true for the toc in sidebars.
+	- Added \keywords command (like \subject).
+	- Added a patch to make beamer work together with musixtex.
 
 	Changed:
 	- Reordered directories.
+	- Split documentation into multiple files.
 	- Unified left and right sidebar commands to single commands that
 	  take [left] or [right] as argument.
-	- Switched to xcolor 1.11.
+	- beamerboxesrounded now works differently. color schemes no
+	  longer needed.
 	- Option class=xxxx onsolete. Use document class xxxx directly
 	  instead and load new style beamerarticle.
+	- Cleaned up some internals.
+	- Slight changes to vertical spacing.
 	
 	Bugfixes:
 	- Fixed incompatibility with czech.sty.
@@ -48,6 +60,13 @@
 	- Fixed \label bug in article mode in conjunction with amstex
 	- Fixed spacing problems when \pause is used in equations
 	- Fixed spacing problem with slides that start with an itemize.
+	- Fixed color problem in itemize in conjunction with evil use of
+	  \everymath. 
+	
+2004-07-06 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.21
+	- Switched to xcolor 2.00.
 
 2004-04-19 Till Tantau <tantau@users.sourceforge.net>
 

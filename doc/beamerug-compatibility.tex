@@ -191,6 +191,21 @@ class, extra options or precautions may be necessary.
   applies to pstricks also applies to |msc|.
 \end{package}
 
+\begin{package}{{musixtex}}
+  When using  MusiX\TeX\ to typeset  musical scores, you should  use the
+  |musixtex| class option. When using this option, your document must be
+  compiled with |pdfelatex| or |elatex| instead of |pdflatex| or
+  |latex|.  
+
+  Inside  a |music| environment, the |\pause| is redefined to match
+  MusiX\TeX's definition (a rest during one quarter of a whole). You can
+  use the |\beamerpause| command  to create overlays in this
+  environment.  
+ 
+  \articlenote
+  Add the option |musixtex| when loading |beamerarticle|.
+\end{package}
+
 \begin{package}{{pdfpages}}
   Commands like |\includepdf| only work \emph{outside} frames as they
   produce pages ``by themselves.'' You may also wish to say
