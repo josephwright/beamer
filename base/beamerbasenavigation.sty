@@ -512,7 +512,8 @@
 %
 
 \def\insertnavigation#1{%
-  \vbox{\tiny%
+  \vbox{%
+    \usebeamerfont{section in head/foot}%
     \beamer@xpos=0\relax%
     \beamer@ypos=1\relax%
     \hbox to #1{\hskip.3cm\setbox\beamer@sectionbox=\hbox{\kern1sp}%
@@ -532,6 +533,7 @@
     \def\insertsectionheadnumber{#1}%
     \def\insertpartheadnumber{#5}%
     \ifnum\c@section=#1%
+    \usebeamerfont{section in head/foot}%
     \hyperlink{Navigation#3}{\beamer@sectionheadhilight}\else%
     \hyperlink{Navigation#3}{\beamer@sectionheadnohilight}\fi}%
   \ht\beamer@sectionbox=1.875ex%
@@ -549,7 +551,9 @@
       \def\insertsectionhead{##2}%
       \def\insertsectionheadnumber{##1}%
       \def\insertpartheadnumber{##5}%
-         \hbox{\hyperlink{Navigation##3}{%
+      \hbox{%
+        \usebeamerfont{section in sidebar}%
+          \hyperlink{Navigation##3}{%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=0\relax%
               \beamer@sectionsidehilight%
@@ -568,7 +572,9 @@
       \def\insertsectionheadnumber{##1}%
       \def\insertsubsectionheadnumber{##2}%
       \def\insertpartheadnumber{##6}%
-      \hbox{\beamer@link(##4){%
+      \hbox{%
+        \usebeamerfont{subsection in sidebar}%
+          \beamer@link(##4){%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=##2%
               \beamer@subsectionsidehilight%
@@ -645,7 +651,7 @@
 
 \def\insertsectionnavigation#1{%
   \hbox to #1{%
-    \vbox{\tiny%
+    \vbox{\usebeamerfont{section in head/foot}%
      \vskip0.5625ex%
      \def\slideentry##1##2##3##4##5##6{}%
      \def\sectionentry##1##2##3##4##5{%
@@ -664,7 +670,9 @@
 \def\insertsectionnavigationhorizontal#1#2#3{%
   \hbox to #1{%
      \def\slideentry##1##2##3##4##5##6{}%
-     #2\hskip.3cm\tiny\setbox\beamer@sectionbox=\hbox{}%
+     #2\hskip.3cm%
+     \usebeamerfont{section in head/foot}%
+     \setbox\beamer@sectionbox=\hbox{}%
      \ht\beamer@sectionbox=1.875ex%
      \dp\beamer@sectionbox=0.75ex%
      \hskip-1.875ex plus-1fill\dohead%
@@ -673,7 +681,8 @@
 
 \def\insertsubsectionnavigation#1{%
   \hbox to #1{%
-    \vbox{\tiny%
+    \vbox{%
+      \usebeamerfont{section in head/foot}%
       \vskip0.5625ex%
       \beamer@currentsubsection=0%
       \def\sectionentry##1##2##3##4##5{}%
@@ -692,7 +701,8 @@
       \dohead\vskip0.5625ex}\hfil}}
 
 \def\insertsubsectionnavigationhorizontal#1#2#3{%
-  \hbox to #1{\tiny%
+  \hbox to #1{%
+    \usebeamerfont{section in head/foot}%
     \beamer@currentsubsection=0%
     \def\sectionentry##1##2##3##4##5{}%
     \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
@@ -710,7 +720,7 @@
       \ht\beamer@sectionbox=1.875ex%
       \dp\beamer@sectionbox=0.75ex%
       \fi\fi\fi\ignorespaces}%
-    #2\hskip.3cm\tiny\setbox\beamer@sectionbox=\hbox{}%
+    #2\hskip.3cm\setbox\beamer@sectionbox=\hbox{}%
     \hskip-1.875ex plus-1fill\dohead%
     \box\beamer@sectionbox\hfil\hskip.3cm%
     #3}}

@@ -56,6 +56,7 @@
   \expandafter\geometry\expandafter{#1=\the\beamer@tempdim}%
   \expandafter\gdef\csname beamer@#1sidebartemplate\endcsname{%
     \vbox to \sidebarheight{%
+      \reset@font\usebeamerfont{sidebar}%
       #3\vfil%
     }%
   }}
@@ -71,84 +72,6 @@
     }}}
 \usesidebarbackgroundtemplate[left]{}
 \usesidebarbackgroundtemplate[right]{}
-
-
-%\long\def\useleftsidebartemplate#1#2{% #1 = size, #2 = text
-%  \beamer@leftsidebar=#1\relax%
-%  % Reset left margin now
-%  \beamer@tempdim=\beamer@leftmargin%
-%  \advance\beamer@tempdim by\beamer@leftsidebar%
-%  \geometry{left=\the\beamer@tempdim}%
-%  \gdef\beamer@leftsidebartemplate{%
-%    \vbox to \sidebarheight{%
-%      #2\vfil%
-%    }%
-%  }}
-%\useleftsidebartemplate{0cm}{}
-  
-%\long\def\userightsidebartemplate#1#2{% #1 = size, #2 = text
-%  \beamer@rightsidebar=#1\relax%
-%  % Reset right margin now
-%  \beamer@tempdim=\beamer@rightmargin%
-%  \advance\beamer@tempdim by\beamer@rightsidebar%
-%  \geometry{right=\the\beamer@tempdim}%
-%  \gdef\beamer@rightsidebartemplate{%
-%    \vbox to \sidebarheight{%
-%      #2\vfil%
-%    }%
-%  }}
-%\userightsidebartemplate{0cm}{}
-
-
-
-
-%\def\useleftsidebarbackgroundtemplate#1{
-%  \def\beamer@leftsidebarbackground{%
-%    \vbox to \sidebarheight{%
-%      #1\vss%
-%    }}}
-%\useleftsidebarbackgroundtemplate{}
-
-% Sets the background of the side bar to a monotone color
-%\def\useleftsidebarcolortemplate#1{
-%  \useleftsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@leftsidebar}}
-
-% Sets the background of the side bar to a vertical shading ranging
-% between the parameter colors.
-%\def\useleftsidebarverticalshadingtemplate#1#2{%
-%  \pgfdeclareverticalshading{beamer@leftsidebar}{\beamer@leftsidebar}{color(0cm)=(#1); color(\paperheight)=(#2)}%
-%  \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
-
-% Sets the background of the side bar to a horizontal shading ranging
-% between the parameter colors.
-%\def\useleftsidebarhorizontalshadingtemplate#1#2{%
-%  \pgfdeclarehorizontalshading{beamer@leftsidebar}{\textheight}{color(0cm)=(#1); color(\beamer@leftsidebar)=(#2)}%
-%  \useleftsidebarbackgroundtemplate{\pgfuseshading{beamer@leftsidebar}}}
-
-
-%%\def\userightsidebarbackgroundtemplate#1{
-%%  \gdef\beamer@rightsidebarbackground{%
-%%    \vbox to \sidebarheight{%
-%%      #1\vss%
-%%    }}}
-%%\userightsidebarbackgroundtemplate{}
-
-%% Sets the background of the side bar to a monotone color
-%% Usage: usesidebarcolortemplate{\color{red}}
-%\def\userightsidebarcolortemplate#1{
-%  \userightsidebarbackgroundtemplate{#1\vrule height\paperheight width\beamer@rightsidebar}}
-
-%% Sets the background of the side bar to a vertical shading ranging
-%% between the parameter colors.
-%\def\userightsidebarverticalshadingtemplate#1#2{%
-%  \pgfdeclareverticalshading{beamer@rightsidebar}{\beamer@rightsidebar}{color(0cm)=(#1); color(\paperheight)=(#2)}%
-%  \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
-
-%% Sets the background of the side bar to a horizontal shading ranging
-%% between the parameter colors.
-%\def\userightsidebarhorizontalshadingtemplate#1#2{%
-%  \pgfdeclarehorizontalshading{beamer@rightsidebar}{\textheight}{color(0cm)=(#1); color(\beamer@rightsidebar)=(#2)}%
-%  \userightsidebarbackgroundtemplate{\pgfuseshading{beamer@rightsidebar}}}
 
 
 %
@@ -246,11 +169,11 @@
   }
 
 \long\def\usefoottemplate#1{%
-  \gdef\beamer@foottemplate{\offinterlineskip\reset@font\def\\{,}#1}}
+  \gdef\beamer@foottemplate{\offinterlineskip\reset@font\usebeamerfont{footline}\def\\{,}#1}}
 \def\insertpagenumber{\thepage}
 
 \long\def\useheadtemplate#1{%
-  \gdef\beamer@headtemplate{\offinterlineskip\reset@font#1}}%
+  \gdef\beamer@headtemplate{\offinterlineskip\reset@font\usebeamerfont{headline}#1}}%
 
 \def\insertvrule#1#2{%
   \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth

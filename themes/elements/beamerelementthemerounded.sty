@@ -1,0 +1,56 @@
+\ProvidesPackage{beamerelementthemerounded}[2004/04/21 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\DeclareOptionBeamer{shadow}{\def\beamer@themerounded@shadow{#1}}
+\ExecuteOptionsBeamer{shadow=false}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\beamertemplateballitem
+\beamertemplateboxedblocks[shadow=\beamer@themerounded@shadow]{rounded}
+\beamertemplatenumberedballsectiontoc
+
+\renewcommand{\beamertemplatesetupshadings}{
+  \beamerboxessetupshadows
+  \beamerboxesdeclarecolorscheme{block}{beamerstructure!75!black}{beamerstructure!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{alert}{beameralert!75!averagebackgroundcolor}{beameralert!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
+}
+
+\beamerboxesdeclarecolorscheme{title}{beamerstructure!75!black}{beamerstructure!75!black}
+\usetitlepagetemplate{
+    \vbox{}
+    \vfill
+    \begin{centering}
+      \begin{beamerboxesrounded}[shadow=true,scheme=title]{}
+          \begin{centering}%
+            \color{white}%
+            {\usebeamerfont{title}\inserttitle\par}%
+            \ifx\insertsubtitle\@empty%
+            \else%
+            \vskip0.25em%
+            {\usebeamerfont{subtitle}\insertsubtitle\par}%
+            \fi%
+          \end{centering}
+      \end{beamerboxesrounded}
+      \vskip1em\par
+      {\usebeamerfont{author}\insertauthor\par}\vskip1em
+      {\usebeamerfont{institute}\insertinstitute\par}\vskip1em
+      {\usebeamerfont{date}\insertdate\par}\vskip1.5em
+      \inserttitlegraphic\par
+    \end{centering}
+    \vfill
+  }
+  
+\mode<all>
+
+%%% Local Variables: 
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 

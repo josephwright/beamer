@@ -411,75 +411,7 @@
 \RequirePackage{beamerbasethemes}
 % Commands for including and building themes
 
-
-
-
-%
-%
-% Default Theme
-%
-%
-
-\usefonttheme{plain}
-
-                                % Part and title page
-\beamertemplatetitlepage
-\beamertemplatepartpage
-
-                                % Frame title
-\beamertemplateboldcenterframetitle
-
-                                % Sections in headline
-\beamertemplatedarksectionheads
-
-                                % Mini slides in headline
-\beamertemplatecircleminiframe
-
-                                % Entries in table of contents
-\beamertemplateplaintoc
-
-                                % Head
-\useheadtemplate{%
-  \vbox{%
-  \vskip3pt%
-  \beamerline{\insertnavigation{\paperwidth}}%
-  \vskip1.5pt%
-  \insertvrule{0.4pt}{structure!50!averagebackgroundcolor}}%
-}
-
-                                % Foot
-\usefoottemplate{}
-
-                                % Background
-\beamertemplatesolidbackgroundcolor{white}
-
-                                % Blocks
-\beamertemplateboldblocks
-
-                                % Theorems
-\beamertemplatetheoremsunnumbered
-
-                                % Enumerations
-\beamertemplateenumeratealpha
-\useenumeratetemplate{}{}
-\usesubenumeratetemplate{\begin{small}}{\end{small}}
-\usesubsubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}
-
-                                % Itemize
-\beamertemplatetriangleitem
-\useitemizetemplate{}{}
-\usesubitemizetemplate{\begin{small}}{\end{small}}
-\usesubsubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}
-
-                                % Buttons
-\beamertemplatesolidbuttons
-
-                                % Navigation symbols
-\beamertemplatenavigationsymbolshorizontal
-\beamertemplaterightsidebarlogonavigation
-
-                                % Continuations
-\beamertemplatecontinuationroman
+\usetheme{default}
 
 %%% Local Variables: 
 %%% mode: latex

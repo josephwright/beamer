@@ -21,7 +21,7 @@
 % Title and part page templates
 %
 
-\newcommand{\beamertemplatetitlepage}{
+\newcommand{\beamertemplatedefaulttitlepage}{
   \usetitlepagetemplate{
     \vbox{}
     \vfill
@@ -41,9 +41,9 @@
     \vfill
   }
 }
+\@onlypreamble\beamertemplatedefaulttitlepage
 
-
-\newcommand{\beamertemplatepartpage}{
+\newcommand{\beamertemplatedefaultpartpage}{
   \usepartpagetemplate{
     \begin{centering}
       \usebeamerfont{partpage}%
@@ -53,45 +53,39 @@
     \end{centering}
   }
 } 
+\@onlypreamble\beamertemplatedefaultpartpage
+
 
 
 %
 % Frame title templates
 %
 
-\newcommand{\beamertemplateboldcenterframetitle}{
+\newcommand{\beamertemplatedefaultframetitle}[1][left]{%
   \useframetitletemplate{%
     \vskip0.25em%
-    \begin{centering}
-      \structure{\textbf{\insertframetitle}}
-      \par
-      \ifx\insertsubtitle\@empty\else{\footnotesize\structure{\textbf{\insertframesubtitle}}\par}\fi
-    \end{centering}
+    \begin{beamer@fte#1}%
+      {\usebeamerfont{frametitle}\structure{\insertframetitle}\par}%
+      {%
+        \ifx\insertsubtitle\@empty%
+        \else%
+        {\usebeamerfont{framesubtitle}\structure{\insertframesubtitle}\par}%
+        \fi
+      }%
+    \end{beamer@fte#1}%
   }
 }
-\newcommand{\beamertemplateboldframetitle}{
-  \useframetitletemplate{%
-    \vskip0.25em%
-    {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
-     \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
-      \color{beamerstructure}
-      \Large\bfseries\insertframetitle\par%
-      {\footnotesize\structure{\textbf{\insertframesubtitle}}\par}
-    }%
-    }
-}
-\newcommand{\beamertemplatelargeframetitle}{
-  \useframetitletemplate{%
-    \vskip0.25em%
-    {\leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
-     \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode
-      \color{beamerstructure}
-      \Large\insertframetitle\par%
-      {\footnotesize\structure{\insertframesubtitle}\par}%
-    }%
-  }
-}
-  
+\@onlypreamble\beamertemplatedefaultframetitle
+
+\newenvironment{beamer@ftecenter}{\begin{centering}}{\end{centering}}
+\newenvironment{beamer@fteleft}{%
+  \leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
+  \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode}{}
+\newenvironment{beamer@fteright}{%
+  \vskip0.5cm\leftskip1cm plus1fill%
+  \rightskip1cm\leavevmode}{}
+
+
 
 %
 % Side bars
@@ -123,13 +117,15 @@
 % Table of contents templates
 %
 
-\newcommand{\beamertemplateplaintoc}{
+\newcommand{\beamertemplatedefaulttoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-    {\large\color{beamerstructure}\inserttocsection}
+    {\structure{\inserttocsection\par}}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
     {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
 }
+\@onlypreamble\beamertemplatedefaulttoc
+
 
 \newcommand{\beamertemplatenumberedsubsectiontoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
@@ -147,17 +143,19 @@
   {\leavevmode\leftskip=2.5em\color{black}\inserttocsubsection\par}
 }
 
-\@ifundefined{pgfex}{\newdimen\pgfex}{}
-
 \newcommand{\beamertemplatenumberedcirclesectiontoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=.5em\color{beamerstructure}%
-    \llap{\pgfex=1ex\begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \color{beamerstructure!50!averagebackgroundcolor}
-      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{white}\inserttocsectionnumber}
-    \end{pgfpicture}\kern1.5ex}\inserttocsection\par}
-
+  {\leavevmode\leftskip=2ex\color{beamerstructure}%
+    \llap{%
+      \usebeamerfont*{section number projected}%
+      \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+        \color{beamerstructure!50!averagebackgroundcolor}
+        \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+        \pgfbox[center,base]{\color{white}\inserttocsectionnumber}
+      \end{pgfpicture}\kern1.5ex%
+    }%
+    \inserttocsection\par}
+  
   \usetemplatetocsubsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=2em\color{black}\inserttocsubsection\par}
 }
@@ -165,19 +163,23 @@
 \newcommand{\beamertemplatenumberedsquaresectiontoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=2ex\color{beamerstructure}%
-    \llap{\color{beamerstructure}%
-      \vrule width2ex height1.65ex depth.35ex%
-      \hskip-2ex%
-      \hbox to2ex{\hfil\color{white}\inserttocsectionnumber\hfil}}%
+    \llap{%
+      \usebeamerfont*{section number projected}%
+      \color{beamerstructure!75!averagebackgroundcolor}%
+      \vrule width2.25ex height1.85ex depth.4ex%
+      \hskip-2.25ex%
+      \hbox to2.25ex{\hfil\color{white}\inserttocsectionnumber\hfil}}%
     \kern1ex\inserttocsection\par}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=5ex\color{black}\llap{\color{beamerstructure}%
+  {\leavevmode\leftskip=5ex\color{black}\llap{\color{beamerstructure!75!averagebackgroundcolor}%
       \vrule width1ex height1ex\kern1ex}\inserttocsubsection\par}
 }
 
 
 \newcommand{\beamertemplatenumberedballsectiontoc}{
+  \setbeamerfont{section number projected}{size=\scriptsize}
+  
   \pgfdeclareradialshading{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
   {color(0cm)=(beamerstructure!35!white);
     color(0.44ex)=(beamerstructure!75!white);
@@ -242,7 +244,9 @@
     \llap{%
       \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
         \pgfbox[center,center]{\pgfuseshading{tocsphere}}
-        \pgfbox[center,center]{\color{white!90!beamerstructure}\scriptsize\textbf{\inserttocsectionnumber}}
+        \pgfbox[center,center]{\color{white!90!beamerstructure}%
+          \usebeamerfont*{section number projected}%
+          \inserttocsectionnumber}
       \end{pgfpicture}%
       \kern1.5ex}%
     \inserttocsection\par}
@@ -282,7 +286,11 @@
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
       \pgfputat{\pgfpoint{0pt}{0.5pt}}
-        {\pgfbox[center,center]{\color{white}\tiny\textbf{\insertenumlabel}}}
+      {%
+        \pgfbox[center,center]{%
+          \color{white}%
+          \usebeamerfont*{item projected}%
+          \insertenumlabel}}
     \end{pgfpicture}}
   \usesubenumerateitemtemplate{%
     \color{beamerstructure}%
@@ -290,7 +298,10 @@
       \begin{pgfmagnify}{1.4}{1.4}
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
-      \pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}
+      \pgfbox[center,center]{%
+          \color{white}%
+          \usebeamerfont*{item projected}%
+          \insertsubenumlabel}
     \end{pgfpicture}}
   \usesubsubenumerateitemtemplate{%
     \color{beamerstructure}%
@@ -298,7 +309,10 @@
       \begin{pgfmagnify}{1.4}{1.4}
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
-      \pgfbox[center,center]{\color{white}\tiny\insertsubsubenumlabel}
+      \pgfbox[center,center]{%
+          \color{white}%
+          \usebeamerfont*{item projected}%
+          \insertsubsubenumlabel}
     \end{pgfpicture}}
   \useenumerateitemminitemplate{%
     \color{beamerstructure}%
@@ -307,11 +321,15 @@
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
       \pgfputat{\pgfpoint{0pt}{0.5pt}}
-        {\pgfbox[center,center]{\color{white}\tiny\textbf{\insertenumlabel}}}
+        {\pgfbox[center,center]{%
+          \color{white}%
+          \usebeamerfont*{item projected}%
+          \insertenumlabel}}
     \end{pgfpicture}}
 
   \AtBeginDocument{\beamertemplatesetupshadings}
 }
+\@onlypreamble\beamertemplateballitem
 
 \newcommand{\beamertemplatetriangleitem}{%
   \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
@@ -334,50 +352,53 @@
   \useenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.}
   \usesubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel}
   \usesubsubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
-  }
+}
+
   
 \newcommand{\beamertemplatenumerateesquare}{%
+  \setbeamerfont{item projected}{size=\scriptsize}
+    
   \useenumerateitemtemplate{%
     \hbox{%
-      \scriptsize
-      \color{beamerstructure}\vrule width2ex height1.75ex depth.25ex%
-      \hskip-2ex%
-      \hbox to2ex{%
-        \hfil\normalfont%
-        \color{white}\textbf{\insertenumlabel}%
+      \usebeamerfont*{item projected}%
+      \color{beamerstructure}\vrule width2.25ex height1.85ex depth.4ex%
+      \hskip-2.25ex%
+      \hbox to2.25ex{%
+        \hfil%
+        \color{white}\insertenumlabel%
         \hfil}%
     }%
   }
   \usesubenumerateitemtemplate{%
     \hbox{%
-      \scriptsize%
-      \color{beamerstructure!75!averagebackgroundcolor}\vrule width2ex height1.75ex depth.25ex%
-      \hskip-2ex%
-      \hbox to2ex{%
-        \hfil\normalfont%
-        \color{white}\textbf{\insertsubenumlabel}%
+      \usebeamerfont*{item projected}%
+      \color{beamerstructure!75!averagebackgroundcolor}\vrule width2.25ex height1.85ex depth.4ex%
+      \hskip-2.25ex%
+      \hbox to2.25ex{%
+        \hfil%
+        \color{white}\insertsubenumlabel%
         \hfil}%
     }%
   }
   \usesubsubenumerateitemtemplate{%
     \hbox{%
-      \scriptsize%
-      \color{beamerstructure!50!averagebackgroundcolor}\vrule width2ex height1.75ex depth.25ex%
-      \hskip-2ex%
-      \hbox to2ex{%
-        \hfil\normalfont%
-        \color{white}\textbf{\insertsubsubenumlabel}%
+      \usebeamerfont*{item projected}%
+      \color{beamerstructure!50!averagebackgroundcolor}\vrule width2.25ex height1.85ex depth.4ex%
+      \hskip-2.25ex%
+      \hbox to2.25ex{%
+        \hfil%
+        \color{white}\insertsubsubenumlabel%
         \hfil}%
     }%
   }
   \useenumerateitemminitemplate{%
     \hbox{%
-      \scriptsize%
-      \color{beamerstructure}\vrule width2ex height1.75ex depth.25ex%
-      \hskip-2ex%
-      \hbox to2ex{%
-        \hfil\normalfont%
-        \color{white}\textbf{\insertenumlabel}%
+      \usebeamerfont*{item projected}%
+      \color{beamerstructure}\vrule width2.25ex height1.85ex depth.4ex%
+      \hskip-2.25ex%
+      \hbox to2.25ex{%
+        \hfil%
+        \color{white}\insertenumlabel%
         \hfil}%
     }%
   }
@@ -399,23 +420,23 @@
 \newcommand{\beamertemplatelightsectionheads}
 {
   \usesectionheadtemplate
-  {\hfill\color{white}\tiny\textbf{\insertsectionhead}}
-  {\hfill\color{white!50!beamerstructure}\tiny\textbf{\insertsectionhead}}
+  {\hfill\color{white}\insertsectionhead}
+  {\hfill\color{white!50!beamerstructure}\insertsectionhead}
 
   \usesubsectionheadtemplate
-  {\color{white}\tiny\textbf{\insertsubsectionhead}}
-  {\color{white!50!beamerstructure}\tiny\textbf{\insertsubsectionhead}}
+  {\color{white}\insertsubsectionhead}
+  {\color{white!50!beamerstructure}\insertsubsectionhead}
 }
 
 \newcommand{\beamertemplatedarksectionheads}
 {
   \usesectionheadtemplate
-  {\color{beamerstructure}\tiny\insertsectionhead}
-  {\color{beamerstructure!50!averagebackgroundcolor}\tiny\insertsectionhead}
+  {\color{beamerstructure}\insertsectionhead}
+  {\color{beamerstructure!50!averagebackgroundcolor}\insertsectionhead}
 
   \usesubsectionheadtemplate
-  {\color{beamerstructure}\tiny\insertsubsectionhead}
-  {\color{beamerstructure!50!averagebackgroundcolor}\tiny\insertsubsectionhead}
+  {\color{beamerstructure}\insertsubsectionhead}
+  {\color{beamerstructure!50!averagebackgroundcolor}\insertsubsectionhead}
 }
 
 
@@ -428,7 +449,7 @@
 
 \newcommand{\beamertemplatefootpagenumber}{%
   \usefoottemplate{%
-  \hfil\tiny{\color{black!50!averagebackgroundcolor}\insertpagenumber}}}
+  \hfil{\color{black!50!averagebackgroundcolor}\insertpagenumber}}}
 
 %
 % Mini navigation bar frame templates
@@ -666,12 +687,12 @@
 
 \newcommand{\beamertemplatecaptionwithnumber}{
 \usecaptiontemplate{%
-  {\small\structure{\insertcaptionname~\insertcaptionnumber:}
+  {\structure{\insertcaptionname~\insertcaptionnumber:}
     \insertcaption}}}
 
 \newcommand{\beamertemplatecaptionownline}{
 \usecaptiontemplate{%
-  {\small%
+  {%
     \begin{minipage}{\textwidth}
       \structure{\insertcaptionname}\\
       \insertcaption
@@ -738,7 +759,7 @@
 \newcommand{\beamertemplateoutlinebuttons}
 {\usebuttontemplate{%
   \color{beamerstructure}
-  \setbox\beamer@tempbox=\hbox{\tiny\insertbuttontext}%
+  \setbox\beamer@tempbox=\hbox{\usebeamerfont{button}\insertbuttontext}%
   \ht\beamer@tempbox=6pt%
   \dp\beamer@tempbox=0pt%
   \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
@@ -828,19 +849,27 @@
 % Blocks
 %
 
-\newcommand{\beamertemplateboldblocks}{
-  \useblocktemplate{\medskip{\color{beamerstructure}\normalfont\textbf{\insertblockname}}\par}{\medskip}
-  \usealertblocktemplate{\medskip{\alert{\normalfont\textbf{\insertblockname}}}\colorlet{beamerstructure}{beameralert}\par}{\medskip}
-  \useexampleblocktemplate{\medskip\begingroup{\color{beamerstructure!50!green}\normalfont\textbf{\insertblockname}}\par%
-    \color{black!50!green}\colorlet{beamerstructure}{beamerstructure!50!green}}{\endgroup\medskip}
-}
 
-\newcommand{\beamertemplatelargeblocks}{
-  \useblocktemplate{\medskip{\color{beamerstructure}\normalfont\large{\insertblockname}}\par}{\medskip}
-  \usealertblocktemplate{\medskip{\alert{\normalfont\large{\insertblockname}}}\colorlet{beamerstructure}{beameralert}\par}{\medskip}
-  \useexampleblocktemplate{\medskip\begingroup{\color{beamerstructure!50!green}\normalfont\large{\insertblockname}}\par%
-    \color{black!50!green}\colorlet{beamerstructure}{beamerstructure!50!green}}{\endgroup\medskip}
+\newcommand{\beamertemplatedefaultblocks}{
+  \useblocktemplate{%
+    \medskip%
+    {\usebeamerfont{block head}\structure{\insertblockname}\par}%
+    }{\medskip}
+  \usealertblocktemplate{%
+    \medskip%
+    {\usebeamerfont{block head}\alert{\insertblockname}\par}%
+    \colorlet{beamerstructure}{beameralert}%
+    }{\medskip}
+  \usealertblocktemplate{%
+    \medskip%
+    \begingroup%
+    {\usebeamerfont{block head}\color{beamerstructure!50!green}\insertblockname\par}%
+    \color{black!50!green}%
+    \colorlet{beamerstructure}{beamerstructure!50!green}%
+    }{\endgroup\medskip}
 }
+\@onlypreamble\beamertemplatedefaultblocks
+
 
 
 \newcommand{\beamertemplatesetupshadings}{
@@ -850,38 +879,32 @@
   \beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
 }
 
-\newcommand{\beamertemplateroundedblocks}{
+\newcommand{\beamertemplateboxedblocks}[2][shadow=false]{
   \AtBeginDocument{\beamertemplatesetupshadings}
 
-  \useblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=block]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrounded}\smallskip}
-  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=alert]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrounded}\smallskip}
-  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[scheme=example]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrounded}\smallskip}
+  \useblocktemplate{%
+    \medskip%
+    \begin{beamerboxes#2}[scheme=block,#1]%
+      {\usebeamerfont{block head boxed}\color{white}\insertblockname}%
+      \raggedright}%      
+    {\end{beamerboxes#2}\smallskip}
+  \usealertblocktemplate{%
+    \medskip%
+    \begin{beamerboxes#2}[scheme=alert,#1]%
+      {\usebeamerfont{block head boxed}\color{white}\insertblockname}%
+      \raggedright}%
+    {\end{beamerboxes#2}\smallskip}
+  \useexampleblocktemplate{%
+    \medskip%
+    \begin{beamerboxes#2}[scheme=example,#1]
+      {\usebeamerfont{block head boxed}\color{white}\insertblockname}%
+      \raggedright}%
+    {\end{beamerboxes#2}\smallskip}
 }
+\@onlypreamble\beamertemplateboxesblocks
 
-\newcommand{\beamertemplateshadowblocks}{
-  \AtBeginDocument{\beamertemplatesetupshadings}
 
-  \useblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=block]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrounded}}
-  \usealertblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=alert]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrounded}}
-  \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=example]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrounded}}
-}
 
-\newcommand{\beamertemplaterectblocks}{
-  \AtBeginDocument{\beamertemplatesetupshadings}
-
-  \useblocktemplate{\medskip\begin{beamerboxesrect}[scheme=block]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrect}\smallskip}
-  \usealertblocktemplate{\medskip\begin{beamerboxesrect}[scheme=alert]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrect}\smallskip}
-  \useexampleblocktemplate{\medskip\begin{beamerboxesrect}[scheme=example]{\normalfont\color{white}\insertblockname}\raggedright}%
-    {\end{beamerboxesrect}\smallskip}
-}
 
 
 %
@@ -1012,9 +1035,6 @@
 \@onlypreamble\beamertemplatenumberedcirclesectiontoc
 \@onlypreamble\beamertemplatenumberedsectiontoc
 \@onlypreamble\beamertemplatenumberedsubsectiontoc
-\@onlypreamble\beamertemplateplaintoc
-\@onlypreamble\beamertemplatetitlepage
-\@onlypreamble\beamertemplatepartpage
 
 \mode
 <all>

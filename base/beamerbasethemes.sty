@@ -33,22 +33,52 @@
 
 \mode<presentation>
 
+%
+% Font theme stuff
+%
+
 \define@key{beamerthm}{size}
   {\expandafter\def\csname beamer@thmfsize@\beamer@temp\endcsname{#1}}
-\define@key{beamerthm}{typeface}
-  {\expandafter\def\csname beamer@thmftypeface@\beamer@temp\endcsname{#1}}
-\define@key{beamerthm}{font}
-  {\expandafter\def\csname beamer@thmffont@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{size*}
+  {\expandafter\def\csname beamer@thmfsize@\beamer@temp\endcsname{\fontsize#1}}
+\define@key{beamerthm}{shape}
+  {\expandafter\def\csname beamer@thmfshape@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{shape*}
+  {\expandafter\def\csname beamer@thmfshape@\beamer@temp\endcsname{\fontshape{#1}}}
+\define@key{beamerthm}{series}
+  {\expandafter\def\csname beamer@thmfseries@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{series*}
+  {\expandafter\def\csname beamer@thmfseries@\beamer@temp\endcsname{\fontseries{#1}}}
+\define@key{beamerthm}{family}
+  {\expandafter\def\csname beamer@thmffamily@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{family*}
+  {\expandafter\def\csname beamer@thmffamily@\beamer@temp\endcsname{\fontfamily{#1}}}
+\define@key{beamerthm}{inheritsfrom}
+  {\expandafter\def\csname beamer@thmfinherits@\beamer@temp\endcsname{%
+    \@for\@temp:={#1}\do{\expandafter\usebeamerfont\expandafter{\@temp}}}}
 
-\newcommand\setbeamerfont[2]{%
+\def\setbeamerfont{\@ifstar{\beamer@clearbeamerfont}{\beamer@setbeamerfont}}
+  
+\newcommand\beamer@clearbeamerfont[2]{%
+  \def\beamer@temp{#1}
+  \setkeys{beamerthm}{size={},shape={},series={},family={},inheritsfrom={}}
+  \setkeys{beamerthm}{#2}
+}
+\newcommand\beamer@setbeamerfont[2]{%
   \def\beamer@temp{#1}
   \setkeys{beamerthm}{#2}
 }
 
-\newcommand\usebeamerfont[1]{%
+\def\usebeamerfont{\@ifstar{\reset@font\beamer@usebeamerfont}{\beamer@usebeamerfont}}
+
+\newcommand\beamer@usebeamerfont[1]{%
+  \csname beamer@thmfinherits@#1\endcsname%
   \csname beamer@thmfsize@#1\endcsname%
-  \csname beamer@thmffont@#1\endcsname%
-  \csname beamer@thmftypeface@#1\endcsname}
+  \csname beamer@thmfshape@#1\endcsname%
+  \csname beamer@thmfseries@#1\endcsname%
+  \csname beamer@thmffamily@#1\endcsname%
+  \selectfont}
+
 
 \mode
 <all>

@@ -1,0 +1,51 @@
+\ProvidesPackage{beamerelementthemerectangles}[2004/04/21 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+
+\mode<presentation>
+
+\beamertemplatesquareitem
+\beamertemplatenumerateesquare
+\beamertemplateboxedblocks{rect}
+\beamertemplatenumberedsquaresectiontoc
+
+\usetitlepagetemplate{
+    \vbox{}
+    \vfill
+    \begin{centering}
+      \fboxsep=8pt
+      \colorbox{beamerstructure!75!averagebackgroundcolor}{%
+        \@tempdima=\textwidth%
+        \advance\@tempdima by-20pt%
+        \begin{minipage}{\the\@tempdima}
+          \begin{centering}%
+            \color{white}%
+            {\usebeamerfont{title}\inserttitle\par}%
+            \ifx\insertsubtitle\@empty%
+            \else%
+            \vskip0.25em%
+            {\usebeamerfont{subtitle}\insertsubtitle\par}%
+            \fi%
+          \end{centering}
+        \end{minipage}
+        }
+      \vskip1em\par
+      {\usebeamerfont{author}\insertauthor\par}\vskip1em
+      {\usebeamerfont{institute}\insertinstitute\par}\vskip1em
+      {\usebeamerfont{date}\insertdate\par}\vskip1.5em
+      \inserttitlegraphic\par
+    \end{centering}
+    \vfill
+  }
+  
+\mode<all>
+
+%%% Local Variables: 
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 

@@ -1,0 +1,141 @@
+\ProvidesPackage{beamerlayoutthemeshadow}[2003/11/15 ver 1.00]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+\mode<presentation>
+
+
+\useframetitletemplate{%
+  \nointerlineskip\vskip-2pt%
+  \hbox{\leavevmode
+    \advance\beamer@leftmargin by -12bp%
+    \advance\beamer@rightmargin by -12bp%
+    \beamer@tempdim=\textwidth%
+    \advance\beamer@tempdim by \beamer@leftmargin%
+    \advance\beamer@tempdim by \beamer@rightmargin%
+    \hskip-\Gm@lmargin\hbox{%
+      \setbox\beamer@tempbox=\hbox{\begin{minipage}[b]{\paperwidth}%
+          \vbox{}\vskip-1ex%
+          \leftskip0.3cm%
+          \rightskip0.3cm plus1fil\leavevmode
+          \usebeamerfont{frametitle}\color{white}\insertframetitle%
+          \ifx\insertframesubtitle\@empty%
+            \strut\par%
+          \else
+            \par{\usebeamerfont*{framesubtitle}{\insertframesubtitle}\strut\par}%
+          \fi%
+          \nointerlineskip
+          \vbox{}%
+          \end{minipage}}%
+      \color{structure!75!black}%
+      \beamer@tempdim=\ht\beamer@tempbox%
+      \advance\beamer@tempdim by 2pt%
+      \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{\beamer@tempdim}
+        \pgfrect[clip]{\pgforigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
+        \pgfbox[left,base]{\pgfuseshading{frametitleshade}}
+      \end{pgfpicture}
+      %\vrule width\paperwidth height \beamer@tempdim%
+      \hskip-\paperwidth%
+      \box\beamer@tempbox%
+    }%
+    \hskip-\Gm@rmargin%
+  }%
+  \nointerlineskip
+    \vskip-0.2pt
+    \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
+    \vskip-2pt
+}
+
+
+\usesectionheadtemplate
+  {\hfill\color{white}\insertsectionhead}
+  {\hfill\color{white!50!black}\insertsectionhead}
+
+\usesubsectionheadtemplate
+  {\color{white}\insertsubsectionhead}
+  {\color{white!50!beamerstructure}\insertsubsectionhead}
+
+
+\pgfdeclareverticalshading{topshade}{\paperwidth}{%
+  color(0pt)=(averagebackgroundcolor);
+  color(4pt)=(black!50!averagebackgroundcolor)}
+
+\pgfdeclarehorizontalshading{frametitleshade}{\paperheight}{%
+  color(0pt)=(structure);
+  color(\paperwidth)=(black)}
+
+                                % Head
+\ifbeamer@compress
+\useheadtemplate{%
+  \vbox{%
+    \setbox\beamer@linebox=\hbox to\paperwidth{%
+      \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
+      \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}\hfil}%
+    \ht\beamer@linebox=2.625ex
+    \dp\beamer@linebox=0pt
+    \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
+    \hbox to\textwidth{%
+      {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth height\ht\beamer@linebox
+      \color{structure}\vrule width.5\paperwidth height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin
+    }%
+    \vskip-0.2pt
+    \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
+    \vskip-2pt
+  }%
+}
+\else
+\useheadtemplate{%
+  \vbox{%
+    \@tempdima=2.4375ex%
+    \ifnum\beamer@subsectionmax<\beamer@sectionmax%
+    \multiply\@tempdima by\beamer@sectionmax%
+    \else%
+    \multiply\@tempdima by\beamer@subsectionmax%
+    \fi%
+    \ifdim\@tempdima>0pt%
+      \advance\@tempdima by 1.125ex%
+      \setbox\beamer@linebox=\hbox to\paperwidth{%
+        \vbox to \@tempdima{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
+        \vbox to \@tempdima{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}\hfill}%
+      \hbox to\textwidth{%
+        {\color{black}\hskip-\Gm@lmargin\vrule width.5\paperwidth
+          height\ht\beamer@linebox\color{structure}\vrule width.5\paperwidth
+          height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+        \hskip-\Gm@lmargin\box\beamer@linebox\hfill\hskip-\Gm@rmargin%
+      }
+      \vskip-0.2pt%
+    \fi%
+    \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{topshade}\hskip-\Gm@rmargin}
+    \vskip-2pt
+  }%
+}
+\fi
+                                % Footline
+\usefoottemplate{%
+  \vbox{%
+  \hbox{%
+  \setbox\beamer@linebox=\hbox to\paperwidth{%
+    \hbox to.5\paperwidth{\hfill\color{white}\usebeamerfont{author in head/foot}\insertshortauthor\hskip.3cm}%
+    \hbox to.5\paperwidth{\hskip.3cm\color{white}\usebeamerfont{title in head/foot}\insertshorttitle\hfill}\hfill}%
+  \ht\beamer@linebox=2.625ex%
+  \dp\beamer@linebox=0pt%
+  \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
+  \color{black}%
+  \hskip-\Gm@lmargin%
+  \vrule width.5\paperwidth height\ht\beamer@linebox%
+  \color{structure}%
+  \vrule width.5\paperwidth height\ht\beamer@linebox%
+  \hskip-\paperwidth% 
+  \hbox{\box\beamer@linebox\hfill}\hfill\hskip-\Gm@rmargin}}}
+
+
+
+
+\mode
+<all>

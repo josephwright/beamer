@@ -27,7 +27,7 @@
 }%
 }
 
-\newcommand\useframetitletemplate[1]{\def\beamer@headrenderer{\parskip0pt#1\vskip0.25em}}
+\newcommand\useframetitletemplate[1]{\def\beamer@headrenderer{\parskip0pt\reset@font#1\vskip0.25em}}
 
 \newcommand\insertshortframetitle[1][]{%
   {%
@@ -122,7 +122,9 @@
 \newenvironment<>{block}[1]{%
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
+    \reset@font%
     \par%
+    \usebeamerfont{block}%
     \beamer@beginblocktemplate}
   {\par%
     \beamer@endblocktemplate%
@@ -131,7 +133,9 @@
 \newenvironment<>{alertblock}[1]{%
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
+    \reset@font%
     \par%
+    \usebeamerfont{block}%
     \beamer@beginalertblocktemplate}
   {\par%
     \beamer@endalertblocktemplate%
@@ -140,7 +144,9 @@
 \newenvironment<>{exampleblock}[1]{%
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
+    \reset@font%
     \par%
+    \usebeamerfont{block}%
     \beamer@beginexampleblocktemplate}
   {\par%
     \beamer@endexampleblocktemplate%
@@ -221,7 +227,7 @@
     \list
       \csname label\@enumctr\endcsname
       {\usecounter\@enumctr%
-        \def\makelabel##1{{\hss\llap{##1}}}}%
+        \def\makelabel##1{{\hss\llap{\usebeamerfont*{item}##1}}}}%
   \beamer@cramped%
   \raggedright}
 \def\endenumerate{\ifhmode\unskip\fi\endlist\csname\@enumctr endtemplate\endcsname}
@@ -247,7 +253,7 @@
     \expandafter
     \list
       \csname\@itemitem\endcsname
-      {\def\makelabel##1{{\hss\llap{##1}}}}
+      {\def\makelabel##1{{\hss\llap{\usebeamerfont*{item}##1}}}}
   \fi%
   \beamer@cramped%
   \raggedright}
@@ -312,14 +318,14 @@
 \def\description{\@ifnextchar[{\beamer@testforospec}{\beamer@descdefault\beamer@descdefaulttemp\@@description}}
 \def\beamer@testforospec[{\@ifnextchar<{\beamer@scandefaultospec[}{\@description[}}
 \def\beamer@scandefaultospec[#1]{\def\beamer@defaultospec{#1}\description}
-\def\@description[#1]{\setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
+\def\@description[#1]{\setbox\beamer@tempbox=\hbox{\usebeamerfont*{item}\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
   \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
 \def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
   \beamer@cramped%
   \raggedright}
 \def\enddescription{\ifhmode\unskip\fi\endlist}
 \long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
-  \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
+  \hfil\hspace\labelsep\usebeamerfont*{item}\descriptionitemtemplate}
 
 \def\usedescriptionitemtemplate#1#2{\def\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
   \global\advance\beamer@descdefaulttemp by \labelsep}
@@ -525,7 +531,7 @@
     \if@minipage
       \@setminipage
     \fi
-    \normalsize
+    \usebeamerfont*{caption}
     \beamer@makecaption{#1}{\ignorespaces #3}\par\nobreak
     \endgroup}
 \long\def\beamer@makecaption#1#2{%
@@ -545,7 +551,7 @@
 \long\def\usecaptiontemplate#1{%
   \def\beamer@captiontemplate{#1}}
 \usecaptiontemplate{%
-  {\small\structure{\insertcaptionname:} \insertcaption}}
+  {\structure{\usebeamerfont{caption head}\insertcaptionname:} \insertcaption}}
 
 
 \mode

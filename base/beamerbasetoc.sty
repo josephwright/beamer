@@ -76,6 +76,7 @@
     \else
     \vfill
     \fi
+    {\usebeamerfont{section in toc}%
     \ifbeamer@onlycurrent%
       \ifnum\c@section=#1%
         \hbox{\vbox{\sectiontemplate}}%
@@ -85,7 +86,7 @@
     \else%
       \hbox{\vbox{\sectiontemplate}}%
     \fi
-    \par}}%
+    \par}}}%
   \beamer@restoreanother%
   }
   \beamer@todo%
@@ -113,6 +114,7 @@
       \edef\inserttocsectionnumber{\the\beamer@tempcount}%
       \def\inserttocsubsectionnumber{#2}%
       \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
+      {\usebeamerfont{subsection in toc}%
       \ifbeamer@subsectionshide
         \ifnum\c@section=#1
           {\beamer@subsectiontemplate}
@@ -152,6 +154,7 @@
           \fi
         \fi
       \fi%
+      }
     }}%
     \beamer@restoreanother%
   }

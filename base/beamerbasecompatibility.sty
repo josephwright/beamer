@@ -167,22 +167,48 @@
 \def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
 \def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
 \def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
-\def\beamertemplatelargepartpage{%
-  \setbeamerfont{part}{size=\Large}%
-  \beamertemplatepartpage}
+\def\beamertemplatelargepartpage{\beamertemplatedefaultpartpage}
 \def\beamertemplateboldpartpage{%
   \setbeamerfont{part}{size=\large}%
   \setbeamerfont{partname}{typeface=\bfseries}%
-  \beamertemplatepartpage}
-\def\beamertemplatelargetitlepage{\beamertemplatetitlepage}
+  \beamertemplatedefaultpartpage}
+\def\beamertemplatelargetitlepage{%
+  \beamertemplatedefaulttitlepage}
 \def\beamertemplateboldtitlepage{%
   \setbeamerfont{title}{size=\large,typeface=\bfseries}%
-  \beamertemplatetitlepage}
+  \beamertemplatedefaulttitlepage}
 \@onlypreamble\beamertemplateboldtitlepage
 \@onlypreamble\beamertemplatelargetitlepage
 \@onlypreamble\beamertemplateboldpartpage
 \@onlypreamble\beamertemplatelargepartpage
-  
+ 
+\def\beamertemplateboldcenterframetitle{
+  \setbeamerfont{frametitle}{size={},typeface=\bfseries}
+  \setbeamerfont{framesubtitle}{typeface=\bfseries}
+  \beamertemplatedefaultframetitle[center]}
+\@onlypreamble\beamertemplateboldcenterframetitle
+
+\def\beamertemplateboldframetitle{
+  \setbeamerfont{frametitle}{typeface=\bfseries}
+  \setbeamerfont{framesubtitle}{typeface=\bfseries}
+  \beamertemplatedefaultframetitle[center]}
+\@onlypreamble\beamertemplateboldframetitle
+
+\def\beamertemplatelargeframetitle{
+  \beamertemplatedefaultframetitle[left]}
+\@onlypreamble\beamertemplatelargeframetitle
+ 
+\def\beamertemplateboldblocks{
+  \setbeamerfont{block head}{size={},typeface=\bfseries}
+  \beamertemplatedefaultblocks}
+\@onlypreamble\beamertemplateboldblocks
+
+\def\beamertemplatelargeblocks{\beamertemplatedefaultblocks}
+\def\beamertemplateroundedblocks{\beamertemplateboxedblocks{rounded}}
+\def\beamertemplateshadowblocks{\beamertemplateboxedblocks[shadow=true]{rounded}}
+\def\beamertemplaterectblocks{\beamertemplateboxedblocks{rect}}
+\def\beamertemplateplaintoc{\beamertemplatedefaulttoc}
+
 \mode
 <all>{\def\unpause{\onslide{}}}
 
