@@ -119,6 +119,7 @@
 \def\WriteBookmarks{0}
 \expandafter\def\csname Parent-1\endcsname{}
 \expandafter\def\csname Parent0\endcsname{}
+\expandafter\def\csname Parent1\endcsname{}
 \def\phantomsection{}
 
 %
@@ -166,6 +167,8 @@
 \newenvironment{columnsonlytextwidth}{\begin{columns}[onlytextwidth]}{\end{columns}}
 \def\untitledsubsection{\subsection*{}}
 \def\noteitems{\note[enumerate]}
+\mode
+<all>{\def\unpause{\onslide{}}}
 
 
 

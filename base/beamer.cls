@@ -15,6 +15,9 @@
 \newif\ifbeamer@blocks
 \beamer@blockstrue
 
+\newcount\beamer@tempcount
+\newcount\beamer@pausecount
+
 
 
 %
@@ -75,7 +78,6 @@
 \newbox\beamer@logobox
 \newbox\beamer@linebox
 
-\newcount\beamer@tempcount
 \newcount\beamer@sectioncount
 \newcount\beamer@subsectionmax
 \newcount\beamer@sectionmax
@@ -84,7 +86,6 @@
 \newcount\beamer@partstartpage
 \newcount\beamer@sectionstartpage
 \newcount\beamer@subsectionstartpage
-\newcount\beamer@pausecount
 \newcount\beamer@animationtempa
 \newcount\beamer@animationtempb
 \newcount\beamer@xpos
@@ -438,11 +439,13 @@
 \beamertemplateenumeratealpha
 \useenumeratetemplate{}{}
 \usesubenumeratetemplate{\begin{small}}{\end{small}}
+\usesubsubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}
 
                                 % Itemize
 \beamertemplatetriangleitem
 \useitemizetemplate{}{}
 \usesubitemizetemplate{\begin{small}}{\end{small}}
+\usesubsubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}
 
                                 % Buttons
 \beamertemplatesolidbuttons

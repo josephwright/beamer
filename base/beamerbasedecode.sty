@@ -16,6 +16,7 @@
 \newif\ifbeamer@anotherslide
 \newif\ifbeamer@localanotherslide
 
+\newif\ifbeamer@plusencountered
 
 %
 %
@@ -37,6 +38,7 @@
 \def\beamer@allsign{*}
 
 \def\beamer@decode{%
+  \beamer@plusencounteredfalse%
   \global\beamer@minimum=10000\relax%
   \gdef\beamer@decaction{}%
   \gdef\beamer@decactionrev{}%
@@ -59,9 +61,11 @@
   \def\beamer@ovmode{#1}%
   \beameratdecodeaction{#2}%
   \expandafter\futurelet\expandafter\next\expandafter\beamer@checkcat\beamer@spec:%
+  \expandafter\beamer@decodeplus\beamer@spec+:%
   \ifx\beamer@ovmode\beamer@ovmodestop%
     \expandafter\beamer@@decode\beamer@decodefound,!%
     \let\beamer@next=\relax%
+    \ifbeamer@plusencountered\global\advance\beamer@pausecount by1\relax\fi%
   \else
     \ifx\beamer@ovmode\beamer@currentmode%
       \beamer@@decodefound%
@@ -122,8 +126,32 @@
   \fi%
 }
 
+%\AtBeginDocument{
+%\def\beamer@decodeplus#1+#2:{%
+%  \def\temp{#1}\def\tempa{#2}\show\temp\show\tempa}}
+%\def\beamer@decodeplus#1+#2:{}%
 
-
+\def\beamer@decodeplus{%
+  \def\beamer@spec{}\beamer@@decodeplus}
+\def\beamer@@decodeplus#1+#2:{%
+  \edef\beamer@spec{\beamer@spec#1}% everything up to first +
+  \beamer@ifempty{#2}{}
+  {% ok, check if followed by number:
+    \beamer@plusencounteredtrue%
+    \beamer@@@decodeplus0#2:}}
+\def\beamer@@@decodeplus#1{%
+  \@ifnextchar,{\beamer@relnumber{#1}}%
+  {\@ifnextchar-{\beamer@relnumber{#1}}%
+  {\@ifnextchar+{\beamer@relnumber{#1}}%
+    {% have to read following number
+      \beamer@scannumberrel{#1}}}}}    
+\def\beamer@scannumberrel#1#2{\beamer@@@decodeplus{#1#2}}
+\def\beamer@relnumber#1{%
+  \beamer@plusencounteredtrue%
+  \beamer@tempcount=#1\relax
+  \advance\beamer@tempcount by\beamer@pausecount\relax%
+  \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
+  \beamer@@decodeplus}
 
 \def\beamer@doifnotinframe{}
 \def\beamer@@decode{%

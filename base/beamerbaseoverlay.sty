@@ -63,7 +63,7 @@
 %
 \def\beamer@plus{+}
 
-\def\action{\@ifnextchar<{\beamer@parsedaction}{\beamer@parsedaction<*>}}
+\def\action{\@ifnextchar<{\beamer@parsedaction}{\expandafter\beamer@parsedaction\beamer@defaultospec}}
 \long\def\beamer@parsedaction<#1>#2{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
   {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}}%
@@ -84,7 +84,7 @@
     \csname#2\endcsname<#3>{#1}}%
   \beamer@processactions}
 
-\def\actionenv{\beamer@ifnextcharospec{\beamer@parsedactionenv}{\beamer@parsedactionenv<*>}}
+\def\actionenv{\beamer@ifnextcharospec{\beamer@parsedactionenv}{\expandafter\beamer@parsedactionenv\beamer@defaultospec}}
 \def\beamer@parsedactionenv<#1>{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
   {{\setbox0=\hbox{\beamer@decode#1| stop:0| }}}%
@@ -115,6 +115,9 @@
   \def\beamer@todoend{#1\end{#2env}}%
   \beamer@processactionsend}
 
+
+\def\beamer@defaultospec{<*>}
+\def\beamer@emptyospec{<*>}
 
 %
 % \temporal
@@ -365,21 +368,25 @@
 {\beamer@endpause}
 
 \newcommand{\pause}[1][]{%
-  \beamer@endpause%
+%  \beamer@endpause%
   \beamer@ifempty{#1}%
     {\global\advance\beamer@pausecount by1\relax}%
     {\global\beamer@pausecount=#1\relax}%
-  \alt<\beamer@pausecount->%
+  \onslide<\beamer@pausecount->%
+}%
+
+\newcommand<>{\onslide}{%
+  \beamer@endpause%
+  \alt#1%
   {\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
   {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
 }
-
-\newcommand{\unpause}{\beamer@endpause\gdef\beamer@endpause{}}
 
 \mode
 <article>
 {
   \newcommand\pause[1][]{}
+  \newcommand<>\onslide{}
 }
 
   
@@ -393,13 +400,30 @@
 \def\item{%
   \beamer@closeitem\gdef\beamer@closeitem{}%
   \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}
-\def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{\beamer@origitem}}
-\long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{\beamer@origitem[#1]}}
+\def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{%
+    \ifx\beamer@defaultospec\beamer@emptyospec%
+      \let\next=\beamer@origitem%
+    \else%
+      \let\next=\beamer@defaultparse%
+    \fi%
+    \next%
+  }}
+\def\beamer@defaultparse{\expandafter\beamer@parseitem\beamer@defaultospec}
+\long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{%
+    \ifx\beamer@defaultospec\beamer@emptyospec%
+      \let\next=\beamer@origitem%
+    \else%
+      \let\next=\beamer@defaultparse%
+    \fi%
+    \next[#1]}}
 \long\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[#1]}
 
 \def\beamer@parseitem<#1>{%
   \gdef\beamer@closeitem{\end{actionenv}}%
   \begin{actionenv}<#1>\beamer@origitem}
+
+\def\beamerdefaultoverlayspecification#1{\def\beamer@defaultospec{#1}}
+\def\beamercleardefaultoverlayspecification{\def\beamer@defaultospec{<*>}}
 
 
 \newcount\beamer@trivlistdepth
@@ -579,6 +603,7 @@
 
 
 \newenvironment{overprint}[1][\textwidth]{%
+  \let\onslide=\beamer@onslide%
   \beamer@animht=0pt%
   \beamer@animdp=0pt%
   \beamer@animwd=#1\relax%
@@ -594,7 +619,7 @@
   \box\beamer@animshowbox%
 }
 
-\def\onslide<#1>{%
+\def\beamer@onslide<#1>{%
   \beamer@endaction%
   \alt<#1>{%
     \ifvoid\beamer@animshowbox\else\ClassError{beamer}{Overprints may not overlap}{}\fi%
@@ -618,10 +643,10 @@
 <article>
 {
   \newenvironment{overprint}[1][]%
-    {\begin{onlyenv}}
+    {\let\onslide=\beamer@onslide\begin{onlyenv}}
     {\end{onlyenv}}
 
-  \def\onslide<#1>{\end{onlyenv}\begin{onlyenv}<#1>}
+  \def\beamer@onslide<#1>{\end{onlyenv}\begin{onlyenv}<#1>}
 }
 
 

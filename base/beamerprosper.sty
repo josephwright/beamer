@@ -7,6 +7,14 @@
 % of the GNU Public License, version 2.
 
 
+\let\beamerprosper@entry=\@gobble
+
+\DeclareOption{framesassubsections}{\def\beamerprosper@entry#1{%
+    \beamer@ifempty{#1}{}{\subsection{#1}}}}
+
+\ProcessOptions
+
+
 \def\institution{\institute}
 
 \def\subtitle#1{%
@@ -14,15 +22,47 @@
   \expandafter\title\expandafter[\beamer@shorttitle]{\beamer@renewtitle}}
 \newcommand\email[1]{\texttt{#1}}
 
-\newenvironment{slide}[2][]{\frame[containsverbatim]\bgroup\PDFtransition{#1}\frametitle{#2}}{\egroup}
+\define@key{beamerprosper}{toc}{\def\beamerprosper@toc{#1}}
+\define@key{beamerprosper}{template}{}
+\define@key{beamerprosper}{trans}{\def\beamerprosper@trans{#1}}
+\define@key{beamerprosper}{Glitter}[true]{\def\beamerprosper@trans{Glitter}}
+\define@key{beamerprosper}{R}[true]{\def\beamerprosper@trans{R}}
+\define@key{beamerprosper}{Replace}[true]{\def\beamerprosper@trans{Replace}}
+\define@key{beamerprosper}{Split}[true]{\def\beamerprosper@trans{Split}}
+\define@key{beamerprosper}{Blinds}[true]{\def\beamerprosper@trans{Blinds}}
+\define@key{beamerprosper}{Box}[true]{\def\beamerprosper@trans{Box}}
+\define@key{beamerprosper}{Wipe}[true]{\def\beamerprosper@trans{Wipe}}
+\define@key{beamerprosper}{Dissolve}[true]{\def\beamerprosper@trans{Dissolve}}
+\define@key{beamerprosper}{Glitter}[true]{\def\beamerprosper@trans{Glitter}}
+
+\newenvironment{slide}[2][]{%
+  \def\beamerprosper@toc{#2}%
+  \def\beamerprosper@trans{}%
+  \setkeys{beamerprosper}{#1}%
+  \expandafter\beamerprosper@entry\expandafter{\beamerprosper@toc}
+  \frame[containsverbatim]\bgroup\PDFtransition{\beamerprosper@trans}\frametitle{#2}}{\egroup}
 \newcommand{\PDForPS}[2]{\ifx\pdfoutput\@undefined#2\else#1\fi}
 \newcommand{\onlyInPDF}[1]{\ifx\pdfoutput\@undefined\else#1\fi}
 \newcommand{\onlyInPS}[1]{\ifx\pdfoutput#1\@undefined\fi}
 
-\newcommand\overlays[2]{%
+
+\def\overlays#1#2{%
+  % Extract frame title (evil trickery necessary to do this, before the frame starts...)
+  \beamerprosper@extractor#2\beamerprosper@ender}
+\def\beamerprosper@extractor#1#2{%
+  \ifx#1\begin%
+  \else%
+    \PackageError{beamerprosper}{Sorry, this overlays command does not start with begin; I'm confused}{}
+  \fi%
+  \@ifnextchar[\beamerprosper@extractora{\beamerprosper@extractora[]}}
+\def\beamerprosper@extractora[#1]#2#3\beamerprosper@ender{%
+  \def\beamerprosper@toc{#2}
+  \def\beamerprosper@trans{}%
+  \setkeys{beamerprosper}{#1}%    
+  \expandafter\beamerprosper@entry\expandafter{\beamerprosper@toc}%
   \begingroup
-  \renewenvironment{slide}[2][]{\PDFtransition{#1}\frametitle{##2}}{}
-  \frame<-#1>{#2}
+  \renewenvironment{slide}{}{}
+  \frame{\begin{slide}\PDFtransition{\beamerprosper@trans}\frametitle{#2}#3}
   \endgroup}
 
 \def\fromSlide{\@ifstar{\beamer@sfromSlide}{\beamer@fromSlide}}
@@ -37,32 +77,27 @@
 \newcommand{\beamer@untilSlide}[2]{\uncover<-#1>{#2}}
 \newcommand{\beamer@suntilSlide}[2]{\only<-#1>{#2}}
 
-\newcommand\FromSlide[1]{\pause[#1]}
-\newcommand\OnlySlide[1]{\beamer@endpause%
-  \alt<#1>{\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
-  {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
-}
-\newcommand\UntilSlide[1]{\beamer@endpause%
-  \alt<-#1>{\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
-  {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
-}
+\newcommand\FromSlide[1]{\onslide<#1->}
+\newcommand\OnlySlide[1]{\onslide<#1>}
+\newcommand\UntilSlide[1]{\onslide<-#1>}
 
 \newcommand\slideCaption[1]{\date{#1}}
 \def\Logo{\@ifnextchar(\beamer@Logo\logo}
 \def\beamer@Logo(#1,#2){\logo}
 
-\newcommand\DefaultTransition[1]{}
-\newcommand\NoFrenchBabelItemize{}
+\let\DefaultTransition=\@gobble
+\let\NoFrenchBabelItemize=\relax
+\let\TitleSlideNav=\@gobble
+\let\NormalSlideNav=\@gobble
+\let\LeftFoot=\@gobble
+\let\RightFoot=\@gobble
+
+\AtBeginDocument{\let\beamer@steporigitem=\item}
 
 \newenvironment{Itemize}{\begin{itemize}}{\end{itemize}}
-\newenvironment{itemstep}{% not really nice...
-  \let\beamer@steporigitem=\item%
-  \let\item=\beamer@itemstepitem%
-  \begin{itemize}\global\advance\beamer@pausecount by-1\relax%
-  }{\end{itemize}}
-\def\beamer@itemstepitem{\pause\beamer@steporigitem}
-
-\newcommand\prosperpart[2][]{\frame{\begin{centering}#2\par\end{centering}}}
+\newenvironment{itemstep}[1][]{\begin{itemize}[<+->]}{\end{itemize}}
+\newenvironment{enumstep}[1][]{\begin{enumerate}[<+->]}{\end{enumerate}}
+\newcommand\prosperpart[2][]{\begin{slide}[#1]{}\begin{centering}#2\par\end{centering}\end{slide}}
 
 \newcommand{\FontTitle}[2]{}
 \newcommand{\FontText}[2]{}
@@ -82,9 +117,30 @@
 
 \newcommand{\myitem}[2]{}
 
+\def\tsection{\@ifstar\section\section}
 
-  
-  
+\def\tsectionandpart{\@ifstar\beamerprosper@tsp\beamerprosper@tsp}
+
+\newcommand\beamerprosper@tsp[2][]{%
+  \def\beamerprosper@toc{#2}%
+  \def\beamerprosper@trans{}%
+  \setkeys{beamerprosper}{#1}%
+  \expandafter\section\expandafter{\beamerprosper@toc}
+  \expandafter\prosperpart\expandafter[\beamerprosper@trans]{#2}}
+
+\newbox\beamerprosper@notebox
+
+\newenvironment{notes}[1]{%
+  \begingroup%
+  \textwidth=10.8cm\hsize=\textwidth\setbox\beamerprosper@notebox=\vbox\bgroup
+  \textbf{#1}\par\medskip}
+{\egroup\note{\box\beamerprosper@notebox}
+  \endgroup}
+
+\let\wideslide=\slide
+\let\endwideslide=\endslide
+
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: ../test/testprosper.tex

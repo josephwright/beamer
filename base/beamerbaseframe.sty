@@ -126,6 +126,7 @@
 \define@key{beamerframe}{template}{%
   \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
 \define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
+\define@key{beamerframe}{defaultospec}{\def\beamer@defaultospec{#1}}
 
 \newif\ifbeamer@containsverbatim
 
@@ -154,6 +155,7 @@
   \def\beamer@mode{\mode<all>}%
   \def\beamer@frametemplate{}%
   \def\beamer@againname{}%
+  \def\beamer@defaultospec{<*>}%
   \beamer@containsverbatimfalse%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%

@@ -263,18 +263,24 @@
 
 \setlength\leftmargini  {2em}
 \setlength\leftmarginii  {2em}
+\setlength\leftmarginiii  {2em}
 \setlength  \labelsep  {.5em}
 \setlength  \labelwidth{\leftmargini}
 \addtolength\labelwidth{-\labelsep}
 \renewcommand\theenumi{\@arabic\c@enumi}
 \renewcommand\theenumii{\@arabic\c@enumii}
+\renewcommand\theenumiii{\@arabic\c@enumiii}
 
 \def\@listi{\leftmargin\leftmargini
             \topsep 4\p@ \@plus2\p@ \@minus\p@
             \parsep 0\p@
             \itemsep4\p@ \@plus2\p@ \@minus2\p@}
 \let\@listI\@listi
-\def\@listii {\leftmargin\leftmarginii
+\def\@listii{\leftmargin\leftmarginii
+              \topsep    2\p@ \@plus2\p@ \@minus\p@
+              \parsep    0\p@   \@plus\p@  \@minus\p@
+              \itemsep   \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
               \topsep    2\p@ \@plus2\p@ \@minus\p@
               \parsep    0\p@   \@plus\p@  \@minus\p@
               \itemsep   \parsep}
@@ -287,14 +293,17 @@
 %
 
 \def\enumerate{%
-  \ifnum\@enumdepth>1\relax\@toodeep
+  \ifnum\@enumdepth>2\relax\@toodeep
   \else%
     \advance\@enumdepth\@ne%
     \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
     \advance\@itemdepth\@ne%
   \fi%
   \@ifnextchar[{\beamer@@enum@}{\beamer@enum@}}
-\def\beamer@@enum@[#1]{% partly copied from enumerate.sty
+\def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
+\def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
+  \@ifnextchar[{\beamer@@@enum@}{\beamer@enum@}}
+\def\beamer@@@enum@[#1]{% partly copied from enumerate.sty
   \@enLab{}\let\@enThe\@enQmark
   \@enloop#1\@enum@
   \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
@@ -327,8 +336,9 @@
 %
 %
 
-\def\itemize{%
-  \ifnum \@itemdepth >1\relax\@toodeep\else
+\renewcommand{\itemize}[1][<*>]{%
+  \def\beamer@defaultospec{#1}%
+  \ifnum \@itemdepth >2\relax\@toodeep\else
     \advance\@itemdepth\@ne
     \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
     \edef\@itemctr{item\romannumeral\the\@itemdepth}%
@@ -341,6 +351,16 @@
   \raggedright}
     
 \def\enditemize{\ifhmode\unskip\fi\endlist\csname\@itemctr endtemplate\endcsname}
+
+\mode
+<article>
+{
+  \AtBeginDocument{
+    \let\beamer@origitemize=\itemize
+    \renewcommand{\itemize}[1][]{\beamer@origitemize}
+  }
+}
+
 
 \def\useenumerateitemtemplate#1{% 
   \def\labelenumi{\def\insertenumlabel{\theenumi}#1}}
@@ -356,23 +376,40 @@
   \def\enumiistarttemplate{#1}%
   \def\enumiiendtemplate{#2}}
 
+\def\usesubsubenumerateitemtemplate#1{%
+  \def\labelenumiii{\def\insertenumlabel{\theenumi}%
+    \def\insertsubenumlabel{\theenumii}%
+    \def\insertsubsubenumlabel{\theenumiii}#1}}
+
+\def\usesubsubenumeratetemplate#1#2{% before and after
+  \def\enumiiistarttemplate{#1}%
+  \def\enumiiiendtemplate{#2}}
+
 
 \def\useitemizeitemtemplate#1{%
-  \def\labelitemi{#1}\let\beamer@labelitemi\labelitemi}%itemilabeltemplate{#1}}
+  \def\labelitemi{#1}\let\beamer@labelitemi\labelitemi}
 
 \def\useitemizetemplate#1#2{% before and after
   \def\itemistarttemplate{#1}%
   \def\itemiendtemplate{#2}}
 
 \def\usesubitemizeitemtemplate#1{%
-  \def\labelitemii{#1}\let\beamer@labelitemii\labelitemii}%itemiilabeltemplate{#1}}
+  \def\labelitemii{#1}\let\beamer@labelitemii\labelitemii}
 
 \def\usesubitemizetemplate#1#2{% before and after
   \def\itemiistarttemplate{#1}%
   \def\itemiiendtemplate{#2}}
 
+\def\usesubsubitemizeitemtemplate#1{%
+  \def\labelitemiii{#1}\let\beamer@labelitemiii\labelitemiii}
 
-\def\description{\@ifnextchar[{\@description}{\beamer@descdefault\beamer@descdefaulttemp\@@description}}
+\def\usesubsubitemizetemplate#1#2{% before and after
+  \def\itemiiistarttemplate{#1}%
+  \def\itemiiiendtemplate{#2}}
+
+\def\description{\@ifnextchar[{\beamer@testforospec}{\beamer@descdefault\beamer@descdefaulttemp\@@description}}
+\def\beamer@testforospec[{\@ifnextchar<{\beamer@scandefaultospec[}{\@description[}}
+\def\beamer@scandefaultospec[#1]{\def\beamer@defaultospec{#1}\description}
 \def\@description[#1]{\setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
   \beamer@descdefault\wd\beamer@tempbox\advance\beamer@descdefault by \labelsep\@@description}
 \def\@@description{\list{}{\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%

@@ -151,14 +151,16 @@
   {\leavevmode\leftskip=2.5em\color{black}\inserttocsubsection\par}
 }
 
+\@ifundefined{pgfex}{\newdimen\pgfex}{}
+
 \newcommand{\beamertemplatenumberedcirclesectiontoc}{
   \usetemplatetocsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=.5em\color{beamerstructure}%
-    \llap{\begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \llap{\pgfex=1ex\begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
       \color{beamerstructure!50!averagebackgroundcolor}
-      \pgfcircle[fill]{\pgfpoint{0ex}{.75ex}}{1.2ex}
+      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
       \pgfbox[center,base]{\color{white}\inserttocsectionnumber}
-    \end{pgfpicture}\kern1ex}\inserttocsection\par}
+    \end{pgfpicture}\kern1.5ex}\inserttocsection\par}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=2em\color{black}\inserttocsubsection\par}
@@ -232,11 +234,11 @@
         \pgfbox[center,center]{\pgfuseshading{tocsphere}}
         \pgfbox[center,center]{\color{white!90!beamerstructure}\scriptsize\textbf{\inserttocsectionnumber}}
       \end{pgfpicture}%
-      \kern1ex}%
+      \kern1.5ex}%
     \inserttocsection\par}
   
   \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=2em\color{black}\llap{\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\ }\inserttocsubsection\par}
+    {\leavevmode\leftskip=2em\color{black}\llap{\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\kern1ex}\inserttocsubsection\par}
 }
 
 \newcommand{\beamertemplateballtoc}{
@@ -255,11 +257,13 @@
 \newcommand{\beamertemplatedotitem}{%
   \useitemizeitemtemplate{\small\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
   \usesubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
+  \usesubsubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
   }
 
 \newcommand{\beamertemplateballitem}{%
   \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}}
   \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}}
+  \usesubsubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}}
 
   \useenumerateitemtemplate{
     \color{beamerstructure}%
@@ -278,6 +282,14 @@
       \end{pgfmagnify}
       \pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}
     \end{pgfpicture}}
+  \usesubsubenumerateitemtemplate{%
+    \color{beamerstructure}%
+    \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+      \begin{pgfmagnify}{1.4}{1.4}
+        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+      \end{pgfmagnify}
+      \pgfbox[center,center]{\color{white}\tiny\insertsubsubenumlabel}
+    \end{pgfpicture}}
   \useenumerateitemminitemplate{%
     \color{beamerstructure}%
     \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
@@ -294,6 +306,7 @@
 \newcommand{\beamertemplatetriangleitem}{%
   \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
   \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
+  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
   }
 
 
@@ -304,6 +317,7 @@
 \newcommand{\beamertemplateenumeratealpha}{
   \useenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.}
   \usesubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel}
+  \usesubsubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
   }
   
 %

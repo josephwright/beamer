@@ -45,6 +45,7 @@
 \def\pdf{\textsc{pdf}}
 \def\pgf{\textsc{pgf}}
 \def\pstricks{\textsc{pstricks}}
+\def\prosper{\textsc{prosper}}
 
 \def\declare#1{{\color{red!75!black}#1}}
 
@@ -94,7 +95,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 2.01\\
+\title{User's Guide to the Beamer Class, Version 2.01-dev\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -294,7 +295,7 @@ on how permanently you intend to use the class.
 
 Currently, I'm not producing prebundled packages of |beamer|. There
 are some out-of-the-box Debian packages and Mik\TeX\ packages around,
-but these are likely to be outdated. Once |beamer| stabilizes, there
+but these are possibly outdated. Once |beamer| stabilizes, there
 will hopefully also be easy-to-install packages. 
 
 
@@ -617,6 +618,310 @@ options or precautions may be necessary.
 \end{package}
 
 
+
+\subsection{Emulation}
+
+\beamer\ is a  powerful class. In some ways it is more powerful
+than other classes around, in others it is less powerful or harder to
+use. If \beamer\ implements all or most of the features some other
+class also offers, albeit under a different name, it is possible to
+\emph{emulate} that class using \beamer. Such an emulation is not a
+perfect substitute for the original (emulations seldomly are), but it
+can help speed up porting since parts of old presentations can simply be
+copied verbatim, without having to worry about the subtle differences
+in syntax.
+
+
+
+\subsubsection{Prosper and HA-Prosper}
+
+The package |beamerprosper| maps the commands of the \prosper\
+package, developped by Fr\'ed\'eric Goualard, to \beamer\
+commands. Also, some commands of the \textsc{ha}-\prosper\ package,
+developped by Hendri Adriaens, are mapped to \beamer\ commands. 
+\emph{These mappings cannot perfectly emulate all of Prosper!} Rather,
+these mappings are intended as an aide when porting presentations
+created using \prosper\ to \beamer. \emph{No styles are implemented
+that mimick Prosper styles.} Rather, the normal \beamer\ themes must
+be used (although, one could implement \beamer\ themes that mimicks
+existing \prosper\ styles; I have not done that and do not intend to).
+
+\begin{package}{{beamerprosper}}
+  Include this package in a |beamer| presentation to get access to
+  \prosper\ commands. Use |beamer| as the document class, not
+  |prosper|. Most of the options passed to the class |prosper| make no
+  sense in |beamer|, so just delete them.
+
+  This package takes the following options:
+  \begin{itemize}
+  \item
+    \declare{|framesassubsections|} causes each frame to create its
+    own subsection with the frame title as subsection name. This
+    behaviour mimicks \textsc{ha}-\textsc{prosper}'s behaviour. In a
+    long talk this will create way too many subsections. 
+  \end{itemize}
+
+  \example
+  Consider the following original \prosper\ file (adapted from an
+  example by Hendri Adriaens):
+\begin{verbatim}
+\documentclass[pdf]{prosper}
+\usepackage[toc,highlight,HA,notes,portrait,hlsections]{HA-prosper}
+
+\title{Example for the HA-prosper package}
+\subtitle{A package for use with prosper}
+
+\author{Hendri Adriaens}
+
+\DefaultTransition{Wipe}
+\TitleSlideNav{FullScreen}
+\NormalSlideNav{ShowBookmarks}
+\LeftFoot{\href{http://center.uvt.nl/phd_stud/adriaens}{Hendri Adriaens}, \today}
+\RightFoot{Example for the HA-prosper package}
+
+\begin{document}
+\maketitle
+
+\begin{slide}{Introduction}
+\begin{itemize}
+\item Welcome to the example for the HA-prosper package.
+\item This example demonstrates some of the possibilities of HA-prosper.
+\item See the style-specific examples for a demonstration of
+features implemented by a style.
+\end{itemize}
+\end{slide}
+
+\overlays{2}{
+\begin{slide}{Numbering and overlays}
+\begin{itemstep}
+\item This overlay contains an equation:
+\begin{equation}
+\label{eq:1}
+(a+b)^n=\sum_{k=0}^n\left(\begin{array}{l}n\\k\end{array}\right)a^{n-k}b^k
+\end{equation}
+\item It is equation number~\ref{eq:1}.
+\end{itemstep}
+\end{slide}
+}
+\end{verbatim}
+
+  To port this example to \beamer, the first two lines should be
+  replaced as follows:
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{beamerprosper}
+\end{verbatim}
+
+  Everything else can stay the same. You can now run, for example,
+  pdf\LaTeX\ on the file to get a \beamer\ presentation with
+  overlays. Certain commands, like |\LeftFoot|, are ignored. You can
+  change the theme using the usual commands; for example
+  |beamerthemesidebar| is quite ``near'' to Adriaens' original
+  theme. You can also use all normal \beamer\ commands and concepts,
+  like overlay-specifications, in the file. 
+\end{package}
+
+In the following, the effect of \prosper\ commands in \beamer\ are
+listed.
+
+\begin{command}{\subtitle\marg{title}}
+  Adds a subtitle by adding a new line to an existing title with the
+  given \meta{title} typeset in a smaller font. 
+\end{command}
+
+\begin{command}{\email\marg{text}}
+  Simply typesets its argument in typewriter text. Should hence be
+  given \emph{inside} the |\author| command.
+\end{command}
+
+\begin{command}{\institution\marg{text}}
+  This command is directly mapped to \beamer's |\institute|
+  command. Should hence be given \emph{outside} the |\author| command.
+\end{command}
+
+\begin{environment}{{slides}\oarg{options}\marg{frame title}}
+  Inserts a frame with the |containsverbatim| option set. The
+  \meta{frame title} will be enclosed in a |\frametitle| command.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|trans=|\meta{prosper transition}} installs the specified
+    \meta{prosper transition} as the transition effect when showing
+    the slide.
+  \item
+    \declare{\meta{prosper transition}} has the same effect as
+    |trans=|\meta{prosper transition}.
+  \item
+    \declare{|toc=|\meta{entry}} overrides the subsection table of
+    contents entry created by this slide by \meta{entry}. Note that a
+    subsection entry is create for a slide only if the
+    |framesassubsections| options is specified.
+  \item
+    \declare{|template|=\meta{text}} is ignored.
+  \end{itemize}
+
+  \example The following two texts have the same effect:
+
+\begin{verbatim}
+\begin{slide}[trans=Glitter,toc=short]{A Title}
+  Hi!
+\end{slide}
+\end{verbatim}
+
+  and
+
+\begin{verbatim}
+\subsection{short} % omitted, if framesassubsections is not specified
+\frame[containsverbatim]
+{
+  \transglitter
+  \frametitle{A Title}
+  Hi!
+}
+\end{verbatim}
+\end{environment}
+
+
+\begin{command}{\overlays\marg{number}\marg{slide environment}}
+  This will put the \meta{slide environment} into a frame that does
+  not have the |containsverbatim| option and which can hence contain
+  overlayed text. The \meta{number} is ignored since the number of
+  necessary overlays is computed automatically by \beamer.
+
+  \example The following code fragments have the same effect:
+  
+\begin{verbatim}
+\overlays{2}{
+\begin{slide}{A Title}
+  \begin{itemsetp}
+  \item Hi!
+  \item Ho!
+  \end{itemstep}
+\end{slide}}
+\end{verbatim}
+
+  and
+
+\begin{verbatim}
+\subsection{A Title} % omitted, if framesassubsections is not specified
+\frame
+{
+  \frametitle{A Title}
+  \begin{itemsetp}
+  \item Hi!
+  \item Ho!
+  \end{itemstep}
+}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\fromSlide\marg{slide number}\marg{text}}
+  This is mapped to |\uncover<|\meta{slide number}|->{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\fromSlide|*|\marg{slide number}\marg{text}}
+  This is mapped to |\only<|\meta{slide number}|->{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\onlySlide\marg{slide number}\marg{text}}
+  This is mapped to |\uncover<|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\onlySlide|*|\marg{slide number}\marg{text}}
+  This is mapped to |\only<|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\untilSlide\marg{slide number}\marg{text}}
+  This is mapped to |\uncover<-|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\untilsSlide|*|\marg{slide number}\marg{text}}
+  This is mapped to |\only<-|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\FromSlide\marg{slide number}}
+  This is mapped to |\onslide<|\meta{slide number}|->|.
+\end{command}
+
+\begin{command}{\OnlySlide\marg{slide number}}
+  This is mapped to |\onslide<|\meta{slide number}|>|.
+\end{command}
+
+\begin{command}{\UntilSlide\marg{slide number}}
+  This is mapped to |\onslide<-|\meta{slide number}|>|.
+\end{command}
+
+
+\begin{command}{\slideCaption\marg{text}}
+  This is mapped to |\date{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\Logo\opt{|(|\meta{x}|,|\meta{y}|)|}\marg{logo text}}
+  This is mapped to |\logo{|\meta{text}|}|. The coordinates are ignored.
+\end{command}
+
+\begin{environment}{{Itemize}}
+  This is mapped to |itemize|.
+\end{environment}
+
+\begin{environment}{{itemstep}}
+  This is mapped to |itemize| with the option |[<+->]|.
+\end{environment}
+
+\begin{environment}{{enumstep}}
+  This is mapped to |enumerate| with the option |[<+->]|.
+\end{environment}
+
+\begin{command}{\prosperpart\oarg{options}\marg{text}}
+  This command has the same effect as \prosper's |\part|
+  command. \beamer's normal |\part| command retains its normal
+  sematics. Thus, you might wish to replace all occurences of |\part|
+  by |\prosperpart|.
+\end{command}
+
+\begin{command}{\fontTitle\marg{text}}
+  Simply inserts \meta{text}.
+\end{command}
+
+\begin{command}{\fontText\marg{text}}
+  Simply inserts \meta{text}.
+\end{command}
+
+\begin{command}{\PDFtransition\marg{prosper transition}}
+  Maps the \meta{prosper transition} to an appropriate |\transxxxx|
+  command.
+\end{command}
+
+
+\begin{command}{\tsection\opt{|*|}\marg{section name}}
+  Creates a section names \meta{section name}. The star, if present,
+  is ignored.
+\end{command}
+
+\begin{command}{\tsectionandpart\opt{|*|}\marg{part text}}
+  Mapped to a |\section| command followed by a |\prosperpart| command.
+\end{command}
+
+
+\begin{environment}{{notes}}
+  Mapped to |\note{|\meta{environment contents}|}| (more or less).
+\end{environment}
+
+The following commands are parsed by \beamer, but have no effect:
+\begin{itemize}\itemsep=0pt\parskip=0pt
+\item |\myitem|,
+\item |\FontTitle|,
+\item |\FontText|,
+\item |\ColorFoot|,
+\item |\DefaultTransition|,
+\item |\NoFrenchBabelItemize|,
+\item |\TitleSlideNav|,
+\item |\NormalSlideNav|,
+\item |\LeftFoot|, and
+\item |\RightFoot|.
+\end{itemize}
 
 
 
@@ -1868,10 +2173,9 @@ A much more fine-grained control over what is shown on each slide can
 be attained using overlay specifications, see the next
 subsections. However, for many simple cases the |\pause|
 command is sufficient.
-
-Normally, the effect of |\pause| lasts till the end of the frame. You
-can use |\unpause| to temporarily stop its effect. All text following
-|\unpause| up to the next |\pause| is shown normally.
+ 
+The effect of |\pause| lasts till the next |\pause|, |\onslide|, or
+the end of the frame.   
 
 \begin{verbatim}
 \frame{
@@ -1911,7 +2215,8 @@ can use |\unpause| to temporarily stop its effect. All text following
 \begin{command}{\pause\oarg{number}}
   This command causes the text following it to be shown only from the
   next slide on, or, if the optional \meta{number} is given,
-  from the slide with the number \meta{number}. 
+  from the slide with the number \meta{number}. This command uses the
+  |\onslide| command, internally. 
 
   \example
 \begin{verbatim}
@@ -1937,11 +2242,8 @@ can use |\unpause| to temporarily stop its effect. All text following
   Use the ``Pause'' style with an empty line to insert a pause.
 \end{command}
 
-
-\begin{command}{\unpause}
-  Stops the covering induced by the previous |\pause| command.
-\end{command}
-
+To ``unpause'' some text, that is, to temporarily suspend pausing, use
+the command |\onslide|, see below.
 
 
 \subsubsection{Commands with Overlay Specifications}
@@ -1968,6 +2270,37 @@ the following example (but there are exceptions to this rule):
 
 For the following commands, the effect of an overlay specification is
 special:
+
+\begin{command}{\onslide\sarg{overlay specification}}
+  All text following this command will only be shown  (uncovered) on
+  the specified slides. On non-specified slides, the text still
+  occupies space. If no slides are specified, the following
+  text is always shown. You need not call this command in the same
+  \TeX\ group, its effect transcedes block groups. However, this
+  command has a \emph{different} effect inside an |overprint|
+  environment, see the description of |overprint|.
+  
+  \example
+\begin{verbatim}
+\frame
+{
+  Shown on first slide.
+  \onslide<2-3>
+  Shown on second and third slide.
+  \begin{itemize}
+  \item
+    Still shown on the second and third slide.
+  \onslide<4->
+  \item
+    Shown from slide 4 on.
+  \end{itemize}
+  Shown from slide 4 on.
+  \onslide
+  Shown on all slides.
+}
+\end{verbatim}
+\end{command}
+
 
 \begin{command}{\only\sarg{overlay
       specification}\marg{text}\sarg{overlay specification}}
@@ -6340,10 +6673,10 @@ If you wish to suppress the head and foot line in the title page, use
   \example |\beamertemplateplaintoc|
 \end{command}
 
-\begin{command}{\beamertemplateballsectiontoc}
+\begin{command}{\beamertemplateballtoc}
   Installs a table of contents template in which small balls are shown
   before each section and subsection.
-  \example |\beamertemplatenumberedballsectiontoc|
+  \example |\beamertemplateballtoc|
 \end{command}
 
 \begin{command}{\beamertemplatenumberedsectiontoc}
@@ -7247,6 +7580,12 @@ The following inserts are useful for the navigation symbols template:
   \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
 \end{command}
 
+\begin{command}{\usesubsubitemizeitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the
+  third level of an itemize list.
+  \example |\usesubsubitemizeitemtemplate{\pgfuseimage{mysubsubbullet}}|
+\end{command}
+
 \begin{command}{\useitemizetemplate\marg{begin text}\marg{end text}}
   The \meta{begin text} is inserted at the beginning of a top-level
   itemize list, the \meta{end text} at its end.
@@ -7257,6 +7596,12 @@ The following inserts are useful for the navigation symbols template:
   The \meta{begin text} is inserted at the beginning of a second-level
   itemize list, the \meta{end text} at its end.
   \example |\usesubitemizetemplate{\begin{small}}{\end{small}}|
+\end{command}
+
+\begin{command}{\usesubsubitemizetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a third-level
+  itemize list, the \meta{end text} at its end.
+  \example |\usesubitemizetemplate{\begin{footnotesize}}{\end{footnotesize}}|
 \end{command}
 
 
@@ -7282,6 +7627,17 @@ The following inserts are useful for the navigation symbols template:
   |\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}|
 \end{command}
 
+\begin{command}{\usesubsubenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the third
+  level of an enumeration. 
+  \example
+\begin{verbatim}
+\usesubsubenumerateitemtemplate
+{\insertenumlabel-\insertsubenumlabel-\insertsubsubenumlabel}
+\end{verbatim}
+\end{command}
+
+
 \begin{command}{\useenumeratetemplate\marg{begin text}\marg{end text}}
   The \meta{begin text} is inserted at the beginning of a top-level
   enumeration, the \meta{end text} at its end.
@@ -7292,6 +7648,12 @@ The following inserts are useful for the navigation symbols template:
   The \meta{begin text} is inserted at the beginning of a second-level
   enumeration, the \meta{end text} at its end.
   \example |\usesubenumeratetemplate{\begin{small}}{\end{small}}|
+\end{command}
+
+\begin{command}{\usesubsubenumeratetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a third-level
+  enumeration, the \meta{end text} at its end.
+  \example |\usesubsubenumeratetemplate{\begin{footnotesize}}{\end{footnotesize}}|
 \end{command}
 
 \begin{command}{\usedescriptiontemplate\marg{description
@@ -7323,6 +7685,11 @@ The following inserts are useful for the navigation symbols template:
 
 \begin{command}{\insertsubenumlabel}
   Inserts the current number of the second-level enumeration (as an
+  Arabic number) into a template.
+\end{command}
+
+\begin{command}{\insertsubsubenumlabel}
+  Inserts the current number of the third-level enumeration (as an
   Arabic number) into a template.
 \end{command}
 
