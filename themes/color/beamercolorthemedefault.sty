@@ -1,0 +1,96 @@
+\ProvidesPackage{beamercolorthemedefault}[2004/05/15 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+\definecolor{beamer@blendedblue}{rgb}{0.2,0.2,0.7}
+
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=red}
+\setbeamercolor{example text}{fg=green!50!black}
+
+\setbeamercolor{structure}{fg=beamer@blendedblue}
+\setbeamercolor{structure in head/foot}{parent=structure}
+\setbeamercolor{structure in sidebar}{parent=structure}
+
+\setbeamercolor{titlelike}{parent=structure}
+
+\setbeamercolor{title}{parent=titlelike}
+\setbeamercolor{title in head/foot}{}
+\setbeamercolor{title in sidebar}{parent={structure in sidebar}}
+
+\setbeamercolor{subtitle}{parent=title}
+
+\setbeamercolor{author}{}
+\setbeamercolor{author in head/foot}{}
+\setbeamercolor{author in sidebar}{}
+
+\setbeamercolor{institute}{}
+\setbeamercolor{institute in head/foot}{}
+\setbeamercolor{institute in sidebar}{}
+
+\setbeamercolor{date}{}
+\setbeamercolor{date in head/foot}{}
+\setbeamercolor{date in sidebar}{}
+
+\setbeamercolor{titlegraphic}{}
+
+\setbeamercolor{partname}{}
+\setbeamercolor{part title}{parent=titlelike}
+
+\setbeamercolor{section in toc}{parent=structure}
+\setbeamercolor{section in head/foot}{parent={structure in head/foot}}
+\setbeamercolor{section in sidebar}{parent={structure in sidebar}}
+\setbeamercolor{section number projected}{parent={item projected}}
+
+\setbeamercolor{subsection in toc}{}
+\setbeamercolor{subsection in head/foot}{}
+\setbeamercolor{subsection in sidebar}{}
+\setbeamercolor{subsection number projected}{parent={subitem projected}}
+
+\setbeamercolor{headline}{}
+\setbeamercolor{footline}{}
+\setbeamercolor{sidebar}{}
+
+\setbeamercolor{frametitle}{parent=titlelike}
+\setbeamercolor{framesubtitle}{parent=frametitle}
+
+\setbeamercolor{caption}{}
+\setbeamercolor{caption name}{parent=structure}
+
+\setbeamercolor{button}{use=structure,bg*=structure.fg!50!bg,bg=structure.fg!50!bg,fg=white}
+\setbeamercolor{navigation symbols}{use=structure,fg=structure.fg!40!bg,fg*=structure.fg!20!bg}
+\setbeamercolor{mini frames}{parent=section in head/foot}
+
+\setbeamercolor{block body}{}
+\setbeamercolor{block title}{parent=titlelike}
+\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.bg}
+\setbeamercolor{blobk title example}{use={normal text,example text},fg=example text.fg!75!normal text.bg}
+\setbeamercolor{block structure}{parent=structure}
+
+\setbeamercolor{item}{parent=block structure}
+\setbeamercolor{subitem}{parent=item}
+\setbeamercolor{subsubitem}{parent=subitem}
+
+\setbeamercolor{item projected}{parent=item,use=item,fg=white,bg=item.fg}
+\setbeamercolor{subitem projected}{parent=subitem,use=subitem,fg=white,bg=subitem.fg!75!white}
+\setbeamercolor{subsubitem projected}{parent=subsubitem,use=subsubitem,fg=white,bg=subsubitem.fg!50!white}
+
+\setbeamercolor{enumerate item}{parent=item}
+\setbeamercolor{enumerate subitem}{parent=subitem}
+\setbeamercolor{enumerate subsubitem}{parent=subsubitem}
+
+\setbeamercolor{itemize item}{parent=item}
+\setbeamercolor{itemize subitem}{parent=subitem}
+\setbeamercolor{itemize subsubitem}{parent=subsubitem}
+
+\setbeamercolor{description item}{parent=item}
+
+\mode
+<all>
