@@ -8,9 +8,9 @@
 % archives in directory macros/latex/base/lppl.txt.
 
 
+
+
 \mode<presentation>
-
-
 
 % Title page: default
 
@@ -80,6 +80,10 @@
 
 \def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip by1.7cm}
 
+
+% Frame title continuations, default
+
+\defbeamertemplate*{frametitle continuation}{default}{\insertcontinuationcountroman}
 
 
 
@@ -181,8 +185,7 @@
 \beamertemplatenavigationsymbolshorizontal
 \beamertemplaterightsidebarlogonavigation
 
-                                % Continuations
-\beamertemplatecontinuationroman
+
 
 \mode
 <all>

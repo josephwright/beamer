@@ -132,8 +132,33 @@ otherwise it contains only one slide.
       If there is a frame title, each of the pages will have this
       frame title, with a special note added indicating which page of
       the frame that page is. By default, this special note is a
-      Roman number. However, this can be changed by changing the
-      continutation template, see Section~\ref{section-continuation}. 
+      Roman number. However, this can be changed using the following
+      template.
+      \begin{template*}{frametitle continuation}
+        The text of this template is inserted at the end of every
+        title of a frame with the |allowframebreaks| option set.
+        \begin{templateoptions}
+          \itemoption{default}{}
+          Installs a Roman number as the template. The number
+          indicates the current page of the frame.
+          \itemoption{from second}{\oarg{text}}
+          Installs a template that inserts \meta{text} from the second
+          page of a frame on. By default, the text inserted is
+          |\insertcontinuationtext|,  which  in turn is |(cont.)| by
+          default. 
+        \end{templateoptions}
+        The following inserts are available:
+        \begin{templateinserts}
+          \iteminsert{\insertcontinuationcount}
+          inserts the current page of the frame as an arabic number.
+          \iteminsert{\insertcontinuationcountroman}
+          inserts the current page of the frame as an (uppercase)
+          Roman number.
+          \iteminsert{\insertcontinuationtext}
+          just inserts the text |(cont.)| or, possibly, a translation
+          thereof (like |(Forts.)| in German). 
+        \end{templateinserts}
+      \end{template*}
     \end{enumerate}
     If a frame needs to be broken into several pages, the material on
     all but the last page fills only 95\% of each page by
@@ -336,10 +361,21 @@ otherwise it contains only one slide.
   In |article| mode, the |frame| environment does not create any visual
   reference to the original frame (no frame is drawn). Rather, the
   frame text is inserted into the normal text. To change this, you can
-  modify the frame template, see
-  Section~\ref{section-frame-template}. To suppress a frame in
-  |article| mode, you can, for example, specify |<presentation>| as
-  overlay specification. 
+  modify the templates |frame begin| and |frame end|, see below. To
+  suppress a frame in |article| mode, you can, for example, specify
+  |<presentation>| as overlay specification.
+
+  \begin{template*}{frame begin}
+    The text of this template is inserted at the beginning of each
+    frame in |article| mode (and only there). You can use it, say, to
+    start a |minipage| environment at the beginning of a frame or to
+    insert a horizontal bar or whatever.
+  \end{template*}
+
+  \begin{template}{frame end}
+    The text of this template is inserted at the end of each
+    frame in |article| mode.
+  \end{template}
 \end{environment}
 
 \begin{command}{\frame\sarg{overlay specification}%
@@ -388,21 +424,69 @@ specification. If so, it is assumed to be an overlay specification.
 
 Each frame consists of several components:
 \begin{enumerate}\itemsep=0pt\parskip=0pt
-\item a headline,
-\item a footline,
-\item a left sidebar,
-\item a right sidebar,
+\item a headline and a footline,
+\item a left and a right sidebar,
 \item navigation symbols,
 \item a logo,
-\item a frame title, and
+\item a frame title, 
+\item a background, and
 \item some frame contents.
 \end{enumerate}
 
-A frame need not have all of these components. Usually, the first six
-components are automatically setup by the theme you are
-using. To change them, you must install an appropriate template, see
-Section~\ref{section-head-templates} for the head- and footlines and
-Section~\ref{section-sidebar-templates} for the sidebars. To install
+A frame need not have all of these components. Usually, the first
+three components are automatically setup by the theme you are using. 
+
+
+\subsubsection{The Headline and Footline}
+
+The headline of a frame is the area at the top of the frame. If it is
+not empty, it should show some information that helps the audience
+orientate itself during your talk.
+
+The headline 
+
+
+\subsubsection{The Sidebars}
+
+
+Sidebars are vertical areas that stretch from the lower end of the
+headline to the top of the footline. There can be a sidebar at the
+left and another one at the right (or even both). Sidebars can show a
+table of contents, but they could also be added for purely aesthetic
+reasons.
+
+When you install a sidebar template, you must explicitly specify the
+horizontal size of the sidebar. The vertical size is determined
+automatically. Each sidebar can have its own background, which can be
+setup using special sidebar background templates.
+
+Adding a sidebar of a certain size, say 1cm, will make the main text
+1cm narrower. The distance between the inner side of a side
+bar and the outer side of the text, as specified by
+the command |\beamersetleftmargin| and its counterpart for the
+right margin, is not changed when a sidebar is installed.
+
+Internally, the sidebars are typeset by showing them as part of the
+headline. The \beamer\ class keeps track of six dimensions, three 
+for each side: the variables |\beamer@leftsidebar| and
+|\beamer@rightsidebar| store the (horizontal) sizes of the side
+bars, the variables |\beamer@leftmargin| and
+|\beamer@rightmargin| store the distance between sidebar and
+text, and the macros |\Gm@lmargin| and  |\Gm@rmargin| store
+the distance from the edge of the paper to the edge of the text. Thus
+the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
+exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
+next to the left sidebar, you might write
+|\hskip-\beamer@leftmargin| to get there.
+
+
+
+
+\subsubsection{The Navigation Symbols}
+
+\subsubsection{The Logo}
+
+To install
 a logo, use the following command:
 
 \begin{command}{\logo\marg{logo text}}
@@ -416,6 +500,9 @@ a logo, use the following command:
 
   \articlenote This command has no effect.
 \end{command}
+
+
+\subsubsection{The Frame Title}
 
 The frame title is shown prominently at the top of the frame and can
 be specified with the following command:
@@ -441,8 +528,9 @@ be specified with the following command:
 
   If you are using the |allowframebreaks| option with the current frame,
   a continuation text (like ``(cont.)'' or something similar,
-  depending on the continuation template) is automatically added to
-  the \meta{frame title text} at the end.
+  depending on the template |frametitle continuation|) is
+  automatically added to the \meta{frame title text} at the end,
+  separated with a space.
 
   \beamernote
   The frame title is not typeset immediately when the command
@@ -556,6 +644,9 @@ change this using the following class options:
   the default. You can override this for
   individual frames using the |t| or |b| option.
 \end{classoption}
+
+
+\subsubsection{The Background}
 
 
 

@@ -244,14 +244,14 @@
   \expandafter\beamer@frametitletoks\expandafter{\beamer@frametitle}%
   \expandafter\beamer@framesubtitletoks\expandafter{\beamer@shortframetitle}%
   \edef\beamer@callframetitle{\noexpand\frametitle[\the\beamer@framesubtitletoks]{\the\beamer@frametitletoks}}
-  \expandafter\beamer@autobreakframe\expandafter{%
-    \beamer@callframetitle%
+  \expandafter\expandafter\expandafter\beamer@autobreakframe
+  \expandafter\expandafter\expandafter{%
+    \expandafter\beamer@callframetitle%
     \expandafter\framesubtitle\expandafter{\insertframesubtitle}%
     \unvbox\beamer@splitbox}%
 }
 
 
-\newcommand\usecontinuationtemplate[1]{\def\beamer@autobreaktemplate{\ifnum\beamer@autobreakcount>0\relax{#1}\fi}}
 \newcommand\insertcontinuationcount{\the\beamer@autobreakcount}
 \newcommand\insertcontinuationcountroman{\@Roman\beamer@autobreakcount}
 \newcommand\insertcontinuationtext{(cont.)}

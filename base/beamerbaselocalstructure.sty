@@ -21,7 +21,7 @@
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
 \long\def\beamer@@frametitle[#1]#2{%
   \beamer@ifempty{#2}{}{%
-  \gdef\insertframetitle{#2\beamer@autobreaktemplate}%
+    \gdef\insertframetitle{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}%
   \gdef\beamer@frametitle{#2}%
   \gdef\beamer@shortframetitle{#1}%
 }%
@@ -90,7 +90,7 @@
 <article>
 {
   \usealerttemplate{\ifmmode\else\begin{itshape}\fi}{\ifmmode\else\end{itshape}\fi}
-  \usestructuretemplate{\begin{bfseries}}{\end{bfseries}}
+  \usestructuretemplate{\ifmmode\else\begin{bfseries}\fi}{\ifmmode\else\end{bfseries}\fi}
 }
 
 

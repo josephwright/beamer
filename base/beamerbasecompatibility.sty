@@ -301,6 +301,16 @@
 \def\beamertemplatelightsectionheads{\usesectionheadtemplate{\hfill\insertsectionhead}{\hfill\color{fg!50!bg}\insertsectionhead} 
  \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}}
 \let\beamertemplatedarksectionheads=\beamertemplatedefaultsectionheads
+\def\usecontinuationtemplate{\setbeamertemplate{frametitle continuation}}
+\def\beamertemplatecontinuationroman{\setbeamertemplate{frametitle continuation}[default]}
+\def\beamertemplatecontinuationtext{\setbeamertemplate{frametitle continuation}[from second]}
+
+
+\mode
+<all>
+{
+  \long\def\useframetemplate#1#2{\setbeamertemplate{frame begin}{#1}\setbeamertemplate{frame end}{#2}}
+}
 
 \mode
 <all>

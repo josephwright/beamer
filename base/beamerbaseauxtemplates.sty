@@ -354,7 +354,12 @@
 
 
 
+%
+% Frame title continutations
+%
 
+\defbeamertemplate{frametitle continuation}{from second}[1][\insertcontinuationtext]
+{\expandafter\ifnum\insertcontinuationcount>1\relax#1\fi}
 
 
 %
@@ -854,16 +859,7 @@
   }{\end{\inserttheoremblockenv}}
 }
 
-%
-% Continutation templates
-%
-\newcommand\beamertemplatecontinuationroman{
-  \usecontinuationtemplate{ \insertcontinuationcountroman}
-}
 
-\newcommand\beamertemplatecontinuationtext{
-  \usecontinuationtemplate{ \expandafter\ifnum\insertcontinuationcount>1\insertcontinuationtext\fi}
-}
 
 
 \mode

@@ -534,20 +534,20 @@
   \long\def\beamer@donoframe{%
     \setbox\beamer@tempbox\vbox\bgroup%
     \beamer@inframetrue%
-    \beamer@templateframestart%
+    \usebeamertemplate{frame begin}%
     \bgroup%
     \aftergroup\beamer@endframe%
     \ifx\@currenvir\beamer@frametext\else\expandafter\let\expandafter\beamer@next\fi}
   \def\beamer@dosingleframe{%
     \bgroup%
     \beamer@inframetrue%
-    \beamer@templateframestart%
+    \usebeamertemplate{frame begin}%
     \bgroup\aftergroup\beamer@endframe%
     \ifx\@currenvir\beamer@frametext\else\expandafter\let\expandafter\beamer@next\fi}
   \def\beamer@endframe{%
-    \beamer@templateframeend\egroup}
+    \usebeamertemplate{frame end}\egroup}
 
-  \def\includeonlyframes#1{}% no effect
+  \providecommand\includeonlyframes[1]{}% no effect
 }
 
 
@@ -555,9 +555,6 @@
 <all>
 {
   \beamer@slideinframe=1\relax%
-
-  \long\def\useframetemplate#1#2{\gdef\beamer@templateframestart{#1}\gdef\beamer@templateframeend{#2}}
-  \useframetemplate{}{}
 }
 
 

@@ -147,7 +147,7 @@
 %\subsection{Templates}
 \label{section-templates}
 
-\subsection{Introduction to Templates}
+%\subsection{Introduction to Templates}
 
 If you only wish to modify a small part of how your presentation is
 rendered, you do not need to create a whole new theme. Instead, you
@@ -384,30 +384,30 @@ template:
 
 
 
-\subsection{Frames}
+%% \subsection{Frames}
 
-\label{section-frame-template}
+%% \label{section-frame-template}
 
-\paragraph{Template Installation Commands}\ 
+%% \paragraph{Template Installation Commands}\ 
 
-\begin{command}{\useframetemplate\marg{begin of frame}\marg{end of
-      frame}}
-  \beamernote
-  This command is currently \emph{not} available in the presentation
-  modes.
+%% \begin{command}{\useframetemplate\marg{begin of frame}\marg{end of
+%%       frame}}
+%%   \beamernote
+%%   This command is currently \emph{not} available in the presentation
+%%   modes.
 
-  \articlenote
-  The \meta{begin of frame} text is inserted at the beginning of each
-  frame, when it is inserted into the article. The text \meta{end of
-  frame} is inserted at the end. You can use this template to put,
-  say, lines around a frame or to put the whole frame into  a
-  minipage. By default, nothing is inserted.
+%%   \articlenote
+%%   The \meta{begin of frame} text is inserted at the beginning of each
+%%   frame, when it is inserted into the article. The text \meta{end of
+%%   frame} is inserted at the end. You can use this template to put,
+%%   say, lines around a frame or to put the whole frame into  a
+%%   minipage. By default, nothing is inserted.
   
-  \example
-\begin{verbatim}
-\useframetemplate{\par\medskip\hrule\smallskip}{\par\smallskip\hrule\medskip}
-\end{verbatim}
-\end{command}
+%%   \example
+%% \begin{verbatim}
+%% \useframetemplate{\par\medskip\hrule\smallskip}{\par\smallskip\hrule\medskip}
+%% \end{verbatim}
+%% \end{command}
 
 
 
@@ -644,11 +644,11 @@ template:
 
 
 
-\subsection{Frame Titles}
+%% \subsection{Frame Titles}
 
-\label{section-continuation}
+%% \label{section-continuation}
 
-\paragraph{Predefined Templates}\
+%% \paragraph{Predefined Templates}\
 
 %% \begin{command}{\beamertemplateboldcenterframetitle}
 %%   Typesets the frame title using a bold face and centers it.
@@ -658,24 +658,24 @@ template:
 %%   Typesets the frame title using a large face and flushes it left.
 %% \end{command}
 
-\begin{command}{\beamertemplatecontinuationroman}
-  Causes the text in the frame title informing that the
-  current frame has been broken up into several pages to be Roman
-  numbers. Thus if you have a frame with title ``Foo'' that is broken
-  up into two pages, the first page will have the title ``Foo~I'' and the
-  second will have ``Foo~II''. 
-\end{command}
+%% \begin{command}{\beamertemplatecontinuationroman}
+%%   Causes the text in the frame title informing that the
+%%   current frame has been broken up into several pages to be Roman
+%%   numbers. Thus if you have a frame with title ``Foo'' that is broken
+%%   up into two pages, the first page will have the title ``Foo~I'' and the
+%%   second will have ``Foo~II''. 
+%% \end{command}
 
-\begin{command}{\beamertemplatecontinuationtext}
-  Causes the text in the frame title informing that the
-  current frame has been broken up into several pages to be the text
-  |\insertcontinuationtext| on all pages but the first. This text
-  inserted by this insert is ``(cont.)'' by default. Thus if you have
-  a frame with title ``Foo'' that is broken up into two pages, the
-  first page will have the title ``Foo'' and the 
-  second will have ``Foo~(cont.)'' or ``Foo~(Forts.)'' if you have
-  redefined |\insertcontinuationtext| to ``(Forts.)''.
-\end{command}
+%% \begin{command}{\beamertemplatecontinuationtext}
+%%   Causes the text in the frame title informing that the
+%%   current frame has been broken up into several pages to be the text
+%%   |\insertcontinuationtext| on all pages but the first. This text
+%%   inserted by this insert is ``(cont.)'' by default. Thus if you have
+%%   a frame with title ``Foo'' that is broken up into two pages, the
+%%   first page will have the title ``Foo'' and the 
+%%   second will have ``Foo~(cont.)'' or ``Foo~(Forts.)'' if you have
+%%   redefined |\insertcontinuationtext| to ``(Forts.)''.
+%% \end{command}
 
 
 %% \paragraph{Template Installation Commands}\ 
@@ -701,19 +701,19 @@ template:
 
 
 
-\begin{command}{\usecontinuationtemplate\marg{template}}
-  The \meta{template} will be added at the end of the text inserted by
-  the |\insertframetitle| text if a frame has the |allowframebreaks| option
-  set. 
-  \example
-\begin{verbatim}
-\usecontinuationtemplate{ \ifnum\insertcontinuationcount>1(Forts.)\fi}
-\end{verbatim}
-\end{command}
+%% \begin{command}{\usecontinuationtemplate\marg{template}}
+%%   The \meta{template} will be added at the end of the text inserted by
+%%   the |\insertframetitle| text if a frame has the |allowframebreaks| option
+%%   set. 
+%%   \example
+%% \begin{verbatim}
+%% \usecontinuationtemplate{ \ifnum\insertcontinuationcount>1(Forts.)\fi}
+%% \end{verbatim}
+%% \end{command}
 
 
 
-\paragraph{Inserts for these Templates}\ 
+%% \paragraph{Inserts for these Templates}\ 
 
 %% \begin{command}{\insertframetitle}
 %%   Inserts the current frame title into a template. If the current
@@ -726,21 +726,21 @@ template:
 %%   Inserts the current frame subtitle into a template.
 %% \end{command}
 
-\begin{command}{\insertcontinuationtext}
-  Inserts the text ``(cont.)'' into a template. Redefine this insert
-  if you use a different language. This insert is used by the template
-  installed by the command |\beamertemplatecontinuationtext|.
-\end{command}
+%% \begin{command}{\insertcontinuationtext}
+%%   Inserts the text ``(cont.)'' into a template. Redefine this insert
+%%   if you use a different language. This insert is used by the template
+%%   installed by the command |\beamertemplatecontinuationtext|.
+%% \end{command}
 
-\begin{command}{\insertcontinuationcount}
-  Inserts which page of the current frame is currently presented. If
-  the |allowframebreaks| option is \emph{not} set, this number is 0.
-\end{command}
+%% \begin{command}{\insertcontinuationcount}
+%%   Inserts which page of the current frame is currently presented. If
+%%   the |allowframebreaks| option is \emph{not} set, this number is 0.
+%% \end{command}
 
-\begin{command}{\insertcontinuationcountroman}
-  Inserts which page of the current frame is currently presented as a
-  Roman number.
-\end{command}
+%% \begin{command}{\insertcontinuationcountroman}
+%%   Inserts which page of the current frame is currently presented as a
+%%   Roman number.
+%% \end{command}
 
 
 
@@ -1005,36 +1005,6 @@ or
 \subsection{Sidebars}
 
 \label{section-sidebar-templates}
-
-Sidebars are vertical areas that stretch from the lower end of the
-headline to the top of the footline. There can be a sidebar at the
-left and one at the right (or even both). Sidebars can show a table
-of contents, but they could also be added for purely aesthetic
-reasons.
-
-When you install a sidebar template, you must explicitly specify the
-horizontal size of the sidebar. The vertical size is determined
-automatically. Each sidebar can have its own background, which can be
-setup using special side background templates.
-
-Adding a sidebar of a certain size, say 1cm, will make the main text
-1cm narrower. The distance between the inner side of a side
-bar and the outer side of the text, as specified by
-the command |\beamersetleftmargin| and its counterpart for the
-right margin, is not changed when a sidebar is installed.
-
-Internally, the sidebars are typeset by showing them as part of the
-headline. The \beamer\ class keeps track of six dimensions, three 
-for each side: the variables |\beamer@leftsidebar| and
-|\beamer@rightsidebar| store the (horizontal) sizes of the side
-bars, the variables |\beamer@leftmargin| and
-|\beamer@rightmargin| store the distance between sidebar and
-text, and the macros |\Gm@lmargin| and  |\Gm@rmargin| store
-the distance from the edge of the paper to the edge of the text. Thus
-the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
-exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
-next to the left sidebar, you might write
-|\hskip-\beamer@leftmargin| to get there.
 
 In the following, only the commands for the left sidebars are
 listed. Each of these commands also exists for the right sidebar,
