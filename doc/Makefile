@@ -9,7 +9,7 @@ themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
 
 fontthemes = bold default italics romanum sansserifstructure serifstructure
 
-colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily
+colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily structure
 
 layoutthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
 

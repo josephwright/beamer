@@ -138,7 +138,11 @@
     \example\genericthemeexample{colortheme#2}
   }
 {\end{theme}}
-\newcommand{\fontthemeexample}[2][]{\genericthemeexample[#1]{fonttheme#2}}
+\newenvironment{fontthemeexample}[2][]
+{\begin{theme}{usefonttheme}{{#2}#1}
+    \example\genericthemeexample{fonttheme#2}
+  }
+{\end{theme}}
 
 \def\partname{Part}
 

@@ -10,14 +10,23 @@
 \fi
 
 \uselayouttheme[height=0pt]{sidebar}
-\usecolortheme{\themename}
 
-\def\specialtreatment{albatross}
-\ifx\themename\specialtreatment
-\makeatletter
-\let\beamertemplatesolidbackgroundcolor=\@gobble
-\makeatother
+\def\albatrossname{albatross}
+\def\structurename{structure}
+
+\ifx\themename\structurename
+  \usecolortheme[cmyk={0.69,0,0.50,0}]{\themename}
+\else
+  \usecolortheme{\themename}
 \fi
+
+\ifx\themename\albatrossname
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
+
 
 \input{beamerthemeexamplebase}
 

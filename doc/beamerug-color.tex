@@ -3,10 +3,15 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\section{Color Management}
-
+\section{Colors}
 
 \label{section-colors}
+
+
+\subsection{Introduction}
+
+
+
 
 The color management of the \beamer\ class relies on the packages
 |xcolor|, which is a stand-alone extension of the |color| package, 
@@ -21,8 +26,7 @@ need to use the class options |color={|\meta{options for color}|}| or
 |xcolor={|\meta{options for xcolor}|}| to pass options to these
 classes.
 
-The whole color management will hopefully be much improved in the
-future. 
+
 
 \subsection{Color Themes}
 
@@ -31,7 +35,7 @@ future.
 
 \begin{colorthemeexample}{default}
   The |default| color theme is very sober. It installs little special
-  colors and even less backgrounds. The default color theme setups up
+  colors and even less backgrounds. The default color theme sets up
   the default parent relations between the different \beamer-colors.
 
   The main colors set in the |default| color theme are the following: 
@@ -46,39 +50,169 @@ future.
     |structure| is set to a light version of MidnightBlue
     (more precisely, 20\% red, 20\% green, and 70\% blue).  
   \end{itemize}
+  Use this theme for a no-nonsense presentation. Note, however, that
+  since this theme is loaded by default, you cannot ``reload'' it
+  after having loaded another color theme.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}[\oarg{options}]{structure}
+  The example was created using |\usecolortheme[named=SeaGreen]{structure}|. 
+  
+  This theme offers a convenient way of changing the color used for
+  structural elements. More precisely, it just changes the foreground
+  of the \beamer-color |structure|. You can also achieve this by
+  directly invoking the function |\setbeamercolor|, but this color
+  theme makes things a bit easier.
+
+  The theme offers several \meta{options}, which can be used to
+  specify the color to be used for structural elements:
+  \begin{itemize}
+  \item
+    \declare{|rgb=|\marg{rgb tuple}} sets the |structure| foreground
+    to the specified red-green-blue tuple. The numbers are given as
+    decimals between 0 and 1. For example, |rgb={0.5,0,0}| yields a
+    dark red.
+  \item
+    \declare{|RGB=|\marg{rgb tuple}} does the same as |rgb|, except
+    that the numbers range between 0 and 255. For example,
+    |RGB={128,0,0}|  yields a dark red.
+  \item
+    \declare{|cmyk=|\marg{cymk tuple}} sets the |structure| foreground
+    to the specified cyan-magenta-yellow-black tuple. The numbers are
+    given as decimals between 0 and 1. For example, |cymk={0,1,1,0.5}|
+    yields a dark red.
+  \item
+    \declare{|cmy=|\marg{cym tuple}} is similar to |cmyk|, except that
+    the black component is not specified.
+  \item
+    \declare{|hsb=|\marg{hsb tuple}}  sets the |structure| foreground
+    to the specified hue-saturation-brightness tuple. The numbers are
+    given as decimals between 0 and 1. For example, |hsb={0,1,.5}|
+    yields a dark red.
+  \item
+    \declare{|named=|\marg{color name}} sets the |structure| foreground
+    to a named color. This color must previously have been defined
+    using the |\DefineNamedColor| command. Adding the class option
+    |xcolor=dvipsnames| will install a long list of standard
+    names. See the file |dvipsnam.def| for the list.
+  \end{itemize}
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{sidebartab}
+  This theme changes the colors in a sidebar such that the current
+  entry in a table of contents shown there gets hilighted by showing a
+  different background behind it.
 \end{colorthemeexample}
+
 
 
 \subsection{Complete Color Themes}
 
+A ``complete'' color theme is a color theme that completely specifies
+all colors for all parts of a frame. It installs specific colors and
+does not derive the colors from, say, the |structure| \beamer-color.
+Complete complete themes happen to have bird names.
+
 \begin{colorthemeexample}{albatross}
+  The color theme is a ``dark'' or ``inverted'' theme using yellow on
+  blue as the main colors. The color theme also installs a slightly
+  darker background color for blocks, which is necessary for
+  presentation themes that use shadows, but which (in my opinion) is
+  undesirable for all other presentation themes. By using the |lily|
+  color theme together with this theme, the backgrounds for blocks can
+  be removed.
+
+  When using a light-on-dark theme like this one, be aware that there
+  are certain disadvantages:
+  \begin{itemize}
+  \item
+    If the room in which the talk is given has been ``darkened,''
+    using such a theme makes it more difficult for the audience to
+    take or read notes.
+  \item
+    Since the room becomes darker, the pupil becomes larger, thus
+    making it harder for the eye to focus. This \emph{can} make text
+    harder to  read.
+  \item
+    Printing such slides is difficult at best.
+  \end{itemize}
+
+  On the other hand, a light-on-dark presentation often appears to be
+  more ``stylish''  than a plain black-on-white one.
 \end{colorthemeexample}
 
+
 \begin{colorthemeexample}{crane}
+  This theme uses the colors of the Lufthansa, whose logo is a crane.
 \end{colorthemeexample}
 
 
 \subsection{Block Color Themes}
 
+Block themes only specify the colors of block environments. They can
+be used together with other (color) themes. If they are used to change the
+block colors installed by a presentation theme or another color theme,
+they should obviously be specified \emph{after} the other theme has
+been loaded. Block themes happen to have flower names.
+
 \begin{colorthemeexample}{lily}
+  This theme is mainly used to \emph{uninstall} any block colors setup
+  by another theme, restoring the colors used in the |default|
+  theme. In particular, using this theme will remove all background
+  colors for blocks.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{orchid}
+  This theme installs white-on-dark block titles. The background of
+  the title of a normal block is set to the foreground of the
+  structure color, the foreground is set to white. The background of
+  alerted blocks are set to red and of example blocks to green. The
+  body of blocks get a nearly transparent background.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{rose}
+  This theme installs nearly transparent backgrounds for both block
+  titles and block bodies. This theme is much less ``aggressive'' than
+  the |orchid| theme. The background colors are derived from the
+  foreground of the structure \beamer-color.
 \end{colorthemeexample}
 
 
 \subsection{Palette Color Themes}
 
-\begin{colorthemeexample}{seahorse}
-\end{colorthemeexample}
+A palette color theme  changes the palette colors, on which the colors
+used in the headline, footline, and sidebar 
+are based by default. Palette color themes do not change block
+titles. They have happen to sea-animal names.
 
 \begin{colorthemeexample}{whale}
+  Installs a white-on-dark palette for the headline, footline, and
+  sidebar. The backgrounds used there are set to shades between the
+  structure \beamer-color and black. The foreground is set to
+  white.
+
+  While this color theme can appear to be agressive, you should note
+  that a dark bar at the border of a frame will have a somewhat
+  different appearance during a presentation than it has on paper:
+  During a presentation the projection on the 
+  wall is usually surrounded by blackness. Thus, a dark bar will
+  not create a contrast as opposed to the way it does on
+  paper. Indeed, using this theme will cause the main part of the
+  frame to be more at the focus of attention.
+
+  The counterpart to the theme with respect to blocks is the |orchid|
+  theme. However, pairing it with the |rose| color theme is also
+  interesting. 
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{seahorse}
+  Installs a near-transparent backgrounds for the headline, footline,
+  and sidebar. Using this theme will cause navigational elements to be
+  much less ``dominant'' than when using the |whale| theme (see the
+  dicussion on contrast there, though).
+
+  It goes well with the |rose| or the |lily| color theme. Pairing it
+  with the |orchid| overemphasizes blocks (in my opinion).
 \end{colorthemeexample}
 
 
