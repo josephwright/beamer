@@ -819,17 +819,18 @@ slide number~2,'' the third ``This is slide number~4,'' and the fourth
 
 
 
-\subsubsection{Verbatim Commands inside Frames}
+\subsubsection{Verbatim Commands and Listings inside Frames}
 
-The \verb!\verb! command and the verbatim environment work only in
-frames that contain a single slide. Furthermore, you must explicitly
-specify that the frame contains only one slide; like this:
+The \verb!\verb! command, the verbatim environment, the lstlisting
+environment, and related environments work only in frames that contain
+a single slide. Furthermore, you must explicitly specify that the
+frame contains only one slide; like this: 
 \begin{verbatim}
 \frame[all:1]
 {
   \frametitle{Our Search Procedure}
 
-  \begin{verbatim}
+\begin{verbatim}
   int find(int* a, int n, int x)
   {
     for (int i = 0; i<n; i++)
@@ -886,8 +887,8 @@ starts. This is done using two special commands:
 \Command{defverbatim}
 \Parameters{
 \item command name (including a backslash)
-\item a normal parameter that contains a \texttt{verbatim} or
-  \texttt{verbatim*} environment.
+\item a normal parameter that contains a \texttt{verbatim},
+  \texttt{verbatim*}, \texttt{lstlisting}, or a related environment. 
 }
 \Description{
   Declares a verbatim environment for later use. The declaration
@@ -3656,26 +3657,38 @@ If you wish to suppress the head and foot line in the title page, use
 
 \Command{usetemplatetocsection}
 \Parameters{
-\item a template for a section name in the table of contents.
-\item a template for a grayed section name in the table of contents.
+\item A color mix-in specification for grayed sections names. This
+parameter is optional and given in square brackets. If present, the
+normal parameter for the grayed section name must be omitted.
+\item A template for a section name in the table of contents.
+\item A template for a grayed section name in the table of contents.
   }
 \Example
 \begin{verbatim}
 \usetemplatetocsection
 {\color{structure}\inserttocsection}
-{\color{structureshaded}\inserttocsection}
+{\color{structure!50}\inserttocsection}
+
+\usetemplatetocsection[50!averagebackgroundcolor]
+{\color{structure}\inserttocsection}
 \end{verbatim}
 
 \Command{usetemplatetocsubsection}
 \Parameters{
-\item a template for a subsection name in the table of contents.
-\item a template for a grayed subsection name in the table of contents.
+\item A color mix-in specification for grayed subsections names. This
+parameter is optional and given in square brackets. If present, the
+normal parameter for the grayed subsection name must be omitted.
+\item A template for a subsection name in the table of contents.
+\item A template for a grayed subsection name in the table of contents.
   }
 \Example
 \begin{verbatim}
 \usetemplatetocsubsection
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
-{\leavevmode\leftskip=1.5em\color{shaded}\inserttocsubsection\par}
+{\leavevmode\leftskip=1.5em\color{black!50}\inserttocsubsection\par}
+
+\usetemplatetocsection[50!averagebackgroundcolor]
+{\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
 \end{verbatim}
 
 
@@ -3741,8 +3754,8 @@ If you wish to suppress the head and foot line in the title page, use
   \usebibliographyblocktemplate
   {\color{structure}}
   {\par\color{black}}
-  {\par\color{structuremedium}}
-  {\par\color{structuremedium}}
+  {\par\color{structure!75}}
+  {\par\color{structure!75}}
 \end{verbatim}
 
 
@@ -3793,13 +3806,13 @@ If you wish to suppress the head and foot line in the title page, use
   }
 \Example
 \begin{verbatim}
-\usefoottemplate{\hfil\tiny{\color{shaded}\insertpagenumber}}
+\usefoottemplate{\hfil\tiny{\color{black!50}\insertpagenumber}}
 \end{verbatim}
 or
 \begin{verbatim}
 \usefoottemplate{%
   \vbox{%
-    \tinycolouredline{structuremedium}%
+    \tinycolouredline{structure!75}%
       {\color{white}\textbf{\insertshortauthor\hfill\insertshortinstitute}}%
     \tinycolouredline{structure}%
       {\color{white}\textbf{\insertshorttitle}\hfill}%
@@ -3815,9 +3828,9 @@ or
 \useheadtemplate{%
   \vbox{%
   \vskip3pt%
-  \line{\insertnavigation{\paperwidth}}%
+  \beamerline{\insertnavigation{\paperwidth}}%
   \vskip1.5pt%
-  \insertvrule{0.4pt}{structureshaded}}%
+  \insertvrule{0.4pt}{structure!50}}%
 }
 \end{verbatim}
 
@@ -3960,7 +3973,7 @@ bar. Should be an \texttt{hbox}.
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
   \box\tempbox}
-{\setbox\tempbox=\hbox{\color{structuremedium}\tiny{\kern3pt\insertsectionhead}}%
+{\setbox\tempbox=\hbox{\color{structure!75}\tiny{\kern3pt\insertsectionhead}}%
   \ht\tempbox=8pt%
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
@@ -3983,7 +3996,7 @@ bar. Should be an \texttt{hbox}.
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
   \box\tempbox}
-{\setbox\tempbox=\hbox{\color{structuremedium}\tiny{\kern3pt\insertsectionhead}}%
+{\setbox\tempbox=\hbox{\color{structure!75}\tiny{\kern3pt\insertsectionhead}}%
   \ht\tempbox=8pt%
   \dp\tempbox=2pt%
   \wd\tempbox=\beamer@sidebarwidth%
@@ -4025,7 +4038,7 @@ bar. Should be an \texttt{hbox}.
 \begin{verbatim}
 \usesectionheadtemplate
 {\color{structure}\tiny\insertsectionhead}
-{\color{structureshaded}\tiny\insertsectionhead}
+{\color{structure!50}\tiny\insertsectionhead}
 \end{verbatim}
 
 
@@ -4038,7 +4051,7 @@ bar. Should be an \texttt{hbox}.
 \begin{verbatim}
 \usesubsectionheadtemplate
 {\color{structure}\tiny\insertsubsectionhead}
-{\color{structureshaded}\tiny\insertsubsectionhead}
+{\color{structure!50}\tiny\insertsubsectionhead}
 \end{verbatim}
 
 
@@ -4062,7 +4075,7 @@ bar. Should be an \texttt{hbox}.
     \vrule height\boxsize width0.4pt%
   }
   {%
-    \color{structureshaded}%
+    \color{structure!50}%
     \vrule height\boxsize width0.4pt%
   }
   {.1cm}

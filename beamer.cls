@@ -1,13 +1,162 @@
-\ProvidesClass{beamer}
-[2003/10/23 v0.92 Class for Typesetting a Beamer Presentation]
-
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesClass{beamer}
+[2003/10/23 v0.92-dev Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
 % This program can be redistributed and/or modified under the terms
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
+
+%
+% Presentation/article stuff
+%
+% Copyright notice: Part of the following code is taken from the
+% package comment.sty by Victor Eijkhout
+%
+
+
+%
+% Comment stuff. This will also be needed, if we switch to another
+% class, so define it here already.
+%
+\newif\ifbeamer@inpresentation
+\beamer@inpresentationtrue
+
+\def\beamer@makeinnocent#1{\catcode`#1=12 }
+\def\beamer@startcomment{%
+    \begingroup%
+    \let\do\beamer@makeinnocent\dospecials%
+    \beamer@makeinnocent\^^L% and whatever other special cases
+    \endlinechar`\^^M \catcode`\^^M=12 \beamer@ignore}
+
+{\catcode`\^^M=12\endlinechar=-1%
+ \gdef\beamer@ignore#1^^M{%
+    \expandafter\beamer@processline}
+ \gdef\beamer@processline#1^^M{%
+   \def\beamer@test{#1}%
+    \ifx\beamer@test\beamer@stoparticle%
+      \let\next=\article%
+    \else%
+      \ifx\beamer@test\beamer@stoppresentation%
+        \let\next=\presentation%
+      \else%
+        \ifx\beamer@test\beamer@stopcommon%
+          \let\next=\common%
+        \else%
+          \ifx\beamer@test\beamer@stopdocument%
+            \let\next=\beamer@enddocument%
+          \else
+            \ifx\beamer@test\beamer@begindocument%
+              \let\next=\beamer@startdocument%
+            \else
+              \let\next=\beamer@processline%
+          \fi%  
+          \fi%  
+        \fi%
+      \fi%
+    \fi%
+    \next}
+}
+\def\article{\beamer@closer%
+  \ifbeamer@inpresentation%
+    \let\next=\beamer@startcomment%
+    \gdef\beamer@closer{\endgroup}%
+  \else%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+  \fi%
+  \next}  
+
+\def\presentation{\beamer@closer%
+  \ifbeamer@inpresentation%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+  \else%
+    \let\next=\beamer@startcomment%
+    \gdef\beamer@closer{\endgroup}%
+  \fi%
+  \next}
+\def\common{\beamer@closer\gdef\beamer@closer{}}
+\def\beamer@enddocument{\beamer@closer\end{document}}
+\def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}\presentation}
+\def\beamer@closer{}
+{\escapechar=-1\relax%
+  \xdef\beamer@stoparticle{\string\\article}
+  \xdef\beamer@stoppresentation{\string\\presentation}
+  \xdef\beamer@stopcommon{\string\\common}
+  \xdef\beamer@stopdocument{\string\\end\string\{document\string\}}
+  \xdef\beamer@begindocument{\string\\begin\string\{document\string\}}
+}
+\newbox\beamer@commentbox
+\def\beamer@startcommentinframe{%
+  \begingroup%
+  \edef\beamer@closer{\egroup\beamer@closer}%
+  \setbox\beamer@commentbox=\vbox\bgroup\leavevmode}
+
+
+
+
+%
+% Check whether we should initiate transfer to another class
+%
+
+% Extract class name, if present
+\def\beamer@classname{}
+\def\beamer@classoptions{}
+\def\beamer@findclassname#1,#2!{
+  \def\beamer@temp{#1}
+  \ifx\beamer@temp\@empty
+  \else
+    \beamer@parseclass#1=!
+  \fi
+  \def\beamer@temp{#2}
+  \ifx\beamer@temp\@empty
+    \let\next=\@gobble 
+  \else
+  \let\next=\beamer@findclassname
+  \fi
+  \next#2!}
+\def\beamer@classnamename{class}
+\def\beamer@optionname{option}
+\def\beamer@parseclass#1=#2!{
+  \def\beamer@temp{#1}
+  \ifx\beamer@temp\beamer@classnamename
+    \beamer@extractclassname#2
+  \else
+    \ifx\beamer@temp\beamer@optionname
+      \beamer@extractoption#2
+    \fi
+  \fi  
+}
+\def\beamer@extractclassname#1={
+  \def\beamer@classname{#1}
+}
+\def\beamer@extractoption#1={
+  \ifx\beamer@classoptions\@empty
+    \def\beamer@classoptions{#1}
+  \else
+    \edef\beamer@classoptions{\beamer@classoptions,#1}  
+  \fi
+}
+
+\def\beamer@transfer{
+  \beamer@inpresentationfalse
+  \edef\beamer@classwhat{[\beamer@classoptions]{\beamer@classname}}
+  \expandafter\LoadClass\beamer@classwhat
+  \endinput
+  }
+
+\expandafter\beamer@findclassname\@classoptionslist,!
+\ifx\beamer@classname\@empty
+  \let\next=\relax
+\else
+  % Need to transfer to another class soon
+  \let\next=\beamer@transfer
+\fi
+\next
+
+
 
 
 %
@@ -573,13 +722,13 @@
 \long\def\@@section#1{\@section[#1]{#1}}
 \long\def\@section[#1]#2{%
   \refstepcounter{section}%
-  \@ifempty{#2}{\long\def\secname{#1}}{\long\def\secname{#2}\addtocontents{toc}{\protect\sectionintoc{\thesection}{#2}{\thepage}}}%
+  \@ifempty{#2}{\long\def\secname{#1}}{\long\def\secname{#2}\addtocontents{btoc}{\protect\sectionintoc{\thesection}{#2}{\thepage}}}%
   \addtocontents{head}{\protect\headcommand{\protect\sectionentry{\thesection}{#1}{\thepage}{\secname}}}%
   {\let\\=\relax\xdef\sectionlink{{Navigation\thepage}{\noexpand\secname}}}%
   \def\insertsection{\expandafter\hyperlink\sectionlink}%
   \def\insertsubsection{}%
   \def\lastsubsection{}%
-  \Hy@writebookmark{\thesection}{\secname}{Outline\thesection}{1}{toc}%
+  \Hy@writebookmark{\thesection}{\secname}{Outline\thesection}{1}{btoc}%
   \hyper@anchorstart{Outline\thesection}\hyper@anchorend}%
 \def\insertsection{}
 \def\lastsubsection{}
@@ -606,14 +755,14 @@
     \long\def\subsecname{#2}%
     \long\def\lastsubsection{#1}%
     \ifbeamer@inappendix%
-    \addtocontents{toc}{\protect\appendixsubsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}}%
+    \addtocontents{btoc}{\protect\appendixsubsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}}%
     \else%
-    \addtocontents{toc}{\protect\subsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}}%
+    \addtocontents{btoc}{\protect\subsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}}%
     \fi%
   }%
   \edef\subsectionlink{{Navigation\thepage}{\noexpand\subsecname}}%
   \def\insertsubsection{\expandafter\hyperlink\subsectionlink}
-  \Hy@writebookmark{\thesubsection}{#1}{Outline\thesection.\thesubsection.\thepage}{2}{toc}%
+  \Hy@writebookmark{\thesubsection}{#1}{Outline\thesection.\thesubsection.\thepage}{2}{btoc}%
   \hyper@anchorstart{Outline\thesection.\thesubsection.\thepage}\hyper@anchorend}
 
 
@@ -646,6 +795,7 @@
   \hypersetup{pdfpagetransition=R}%
   \hypersetup{pdfpageduration=}%
   \xdef\beamer@frameendpage{\thepage}% every time
+  \let\beamer@startcomment=\beamer@startcommentinframe%
   \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
   {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
 
@@ -670,13 +820,13 @@
   \beamer@inappendixtrue%
   \refstepcounter{section}%
   \long\edef\secname{\appendixname}%
-  \addtocontents{toc}{\protect\appendixtoc{\thesubsection}{\appendixname}{\thepage}}
+  \addtocontents{btoc}{\protect\appendixtoc{\thesubsection}{\appendixname}{\thepage}}
   \addtocontents{head}{\protect\headcommand{\protect\appendixsectionentry{\thesection}{\secname}{\thepage}{\secname}}}%
   \xdef\sectionlink{{Navigation\thepage}{\noexpand\secname}}%
   \def\insertsection{\expandafter\hyperlink\sectionlink}%
   \def\insertsubsection{}%
   \def\lastsubsection{}%
-  \Hy@writebookmark{\thesection}{\secname}{Outline\thesection}{1}{toc}%
+  \Hy@writebookmark{\thesection}{\secname}{Outline\thesection}{1}{btoc}%
   \hyper@anchorstart{Outline\thesection}\hyper@anchorend}%
 
 
@@ -1810,7 +1960,7 @@
     \def\appendixsubsectionintoc##1##2##3##4{}%
     \fi%
     \begin{pauses}[0]%
-      \@input{\jobname.toc}%
+      \@input{\jobname.btoc}%
     \end{pauses}\vfill}%
   \normalcolor
   }
@@ -2004,8 +2154,8 @@
     \if@filesw
       \newwrite\tf@head
       \immediate\openout\tf@head\jobname.head\relax
-      \newwrite\tf@toc
-      \immediate\openout\tf@toc\jobname.toc\relax
+      \newwrite\tf@btoc
+      \immediate\openout\tf@btoc\jobname.btoc\relax
     \fi
 }
 
@@ -2253,7 +2403,6 @@
   {\small\structure{\insertcaptionname:} \insertcaption}}
 
 
-
 %
 % Notes
 %
@@ -2298,8 +2447,7 @@
 % Default Theme
 %
 %
-
-  
+ 
                                 % Title page  
 \usetitlepagetemplate{
   \vbox{}
@@ -2395,6 +2543,7 @@
 \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{structure}$\blacktriangleright$}}
 \useitemizetemplate{}{}
 \usesubitemizetemplate{\begin{small}}{\end{small}}
+
 
 
 
