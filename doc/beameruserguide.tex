@@ -833,7 +833,7 @@ Second, you can use the following command:
 
 \frame{This frame will not be included.}
 
-\resumeframe{example1} % Will be included
+\againframe{example1} % Will be included
 \end{verbatim}
 \end{command}
 
@@ -943,10 +943,10 @@ slides of the frame.
   \item
     \declare{|label=|\meta{name}} causes the frame's contents to
     be stored under the name \meta{name} for later resumption using
-    the command |\resumeframe|. If this option is given, you cannot
+    the command |\againframe|. If this option is given, you cannot
     include verbatim text in the frame, even if you specify an overlay
     specification like |<1>|. The frame is still rendered
-    normally. See also |\resumeframe|.
+    normally. See also |\againframe|.
 
     Furthermore, on each slide of the frame a label with the name
     \meta{name}|<|\meta{slide number}|>| is created. On the
@@ -969,7 +969,7 @@ reason is that I simply have not been able to come up with an idea of
 how to implement it.
 
 
-\begin{command}{\resumeframe\sarg{overlay
+\begin{command}{\againframe\sarg{overlay
       specification}\oarg{options}\marg{name}}
   Resumes a frame that was previously created using |\frame|
   with the option |label=|\meta{name}. You must have used this option,
@@ -995,7 +995,7 @@ how to implement it.
   Some stuff explaining more on the second matter.
 }
 
-\resumeframe<3>{myframe}
+\againframe<3>{myframe}
 \end{verbatim}
   The effect of the above code is to create four slides. In the first
   two, the items 1 and~2 are hilighted. The third slide contains the
@@ -1030,7 +1030,7 @@ how to implement it.
 ...
 \appendix
 
-\resumeframe<2>{Cantor}
+\againframe<2>{Cantor}
 \end{verbatim}
   In this example, the proof details are deferred to a slide in the
   appendix. Hyperlinks are setup, so that one can jump to the proof
@@ -1835,9 +1835,9 @@ short cuts''.
   is a return button present on each slide that will jump back to the
   place where the goto button was pressed.
 \item
-  You can use the |\resumeframe| command to ``continue'' frames that
+  You can use the |\againframe| command to ``continue'' frames that
   you previously started somewhere, but where certain details have
-  been suppressed. You can use the |\resumeframe| command at a
+  been suppressed. You can use the |\againframe| command at a
   much later point, for example only in the appendix to show to
   additional slides there.
 \end{itemize}
@@ -2457,7 +2457,7 @@ governed by a template, see Section~\ref{section-navigation-buttons}.
   \end{overprint}
 }
 \appendix
-\resumeframe<2>{mytheorem}
+\againframe<2>{mytheorem}
 \end{verbatim}
 \end{command}
 

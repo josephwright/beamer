@@ -213,6 +213,8 @@
 {
   \long\def\beamer@gobbleoptional{\@ifnextchar[{\beamer@@gobbleoptional}{\beamer@@gobbleoptional[]}}
   \long\def\beamer@@gobbleoptional[#1]#2{}
+  \long\def\beamer@gobbleoptionalinsp{\@ifnextchar[{\beamer@@gobbleoptionalinsp}{\beamer@@gobbleoptionalinsp[]}}
+  \long\def\beamer@@gobbleoptionalinsp[#1]#2{\ignorespaces}
 
   \long\def\beamer@ignoreoptional{\@ifnextchar[{\beamer@@ignoreoptional}{}}
   \long\def\beamer@@ignoreoptional[#1]{}
@@ -224,25 +226,29 @@
 }
 
 \long\def\makeinvisible#1{\beamer@startcovered#1\beamer@endcovered}
+\long\def\makeinvisibleinsp#1{\beamer@startcovered\ignorespaces#1\beamer@endcovered\ignorespaces}
 \long\def\fakeinvisible#1{\beamer@spacingcover#1\beamer@spacingcover}
+\long\def\fakeinvisibleinsp#1{\beamer@spacingcover\ignorespaces#1\beamer@spacingcover\ignorespaces}
 \long\def\beamer@reallymakeinvisible#1{\pgfsys@begininvisible#1\pgfsys@endinvisible}
 
 \newoverlaycommand{\uncover}{\fakeinvisible}{\makeinvisible}
+\newoverlaycommand{\pgfuncover}{\fakeinvisibleinsp}{\makeinvisibleinsp}
 \newoverlaycommand{\invisible}{\beamer@reallymakeinvisible}{\fakeinvisible}
 \newoverlayenvironment{uncoverenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}
-\newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
-\renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptional}
+\newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
+\renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}
 
 \article
 {
   \newoverlaycommand{\uncover}{\beamer@unbrace}{\@gobble}
+  \newoverlaycommand{\pgfuncover}{\beamer@unbrace\ignorespaces}{\beamer@gobbleis}
   \newoverlaycommand{\invisible}{\@gobble}{\beamer@unbrace}
-  \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
-  \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\hbox\bgroup}{\egroup\endgroup}
+  \newoverlayenvironment{uncoverenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
+  \newoverlayenvironment{onlyenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}
 
   \AtBeginDocument{
     % These have to be done late...
-    \renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptional}
+    \renewoverlaycommand{\color}{\beameroriginal{\color}}{\beamer@gobbleoptionalinsp}
   }
 }
 

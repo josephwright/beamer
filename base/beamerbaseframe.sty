@@ -49,10 +49,10 @@
   \xdef\beamer@frameendpage{\thepage}% every time
   \beamer@setuplinks%
   \let\beamer@startcomment=\beamer@startcommentinframe%
-  \ifx\beamer@resumename\@empty\else%
-    \label<\the\beamer@slideinframe>{\beamer@resumename<\the\beamer@slideinframe>}%
+  \ifx\beamer@againname\@empty\else%
+    \label<\the\beamer@slideinframe>{\beamer@againname<\the\beamer@slideinframe>}%
     \ifnum\beamer@slideinframe=1\relax%
-      \label<1>{\beamer@resumename}%
+      \label<1>{\beamer@againname}%
     \fi%
   \fi%
   \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
@@ -122,10 +122,10 @@
 %
 % Keys
 %
-\define@key{beamerframe}{label}{\def\beamer@resumename{#1}}
-\define@key{beamerframe}{plain}[true]{\def\beamer@frametheme{\beamer@frametheme@plain}}
-\define@key{beamerframe}{theme}{%
-  \edef\beamer@frametheme{\expandafter\noexpand\csname beamer@frametheme@#1\endcsname}}
+\define@key{beamerframe}{label}{\def\beamer@againname{#1}}
+\define@key{beamerframe}{plain}[true]{\def\beamer@frametemplate{\beamer@frametemplate@plain}}
+\define@key{beamerframe}{template}{%
+  \edef\beamer@frametemplate{\expandafter\noexpand\csname beamer@frametemplate@#1\endcsname}}
 
 
 % Check for old version:
@@ -151,10 +151,10 @@
 \def\beamer@@@frame<#1>[#2]{%
   \beamer@savemode%
   \def\beamer@mode{\common}%
-  \def\beamer@frametheme{}%
-  \def\beamer@resumename{}%
+  \def\beamer@frametemplate{}%
+  \def\beamer@againname{}%
   \setkeys{beamerframe}{#2}%
-  \beamer@frametheme%
+  \beamer@frametemplate%
   \refstepcounter{framenumber}%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\insertframetitle{}%
@@ -163,7 +163,7 @@
   \ifx\beamer@framerestriction\@undefined\else% restriction stuff
     \expandafter\beamer@checkifinlist\beamer@framerestriction\relax%
   \fi%
-  \ifx\beamer@resumename\@empty%
+  \ifx\beamer@againname\@empty%
     \beamer@slideinframe=0\relax%
     \beamer@anotherslidefalse%
     {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:| }}%
@@ -182,7 +182,7 @@
     \else% no slides in frame
       \let\beamer@howtotreatframe\beamer@donoframe%
     \fi%
-  \else% resume mode
+  \else% again mode
     \let\beamer@howtotreatframe\beamer@doseveralframes%
   \fi%
   \ifbeamer@notesnormals\else\let\beamer@howtotreatframe\beamer@donoframe\fi%
@@ -204,9 +204,9 @@
 \def\beamer@noframesingletoken{\beamer@next\egroup\beamer@reseteecodes}
 
 \long\def\beamer@doseveralframes#1{%
-  \ifx\beamer@resumename\@empty\else%
-    % Resume stuff
-    \expandafter \gdef\csname beamer@resume@\beamer@resumename\endcsname{{#1}}%
+  \ifx\beamer@againname\@empty\else%
+    % Again stuff
+    \expandafter \gdef\csname beamer@again@\beamer@againname\endcsname{{#1}}%
   \fi%
   \beamer@slideinframe=1\relax%
   \loop%
@@ -240,8 +240,8 @@
   {%else
     \addtocontents{nav}%
       {\protect\headcommand{%
-          \protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
-          {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\thepart}}}%
+          \protect\slideentry{\the\c@section}{\the\c@subsection}{\the\c@subsectionslide}%
+          {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\the\c@part}}}%
     \addtocontents{nav}%
       {\protect\headcommand{% 
         \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
@@ -252,7 +252,7 @@
 
 \def\beamer@checkifinlist#1,#2\relax{
   \def\beamer@temp{#1}%
-  \ifx\beamer@temp\beamer@resumename\else
+  \ifx\beamer@temp\beamer@againname\else
     \def\beamer@temp{#2}%
     \ifx\beamer@temp\@empty
       \gdef\beamer@whichframes{all:0}%
@@ -320,32 +320,32 @@
 % Plain frames
 %
 
-\def\beamer@frametheme@plain{%
+\def\beamer@frametemplate@plain{%
   \def\beamer@entrycode{\vspace*{-\headheight}}%
   \def\beamer@exitcode{\vspace*{-\footheight}\thispagestyle{empty}}}
 
 
 %
-% Resume frame
+% Again frame
 %
 
-\def\resumeframe{\@ifnextchar<{\begingroup\catcode`:=12\catcode`|=12\beamer@resumeframe}{\beginroup\beamer@resumeframe<+>}}
-\def\beamer@resumeframe<#1>{\endgroup\@ifnextchar[{\beamer@@resumeframe<#1>}{\beamer@@resumeframe<#1>[]}}
-\def\beamer@@resumeframe<#1>[#2]#3{%
-  \@ifundefined{beamer@resume@#3}%
+\def\againframe{\@ifnextchar<{\begingroup\catcode`:=12\catcode`|=12\beamer@againframe}{\beginroup\beamer@againframe<+>}}
+\def\beamer@againframe<#1>{\endgroup\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
+\def\beamer@@againframe<#1>[#2]#3{%
+  \@ifundefined{beamer@again@#3}%
   {\ClassError{beamer}{No frame has been designated to resume under
       the name "#3"}{}}%
   {%
   \def\beamer@temp{\frame<#1>[#2,label=#3]}%
-  \expandafter\let\expandafter\beamer@templet\csname beamer@resume@#3\endcsname%
+  \expandafter\let\expandafter\beamer@templet\csname beamer@again@#3\endcsname%
   \expandafter\beamer@temp\beamer@templet}%
 }
 
 \article
 {
-  \def\resumeframe{\@ifnextchar<{\beamer@resumeframe}{\beamer@resumeframe<>}}
-  \def\beamer@resumeframe<#1>{\@ifnextchar[{\beamer@@resumeframe<#1>}{\beamer@@resumeframe<#1>[]}}
-  \def\beamer@@resumeframe<#1>[#2]#3{} % do nothing
+  \def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<>}}
+  \def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
+  \def\beamer@@againframe<#1>[#2]#3{} % do nothing
 }
 
 

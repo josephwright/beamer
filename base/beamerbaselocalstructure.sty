@@ -15,11 +15,17 @@
 % Alerting
 %
 
-\newoverlaycommand{\alert}{\@alert}{}
+\newoverlaycommand{\alert}{\@alert}{\beamer@unbrace}
 \def\@alert#1{\def\insertalert{#1}\beamer@alerttemplate}
 
-\newoverlaycommand{\structure}{\@structure}{}
+\newoverlaycommand{\pgfalert}{\@alertinsp}{\beamer@insp}
+\def\@alertinsp#1{\def\insertalert{#1\ignorespaces}\beamer@alerttemplate\ignorespaces}
+
+\newoverlaycommand{\structure}{\@structure}{\beamer@unbrace}
 \def\@structure#1{\def\insertstructure{#1}\beamer@structuretemplate}
+
+\newoverlaycommand{\pgfstructure}{\@structureinsp}{\beamer@insp}
+\def\@structureinsp#1{\def\insertstructure{#1\ignorespaces}\beamer@structuretemplate\ignorespaces}
 
 \long\def\usealerttemplate#1{%
   \gdef\beamer@alerttemplate{#1}}
@@ -33,6 +39,10 @@
 {
   \newoverlaycommand{\alert}{\emph}{}
   \newoverlaycommand{\structure}{\textbf}{}
+  \newoverlaycommand{\pgfalert}{\beamer@emphinsp}{\beamer@insp}
+  \def\beamer@emphinsp#1{\emph{\ignorespaces#1}\ignorespaces}
+  \newoverlaycommand{\pgfstructure}{\beamer@structinsp}{\beamer@insp}
+  \def\beamer@structinsp#1{\textbf{\ignorespaces#1}\ignorespaces}  
 }
 
 

@@ -78,7 +78,7 @@
     \vfill
     \fi
     \ifbeamer@onlycurrent%
-      \ifnum\thesection=#1%
+      \ifnum\c@section=#1%
         \hbox{\vbox{\sectiontemplate}}%
       \else%
         \hbox{\vbox{\sectiontemplateshaded}}%
@@ -115,14 +115,14 @@
       \def\inserttocsubsectionnumber{#2}%
       \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
       \ifbeamer@subsectionshide
-        \ifnum\thesection=#1
+        \ifnum\c@section=#1
           {\beamer@subsectiontemplate}
         \fi
       \else
         \ifbeamer@onlycurrent
-          \ifnum\thesection=#1
+          \ifnum\c@section=#1
             \ifbeamer@onlycurrentsubsection
-              \ifnum\thesubsection=#2
+              \ifnum\c@subsection=#2
                 {\beamer@subsectiontemplate}
               \else
                 {\beamer@subsectiontemplateshaded}
@@ -138,8 +138,8 @@
             {\beamer@subsectiontemplateshaded}
           \else
             \ifbeamer@onlycurrentsubsection
-              \ifnum\thesection=#1
-                \ifnum\thesubsection=#2
+              \ifnum\c@section=#1
+                \ifnum\c@subsection=#2
                   {\beamer@subsectiontemplate}
                 \else
                   {\beamer@subsectiontemplateshaded}

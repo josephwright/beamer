@@ -488,7 +488,7 @@
   \beamer@ypos=1\relax%
   \setbox\beamer@sectionbox=
   \hbox{\def\insertsectionhead{#2}%
-    \ifnum\thesection=#1%
+    \ifnum\c@section=#1%
     \hyperlink{Navigation#3}{\beamer@sectionheadhilight}\else%
     \hyperlink{Navigation#3}{\beamer@sectionheadnohilight}\fi}%
   \ht\beamer@sectionbox=1.875ex%
@@ -505,8 +505,8 @@
       \ifnum##5=\c@part%
       \def\insertsectionhead{##2}%
       \hbox{\hyperlink{Navigation##3}{%
-          \ifnum\thesection=##1%
-            \ifnum\thesubsection=0\relax%
+          \ifnum\c@section=##1%
+            \ifnum\c@subsection=0\relax%
               \beamer@sectionsidehilight%
             \else%
               \beamer@sectionsidenohilight%
@@ -521,8 +521,8 @@
       \beamer@currentsubsection=##2%
       \def\insertsubsectionhead{##5}%
       \hbox{\beamer@link(##4){%
-          \ifnum\thesection=##1%
-            \ifnum\thesubsection=##2%
+          \ifnum\c@section=##1%
+            \ifnum\c@subsection=##2%
               \beamer@subsectionsidehilight%
             \else%
               \beamer@subsectionsidenohilight%
@@ -555,7 +555,7 @@
       \advance\beamer@tempdim by -\beamer@boxsize%
       \advance\beamer@tempdim by 1pt%
       \kern\beamer@tempdim\hbox{\beamer@link(#4){%
-        \ifnum\thesection=#1\ifnum\thesubsection=#2\ifnum\thesubsectionslide=#3%
+        \ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsectionslide=#3%
         \beamer@minislidehilight\else\beamer@minisliderowhilight\fi\else\beamer@minislide\fi\else\beamer@minislide\fi%
         }}}\hskip-10cm plus 1fil
   }\fi\fi%
@@ -605,7 +605,7 @@
        \def\insertsectionhead{##2}%
        \setbox\beamer@tempbox=\hbox{%
          \hyperlink{Navigation##3}{\hbox to #1{%
-           \hskip0.3cm\ifnum\thesection=##1%
+           \hskip0.3cm\ifnum\c@section=##1%
            \beamer@sectionheadhilight\else\beamer@sectionheadnohilight\fi\hskip0.3cm}}}%
        \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%        
        \box\beamer@tempbox\fi}%
@@ -627,12 +627,12 @@
       \vskip0.5625ex%
       \beamer@currentsubsection=0%
       \def\sectionentry##1##2##3##4##5{}%
-      \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
+      \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
         \ifnum##2>\beamer@currentsubsection%
         \beamer@currentsubsection=##2%
         \def\insertsubsectionhead{##5}%
         \setbox\beamer@tempbox=\hbox{\beamer@link(##4){%
-          \hbox to #1{\hskip0.3cm\ifnum\thesubsection=##2%
+          \hbox to #1{\hskip0.3cm\ifnum\c@subsection=##2%
           \beamer@subsectionheadhilight\else\beamer@subsectionheadnohilight\fi\hfil\hskip0.3cm}}}%
         \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%
         \box\beamer@tempbox\fi\fi\fi}%
@@ -642,13 +642,13 @@
   \hbox to #1{\tiny%
     \beamer@currentsubsection=0%
     \def\sectionentry##1##2##3##4##5{}%
-    \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\thesection%
+    \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
       \ifnum##2>\beamer@currentsubsection%
       \beamer@currentsubsection=##2%
       \box\beamer@sectionbox\hskip1.875ex plus1fill%
       \setbox\beamer@sectionbox=
       \hbox{\def\insertsubsectionhead{##5}%
-        \ifnum\thesubsection=##2%
+        \ifnum\c@subsection=##2%
         \beamer@link(##4){\beamer@subsectionheadhilight}\else%
         \beamer@link(##4){\beamer@subsectionheadnohilight}\fi}%
       \ht\beamer@sectionbox=1.875ex%

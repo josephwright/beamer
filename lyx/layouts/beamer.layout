@@ -96,7 +96,7 @@ End
 Style BeginFrame
   KeepEmpty	1
   LatexType	Command
-  LatexName	frame{\frametitle
+  LatexName	lyxframe
   Margin            First_Dynamic
   NextNoIndent      1
   ParSkip           0
@@ -120,12 +120,22 @@ Style BeginFrame
     Family          Roman
     Color           latex
   EndFont
+
+  Preamble
+    \makeatletter
+    \long\def\lyxframe#1{\@lyxframe#1\@lyxframestop}%
+    \def\@lyxframe{\@ifnextchar<{\@@lyxframe}{\@@lyxframe<+>}}%
+    \def\@@lyxframe<#1>{\@ifnextchar[{\@@@lyxframe<#1>}{\@@@lyxframe<#1>[]}}
+    \long\def\@@@lyxframe<#1>[#2]#3\@lyxframestop#4\lyxframeend{%
+      \frame<#1>[#2]{\frametitle{#3}#4}}
+    \makeatother
+  EndPreamble
 End
 
 Style BeginPlainFrame
   KeepEmpty	1
   LatexType	Command
-  LatexName	frame[plain]{
+  LatexName	lyxplainframe
   Margin            First_Dynamic
   NextNoIndent      1
   ParSkip           0
@@ -149,43 +159,22 @@ Style BeginPlainFrame
     Family          Roman
     Color           latex
   EndFont
-End
 
-Style BeginNohandoutFrame
-  KeepEmpty	1
-  LatexType	Command
-  LatexName	frame<handout:0>{\frametitle
-  Margin            First_Dynamic
-  NextNoIndent      1
-  ParSkip           0
-  TopSep            2.5
-  BottomSep         0.5
-  ParSep            0
-  Align             Center
-  AlignPossible     Center
-  LabelType         Static
-  LabelBottomSep    0
-  LeftMargin        M
-  LabelString       "Frame (not in handout)  "
-
-  Font
-    Series          Bold
-    Size            Largest
-    Color           Blue
-  EndFont
-
-  LabelFont 
-    Family          Roman
-    Color           latex
-  EndFont
+  Preamble
+    \makeatletter
+    \long\def\lyxplainframe#1{\@lyxplainframe#1\@lyxframestop}%
+    \def\@lyxplainframe{\@ifnextchar<{\@@lyxplainframe}{\@@lyxplainframe<+>}}%
+    \long\def\@@lyxplainframe<#1>#2\@lyxframestop#3\lyxframeend{%
+      \frame<#1>[plain]{\frametitle{#2}#3}}
+    \makeatother
+  EndPreamble
 End
 
 Style EndFrame
-  KeepEmpty	1
-  LatexType	Command
-  LatexName	relax}
+  KeepEmpty	    1
+  LatexType	    Command
+  LatexName	    lyxframeend
   Margin            First_Dynamic
-  NextNoIndent      1
   ParSkip           0
   TopSep            0
   BottomSep         3
@@ -203,6 +192,10 @@ Style EndFrame
     Size            Normal
     Color           latex
   EndFont
+
+  Preamble
+    \def\lyxframeend{} % In case there is a superfluous frame end
+  EndPreamble
 End
 
 Style Pause
@@ -338,6 +331,42 @@ Style Subsection*
   OptionalArgs		0
 End
 
+Style AgainFrame
+  KeepEmpty	    0
+  LatexType	    Command
+  LatexName	    lyxagainframe
+  Margin            First_Dynamic
+  NextNoIndent      1
+  ParSkip           0
+  TopSep            3
+  BottomSep         3
+  ParSep            0
+  Align             Center
+  AlignPossible     Center
+  LabelType         Static
+  LabelBottomSep    0
+  LeftMargin        M
+  LabelString       "Again frame with label   "
+
+
+  LabelFont 
+    Family          Roman
+    Color           latex
+    Series          Bold
+    Size            Largest
+  EndFont
+
+  Preamble
+    \makeatletter
+    \long\def\lyxagainframe#1{\@lyxagainframe#1\@lyxframestop}%
+    \def\@lyxagainframe{\@ifnextchar<{\@@lyxagainframe}{\@@lyxagainframe<+>}}%
+    \def\@@lyxagainframe<#1>{\@ifnextchar[{\@@@lyxagainframe<#1>}{\@@@lyxagainframe<#1>[]}}
+    \long\def\@@@lyxagainframe<#1>[#2]#3\@lyxframestop{%
+      \againframe<#1>[#2]{#3}}
+    \makeatother
+  EndPreamble
+End
+
 Style AlertBlock
   Margin		First_Dynamic
   LatexType		Environment
@@ -348,7 +377,7 @@ Style AlertBlock
   LabelSep              xx
 
   LatexName	 	alertblock
-  LabelString		"alert block" 
+  LabelString		"block with alerted text" 
 
   ParSkip           0.5
   TopSep            1
@@ -385,7 +414,7 @@ Style Author
 
   # standard font definition
   Font 
-    Size		Large
+    Size		Largest
     Color               Blue
   EndFont
 
@@ -478,6 +507,7 @@ Style Corollary
   TopSep            1
   BottomSep         1
   ParSep            0
+  KeepEmpty             1
 
   # font & label font definition
 
@@ -619,7 +649,7 @@ Style Date
 
   # standard font definition
   Font 
-    Size		Large
+    Size		Largest
     Color               Blue
   EndFont
 End
@@ -663,7 +693,7 @@ Style ExampleBlock
   LabelSep              xx
 
   LatexName	 	exampleblock
-  LabelString		"example block" 
+  LabelString		"block showing an example" 
 
   ParSkip           0.5
   TopSep            1
@@ -876,7 +906,8 @@ Style Title
 
   # standard font definition
   Font 
-    Size		Largest
+    Size		Huge
+    Series		Bold
     Color               Blue
   EndFont
 
