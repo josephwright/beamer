@@ -124,8 +124,19 @@
     \llap{\insertnavigationsymbols\hskip0.1cm}%
     \vskip2pt}
 }
- 
 
+\newcommand{\beamertemplatesidebarcolor}[2][left]{
+  \usesidebarbackgroundtemplate[#1]{\color{#2}\vrule height\paperheight
+    width\csname beamer@#1sidebar\endcsname}
+}
+
+\newcommand{\beamertemplatesidebarverticalshading}[3][left]{%
+  \pgfdeclareverticalshading{beamer@#1sidebar}{\csname beamer@#1sidebar\endcsname}{color(0cm)=(#2); color(\paperheight)=(#3)}%
+  \usesidebarbackgroundtemplate[#1]{\pgfuseshading{beamer@#1sidebar}}}
+
+\newcommand{\beamertemplatesidebarhorizontalshading}[3][left]{%
+  \pgfdeclarehorizontalshading{beamer@#1sidebar}{\textheight}{color(0cm)=(#2); color(\beamer@leftsidebar)=(#3)}%
+  \usesidebarbackgroundtemplate[#1]{\pgfuseshading{beamer@#1sidebar}}}
 
 
 %
@@ -169,6 +180,20 @@
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=2em\color{black}\inserttocsubsection\par}
+}
+
+\newcommand{\beamertemplatenumberedsquaresectiontoc}{
+  \usetemplatetocsection[20!averagebackgroundcolor]
+  {\leavevmode\leftskip=2ex\color{beamerstructure}%
+    \llap{\color{beamerstructure}%
+      \vrule width2ex height1.65ex depth.35ex%
+      \hskip-2ex%
+      \hbox to2ex{\hfil\color{white}\inserttocsectionnumber\hfil}}%
+    \kern1ex\inserttocsection\par}
+
+  \usetemplatetocsubsection[20!averagebackgroundcolor]
+  {\leavevmode\leftskip=5ex\color{black}\llap{\color{beamerstructure}%
+      \vrule width1ex height1ex\kern1ex}\inserttocsubsection\par}
 }
 
 
@@ -314,6 +339,12 @@
   \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
   }
 
+\newcommand{\beamertemplatesquareitem}{%
+  \useitemizeitemtemplate{\hbox{\color{beamerstructure}\vrule width 1ex height 1ex}}
+  \usesubitemizeitemtemplate{\small\hbox{\color{beamerstructure!75!averagebackgroundcolor}\vrule width 1ex height 1ex}}
+  \usesubsubitemizeitemtemplate{\small\hbox{\color{beamerstructure!50!averagebackgroundcolor}\vrule width 1ex height 1ex}}
+  }
+
 
 %
 % Enumerate Item templates
@@ -325,6 +356,55 @@
   \usesubsubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
   }
   
+\newcommand{\beamertemplatenumerateesquare}{%
+  \useenumerateitemtemplate{%
+    \hbox{%
+      \scriptsize
+      \color{beamerstructure}\vrule width2ex height1.75ex depth.25ex%
+      \hskip-2ex%
+      \hbox to2ex{%
+        \hfil\normalfont%
+        \color{white}\textbf{\insertenumlabel}%
+        \hfil}%
+    }%
+  }
+  \usesubenumerateitemtemplate{%
+    \hbox{%
+      \scriptsize%
+      \color{beamerstructure!75!averagebackgroundcolor}\vrule width2ex height1.75ex depth.25ex%
+      \hskip-2ex%
+      \hbox to2ex{%
+        \hfil\normalfont%
+        \color{white}\textbf{\insertsubenumlabel}%
+        \hfil}%
+    }%
+  }
+  \usesubsubenumerateitemtemplate{%
+    \hbox{%
+      \scriptsize%
+      \color{beamerstructure!50!averagebackgroundcolor}\vrule width2ex height1.75ex depth.25ex%
+      \hskip-2ex%
+      \hbox to2ex{%
+        \hfil\normalfont%
+        \color{white}\textbf{\insertsubsubenumlabel}%
+        \hfil}%
+    }%
+  }
+  \useenumerateitemminitemplate{%
+    \hbox{%
+      \scriptsize%
+      \color{beamerstructure}\vrule width2ex height1.75ex depth.25ex%
+      \hskip-2ex%
+      \hbox to2ex{%
+        \hfil\normalfont%
+        \color{white}\textbf{\insertenumlabel}%
+        \hfil}%
+    }%
+  }
+}
+
+
+
 %
 % Head templates
 %
@@ -810,6 +890,17 @@
     {\end{beamerboxesrounded}}
   \useexampleblocktemplate{\medskip\begin{beamerboxesrounded}[shadow=true,scheme=example]{\normalfont\color{white}\insertblockname}\raggedright}%
     {\end{beamerboxesrounded}}
+}
+
+\newcommand{\beamertemplaterectblocks}{
+  \AtBeginDocument{\beamertemplatesetupshadings}
+
+  \useblocktemplate{\medskip\begin{beamerboxesrect}[scheme=block]{\normalfont\color{white}\insertblockname}\raggedright}%
+    {\end{beamerboxesrect}\smallskip}
+  \usealertblocktemplate{\medskip\begin{beamerboxesrect}[scheme=alert]{\normalfont\color{white}\insertblockname}\raggedright}%
+    {\end{beamerboxesrect}\smallskip}
+  \useexampleblocktemplate{\medskip\begin{beamerboxesrect}[scheme=example]{\normalfont\color{white}\insertblockname}\raggedright}%
+    {\end{beamerboxesrect}\smallskip}
 }
 
 

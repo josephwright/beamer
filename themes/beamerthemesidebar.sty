@@ -16,9 +16,19 @@
 \newdimen\beamer@sidebarwidth
 \beamer@sidebarwidth=2.5cm
 
+\def\beamer@lefttext{left}
+
 \DeclareOptionBeamer{width}[2.5cm]{\beamer@sidebarwidth=#1}
 \DeclareOptionBeamer{tab}[true]{\csname beamer@sidebartab#1\endcsname}
 \DeclareOptionBeamer{dark}[true]{\csname beamer@sidebardark#1\endcsname}
+\DeclareOptionBeamer{left}{\ExecuteOptionsBeamer{side=left}}
+\DeclareOptionBeamer{right}{\ExecuteOptionsBeamer{side=right}}
+\DeclareOptionBeamer{side}{%
+  \def\beamer@sidebarside{#1}%
+  \edef\beamer@sidebarsideopposite{%
+    \ifx\beamer@sidebarside\beamer@lefttext right\else left\fi}%
+}
+\ExecuteOptionsBeamer{side=right}
 
 \ProcessOptionsBeamer
 
@@ -31,21 +41,19 @@
   \beamertemplateboldpartpage
   \beamertemplateboldframetitle
   \beamertemplateboldblocks
-  \beamertemplatenavigationsymbolsvertical
 \else
   \beamertemplatelargetitlepage
   \beamertemplatelargepartpage
   \beamertemplatelargeframetitle
   \beamertemplatelargeblocks
-  \beamertemplatenavigationsymbolsvertical
 \fi
 
 \ifbeamer@sidebardark
   \usetemplatetocsection[50!averagebackgroundcolor]
   {\color{beamerstructure}\textbf{\inserttocsection}}
 
-  \def\beamernavigationcolorlight{beamerstructure!65!white}
-  \def\beamernavigationcolorstrong{beamerstructure!50!white}
+%  \def\beamernavigationcolorlight{beamerstructure!65!white}
+%  \def\beamernavigationcolorstrong{beamerstructure!50!white}
 
   \ifbeamer@sidebartab
     {\tiny\global\beamer@tempdim=2.4375ex}
@@ -138,14 +146,12 @@
   \box\beamer@tempbox}%
 }
 
-                                % Head
 \useheadtemplate{}
-
-                                % Foot
 \usefoottemplate{}
 
+
                                 % Sidebar
-\userightsidebartemplate{\beamer@sidebarwidth}{%
+\usesidebartemplate[\beamer@sidebarside]{\beamer@sidebarwidth}{%
   \vskip1em
   \beamer@tempdim=\beamer@sidebarwidth%
   \advance\beamer@tempdim by -6pt%
@@ -166,20 +172,22 @@
   \vskip1.5em
   \insertverticalnavigation{\beamer@sidebarwidth}%
   \vfill
-  \hbox to \beamer@sidebarwidth{\hfil\insertnavigationsymbols\hskip3pt}
-  \vskip3pt
-  \hbox to \beamer@sidebarwidth{\hfil\insertlogo\hskip3pt}
-  \vskip3pt
+  \ifx\beamer@sidebarside\beamer@lefttext%
+  \else%
+    \hbox{\llap{\insertnavigationsymbols\hskip3pt}\hbox to
+    \beamer@sidebarwidth{\hfil\insertlogo\hskip3pt}}
+    \vskip3pt
+  \fi%
 }
 
                                 % Side bar background
 \ifbeamer@sidebardark
-  \userightsidebarverticalshadingtemplate{beamerstructure}{black}
+  \beamertemplatesidebarverticalshading[\beamer@sidebarside]{beamerstructure}{black}
 \else
   \ifbeamer@sidebartab
-    \userightsidebarverticalshadingtemplate{beamerstructure!90!white}{white!95!beamerstructure}
+    \beamertemplatesidebarverticalshading[\beamer@sidebarside]{beamerstructure!90!white}{white!95!beamerstructure}
   \else
-    \userightsidebarverticalshadingtemplate{white}{beamerstructure!50!averagebackgroundcolor}
+    \beamertemplatesidebarverticalshading[\beamer@sidebarside]{white}{beamerstructure!50!averagebackgroundcolor}
   \fi
 \fi
   

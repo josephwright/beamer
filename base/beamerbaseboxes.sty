@@ -153,8 +153,7 @@
 \newdimen\bmb@dimb
 \newdimen\bmb@prevheight
 
-\def\beamerboxesrounded{\@ifnextchar[{\@beamerboxesrounded}{\@beamerboxesrounded[]}}
-\def\@beamerboxesrounded[#1]#2{%
+\newcommand\beamerboxesrounded[2][]{%
   \setkeys{beamerboxes}{scheme=default,width=\textwidth,shadow=false}%
   \setkeys{beamerboxes}{#1}%
   \@ifundefined{@pgfshadingbmb@cs\bmb@scheme!}{\PackageError{beamerboxes}{Undefined scheme "\bmb@scheme"}{}}{}%
@@ -293,6 +292,84 @@
   \else%
     \vskip2bp%
   \fi%
+  \egroup% of \vbox\bgroup
+}
+
+
+
+\newcommand\beamerboxesrect[2][]{%
+  \setkeys{beamerboxes}{scheme=default,width=\textwidth}%
+  \setkeys{beamerboxes}{#1}%
+  \@ifundefined{@pgfshadingbmb@cs\bmb@scheme!}{\PackageError{beamerboxes}{Undefined scheme "\bmb@scheme"}{}}{}%
+  %
+  % Typeset head
+  %
+  \vbox\bgroup%
+  \setbox\bmb@box=\hbox{%
+    \begin{minipage}[b]{\bmb@width}%
+      \colorlet{averagebackgroundcolor}{bmb@up\bmb@scheme}%
+      \vbox{}%
+      #2%
+    \end{minipage}}%
+  \ifdim\wd\bmb@box=0pt%
+    \setbox\bmb@box=\hbox{}%
+    \ht\bmb@box=1.5pt%
+    \bmb@prevheight=-4.5pt%
+  \else%
+    \wd\bmb@box=\bmb@width%
+    \bmb@temp=\dp\bmb@box%
+    \ifdim\bmb@temp<1.5pt%
+      \bmb@temp=1.5pt%
+    \fi%
+    \setbox\bmb@box=\hbox{\raise\bmb@temp\hbox{\box\bmb@box}}%
+    \dp\bmb@box=0pt%
+    \bmb@prevheight=\ht\bmb@box%
+  \fi%
+  \bmb@temp=-\ht\bmb@box\advance\bmb@temp by-5pt%
+  \bmb@dima=\bmb@width\advance\bmb@dima by8bp%
+  \bmb@dimb=\ht\bmb@box\advance\bmb@dimb by3bp%
+  \vbox{%
+    \begin{pgfpicture}{0bp}{-\ht\bmb@box}{0bp}{-\ht\bmb@box}
+      \ifdim\wd\bmb@box=0pt%
+        \color{bmb@down\bmb@scheme}%
+      \else%        
+        \color{bmb@up\bmb@scheme}%
+      \fi%
+      \pgfrect[fill]{\pgfpoint{-4bp}{\bmb@temp}}{\pgfpoint{\bmb@dima}{\bmb@dimb}}
+    \end{pgfpicture}%
+    \copy\bmb@box%
+  }%
+  \nointerlineskip%
+  \vskip5pt%
+  \edef\beamer@savedextension{\pgfalternateextension}
+  \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
+    \vskip2pt%
+    \colorlet{averagebackgroundcolor}{bmb@down\bmb@scheme}%
+    \colorlet{beamerstructure}{bmb@up\bmb@scheme}%
+    \colorlet{structure}{bmb@up\bmb@scheme}%
+    \color{.}%
+  }
+
+\def\endbeamerboxesrect{%
+  \end{minipage}\egroup%
+  % temporarily restore alternate extension
+  \edef\pgfalternateextension{\beamer@savedextension}%
+  \wd\bmb@box=\bmb@width%
+  \bmb@temp=\dp\bmb@box%
+  \advance\bmb@temp by.5pt%
+  \setbox\bmb@box=\hbox{\raise\bmb@temp\hbox{\box\bmb@box}}%
+  \dp\bmb@box=0pt%
+  \bmb@temp=\wd\bmb@box%
+  \bmb@dima=\wd\bmb@box\advance\bmb@dima by8bp%
+  \bmb@dimb=\ht\bmb@box\advance\bmb@dimb by6bp%
+  \hbox{%
+    \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
+      \color{bmb@down\bmb@scheme}%
+      \pgfrect[fill]{\pgfpoint{-4bp}{-4bp}}{\pgfpoint{\bmb@dima}{\bmb@dimb}}
+    \end{pgfpicture}%
+    \box\bmb@box%
+  }%
+  \vskip2bp%
   \egroup% of \vbox\bgroup
 }
 

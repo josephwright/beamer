@@ -1,0 +1,184 @@
+\ProvidesPackage{beamerthememondrian}[2004/04/21 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+
+
+\newdimen\beamer@sidebarwidth
+\newdimen\beamer@headheight
+\Large
+\beamer@sidebarwidth=2.5\baselineskip
+\beamer@headheight=2.5\baselineskip
+\normalsize
+
+\def\beamer@lefttext{left}
+
+\DeclareOptionBeamer{cornercolor}{\def\beamersidebar@cornercolor{#1}}
+\DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
+\DeclareOptionBeamer{left}{\ExecuteOptionsBeamer{side=left}}
+\DeclareOptionBeamer{right}{\ExecuteOptionsBeamer{side=right}}
+\DeclareOptionBeamer{side}{%
+  \def\beamer@sidebarside{#1}%
+  \edef\beamer@sidebarsideopposite{%
+    \ifx\beamer@sidebarside\beamer@lefttext right\else left\fi}%
+}
+\ExecuteOptionsBeamer{cornercolor=white,side=left}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+                                % Standard templates
+\beamertemplatelargetitlepage
+\beamertemplatelargepartpage
+\beamertemplatelargeblocks
+\beamertemplatesquareitem
+\beamertemplatenumerateesquare
+\beamertemplateplaintoc
+\beamertemplatelightsectionheads
+\beamertemplatenumberedsquaresectiontoc
+\beamertemplaterectblocks
+
+\useframetitletemplate{%
+  {%
+    \nointerlineskip%
+    \vskip-\beamer@headheight%
+    \Large%
+    \vbox to \beamer@headheight{%
+      \vfil
+      \leftskip=-\beamer@leftmargin%
+      \advance\leftskip by0.3cm%
+      \rightskip=-\beamer@rightmargin%
+      \advance\rightskip by0.3cm plus1fil%
+      \color{white}%
+      \insertframetitle%
+      \par\normalsize\insertframesubtitle\par%
+      \vbox{}%
+      \vskip-1em%
+      \vfil
+    }}%
+}
+
+                                % Head
+\useheadtemplate{%
+  \hbox{%
+    \hskip-\Gm@lmargin%
+    \ifx\beamer@sidebarside\beamer@lefttext%
+      \color{\beamersidebar@cornercolor}%
+      \vrule width\beamer@sidebarwidth height \beamer@headheight%
+      \hskip-\beamer@sidebarwidth%
+      \hbox to \beamer@sidebarwidth{\hss\vbox to
+        \beamer@headheight{\vss\hbox{\insertlogo}\vss}\hss}%
+    \fi%
+    \color{beamerstructure}%
+    \@tempdima=\paperwidth%
+    \advance\@tempdima by-\beamer@sidebarwidth%
+    \vrule width\@tempdima height\beamer@headheight%
+    \ifx\beamer@sidebarside\beamer@lefttext%
+    \else%
+      \color{\beamersidebar@cornercolor}%
+      \vrule width\beamer@sidebarwidth height \beamer@headheight%
+      \hskip-\beamer@sidebarwidth%
+      \hbox to \beamer@sidebarwidth{\hss\vbox to
+        \beamer@headheight{\vss\hbox{\insertlogo}\vss}\hss}%
+    \fi%
+    \hskip-\Gm@rmargin%
+  }%
+}
+
+%\usetemplatetocsection[50!averagebackgroundcolor]
+%  {\color{beamerstructure}\textbf{\inserttocsection}}
+
+
+\def\beamer@colorbox#1#2{\hbox to \beamer@sidebarwidth{\fboxsep=0pt\colorbox{#1}{#2}}}%
+\def\beamer@buildsidebarbox#1#2#3{%
+  \setbox#1=\hbox{%
+    \vbox{%
+      \hsize=\beamer@sidebarwidth%
+      \leftskip=#2%
+      \rightskip=1ex plus 1fil%
+      \parskip=0pt%
+      \vbox{}%
+      #3\par%
+      \vbox{}%
+      \vskip-1.5ex%
+      }}%
+  \wd#1=\beamer@sidebarwidth%
+}
+  
+                                % Sections in sidebar
+\usesectionsidetemplate
+{%
+  {\Tiny
+    \vbox{\vskip1ex%
+    \beamer@buildsidebarbox{\beamer@tempbox}{1.125ex}{\insertsectionhead}%
+    \beamer@colorbox{beamerstructure!70!averagebackgroundcolor}{\box\beamer@tempbox}%
+    }}%
+}
+{%
+  {\Tiny
+    \vbox{\vskip1ex%
+    \beamer@buildsidebarbox{\beamer@tempbox}{1.125ex}{\insertsectionhead}%
+    \beamer@colorbox{beamerstructure}{\box\beamer@tempbox}%
+  }}%
+}
+
+\usesubsectionsidetemplate
+{%
+  {\Tiny
+    \beamer@buildsidebarbox{\beamer@tempbox}{2.25ex}{\color{white}\insertsubsectionhead}%
+    \beamer@colorbox{beamerstructure!70!averagebackgroundcolor}{\box\beamer@tempbox}%
+    }%
+}
+{%
+  {\Tiny
+    \beamer@buildsidebarbox{\beamer@tempbox}{2.25ex}{\color{white}\insertsubsectionhead}%
+    \beamer@colorbox{beamerstructure}{\box\beamer@tempbox}%
+  }%
+}
+
+                                % Foot
+\usefoottemplate{}
+
+
+\ifdim\beamer@sidebarwidth>0pt
+
+                                % Sidebar
+  \usesidebartemplate[\beamer@sidebarside]{\beamer@sidebarwidth}{%
+    \vskip1em
+    \beamer@tempdim=\beamer@sidebarwidth%
+    \advance\beamer@tempdim by -6pt%
+    \Tiny
+      \hskip3pt\color{white}\bfseries\insertshorttitle%
+        [width=\beamer@tempdim,center,respectlinebreaks]\par%
+      \vskip1.5em
+      \hskip3pt\color{beamerstructure!50}\insertshortauthor%
+        [width=\beamer@tempdim,center,respectlinebreaks]\par
+      \vskip1.5em%
+    \color{beamerstructure!25}%
+    \insertverticalnavigation{\beamer@sidebarwidth}%
+    \vfill
+  }
+
+                                % Side bar background
+  \beamertemplatesidebarcolor[\beamer@sidebarside]{beamerstructure}
+
+  \usesidebartemplate[\beamer@sidebarsideopposite]{0cm}{%
+    \vfill%
+    \llap{\insertnavigationsymbols\hskip0.1cm}%
+    \vskip2pt}
+                                % Margins
+  \beamersetleftmargin{0.5cm}
+  \beamersetrightmargin{0.5cm}
+\fi
+
+\mode
+<all>
+
+%%% Local Variables: 
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 

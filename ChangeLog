@@ -7,6 +7,7 @@
 	- Added the dot notation to overlay specifications. If a dot is
 	  used instead of a plus, the beamerpauses counter is not
 	  incremented. 
+	- Added new theme mondrian.
 	- Added xmpmulti.sty. Very useful for including Multi Metapost
 	  graphics. 
 	- Added some functionality to \onslide to get it more in sync with
@@ -18,10 +19,14 @@
 	  frames. 
 	- Added new version of beamer.el by Thomas Baumann.
 	- \footnote now takes an overlays specification.
+	- Added beamerboxesrect environment.
 
 	Changed:
-	- Reordered some directories (art is now a subdirectory of base,
-	  multimedia is now a subdirectory of extensions).
+	- Reordered directories (art is now a subdirectory of base,
+	  multimedia is now a subdirectory of extensions, themes have
+	  subdirectories). 
+	- Unified left and right sidebar commands to single commands that
+	  take [left] or [right] as argument.
 	
 	Bugfixes:
 	- Fixed incompatibility with czech.sty.
@@ -30,6 +35,7 @@
 	  resulted from an autobreak.
 	- Fixed bug that caused footnotes of suppressed frames to spill
 	  over to the next frame.
+	- Fixed bug with \AtBeginSection + \lecture + \mode*
 
 2004-04-19 Till Tantau <tantau@users.sourceforge.net>
 

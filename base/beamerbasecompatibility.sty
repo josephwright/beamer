@@ -16,7 +16,6 @@
 \let\beamer@orighyperlink\hyperlink
 \def\hyperlink#1#2{\beamer@orighyperlink{#1}{\relax#2}}
 
-
 \providecommand\hyper@pagetransition{}
 \providecommand\hyper@pageduration{}
 \providecommand\hyper@pagehidden{}
@@ -156,6 +155,19 @@
 \newenvironment{columnsonlytextwidth}{\begin{columns}[onlytextwidth]}{\end{columns}}
 \def\untitledsubsection{\subsection*{}}
 \def\noteitems{\note[enumerate]}
+\def\useleftsidebartemplate{\usesidebartemplate[left]}
+\def\userightsidebartemplate{\usesidebartemplate[right]}
+\def\useleftsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[left]}
+\def\userightsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[right]}
+\def\useleftsidebarcolortemplate#1{\usesidebarbackgroundtemplate[left]{#1\vrule height\paperheight
+  width\csname beamer@leftsidebar\endcsname}}
+\def\userightsidebarcolortemplate#1{\usesidebarbackgroundtemplate[right]{#1\vrule height\paperheight
+  width\csname beamer@rightsidebar\endcsname}}
+\def\useleftsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[left]}
+\def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
+\def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
+\def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
+  
 \mode
 <all>{\def\unpause{\onslide{}}}
 

@@ -169,8 +169,16 @@
 
 \mode<all>
 
-\def\beamer@savemode{\expandafter\gdef\expandafter\beamer@savedmode\expandafter{\beamer@mode}}
-\def\beamer@resumemode{\beamer@savedmode}
+\newcount\beamer@modecount
+\def\beamer@pushmode#1{%
+  \expandafter\gdef\csname beamer@savedmode@\the\beamer@modecount\endcsname{#1}%
+  \global\advance\beamer@modecount by1\relax}
+\def\beamer@popmode{
+  \global\advance\beamer@modecount by-1\relax%
+  \csname beamer@savedmode@\the\beamer@modecount\endcsname}
+  
+\def\beamer@savemode{\expandafter\beamer@pushmode\expandafter{\beamer@mode}}
+\def\beamer@resumemode{\beamer@popmode}
 
 
 

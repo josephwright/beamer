@@ -195,8 +195,7 @@
 \def\beamer@endautobreak{\end{beamer@frameslide}%
   \beamer@writeslidentry%
   \ifvoid\beamer@splitbox%
-    \beamer@reseteecodes%
-    \let\beamer@next=\relax%  
+    \let\beamer@next=\beamer@reseteecodes%
   \else%
     \let\beamer@next=\beamer@continueautobreak%
   \fi%      

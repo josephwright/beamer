@@ -31,6 +31,7 @@
 \newcommand\lecture{\@dblarg\beamer@lecture}
 \long\def\beamer@lecture[#1]#2#3{
   \beamer@savemode
+  \mode<all>
   \refstepcounter{lecture}
   \def\beamer@currentlecturelabel{#3}
   \def\beamer@lecturename{#2}
@@ -86,6 +87,7 @@
 \newcommand<>{\part}{\alt#1{\@dblarg\beamer@part}{\beamer@gobbleoptional}}
 \long\def\beamer@part[#1]#2{%
   \beamer@savemode%
+  \mode<all>%
   \ifbeamer@inlecture%
     \refstepcounter{part}%
     \def\beamer@partname{#2}%
@@ -158,6 +160,7 @@
 \long\def\beamer@@@section#1{\beamer@section[#1]{#1}}
 \long\def\beamer@section[#1]#2{%
   \beamer@savemode%
+  \mode<all>%
   \ifbeamer@inlecture
     \refstepcounter{section}%
     \beamer@ifempty{#2}%
@@ -221,6 +224,7 @@
 \def\beamer@@@subsection#1{\beamer@subsection[#1]{#1}}
 \def\beamer@subsection[#1]#2{%
   \beamer@savemode%
+  \mode<all>%
   \ifbeamer@inlecture%
     \refstepcounter{subsection}%
     \beamer@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}
