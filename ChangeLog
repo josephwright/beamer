@@ -5,8 +5,50 @@
 	Themes:
 	- Completely new theme management.
 	- Lot's of new variations of themes.
-	- Font/element/layout/color themes. 
+	- Font/element/layout/color themes are orthogonal and can be
+	  freely combined. 
 	- Old themes obsolete, but supported for compatibility.
+	- Original default theme is now in
+	  "beamerthemecompatibility.sty". New default is more minimalistic.
+
+	+ Presentation themes:
+	- There are now 24 ready-to-use presentation themes. 
+	- Manuel Carro has send me a theme that I slightly adapted and
+	  added as the Madrid theme.
+
+	+ Layout and element Themes:
+	- There are 9 different layouts themes, including three new ones
+	  that were not available in the previous version.
+	- There are 4 different element themes (which dictate things like
+	  how items are typeset).
+
+	+ Color themes:
+	- There are 10 color themes, including a yellow-on-blue theme.
+	- The seahorse and rose theme allow you to change the colors of
+	  headlines and footlines easily to much less "aggressive"
+	  versions.  
+	- You can now dictate the color of every minute detail of a
+	  presentation individually, (including math!).
+
+	+ Font themes:
+	- 6 font themes. Change the fonts of titles to, say, small caps
+	  just by using the smallcaps theme; no need to meddle with
+	  templates. 
+	- Just like colors, you can individually change all fonts in
+	  minute detail without touching any templates.
+
+	Documentation:
+	- Split documentation into multiple files.
+	- Reorganized and reworked large parts of the documention.
+	- Added a small tutorial to help new users.
+	- Extracted all "guidelines" and "recommendations" and put them in
+	  a "guidelines" section. Also added lots of guidelines on fonts.
+
+	Solutions:
+	- Added a solutions directory.
+	  It contains ready-to-use solutions for common problems (like
+	  a template for a conference talk).
+	- Help appreciated (see the documentation).
 	
 	Added:
 	- Added frame environment (finally!).
@@ -17,9 +59,6 @@
 	  graphics. 
 	- Added some functionality to \onslide to get it more in sync with
 	  ha-prosper. 
-	- Added a solutions directory.
-	  It contains ready-to-use solutions for common problems (like
-	  a template for a conference talk). Help appreciated.
 	- Made \beamerdefaultoverlayspecification work also outside
 	  frames. 
 	- Added new version of beamer.el by Thomas Baumann.
@@ -28,9 +67,9 @@
 	- Characters like : may now be active (nice for french
 	  style). Only exceptions are < and >.
 	- Added a note on how to use msc.sty with beamer.
-	- TOCs in sidebar will now do line breaking.
-	- Powerful new font management.
-	- Powerful new color management.
+	- TOCs in sidebar will now do line breaking (finally!).
+	- Powerful object-oriented new font management.
+	- Powerful object-oriented new color management.
 	- \tableofcontents now has more options for showing/not showing
 	  entries.
 	- Same is true for the toc in sidebars.
@@ -42,21 +81,20 @@
 
 	Changed:
 	- Reordered directories.
-	- Split documentation into multiple files.
 	- Unified left and right sidebar commands to single commands that
 	  take [left] or [right] as argument.
 	- beamerboxesrounded now works differently. color schemes no
 	  longer needed.
 	- Option class=xxxx onsolete. Use document class xxxx directly
 	  instead and load new style beamerarticle.
-	- Cleaned up some internals.
+	- Cleaned up lot's of internals.
 	- Slight changes to vertical spacing.
 	
 	Bugfixes:
 	- Fixed incompatibility with czech.sty.
 	- Fixed some spacing problems with \label.
 	- Fixed bug that could cause endless loop if more than two pages
-	  resulted from an autobreak.
+	  resulted from an allowframebreaks.
 	- Fixed bug that caused footnotes of suppressed frames to spill
 	  over to the next frame.
 	- Fixed bug with \AtBeginSection + \lecture + \mode*
