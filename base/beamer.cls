@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2004/02/19 v2.01 Class for Typesetting a Beamer Presentation]
+[2004/03/10 v2.10 Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
@@ -29,7 +29,7 @@
 % Versioning stuff
 %
 \newdimen\beamer@version
-\beamer@version=2.01pt % It is only fitting, that the version should
+\beamer@version=2.10pt % It is only fitting, that the version should
                        % be given in points...
 \def\beamer@endinputifotherversion#1{%
   \let\beamer@next=\relax%

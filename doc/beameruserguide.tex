@@ -46,6 +46,7 @@
 \def\pgf{\textsc{pgf}}
 \def\pstricks{\textsc{pstricks}}
 \def\prosper{\textsc{prosper}}
+\def\seminar{\textsc{seminar}}
 
 \def\declare#1{{\color{red!75!black}#1}}
 
@@ -95,7 +96,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 2.01-CVS\\
+\title{User's Guide to the Beamer Class, Version 2.10\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -1060,6 +1061,252 @@ The following commands are parsed by \beamer, but have no effect:
 \item |\LeftFoot|, and
 \item |\RightFoot|.
 \end{itemize}
+
+
+
+
+\subsubsection{Seminar}
+
+The package |beamerseminar| maps a subset of the commands of the \seminar\
+package to \beamer. As for \prosper, the emulation cannot be
+perfect. For example, no portrait slides are supported, no
+automatic page braking, the framing of slides is not
+emulated. Unfortunately, for all frames (|slide| environments) that
+contain overlays, you have to put the environment into a |\frame| ``by
+hand'' and must remove all occurences of |\newslide| inside the
+environment by closing the slide and opening a new one (and them
+putting these into |\frame| commands).
+
+The workflow for the migration is the following:
+\begin{enumerate}
+\item
+  Replace the document class |seminar| by |beamer|. Most options
+  passed to |prosper| do not apply to |beamer| and should be
+  omitted. If the presentation is mixed with normal text, add the
+  |ignorenonframetext| option and place \emph{every} |slide|
+  environment inside a |\frame| since \beamer\ will not recognize the
+  |\begin{slide}| as the beginning of a frame.
+\item
+  Add a |\usepackage{beamerseminar}| to start the emulation. Add the
+  option |accumulate| if you wish to create a presentation to be held
+  with a video projector.
+\item
+  Possibly add commands to install themes and templates.
+\item
+  Remove most commands in the preamble having to do with page and
+  slide styles. They do not apply to |beamer|.
+\item
+  If a |\newslide| command is used in a |slide| (or similarly
+  |slide*|) environment that contains an overlay, you must replace it
+  by a closing |\end{slide}| and an opening |\begin{slide}|. 
+\item
+  Next, for each |slide| or |slide*| environment that contains an
+  overlay, you must place a |\frame| command around it. You can remove
+  the environment, unless you use the |accumulate| option.
+\item
+  If you use pdf\LaTeX\ to typeset the presentation, than you cannot
+  include PostScript file. You should convert them to |.pdf| or to
+  |.png| and adjust any usage of |\includegraphics| accordingly.
+\item
+  When starting to change things, you can use all of \beamer's
+  commands and even mix them with \prosper\ commands.
+\end{enumerate}
+
+An example can be found in the file
+|beamerexample-seminar.tex|.
+
+There are, unfortunately, numerous places where you may run into
+problems:
+\begin{itemize}
+\item
+  The whole |note| management of |seminar| is so different from
+  |beamer|'s, that you will have to edit notes ``by hand.'' In
+  particular, commands like |\ifslidesonly| and |\ifslide| may not do
+  exactly what you expect.
+\item
+  If you use |pstricks| commands, you will either have to stick to
+  using |latex| and |dvips| or will have to work around them using,
+  for example, |pgf|. Porting lot's of |pstricks| code is bound to be
+  difficult, if you wish to switch over to |pdflatex|, so be warned.
+\item
+  If the file cannot be compiled because some \seminar\ command is not
+  implemented, you will have to delete this command and try to mimick
+  its behaviour using some \beamer\ command.
+\end{itemize}
+
+\begin{package}{{beamerseminar}}
+  Include this package in a |beamer| presentation to get access to
+  \seminar\ commands. Use |beamer| as the document class, not
+  |seminar|. Most of the options passed to the class |seminar| make no
+  sense in |beamer|, so just delete them.
+
+  This package takes the following options:
+  \begin{itemize}
+  \item
+    \declare{|accumulate|} causes overlays to be accumulated. The
+    original behaviour of the \seminar\ package is that in each
+    overlay only the really ``new'' part of the overlay is shown. This
+    makes sense, if you really print out the overlays on
+    transparencies and then really stack overlays on top of each
+    other. For a presentation with a video projector, you rather
+    want to present an ``accumulated'' version of the overlays. This
+    is what this option does: When the new material of the $i$th
+    overlay is shown, the material of all previous overlays is also
+    shown. 
+  \end{itemize}
+
+  \example
+  The following example is an extract of |beamerexample-seminar.tex|:
+\begin{verbatim}
+\documentclass[ignorenonframetext]{beamer}
+\usepackage[accumulated]{beamerseminar}
+\usepackage{beamerthemeclassic}
+
+\title{Example for seminar.sty}
+\author{Policarpa Salabarrieta}
+\date{July 21, 1991}
+
+\newcommand{\sref}[1]{SLIDE \ref{#1}}
+
+% CHANGED: different definition of \heading
+%\newcommand{\heading}[1]{\begin{center}\large\bf #1\end{center}}
+\let\heading=\frametitle
+
+% CHANGED: Commented:
+%\newpagestyle{MH}%
+%  {University of Guaduas, March 13, 1998\hfil\thepage}{}
+%\pagestyle{MH}
+
+\begin{document}
+
+% CHANGED: Added \frame
+\frame{
+\maketitle         
+}
+
+This is a lot of gobbledy-gook intended only to illustrate some of the
+features of seminar.sty.
+
+% CHANGED: Added \frame
+\frame{
+\begin{slide}\label{too_much}%
+\begin{center}
+  \large\bf
+ Information overload = ``Too much'' information
+\end{center}
+\smallskip
+
+\begin{verse} \bf\tt
+  You have 134 unread messages:\\
+  Do you want to read them now?
+\end{verse}
+
+\begin{enumerate}
+  {\overlay2
+  \item People {\overlay1 cannot process all} the information they receive.}
+  \item People {\em should} receive less information.
+ \end{enumerate}
+\end{slide}
+}
+\end{document}
+\end{verbatim}
+
+  You can use all normal \beamer\ commands and concepts, like
+  overlay-specifications, in the file. You can also create an
+  |article| version by adding the class option |class=article| and
+  including the package |beamerbasearticle|. 
+\end{package}
+
+In the following, the effect of \seminar\ commands in \beamer\ are
+listed.
+
+\begin{command}{\overlay\marg{number}}
+  Shows the material till the end of the current \TeX\ group only on
+  overlay numbered $\hbox{\meta{number}}+1$ or, if the |accumulate|
+  option is given, from that overlay on. Usages of this command may be
+  nested (as in \seminar). If an |\overlay| command is given inside
+  another, it temporarily ``overrules'' the outer one as demonstrated
+  in the following example, where it is assumed, that the |accumulate|
+  option is given.
+
+  \example
+\begin{verbatim}
+\frame{
+\begin{slide}
+  This is shown from the first slide on.
+  {\overlay{2}
+    This is shown from the third slide on.
+    {\overlay{1}
+      This is shown from the second slide on.
+    }
+    This is shown once more from the third slide on.
+  }
+\end{slide}
+}
+\end{verbatim}
+\end{command}
+
+
+\begin{environment}{{slide\opt{|*|}}}
+  Mainly installs an |\overlay{0}| around the \meta{environment
+    contents}. If the |accumulate| option is given, this has no
+  effect, but otherwise it will cause the main text of the slide to be
+  shown \emph{only} on the first slide. This is useful if you really
+  wish to physically place slides on top of each other.
+
+  The starred version does the same as the nonstarred one.
+
+  If this command is not issued inside a |\frame|, it sets up a frame
+  with the |containsverbatim| option set. Thus, this frame will
+  contain only a single slide.
+
+  \example
+\begin{verbatim}
+\begin{slide}
+  Some text.
+\end{slide}
+
+\frame{
+\begin{slide}
+  Some text. And an {\overlay{1} overlay}.
+\end{slide}
+}
+\end{verbatim}
+\end{environment}
+
+\begin{command}{\red}
+  Mapped to |\color{red}|.
+\end{command}
+
+\begin{command}{\blue}
+  Mapped to |\color{blue}|.
+\end{command}
+
+\begin{command}{\green}
+  Mapped to |\color{green}|.
+\end{command}
+
+\begin{command}{\ifslide}
+  True in the |presentation| modes, false in the |article| mode.
+\end{command}
+
+\begin{command}{\ifslidesonly}
+  Same as |\ifslide|.
+\end{command}
+
+\begin{command}{\ifarticle}
+  False in the |presentation| modes, true in the |article| mode.
+\end{command}
+
+\begin{command}{\ifportrait}
+  Always false.
+\end{command}
+
+The following commands are parsed by \beamer, but have no effect:
+\begin{itemize}\itemsep=0pt\parskip=0pt
+\item |\ptsize|.
+\end{itemize}
+
 
 
 

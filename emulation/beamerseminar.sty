@@ -1,0 +1,74 @@
+\ProvidesPackage{beamerseminar}[2004/03/10 ver 0.01]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\newif\ifbeamerseminar@accumulated
+\beamerseminar@accumulatedfalse
+
+\DeclareOption{accumulated}{\beamerseminar@accumulatedtrue}
+\ProcessOptions
+
+
+\newcount\beamerseminar@overlay
+
+\def\overlay#1{%
+  \beamerseminar@overlay=#1\relax%
+  \advance\beamerseminar@overlay by1\relax%
+  \ifbeamerseminar@accumulated%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay->%
+  \else%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay>%
+  \fi%
+  \aftergroup\beamerseminar@endoverlay\ignorespaces}
+\def\beamerseminar@endoverlay{%
+  \ifbeamerseminar@accumulated%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay->%
+  \else%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay>%
+  \fi}
+
+\newif\ifbeamerseminar@starred
+\newenvironment{slide}[1][]{%
+  \beamerseminar@starredfalse
+  \ifbeamer@inframe%
+    \beamerseminar@overlay=1\bgroup\overlay{0}%
+  \else%
+    \frame[containsverbatim]\bgroup%
+  \fi}
+  {\egroup}
+\newenvironment{slide*}[1][]{\begin{slide}\beamerseminar@starredtrue}{\end{slide}}
+
+\newcommand{\newslide}{%
+  \ifbeamerseminar@starred%
+    \end{slide*}\begin{slide*}%
+  \else%
+    \end{slide}\begin{slide}%
+  \fi}
+
+\beamerseminar@overlay=1
+
+\def\blue{\color{blue}}
+\def\red{\color{red}}
+\def\green{\color{green}}
+
+\def\ptsize#1{}
+
+\newif\ifarticle
+\articlefalse
+\newif\ifslidesonly
+\slidesonlytrue
+\newif\ifslide
+\slidetrue
+\newif\ifportrait
+\portraitfalse
+
+\mode<article>{\articletrue\slidefalse\slidesonlyfalse}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: ../test/testprosper.tex
+%%% End: 

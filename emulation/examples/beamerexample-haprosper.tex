@@ -1,0 +1,236 @@
+% This file is a demonstration on how a (HA-)prosper file should be
+% changed to make it work with beamer.
+
+
+
+% Copyright notice:
+
+% Except for the following block, this file is the original
+% Doc/Introduction.tex created by Hendri Adriaens
+% http://center.uvt.nl/phd_stud/adriaens as part of the HA-prosper
+% package.
+
+
+% Changed:
+
+\documentclass{beamer}
+
+% You might wish to try this instead of the above line:
+%\documentclass[class=article]{beamer}
+%\usepackage{beamerbasearticle}
+%\usepackage{hyperref}
+
+\usepackage[framesassubsections]{beamerprosper}
+
+\mode<presentation>
+{
+  \definecolor{beamerstructure}{RGB}{43,79,112}
+  \definecolor{sidebackground}{RGB}{230,242,250}
+  \color{beamerstructure}
+  \usepackage[tab,width=3.25cm]{beamerthemesidebar}
+  \usepackage{times}
+  \userightsidebarcolortemplate{\color{sidebackground}}
+  \beamertemplateballitem
+  \beamertemplateboldframetitle
+  \beamertemplateboldtitlepage
+}
+
+%\documentclass[pdf]{prosper}
+%\usepackage[toc,highlight,HA]{HA-prosper}
+
+
+
+% Original file:
+
+
+% Introduction to the `HA-Prosper' package.
+% Created by: Hendri Adriaens
+%             http://center.uvt.nl/phd_stud/adriaens
+%             Center for Economic Research
+%             Tilburg University, the Netherlands
+
+%================================================
+% Please also read the manual of HA-prosper and
+% of the specific style you are using since some
+% features of this example might not be supported
+% by the style you use.
+%================================================
+
+\title{Introduction to the HA-prosper package}
+\subtitle{A package for use with prosper}
+\author{Hendri Adriaens\\
+\institution{CentER}\\
+\institution{\href{http://center.uvt.nl/phd_stud/adriaens}{http://center.uvt.nl/phd\string_stud/adriaens}}}
+
+\DefaultTransition{Wipe}
+\TitleSlideNav{FullScreen}
+\NormalSlideNav{ShowBookmarks}
+\LeftFoot{\href{http://center.uvt.nl/phd_stud/adriaens}{Hendri Adriaens}, \today}
+\RightFoot{Introduction to the HA-prosper package}
+
+\HAPsetup{iacolor=lightgray,stype=1}
+
+\begin{document}
+
+% ==================================================================================
+% Slide 1
+\maketitle
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 2
+\tsectionandpart{Introduction}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 3
+\overlays{2}{
+\begin{slide}{Welcome}
+\begin{itemstep}
+\item Welcome to the introduction of the HA-prosper package.
+\item The main features of HA-prosper are:
+\begin{itemize}
+\item table of contents;
+\item portrait slides support;
+\item notes;
+\item prosper bug solutions.
+\end{itemize}
+\end{itemstep}
+\end{slide}
+}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 4
+\overlays{2}{
+\begin{slide}{Styles}
+\begin{itemstep}
+\item The HA-prosper packages adds some functionality to prosper, but\dots
+\item The available styles show how to extend these possibilities
+even further and for instance:
+\begin{itemize}
+\item embed additional navigational elements on slides;
+\item use multiple slide layouts in the same presentation;
+\item put figures on slides together with text;
+\item etcetera.
+\end{itemize}
+\end{itemstep}
+\end{slide}
+}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 5
+\tsectionandpart{Features}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 6
+\overlays{4}{
+\begin{slide}{Table of contents}
+\begin{itemstep}
+\item A table of contents can be put on every slide;
+\item A table of contents entry is created from the slide title
+or from text that is given as an optional argument;
+\item The table of contents has the following features:
+\begin{itemize}
+\item Highlighting of the current slide or section is possible;
+\item Items can be omitted;
+\item Parts of the table of contents can be hidden when these are
+unnecessary.
+\end{itemize}
+\item The style that you use should of course support the inclusion
+of the table of contents.
+\end{itemstep}
+\end{slide}
+}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 7
+\overlays{6}{
+\begin{slide}{More features}
+HA-prosper contains more features which are fully described in the manual.
+\begin{itemstep}[sstart=2]
+\item Portrait slides
+\item Notes
+\item Dualslide
+\item Blackslide
+\item and a lot more\dots
+\end{itemstep}
+\end{slide}
+}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 8
+\overlays{3}{
+\begin{slide}{Prosper bug solutions}
+\begin{itemstep}
+\item Numbering of equations, tables and figures on overlays is supported;
+\item The `\textbackslash and' command for authors is supported;
+\item Solved placement of left and right footers.
+\end{itemstep}
+\end{slide}
+}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 9
+\tsectionandpart{Questions and comments}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 10
+\overlays{3}{
+\begin{slide}{Comments and contributions}
+\begin{itemstep}
+\item Comment and contributions are always welcome.
+\item In case you want to contribute a style or template, please
+insert both
+\begin{itemize}
+\item documentation;
+\item an example that demonstrates all the features that your template provides.
+\end{itemize}
+\item You can contact
+\href{http://stuwww.uvt.nl/~hendri/Personal/contact.html}{\underline{Hendri Adriaens}}
+(click the link) in case you have comments or questions about
+developing a new template or if want to submit your style.
+\end{itemstep}
+\end{slide}
+}
+% ==================================================================================
+
+
+% ==================================================================================
+% Slide 11
+\overlays{2}{
+\begin{slide}{Questions}
+\begin{itemstep}
+\item If you have questions, please first consult the documentation
+of the following packages (depending on your problem):
+\begin{itemize}
+\item HA-prosper;
+\item Prosper;
+\item Hyperref;
+\item PSTricks.
+\end{itemize}
+\item In case you cannot find the answer and your question is related
+to HA-prosper, you can post a message to the HA-prosper mailinglist:\par
+\href{http://listserv.surfnet.nl/archives/ha-prosper.html}{http://listserv.surfnet.nl/archives/ha-prosper.html}.
+\end{itemstep}
+\end{slide}
+}
+% ==================================================================================
+
+
+\end{document}
