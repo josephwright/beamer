@@ -242,7 +242,8 @@
       \begin{pgfmagnify}{1.75}{1.75}
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
-      \pgfbox[center,center]{\color{white}\tiny\textbf{\insertenumlabel}}
+      \pgfputat{\pgfpoint{0pt}{0.5pt}}
+        {\pgfbox[center,center]{\color{white}\tiny\textbf{\insertenumlabel}}}
     \end{pgfpicture}}
   \usesubenumerateitemtemplate{%
     \color{structure}%
@@ -250,7 +251,8 @@
       \begin{pgfmagnify}{1.4}{1.4}
         \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
       \end{pgfmagnify}
-      \pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}
+      \pgfputat{\pgfpoint{0pt}{0.2pt}}
+      {\pgfbox[center,center]{\color{white}\tiny\insertsubenumlabel}}
     \end{pgfpicture}}
   \AtBeginDocument{\beamertemplatesetupshadings}
 }

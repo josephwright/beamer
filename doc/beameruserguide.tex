@@ -10,7 +10,7 @@
 \usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage[pdfborder={0 0 0}]{hyperref}
-
+\usepackage[latin1]{inputenc}
 
 \pgfdeclareimage[width=6.66666cm,height=5cm]{themebars}{themebars}
 \pgfdeclareimage[width=6.66666cm,height=5cm]{themebars2}{themebars2}
@@ -283,8 +283,8 @@ are simply huge directories that contain these files. By default,
   |/usr/local/share/texmf/|, |c:\localtexmf\|, or\\
   |c:\Program Files\TeXLive\texmf-local\|.
 \item
-  Your personal  |texmf| tree, which is located in your home
-  directory.   
+  Your personal  |texmf| tree, which is usually located in your home
+  directory at |~/texmf/| or |~/Library/texmf/|.   
 \end{itemize}
 
 You should install the packages either in the local tree or in
@@ -413,7 +413,7 @@ options or precautions may be necessary.
 \end{package}
 
 \begin{package}{{ucs}}
-  See |[utf8]{inputenc}|.
+  See |\usepackage[utf8]{inputenc}|.
 \end{package}
 
 
@@ -512,7 +512,7 @@ likely have forgotten them by the time you reach them.
 Ideally, a table of contents should be understandable by itself. In
 particular, it should be comprehensible \emph{before} someone has
 heard your talk. Keep section and subsection titles
-self-explaining. Note each part has its own table of contents. 
+self-explaining. Note that each part has its own table of contents. 
 
 Both the sections and the subsections should follow a logical
 pattern. Begin with an explanation of what your talk is all about. (Do
@@ -526,8 +526,8 @@ attention at the beginning and at the end of talks. The summary is
 your ``second chance'' to get across a message.
 
 You can also add an appendix part using the |\appendix| command. Put
-everything into this part which you do not actually intend to talk
-about, but which might come in handy in questions are asked.
+everything into this part that you do not actually intend to talk
+about, but that might come in handy when questions are asked.
 
 
 
@@ -889,7 +889,7 @@ Section~\ref{section-postscript} on how to do this.
 You may also wish to create an article version of your talk. An
 ``article version'' of your presentation is a normal \TeX\ text
 typeset using, for example, the document class |article| or perhaps
-|lncs| or a similar document class. The \beamer\ class offers
+|llncs| or a similar document class. The \beamer\ class offers
 facilities to have this version coexist with your presentation version
 in one file and to share code. Also, you can include slides of your
 presentation as figures in your article version. Details on how to

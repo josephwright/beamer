@@ -135,8 +135,6 @@
   ]{hyperref}
 % For hyperlinks
 
-  
-
 
 %
 %
@@ -269,7 +267,8 @@
     }
   }  
 }
-  
+ 
+
 %
 % Process Options
 %
