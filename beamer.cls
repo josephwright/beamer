@@ -365,6 +365,7 @@
 \newbox\navigationbox
 \newbox\logobox
 \newbox\linebox
+\newcount\beamer@tempcount
 
 
 %
@@ -528,6 +529,11 @@
 \def\slideentry#1#2#3#4#5{\ifnum\subsection@max<#2\relax\subsection@max=#2\fi}
 \def\appendixslideentry#1#2#3#4#5{\ifnum\subsection@max<#2\relax\subsection@max=#2\fi}
 \def\appendixsectionentry#1#2#3#4{\gdef\beamer@appendixstart{#3}}
+\def\beamer@framepages#1#2{}
+\def\beamer@subsectionpages#1#2{}
+\def\beamer@sectionpages#1#2{}
+\def\beamer@partpages#1#2{}
+\def\beamer@documentpages#1{\gdef\beamer@endpageofdocument{#1}}
 \dohead
 
 
@@ -728,6 +734,9 @@
 \newcounter{subsection}[section]
 \renewcommand\thesubsection{\@arabic\c@subsection}
 
+\newcount\beamer@subsectionstartpage
+\beamer@subsectionstartpage=1
+
 \def\subsection{\@ifnextchar[\@subsection\@@subsection}
 \def\@@subsection#1{\@subsection[#1]{#1}}
 
@@ -744,6 +753,9 @@
     \addtocontents{btoc}{\protect\subsectionintoc{\thesection}{\thesubsection}{#2}{\thepage}}%
     \fi%
   }%
+  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+  \addtocontents{head}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
+  \beamer@subsectionstartpage=\c@page%
   \edef\subsectionlink{{Navigation\thepage}{\noexpand\subsecname}}%
   \def\insertsubsection{\expandafter\hyperlink\subsectionlink}
   \Hy@writebookmark{\thesubsection}{#1}{Outline\thesection.\thesubsection.\thepage}{2}{btoc}%
@@ -768,8 +780,18 @@
 \def\beamer@entrycode{}
 \def\beamer@exitcode{}
 
+\def\beamer@setuplinks{%
+  {%
+    \def\sectionentry##1##2##3##4{}%
+    \def\slideentry##1##2##3##4##5{}%
+    \def\appendixslideentry##1##2##3##4##5{}%
+    \def\appendixsectionentry##1##2##3##4{}%
+    \dohead%
+  }%
+}
+
 \newenvironment{frameslide}[1][1]{%
-  {\let\@elt\@restorecounter\@overlaycounterresets}
+  {\let\@elt\@restorecounter\@overlaycounterresets}%
   \global\beamer@pausecount=1\relax%
   \serialnumber=#1\relax%
   \expandafter\@ifempty\expandafter{\beamer@framestartpage}{%
@@ -779,6 +801,7 @@
   \hypersetup{pdfpagetransition=R}%
   \hypersetup{pdfpageduration=}%
   \xdef\beamer@frameendpage{\thepage}% every time
+  \beamer@setuplinks%
   \let\beamer@startcomment=\beamer@startcommentinframe%
   \beamer@entrycode\vspace*{-\baselineskip}\begin{pauses}\vfill}%
   {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
@@ -1109,11 +1132,17 @@
         {\protect\headcommand{% 
             \protect\appendixslideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
             {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}}}%
+      \addtocontents{head}%
+        {\protect\headcommand{% 
+          \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
     \else%
       \addtocontents{head}%
         {\protect\headcommand{%
             \protect\slideentry{\thesection}{\thesubsection}{\thesubsectionslide}%
             {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}}}%
+      \addtocontents{head}%
+        {\protect\headcommand{% 
+          \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
     \fi%
     \clearpage%
   }
@@ -2135,6 +2164,11 @@
 
 \AtEndDocument{%
   \clearpage
+  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}}%
+  \immediate\write\@auxout{\string\@writefile{head}%
+    {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
     \if@filesw
       \newwrite\tf@head
       \immediate\openout\tf@head\jobname.head\relax
@@ -2320,7 +2354,113 @@
   
 
 
+%
+% Navigation buttons
+%
 
+% The following commands are called by the .head file.
+\def\beamer@framepages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofframe{#1}%
+      \gdef\beamer@endpageofframe{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@subsectionpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofsubsection{#1}%
+      \gdef\beamer@endpageofsubsection{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@sectionpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofsection{#1}%
+      \gdef\beamer@endpageofsection{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@partpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofpart{#1}%
+      \gdef\beamer@endpageofpart{#2}%
+    \fi%
+  \fi%
+}
+
+\def\beamer@startpageofframe{1}
+\def\beamer@endpageofframe{1}
+\def\beamer@startpageofsubsection{1}
+\def\beamer@endpageofsubsection{1}
+\def\beamer@startpageofsection{1}
+\def\beamer@endpageofsection{1}
+\def\beamer@startpageofpart{1}
+\def\beamer@endpageofpart{1}
+\def\beamer@endpageofdocument{1}
+
+\def\beamer@nextpage#1{%
+  \beamer@tempcount=#1%
+  \advance\beamer@tempcount by1\relax%
+  \ifnum\beamer@tempcount>\beamer@endpageofdocument%
+  \beamer@tempcount=\beamer@endpageofdocument%
+  \fi}
+\def\beamer@prevpage#1{%
+  \beamer@tempcount=#1\relax%
+  \ifnum\beamer@tempcount>1%
+  \advance\beamer@tempcount by-1%
+  \fi%
+}
+
+\def\hyperlinkframestart{\hyperlink{Navigation\beamer@startpageofframe}}
+\def\hyperlinkframeend{\hyperlink{Navigation\beamer@endpageofframe}}
+\def\hyperlinkframestartnext{%
+  \beamer@nextpage\beamer@endpageofframe%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkframeendprev{%
+  \beamer@prevpage\beamer@startpageofframe%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinksubsectionstart{\hyperlink{Navigation\beamer@startpageofsubsection}}
+\def\hyperlinksubsectionend{\hyperlink{Navigation\beamer@endpageofsubsection}}
+\def\hyperlinksubsectionstartnext{%
+  \beamer@nextpage\beamer@endpageofsubsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinksubsectionendprev{%
+  \beamer@prevpage\beamer@startpageofsubsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinksectionstart{\hyperlink{Navigation\beamer@startpageofsection}}
+\def\hyperlinksectionend{\hyperlink{Navigation\beamer@endpageofsection}}
+\def\hyperlinksectionstartnext{%
+  \beamer@nextpage\beamer@endpageofsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinksectionendprev{%
+  \beamer@prevpage\beamer@startpageofsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinkpartstart{\hyperlink{Navigation\beamer@startpageofpart}}
+\def\hyperlinkpartend{\hyperlink{Navigation\beamer@endpageofpart}}
+\def\hyperlinkpartstartnext{%
+  \beamer@nextpage\beamer@endpageofpart%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkpartendprev{%
+  \beamer@prevpage\beamer@startpageofpart%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinkdocumentstart{\hyperlink{Navigation1}}
+\def\hyperlinkdocumentend{\hyperlink{Navigation\beamer@endpageofdocument}}
 
 %
 % Floats and tables
