@@ -8,6 +8,10 @@
 
 \mode<presentation>
 
+\setbeamerfont{normal text}{} % ignored currently
+\setbeamerfont{alerted text}{}
+\setbeamerfont{example text}{}
+
 \setbeamerfont{structure}{}
 \setbeamerfont{tiny structure}{size=\tiny}
 
@@ -55,6 +59,8 @@
 
 \setbeamerfont{block}{}
 \setbeamerfont{block title}{size=\large,parent={structure,block}}
+\setbeamerfont{alerted block title}{parent={block title,alerted text}}
+\setbeamerfont{example block title}{parent={block title,example text}}
 
 \setbeamerfont{item}{parent=structure}
 \setbeamerfont{subitem}{parent=item}

@@ -272,7 +272,7 @@
 \def\beamertemplatedotitem{\setbeamertemplate{itemize items}[circle]}
 \def\beamertemplatetriangleitem{\setbeamertemplate{itemize items}[default]}
 \def\beamertemplatesquareitem{\setbeamertemplate{itemize items}[square]}
-\def\beamertemplateballitem{\setbeamertemplate{item}[ball]}
+\def\beamertemplateballitem{\setbeamertemplate{items}[ball]}
 \def\beamertemplateenumeratealpha{\setbeamerfont{enumerate items}[default]}
 \def\beamertemplateenumeratecircle{\setbeamertemplate{enumerate items}[circle]}
 \def\beamertemplateenumeratesquare{\setbeamertemplate{enumerate items}[square]}
@@ -305,11 +305,14 @@
 \def\beamertemplatecontinuationroman{\setbeamertemplate{frametitle continuation}[default]}
 \def\beamertemplatecontinuationtext{\setbeamertemplate{frametitle continuation}[from second]}
 
-
 \mode
 <all>
 {
   \long\def\useframetemplate#1#2{\setbeamertemplate{frame begin}{#1}\setbeamertemplate{frame end}{#2}}
+  \def\usebackgroundtemplate{\setbeamertemplate{background canvas}}
+  \def\beamertemplatesolidbackgroundcolor#1{\setbeamercolor{normal text}{bg=#1}}
+  \newcommand{\beamertemplategridbackground}[1][]{\setbeamertemplate{background}[grid][step=#1]}
+  \newcommand{\beamertemplateshadingbackground}[2]{\setbeamertemplate{background canvas}{vertical shading}{bottom=#1,top=#2}}
 }
 
 \mode

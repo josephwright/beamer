@@ -413,56 +413,56 @@ template:
 
 
 
-\subsection{Background}
+%% \subsection{Background}
 
-\label{section-backgrounds}
+%% \label{section-backgrounds}
 
-\paragraph{Predefined Templates}\ 
+%% \paragraph{Predefined Templates}\ 
 
-\begin{command}{\beamertemplatesolidbackgroundcolor\marg{color}}
-  Installs the given color as the background color for every frame.
+%% \begin{command}{\beamertemplatesolidbackgroundcolor\marg{color}}
+%%   Installs the given color as the background color for every frame.
   
-  \example |\beamertemplatesolidbackgroundcolor{white!90!red}|
-\end{command}
+%%   \example |\beamertemplatesolidbackgroundcolor{white!90!red}|
+%% \end{command}
 
-\begin{command}{\beamertemplateshadingbackground%
-    \marg{color expression page bottom}\marg{color expression page top}}
-  Installs a vertically shaded background such that the
-  specified bottom color changes smoothly to the specified top
-  color. \emph{Use with care: Background shadings are often
-    distracting!} However, a very light shading with warm colors can 
-  make a presentation more lively.
-  \example
-\begin{verbatim}
-\beamertemplateshadingbackground{red!10}{blue!10}
-%% Bottom is light red, top is light blue
-\end{verbatim}
-\end{command}
-
-
-\begin{command}{\beamertemplategridbackground\oarg{spacing}}
-  Installs a light grid as background with lines spaced apart by
-  \meta{spacing}. Default is half a centimeter.
-
-  \example |\beamertemplategridbackground[0.2cm]|
-\end{command}
+%% \begin{command}{\beamertemplateshadingbackground%
+%%     \marg{color expression page bottom}\marg{color expression page top}}
+%%   Installs a vertically shaded background such that the
+%%   specified bottom color changes smoothly to the specified top
+%%   color. \emph{Use with care: Background shadings are often
+%%     distracting!} However, a very light shading with warm colors can 
+%%   make a presentation more lively.
+%%   \example
+%% \begin{verbatim}
+%% \beamertemplateshadingbackground{red!10}{blue!10}
+%% %% Bottom is light red, top is light blue
+%% \end{verbatim}
+%% \end{command}
 
 
-\paragraph{Template Installation Commands}\ 
+%% \begin{command}{\beamertemplategridbackground\oarg{spacing}}
+%%   Installs a light grid as background with lines spaced apart by
+%%   \meta{spacing}. Default is half a centimeter.
 
-\begin{command}{\usebackgroundtemplate\marg{background template}}
-  Installs a new background template. Set the background color of
-  |normal text| after you have called this macro to the average color
-  of the background you have installed.
-  \example
-\begin{verbatim}
-\usebackgroundtemplate{%
-  \color{red}%
-  \vrule  height\paperheight width\paperwidth%
-}
-\setbeamercolor{normal text}{bg=red}
-\end{verbatim}
-\end{command}
+%%   \example |\beamertemplategridbackground[0.2cm]|
+%% \end{command}
+
+
+%% \paragraph{Template Installation Commands}\ 
+
+%% \begin{command}{\usebackgroundtemplate\marg{background template}}
+%%   Installs a new background template. Set the background color of
+%%   |normal text| after you have called this macro to the average color
+%%   of the background you have installed.
+%%   \example
+%% \begin{verbatim}
+%% \usebackgroundtemplate{%
+%%   \color{red}%
+%%   \vrule  height\paperheight width\paperwidth%
+%% }
+%% \setbeamercolor{normal text}{bg=red}
+%% \end{verbatim}
+%% \end{command}
 
 
 

@@ -142,6 +142,27 @@ Complete complete themes happen to have bird names.
 \end{colorthemeexample}
 
 
+
+\begin{colorthemeexample}{dove}
+  This theme is nearly a black and white theme and useful for creating
+  presentations that are easy to print on a black-and-white
+  printer. The theme uses grayscale in certain unavoidable cases, but
+  never color. It also changes the font of alerted text to boldface.
+
+  When using this theme, you should consider using the class option
+  |gray|, which ensures that all colors are converted to
+  grayscale. Also consider using the |structurebold| font theme.
+\end{colorthemeexample}
+
+
+
+\begin{colorthemeexample}{seagull}
+  Like the |dove| color theme, this theme is useful for printing on a
+  black-and-white printer. However, it uses different shades of gray
+  extensively, which may or may not look good on a transparency.
+\end{colorthemeexample}
+
+
 \subsubsection{Block Color Themes}
 
 Block themes only specify the colors of block environments. They can
@@ -324,7 +345,7 @@ behavior.
 \begin{verbatim}
 \beamersetuncovermixins{\opaqueness<1->{15}{\opaqueness<1->{15}}
 \pgfdeclareimage{book}{book}
-\pgfdeclareimage{book.15opaque}{filenameforbooknearlytransparent}
+\pgfdeclareimage{book.!15opaque}{filenameforbooknearlytransparent}
 \end{verbatim}
   Makes everything that is uncovered in two slides only 15 percent
   opaque. 

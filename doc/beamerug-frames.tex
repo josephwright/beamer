@@ -648,6 +648,93 @@ change this using the following class options:
 
 \subsubsection{The Background}
 
+Each frame has a \emph{background}, which---as the name suggests---is
+``behind everything.'' The background is a surprisingly complex
+object: in \beamer, it consists of a \emph{background canvas} and the
+\emph{main background}.
+
+\appearancenote
+The background canvas can be imagined as a large area on which
+everything (the main background and everything else) is painted on. By
+default, this canvas is a big rectangle filling the whole frame whose
+color is the background of the \beamer-color
+|background canvas|. Since this color inherits from |normal text|, by
+changing the background color of the normal text, you can change this
+color of the canvas.
+
+\example The following command changes the background color to a light
+red.
+\begin{verbatim}
+\setbeamercolor{normal text}{bg=red!20} 
+\end{verbatim}
+
+The canvas need not be monochrome. Instead, you can install a shading
+or even make it transparent. Making it transparent is a good idea if
+you wish to include your slides in some other document.
+
+\begin{template*}{background canvas}
+  The template is inserted ``behind everything.'' The template should
+  typically be some \TeX\ commands that produce a rectangle of height
+  |\paperheight| and width |\paperwidth|.
+
+  \begin{templateoptions}
+    \itemoption{default}{}
+    installs a large rectangle of color |background canvas.bg|. Since
+    this color inherits from |normal text|, you can change the
+    background of the \beamer-color |normal text| to change the
+    color of the default canvas.
+    \itemoption{transparent}{}
+    removes the canvas. This is useful if the slides are to be
+    inserted into another document.
+    \itemoption{vertical shading}{\oarg{color options}}
+    installs a vertically shaded background. \emph{Use with care:
+      Background shadings are often distracting!} The following
+    \meta{color options} may be given:
+    \begin{itemize}
+    \item \declare{|top=|\meta{color}} specifies the color at the
+      top of the page. By default, 25\% of the foreground of the
+      \beamer-color |palette primary| is used.
+    \item \declare{|bottom=|\meta{color}} specifies the color at the
+      bottom of the page. By default, the background of
+      |normal text| at the moment of invocation of this command is
+      used. 
+    \item \declare{|middle=|\meta{color}} specifies the color
+      for the middle of the page. Thus, if this option is given, the
+      shading changes from the bottom color to this color and then
+      to the top color.
+    \item \declare{|midpoint=|\meta{factor}} specifies at which
+      point of the page the middle color is used. A factor of |0| is
+      the bottom of the page, a factor of |1| is the top. The
+      default, which is |0.5| is in the middle.
+    \end{itemize}
+  \end{templateoptions}  
+\end{template*}
+
+The main background is drawn on top of the background canvas. It can
+be used to add, say, a grid to every frame or a big background picture
+or whatever.
+
+\begin{template}{background}
+  The template is inserted ``behind everything, but on top of the
+  background canvas.'' Use it for pictures or grids or anything that
+  does not necessarily fill the whole background. When this template
+  is typeset, the \beamer-color and -font |background| will be
+  setup.
+
+  \begin{templateoptions}
+    \itemoption{default}{} is empty.
+    \itemoption{grid}{\oarg{grid options}}
+    places a grid on the background. The following
+    \meta{grid options} may be given:
+    \begin{itemize}
+    \item \declare{|step=|\meta{dimension}} specifies the distance
+      between grid lines. The default is 0.5cm.
+    \item \declare{|color=|\meta{color}} specifies the color of the
+      grid lines. The default is 10\% foreground.
+    \end{itemize}
+  \end{templateoptions}  
+\end{template}
+
 
 
 

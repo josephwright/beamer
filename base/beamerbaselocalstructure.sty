@@ -59,11 +59,11 @@
 <all>
 {
 \newenvironment{alertenv}{\begin{altenv}%
-    {\beamer@templatestartalert}
+    {\beamer@templatestartalert\usebeamercolor[fg]{alerted text}\usebeamerfont{alerted text}}
     {\beamer@templateendalert}{\color{.}}{}}{\end{altenv}}
 
 \newenvironment{structureenv}{\begin{altenv}%
-    {\beamer@templatestartstructure}
+    {\beamer@templatestartstructure\usebeamercolor[fg]{structure}\usebeamerfont{structure}}
     {\beamer@templateendstructure}{\color{.}}{}}{\end{altenv}}
 
 \newcommand<>{\alert}[1]{\begin{alertenv}#2#1\end{alertenv}}
@@ -79,11 +79,8 @@
 \mode
 <presentation>
 {
-\usealerttemplate{%
-  \usebeamercolor[fg]{alerted text}%
-  \setbeamercolor{local structure}{parent=alerted text}%
-  }{}
-\usestructuretemplate{\usebeamercolor[fg]{structure}}{}
+\usealerttemplate{\setbeamercolor{local structure}{parent=alerted text}}{}
+\usestructuretemplate{}{}
 }
 
 \mode

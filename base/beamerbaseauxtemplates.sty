@@ -54,6 +54,67 @@
 
 
 
+
+
+
+
+
+%
+% Background templates
+%
+
+\define@key{beamer@backgroundgrid}{step}{\def\beamer@bggw{#1}}
+\define@key{beamer@backgroundgrid}{color}{\def\beamer@bggc{\color{#1}}}
+
+\defbeamertemplate{background}{grid}[1][]
+{%
+  \setkeys{beamer@backgroundgrid}{step=0.5cm,color=fg!10!bg}%
+  \setkeys{beamer@backgroundgrid}{#1}%
+  \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
+    \beamer@bggc
+    \pgfgrid[stepx=\beamer@bggw,stepy=\beamer@bggw]{\pgforigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
+  \end{pgfpicture}%    
+}
+
+\defbeamertemplate{background canvas}{transparent}
+{}
+
+
+\define@key{beamer@backgroundshade}{top}{\def\beamer@bgst{#1}}
+\define@key{beamer@backgroundshade}{bottom}{\def\beamer@bgsb{#1}}
+\define@key{beamer@backgroundshade}{middle}{\def\beamer@bgsm{#1}}
+\define@key{beamer@backgroundshade}{midpoint}{\def\beamer@bgsmp{#1}}
+
+\defbeamertemplate{background canvas}{vertical shading}[1][]
+{%
+  \pgfuseshading{beamer@backgroundshading}%
+}
+[action]
+{
+  {\usebeamercolor{palette primary}}
+  \usebeamercolor{normal text}
+  \setkeys{beamer@backgroundshade}{top=palette primary.bg!25!bg,bottom=bg,middle={},midpoint=0.5}%
+  \setkeys{beamer@backgroundshade}{#1}
+  \ifx\beamer@bgsm\@empty
+    \pgfdeclareverticalshading{beamer@backgroundshading}{\the\paperwidth}%
+      {color(0cm)=(\beamer@bgsb); color(\the\paperheight)=(\beamer@bgst)}
+    \colorlet{beamer@backgroundshadestart}{\beamer@bgsb}%
+    \colorlet{beamer@backgroundshadeend}{\beamer@bgst}%
+    \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
+  \else
+    \pgfdeclareverticalshading{beamer@backgroundshading}{\the\paperwidth}%
+      {color(0cm)=(\beamer@bgsb); color(\beamer@bgsmp\paperheight)=(\beamer@bgsm); color(\the\paperheight)=(\beamer@bgst)}
+    \colorlet{beamer@average}{\beamer@bgsm}
+  \fi%
+  \setbeamercolor{normal text}{bg=beamer@average}
+}
+
+
+
+
+
+
+
 % (sub-)section in toc: sections numbered
 
 \defbeamertemplate{section in toc}{sections numbered}
@@ -474,41 +535,6 @@
   {.1cm}{.05cm}}
 
 
-%
-% Background templates
-%
-
-\newcommand{\beamertemplatesolidbackgroundcolor}[1]{
-  \usebackgroundtemplate{\color{#1}\vrule width \paperwidth height\paperwidth}
-  \setbeamercolor{normal text}{bg=#1}
-  }
-
-\newcommand{\beamertemplateshadingbackground}[2]{
-  \pgfdeclareverticalshading{background}{\the\paperwidth}%
-  {color(0cm)=(#1); color(\the\paperheight)=(#2)}
-
-  \usebackgroundtemplate{\pgfuseshading{background}}%
-  \colorlet{beamer@backgroundshadestart}{#1}%
-  \colorlet{beamer@backgroundshadeend}{#2}%
-  \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
-  \setbeamercolor{normal text}{bg=beamer@average}
-  }
-  
-\newcommand{\beamertemplategridbackground}[1][0.5cm]{
-  \usebackgroundtemplate{%
-  \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
-    \color{black!10!white}
-    \pgfgrid[stepx=#1,stepy=#1]{\pgforigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
-  \end{pgfpicture}%    
-  }}
-
-\mode
-<article>
-{
-  \newcommand{\beamertemplatesolidbackgroundcolor}[1]{}
-  \newcommand{\beamertemplateshadingbackground}[2]{}
-  \newcommand{\beamertemplategridbackground}[1][]{}
-}
 
 
 %
@@ -730,7 +756,7 @@
   \usealertblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
-      \usebeamerfont*{block title}\insertblockname%
+      \usebeamerfont*{alerted block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title alerted}{}{\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip}}%
@@ -739,7 +765,7 @@
   \useexampleblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamercolorbox}[colsep*=.75ex]{block title example}
-      \usebeamerfont*{block title}\insertblockname%
+      \usebeamerfont*{example block title}\insertblockname%
     \end{beamercolorbox}%
     {\parskip0pt\par}%
     \ifbeamercolorempty[bg]{block title example}{}{\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip}}%
@@ -758,13 +784,13 @@
   \usealertblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
-      {\usebeamerfont*{block title}\insertblockname}%
+      {\usebeamerfont*{alerted block title}\insertblockname}%
       \raggedright}%
     {\end{beamerboxesrounded}\vskip\smallskipamount}
   \useexampleblocktemplate{%
     \par\vskip\medskipamount%
     \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
-      {\usebeamerfont*{block title}\insertblockname}%
+      {\usebeamerfont*{example block title}\insertblockname}%
       \raggedright}%
     {\end{beamerboxesrounded}\vskip\smallskipamount}
 }

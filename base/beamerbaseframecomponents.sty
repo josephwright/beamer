@@ -81,17 +81,7 @@
 \usesidebarbackgroundtemplate[right]{}
 
 
-%
-%
-% Background management
-%
-%
-\mode
-<all>
-{
-  \long\def\usebackgroundtemplate#1{%
-    \def\beamer@backgroundtemplate{#1}}
-}
+
 
 
 %
@@ -104,11 +94,15 @@
 \def\ps@navigation{
   \def\@oddhead{%
     \begingroup%
-    \setbox\beamer@tempbox=\hbox{\normalcolor{\beamer@backgroundtemplate}\hyper@pagetransition\hyper@pageduration}%
+    \setbox\beamer@tempbox=\hbox{\usebeamertemplate***{background canvas}\hyper@pagetransition\hyper@pageduration}%
     \beamer@tempdim=\ht\beamer@tempbox%
     \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
     \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
-    \vbox{\hbox{\hskip-\Gm@lmargin\box\beamer@tempbox}%
+    \setbox\@tempboxa=\hbox{\usebeamertemplate***{background}}%
+    \beamer@tempdim=\ht\@tempboxa%
+    \setbox\@tempboxa=\hbox{\lower\beamer@tempdim\hbox{\box\@tempboxa}}%
+    \wd\@tempboxa=0pt\ht\@tempboxa=0pt\dp\@tempboxa=0pt%
+    \vbox{\hbox{\hskip-\Gm@lmargin\box\beamer@tempbox\box\@tempboxa}%
       \hbox{%
         {%
           \setbox\beamer@tempbox=\hbox{\hskip-\Gm@lmargin%
