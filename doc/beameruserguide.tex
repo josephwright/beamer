@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{ltxdoc}
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
 %
@@ -6,8 +6,8 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\usepackage{pgf}
-\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
+\usepackage{pgf,xcolor}
+\usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage[pdfborder={0 0 0}]{hyperref}
 
@@ -42,18 +42,42 @@
 \def\pdf{\textsc{pdf}}
 \def\pgf{\textsc{pgf}}
 \def\pstricks{\textsc{pstricks}}
-\def\bs{$\backslash$}
 
-\def\Theme#1{\par\bigskip\noindent\textbf{Theme \texttt{#1}}\par}
-\def\ClassOption#1{\par\bigskip\noindent\textbf{Class Option \texttt{#1}}\par}
-\def\Environment#1{\par\bigskip\noindent\textbf{Environment \texttt{#1}}\par}
-\def\Command#1{\par\bigskip\noindent\textbf{Command \texttt{#1}}\par}
-\long\def\Parameters#1{\medskip\noindent Parameters:
-  \begin{enumerate}\itemsep=0pt\parskip=0pt
-    #1
-  \end{enumerate}}
-\long\def\Description#1{\unskip\medskip\noindent Description: #1}
-\def\Example{\par\medskip\noindent Example: }
+\def\declare#1{{\color{red!75!black}#1}}
+
+\def\command#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item\extractcommand#1@\par\topsep=0pt}
+\def\endcommand{\endlist}
+\def\extractcommand#1#2@{\strut\declare{\texttt{\string#1}}#2}
+
+\def\example{\par\smallskip\noindent\textit{Example: }}
+
+\def\environment#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\extractenvironement#1@\par\topsep=0pt}
+\def\endenvironment{\endlist}
+\def\extractenvironement#1#2@{%
+\item{{\ttfamily\char`\\begin\char`\{\declare{#1}\char`\}}#2}%
+  {\itemsep=0pt\parskip=0pt\item{\meta{environment contents}}%
+  \item{\ttfamily\char`\\end\char`\{\declare{#1}\char`\}}}}
+
+\def\classoption#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item{{\ttfamily\char`\\documentclass[\declare{#1}]\char`\{beamer\char`\}}}\par\topsep=0pt}
+\def\endclassoption{\endlist}
+
+
+\def\smalltheme{\vbox\bgroup\theme}
+\def\endsmalltheme{\egroup\endtheme}
+\def\theme#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item\extracttheme#1@\par\topsep=0pt}
+\def\endtheme{\endlist}
+\def\extracttheme#1#2@{%
+\item{{{\ttfamily\char`\\usepackage}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}}
+
+
+\newcommand\opt[1]{{\color{black!50!green}#1}}
+\renewcommand\oarg[1]{\opt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
+\newcommand\sarg[1]{\opt{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}}
+\newcommand\ssarg[1]{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}
 
 \begin{document}
 
@@ -76,28 +100,28 @@ This user's guide explains the functionality of the \beamer\ class.
 It is a \LaTeX\ class that allows you to create a beamer
 presentation. It can also be used to create slides. It behaves
 similarly to other packages like \textsc{prosper}, but has the
-advantage that it works together directly with \texttt{pdflatex}, but
-also with \texttt{dvips}.
+advantage that it works together directly with |pdflatex|, but
+also with |dvips|.
 
 To use the \beamer\ class, proceed as follows:
 \begin{enumerate}
 \item
-  Specify \texttt{beamer} as document class instead of
-  \texttt{article}.
+  Specify |beamer| as document class instead of
+  |article|.
 \item
-  Structure your \LaTeX\ text using \texttt{section} and
-  \texttt{subsection} commands.
+  Structure your \LaTeX\ text using |section| and
+  |subsection| commands.
 \item
-  Place the text of the individual slides inside \texttt{frame}
+  Place the text of the individual slides inside |frame|
   commands.
 \item
-  Run \texttt{pdflatex} on the text (or \texttt{latex},
-  \texttt{dvips}, and \texttt{ps2pdf}).
+  Run |pdflatex| on the text (or |latex|,
+  |dvips|, and |ps2pdf|).
 \end{enumerate}
 
 The \beamer\ class has several useful features: You don't need any
-external programs to use it other than \texttt{pdflatex}, but it works
-also with \texttt{dvips}. You can easily and intuitively create
+external programs to use it other than |pdflatex|, but it works
+also with |dvips|. You can easily and intuitively create
 sophisticated overlays. Finally, you can easily change the whole slide
 theme or only parts of it. The following code shows a typical usage of
 the class.
@@ -133,19 +157,19 @@ the class.
 \end{document}
 \end{verbatim}
 
-Run \texttt{pdflatex} on this code (twice) and then use, for example, the
-Acrobat Reader to present the resulting \texttt{.pdf} file in a
-presentation. You can also, alternatively, use \texttt{dvips}; see
+Run |pdflatex| on this code (twice) and then use, for example, the
+Acrobat Reader to present the resulting |.pdf| file in a
+presentation. You can also, alternatively, use |dvips|; see
 Section~\ref{section-postscript} for details.
 
 As can be seen, the text looks almost like a normal \LaTeX\ text. The
-main difference is the usage of the \verb!\frame! command. This
+main difference is the usage of the |\frame| command. This
 command takes one parameter, which is the text that should be shown on
 the frame. Typically, the contents of a frame is shown on a single
 slide. However, in case you use overlay commands inside a frame, a
 single frame command may produce several slides. An example is the
-last frame in the above example. There, the \verb!\item! commands
-are followed by \emph{overlay specifications} like \verb!<1->!,
+last frame in the above example. There, the |\item| commands
+are followed by \emph{overlay specifications} like |<1->|,
 which means ``from slide 1 on.'' Such a specification causes the item
 to be shown only on the specified slides of the frame (see
 Section~\ref{section-overlay} for details). In the above example, a
@@ -153,8 +177,8 @@ total of five slides are produced: a title page slide, an outline
 slide, a slide showing only the first of the three items, a slide
 showing the first two of them, and a slide showing all three items.
  
-To structure your text, you can use the commands \verb!\section! and
-\verb!\subsection!. These commands will not only create entries in the
+To structure your text, you can use the commands |\section| and
+|\subsection|. These commands will not only create entries in the
 table of contents, but will also in the navigation bars.
 
 
@@ -183,8 +207,8 @@ the beamer class available.
 
 If you only wish to install the beamer class for a quick appraisal, do
 the following: Obtain the latest source version (ending
-\texttt{.tar.gz}) of the \beamer\ package from 
-\href{http://sourceforge.net/projects/latex-beamer/}{\texttt{http://sourceforge.net/projects/latex-beamer/}}
+|.tar.gz|) of the \beamer\ package from 
+\href{http://sourceforge.net/projects/latex-beamer/}{|http://sourceforge.net/projects/latex-beamer/|}
 (most likely, you have already done this). Next, you also need at
 least version 0.34 of the \textsc{pgf} package, which can be found at
 the same place. Finally, you need at least version 1.03 of the
@@ -192,13 +216,13 @@ the same place. Finally, you need at least version 1.03 of the
 (although the version on CTAN might be newer).
 
 In all cases, the packages contain a bunch of files (for the \beamer\
-class, \texttt{beamer.cls} is one of these files and happens to be the
-most important one, for the \textsc{pgf} package \texttt{pgf.sty} is
+class, |beamer.cls| is one of these files and happens to be the
+most important one, for the \textsc{pgf} package |pgf.sty| is
 the most important file). 
 Place all files in three directories. For example,
-\texttt{/home/tantau/beamer/}, \texttt{/home/tantau/pgf/}, and
-\texttt{/home/tantau/xcolor/} would work fine for me. Then setup the
-environment variable called \texttt{TEXINPUTS} to be the following
+|/home/tantau/beamer/|, |/home/tantau/pgf/|, and
+|/home/tantau/xcolor/| would work fine for me. Then setup the
+environment variable called |TEXINPUTS| to be the following
 string (how exactly this is done depends on your operating system and
 shell): 
 
@@ -206,7 +230,7 @@ shell):
 .:/home/tantau/beamer:/home/tantau/pgf:/home/tantau/xcolor:
 \end{verbatim}
 
-Naturally, if the \texttt{TEXINPUTS} variable is already defined
+Naturally, if the |TEXINPUTS| variable is already defined
 differently, you should \emph{add} the three directories to the list. Do
 not forget to place a colon at the end (corresponding to an empty
 path), which will include all standard directories.
@@ -217,24 +241,24 @@ path), which will include all standard directories.
 
 For a more permanent installation, you can place the files of the
 \beamer\ package and of the \textsc{pgf} package (see the previous
-subsection on how to obtain them) in an appropriate \texttt{texmf}
+subsection on how to obtain them) in an appropriate |texmf|
 tree. 
 
 When you ask \TeX\ to use a certain class or package, it usually looks
-for the necessary files in so-called \texttt{texmf} trees. These trees
+for the necessary files in so-called |texmf| trees. These trees
 are simply huge directories that contain these files. By default,
-\TeX\ looks for files in three different \texttt{texmf} trees:
+\TeX\ looks for files in three different |texmf| trees:
 \begin{itemize}
 \item
-  The root \texttt{texmf} tree, which is usually located at
-  \texttt{/usr/share/texmf/}, \verb!c:\texmf\!, or\\
-  \verb!c:\Program Files\TeXLive\texmf\!.
+  The root |texmf| tree, which is usually located at
+  |/usr/share/texmf/|, |c:\texmf\|, or\\
+  |c:\Program Files\TeXLive\texmf\|.
 \item
-  The local  \texttt{texmf} tree, which is usually located at
-  \texttt{/usr/local/share/texmf/}, \verb!c:\localtexmf\!, or\\
-  \verb!c:\Program Files\TeXLive\texmf-local\!.
+  The local  |texmf| tree, which is usually located at
+  |/usr/local/share/texmf/|, |c:\localtexmf\|, or\\
+  |c:\Program Files\TeXLive\texmf-local\|.
 \item
-  Your personal  \texttt{texmf} tree, which is located in your home
+  Your personal  |texmf| tree, which is located in your home
   directory.   
 \end{itemize}
 
@@ -243,44 +267,61 @@ your personal tree, depending on whether you have write access to the
 local tree. Installation in the root tree can cause problems, since an
 update of the whole \TeX\ installation will replace this whole tree.
 
-Inside whatever \texttt{texmf} directory you have chosen, create
+Inside whatever |texmf| directory you have chosen, create
 the sub-sub-sub-directories
 \begin{itemize}
 \item
-  \texttt{texmf/tex/latex/beamer} and
+  |texmf/tex/latex/beamer| and
 \item
-  \texttt{texmf/tex/latex/pgf}
+  |texmf/tex/latex/pgf|
 \item
-  \texttt{texmf/tex/latex/xcolor}
+  |texmf/tex/latex/xcolor|
 \end{itemize}
 and place all files in these three directories.
 
 Finally, you need to rebuild \TeX's filename database. This done by
-running the command  \texttt{texhash} or \texttt{mktexlsr} (they are
+running the command  |texhash| or |mktexlsr| (they are
 the same). In MikTeX, there is a menu option to do this.
 
 \vskip1em
 For a more detailed explanation of the standard installation process
 of packages, you might wish to consult
-\href{http://www.ctan.org/installationadvice/}{\texttt{http://www.ctan.org/installationadvice/}}.
+\href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}.
 However, note that the \beamer\ package does not come with a
-\texttt{.ins} file (simply skip that part).
+|.ins| file (simply skip that part).
 
 
 
 \subsection{Testing the Installation}
 
-To test your installation, copy the file \texttt{beamerexample.tex}
+To test your installation, copy the file |beamerexample.tex|
 from the documentation subdirectory to some place where you usually
-create presentations. Then run the command \texttt{pdflatex} twice on
-the file and check whether the resulting \texttt{beamerexample.pdf}
+create presentations. Then run the command |pdflatex| twice on
+the file and check whether the resulting |beamerexample.pdf|
 looks correct. If so, you are all set.
 
 If you have updated from a previous version and you have trouble
 \TeX ing some old file, it sometimes helps to delete all the extra
-files \TeX\ creates automatically (like the \texttt{.aux} and
-\texttt{.head} files).
+files \TeX\ creates automatically (like the |.aux| and
+|.head| files).
 
+
+
+\subsection{How to Read this User's Guide}
+
+This user guide is both intended as a tutorial and as a reference
+guide. If you do not have much experience with preparing
+presentations, the next section might be especially helpful. The
+following sections explain the basic usage of the |beamer| class as
+well as advanced features. If you wish to adjust the way your
+presentations look (for example, if you wish to add a default logo of
+your institution to every presentation in the future), please read the
+last section.
+
+In this guide you will find the descriptions of all ``public''
+commands provided by the |beamer| class. In each such
+description, the described command, environment or option is printed 
+in red. Text shown in green is optional and can be left out.
 
 
 \section{Workflow}
@@ -291,8 +332,8 @@ questions are addressed, like which programs to call with
 which parameters, and hints are given on how to create a
 presentation. If you have already created numerous presentations, you
 may wish to skip the first of the following steps 
-and only have a look at how to convert the \texttt{.tex} file into a
-\texttt{.pdf} of \texttt{.ps} file.
+and only have a look at how to convert the |.tex| file into a
+|.pdf| of |.ps| file.
 
 
 \subsection{Step Zero: Know the Time Constraints}
@@ -331,12 +372,12 @@ all about. Putting the date at the front in this format causes your
 presentation folders to be listed nicely when you have several of them
 residing in one directory. If you use an extra directory for each
 presentation, you can call your main file
-\verb!main.tex!. 
+|main.tex|. 
 
-To create an initial \verb!main.tex! file for your talk, copy an
-existing file (like the file \verb!beamerexample.tex! that comes along
+To create an initial |main.tex| file for your talk, copy an
+existing file (like the file |beamerexample.tex| that comes along
 with the contribution) and delete everything that is not going to be
-part of your talk. Adjust the \verb!\author{}! and other fields as 
+part of your talk. Adjust the |\author{}| and other fields as 
 appropriate. 
 
 
@@ -348,7 +389,7 @@ appropriate.
 With the time constraints in mind, make a mental inventory of the
 things you can reasonably talk about within the time available. Then
 categorize the inventory into sections and subsections. Put
-\verb!\section{}! and \verb!\subsection{}! commands into the (more or
+|\section{}| and |\subsection{}| commands into the (more or
 less empty) main file. Do not create any frames until you
 have a first working version of a possible table of contents. Do not
 feel afraid to change it later on as you work on the talk.
@@ -422,8 +463,8 @@ might  look like this:
 
 \subsubsection{Creating PDF}
 
-To create a \texttt{PDF} version of this file, run the program
-\verb!pdflatex! on \verb!main.tex! at least twice. Your need to run it
+To create a |PDF| version of this file, run the program
+|pdflatex| on |main.tex| at least twice. Your need to run it
 twice, so that \TeX\ can create the table of contents. In the
 following example, the greater-than sign is the prompt.
 
@@ -435,7 +476,7 @@ following example, the greater-than sign is the prompt.
 \end{verbatim}
 
 
-You can next use a program like the Acrobat Reader or \texttt{xpdf}
+You can next use a program like the Acrobat Reader or |xpdf|
 to view the resulting presentation.
 
 \begin{verbatim}
@@ -453,15 +494,15 @@ only 128mm times 96mm.
 
 To create a PostScript version, you should first ascertain that the
 \textsc{hyperref} package (which is automatically loaded by the
-\beamer\ class) uses the option \texttt{dvips} or some compatible
+\beamer\ class) uses the option |dvips| or some compatible
 option, see the documentation of the \textsc{hyperref} package for
 details. Whether this is the case depends on the contents of your
-local \texttt{hyperref.cfg} file. You can enforce the usage of this
-option by passing \texttt{dvips} or a compatible option to the
-\beamer\ class (write \verb!\documentclass[dvips]{beamer}!), which
+local |hyperref.cfg| file. You can enforce the usage of this
+option by passing |dvips| or a compatible option to the
+\beamer\ class (write |\documentclass[dvips]{beamer}|), which
 will pass this option on to the \textsc{hyperref} package.
 
-You can then run \verb!latex! twice, followed by \verb!dvips!.
+You can then run |latex| twice, followed by |dvips|.
 
 \begin{verbatim}
 > latex main.tex
@@ -471,7 +512,7 @@ You can then run \verb!latex! twice, followed by \verb!dvips!.
 > dvips -P pdf main.dvi
 \end{verbatim}
 
-The option (\verb!-P pdf!) tells \verb!dvips! to use
+The option (|-P pdf|) tells |dvips| to use
 Type~1 outline fonts instead of the usual Type~3 bitmap fonts. You may
 wish to omit this option if there is a problem with it. 
 
@@ -491,13 +532,13 @@ For A4-sized paper, use:
 \end{verbatim}
 
 In order to create a white margin around the whole page (which is sometimes
-useful for printing), add the option \verb!-m 1cm! to the options of
-\verb!psnup!. 
+useful for printing), add the option |-m 1cm| to the options of
+|psnup|. 
 
-To put two or four slides on one page, use \verb!-2!, respectively
-\verb!-4! instead of \verb!-1! as the first parameter for
-\verb!psnup!. In this case, you may wish to add the option
-\verb!-b 1cm! to add a bit of space around the individual slides.
+To put two or four slides on one page, use |-2|, respectively
+|-4| instead of |-1| as the first parameter for
+|psnup|. In this case, you may wish to add the option
+|-b 1cm| to add a bit of space around the individual slides.
 
 You can convert a PostScript file to a pdf file using
 
@@ -573,7 +614,7 @@ yourself.
   possible. Visualizations help an audience enormously.
 \item
   Usually, place graphics to the left of the text. (Use the
-  \texttt{columns} environment.) 
+  |columns| environment.) 
 \item
   Graphics should have the same typographic parameters as the
   text: Use the same fonts (at the same size) in graphics as in the
@@ -665,7 +706,7 @@ test and retest the talk and modify it as needed.
 \subsection{Step Six: Optionally Create a Handout}
 
 Once your talk is fixed, you can create a handout, if this seems
-appropriate. For this, use the class option \verb!handout! as
+appropriate. For this, use the class option |handout| as
 explained in Section~\ref{handout}. Typically, you might wish
 to put several handout slides on one page. See
 Section~\ref{section-postscript} on how to do this.
@@ -686,51 +727,42 @@ Section~\ref{section-postscript} on how to do this.
 
 A presentation consists of a series of frames. Each frame consists of
 a series of slides. You create a frame using the command
-\verb!\frame!. This command takes one parameter, namely the
+|\frame|. This command takes one parameter, namely the
 contents of the frame. All of this text that is not tagged by overlay
 specifications (see Section~\ref{subsection-overlay}) is shown on all
 slides of the frame.  
 
-\Command{frame}
-\Parameters{
-\item
-  optional parameter in square brackets: a specification of slides to
-  be shown, see subsection \ref{subsection-restriction} for details. 
-\item
-  the frame's contents.
-}
-\Example
-\begin{verbatim}
+\begin{command}{\frame\oarg{overlay specification}\marg{frame text}}
+  The \meta{overlay specification} dictates which slides of a frame are
+  to be shown, see Section~\ref{subsection-restriction} for details. 
+  The \meta{frame text} can be normal \LaTeX\ text, but may not contain
+  |\verb| commands or |verbatim| environments, unless special
+  precautions are taken, see Section~\ref{section-verbatim}.
+  \example
+  \begin{verbatim}
 \frame
 {
   Some text...
 
   Some more...
 }
-\end{verbatim}
+  \end{verbatim}
+\end{command}
 
-\Command{plainframe}
-\Parameters{
-\item
-  optional parameter in square brackets: a specification of slides to
-  be shown, see subsection \ref{subsection-restriction} for details. 
-\item
-  the frame's contents.
-}
-\Description{
+\begin{command}{\plainframe\oarg{overlay specification}\marg{frame text}}
   This command creates a frame in which the head lines, foot lines,
   and side bars are suppressed. This is useful for creating single
   frames with different head and foot lines or for creating frames
   showing big pictures that completely fill the frame.
-  }
-\Example A frame with a picture completely filling the frame:  
+
+  \example A frame with a picture completely filling the frame:  
 \begin{verbatim}
 \pgfdeclareimage{bigimage}{}{9.6cm}{bigimagefilename}
 \plainframe{\hfill\pgfuseimage{bigimage}\hfill}
 \end{verbatim}
-
-\Example A title page, in which the head and foot lines are replaced
-by two graphics.
+  
+  \example A title page, in which the head and foot lines are replaced
+  by two graphics.
 \begin{verbatim}
 \usetitlepagetemplate{
   \beamerline{\pgfuseimage{toptitle}}
@@ -749,7 +781,7 @@ by two graphics.
 \begin{document}
 \plainframe{\titlepage}
 \end{verbatim}
-
+\end{command}
 
 \subsubsection{Components of a Frame}
 
@@ -769,16 +801,13 @@ using. To change them, you must install an appropriate template, see
 Section~\ref{section-head-templates} for the head and foot lines and
 Section~\ref{section-sidebar-templates} for the side bars.
 
-The frame title is shown prominently at the top of the frame. To
-specify the title, use the command \verb!\frametitle!. You should end
-the frame title with a period, if the title is a proper
-sentence. Otherwise, there should not be a period.
+The frame title is shown prominently at the top of the frame and can
+be specified with the following command:
 
-\Command{frametitle}
-\Parameters{
-\item a title for the frame.
-}
-\Example
+\begin{command}{\frametitle\marg{frame title text}}
+  You should end the \meta{frame title text} with a period, if the title is a
+  proper sentence. Otherwise, there should not be a period.
+\example
 \begin{verbatim}
 \frame{
   \frametitle{A Frame Title is Important.}
@@ -786,7 +815,7 @@ sentence. Otherwise, there should not be a period.
   Frame contents.
 }
 \end{verbatim}
-
+\end{command}
 
 
 \subsubsection{Restricting the Slides of a Frame}
@@ -795,11 +824,11 @@ sentence. Otherwise, there should not be a period.
 The number of slides in a frame is automatically
 calculated. If the largest number mentioned in any
 overlay specification inside the frame is 4, four slides are
-introduced (despite the fact that a specification like \verb!<4->!
+introduced (despite the fact that a specification like |<4->|
 might suggest that more than four slides would be possible).
 
 You can also specify the number of slides in the frame ``by hand.'' To
-do so, you pass an optional argument to the \verb!\frame! command,
+do so, you pass an optional argument to the |\frame| command,
 given in \emph{square} brackets. This argument is also a 
 slide specification. The frame will contain only the slides
 specified in this argument. Consider the following example.
@@ -816,16 +845,17 @@ will contain the text ``This is slide number~1,'' the second ``This is
 slide number~2,'' the third ``This is slide number~4,'' and the fourth
 ``This is slide number~5.''
 
-A useful specification is just \texttt{[0]}, which causes the frame to
-have to no slides at all. For example, \verb!\frame[handout:0]! causes
+A useful specification is just |[0]|, which causes the frame to
+have to no slides at all. For example, |\frame[handout:0]| causes
 the frame to be suppressed in the handout version, but to be shown
 normally in all other versions.
 
 
 \subsubsection{Verbatim Commands and Listings inside Frames}
+\label{section-verbatim}
 
-The \verb!\verb! command, the \texttt{verbatim} environment, the
-\texttt{lstlisting} environment, and related environments that allow
+The |\verb| command, the |verbatim| environment, the
+|lstlisting| environment, and related environments that allow
 you to typeset arbitrary text work only in
 frames that contain a single slide or that are suppressed
 altogether. Furthermore, you must explicitly specify that the frame
@@ -843,17 +873,17 @@ contains only one slide; like this:
         return i;
   }
 \end{verbatim}
-\unskip\verb!\end{verbatim}!
+\unskip{\MacroFont|\end{verbatim}|}
 \begin{verbatim}
 }
 \end{verbatim}
 
-Instead of \verb!\frame[all:1]! you could also have specified
-\verb!\frame[1]!, but this works only for the presentation version of
+Instead of |\frame[all:1]| you could also have specified
+|\frame[1]|, but this works only for the presentation version of
 the talk, not for the handout version. To make verbatim accessible
 also in the handout version, you would have to specify
 \verb!\frame[1| handout: 1]! and even more if you also have a
-transparencies version. The specification \verb!\frame[all:1]! states
+transparencies version. The specification |\frame[all:1]| states
 that the frame has just one slide in all versions.
 
 If you need to use verbatim commands in frames that contain several
@@ -861,19 +891,15 @@ slides, you must \emph{declare} your verbatim texts before the frame
 starts. This is done using two special commands:
 
 
-\Command{defverb}
-\Parameters{
-\item command name (including a backslash)
-\item a one-line verbatim text, delimited by a special symbol (works
-  like the \texttt{verb} command). Adding a star before the second
-  parameter make spaces visible.
-}
-\Description{
+\begin{command}{\defverb\marg{command name}\opt{|*|}%
+    \meta{delimiter symbol}\meta{verbatim text}\meta{delimiter symbol}}
   Declares a verbatim text for later use. The declaration should be
   done outside the frame. Once declared, the text can be used
-  in overlays like normal text.
-  }
-\Example
+  in overlays like normal text. The one-line \meta{verbatim text} must
+  be delimited by a special \meta{delimiter symbol} (works like the
+  |\verb| command). Adding a star makes spaces visible.
+
+\example
 \begin{verbatim}
 \defverb\mytext!int main (void) { ...!
 \defverb\mytextspaces*!int  main  (void ){  ...!
@@ -887,20 +913,17 @@ starts. This is done using two special commands:
   \end{itemize}
 }
 \end{verbatim}
+\end{command}
 
 
-\Command{defverbatim}
-\Parameters{
-\item command name (including a backslash)
-\item a normal parameter that contains a \texttt{verbatim},
-  \texttt{verbatim*}, \texttt{lstlisting}, or a related environment. 
-}
-\Description{
-  Declares a verbatim environment for later use. The declaration
+\begin{command}{\defverbatim\marg{command name}\marg{text}}
+  The \meta{text} may contain a |verbatim|,  |verbatim*|,
+  |lstlisting|, or a related environment. The command \marg{command
+    name} can be used later inside frames. The declaration
   should be done outside the frame. Once declared, the text can be
   used in overlays like normal text.
-  }
-\Example
+  
+  \example
 \begin{verbatim}
 \defverbatim\algorithm{
 \begin{verbatim}
@@ -910,43 +933,41 @@ int main (void)
   return 0;
 }
 \end{verbatim}
-\unskip\verb!\end{verbatim}!
+\unskip{\MacroFont|\end{verbatim}|}
 \begin{verbatim}
 }
 
 \frame
 {
   Our algorithm:
-
   \alert<1>{\algorithm}
-
   \uncover<2>{Note the return value.}
 }
 \end{verbatim}
-
+\end{command}
 
 
 \subsection{Overlays}
 
 \subsubsection{The Pauses Environment}
 
-The \texttt{pauses} environment offers an easy, but not very flexible
+The |pauses| environment offers an easy, but not very flexible
 way of creating frames that are uncovered piecewise. The environment
 itself does not have an immediate effect. But if you use the command
-\verb!\pause! inside the environment, only the text of the environment
-up to the \verb!\pause! command is shown on the first slide. On the
-second slide, everything is shown up to the second \verb!\pause!, and
-so forth. Note that the \verb!\pause! command can only be used on the 
-same level of nesting as the \texttt{pauses} environment.
+|\pause| inside the environment, only the text of the environment
+up to the |\pause| command is shown on the first slide. On the
+second slide, everything is shown up to the second |\pause|, and
+so forth. Note that the |\pause| command can only be used on the 
+same level of nesting as the |pauses| environment.
 
 A much more fine-grained control over what is shown on each slide can
 be attained using overlay specifications, see the next
-subsections. However, for many simple cases the \verb!\pause!
+subsections. However, for many simple cases the |\pause|
 command is sufficient.
 
-If you use multiple  \texttt{pauses} environments on one frame, the
+If you use multiple  |pauses| environments on one frame, the
 slide counting for the second environment starts where the first one
-left off, see the following example. You can nest \texttt{pauses}
+left off, see the following example. You can nest |pauses|
 environments, but this will not always have the effect you might
 expect. 
 
@@ -970,29 +991,23 @@ expect.
 }
 \end{verbatim}
 
-As a convenience, a \texttt{pauses} environment is automatically setup
-inside each frame, each \texttt{itemize}, each \texttt{description},
-and each \texttt{enumerate}. Thus, by simply using the \verb!\pause!
+As a convenience, a |pauses| environment is automatically setup
+inside each frame, each |itemize|, each |description|,
+and each |enumerate|. Thus, by simply using the |\pause|
 command on the outermost level of any frame or after items in lists or
 descriptions, you uncover the rest of the frame or list only on the
 next slide.
 
-\Environment{pauses}
-\Parameters{
-\item Put the text before first \texttt{pause} from this slide on,
-then continue increasing the slide number. Optional parameter, given
-in square brackets.
-}
-\Description{
+\begin{environment}{{pauses}\oarg{start slide number}}
   The content of the environment is shown piecewise. Each
-  \texttt{pause} command used inside uncovers a bit more of the
-  environment's text. The optional parameter's main use is to set it
-  to~0. The effect of this is that the first \texttt{pause} has no
-  effect, which can be useful if the \texttt{pauses} environment
-  immediately starts with a \texttt{pause} command. This happens
+  |\pause| command used inside uncovers a bit more of the
+  environment's text. The main use of \meta{start slide
+    number} is to set it to~0. The effect of this is that the first
+  |\pause| has no effect, which can be useful if the |pauses|
+  environment immediately starts with a |\pause| command. This happens 
   sometimes when the environment's content is created automatically.
-}
-\Example
+
+\example
 \begin{verbatim}
 \frame
 {
@@ -1004,16 +1019,16 @@ in square brackets.
   \end{pauses}
 }
 \end{verbatim}
-As mentioned above, in the above example the \texttt{pause}
-environment could also have been omitted, as the \verb!\frame! command
+\end{environment}
+As mentioned above, in the above example the |pauses|
+environment could also have been omitted, as the |\frame| command
 inserts it automatically.
 
-
-\Command{pause}
-\Description{
+\begin{command}\pause
   When used inside a \texttt{pauses} environment, this command causes
   the text following it to be shown only from the next slide on.
-}
+
+  \example
 \begin{verbatim}
 \frame
 {
@@ -1029,18 +1044,18 @@ inserts it automatically.
   \end{itemize}
 }
 \end{verbatim}
-
+\end{command}
 
 
 \subsubsection{Commands with Overlay Specifications}
 \label{subsection-overlay}
 
 An overlay specification is a comma-separated list of slides and
-ranges. Ranges are specified like this: \verb!2-5!, which
+ranges. Ranges are specified like this: |2-5|, which
 means slide two through to five. The start or the beginning of a range
-can be omitted. For example, \verb!3-! means ``slides three, four,
-five, and so on'' and \verb!-5! means the same as \verb!1-5!. A
-complicated example is \verb!-3,6-8,10,12-15!, which selected the
+can be omitted. For example, |3-| means ``slides three, four,
+five, and so on'' and |-5| means the same as |1-5|. A
+complicated example is |-3,6-8,10,12-15|, which selected the
 slides 1, 2, 3, 6, 7, 8, 10, 12, 13, 14, and 15.
 
 Overlay specifications can be written behind certain commands. If such
@@ -1057,7 +1072,7 @@ depends on the command. Consider the following example.
 }
 \end{verbatim}
 
-For the command \verb!\textbf!, the overlay specification causes the
+For the command |\textbf|, the overlay specification causes the
 text to be set in boldface only on the specified slides. On all other
 slides, the text is set in a normal font.
 
@@ -1067,10 +1082,10 @@ command such that it becomes ``overlay specification aware.''
 
 For the following commands, adding an overlay specification causes the
 command to be simply ignored on slides that are not included in the
-specification: \verb!\textbf!, \verb!\textit!, \verb!\textsl!,
-\verb!\textrm!, \verb!\textsf!, \verb!\color!, \verb!\alert!,
-\verb!\structure!. If a command takes several arguments, like
-\verb!\color!, the specification directly follows the command as in
+specification: |\textbf|, |\textit|, |\textsl|,
+|\textrm|, |\textsf|, |\color|, |\alert|,
+|\structure|. If a command takes several arguments, like
+|\color|, the specification directly follows the command as in
 the following example.
 
 \begin{verbatim}
@@ -1083,82 +1098,62 @@ the following example.
 For the following commands, the effect of an overlay specification is
 special:
 
-\Command{only}
-\Parameters{
-\item a text
-}
-\Description{
-  If an overlay specification is present, the text is inserted only
-  into the specified slides. For other slides, the text is simply
-  thrown away. In particular, it occupies no space.}
-\Example \verb!\only<3->{Text inserted from slide 3 on.}!
+\begin{command}{\only\sarg{overlay specification}\marg{text}}
+  If the \meta{overlay specification} is present, the \meta{text} is
+  inserted only into the specified slides. For other slides, the text
+  is simply thrown away. In particular, it occupies no space.
+  \example |\only<3->{Text inserted from slide 3 on.}|
+\end{command}
 
-There exists a variant of \verb!\only!, namely \verb!\pgfonly!, that
-should be used inside \pgf\ pictures instead of \verb!\only!. The
-command \verb!\pgfonly! inserts appropriate \verb!\ignorespaces!
+There exists a variant of |\only|, namely |\pgfonly|, that
+should be used inside \pgf\ pictures instead of |\only|. The
+command |\pgfonly| inserts appropriate |\ignorespaces|
 commands that are needed by \pgf.
 
-\Command{uncover}
-\Parameters{
-\item a text
-}
-\Description{
-  If an overlay specification is present, the text is shown
-  (``uncovered'') only on the specified slides. On other slides, the
+\begin{command}{\uncover\sarg{overlay specification}\marg{text}}
+  If the \meta{overlay specification} is present, the \meta{text} is
+  shown (``uncovered'') only on the specified slides. On other slides, the
   text still occupies space and it is still typeset, but it is not
   shown or only shown as if transparent. For details on how to specify
   whether the text is invisible or just transparent, see
   Section~\ref{section-transparent}. 
-}
-\Example \verb!\uncover<3->{Text shown from slide 3 on.}!
+  \example |\uncover<3->{Text shown from slide 3 on.}|
+\end{command}
 
-\Command{invisible}
-\Parameters{
-\item a text
-}
-\Description{
-  The text is occupies space and it is still typeset, but it is not
-  shown. If an overlay specification is given, this command takes
+\begin{command}{\invisible\sarg{overlay specification}\marg{text}}
+  The \meta{text} occupies space and it is typeset, but it is not
+  shown. If the \meta{overlay specification} is given, this command takes
   effect only on the specified slides. This command is a conter-part to
-  \texttt{uncover}, but not quite: unlike \texttt{uncover}, invisible 
+  |\uncover|, but not quite: unlike |\uncover|, invisible 
   text is never shown in a transparent way, but is guaranteed to
   really be invisible.
-}
-\Example \verb!\invisible<-2>{Text shown from slide 3 on.}!
+  \example |\invisible<-2>{Text shown from slide 3 on.}|
+\end{command}
 
-\Command{alt}
-\Parameters{
-\item a slide specification in pointed brackets.
-\item a main text
-\item an alternative text
-}
-\Description{
-  The main text is shown on the specified slides, otherwise the
-  alternative text. The specification must always be present.}
-\Example \verb!\alt<2>{On Slide 2}{Not on slide 2.}!
+\begin{command}{\alt\ssarg{overlay specification}%
+    \marg{default text}\marg{alternative text}}
+  The default text is shown on the specified slides, otherwise the
+  alternative text. The specification must always be present.
+  \example |\alt<2>{On Slide 2}{Not on slide 2.}|
+\end{command}
 
-\Command{temporal}
-\Parameters{
-\item a slide specification in pointed brackets.
-\item a text to be put on all slides before the specified slides
-\item a text to be put on the specified slides
-\item a text tot be put on all slides after the specified slides
-}
-\Description{
+
+\begin{command}{\temporal\ssarg{overlay specification}%
+    \marg{before slide text}\marg{default text}\marg{after slide text}}
   This command alternates between three different texts, depending on
   whether the current slide is temporally before the specified
   slides, is one of the specified slides, or comes after them. If the
-  specification is not an interval (that is, if it has a ``hole''),
-  the ``hole'' is considered to be part of the before slides.}
-\Example
+  \meta{overlay specification} is not an interval (that is, if it has
+  a ``hole''), the ``hole'' is considered to be part of the before slides.
+  \example
 \begin{verbatim}
   \temporal<3-4>{Shown on 1, 2}{Shown on 3, 4}{Shown 5, 6, 7, ...}
   \temporal<3,5>{Shown on 1, 2, 4}{Shown on 3, 5}{Shown 6, 7, 8, ...}
 \end{verbatim}
 
-As a possible application of the \verb!\temporal! command consider the
-following example: 
-
+  As a possible application of the |\temporal| command consider the
+  following example: 
+  \example
 \begin{verbatim}
 \def\colorize<#1>{%
   \temporal<#1>{\color{structure!50}}{\color{black}}{\color{black!50}}}
@@ -1172,16 +1167,18 @@ following example:
   \end{itemize}
 }
 \end{verbatim}
+\end{command}
 
 
-\Command{item}
-\Description{
-  Adding an overlay specification to an item in a list causes this
-  item to be uncovered only on the specified slides. This is useful
-  for creating lists that are uncovered piecewise. Note that you are
-  not required to stick to an order in which items are uncovered.
-  }
-\Example
+\begin{command}{\item\sarg{overlay specification}\oarg{item label}}
+  Adding an \meta{overlay specification} to an item in a list causes
+  this item to be uncovered only on the specified slides. This is
+  useful for creating lists that are uncovered piecewise. Note that
+  you are not required to stick to an order in which items are
+  uncovered. If present, the optional \meta{item label} comes after
+  the overlay specification. 
+  
+  \example
 \begin{verbatim}
 \frame
 {
@@ -1203,9 +1200,8 @@ following example:
 }
 \end{verbatim}
 
-In the following concluding example, a list is uncovered
-item-wise. The last uncovered item is furthermore hilighted. 
-
+  \example In the following example a list is uncovered item-wise. The
+  last uncovered item is furthermore hilighted.  
 \begin{verbatim}
 \frame
 {
@@ -1218,53 +1214,21 @@ item-wise. The last uncovered item is furthermore hilighted.
   \end{enumerate}
 }
 \end{verbatim}
+\end{command}
 
-The related command \verb!\bibitem! is also overlay-specification-aware
-in the same way as \verb!\item!.
+The related command |\bibitem| is also overlay-specification-aware
+in the same way as |\item|.
 
-\Command{hypertarget}
-\Parameters{
-\item a target name
-\item some text
-}
-\Description{
-  If an overlay specification is present, the text is the specified
-  target for hyperjumps only on the specified slide. On all other
-  slides, the text is shown normally. Note that you \emph{must} add an
-  overlay specification to the \texttt{hypertarget} command whenever
-  you use it on frames that have multiple slides (otherwise
-  \texttt{pdflatex} rightfully complains that you have defined the
-  same target on different slides).}
-\Example
-\begin{verbatim}
-\frame{
-  \begin{itemize}
-  \item<1-> First item.
-  \item<2-> Second item.
-  \item<3-> Third item.
-  \end{itemize}
-
-  \hyperlink{jumptoend}{Jump to last slide of the frame.}
-  \hypertarget<3>{jumptoend}{}
-}
-\end{verbatim}
-
-
-\Command{label}
-\Parameters{
-\item a target
-}
-\Description{
-  If an overlay specification is present, the label is only inserted
-  on the specified slide. Inserting a label on more than one slide
-  will cause a `multiple labels' warning. \emph{However}, if no
+\begin{command}{\label\sarg{overlay specification}\marg{label name}}
+  If the \meta{overlay specification} is present, the label is only
+  inserted on the specified slide. Inserting a label on more than one
+  slide will cause a `multiple labels' warning. \emph{However}, if no
   overlay specification is present, the specification is automatically
   set to just `1' and the label is thus inserted only on the first
   slide. This is typically the desired behaviour since it does not
   really matter on which slide the label is inserted, \emph{except} if
-  you use an \texttt{only} command. Then you need to specifiy a slide.
-}
-\Example
+  you use an |\only| command. Then you need to specifiy a slide.
+  \example
 \begin{verbatim}
 \frame
 {
@@ -1278,7 +1242,7 @@ in the same way as \verb!\item!.
   \only<3>{Specification is needed now.\label<3>{mylabel}}
 }
 \end{verbatim}
-
+\end{command}
 
 \subsubsection{Environments with Overlay Specifications}
 
@@ -1310,15 +1274,14 @@ In the example, the first slide only contains the theorem, on the
 second slide an example is added, and on the third slide the proof is
 also shown.
 
-The two special environments \verb!onlyenv! and \verb!uncoverenv! are
-``environment versions'' of the commands \verb!\only! and \verb!\uncover!.
+The two special environments |onlyenv| and |uncoverenv| are
+``environment versions'' of the commands |\only| and |\uncover|.
 
 
-\Environment{onlyenv}
-\Description{
-  If an overlay specification is given, the contents of the
-  environment is inserted into the text only on the specified slides. }
-\Example
+\begin{environment}{{onlyenv}\sarg{overlay specification}}
+  If the \meta{overlay specification} is given, the contents of the
+  environment is inserted into the text only on the specified slides. 
+  \example
 \begin{verbatim}
 \frame
 {
@@ -1328,13 +1291,14 @@ The two special environments \verb!onlyenv! and \verb!uncoverenv! are
   \end{onlyenv}
 }
 \end{verbatim}
+\end{environment}
 
-\Environment{uncoverenv}
-\Description{
-  If an overlay specification is given, the contents of the
+
+\begin{environment}{{uncoverenv}\sarg{overlay specification}}
+  If the \meta{overlay specification} is given, the contents of the
   environment is shown only on the specified slides. It still occupies
-  space on the other slides.}
-\Example
+  space on the other slides.
+  \example
 \begin{verbatim}
 \frame
 {
@@ -1345,6 +1309,7 @@ The two special environments \verb!onlyenv! and \verb!uncoverenv! are
   only on slide 2.
 }
 \end{verbatim}
+\end{environment}
 
 
 \subsubsection{Dynamically Changing Text}
@@ -1352,7 +1317,7 @@ The two special environments \verb!onlyenv! and \verb!uncoverenv! are
 You may sometimes wish to have some part of a frame change dynamically
 from slide to slide. On each slide of the frame, something different
 should be shown inside this area. You could achieve the effect of
-dynamically changing text by giving a list of \verb!\only! commands like this:
+dynamically changing text by giving a list of |\only| commands like this:
 \begin{verbatim}
   \only<1>{Initial text.}
   \only<2>{Replaced by this on second slide.}
@@ -1364,45 +1329,33 @@ whole frame to ``whobble'' from slide to slide. This problem becomes
 much more severe if the replacement text is several lines long.
 
 To solve this problem, you can use two environments:
-\verb!overlayarea! and \verb!overprint!. The first is more flexible,
+|overlayarea| and |overprint|. The first is more flexible,
 but less user-friendly.
 
-\Environment{overlayarea}
-\Parameters{
-\item
-  The width of the area.
-\item
-  The height of the area.
-  }
-\Description{
+\begin{environment}{{overlayarea}\marg{area width}\marg{area height}}
   Everything within the environment will be placed in a rectangular
   area of the specified size. The area will have the same size on all
-  slides of a frame, regardless of its actual contents. }
-\Example
+  slides of a frame, regardless of its actual contents. 
+  \example
 \begin{verbatim}
 \begin{overlayarea}{\textwidth}{3cm}
   \only<1>{Some text for the first slide.\\Possibly several lines long.}
   \only<2>{Replacement on the second slide.}
 \end{overlayarea}
 \end{verbatim}
+\end{environment}
 
-
-\Environment{overprint}
-\Parameters{
-\item
-  Optional parameter in square brackets: width of the overprint
-  area. Default: text width.
-  }
-\Description{
-  Inside the environment, use \texttt{onslide} commands to specify
+\begin{environment}{{overprint}\oarg{area width}}
+  The \meta{area width} defaults to the text width.
+  Inside the environment, use |\onslide| commands to specify
   different things that should be shown for this environment on
-  different slides. The \texttt{onslide} commands are used like
-  \texttt{item} commands. Everything within the environment will be
+  different slides. The |\onslide| commands are used like
+  |\item| commands. Everything within the environment will be
   placed in a rectangular area of the specified width. The height and
   depth of the area are chosen large enough to accommodate the largest
   contents of the area. The overlay specifications of the
-  \texttt{onslide} commands must be disjoint.}
-\Example
+  |\onslide| commands must be disjoint.
+  \example
 \begin{verbatim}
 \begin{overprint}
   \onslide<1>
@@ -1412,7 +1365,7 @@ but less user-friendly.
     Replacement on the second slide.
 \end{overprint}
 \end{verbatim}
-
+\end{environment}
 
 
 
@@ -1428,78 +1381,58 @@ class.
 You can define a new command that is overlay-specification-aware using
 the following command.
 
-\Command{newoverlaycommand}
-\Parameters{
-\item name of the command
-\item commands to be executed on the specified slides
-\item commands to be executed otherwise
-}
-\Description{
-  Declares a new command. If this command is encountered, it is
-  checked whether an overlay specification follows. If not, the
-  commands given in the second parameter are executed. If there is a
-  specification, the second parameter is executed if the current slide
-  is specified, otherwise the third parameter is executed.
-  }
-\Example
+\begin{command}{\newoverlaycommand\marg{command name}%
+    \marg{default text}\marg{alternative text}}
+  Declares the new command named \meta{command name}. If this command is
+  encountered by \TeX, it is checked whether an overlay specification
+  follows. If not, the \meta{default text} is inserted. If there is a
+  specification, the \meta{default text} is also inserted if the current slide
+  is specified, otherwise the  \meta{alternative text} is inserted.
+  \example
 \begin{verbatim}
 \newoverlaycommand{\SelectRedAsColor}{\color[rgb]{1,0,0}}{}
-...
+
 \frame
 {
   \SelectRedAsColor<2>
   The second slide of this frame is all in red. 
 }
 \end{verbatim}
+\end{command}
 
-
-\Command{renewoverlaycommand}
-\Parameters{
-\item name of a command to be redefined
-\item commands to be executed on the specified slides
-\item commands to be executed otherwise
-}
-\Description{
+\begin{command}{\renewoverlaycommand\marg{existing command name}%
+    \marg{default text}\marg{alternative text}}
   Redeclares a command that already exists in the same way as
-  \texttt{newoverlaycommand}. Inside the parameters, you can 
+  |\newoverlaycommand|. Inside the parameters, you can 
   still access to original definitions using the command
-  \texttt{original}, see the example.
-  }
-\Example
+  |\original|, see the example.
+  \example
 \begin{verbatim}
 \renewoverlaycommand{\tiny}{\original{\tiny}}{}
-...
+
 \frame
 {
   \tiny<2>This text is tiny on slide 2.
 }
 \end{verbatim}
+\end{command}
 
 
-
-\Command{newoverlayenvironment}
-\Parameters{
-\item name of the environment
-\item begin commands to be executed on the specified slides
-\item end commands to be executed on the specified slides
-\item begin commands to be executed otherwise
-\item end commands to be executed otherwise
-}
-\Description{
+\begin{command}{\newoverlayenvironment\marg{environment name}%
+    \oarg{parameter number}%
+    \marg{default begin}\marg{default end}\\
+    \marg{alternative begin}\marg{alternative end}}
   Declares a new environment that is overlay specification aware. If
   this environment encountered, it is 
   checked whether an overlay specification follows. If not or if it is
-  found and the current slide is specified, the second and third
-  parameters form the beginning and end of the environment. Otherwise,
-  the fourth and fifth parameters are used.
+  found and the current slide is specified, the default begin and end
+  are used. Otherwise, the alternative begin and end are used.
 
-  This command can take one optional parameter, given in square
-  brackets after the first parameter. If this parameter is specified,
-  it must currently be~1. In this case, the begin commands must take
-  one parameter. This parameter will \emph{preceed} the overlay
-  specification, see the examples.
-  }
-\Example
+  If the \meta{parameter number} is specified, it must currently
+  be~1. In this case, the begin commands must take one parameter. This
+  parameter will \emph{preceed} the overlay specification, see the
+  examples. 
+  \example
 \begin{verbatim}
 \newoverlayenvironment{mytheorem}{\alert{Theorem}:}{}{Theorem:}{}
 
@@ -1521,7 +1454,7 @@ the following command.
   \end{mytheorem}
 }
 \end{verbatim}
-
+\end{command}
 
 The following two commands can be used to ensure that a certain
 counter is automatically reset on subsequent slides of a frame. This
@@ -1531,32 +1464,22 @@ overlay slide to overlay slide. For equation counters and footnote
 counters (you should not use footnotes), these commands have already
 been invoked.
 
-\Command{resetcounteronoverlays}
-\Parameters{
-\item name of a \LaTeX\ counter
-}
-\Description{
+\begin{command}{\resetcounteronoverlays\marg{counter name}}
   After you have invoked this command, the value of the specified
   counter will be the same on all slides of every frame. 
-}
-\Example \verb!\resetcounteronoverlays{equation}!
+  \example |\resetcounteronoverlays{equation}|
+\end{command}
  
-\Command{resetcountonoverlays}
-\Parameters{
-\item name of a \TeX\ count register
-}
-\Description{
-  The same as \texttt{resetcounteronoverlays}, except that this
+\begin{command}{\resetcountonoverlays\marg{count register name}}
+  The same as |\resetcounteronoverlays|, except that this
   command should be used with counts that have been created using the
-  \TeX\ primitive \texttt{newcount} instead of \LaTeX 's
-  \texttt{definecounter}. 
-}
-\Example
+  \TeX\ primitive |\newcount| instead of \LaTeX's  |\definecounter|. 
+  \example
 \begin{verbatim}
 \newcount\mycount
 \resetcountonoverlays{mycount}
 \end{verbatim}
-
+\end{command}
 
 
 
@@ -1565,78 +1488,101 @@ been invoked.
 
 \section{Structuring a Presentation}
 
-\subsection{Kinds of Global Structures of Presentations}
+\subsection{Global Structure of Presentations}
 
-Still needs to be written.
+Ideally, during most presentations you would like to present your
+slides in a perfectly linear fashion, presumably by pressing the
+page-down-key once for each slide. However, there are different
+reasons why you might have to deviate from this linear order:
+\begin{itemize}
+\item
+  Your presentation may contain ``different levels of detail'' that
+  may or may not be skipped or expanded, depending on the audience's
+  reaction.
+\item
+  You are asked questions and wish to show supplementary slides.
+\item
+  You are asked questions about an earlier slide, which forces you to 
+  find and then jump to that slide.
+\end{itemize}
+You cannot really prepare against the last kind of questions. In this
+case, you can use the navigation bars and symbols to find the slide
+you are interested in, see \ref{section-navigation-bars}.
 
-\subsubsection{Linear Global Structure}
+Concerning the first two kinds of deviations, the \beamer\ class
+offers several ways of preparing such ``planned detours'' or ``planned
+short cuts''.
+\begin{itemize}
+\item
+  You can easily add predefined ``skip buttons.'' When such a button
+  is pressed, you jump over a well-defined part of your talk. Skip
+  button have two advantages over just pressing the forward key
+  is rapid succession: first, you immediately end up at the correct
+  position and, second, the button's label can give the audience a
+  visual feedback of what exactly will be skipped. For example, when
+  you press a skip button labeled ``Skip proof'' nobody will start
+  puzzling over what he or she has missed.
+\item
+  You can add an appendix to your talk. The appendix is kept
+  ``perfectly separated'' from the main talk. Only once you ``enter''
+  the appendix part (presumably by hyperjumping into it), does the
+  appendix structure become visible. You can put all frames that you
+  do not intend to show during the normal course of your talk, but
+  which you would like to have handy in case someone asks, into this
+  appendix.
+\item
+  You can add ``goto buttons'' and ``return buttons'' to create
+  detours. Pressing a goto button will jump to a certain part of the
+  presentation where extra details can be shown. In this part, there
+  is a return button present on each slide that will jump back to the
+  place where the goto button was pressed.
+\end{itemize}
 
-%\subsubsection{Pyramidal Global Structures}
 
-\subsubsection{Nonlinear Global Structure}
-
-
-
-\subsection{Commands and Environments for Creating Global Structure}
-
+\subsection{Commands for Creating the Global Structure}
 
 \subsubsection{Adding a Title Page}
 
-You can use the \verb!\titlepage! command to insert a title page into
+You can use the |\titlepage| command to insert a title page into
 a frame. 
 
-The \verb!\titlepage! command will arrange the following elements on
+The |\titlepage| command will arrange the following elements on
 the title page: the document title, the author(s)'s names, their
 affiliation, a title graphic, and a date.
 
-\Command{titlepage}
-\Description{Inserts the text of a title page into the current frame.}
-\Example \verb!\frame{\titlepage}!
-\vskip1em
+\begin{command}{\titlepage}
+  Inserts the text of a title page into the current frame.
+  \example |\frame{\titlepage}|
+\end{command}
 
 Before you invoke the title page command, you must specify all
 elements you wish to be shown. This is done using the following
 commands: 
 
-\Command{title}
-\Parameters{
-\item A shorter version of the title for inclusion in head lines and
-  foot lines. This parameter is optional and given in square brackets.
-\item A title for the document. Line breaks can be inserted using the
+\begin{command}{\title\oarg{short title}\marg{title}}
+  The \meta{short tile} is used in head lines and foot lines. Inside
+  the \meta{title} line breaks can be inserted using the
   double-backslash command.
-}
-\Example
+  \example
 \begin{verbatim}
 \title{The Beamer Class}
-
 \title[Short Version]{A Very Long Title\\Over Several Lines}
 \end{verbatim}
+\end{command}
 
-\Command{author}
-\Parameters{
-\item A shorter version of the authors for inclusion in head lines and
-  foot lines. This parameter is optional and given in square brackets.
-\item Names of the authors.
-}
-\Description{
+\begin{command}{\author\oarg{short author names}\marg{author names}}
   The names should be separated using the
-  command \texttt{and}. In case authors have different affiliations,
-  they should be suffixed by the command \texttt{inst} with different
-  parameters.}
-\Example\verb!\author[Hemaspaandra et al.]{Lane Hemaspaandra\inst{1} \and Till Tantau\inst{2}}!
+  command |\and|. In case authors have different affiliations,
+  they should be suffixed by the command |\inst| with different
+  parameters.
+  \example|\author[Hemaspaandra et al.]{L. Hemaspaandra\inst{1} \and T. Tantau\inst{2}}|
+\end{command}
 
-\Command{institute}
-\Parameters{
-\item A shorter version of the institute's name for inclusion in head
-  lines and foot lines. This parameter is optional and given in square
-  brackets.
-\item Institute(s) where the authors work.
-}
-\Description{
+\begin{command}{\institute\oarg{short institute}\marg{institute}}
   If more than one institute is given, they should be separated using
-  the command \texttt{and} and they should be prefixed by the command
-  \texttt{inst} with different parameters.}
-\Example
+  the command |\and| and they should be prefixed by the command
+  |\inst| with different parameters.
+  \example
 \begin{verbatim}
 \institute[Universities of Rochester and Berlin]{
   \inst{1}Department of Computer Science\\
@@ -1645,45 +1591,34 @@ commands:
   \inst{2}Fakult\"at f\"ur Elektrotechnik und Informatik\\
   Technical University of Berlin}
 \end{verbatim}
+\end{command}
+
+\begin{command}{\date\oarg{short date}\marg{date}}
+  \example|\date{\today}| or |\date[STACS 2003]{STACS Conference, 2003}|.
+\end{command}
 
 
-\Command{date}
-\Parameters{
-\item A shorter version of the date for inclusion in head
-  lines and foot lines. This parameter is optional and given in square
-  brackets.
-\item A text to be shown as date or occasion at which the talk was held.
-}
-\Example\verb!\date{\today}! or \verb!\date[STACS 2003]{STACS Conference, 2003}!.
-
-
-\Command{titlegraphic}
-\Parameters{
-\item A text to be shown as title graphic. Typically, a picture
-  environment is used as text.
-}
-\Example\verb!\titlegraphic{\pgfuseimage{titlegraphic}}!
+\begin{command}{\titlegraphic\marg{text}}
+  The \meta{text} is shown as title graphic. Typically, a picture
+  environment is used as \meta{text}.
+  \example|\titlegraphic{\pgfuseimage{titlegraphic}}|
+\end{command}
 
 
 
-\subsubsection{Adding Table of Contents}
+
+\subsubsection{Adding a Table of Contents}
 
 You can create a table of contents using the command
-\verb!\tableofcontents!. Unlike the normal \LaTeX\ table of contents
+|\tableofcontents|. Unlike the normal \LaTeX\ table of contents
 command, this command takes an optional parameter in square brackets
 that can be used to create certain special effects.
 
-\Command{tableofcontents}
-\Parameters{
-\item A list of options, separated by commas. The valid options and
-their effects are explained below.
-}
-\Description{
+\begin{command}{\tableofcontents\oarg{comma-separated option list}}
   Inserts a table of contents into the current frame. To change how
-the table of contents is typeset, you need to modify the appropriate
-templates, see Section~\ref{section-toc-templates}.
-}
-\Example
+  the table of contents is typeset, you need to modify the appropriate
+  templates, see Section~\ref{section-toc-templates}. 
+  \example
 \begin{verbatim}
 \section[Outline]{}
 \frame{\tableofcontents}
@@ -1704,30 +1639,29 @@ templates, see Section~\ref{section-toc-templates}.
 \frame{...}
 \end{verbatim}
 
-The options of the command \verb!\tableofcontents! have the following
-effects: 
-\begin{itemize}
-\item
-  The option \texttt{current} causes all but the current section to be
-  shown in a semi-transparent way.
-\item
-  The option \texttt{pausesections} causes a \verb!\pause! command to
-  be issued before each section. This is useful if you wish to show
-  the table of contents in an incremental way.
-\item
-  The option \texttt{pausesubsections} causes a \verb!\pause! command to
-  be issued before each subsection.
-\item
-  The option \texttt{hidesubsections} causes the subsections to be
-  omitted. However, if used together with the \texttt{current} option,
-  the subsections of the current section are not omitted.
-\item
-  The option \texttt{shadesubsections} causes the subsections to
-  be shown in a semi-transparent way.
-\end{itemize}
-
-The last two commands are useful if you do not wish to show too many
-details when presenting the talk outline.
+  The following options can be given:
+  \begin{itemize}
+  \item
+    \declare{|current|} causes all but the current section to be
+    shown in a semi-transparent way.
+  \item
+    \declare{|pausesections|} causes a |\pause| command to
+    be issued before each section. This is useful if you wish to show
+    the table of contents in an incremental way.
+  \item
+    \declare{|pausesubsections|} causes a |\pause| command to
+    be issued before each subsection.
+  \item
+    \declare{|hidesubsections|} causes the subsections to be
+    omitted. However, if used together with the |current| option,
+    the subsections of the current section are not omitted.
+  \item
+    \declare{|shadesubsections|} causes the subsections to
+    be shown in a semi-transparent way.
+  \end{itemize}
+  The last two commands are useful if you do not wish to show too many
+  details when presenting the talk outline.
+\end{command}
 
 
 
@@ -1735,55 +1669,38 @@ details when presenting the talk outline.
 
 \subsubsection{Adding Sections and Subsections}
 
-You can structure your text using the commands \verb!\section! and
-\verb!\subsection!. Unlike standard \LaTeX, these commands will not
+You can structure your text using the commands |\section| and
+|\subsection|. Unlike standard \LaTeX, these commands will not
 create a heading at the position where you use them. Rather, they will
 add an entry to the table of contents and also to the navigation
 bars.
 
 In order to create a line break in the table of contents (usually not
-a good idea), you can use the command \verb!\breakhere!. Note that the
-standard command \verb!\\! does not work.
+a good idea), you can use the command |\breakhere|. Note that the
+standard command |\\| does not work.
 
-\Command{section}
-\Parameters{
-\item (optional, in square brackets) text to be shown in horizontal
-  navigation bars 
-\item text to be shown in the table of contents; if empty, no entry is
-  created.
-}
-\Description{
-  Starts a section. No heading is created, the section name is only
-  shown in the table of contents and in the navigation bar. If the
-  main parameter is empty, but the parameter in square brackets is
-  not, a navigation entry is created, but no entry in the table of
+\begin{command}{\section\oarg{short section name}\marg{section name}}
+  Starts a section. No heading is created, but the \meta{section name}
+  is only shown in the table of contents and the \meta{short section name}
+  is only shown in the navigation bar. If the \meta{section name} is
+  empty, a navigation entry is created, but no entry in the table of
   contents. This is useful for sections like a ``table of contents
-  section.''} 
-\Example\verb!\section[Summary]{Summary of Main Results}! or
-\verb!\section[Outline]{}! 
+  section.''
+  \example|\section[Summary]{Summary of Main Results}| or
+  |\section[Outline]{}| 
+\end{command}
 
 
-\Command{subsection}
-\Parameters{
-\item (optional, in square brackets) text to be shown in horizontal
-  navigation bars 
-\item text to be shown in the table of contents; if empty, no entry is
-  created.
-}
-\Description{
-  Starts a subsection. No heading is created, the subsection name is only
-  shown in the table of contents and in the navigation bar. If the
-  main parameter is empty, but the parameter in square brackets is
-  not, a navigation entry is created, but no entry in the table of
-  contents.}
-\Example\verb!\subsection{Some Subsection}!
-
+\begin{command}{\subsection\oarg{short subsection name}\marg{subsection name}}
+  This command works the same way as the |\section| command.
+  \example|\subsection{Some Subsection}|
+\end{command}
 
 
 
 \subsubsection{Adding a Bibliography}
 
-You can use the bibliography environment and the \verb!\cite! commands
+You can use the bibliography environment and the |\cite| commands
 of \LaTeX\ in a \beamer\ presentation. However, there are a few things
 to keep in mind:
 
@@ -1795,7 +1712,7 @@ to keep in mind:
   Present references only if they are intended as ``further reading,''
   for example at the end of a lecture.
 \item
-  Using the \verb!\cite! commands can be confusing since the audience
+  Using the |\cite| commands can be confusing since the audience
   has little chance of remembering the citations. If you cite the
   references, always cite them with full author name and year like
   ``[Tantau, 2003]'' instead of something like ``[2,4]'' or
@@ -1807,31 +1724,38 @@ bibliography:
 
 For a beamer presentation, you will typically have to typeset your
 bibliography items partly ``by hand.'' Nevertheless, you \emph{can}
-use \verb!bibtex! to create a ``first approximation'' of the
-bibliography. Copy the content of the file \verb!main.bbl! into your
-presentation. If you are not familiar with \verb!bibtex!, you may wish
+use |bibtex| to create a ``first approximation'' of the
+bibliography. Copy the content of the file |main.bbl| into your
+presentation. If you are not familiar with |bibtex|, you may wish
 to consult its documentation. It is a  powerful tool for
 creating high-quality citations.
 
-Using \verb!bibtex! or your editor, place your bibliographic
-references in the environment \verb!thebibliography!. This
+Using |bibtex| or your editor, place your bibliographic
+references in the environment |thebibliography|. This
 (standard \LaTeX) environment takes one parameter, which should be the
-longest \verb!bibitem! label in the following list of bibliographic
+longest |\bibitem| label in the following list of bibliographic
 entries.
 
-\Environment{thebibliography}
-\Parameters{
-\item Text of the longest label. Inside the environment, use one
-  \texttt{bibitem} command for each reference.
-}
-\Description{
-  Inserts a bibliography into the current frame. Must be placed inside
-a frame. If the bibliography does not fit on one frame, you should
-split it (create a new frame and a second \texttt{thebibliography}
-environment). Even better, you should reconsider whether it is a good
-idea to present so many references.}
-\Example
+\begin{environment}{{thebibliography}\marg{longest label text}}
+  Inserts a bibliography into the current frame. The \meta{longest
+    label text} is used to determine the indent of the list. However,
+  several templates for the typesetting of the bibliography (see
+  Section~\ref{section-bib-templates}) ignore this 
+  parameter since they replace the references by a symbol.
 
+  Inside the environment, use a (standard \LaTeX) |\bibitem| command
+  for each reference item. Inside each item, use a (standard \LaTeX)
+  |\newblock| command to separate the authors's names, the title, the
+  book/journal reference, and any notes. Each of these commands may
+  introduce a new line or color or other formatting, as specified by
+  the template for bibliographies.
+
+  The environment must be placed inside a frame. If the bibliography
+  does not fit on one frame, you should 
+  split it (create a new frame and a second |thebibliography|
+  environment). Even better, you should reconsider whether it is a good
+  idea to present so many references.
+  \example
 \begin{verbatim}
 \frame{
   \frametitle{For Further Reading}
@@ -1849,61 +1773,42 @@ idea to present so many references.}
   \end{thebibliography}
  }
 \end{verbatim}
+\end{environment}
 
-The parameter of the \verb!thebibliography! environment is used to
-determine the indent of the list. However, several templates for the
-typesetting of the bibliography (see
-Section~\ref{section-bib-templates}) ignore this parameter since they
-replace the references by a symbol.
+\begin{command}{\bibitem\sarg{overlay specification}%
+    \oarg{citation text}\marg{label name}}
+  The \meta{citation text} is inserted into the text when the item is
+  cited using |\cite{|\meta{label name}|}| in the main presentation
+  text. For a \beamer\ presentation, this should usually be as long as
+  possible.  
 
-Inside the \verb!thebibliography! environment, use a (standard \LaTeX)
-\verb!\bibitem! command for each reference item. Inside each item, use a
-(standard \LaTeX) \verb!\newblock! command to separate the authors's
-names, the title, the book/journal reference, and any notes. Each of
-these commands may introduce a new line or color or other formatting,
-as specified by the template for bibliographies.
-
-
-\Command{bibitem}
-\Parameters{
-\item
-  The text to be inserted into the text when the item is cited in the
-  presentation (optional in square brackets). For a beamer
-  presentation, this should usually be as long as possible.
-\item
-  A label to be used with the \texttt{cite} commands.
-  }
-\Description{
-  Adds a reference item to the bibliography. Use \texttt{newblock}
-  commands to  separate the authors's names, the title, the
-  book/journal reference, and any notes. If an overlay specification
-  is present, it must come directly after the word
-  \texttt{bibitem}. If present, the entry will only be shown on the
+  Use |\newblock| commands to separate the authors's names, the title, the
+  book/journal reference, and any notes. If the \meta{overlay specification}
+  is present, the entry will only be shown on the
   specified slides.
-}
-\Example
-
+  \example
 \begin{verbatim}
 \bibitem[Dijkstra, 1982]{Dijkstra1982}
   E.~Dijkstra.
   \newblock Smoothsort, an alternative for sorting in situ.
   \newblock {\em Science of Computer Programming}, 1(3):223--233, 1982.
 \end{verbatim}
+\end{command}
 
-Note that, unlike normal \LaTeX, the default template for the
+Unlike normal \LaTeX, the default template for the
 bibliography does not repeat the citation text (like ``[Dijkstra,
 1982]'') before each item in the bibliography. Instead, a cute, small
 article symbol is drawn. The rationale is that the audience will not be
 able to remember any abbreviated citation texts till the end of the
 talk. If you really insist on using abbreviations, you can use the
-command \verb!beamertemplatetextbibitems! to restore the default
+command |\beamertemplatetextbibitems| to restore the default
 bevahior, see also Section~\ref{section-bib-templates}.
 
 
 
 \subsubsection{Adding an Appendix}
 
-You can add an appendix to your talk by using the \verb!\appendix!
+You can add an appendix to your talk by using the |\appendix|
 command. You should put frames and perhaps whole subsections into the
 appendix that you do not intend to show during your presentation, but
 which might be useful to answer a question. 
@@ -1917,19 +1822,16 @@ or by using a hyper-jump), the navigation bars show (only) the
 contents of the appendix and the table of contents commands (only)
 show the subsections of the appendix.
 
-Inside the appendix, you should not use the \verb!\section! command,
-but you can use the \verb!\subsection! command to structure the
-appendix. Use the \verb!\tableofcontents! command to insert a table of
+Inside the appendix, you should not use the |\section| command,
+but you can use the |\subsection| command to structure the
+appendix. Use the |\tableofcontents| command to insert a table of
 contents of the appendix into the current frame.
 
-\Command{appendix}
-\Description{
-  Starts the appendix. All frames and all \texttt{subsection} commands
+\begin{command}{\appendix}
+  Starts the appendix. All frames and all |\subsection| commands
   used after this command will not be shown as part of the normal
   navigation bars.
-}
-\Example
-
+  \example
 \begin{verbatim}
 \begin{document}
 \frame{\titlepage}
@@ -1949,15 +1851,206 @@ contents of the appendix into the current frame.
 \frame{More details}
 \end{document}
 \end{verbatim}
+\end{command}
 
 
 
 
 
+\subsubsection{Adding Hyperlinks and Buttons}
+
+To create an anticipated nonlinear jumps in your talk structure, you
+can add hyperlinks to your presentation. A hyperlink is a text
+(usually rendered as a button) that, when you click on it, jumps the
+presentation to some other slide. Creating such a button is a
+three-step process: 
+\begin{enumerate}
+\item
+  You specify a target using the command |\hypertarget|. In some
+  cases, see below, this step may be skipped.
+\item
+  You render the button using |\beamerbutton| or a similar
+  command. This will \emph{render} the button, but clicking it will
+  not yet have any effect. 
+\item
+  You put the button inside a |\hyperlink| command. Now clicking it
+  will jump to the target of the link.  
+\end{enumerate}
+
+\begin{command}{\hypertarget\sarg{overlay specification}%
+    \marg{target name}\marg{text}}
+  If the \meta{overlay specification} is present, the \meta{text} is
+  the target for hyper jumps to \meta{target name} only on the
+  specified slide. On all other slides, the text is shown
+  normally. Note that you \emph{must} add an overlay specification to
+  the |\hypertarget| command whenever you use it on frames that have
+  multiple slides (otherwise |pdflatex| rightfully complains
+  that you have defined the same target on different slides).
+  \example
+\begin{verbatim}
+\frame{
+  \begin{itemize}
+  \item<1-> First item.
+  \item<2-> Second item.
+  \item<3-> Third item.
+  \end{itemize}
+
+  \hyperlink{jumptosecond}{\beamergotobutton{Jump to second slide}}
+  \hypertarget<2>{jumptosecond}{}
+}
+\end{verbatim}
+\end{command}
+
+The following commands can be used to specify in an abstract way what
+a button will be used for. How exactly these buttons are rendered is
+governed by a template, see Section~\ref{section-navigation-buttons}.
+
+\begin{command}{\beamerbutton\marg{button text}}
+  Draws a button with the given \meta{button text}.
+  \example |\hyperlink{somewhere}{\beamerbutton{Go somewhere}}|
+\end{command}
+
+\begin{command}{\beamergotobutton\marg{button text}}
+  Draws a button with the given \meta{button text}. Before the text, a
+  small symbol (usually a right-pointing arrow) is inserted that
+  indicates that pressing this button will jump to another ``area'' of
+  the presentation.
+
+  \example |\hyperlink{detour}{\beamergotobutton{Go to detour}}|
+\end{command}
+
+\begin{command}{\beamerskipbutton\marg{button text}}
+  The symbol drawn for this button is usually a double right
+  arrow. Use this button if pressing it will skip over a
+  well-defined part of your talk.
+
+  \example
+\begin{verbatim}
+\frame{
+  \begin{theorem}
+    ...
+  \end{theorem}
+
+  \begin{overprint}
+  \onslide<1>
+    \hfill\hyperlinkframestartnext{\beamerskipbutton{Skip proof}}
+  \onslide<2>
+    \begin{proof}
+      ...
+    \end{proof}
+  \end{overprint}
+}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\beamerreturnbutton\marg{button text}}
+  The symbol drawn for this button is usually a left pointing
+  arrow. Use this button if pressing it will return from a detour. 
+
+  \example
+\begin{verbatim}
+\frame{
+  \begin{theorem}
+    ...
+  \end{theorem}
+
+  \hyperlink{detour}{\beamergotobutton{Go to proof details}}
+  \hypertarget{returnhere}{}
+}
+\appendix
+\frame{
+  \hypertarget{detour}{}
+  \begin{proof}
+    ...
+  \end{proof}
+  \hfill\hyperlink{returnhere}{\beamerreturnbutton{Return}}
+}  
+\end{verbatim}
+\end{command}
+
+To make a button ``clickable'' you must place it in a command like
+|\hyperlink|. The command |\hyperlink| is a standard command of the
+|hyperref| package. The \beamer\ class defines a whole bunch of other
+hyperlink commands that you can also use.
+
+\begin{command}{\hyperlink\marg{target name}\marg{link text}}
+  The \meta{link text} is typeset in the usual way. If you click
+  anywhere on this text, you will jump to the slide on which the
+  |\hypertarget| command was used with the parameter \meta{target
+    name}. 
+\end{command}
+
+The following commands have a predefined target; otherwise they behave
+exactly like |\hyperlink|.
+
+\begin{command}{\hyperlinkslideprev\marg{link text}}
+  Clicking the text jumps one slide back.
+\end{command}
+
+\begin{command}{\hyperlinkslidenext\marg{link text}}
+  Clicking the text jumps one slide forward.
+\end{command}
+  
+\begin{command}{\hyperlinkframestart\marg{link text}}
+  Clicking the text jumps to the first slide of the current frame.
+\end{command}
+
+\begin{command}{\hyperlinkframeend\marg{link text}}
+  Clicking the text jumps to the last slide of the current frame.
+\end{command}
+
+\begin{command}{\hyperlinkframestartnext\marg{link text}}
+  Clicking the text jumps to the first slide of the next frame.
+\end{command}
+
+\begin{command}{\hyperlinkframeendprev\marg{link text}}
+  Clicking the text jumps to the last slide of the previous frame.
+\end{command}
+
+The previous four command exist also with ``|frame|'' replaced by
+``|subsection|'' everywhere, and also again with  ``|frame|'' replaced
+by ``|section|''.
+
+\begin{command}{\hyperlinkpresentationstart\marg{link text}}
+  Clicking the text jumps to the first slide of the presentation.
+\end{command}
+
+\begin{command}{\hyperlinkpresentationend\marg{link text}}
+  Clicking the text jumps to the last slide of the presentation. This
+  \emph{excludes} the appendix.
+\end{command}
+
+\begin{command}{\hyperlinkappendixstart\marg{link text}}
+  Clicking the text jumps to the first slide of the appendix. If there
+  is no appendix, this will jump to the last slide of the document.
+\end{command}
+
+\begin{command}{\hyperlinkappendixend\marg{link text}}
+  Clicking the text jumps to the last slide of the appendix.
+\end{command}
+
+\begin{command}{\hyperlinkdocumentstart\marg{link text}}
+  Clicking the text jumps to the first slide of the presentation.
+\end{command}
+
+\begin{command}{\hyperlinkdocumentend\marg{link text}}
+  Clicking the text jumps to the last slide of the presentation or, if
+  an appendix is present, to the last slide of the appendix.
+\end{command}
 
 
 
-\subsection{The Navigation Bars}
+
+
+\subsection{Navigation Bars and Symbols}
+\label{section-navigation-bars}
+
+Navigation bars and symbols are two independent concepts that can be
+used to navigate through a presentation. They are created
+automatically.
+
+
+\subsubsection{Using the Navigation Bars}
 
 Most themes that come along with the \beamer\ class show some kind of
 navigation bar during your talk. Although these navigation bars take
@@ -1978,11 +2071,9 @@ up quite a bit of space, they are often useful for two reasons:
   has asked about.
 \end{itemize}
 
-
-\subsubsection{Using the Navigation Bars to Navigate Between Frames}
-
-When you click on one of the icons representing a frame (by default
-this is icon is a small circle), the following happens:
+When you click on one of the icons representing a frame in a
+navigation bar (by default this is icon is a small circle), the
+following happens: 
 \begin{itemize}
 \item
   If you click on (the icon of) any frame other than the current frame, the
@@ -2013,12 +2104,9 @@ out to be more confusing than helpful. With the current implementation
 a double-click always brings you to the end of a slide, regardless
 from where you ``come.''
 
-
-\subsubsection{Using the Navigation Bars to Navigate Between Sections}
-
 By clicking on a section or subsection in the navigation bar, you will
 jump to that section. Clicking on a section is particularly useful if
-the section starts with a \verb!\tableofcontents[current]!, since you
+the section starts with a |\tableofcontents[current]|, since you
 can use it to jump to the different subsections.
 
 By clicking on the document title in a navigation bar (not all themes
@@ -2031,8 +2119,91 @@ document title in a navigation bar, you can jump to the appendix.
 
 
 
+\subsubsection{Using the Navigation Symbols}
+\label{section-navigation-symbols}
 
-\subsection{The Local Structure of Frames}
+Navigation symbols are small icons that are shown on every slide
+by default. The following symbols are shown: 
+\begin{enumerate}
+\item
+  A slide icon, which is depicted as  a single rectangle. To the left and
+  right of this symbol, a left and right arrow are shown.
+\item
+  A frame icon, which is depicted as three slide icons ``stacked on top of
+  each other''. This symbols is framed by arrows.
+\item
+  A subsection icon, which is depicted as a highlighted subsection
+  entry in a table of contents. This  symbols is framed by arrows.
+\item
+  A section icon, which is depicted as a highlighted section entry
+  (together with all subsections) in a table of contents. This symbols
+  is framed by arrows.
+\item
+  A presentation icon, which is depicted as a completely highlighted
+  table of contents.
+\item
+  An appendix icon, which is depicted as a completely highlighted
+  table of contents consisting of only one section. (This icon is only
+  shown if there is an appendix.
+\item
+  Back and forward icons, depicted as circular arrows.
+\item
+  A ``search'' or ``find'' icon, depicted as a detective's
+  magnifying glass.
+\end{enumerate}
+
+Clicking on the left arrow next to an icon always jumps to (the
+last slide of) the previous slide, frame, subsection, or
+section. Clicking on the right arrow next to an icon always jump to
+(the first slide of) the next slide, frame, subsection, or section. 
+
+Clicking \emph{on} any of these icons has different effects:
+\begin{enumerate}
+\item
+  If supported by the viewer application, clicking on a slide icon
+  pops up a window that allows you to enter a slide number to which
+  you wish to jump.
+\item
+  Clicking on the left side of a frame icon will jump to the first
+  slide of the frame, clicking on the right side will jump to the last
+  slide of the frame (this can be useful for skipping overlays).
+\item
+  Clicking on the left side of a subsection icon will jump to the
+  first slide of the subsection, clicking on the right side will jump
+  to the last slide of the subsection.
+\item
+  Clicking on the left side of a section icon will jump to the
+  first slide of the section, clicking on the right side will jump
+  to the last slide of the section.
+\item
+  Clicking on the left side of the presentation icon will jump to the
+  first slide, clicking on the right side will jump to the last slide
+  of the presentation. However, this does \emph{not} include the
+  appendix. 
+\item
+  Clicking on the left side of the appendix icon will jump to the
+  first slide of the appendix, clicking on the right side will jump to
+  the last slide of the appendix.
+\item
+  If supported by the viewer application, clicking on the back and
+  forward symbols jumps to the previously visited slides.
+\item
+  If supported by the viewer application, clicking on the search icon
+  pops up a window that allows you to enter a search string. If found,
+  the viewer application will jump to this string.
+\end{enumerate}
+
+You can reduce the number of icons that are shown or their layout by
+adjusting the navigation symbols template, see
+Section~\ref{section-navigation-symbols-template}. 
+
+
+
+
+
+
+
+\subsection{Command for Creating the Local Structure}
 
 Just like your whole presentation, each frame should also be
 structured. A frame that is solely filled with some long text is very
@@ -2042,7 +2213,7 @@ is important, which information is just a detail, how the presented
 information is related, and so on.
 
 \LaTeX\ provides different commands for structuring text ``locally,''
-for example, via the \texttt{itemize} environment. These environments
+for example, via the |itemize| environment. These environments
 are also available in the beamer class, although their appearance has
 been slightly changed. Furthermore, the \beamer\ class also defines
 some new commands and environments, see below, that may help you to
@@ -2052,15 +2223,15 @@ structure your text.
 \subsubsection{Itemizations, Enumerations, and Descriptions}
 
 There are three predefined environments for creating lists, namely
-\verb!enumerate!, \verb!itemize!, and \verb!description!. The first
+|enumerate|, |itemize|, and |description|. The first
 two can be nested to depth two, but not further (this would
 create totally unreadable slides).
 
-The \verb!\item! command is overlay-specification-aware. If an overlay
+The |\item| command is overlay-specification-aware. If an overlay
 specification is provided, the item will only be shown on the
-specified slides, see the following example. If the \verb!\item!
+specified slides, see the following example. If the |\item|
 command is to take an optional argument and an overlay specification,
-the overlay specification comes first as in \verb!\item<1>[Cat]!.
+the overlay specification comes first as in |\item<1>[Cat]|.
 
 \begin{verbatim}
 \frame
@@ -2080,49 +2251,38 @@ the overlay specification comes first as in \verb!\item<1>[Cat]!.
 \end{verbatim}
 
 
-\Environment{itemize}
-\Description{
+\begin{environment}{{itemize}}
   Used to display a list of items that do not have a special
-  ordering. Inside the environment, use an \texttt{item} command for
+  ordering. Inside the environment, use an |\item| command for
   each topic. The appearence of the items can be changed using
-  templates, see Section~\ref{section-templates}.}
-\Example
+  templates, see Section~\ref{section-templates}.
+  \example
 \begin{verbatim}
 \begin{itemize}
 \item This is important.
 \item This is also important.
 \end{itemize}
 \end{verbatim}
+\end{environment}
 
 
-\Environment{enumerate}
-\Description{
-  Used to display an ordered list of items. Inside the environment,
-  use an \texttt{item} command for each topic. The appearence of the
-  items can be changed using templates, see
-  Section~\ref{section-templates}.}
-\Example
+\begin{environment}{{enumerate}}
+  Like |itemize|, except that the list is ordered.
+  \example
 \begin{verbatim}
 \begin{enumerate}
 \item This is important.
 \item This is also important.
 \end{enumerate}
 \end{verbatim}
+\end{environment}
 
 
-\Environment{description}
-\Parameters{
-\item
-  Some text, given as an optional parameter in square brackets. The
-  width of the labels will be set to the width of this text. Normally,
+\begin{environment}{{description}\oarg{long text}}
+  Like |itemize|, but used to display an list that explains or defines
+  labels. The width of \meta{long text} is used to set the indent. Normally,
   you choose the widest label in the description and copy it here.
-  }
-\Description{
-  Used to display an list that explains or defines labels. Inside the
-  environment, use an \texttt{item} with an argument in square brackets
-  for each topic. The appearence of the items can be changed using
-  templates, see Section~\ref{section-templates}.}
-\Example
+  \example
 \begin{verbatim}
 \begin{description}
 \item[Lion] King of the savanna.
@@ -2135,7 +2295,7 @@ the overlay specification comes first as in \verb!\item<1>[Cat]!.
 \item<3->[long label] Some text.
 \end{description}
 \end{verbatim}
-
+\end{environment}
 
 
 
@@ -2147,87 +2307,65 @@ commands. Using these commands makes is easy to change the appearance
 of a document by changing the theme.
 
 
-\Command{alert}
-\Parameters{
-\item a text to be hilighted.
-  }
-\Description{
+\begin{command}{\alert\sarg{overlay specification}\marg{hilighted text}}
   The given text is hilighted, typically be coloring the text red. If
-  an overlay specification is given, the command only has an effect on
-  the specified slides.
-  }
-\Example\verb!This is \alert{important}.!
+  the \meta{overlay specification} is present, the command only has an
+  effect on the specified slides.
+  \example |This is \alert{important}.|
+\end{command}
 
+\begin{command}{\structure\sarg{overlay specification}\marg{text}}
+  The given text is marked as part of the structure, typically by
+  coloring it in the |structure| color. If the \meta{overlay
+    specification} is present, the command only has an effect on the
+  specified slides.
+  \example|\structure{Paragraph Heading.}|
+\end{command}
 
-\Command{structure}
-\Parameters{
-\item a text to be marked as part of the structure of the text.
-  }
-\Description{
-  The given text is marked as part of the structure, typically be
-  coloring the text in the structure color. If
-  an overlay specification is given, the command only has an effect on
-  the specified slides.
-  }
-\Example\verb!\structure{Paragraph Heading.}!
-
-\Environment{block}
-\Parameters{
-\item a block title
-  }
-\Description{
-  Inserts a block, like a definition or a theorem, with a title. If
-  an overlay specification is given, the block is shown only on the
-  specified slides. In the example, the definition is shown only from
-  slide 3 onwards.
-  }
-\Example
+\begin{environment}{{block}\marg{block title}\sarg{overlay specification}}
+  Inserts a block, like a definition or a theorem, with the title
+  \meta{block title}. If the \meta{overlay specification} is present,
+  the block is shown only on the specified slides. In the example, the
+  definition is shown only from slide 3 onward.
+  \example
 \begin{verbatim}
   \begin{block}{Definition}<3->
     A \alert{set} consists of elements.
   \end{block}
 \end{verbatim}
+\end{environment}
 
-\Environment{alertblock}
-\Parameters{
-\item a block title
-  }
-\Description{
-  Inserts a block whose title is hilighted. If
-  an overlay specification is given, the block is shown only on the
-  specified slides.
-  }
-\Example
+
+\begin{environment}{{alertblock}\marg{block title}\sarg{overlay specification}}
+  Inserts a block whose title is hilighted.  If the \meta{overlay specification} is present,
+  the block is shown only on the specified slides.
+  \example
 \begin{verbatim}
   \begin{alertblock}{Wrong Theorem}
     $1=2$.
   \end{alertblock}
 \end{verbatim}
+\end{environment}
 
-\Environment{exampleblock}
-\Parameters{
-\item a block title
-  }
-\Description{
-  Inserts a block that is supposed to be an example. If
-  an overlay specification is given, the block is shown only on the
-  specified slides.
-  }
-\Example
+\begin{environment}{{exampleblock}\marg{block title}\sarg{overlay specification}}
+  Inserts a block that is supposed to be an example. If the \meta{overlay specification} is present,
+  the block is shown only on the specified slides.
+  \example
 \begin{verbatim}
   \begin{exampleblock}{Example}
     The set $\{1,2,3,5\}$ has four elements.
   \end{exampleblock}
 \end{verbatim}
-
+\end{environment}
+  
 Predefined English block environments, that is, block environments
-with fixed title, are: \verb!Theorem!, \verb!Proof!, \verb!Corollary!,
-\verb!Fact!, \verb!Example!, and \verb!Examples!. You can also use these
+with fixed title, are: |Theorem|, |Proof|, |Corollary|,
+|Fact|, |Example|, and |Examples|. You can also use these
 environments with a lowercase first letter, the result  is the
 same. The following German block environments are also predefined:
-\verb!Problem!, \verb!Loesung!, \verb!Definition!, \verb!Satz!,
-\verb!Beweis!, \verb!Folgerung!, \verb!Lemma!, \verb!Fakt!,
-\verb!Beispiel!, and \verb!Beispiele!. See the following example for
+|Problem|, |Loesung|, |Definition|, |Satz|,
+|Beweis|, |Folgerung|, |Lemma|, |Fakt|,
+|Beispiel|, and |Beispiele|. See the following example for
 their usage.
 
 \begin{verbatim}
@@ -2250,16 +2388,17 @@ their usage.
 \end{verbatim}
 
 
+
 \subsubsection{Figures and Tables}
 
-You can use the standard \LaTeX\ environments \texttt{figure} and
-\texttt{table} much the same way you would normally use them. However,
+You can use the standard \LaTeX\ environments |figure| and
+|table| much the same way you would normally use them. However,
 any placement specification will be ignored. Figures and tables are
 immediately inserted where the environments start. If there are too
 many of them to fit on the frame, you must manually split them among
 additional frames.
 
-\Example
+\example
 \begin{verbatim}
 \frame{
   \begin{figure}
@@ -2287,14 +2426,13 @@ Section~\ref{section-template-caption}.
 Three environments are used to create columns on a slide. Columns are
 especially useful for placing a graphic next to a description/explanation.
 The main environment for creating columns is called
-\verb!columns!. Inside this environment, you can place several
-\verb!column! environments. Each will create a new column.
+|columns|. Inside this environment, you can place several
+|column| environments. Each will create a new column.
 
-\Environment{columns}
-\Description{
+\begin{environment}{{columns}}
   A multi-column area. Inside the environment you should place only
-  \texttt{column} environments.}
-\Example
+  |column| environments.
+  \example
 \begin{verbatim}
 \begin{columns}
   \begin{column}{5cm}
@@ -2305,21 +2443,20 @@ The main environment for creating columns is called
   \end{column}
 \end{columns}
 \end{verbatim}
+\end{environment}
 
-\Environment{columnsonlytextwidth}
-\Description{
-  This command has the same effect as \texttt{columns}, except that the
+\begin{environment}{{columnsonlytextwidth}}
+  This command has the same effect as |columns|, except that the
   columns will not occupy the whole page width, but only the text
   width. 
-  }
+\end{environment}
 
-\Environment{column}
-\Parameters{
-\item The width of the column.
-}
-\Description{
-  Creates a single column of the specified width. The column is
-  centered vertically relative to the other columns.}
+
+\begin{environment}{{column}\marg{column width}}
+  Creates a single column of width \meta{column width}. The column is
+  centered vertically relative to the other columns.
+\end{environment}
+
 
 
 
@@ -2342,7 +2479,7 @@ of creating graphics for beamer presentations are discussed.
 \subsubsection{Including External Graphic Files}
 
 One way of creating graphics for a presentation is to  use an 
-external program, like \texttt{xfig} or the Gimp. These programs
+external program, like |xfig| or the Gimp. These programs
 have an option to \emph{export} graphic files in a format that can
 then be inserted into the presentation.
 
@@ -2372,23 +2509,23 @@ The main disadvantages are:
 
 
 In principle, you can use all the standard \LaTeX\ commands for
-inserting graphics, like the command \verb!\includegraphic!. However,
+inserting graphics, like the command |\includegraphic|. However,
 it may be advisable to use the special commands from the \textsc{pgf}
 package instead for this particular purpose. The reason is that
-\verb!\includegraphic! will put a copy of the graphic into the file
+|\includegraphic| will put a copy of the graphic into the file
 upon each invocation. If a frame includes a graphic and
 shows this graphic on ten slides, then ten copies of the possibly
 large graphic file will be inserted into the presentation file. This
 can result in huge files.
 
 The \textsc{pgf} package offers a solution to this (but, currently,
-only if you use \verb!pdflatex!): There, you must first \emph{declare}
+only if you use |pdflatex|): There, you must first \emph{declare}
 every graphic. Once you have done this, you can \emph{use} the graphic
 as often as you want and the graphic data will be put only once into
-the \verb!.pdf! file. Furthermore, if you use \verb!latex! instead of
-\verb!pdflatex!, the \textsc{pgf} package will automatically search
-for a graphic file with the extension \texttt{.eps} instead of the
-extensions appropriate for \verb!pdflatex!.
+the |.pdf| file. Furthermore, if you use |latex| instead of
+|pdflatex|, the \textsc{pgf} package will automatically search
+for a graphic file with the extension |.eps| instead of the
+extensions appropriate for |pdflatex|.
 
 The \textsc{pgf} commands are used as follows: To declare an image,
 you write, somewhere early in your file,
@@ -2402,9 +2539,9 @@ missing value is computed automatically such that the image's aspect
 ratio remains correct. The last parameter is the graphic file name
 \emph{without} the extension. Depending on whether a \textsc{pdf} or a
 PostScript file is created, the package will try appropriate
-extensions automatically (\texttt{.eps} for normal \LaTeX,
-\texttt{.png}, \texttt{.jpg}, and \texttt{.pdf} for
-\texttt{pdflatex}). 
+extensions automatically (|.eps| for normal \LaTeX,
+|.png|, |.jpg|, and |.pdf| for
+|pdflatex|). 
 
 To use a previously declared image, just write 
 \begin{verbatim}
@@ -2430,22 +2567,22 @@ mind:
 \begin{itemize}
 \item
   Many packages produce poor quality graphics. This is especially true
-  of the standard \texttt{picture} environment of \LaTeX.
+  of the standard |picture| environment of \LaTeX.
 \item
   Powerful packages that produce high-quality graphics often do not
-  work together with \texttt{pdflatex}.
+  work together with |pdflatex|.
 \item
   The most powerful and easiest-to-use package around, namely
-  \texttt{pstricks}, does not work together with \texttt{pdflatex} and
+  |pstricks|, does not work together with |pdflatex| and
   this is a fundamental problem. Due to the fundamental differences
   between \textsc{pdf} and PostScript, it is not possible to write a
-  ``\texttt{pdflatex} backend for \texttt{pstricks}.''
+  ``|pdflatex| backend for |pstricks|.''
 \end{itemize}
 
 A solution to the above problem (though not necessarily the best) is
 to use the \textsc{pgf} package. It produces high-quality graphics and
-works together with \texttt{pdflatex}, but also with normal
-\texttt{latex}. It is not as powerful as \texttt{pstricks} (as pointed
+works together with |pdflatex|, but also with normal
+|latex|. It is not as powerful as |pstricks| (as pointed
 out above, this is because of rather fundamental reasons) and not as
 easy to use, but it should be sufficient in most cases.
 
@@ -2456,11 +2593,11 @@ easy to use, but it should be sufficient in most cases.
 \subsection{Color Management}
 
 The color management of the \beamer\ class relies on the packages
-\texttt{xcolor}, which is an extension of the \texttt{color} package,
-and on \texttt{xxcolor}, which in turn is an extension of
-\texttt{xcolor}. Hopefully, in the future \texttt{xxcolor} and
-\texttt{xcolor} will merge into one package and perhaps they will
-someday also merge together with \texttt{color}.
+|xcolor|, which is an extension of the |color| package,
+and on |xxcolor|, which in turn is an extension of
+|xcolor|. Hopefully, in the future |xxcolor| and
+|xcolor| will merge into one package and perhaps they will
+someday also merge together with |color|.
 
 
 \subsubsection{Colors of Main Text Elements}
@@ -2468,17 +2605,17 @@ someday also merge together with \texttt{color}.
 By default, the following colors are used in a presentation:
 \begin{itemize}
 \item
-  Normal text is typeset in \texttt{black}.
+  Normal text is typeset in |black|.
 \item
   All ``structural'' elements, like titles, navigation bars, block
   titles, and so on, are typeset using the color
-  \texttt{structure}. By default, this color is bluish. Using one of
-  the class options \texttt{red}, \texttt{gray}, or \texttt{brown}
+  |structure|. By default, this color is bluish. Using one of
+  the class options |red|, |gray|, or |brown|
   changes this. You can also simply redefine this color to a different
-  color using the \verb!\definecolor! command.
+  color using the |\definecolor| command.
 \item
   All ``alert'' text is typeset by mixing in 85\% of red. To change
-  this, you can either redefine the color \texttt{alert}, or you can
+  this, you can either redefine the color |alert|, or you can
   change the whole alert template.
 \item
   All examples are typeset using 50\% of green. To change this, you
@@ -2489,6 +2626,8 @@ By default, the following colors are used in a presentation:
 
 \subsubsection{Average Background Color}
 
+\label{section-average}
+
 In some situations, for example when creating a transparency effect,
 it is useful to have access to the current background
 color. One can then, for example, mix a color with the background
@@ -2498,25 +2637,21 @@ Unfortunately, it is not always clear what exactly the background
 color is. If the background is a shading or a picture, different parts
 of a slide have different background colors. In these cases, one can
 at least try to mix-in an \emph{average} background color, called
-\texttt{averagebackgroundcolor}. If a shading or picture is not too
+|averagebackgroundcolor|. If a shading or picture is not too
 colorful, this works fairly well.
 
 To specify the average background color, use the following command:
 
-\Command{beamersetaveragebackground}
-\Parameters{
-\item name of a color or a color expression (see the \texttt{xcolor}
-package).
-}
-\Description{
-  Installs the given color as the average background color.
-}
-\Example \verb/\beamersetaveragebackground{red!10}/
+\begin{command}{\beamersetaveragebackground\marg{color expression}}
+  Installs the given color as the average background color. See the
+  |xcolor| package for the syntax of color expressions.
+  \example |\beamersetaveragebackground{red!10}|
+\end{command}
 
 If you use the commands from Section~\ref{section-backgrounds} for
 installing a background coloring, the average background color is
 computed automatically for you. When you directly use the command
-\verb!\usebackgroundtemplate!, you should must set the average
+|\usebackgroundtemplate|, you should must set the average
 background color afterward.
 
 
@@ -2526,7 +2661,7 @@ background color afterward.
 \label{section-transparent}
 
 By default, \emph{covered} items are not shown during a
-presentation. Thus if you write \verb!\uncover<2>{Text.}!, the text
+presentation. Thus if you write |\uncover<2>{Text.}|, the text
 is not shown on any but the second slide. On the other slide, the text
 is not simply printed using the background color -- it is not shown at
 all. This effect is most useful if your background does not have a
@@ -2559,36 +2694,27 @@ more. The transparency effect will automatically apply to all colors,
 shadings there is an awkward workaround, see the documentation of the
 \pgf\ package. 
 
-As a convenience, two commands are defined in \texttt{beamertemplates}
+As a convenience, two commands are defined in |beamertemplates|
 that install a predefined uncovering behavior.
 
-\Command{beamertemplatetransparentcovered}
-\Description{
+\begin{command}{\beamertemplatetransparentcovered}
   Makes all covered text nearly transparent. 
-}
+\end{command}
 
-\Command{beamertemplatetransparentcovereddynamic}
-\Description{
+\begin{command}{\beamertemplatetransparentcovereddynamic}
   Makes all covered text nearly transparent, but is a dynamic way. The
   longer it will take till the text is uncovered, the stronger the
   transparency. 
-}
+\end{command}
 
-\Command{beamersetuncovermixins}
-\Parameters{
-\item
-  A specification of how to render covered items that have \emph{not
-  yet} been uncovered.
-\item
-  A specification of how to render covered items that have \emph{once
-  more} been covered.
-}
-\Description{
-  The format of the specifications is explained below. If you leave
-one of the specifications empty, the corresponding covered items are
-completely covered, that is, they are invisible.
-}
-\Example
+\begin{command}{\beamersetuncovermixins\marg{not yet list}%
+    \marg{once more list}}
+  The \meta{not yet list} specifies  how to render covered items that
+  have not  yet been uncovered. The \meta{once more list} specifies
+  how to render covered items that have once more been covered. 
+  If you leave one of the specifications empty, the corresponding
+  covered items are completely covered, that is, they are invisible.
+  \example
 \begin{verbatim}
 \beamersetuncovermixins
   {\mixinon<1>{15!averagebackgroundcolor}
@@ -2597,63 +2723,54 @@ completely covered, that is, they are invisible.
     \mixinon<4->{2!averagebackgroundcolor}}
   {\mixinon<1->{15!averagebackgroundcolor}}
 \end{verbatim}
+  The \meta{not yet list} and the  \meta{once more list} can
+  contain any number of the following two commands:
+\end{command}
 
-The specifications passed to \verb!\beamersetuncovermixins! can
-contain any number of the following two commands:
+\begin{command}{\mixinon\ssarg{overlay specification}\marg{mix-in specification}}
+  The \meta{overlay specification} specifies on which slides the
+  \meta{mix-in specification} should be applied to all colors. Unlike
+  other overlay specifications, this \meta{overlay specification} is a
+  ``relative'' overlay specification. For example, the specification
+  ``3'' here means ``things that will be uncovered three slides
+  ahead,'' respectively ``things that have once more been covered for
+  three slides.'' More precisely, if an item is uncovered for more
+  than one slide and then covered once more, only the ``first moment
+  of uncovering'' is used for the calculation of how long the item has
+  been covered once more.
 
-\Command{mixinon}
-\Parameters{
-\item
-  An overlay specification given in brackets.
-\item
-  A mix-in specification.
-}
-\Description{
-  The overlay specification specifies on which slides the second
-parameter should be applied to all colors. Unlike other overlay
-specifications, the first parameter is a ``relative'' overlay
-specification. For example, the specification ``3'' here means
-``things that will be uncovered three slides ahead,'' respectively
-``things that have once more been covered for three slides.'' More
-precisely, if an item is uncovered for more than one slide and then
-covered once more, only the ``first moment of uncovering'' is used for
-the calculation of how long the item has been covered once more.
-
-  A \emph{mix-in} specification is a concept introduced by the
-\texttt{xcolor} package. A mix-in specification specifies how colors
-should be altered by adding another color to them. The specification
-consists of two parts, separated by an exclamation mark. The first
-part is a number between 0 and 100, where 0 means ``do not mix in the
-text color at all'' and 100 means ``use only the text color''. The
-second part is the color that should be mixed in. This second part may
-be omitted (along with the exclamation mark), in which case ``white''
-is used as mix-in color. Any color that has been defined using the
-\texttt{definecolor} command is permissible as a mix-in color.
-}
-\Example
+  \emph{Mix-in} specifications are a concept introduced by the
+  |xcolor| package. The \meta{mix-in specification} specifies how colors
+  should be altered by adding another color to them. The specification
+  consists of two parts, separated by an exclamation mark. The first
+  part is a number between 0 and 100, where 0 means ``do not mix in the
+  text color at all'' and 100 means ``use only the text color''. The
+  second part is the color that should be mixed in. This second part may
+  be omitted (along with the exclamation mark), in which case ``white''
+  is used as mix-in color. Any color that has been defined using the
+  |\definecolor| command is permissible as a mix-in color.
+  \example
 \begin{verbatim}
 \mixinon<1>{15!averagebackgroundcolor}
 \end{verbatim}
-For all items that become uncovered on the next slide or that have
-just been covered on the previous slide (depending on whether this
-command is used as part of the first or second parameter of the command
-\verb!\beamersetuncovermixins!), use only 15\% of the actual color and
-85\% of the average background color.
+  For all items that become uncovered on the next slide or that have
+  just been covered on the previous slide (depending on whether this
+ command is used as part of the first or second parameter of the command
+  |\beamersetuncovermixins|), use only 15\% of the actual color and
+  85\% of the average background color.
+\end{command}
 
-\Command{invisibleon}
-\Parameters{
-\item
-  An overlay specification given in brackets.
-}
-\Description{
+\begin{command}{\invisibleon\ssarg{overlay specification}}
   Text that is covered on the specified slides (once more,
-  relative to the current slide), is not shown at all.}
-\Example
+  relative to the current slide), is not shown at all.
+  \example
 \begin{verbatim}
 \invisibleon<2->
 \end{verbatim}
-Makes everything totally covered that is not shown next or has just
-been shown.
+  Makes everything totally covered that is not shown next or has just
+  been shown.
+\end{command}
+
 
 
 
@@ -2696,15 +2813,12 @@ mode). By setting the number of seconds to zero, you can create a
 rapid succession of slides.
 
 To facilitate the creation of animations using this feature, commands
-can be used: \verb!\animate! and \verb!\animatevalue!.
+can be used: |\animate| and |\animatevalue|.
 
-\Command{animate}
-\Description{
-  An overlay specification should be present. The slides specified by
-  this overlay specification will be shown only as shortly as
-  possible.
-}
-\Example
+\begin{command}{\animate\ssarg{overlay specification}}
+  The slides specified by \meta{overlay specification} will be shown
+  only as shortly as  possible.
+\example
 \begin{verbatim}
 \frame{
   \frametitle{A Five Slide Animation}
@@ -2718,26 +2832,18 @@ can be used: \verb!\animate! and \verb!\animatevalue!.
   ... code for creating an animation with five slides ...
 }
 \end{verbatim}
+\end{command}
 
-
-\Command{animatevalue}
-\Parameters{
-\item An overlay specification range given in pointed brackets. Two
-  numbers must be given, separated by a dash.
-\item Name of a counter or a dimension that will be varied on
-  the specified slides.
-\item The value the counter or dimension should have on and before the
-  first slide of the range.
-\item The value the counter or dimension should have on and after the
-  last slide of the range.
-}
-\Description{
-  The command allows you to vary a counter or dimension between two
-  values. For the slides in the specified range, the counter or
-  dimension is set to an interpolated value that depends on the
-  current slide number.
-}
-\Example
+\begin{command}{\animatevalue|<|\meta{start slide}|-|\meta{end slide}|>|%
+    \marg{name}\marg{start value}\marg{end value}}
+  The \meta{name} must be the name of a counter or a dimension.
+  It will be varied between two values. For the slides in the
+  specified range, the counter or dimension is set to an interpolated
+  value that depends on the current slide number. On slides before the
+  \meta{start slide}, the counter or dimension is set to \meta{start
+    value}; on the slides after the \meta{end slide} it is set to
+  \meta{end value}.
+  \example
 \begin{verbatim}
 \newcount\opaqueness
 \frame{
@@ -2751,9 +2857,7 @@ can be used: \verb!\animate! and \verb!\animatevalue!.
     {\color{green!90!black}colored} \alert{text}.
   \end{colormixin}
 }
-\end{verbatim}
 
-\begin{verbatim}
 \newcount\opaqueness
 \newdimen\offset
 \frame{
@@ -2784,6 +2888,7 @@ can be used: \verb!\animate! and \verb!\animatevalue!.
   \end{colormixin}
 }
 \end{verbatim}
+\end{command}
 
 
 
@@ -2816,7 +2921,7 @@ following example:
   \pgfuseimage{man}
 }
 \end{verbatim}
-The command \verb!\transdissolve! causes the slide of the
+The command |\transdissolve| causes the slide of the
 second frame to be shown in a ``dissolved way.'' Note that the
 dissolving is a property of the second frame, not of the first one. We
 could have placed the command anywhere on the frame.
@@ -2837,100 +2942,75 @@ slide is shown, it should be  shown in a ``dissolved way.''
 In the following, the different commands for creating transitional
 effects are listed.
 
-\Command{transblindshorizontal}
-\Description{
+\begin{command}{\transblindshorizontal}
   Show the slide as if horizontal blinds where pulled away.
-}
-\Example\verb!\transblindshorizontal!
+  \example|\transblindshorizontal|
+\end{command}
   
-\Command{transblindsvertical}
-\Description{
+\begin{command}{\transblindsvertical}
   Show the slide as if vertical blinds where pulled away.
-}
-\Example\verb!\transblindsvertical<2,3>!
+  \example|\transblindsvertical<2,3>|
+\end{command}
   
-\Command{transboxin}
-\Description{
+\begin{command}{\transboxin}
   Show the slide by moving to the center from all four sides.
-}
-\Example\verb!\transboxin<1>!
+  \example|\transboxin<1>|
+\end{command}
   
-\Command{transboxout}
-\Description{
+\begin{command}{\transboxout}
   Show the slide by showing more and more of a rectangular area that
   is centered on the slide center.
-}
-\Example\verb!\transboxout!
-  
-\Command{transdissolve}
-\Description{
+  \example|\transboxout|
+\end{command}
+ 
+\begin{command}{\transdissolve}
   Show the slide by slowly dissolving what was shown before.
-}
-\Example\verb!\transdissolve!
+  \example|\transdissolve|
+\end{command}
   
-\Command{transglitter}
-\Parameters{
-\item
-  a degree (must be a multiple of 90).  
-}
-\Description{
+\begin{command}{\transglitter\marg{degree}}
   Show the slide with a glitter effect that sweeps in the specified
-  direction. 
-}
-\Example\verb!\transglitter<2-3>{90}!
+  direction. The \meta{degree} must be a multiple of 90.
+  \example|\transglitter<2-3>{90}|
+\end{command}
   
-\Command{transsplitverticalin}
-\Description{
+\begin{command}{\transsplitverticalin}
   Show the slide by sweeping two vertical lines from the sides inward.
-}
-\Example\verb!\transsplitverticalin!
+  \example|\transsplitverticalin|
+\end{command}
   
-\Command{transsplitverticalout}
-\Description{
+\begin{command}{\transsplitverticalout}
   Show the slide by sweeping two vertical lines from the center outward.
-}
-\Example\verb!\transsplitverticalout!
+  \example|\transsplitverticalout|
+\end{command}
   
-\Command{transsplithorizontalin}
-\Description{
+\begin{command}{\transsplithorizontalin}
   Show the slide by sweeping two horizontal lines from the sides inward.
-}
-\Example\verb!\transsplithorizontalin!
+  \example|\transsplithorizontalin|
+\end{command}
   
-\Command{transsplithorizontalout}
-\Description{
+\begin{command}{\transsplithorizontalout}
   Show the slide by sweeping two horizontal lines from the center outward.
-}
-\Example\verb!\transsplithorizontalout!
-  
-\Command{transwipe}
-\Parameters{
-\item
-  a degree (must be a multiple of 90).  
-}
-\Description{
+  \example|\transsplithorizontalout|
+\end{command}
+ 
+\begin{command}{\transwipe\marg{degree}}
   Show the slide by sweeping a single line in the specified direction,
-  thereby ``wiping out'' the previous contents.
-}
-\Example\verb!\transwipe{90}!
+  thereby ``wiping out'' the previous contents. The \meta{degree} must be a multiple of 90.
+  \example|\transwipe{90}|
+\end{command}
 
 
 
 You can also specify how \emph{long} a given slide should be shown,
 using the following overlay-specification-aware command:
 
-\Command{transduration}
-\Parameters{
-\item
-  a number of seconds
-}
-\Description{
-  In full screen mode, show the slide the specified number of seconds.
+\begin{command}{\transduration\marg{number of seconds}}
+  In full screen mode, show the slide for \meta{number of seconds}.
   In zero is specified, the slide is shown as short as possible. This
   can be used to create interesting pseudo-animations.
-}
-\Example\verb!\transduration<2>{1}!
-
+  \example|\transduration<2>{1}|
+\end{command}
 
 
 
@@ -2962,16 +3042,16 @@ particular, you do not want to print a new slide for each slide of a
 frame. Rather, only the ``last'' slide should be printed. 
 
 In order to create a handout, specify the class option
-\verb!handout!. If you do not specify anything else, this will cause
+|handout|. If you do not specify anything else, this will cause
 all overlay specifications to be suppressed. For most cases this will
 create exactly the desired result.
 
 In some cases, you may want a more complex behaviour. For example, if
-you use many \verb!\only! commands to draw an animation. In this case,
+you use many |\only| commands to draw an animation. In this case,
 suppressing all overlay specifications is not such a good idea, since
 this will cause all steps of the animation to be shown at the same
 time. In some cases this is not desirable. Also, it might be desirable
-to suppress some \verb!\alert! commands that apply only to specific
+to suppress some |\alert| commands that apply only to specific
 slides in the handout.
 
 For a fine-grained control of what is shown on a handout, you can use
@@ -3013,9 +3093,9 @@ the frame are shown on the handout:
 \end{verbatim}
 
 It is also possible to give only an alternate overlay
-specification. For example, \verb!\alert<handout:0>{...}! causes the
+specification. For example, |\alert<handout:0>{...}| causes the
 text to be always hilighted during the presentation, but never on the
-handout version. Likewise, \verb!\frame[handout:0]{...}! causes the
+handout version. Likewise, |\frame[handout:0]{...}| causes the
 frame to be suppressed for the handout.
 
 Finally, note that it is possible to give more than one alternate
@@ -3028,7 +3108,7 @@ transparency version, and not at all in the handout.
 \end{verbatim}
 
 If you wish to give the same specification in all versions, you can do
-so by specifying \verb!all:! as the version. For example,
+so by specifying |all:| as the version. For example,
 \begin{verbatim}
 \frame[all:1-2]
 {
@@ -3052,19 +3132,19 @@ condensed to a single slide, you might wish to print several slides
 for the transparency version.
 
 You can use the same mechanism as for creating handouts: Specify
-\verb!trans! as a class option and add alternate transparency
-specifications for the \verb!trans! version as needed. An elaborated
+|trans| as a class option and add alternate transparency
+specifications for the |trans| version as needed. An elaborated
 example of different overlay specifications for the presentation, the
 handout, and the transparencies can be found in the file
-\verb!beamerexample.tex!.
+|beamerexample.tex|.
 
 
 
 \subsection{Adding Notes}
 
-You can add notes to your slides using the command \verb!\note!. A
+You can add notes to your slides using the command |\note|. A
 note is a reminder to yourself of what you should say or should keep in
-mind when presenting a frame. The \verb!\note! command should be given
+mind when presenting a frame. The |\note| command should be given
 after the frame to which the note applies. Here is a typical example.
 \begin{verbatim}
 \frame{
@@ -3082,31 +3162,20 @@ frame while talking.
 
 Since you normally do not wish the notes to be part of your
 presentation, you must explicitly specify the class option
-\verb!notes! to include notes. If this option is not specified, notes
-are suppressed. If you specify \verb!notesonly! instead of
-\verb!notes!, only notes will be included and all normal frames are
+|notes| to include notes. If this option is not specified, notes
+are suppressed. If you specify |notesonly| instead of
+|notes|, only notes will be included and all normal frames are
 parsed, but not displayed. This is useful for printing the notes.
 
-\Command{note}
-\Parameters{
-\item a note text.
-  }
-\Description{
+\begin{command}{\note\marg{note text}}
   Creates a note page. Should be given right after a frame.
-  }
-\Example\verb!\note{Talk no more than 1 minute.}!
+  \example|\note{Talk no more than 1 minute.}|
+\end{command}
 
-
-\Command{noteitems}
-\Parameters{
-\item a list of \texttt{item} commands.
-  }
-\Description{
-  Just like the \texttt{note} command, except that an \texttt{itemize}
+\begin{command}{\noteitems\marg{list of item commands}}
+  Just like the |\note| command, except that an |itemize|
   environment is setup inside the note.
-  }
-\Example
-
+  \example
 \begin{verbatim}
 \frame{Bla bla...}
 \noteitems{
@@ -3114,7 +3183,7 @@ parsed, but not displayed. This is useful for printing the notes.
 \item Use no more than 2 minutes.
 }
 \end{verbatim}
-
+\end{command}
 
 
 
@@ -3124,7 +3193,7 @@ parsed, but not displayed. This is useful for printing the notes.
 
 In the following, the ``article version'' of your presentation refers
 to a normal \TeX\ text typeset using, for example, the document class
-\texttt{article} or perhaps \texttt{lncs} or a similar document
+|article| or perhaps |lncs| or a similar document
 class. This version of the presentation will typically follow
 different typesetting rules and may even have a different
 structure. Nevertheless, you may wish to have this version coexist
@@ -3132,22 +3201,22 @@ with your presentation in one file and you may wish to share some part
 of it (like a figure or a formula) with your presentation.
 
 To achieve this, a special class option and three commands can be
-used. The class option is the option \texttt{class=xxx}, where
-\texttt{xxx} is the name of another document class like
-\texttt{article} or \texttt{report}. If this class option is given,
+used. The class option is the option |class=xxx|, where
+|xxx| is the name of another document class like
+|article| or |report|. If this class option is given,
 the beamer class will almost immediately transfer control to this
 class. None of the normal commands defined by the beamer class will be
 defined, except for the three commands listed in the following. All
 class options passed to the beamer class will be passed on to the
-class \texttt{xxx}, \emph{except}, naturally, for the option
-\texttt{class=xxx} itself. Consider the following example:
+class |xxx|, \emph{except}, naturally, for the option
+|class=xxx| itself. Consider the following example:
 \begin{verbatim}
 \documentclass[class=article,a4paper]{beamer}
 \end{verbatim}
 
 This will cause the rest of the text to be typeset using the
-\texttt{article} class with the only class option being
-\texttt{a4paper}.
+|article| class with the only class option being
+|a4paper|.
 
 You can use three commands to specify which part of your text belong
 to the article version, which belongs to the actual presentation, and
@@ -3158,33 +3227,30 @@ article is requested, but thrown away if a presentation is
 requested. In presentation mode, the behavior is the other way
 round. In common mode, the text is always inserted.
 
-Right after the \texttt{documentclass} command and right after the
-\verb!\begin{document}!, \TeX\ is always in common mode.
+Right after the |documentclass| command and right after the
+|\begin{document}|, \TeX\ is always in common mode.
 
-\Command{article}
-\Description{
+  
+\begin{command}{\article}
   All text following this command will only be present in the article
   version. For the presentation version, this text will be completely
   ignored. This command must be the only command in a line and it must
   start the line.
-  }
+\end{command}
 
-\Command{presentation}
-\Description{
+\begin{command}{\presentation}
   All text following this command will only be present in the
   presentation version. For the article version, the text will be
   completely ignored. This command must be the only command in a line
   and it must start the line.
-  }
+\end{command}
 
-\Command{common}
-\Description{
+\begin{command}{\common}
   All text following this command will be present in both the article
   and the presentation version. This command must be the only command in
   a line and it must start the line.
-  }
+\end{command}
 
-\Example
 \begin{verbatim}
 \documentclass[class=article,a4paper]{beamer}
 %\documentclass[red]{beamer}
@@ -3216,13 +3282,13 @@ Right after the \texttt{documentclass} command and right after the
 \end{verbatim}
 
 The above commands cannot be used inside macros (they are implemented
-similarly to \texttt{verbatim} environments, only that the contents is
+similarly to |verbatim| environments, only that the contents is
 sometimes thrown away instead of rendered). However, there is one
-exception: Inside a \verb!\frame!, these commands can be used,
+exception: Inside a |\frame|, these commands can be used,
 provided they ``balance'' inside the frame and provided you switch
 back to presentation mode by the end of the frame (as in the above
 example). If you have problems with these commands inside 
-a frame, try using a \verb!\def! command outside the frame as in the 
+a frame, try using a |\def| command outside the frame as in the 
 following example:
 \begin{verbatim}
 \begin{document}
@@ -3243,8 +3309,9 @@ following example:
 \end{verbatim}
 
 
-\section{Customization}
 
+
+\section{Customization}
 
 \subsection{Fonts}
 
@@ -3285,10 +3352,10 @@ While these reasons are pretty good, you still might wish to change the font:
 
 There are two ways of changing the document font: First, you must
 decide whether the text should be typeset in sans serif or in
-serif. To choose this, use either the class option \texttt{sans} or
-\texttt{serif}. By default, \texttt{sans} is selected, so you do not
+serif. To choose this, use either the class option |sans| or
+|serif|. By default, |sans| is selected, so you do not
 need to specify this. Furthermore, you can specify one of the two
-options \texttt{mathsans} or \texttt{mathserif}. These options
+options |mathsans| or |mathserif|. These options
 override the overall sans-serif/serif choice for math text.
 
 Second, you can independently switch the document font. To do so, you
@@ -3297,22 +3364,20 @@ mechanism. For example, to change to Times/Helvetica, simply add
 \begin{verbatim}
 \usepackage{times}
 \end{verbatim}
-in your preamble. Note that if you do not specify \texttt{serif} as a
+in your preamble. Note that if you do not specify |serif| as a
 class option, Helvetica (not Times) will be selected as the text
 font.
 
 There may be many other fonts available on your
 installation. Typically, at least some of the following packages
-should be available: \texttt{avant}, \texttt{bookman},
-\texttt{chancery}, \texttt{charter},  \texttt{euler}, \texttt{helvet},
-\texttt{mathtime}, \texttt{mathptm}, \texttt{newcent},
-\texttt{palatino}, \texttt{pifont}, \texttt{times},
-\texttt{utopia}.
+should be available: |avant|, |bookman|, |chancery|, |charter|,
+|euler|, |helvet|, |mathtime|, |mathptm|, |newcent|, |palatino|,
+|pifont|, |times|, |utopia|.
 
-If you use \texttt{times} together with the \texttt{serif} option, you
-may wish to include also the package \texttt{mathptm}. If you use the
-\texttt{mathtime} package (you have to buy some of the fonts), you
-also need to specify the \texttt{serif} option.
+If you use |times| together with the |serif| option, you
+may wish to include also the package |mathptm|. If you use the
+|mathtime| package (you have to buy some of the fonts), you
+also need to specify the |serif| option.
 
 
 
@@ -3321,7 +3386,7 @@ also need to specify the \texttt{serif} option.
 The ``paper size'' of a beamer presentation is fixed to 128mm times
 96mm. The aspect ratio of this size is 4:3, which is exactly what most
 beamers offer these days. It is the job of the
-presentation program (like \verb!acroread!) to display the slides at
+presentation program (like |acroread|) to display the slides at
 full screen size. The main advantage of using a small ``paper size''
 is that you can use all your normal fonts at their natural sizes. In
 particular, inserting a graphic with 11pt labels will result in
@@ -3332,26 +3397,17 @@ You should refrain from changing the ``paper size.'' However, you
 default to 1cm. To change them, you should use the following two
 commands:
 
-\Command{beamersetleftmargin}
-\Parameters{
-\item a new left margin, \emph{excluding} the left side bar, if present.
-  }
-\Description{
+\begin{command}{\beamersetleftmargin\marg{left margin dimension}}
   Sets a new left margin. This excludes the left side bar. Thus, it is
-the distance between the right edge of the left side bar and the left
-edge of the text. This command can only be used in the preamble
-(before the \texttt{document} environment is used).
-  }
-\Example \verb!\beamersetleftmargin{1cm}!
+  the distance between the right edge of the left side bar and the left
+  edge of the text. This command can only be used in the preamble
+  (before the |document| environment is used).
+  \example |\beamersetleftmargin{1cm}|
+\end{command}
 
-\Command{beamersetrightmargin}
-\Parameters{
-\item a new right margin, excluding the right side bar, if present.
-  }
-\Description{
-  Like \texttt{beamersetleftmargin}, only for the right margin.
-  }
-\Example \verb!\beamersetleftmargin{1cm}!
+\begin{command}{\beamersetrightmargin\marg{left margin dimension}}
+  Like |\beamersetleftmargin|, only for the right margin.
+\end{command}
 
 For more information on side bars, see Section~\ref{section-sidebar-templates}.
 
@@ -3359,95 +3415,86 @@ For more information on side bars, see Section~\ref{section-sidebar-templates}.
 
 \subsection{Class Options}
 
-Class options are listed right behind the command \verb!\documentclass!
+Class options are listed right behind the command |\documentclass|
 in square brackets. Class options, see the following list, govern
 certain global behaviors of the presentation.
 
-\ClassOption{class=xxx}
-\Description{
-  Transfer control to document class \texttt{xxx}. See
+\begin{classoption}{bigger}
+  Makes all fonts a little bigger, which makes the text more
+  readable. The downside is that less fits onto each frame.
+\end{classoption}
+
+\begin{classoption}{brown}
+  Changes the main color of the navigation and title bars
+  to a brownish color. Other options are \declare{gray} and
+  \declare{red}. Further colors can be setup by redefining the color
+  |structure|. 
+\end{classoption}
+
+\begin{classoption}{class={\normalfont\meta{another class
+        name}}{\opt{,{\normalfont\meta{options for another class}}}}}
+  Transfer control to document class \meta{another class name} with
+  the options \meta{options for another class}. See
   Section~\ref{section-article} for details.
-}
+  \example |\documentclass[class=article,a4paper]{beamer}|
+\end{classoption}
 
-\ClassOption{notes}
-\Description{
-  Include notes in the output file. Normally, notes are not included.
-  }
-
-\ClassOption{notesonly}
-\Description{
-  Include only the notes in the output file. Useful for printing them.
-  }
-
-\ClassOption{handout}
-\Description{
+\begin{classoption}{handout}
   Create a version that uses the \texttt{handout} overlay
   specifications. See subsection~\ref{handout}.
-  }
+\end{classoption}
 
-\ClassOption{trans}
-\Description{
-  Create a version that uses the \texttt{trans} overlay
-  specifications. See subsection~\ref{trans}.
-  }
-
-\ClassOption{inrow}
-\Description{
+\begin{classoption}{inrow}
   All small frame representation in the navigation bars for a single
   section are shown alongside each other. Normally, the representation
   for different subsections are shown in different lines.
-  }
+\end{classoption}
 
-\ClassOption{slidescentered}
-\Description{
+\begin{classoption}{mathsans}
+  Override the math font to be a sans-serif font.
+\end{classoption}
+
+\begin{classoption}{mathserif}
+  Override the math font to be a serif font.
+\end{classoption}
+
+\begin{classoption}{notes}
+  Include notes in the output file. Normally, notes are not included.
+\end{classoption}
+
+\begin{classoption}{notesonly}
+  Include only the notes in the output file. Useful for printing them.
+\end{classoption}
+
+\begin{classoption}{sans}
+  Use a sans-serif font during the presentation. (Default.)
+\end{classoption}
+
+\begin{classoption}{serif}
+  Use a serif font during the presentation.
+\end{classoption}
+
+\begin{classoption}{slidescentered}
   Place text of slides at the (vertical) center of the slides. This is
   the default.
-  }
+\end{classoption}
 
-\ClassOption{slidestop}
-\Description{
+\begin{classoption}{slidestop}
   Place text of slides at the (vertical) top of the slides. This
   corresponds to a vertical ``flush.''
-}
+\end{classoption}
 
-\ClassOption{blue, red, gray, brown}
-\Description{
-  These options change the main color of the navigation and title bars
-  to the given colors. Other colors can be setup by redefining the
-  color \texttt{structure}.
-  }
-
-\ClassOption{bigger}
-\Description{
-  Makes all fonts a little bigger, which makes the text more
-  readable. The downside is that less fits onto each frame.
-  }
-
-\ClassOption{smaller}
-\Description{
+\begin{classoption}{smaller}
   Makes all fonts a little smaller, which allows you to fit more onto
   frames. Normally, this is not a good idea.
-  }
+\end{classoption}
 
-\ClassOption{sans}
-\Description{
-  Use a sans-serif font during the presentation. (Default.)
-  }
+\begin{classoption}{trans}
+  Create a version that uses the \texttt{trans} overlay
+  specifications. See subsection~\ref{trans}.
+\end{classoption}
 
-\ClassOption{serif}
-\Description{
-  Use a serif font during the presentation.
-}
 
-\ClassOption{mathsans}
-\Description{
-  Override the math font to be a sans-serif font.
-  }
-
-\ClassOption{mathserif}
-\Description{
-  Override the math font to be a serif font.
-}
 
 
 
@@ -3464,190 +3511,134 @@ a predefined collection of templates.
 There exist a number of different predefined themes that can be used
 together with the \beamer\ class. Feel free to add further themes.
 Themes are used by including an appropriate \LaTeX\ style file, using
-the standard \verb!\usepackage! command.
+the standard |\usepackage| command.
 
 
-\subsubsection{Bars Theme}
+\begin{smalltheme}{{beamerthemebars}}
+  \example
 
-\vbox{
-\Theme{beamerthemebars}
+  \pgfuseimage{themebars}\quad\pgfuseimage{themebars2}
+\end{smalltheme}
 
-\Example
 
-\hbox{\pgfuseimage{themebars}\quad\pgfuseimage{themebars2}}
-}
+\begin{theme}{{beamerthemeboxes}\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}
+  \example
 
-\subsubsection{Boxes Theme}
+  \pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}
 
-\Theme{beamerthemeboxes}
-\Parameters{
-\item Package option \texttt{headheight}, which specifies the height
-of the head line. Specified in a key~=~value fashion.
-\item Package option \texttt{footheight}, which specifies the height
-of the foot line. Specified in a key~=~value fashion.
-}
-\Example
-
-\hbox{\pgfuseimage{themeboxes}\quad\pgfuseimage{themeboxes2}}
-
-\Example
+  \example
 \begin{verbatim}
 \usepackage[headheight=12pt,footheight=12pt]{beamerthemeboxes}
 \end{verbatim}
 
-For this theme, you can specify an arbitrary number of templates for
-the boxes in the head line and in the foot line. You can add a
-template for another box by using the following commands.
+  For this theme, you can specify an arbitrary number of templates for
+  the boxes in the head line and in the foot line. You can add a
+  template for another box by using the following commands.
+\end{theme}
 
-\Command{addheadboxtemplate}
-\Parameters{
-\item a color command for the background of the box
-\item a template for a new box
-  }
-\Description{
+\begin{command}{\addheadboxtemplate%
+    \marg{background color command}\marg{box template}}
   Each time this command is invoked, a new box is added to the head
   line, with the first added box being shown on the left. All boxes
   will have the same size.
-}
-\Example
+  \example
 \begin{verbatim}
 \addheadboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
 \addheadboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
 \addheadboxtemplate{\color{structure!50}}{\color{white}\tiny\quad 3. Box}
 \end{verbatim}
+\end{command}
 
-\Command{addfootboxtemplate}
-\Parameters{
-\item a color command for the background of the box
-\item a template for a new box
-  }
-\Example
+\begin{command}{\addfootboxtemplate%
+    \marg{background color command}\marg{box template}}
+  \example
 \begin{verbatim}
 \addfootboxtemplate{\color{black}}{\color{white}\tiny\quad 1. Box}
 \addfootboxtemplate{\color{structure}}{\color{white}\tiny\quad 2. Box}
 \end{verbatim}
+\end{command}
 
 
+\begin{smalltheme}{{beamerthemeclassic}}
+  \example
 
-\subsubsection{Classic Theme}
-
-\vbox{
-\Theme{beamerthemeclassic}
-
-\Example
-
-\hbox{\pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}}
-}
+  \pgfuseimage{themeclassic}\quad\pgfuseimage{themeclassic2}
+\end{smalltheme}
 
 
-\subsubsection{Lined Theme}
+\begin{smalltheme}{{beamerthemelined}}
+  \example
 
-\vbox{
-\Theme{beamerthemelined}
-
-\Example
-
-\hbox{\pgfuseimage{themelined}\quad\pgfuseimage{themelined2}}
-}
+  \pgfuseimage{themelined}\quad\pgfuseimage{themelined2}
+\end{smalltheme}
 
 
+\begin{smalltheme}{{beamerthemeplain}}
+  \example
+
+  \pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}
+\end{smalltheme}
 
 
-\subsubsection{Plain Theme}
+\begin{smalltheme}{{beamerthemesidebar}\opt{|[width=|\meta{sidebar width}|]|}}
+  \example
 
-\vbox{
-\Theme{beamerthemeplain}
+  \pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}
 
-\Example
-
-\hbox{\pgfuseimage{themeplain}\quad\pgfuseimage{themeplain2}}
-}
-
-
-\subsubsection{Side Bar Themes}
-
-\Theme{beamerthemesidebar}
-\Parameters{
-\item Package option \texttt{width}, which specifies the width of 
-of the side bar. Specified in a key~=~value fashion.
-}
-\Example
+  \example
 \begin{verbatim}
 \usepackage[width=3cm]{beamerthemesidebar}
 \end{verbatim}
-
-\Example
-
-\hbox{\pgfuseimage{themesidebar}\quad\pgfuseimage{themesidebar2}}
+\end{smalltheme}
 
 
-The following themes take the same parameter as the normal side bar
-theme. They only differ in the coloring of the side bar.
+\begin{smalltheme}{{beamerthemesidebartab}\opt{|[width=|\meta{sidebar width}|]|}}
+  \example
 
-\vbox{
-\Theme{beamerthemesidebartab}
-
-\Example
-
-\hbox{\pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}}
-}
-
-\vbox{
-\Theme{beamerthemesidebardark}
-
-\Example
-
-\hbox{\pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}}
-}
-
-\vbox{
-\Theme{beamerthemesidebartabdark}
-
-\Example
-
-\hbox{\pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}}
-}
+  \pgfuseimage{themesidebartab}\quad\pgfuseimage{themesidebartab2}
+\end{smalltheme}
 
 
-\subsubsection{Split Theme}
+\begin{smalltheme}{{beamerthemesidebardark}\opt{|[width=|\meta{sidebar width}|]|}}
+  \example
 
-\vbox{
-\Theme{beamerthemesplit}
-
-\Example
-
-\hbox{\pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}}
-}
+  \pgfuseimage{themesidebardark}\quad\pgfuseimage{themesidebardark2}
+\end{smalltheme}
 
 
-\subsubsection{Condensed Split Theme}
+\begin{smalltheme}{{beamerthemesidebartabdark}\opt{|[width=|\meta{sidebar width}|]|}}
+  \example
 
-\vbox{
-\Theme{beamerthemesplitcondensed}
-
-\Example
-
-\hbox{\pgfuseimage{themesplitcondensed}\quad\pgfuseimage{themesplitcondensed2}}
-}
-\vbox{
-\Theme{beamerthemetree}
+  \pgfuseimage{themesidebardarktab}\quad\pgfuseimage{themesidebardarktab2}
+\end{smalltheme}
 
 
+\begin{smalltheme}{{beamerthemesplit}}
+  \example
 
-\subsubsection{Tree Themes}
+  \pgfuseimage{themesplit}\quad\pgfuseimage{themesplit2}
+\end{smalltheme}
 
-\Example
 
-\hbox{\pgfuseimage{themetree}\quad\pgfuseimage{themetree2}}
-}
+\begin{smalltheme}{{beamerthemesplitcondensed}}
+  \example
 
-\vbox{
-\Theme{beamerthemetreebars}
+  \pgfuseimage{themesplitcondensed}\quad\pgfuseimage{themesplitcondensed2}
+\end{smalltheme}
 
-\Example
+\begin{smalltheme}{{beamerthemetree}}
+  \example
 
-\hbox{\pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}}
-}
+  \pgfuseimage{themetree}\quad\pgfuseimage{themetree2}
+\end{smalltheme}
+
+
+\begin{smalltheme}{{beamerthemetreebars}}
+  \example
+
+  \pgfuseimage{themetreebars}\quad\pgfuseimage{themetreebars2}
+\end{smalltheme}
+
 
 
 \subsection{Templates}
@@ -3664,7 +3655,7 @@ put, which font is used, and so on.
 As the name suggests, you specify a template by writing the exact
 \LaTeX\ code you would also use when typesetting a single frame title
 by hand. Only, instead of the actual title, you use the command
-\verb!\insertframetitle!.
+|\insertframetitle|.
 
 For example, suppose we would like to have the frame title typeset in
 red, centered, and boldface. If we were to typeset a single frame
@@ -3706,18 +3697,18 @@ We can then use the following code to get the desired effect:
 
 When rendering the frame, the \beamer\ class will use the code of the
 frame title template to typeset the frame title and it will replace
-every occurrence of \verb!\insertframetitle! by the current frame
+every occurrence of |\insertframetitle| by the current frame
 title.
 
 In the following subsections all commands for changing templates are
 listed, like the above-mentioned command
-\verb!\useframetitletemplate!. Inside these commands, you should use
-the \verb!\insertxxxx! commands listed in 
+|\useframetitletemplate|. Inside these commands, you should use
+the |\insertxxxx| commands listed in 
 the next subsection. 
 
 Some of the below subsections start with commands for using
 \emph{predefined} templates. These commands are defined in the package
-\verb!beamertemplates!. Calling one of them will change a template in
+|beamertemplates|. Calling one of them will change a template in
 a predefined way. Using them, you can use, for example, your favorite
 theme together with a predefined background.
 
@@ -3725,11 +3716,11 @@ theme together with a predefined background.
 
 \subsubsection{Title Page}
 
-\Command{usetitlepagetemplate}
-\Parameters{
-\item a template for the title page
-  }
-\Example
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usetitlepagetemplate\marg{title page template}}
+  \example
 \begin{verbatim}
 \usetitlepagetemplate{
   \vbox{}
@@ -3745,9 +3736,37 @@ theme together with a predefined background.
   \vfill
 }
 \end{verbatim}
+\end{command}
 
 If you wish to suppress the head and foot line in the title page, use
-\verb!\plainframe{\titlepage}!.
+|\plainframe{\titlepage}|.
+
+
+
+\paragraph{Inserts for this Template}\ 
+
+\begin{command}{\insertauthor}
+  Inserts the one-line version of the author names into a template.
+\end{command}
+
+\begin{command}{\insertdate}
+  Inserts the date into a template.
+\end{command}
+
+\begin{command}{\insertinstitute}
+  Inserts the institute into a template.
+\end{command}
+
+\begin{command}{\inserttitle}
+  Inserts a version of the document title into a template that is
+  useful for the title page. 
+\end{command}
+
+\begin{command}{\inserttitlegraphic}
+  Inserts the title graphic into a template.
+\end{command}
+
+
 
 
 
@@ -3757,53 +3776,63 @@ If you wish to suppress the head and foot line in the title page, use
 
 \paragraph{Predefined Templates}\ 
 
-\Command{beamertemplateshadingbackground}
-\Parameters{
-\item Name of the color at the page bottom.
-\item Name of the color at the page top.
-  }
-\Description{Installs a vertically shaded background such that the
+\begin{command}{\beamertemplateshadingbackground%
+    \marg{color expression page bottom}\marg{color expression page top}}
+  Installs a vertically shaded background such that the
   specified bottom color changes smoothly to the specified top
   color. \textbf{Use with care: Background shadings are often
     distracting!} However, a very light shading with warm colors can
-  make a presentation more lively.}
-\Example
+  make a presentation more lively.
+  \example
 \begin{verbatim}
 \beamertemplateshadingbackground{red!10}{blue!10}
 % Bottom is light red, top is light blue
 \end{verbatim}
+\end{command}
 
-\Command{beamertemplategridbackground}
-\Description{Installs a light grid as background.}
 
-\paragraph{Template Changing Commands}\ 
+\begin{command}{\beamertemplategridbackground}
+  Installs a light grid as background.
+\end{command}
 
-\Command{usebackgroundtemplate}
-\Parameters{
-\item a template for the page background
-  }
-\Example
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usebackgroundtemplate\marg{background template}}
+  Installs a new background template. Call
+  |\beamersetaveragebackground| after you have called this macro, see
+  Section~\ref{section-average} for details.
+  \example
 \begin{verbatim}
 \usebackgroundtemplate{%
   \color{red}%
   \vrule  height\paperheight width\paperwidth%
 }
 \end{verbatim}
+\end{command}
+
+
+
+
+
 
 
 \subsubsection{Table of Contents}
 
 \label{section-toc-templates}
 
-\Command{usetemplatetocsection}
-\Parameters{
-\item A color mix-in specification for grayed sections names. This
-parameter is optional and given in square brackets. If present, the
-normal parameter for the grayed section name must be omitted.
-\item A template for a section name in the table of contents.
-\item A template for a grayed section name in the table of contents.
-  }
-\Example
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usetemplatetocsection\oarg{mix-in specification}%
+    \marg{template}\opt{\marg{grayed template}}}
+  Installs a \meta{template} for rendering sections in the table of
+  contents. If the \meta{mix-in specification} is present, the
+  \meta{grayed template} may not be present and the grayed sections
+  names are obtained by mixing in the  \meta{mix-in specification}. 
+  If \meta{mix-in specification} is not present,  \meta{grayed
+    template} must be present and is used to render grayed section
+  names. 
+  \example
 \begin{verbatim}
 \usetemplatetocsection
 {\color{structure}\inserttocsection}
@@ -3812,16 +3841,12 @@ normal parameter for the grayed section name must be omitted.
 \usetemplatetocsection[50!averagebackgroundcolor]
 {\color{structure}\inserttocsection}
 \end{verbatim}
+\end{command}
 
-\Command{usetemplatetocsubsection}
-\Parameters{
-\item A color mix-in specification for grayed subsections names. This
-parameter is optional and given in square brackets. If present, the
-normal parameter for the grayed subsection name must be omitted.
-\item A template for a subsection name in the table of contents.
-\item A template for a grayed subsection name in the table of contents.
-  }
-\Example
+\begin{command}{\usetemplatetocsubsection\oarg{mix-in specification}%
+    \marg{template}\opt{\marg{grayed template}}}
+  See |\usetemplatetocsection|.
+  \example
 \begin{verbatim}
 \usetemplatetocsubsection
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
@@ -3830,6 +3855,22 @@ normal parameter for the grayed subsection name must be omitted.
 \usetemplatetocsection[50!averagebackgroundcolor]
 {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
 \end{verbatim}
+\end{command}
+
+\paragraph{Inserts for this Template}\ 
+
+\begin{command}{\inserttocsection}
+  Inserts the table of contents version of the current section name
+  into a template.
+\end{command}
+
+\begin{command}{\inserttocsubsection}
+  Inserts the table of contents version of the current subsection name
+  into a template. 
+\end{command}
+
+
+
 
 
 \subsubsection{Bibliography}
@@ -3838,58 +3879,55 @@ normal parameter for the grayed subsection name must be omitted.
 
 \paragraph{Predefined Templates}\
 
-\Command{beamertemplatetextbibitems}
-\Description{Shows the citation text in front of references in a
-  bibliography instead of a small symbol.} 
+\begin{command}{\beamertemplatetextbibitems}
+  Shows the citation text in front of references in a
+  bibliography instead of a small symbol.
+\end{command} 
 
-\Command{beamertemplatearrowbibitems}
-\Description{Changes the symbol before references in a bibliography to
-  a small arrow.}
+\begin{command}{\beamertemplatearrowbibitems}
+  Changes the symbol before references in a bibliography to
+  a small arrow.
+\end{command}
 
-\Command{beamertemplatebookbibitems}
-\Description{Changes the symbol before references in a bibliography to
-  a small book icon.}
+\begin{command}{\beamertemplatebookbibitems}
+  Changes the symbol before references in a bibliography to
+  a small book icon.
+\end{command}
 
-\Command{beamertemplatearticlebibitems}
-\Description{Changes the symbol before references in a bibliography to
-  a small article icon. (Default)}
+\begin{command}{\beamertemplatearticlebibitems}
+  Changes the symbol before references in a bibliography to
+  a small article icon. (Default)
+\end{command}
 
 
 
-\paragraph{Template Changes Commands}\ 
+\paragraph{Template Installation Commands}\ 
 
-\Command{usebibitemtemplate}
-\Parameters{
-\item a template for the citation text before the entry. (The
+\begin{command}{\usebibitemtemplate\marg{citation template}}
+  Installs a template for the citation text before the entry. (The 
   ``label'' of the item.)
-}
-\Description{
-  Use \texttt{insertbiblabel} to insert the label text.
-  }
-\Example \verb!\usebibitemtemplate{\color{structure}\insertbiblabel}!
+  \example |\usebibitemtemplate{\color{structure}\insertbiblabel}|
+\end{command}
 
 
-\Command{usebibliographyblocktemplate}
-\Parameters{
-\item a template to be inserted before the first block of the entry
-  (the first block is all text before the first occurrence of a
-  \texttt{newblock} command).
-\item a template to be inserted before the second block (the text
-  between the first and second occurrence of \texttt{newblock})
-\item a template to be inserted before the third block
-\item a template to be inserted before all other blocks
-}
-\Description{
+\begin{command}{\usebibliographyblocktemplate%
+    \marg{template 1}\marg{template 2}%
+    \marg{template 3}\marg{template 4}}
+  The text \meta{template~1} is inserted before the first block of the
+  entry (the first block is all text before the first occurrence of a 
+  |\newblock| command). The text \meta{template~2} is inserted before
+  the second block (the text between the first and second occurrence
+  of |\newblock|). Likewise for \meta{template~3} and \meta{template~4}. 
+
   The templates are inserted \emph{before} the blocks and you do not
   have access to the blocks themselves via insert commands. In the
-  following example, the first \texttt{par} commands ensure that the
+  following example, the first |\par| commands ensure that the
   author, the title, and the journal are put on different lines. The
   color commands cause the author (first block) to be typeset using
   the theme color, the second block (title of the paper) to be typeset
   in black, and all other lines to be typeset in a washed-out version
   of the theme color. 
-  }
-\Example
+  \example
 \begin{verbatim}
   \usebibliographyblocktemplate
   {\color{structure}}
@@ -3897,17 +3935,23 @@ normal parameter for the grayed subsection name must be omitted.
   {\par\color{structure!75}}
   {\par\color{structure!75}}
 \end{verbatim}
+\end{command}
 
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\insertbiblabel}
+  Inserts the current citation label into a template.
+\end{command}
 
 
 
 \subsubsection{Frame Titles}
 
-\Command{useframetitletemplate}
-\Parameters{
-\item a template for the frame title
-  }
-\Example
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\useframetitletemplate\marg{frame title template}}
+  \example
 \begin{verbatim}
 \useframetitletemplate{%
   \begin{centering}
@@ -3916,8 +3960,13 @@ normal parameter for the grayed subsection name must be omitted.
   \end{centering}
 }
 \end{verbatim}
+\end{command}
 
+\paragraph{Inserts for this Template}\ 
 
+\begin{command}{\insertframetitle}
+  Inserts the current frame title into a template.
+\end{command}
 
 
 
@@ -3928,23 +3977,27 @@ normal parameter for the grayed subsection name must be omitted.
 
 \paragraph{Predefined Templates}\ 
 
-\Command{beamertemplateheadempty}
-\Description{Makes the head line empty.}
+\begin{command}{\beamertemplateheadempty}
+  Makes the head line empty.
+\end{command}
 
-\Command{beamertemplatefootempty}
-\Description{Makes the foot line empty.}
+\begin{command}{\beamertemplatefootempty}
+  Makes the foot line empty.
+\end{command}
 
-\Command{beamertemplatefootpagenumber}
-\Description{Shows only the page number in the foot line.}
+\begin{command}{\beamertemplatefootpagenumber}
+  Shows only the page number in the foot line.
+\end{command}
 
 
-\paragraph{Template Changing Commands}\ 
 
-\Command{usefoottemplate}
-\Parameters{
-\item a template for the foot line
-  }
-\Example
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usefoottemplate\marg{foot line template}}
+  The final height of the foot line is calculated by invoking this
+  template just before the beginning of the document and by setting
+  the foot line height to the height of the template.
+  \example
 \begin{verbatim}
 \usefoottemplate{\hfil\tiny{\color{black!50}\insertpagenumber}}
 \end{verbatim}
@@ -3958,12 +4011,12 @@ or
       {\color{white}\textbf{\insertshorttitle}\hfill}%
     }}
 \end{verbatim}
+\end{command}
 
-\Command{useheadtemplate}
-\Parameters{
-\item a template for the head line
-  }
-\Example
+
+\begin{command}{\useheadtemplate\marg{head line template}}
+  See |\usefoottemplate|.
+  \example
 \begin{verbatim}
 \useheadtemplate{%
   \vbox{%
@@ -3973,6 +4026,95 @@ or
   \insertvrule{0.4pt}{structure!50}}%
 }
 \end{verbatim}
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\ 
+
+\begin{command}{\insertframenumber}
+  Inserts the number of the current frame (not slide) into a template.
+\end{command}
+
+\begin{command}{\insertlogo}
+  Inserts the logo(s) into a template.
+\end{command}
+
+\begin{command}{\insertnavigation\marg{width}}
+  Inserts a horizontal navigation bar of the given \meta{width} into a
+  template. The bar lists the sections and below them mini frames for
+  each frame in that section.
+\end{command}
+
+\begin{command}{\insertpagenumber}
+  Inserts the current page number into a template.
+\end{command}
+
+\begin{command}{\insertsection}
+  Inserts the current section into a template.
+\end{command}
+
+\begin{command}{\insertsectionnavigation\marg{width}}
+  Inserts a vertical navigation bar containing all sections, with the
+  current section hilighted.
+\end{command}
+
+\begin{command}{\insertsectionnavigationhorizontal\marg{width}%
+    \marg{left insert}\marg{right insert}}
+  Inserts a horizontal navigation bar containing all sections, with
+  the current section hilighted. The \meta{left insert} will be
+  inserted to the left of the sections, the \marg{right insert} to the
+  right. By inserting a triple fill (a
+  |filll|) you can flush to bar to the left or right.
+  \example
+\begin{verbatim}
+\insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\insertshortauthor}
+  Inserts the short version of the author into a template.
+\end{command}
+
+\begin{command}{\insertshortdate}
+  Inserts the short version of the date into a template.
+\end{command}
+
+\begin{command}{\insertshortinstitute}
+  Inserts the short version of the institute into a template.
+\end{command}
+
+\begin{command}{\insertshorttitle}
+  Inserts the short version of the document title into a template.
+\end{command}
+
+
+\begin{command}{\insertsubsection}
+  Inserts the current subsection into a template.
+\end{command}
+
+\begin{command}{\insertsubsectionnavigation\marg{width}}
+  Inserts a vertical navigation bar containing all subsections of the
+  current section, with the current subsection hilighted.
+\end{command}
+
+\begin{command}{\insertsubsectionnavigationhorizontal\marg{width}%
+    \marg{left insert}\marg{right insert}}
+  See |\insertsectionnavigationhorizontal|.
+\end{command}
+
+
+\begin{command}{\insertverticalnavigation\marg{width}}
+  Inserts a vertical navigation bar of the given \meta{width} into a
+  template. The bar shows a little table of contents. The individual
+  lines are typeset using the templates
+  |\usesectionsidetemplate| and |\usesubsectionsidetemplate|.
+\end{command}
+
+\begin{command}{\insertvrule\marg{color expression}\marg{thickness}}
+  Inserts a rule of the given color and \meta{thickness} into a
+  template. 
+\end{command}
 
 
 
@@ -3996,40 +4138,34 @@ setup using special side background templates.
 Adding a sidebar of a certain size, say 1cm, will make the main text
 1cm narrower. The distance between the inner side of a side
 bar and the outer side of the text, as specified by
-the command \verb!\beamersetleftmargin! and its counterpart for the
+the command |\beamersetleftmargin| and its counterpart for the
 right margin, is not changed when a side bar is installed.
 
 Internally, the sidebars are typeset by showing them as part of the
 headline. The \beamer\ class keeps track of six dimensions, three 
-for each side: the variables \verb!\beamer@leftsidebar! and
-\verb!\beamer@rightsidebar! store the (horizontal) sizes of the side
-bars, the variables \verb!\beamer@leftmargin! and
-\verb!\beamer@rightmargin! store the distance between sidebar and
-text, and the macros \verb!\Gm@lmargin! and  \verb!\Gm@rmargin! store
+for each side: the variables |\beamer@leftsidebar| and
+|\beamer@rightsidebar| store the (horizontal) sizes of the side
+bars, the variables |\beamer@leftmargin| and
+|\beamer@rightmargin| store the distance between sidebar and
+text, and the macros |\Gm@lmargin| and  |\Gm@rmargin| store
 the distance from the edge of the paper to the edge of the text. Thus
-the sum \verb!\beamer@leftsidebar! and \verb!\beamer@leftmargin! is
-exactly  \verb!\Gm@lmargin!. Thus, if you wish to put some text right
+the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
+exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
 next to the left side bar, you might write
-\verb!\hskip-\beamer@leftmargin! to get there.
+|\hskip-\beamer@leftmargin| to get there.
 
 In the following, only the commands for the left side bars are
 listed. Each of these commands also exists for the right side bar,
 with ``left'' replaced by ``right'' everywhere.
 
 
-\Command{useleftsidebartemplate}
-\Parameters{
-\item the horizontal size of the left side bar.
-\item a template for formating the left side bar.
-  }
-\Description{
-  When the side bar is typeset, the template is invoked inside a
-  \texttt{vbox} of the height of the side bar. Thus, the below example
+\begin{command}{\useleftsidebartemplate\marg{horizontal size}\marg{template}}
+  When the side bar is typeset, the \meta{template} is invoked inside a
+  |\vbox| of the height of the side bar. Thus, the below example
   will produce a side bar of half a centimeter width, in which the word
   ``top'' is printed just below the head line and ``bottom'' is printed
   just above the foot line.
-}
-\Example
+  \example
 \begin{verbatim}
 \useleftsidebartemplate{1cm}{
   top
@@ -4037,75 +4173,55 @@ with ``left'' replaced by ``right'' everywhere.
   bottom
 }
 \end{verbatim}
+\end{command}
 
-
-\Command{useleftsidebarbackgroundtemplate}
-\Parameters{
-\item a template for the background of  the left side bar.
-  }
-\Description{
+\begin{command}{\useleftsidebarbackgroundtemplate\marg{template}}
   The template is shown behind whatever is shown in the left side
   bar. 
-}
-\Example
+  \example
 \begin{verbatim}
 \useleftsidebarbackgroundtemplate
   {\color{red}\vrule height\paperheight width\beamer@leftsidebar}
 \end{verbatim}
+\end{command}
 
 
-\Command{useleftsidebarcolortemplate}
-\Parameters{
-\item A color command.
-  }
-\Description{
+\begin{command}{\useleftsidebarcolortemplate\marg{color expression}}
   Uses the given color as background for the side bar.
-}
-\Example
+  \example
 \begin{verbatim}
 \useleftsidebarcolortemplate{\color{red}}
 \useleftsidebarcolortemplate{\color[rgb]{1,0,0.5}}
 \end{verbatim}
+\end{command}
 
-
-\Command{useleftsidebarverticalshadingtemplate}
-\Parameters{
-\item Name of the color at the bottom of the side bar.
-\item Name of the color at the top of the side bar.
-  }
-\Description{
+\begin{command}{\useleftsidebarverticalshadingtemplate\marg{bottom
+      color expression}\marg{top color expression}}
   Installs a smooth vertical transition between the given colors as
   background for the side bar.
-}
-\Example
+  \example
 \begin{verbatim}
 \useleftsidebarverticalshadingtemplate{white}{red}
 \end{verbatim}
+\end{command}
 
 
-\Command{useleftsidebarhorizontalshadingtemplate}
-\Parameters{
-\item Name of the color at the left end of the side bar.
-\item Name of the color at the right end of the side bar.
-  }
-\Description{
+\begin{command}{\useleftsidebarhorizontalshadingtemplate\marg{left end
+      color expression}\marg{right end color expression}}
   Installs a smooth horizontal transition between the given colors as
   background for the side bar.
-}
-\Example
+  \example
 \begin{verbatim}
 \useleftsidebarhorizontalshadingtemplate{white}{red}
 \end{verbatim}
+\end{command}
 
 
-\Command{usesectionsidetemplate}
-\Parameters{
-\item A template for the current section name in a side navigation
-bar. Should be an \texttt{hbox}.
-\item a template for a different section name in a side navigation
-bar. Should be an \texttt{hbox}.
-  }
-\Example
+\begin{command}{\usesectionsidetemplate\marg{current section
+      template}\marg{other section template}}
+  Both parameters should be |\hbox|es. The templates are used to
+  typeset a section name inside a side navigation bar.
+  \example
 \begin{verbatim}
 \usesectionsidetemplate
 {\setbox\tempbox=\hbox{\color{black}\tiny{\kern3pt\insertsectionhead}}%
@@ -4119,16 +4235,14 @@ bar. Should be an \texttt{hbox}.
   \wd\tempbox=\beamer@sidebarwidth%
   \box\tempbox}
 \end{verbatim}
+\end{command}
 
 
-\Command{usesubsectionsidetemplate}
-\Parameters{
-\item A template for the current subsection name in a side navigation
-bar. Should be an \texttt{hbox}.
-\item a template for a different subsection name in a side navigation
-bar. Should be an \texttt{hbox}.
-  }
-\Example
+
+\begin{command}{\usesubsectionsidetemplate\marg{current subsection
+      template}\marg{other subsection template}}
+  See |\usesectionsidetemplate|.
+  \example
 \begin{verbatim}
 \usesectionsidetemplate
 {\setbox\tempbox=\hbox{\color{black}\tiny{\kern3pt\insertsectionhead}}%
@@ -4142,6 +4256,7 @@ bar. Should be an \texttt{hbox}.
   \wd\tempbox=\beamer@sidebarwidth%
   \box\tempbox}
 \end{verbatim}
+\end{command}
 
 
 
@@ -4149,61 +4264,118 @@ bar. Should be an \texttt{hbox}.
 
 
 
+
+
+
+\subsubsection{Buttons}
+\label{section-navigation-buttons}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplateoutlinebuttons}
+  Renders buttons as rectangles with rounded left and right
+  border. Only the border (outline) is painted.
+\end{command}
+
+\begin{command}{\beamertemplatesolidbuttons}
+  Renders buttons as filled rectangles with rounded left and right
+  border.
+\end{command}
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usebuttontemplate\marg{button template}}
+  Installs a new button template. This template is invoked whenever a
+  button should be rendered.
+  \example
+\begin{verbatim}
+\usebuttontemplate{\color{structure}\insertbuttontext}
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts}\ 
+
+Inside the button template, the button text can be accessed via the
+following command:
+
+\begin{command}{\insertbuttontext}
+  Inserts the text of the current button into a template. When called
+  by  button creation commands, like |\beamerskipbutton|, the symbol
+  will be part of this text.
+\end{command}
+
+The button creation commands automatically add the following three
+inserts to the text to be rendered by |\insertbuttontext|:
+
+\begin{command}{\insertgotosymbol}
+  Inserts a small right-pointing arrow.
+\end{command}
+
+\begin{command}{\insertskipsymbol}
+  Inserts a double right-pointing arrow.
+\end{command}
+
+\begin{command}{\insertreturnsymbol}
+  Inserts a small left-pointing arrow.
+\end{command}
+
+You can redefine these commands to change these symbols.
 
 
 
 
 \subsubsection{Navigation Bars}
 
-
 \paragraph{Predefined Templates}\ 
 
-\Command{beamertemplateboxminiframe}
-\Description{Changes the symbols in a navigation bar used to represent
-  a frame to a small box.}
+\begin{command}{\beamertemplateboxminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small box.
+\end{command}
 
-\Command{beamertemplateticksminiframe}
-\Description{Changes the symbols in a navigation bar used to represent
-  a frame to a small vertical bar of varying length.}
+\begin{command}{\beamertemplateticksminiframe}
+  Changes the symbols in a navigation bar used to represent
+  a frame to a small vertical bar of varying length.
+\end{command}
 
 
-\paragraph{Template Changes Commands}\ 
+\paragraph{Template Installation Commands}\ 
 
-\Command{usesectionheadtemplate}
-\Parameters{
-\item a template for the current section name in a navigation bar.
-\item a template for a different section name in a navigation bar.
-  }
-\Example
+\begin{command}{\usesectionheadtemplate\marg{current section
+      template}\marg{other section template}}
+  The templates are used to render the section names in a navigation
+  bar. 
+  \example
 \begin{verbatim}
 \usesectionheadtemplate
 {\color{structure}\tiny\insertsectionhead}
 {\color{structure!50}\tiny\insertsectionhead}
 \end{verbatim}
+\end{command}
+  
 
-
-\Command{usesubsectionheadtemplate}
-\Parameters{
-\item a template for the current subsection name in a navigation bar.
-\item a template for a different subsection name in a navigation bar.
-  }
-\Example
+\begin{command}{\usesubsectionheadtemplate\marg{current subsection
+      template}\marg{other subsection template}}
+  See |\usesectionheadtemplate|.
+  \example
 \begin{verbatim}
 \usesubsectionheadtemplate
 {\color{structure}\tiny\insertsubsectionhead}
 {\color{structure!50}\tiny\insertsubsectionhead}
 \end{verbatim}
+\end{command}
 
-
-\Command{useminislidetemplate}
-\Parameters{
-\item a template for the mini frame of the current frame in a navigation bar.
-\item a template for the mini frame of a frame of the current
-  subsection in a navigation bar.
-\item a template for the mini frame of other frames in a navigation bar.
-\item horizontal offset between mini frames.
-\item vertical offset between mini frames.}
-\Example
+\begin{command}{\useminislidetemplate%
+    \marg{template current frame icon}%
+    \marg{template current subsection frame icon}\\%
+    \marg{template other frame icon}%
+    \marg{horizontal offset}%
+    \marg{vertical offset}}
+  The templates are used to draw frame icons in navigation bars. The
+  offsets describe the offset between icons.
+  \example
 \begin{verbatim}
 \useminislidetemplate
   {
@@ -4221,23 +4393,116 @@ bar. Should be an \texttt{hbox}.
   {.1cm}
   {.05cm}
 \end{verbatim}
+\end{command}
+
+
+
+
+\subsubsection{Navigation Symbols}
+\label{section-navigation-symbols-template}
+
+\paragraph{Predefined Templates}\ 
+
+\begin{command}{\beamertemplatenavigationsymbolsempty}
+  Suppresses all navigation symbols.
+\end{command}
+
+\begin{command}{\beamertemplatenavigationsymbolsframe}
+  Shows only the frame symbol as navigation symbol.
+\end{command}
+
+\begin{command}{\beamertemplatenavigationsymbolsvertical}
+  Organizes the navigation symbols vertically.
+\end{command}
+
+\begin{command}{\beamertemplatenavigationsymbolshorizontal}
+  Organizes the navigation symbols horizontally.
+\end{command}
+
+
+
+\paragraph{Template Installation Commands}\ 
+
+\begin{command}{\usenavigationsymbolstemplate\marg{symbols template}}
+  Installs a new symbols template. This template is invoked by themes
+  at the place where the navigation symbols should be shown.
+  \example
+\begin{verbatim}
+\usenavigationsymbolstemplate{\vbox{%
+  \hbox{\insertslidenavigationsymbols}
+  \hbox{\insertframenavigationsymbols}
+  \hbox{\insertsubsectionnavigationsymbols}
+  \hbox{\insertsectionnavigationsymbols}
+  \hbox{\insertdocnavigationsymbols}
+  \hbox{\insertbackfindforwardnavigationsymbols}}}
+\end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts for this Template}\ 
+
+The following inserts are useful for the navigation symbols template:
+
+\begin{command}{\insertslidenavigationsymbols}
+  Inserts the slide navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertframenavigationsymbols}
+  Inserts the frame navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertsubsectionnavigationsymbols}
+  Inserts the subsection navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertsectionnavigationsymbols}
+  Inserts the section navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertdocnavigationsymbols}
+  Inserts the presentation navigation symbol and (if necessary) the
+  appendix navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
+\begin{command}{\insertbackfindforwardnavigationsymbols}
+  Inserts a back, a find, and a forward navigation symbol, see
+  Section~\ref{section-navigation-symbols}.
+\end{command}
+
 
 
 
 
 \subsubsection{Footnotes}
 
-\Command{usefootnotetemplate}
-\Parameters{
-\item A template for formating a footnote.
-  }
-\Example
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\usefootnotetemplate\marg{footnote template}}
+  \example
 \begin{verbatim}
 \usefootnotetemplate{
   \parindent 1em
   \noindent
   \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext}
 \end{verbatim}
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertfootnotemark}
+  Inserts the current footnote mark (like a raised number) into a
+  template. 
+\end{command}
+
+\begin{command}{\insertfootnotetext}
+  Inserts the current footnote text into a template. 
+\end{command}
 
 
 
@@ -4248,23 +4513,22 @@ bar. Should be an \texttt{hbox}.
 
 \paragraph{Predefined Templates}\
 
-\Command{beamertemplatecaptionwithnumber}
-\Description{Changes the caption template such that the number of the
-table or figure is also shown.}
+\begin{command}{\beamertemplatecaptionwithnumber}
+  Changes the caption template such that the number of the
+  table or figure is also shown.
+\end{command}
 
-\Command{beamertemplatecaptionownline}
-\Description{Changes the caption template such that the word ``Table''
-or ``Figure'' has its own line.}
+\begin{command}{\beamertemplatecaptionownline}
+  Changes the caption template such that the word ``Table''
+  or ``Figure'' has its own line.
+\end{command}
 
 
 
-\paragraph{Template Changes Commands}\
+\paragraph{Template Installation Commands}\
 
-\Command{usecaptiontemplate}
-\Parameters{
-\item a caption template.
-  }
-\Example
+\begin{command}{\usecaptiontemplate\marg{caption template}}
+  \example
 \begin{verbatim}
 \usecaptiontemplate{
   \small
@@ -4272,6 +4536,27 @@ or ``Figure'' has its own line.}
   \insertcaption
 }
 \end{verbatim}
+\end{command}
+
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertcaption}
+  Inserts the text of the current caption into a template.
+\end{command}
+
+\begin{command}{\insertcaptionname}
+  Inserts the name of the current caption into a template. This word
+  is either ``Table'' or ``Figure'' or, if the |babel| package is
+  used, some translation thereof.
+\end{command}
+
+\begin{command}{\insertcaptionnumber}
+  Inserts the number of the current figure or table into a template.
+\end{command}
+
+
 
 
 
@@ -4280,112 +4565,147 @@ or ``Figure'' has its own line.}
 
 \paragraph{Predefined Templates}\
 
-\Command{beamertemplatedotitem}
-\Description{Changes the symbols shown in an \texttt{itemize}
-  environment to dots.}
+\begin{command}{\beamertemplatedotitem}
+  Changes the symbols shown in an |itemize|
+  environment to dots.
+\end{command}
 
-\Command{beamertemplateballitem}
-\Description{Changes the symbols shown in an \texttt{itemize}
-  environment to small plastic balls.}
-
-
-\paragraph{Template Changes Commands}\
-
-\Command{useenumerateitemtemplate}
-\Parameters{
-\item a template for the default item in the top level of an
-  enumeration. 
-  }
-\Example \verb!\useenumerateitemtemplate{\insertenumlabel}!
-
-\Command{useitemizeitemtemplate}
-\Parameters{
-\item a template for the default item in the top level of an
-  itemize list.
-  }
-\Example \verb!\useitemizeitemtemplate{\pgfuseimage{mybullet}}!
-
-\Command{usesubitemizeitemtemplate}
-\Parameters{
-\item a template for the default item in the second level of an
-  itemize list.
-  }
-\Example \verb!\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}!
-
-\Command{useitemizetemplate}
-\Parameters{
-\item a template for the beginning a top-level itemize list.
-\item a template for the end of a top-level itemize list.
-  }
-\Example \verb!\useitemizetemplate{}{}!
-
-\Command{usesubitemizetemplate}
-\Parameters{
-\item a template for the beginning a second-level itemize list.
-\item a template for the end of a second-level itemize list.
-  }
-\Example \verb!\usesubitemizetemplate{\begin{small}}{\end{small}}!
-
-\Command{useenumeratetemplate}
-\Parameters{
-\item a template for the beginning a top-level enumeration.
-\item a template for the end of a top-level enumeration.
-  }
-\Example \verb!\useenumeratetemplate{}{}!
-
-\Command{usesubenumerateitemtemplate}
-\Parameters{
-\item a template for the default item in the second level of an
-  enumeration. 
-  }
-\Example
-\verb!\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}!
-
-\Command{usesubenumeratetemplate}
-\Parameters{
-\item a template for the beginning a second-level enumeration.
-\item a template for the end of a second-level enumeration.
-  }
-\Example \verb!\usesubenumeratetemplate{\begin{small}}{\end{small}}!
+\begin{command}{\beamertemplateballitem}
+  Changes the symbols shown in an |itemize|
+  environment to small plastic balls.
+\end{command}
 
 
-\Command{usedescriptiontemplate}
-\Parameters{
-\item A template for the default item in a description. Use
-  \texttt{insertdescriptionitem} to insert the current item text.
-\item A default width for the default item, if no other width is
-  specified; the width \texttt{labelsep} is automatically added to
-  this parameter.
-  }
-\Example \verb!\usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}!
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\useenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the top
+  level of an enumeration. 
+  \example |\useenumerateitemtemplate{\insertenumlabel}|
+\end{command}
+
+
+\begin{command}{\useitemizeitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the top
+  level of an itemize list.
+  \example |\useitemizeitemtemplate{\pgfuseimage{mybullet}}|
+\end{command}
+
+
+\begin{command}{\usesubitemizeitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the
+  second level of an itemize list.
+  \example |\usesubitemizeitemtemplate{\pgfuseimage{mysubbullet}}|
+\end{command}
+
+\begin{command}{\useitemizetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a top-level
+  itemize list, the \meta{end text} at its end.
+  \example |\useitemizetemplate{}{}|
+\end{command}
+
+\begin{command}{\usesubitemizetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a second-level
+  itemize list, the \meta{end text} at its end.
+  \example |\usesubitemizetemplate{\begin{small}}{\end{small}}|
+\end{command}
+
+
+\begin{command}{\useenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the
+  top-level of an enumeration.  
+  \example
+  |\useenumerateitemtemplate{\insertenumlabel}|
+\end{command}
+\begin{command}{\usesubenumerateitemtemplate\marg{template}}
+  The \meta{template} is used to render the default item in the second
+  level of an enumeration. 
+  \example
+  |\usesubenumerateitemtemplate{\insertenumlabel-\insertsubenumlabel}|
+\end{command}
+
+\begin{command}{\useenumeratetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a top-level
+  enumeration, the \meta{end text} at its end.
+  \example |\useenumeratetemplate{}{}|
+\end{command}
+
+
+\begin{command}{\usesubenumeratetemplate\marg{begin text}\marg{end text}}
+  The \meta{begin text} is inserted at the beginning of a second-level
+  enumeration, the \meta{end text} at its end.
+  \example |\usesubenumeratetemplate{\begin{small}}{\end{small}}|
+\end{command}
+
+
+\begin{command}{\usedescriptiontemplate\marg{description
+      template}\marg{default width}}
+  The \meta{default width} is used as width of the default item, if no
+  other width is specified; the width |\labelsep| is
+  automatically added to this parameter.
+  \example
+  |\usedescriptionitemtemplate{\color{structure}\insertdescriptionitem}{2cm}|
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertdescriptionitem}
+  Inserts the current item of a description environment into a
+  template.
+\end{command}
+
+\begin{command}{\insertenumlabel}
+  Inserts the current number of the top-level enumeration (as an
+  Arabic number) into a template.
+\end{command}
+
+
+\begin{command}{\insertsubenumlabel}
+  Inserts the current number of the second-level enumeration (as an
+  Arabic number) into a template.
+\end{command}
+
+
 
 
 
 \subsubsection{Hilighting Commands}
 
-\Command{usealerttemplate}
-\Parameters{
-\item a template for the \texttt{alert} command
-  }
-\Example \verb!\usealerttemplate{{\color{red}\insertalert}}!
+\paragraph{Template Installation Commands}\
 
-\Command{usestructuretemplate}
-\Parameters{
-\item a template for the \texttt{structure} command
-  }
-\Example \verb!\usestructuretemplate{{\color{structure}\insertstructure}}!
+\begin{command}{\usealerttemplate\marg{alert template}}
+  \example |\usealerttemplate{{\color{red}\insertalert}}|
+\end{command}
+
+
+\begin{command}{\usestructuretemplate\marg{structure template}}
+  \example |\usestructuretemplate{{\color{structure}\insertstructure}}|
+\end{command}
+
+
+\paragraph{Inserts for these Templates}\
+
+\begin{command}{\insertalert}
+  Inserts the current alerted text into a template.
+\end{command}
+
+\begin{command}{\insertstructure}
+  Inserts the current structure text into a template.
+\end{command}
+
+
 
 
 
 
 \subsubsection{Block Environments}
 
-\Command{useblocktemplate}
-\Parameters{
-\item a template for the beginning of the block.
-\item a template for the end of the block.
-  }
-\Example
+\paragraph{Template Installation Commands}\
+
+\begin{command}{\useblocktemplate\marg{block beginning
+      template}\marg{block end template}}
+  \example
 \begin{verbatim}
 \useblocktemplate
   {%
@@ -4395,13 +4715,12 @@ or ``Figure'' has its own line.}
   }
   {\medskip}
 \end{verbatim}
+\end{command}
 
-\Command{usealertblocktemplate}
-\Parameters{
-\item a template for the beginning of the block.
-\item a template for the end of the block.
-  }
-\Example
+
+\begin{command}{\usealertblocktemplate\marg{block beginning
+      template}\marg{block end template}}
+  \example
 \begin{verbatim}
 \usealertblocktemplate
   {%
@@ -4410,13 +4729,12 @@ or ``Figure'' has its own line.}
   \par}
   {\medskip}
 \end{verbatim}
+\end{command}
 
-\Command{useexampleblocktemplate}
-\Parameters{
-\item a template for the beginning of the block.
-\item a template for the end of the block.
-  }
-\Example
+
+\begin{command}{\useexampleblocktemplate\marg{block beginning
+      template}\marg{block end template}}
+  \example
 \begin{verbatim}
 \useexampleblocktemplate
   {%
@@ -4428,251 +4746,14 @@ or ``Figure'' has its own line.}
      \medskip
   }
 \end{verbatim}
+\end{command}
 
 
+\paragraph{Inserts for these Templates}\
 
-
-
-\subsection{Template Inserts}
-
-In the following, an alphabetical list of the different
-\verb!\insertxxxx! commands is given. These commands are used inside
-templates.
-
-
-\Command{insertalert}
-\Description{
-  Inserts the current alerted text into a template.
-}
-
-\Command{insertauthor}
-\Description{
-  Inserts the one-line version of the author names into a template.
-}
-
-\Command{insertbiblabel}
-\Description{
-  Inserts the current citation label into a template.
-  }
-
-\Command{insertblockname}
-\Description{
+\begin{command}{\insertblockname}
   Inserts the name of the current block into a template.
-}
+\end{command}
 
-\Command{insertcaption}
-\Description{
-  Inserts the text of the current caption into a template.
-}
-
-\Command{insertcaptionname}
-\Description{
-  Inserts the name of the current caption into a template. This word
-  is either ``Table'' or ``Figure'' or, if the \texttt{babel} package is
-  used, some translation thereof.
-}
-
-\Command{insertcaptionnumber}
-\Description{
-  Inserts the number of the current figure or table into a template.
-}
-
-\Command{insertdate}
-\Description{
-  Inserts the date into a template.
-}
-
-\Command{insertdescriptionitem}
-\Description{
-  Inserts the current item of a description environment into a
-  template.
-}
-
-\Command{insertenumlabel}
-\Description{
-  Inserts the current number of the top-level enumeration (as an
-  Arabic number) into a template.
-}
-
-\Command{insertfootnotemark}
-\Description{
-  Inserts the current footnote mark (like a raised number) into a
-  template. 
-}
-
-\Command{insertfootnotetext}
-\Description{
-  Inserts the current footnote text into a template. 
-}
-
-\Command{insertframenumber}
-\Description{
-  Inserts the number of the current frame (not slide) into a template.
-}
-
-\Command{insertframetitle}
-\Description{
-  Inserts the current frame title into a template.
-}
-
-\Command{insertinstitute}
-\Description{
-  Inserts the institute into a template.
-}
-
-\Command{insertlogo}
-\Description{
-  Inserts the logo(s) into a template.
-}
-
-\Command{insertnavigation}
-\Parameters{
-\item a width
-  }
-\Description{
-  Inserts a horizontal navigation bar of the given width into a
-  template. The bar lists the sections and below them mini frames for
-  each frame in that section.
-}
-
-\Command{insertpagenumber}
-\Description{
-  Inserts the current page number into a template.
-}
-
-\Command{insertsection}
-\Description{
-  Inserts the current section into a template.
-}
-
-\Command{insertsectionnavigation}
-\Parameters{
-\item a width
-  }
-\Description{
-  Inserts a vertical navigation bar containing all sections, with the
-  current section hilighted.
-}
-
-\Command{insertsectionnavigationhorizontal}
-\Parameters{
-\item a width
-\item a text (typical a glue) to be inserted at the left
-\item a text (typical a glue) to be inserted at the right
-  }
-\Description{
-  Inserts a horizontal navigation bar containing all sections, with the
-  current section hilighted. By inserting a triple fill (a
-  \texttt{filll}) you can flush to bar to the left or right.
-}
-\Example
-\begin{verbatim}
-\insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
-\end{verbatim}
-
-\Command{insertshortauthor}
-\Description{
-  Inserts the short version of the author into a template.
-}
-
-\Command{insertshortdate}
-\Description{
-  Inserts the short version of the date into a template.
-}
-
-\Command{insertshortinstitute}
-\Description{
-  Inserts the short version of the institute into a template.
-}
-
-\Command{insertshorttitle}
-\Description{
-  Inserts the short version of the document title into a template.
-}
-
-\Command{insertstructure}
-\Description{
-  Inserts the current structure text into a template.
-}
-
-\Command{insertsubenumlabel}
-\Description{
-  Inserts the current number of the second-level enumeration (as an
-  Arabic number) into a template.
-}
-
-\Command{insertsubsection}
-\Description{
-  Inserts the current subsection into a template.
-}
-
-\Command{insertsubsectionnavigation}
-\Parameters{
-\item a width
-  }
-\Description{
-  Inserts a vertical navigation bar containing all subsections of the
-  current section, with the current subsection hilighted.
-}
-
-\Command{insertsubsectionnavigationhorizontal}
-\Parameters{
-\item a width
-\item a text (typical a glue) to be inserted at the left
-\item a text (typical a glue) to be inserted at the right
-  }
-\Description{
-  Inserts a horizontal navigation bar containing all subsections, with the
-  current section hilighted. By inserting a triple fill (a
-  \texttt{filll}) you can flush to bar to the left or right.
-}
-\Example
-\begin{verbatim}
-\insertsubsectionnavigationhorizontal{.5\textwidth}{}{\hskip0pt plus1filll}
-\end{verbatim}
-
-\Command{inserttitle}
-\Description{
-  Inserts a version of the document title into a template that is
-  useful for the title page. 
-}
-
-\Command{inserttitlegraphic}
-\Description{
-  Inserts the title graphic into a template.
-}
-
-\Command{inserttocsection}
-\Description{
-  Inserts the version of the current section name into a template that
-  is useful for the table of contents.
-  }
-
-\Command{inserttocsubsection}
-\Description{
-  Inserts the version of the current subsection name into a template
-  that is useful for the table of contents.
-  }
-
-\Command{insertverticalnavigation}
-\Parameters{
-\item a width
-  }
-\Description{
-  Inserts a vertical navigation bar of the given width into a
-  template. The bar shows a little table of contents. The indiviual
-  lines are typeset using the templates
-  \texttt{usesectionsidetemplate} and \texttt{usesubsectionsidetemplate}.
-}
-
-\Command{insertvrule}
-\Parameters{
-\item a color
-\item a thickness
-  }
-\Description{
-  Inserts a rule of the given color and thickness into a
-  template. 
-  }
 
 \end{document}

@@ -2502,7 +2502,7 @@
 \pgfdefobject{beamerslidenavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
 {\pgfrect[stroke]{\pgfpoint{8.3pt}{0.8pt}}{\pgfpoint{3.4pt}{2.4pt}}}
 
-\def\insertslidenavigationbuttons{%
+\def\insertslidenavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
     \color{\beamernavigationcolorlight}%
     \pgfuseobject{beamerslidenavlight}%
@@ -2537,7 +2537,7 @@
  \pgfqlineto{11.2}{1.6}
  \pgfstroke}
 
-\def\insertframenavigationbuttons{%
+\def\insertframenavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
     \color{\beamernavigationcolorlight}%
     \pgfuseobject{beamerframenavlight}%
@@ -2577,7 +2577,7 @@
   \pgfqlineto{12}{3}
   \pgfstroke}
 
-\def\insertsubsectionnavigationbuttons{%
+\def\insertsubsectionnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
     \color{\beamernavigationcolorlight}%
     \pgfuseobject{beamersubsectionnavlight}%
@@ -2618,7 +2618,7 @@
   \pgfstroke
 }
 
-\def\insertsectionnavigationbuttons{%
+\def\insertsectionnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
     \color{\beamernavigationcolorlight}%
     \pgfuseobject{beamersectionnavlight}%
@@ -2630,7 +2630,7 @@
   \hyperlinksectionend{\kern5.5pt}%
   \hyperlinksectionstartnext{\kern5pt}}
 
-\ifx\beamer@appendixpages\@empty
+\ifx\beamer@startpageofappendix\@empty
 % no appendix
 \pgfdefobject{beamerdocnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
 {\pgfsetlinewidth{0.6pt}
@@ -2650,7 +2650,7 @@
   \pgfqlineto{12}{0}
   \pgfstroke}
 
-\def\insertdocnavigationbuttons{%
+\def\insertdocnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
     \color{\beamernavigationcolorstrong}%
     \pgfuseobject{beamerdocnavstrong}%
@@ -2692,7 +2692,7 @@
   \pgfstroke
 }
 
-\def\insertdocnavigationbuttons{%
+\def\insertdocnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
     \color{\beamernavigationcolorlight}%
     \pgfuseobject{beamerdocnavlight}%
@@ -2737,7 +2737,7 @@
   \pgfstroke
 }  
 
-\def\insertbackfindforwardnavigationbuttons{%
+\def\insertbackfindforwardnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
     \color{\beamernavigationcolorlight!50!\beamernavigationcolorstrong}%
     \pgfuseobject{beamerbackfindforwardnav}%
@@ -2747,8 +2747,8 @@
   \Acrobatmenu{GoForward}{\kern7pt}}
 
 
-\def\usenavigationbuttontemplate#1{%
-  \def\insertnavigationbuttons{#1}}
+\def\usenavigationsymbolstemplate#1{%
+  \def\insertnavigationsymbols{#1}}
 
 
 %
@@ -2802,17 +2802,17 @@
 \def\usebuttontemplate#1{%
   \def\beamer@buttontemplate{#1}}
 
-\def\beamerbutton#1#2{%
-  \def\insertbuttontext{\hyperlink{#1}{#2}}%
+\def\beamerbutton#1{%
+  \def\insertbuttontext{#1}%
   \beamer@buttontemplate}
-\def\beamergotobutton#1#2{%
-  \def\insertbuttontext{\hyperlink{#1}{\insertgotosymbol#2}}%
+\def\beamergotobutton#1{%
+  \def\insertbuttontext{\insertgotosymbol#1}%
   \beamer@buttontemplate}%
-\def\beamerskipbutton#1#2{%
-  \def\insertbuttontext{\hyperlink{#1}{\insertskipsymbol#2}}%
+\def\beamerskipbutton#1{%
+  \def\insertbuttontext{\insertskipsymbol#1}%
   \beamer@buttontemplate}%
-\def\beamerreturnbutton#1#2{%
-  \def\insertbuttontext{\hyperlink{#1}{\insertreturnsymbol#2}}%
+\def\beamerreturnbutton#1{%
+  \def\insertbuttontext{\insertreturnsymbol#1}%
   \beamer@buttontemplate}%
 
 
@@ -3032,13 +3032,35 @@
   \dp\beamer@tempbox=0pt%
   \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
   \beamer@tempdim=\wd\beamer@tempbox%
+  \newdimen\dima
+  \newdimen\dimb
+  \dima=\beamer@tempdim\advance\dima by2.2pt
+  \dimb=\beamer@tempdim\advance\dimb by4pt
   \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
-    \color{structure}
-    \pgfcircle[fill]{\pgfpoint{0pt}{4pt}}{4pt}
-    \pgfcircle[fill]{\pgfpoint{\the\beamer@tempdim}{4pt}}{4pt}
-    \pgfrect[fill]{\pgfpoint{0pt}{0pt}}{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \color{structure!50!averagebackgroundcolor}
+    \pgfsetlinewidth{0.8pt}
+    \pgfqmoveto{0}{0}
+    \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
+    \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
+    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\dima}{8pt}}%
+    {\pgfpoint{\the\dimb}{6.2pt}}%
+    {\pgfpoint{\the\dimb}{4pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\dimb}{1.8pt}}%
+    {\pgfpoint{\the\dima}{0pt}}%
+    {\pgfpoint{\the\beamer@tempdim}{0pt}}
+    \pgffill
   \end{pgfpicture}%
   \hskip-\beamer@tempdim%
   \box\beamer@tempbox%
   \kern4pt}
-\usenavigationbuttontemplate{}
+
+\usenavigationsymbolstemplate{\hbox{%
+  \hbox{\insertslidenavigationsymbol}
+  \hbox{\insertframenavigationsymbol}
+  \hbox{\insertsubsectionnavigationsymbol}
+  \hbox{\insertsectionnavigationsymbol}
+  \hbox{\insertdocnavigationsymbol}
+  \hbox{\insertbackfindforwardnavigationsymbol}}}

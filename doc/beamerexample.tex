@@ -30,13 +30,15 @@
 \usepackage[latin1]{inputenc}
 \usepackage{colortbl}
 
+\usepackage{listings}
 
 % Use some nice templates
 
 \beamertemplateshadingbackground{red!10}{structure!10}
 \beamertemplatetransparentcovereddynamic
 \beamertemplateballitem
-\beamertemplatenavigationbuttonshorizontal
+\beamertemplatenavigationsymbolshorizontal
+\beamertemplatesolidbuttons
 
 %
 % The following defintions are peculiar to this particular
@@ -643,7 +645,7 @@
 
   \begin{overprint}
   \onslide<1>
-    \hfill\beamerskipbutton{skipproof}{Skip proof}
+    \hfill\hyperlinkframestartnext{\beamerskipbutton{Skip proof}}
   \onslide<2>
     \begin{proof}
       Every context-free language can be accepted by a nondeterministic
@@ -655,8 +657,6 @@
 \frame
 {
   \frametitle{Relationships among Overhead-Free Computation Classes}
-
-  \hypertarget<1>{skipproof}{}
   
   \begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{6.5cm}
     \pgfsetlinewidth{0.8pt}
@@ -688,7 +688,7 @@
   \end{Theorem}
   \vskip1em
 
-  \beamergotobutton{proofdetails}{Proof details}
+  \hyperlink{proofdetails}{\beamergotobutton{Proof details}}
   \hypertarget{backfromproofdetails}{}
 }
 
@@ -888,7 +888,7 @@
     \end{itemize}
   \end{proof}
 
-  \hfill\beamerreturnbutton{backfromproofdetails}{Return}
+  \hfill\hyperlink{backfromproofdetails}{\beamerreturnbutton{Return}}
 }
 
 \subsection{Improvements for Context-Free Languages}

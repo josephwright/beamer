@@ -265,27 +265,92 @@
 % Buttons
 %
 
-\newcommand{\beamertemplatenavigationbuttonsempty}{
-  \usenavigationbuttontemplate{}}
+\newcommand{\beamertemplateoutlinebuttons}
+{\usebuttontemplate{%
+  \color{structure}
+  \setbox\beamer@tempbox=\hbox{\tiny\insertbuttontext}%
+  \ht\beamer@tempbox=6pt%
+  \dp\beamer@tempbox=0pt%
+  \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
+  \beamer@tempdim=\wd\beamer@tempbox%
+  \newdimen\dima
+  \newdimen\dimb
+  \dima=\beamer@tempdim\advance\dima by2.2pt
+  \dimb=\beamer@tempdim\advance\dimb by4pt
+  \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
+    \color{structure!50!averagebackgroundcolor}
+    \pgfsetlinewidth{0.8pt}
+    \pgfqmoveto{0}{0}
+    \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
+    \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
+    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\dima}{8pt}}%
+    {\pgfpoint{\the\dimb}{6.2pt}}%
+    {\pgfpoint{\the\dimb}{4pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\dimb}{1.8pt}}%
+    {\pgfpoint{\the\dima}{0pt}}%
+    {\pgfpoint{\the\beamer@tempdim}{0pt}}
+    \pgfclosepath
+    \pgfstroke
+  \end{pgfpicture}%
+  \hskip-\beamer@tempdim%
+  \box\beamer@tempbox%
+  \kern4pt}}
 
-\newcommand{\beamertemplatenavigationbuttonsframe}{
-  \usenavigationbuttontemplate{\insertframenavigationbuttons}}
+\newcommand{\beamertemplatesolidbuttons}
+{\usebuttontemplate{%
+  \setbox\beamer@tempbox=\hbox{\tiny\color{white}\insertbuttontext}%
+  \ht\beamer@tempbox=6pt%
+  \dp\beamer@tempbox=0pt%
+  \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
+  \beamer@tempdim=\wd\beamer@tempbox%
+  \newdimen\dima
+  \newdimen\dimb
+  \dima=\beamer@tempdim\advance\dima by2.2pt
+  \dimb=\beamer@tempdim\advance\dimb by4pt
+  \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
+    \color{structure!50!averagebackgroundcolor}
+    \pgfsetlinewidth{0.8pt}
+    \pgfqmoveto{0}{0}
+    \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
+    \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
+    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\dima}{8pt}}%
+    {\pgfpoint{\the\dimb}{6.2pt}}%
+    {\pgfpoint{\the\dimb}{4pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\dimb}{1.8pt}}%
+    {\pgfpoint{\the\dima}{0pt}}%
+    {\pgfpoint{\the\beamer@tempdim}{0pt}}
+    \pgffill
+  \end{pgfpicture}%
+  \hskip-\beamer@tempdim%
+  \box\beamer@tempbox%
+  \kern4pt}}
+\newcommand{\beamertemplatenavigationsymbolsempty}{
+  \usenavigationsymbolstemplate{}}
 
-\newcommand{\beamertemplatenavigationbuttonsvertical}{%
-  \usenavigationbuttontemplate{
+\newcommand{\beamertemplatenavigationsymbolsframe}{
+  \usenavigationsymbolstemplate{\insertframenavigationsymbols}}
+
+\newcommand{\beamertemplatenavigationsymbolsvertical}{%
+  \usenavigationsymbolstemplate{
   \vbox{%
-  \hbox{\insertslidenavigationbuttons}
-  \hbox{\insertframenavigationbuttons}
-  \hbox{\insertsubsectionnavigationbuttons}
-  \hbox{\insertsectionnavigationbuttons}
-  \hbox{\insertdocnavigationbuttons}
-  \hbox{\insertbackfindforwardnavigationbuttons}}}}
+  \hbox{\insertslidenavigationsymbols}
+  \hbox{\insertframenavigationsymbols}
+  \hbox{\insertsubsectionnavigationsymbols}
+  \hbox{\insertsectionnavigationsymbols}
+  \hbox{\insertdocnavigationsymbols}
+  \hbox{\insertbackfindforwardnavigationsymbols}}}}
 
-\newcommand{\beamertemplatenavigationbuttonshorizontal}{%
-  \usenavigationbuttontemplate{\hbox{%
-  \hbox{\insertslidenavigationbuttons}
-  \hbox{\insertframenavigationbuttons}
-  \hbox{\insertsubsectionnavigationbuttons}
-  \hbox{\insertsectionnavigationbuttons}
-  \hbox{\insertdocnavigationbuttons}
-  \hbox{\insertbackfindforwardnavigationbuttons}}}}
+\newcommand{\beamertemplatenavigationsymbolshorizontal}{%
+  \usenavigationsymbolstemplate{\hbox{%
+  \hbox{\insertslidenavigationsymbol}
+  \hbox{\insertframenavigationsymbol}
+  \hbox{\insertsubsectionnavigationsymbol}
+  \hbox{\insertsectionnavigationsymbol}
+  \hbox{\insertdocnavigationsymbol}
+  \hbox{\insertbackfindforwardnavigationsymbol}}}}
