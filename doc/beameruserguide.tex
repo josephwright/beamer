@@ -3420,6 +3420,10 @@ Right after the |documentclass| command and right after the
 comments following and no leading spaces), \TeX\ is always in common
 mode. If you do not wish this to be the case, simply append a comment
 to the line.
+
+If you use |\input| or |\include| or a related command to include
+another file, make sure that when \TeX\ reaches the end of this file,
+it is in common mode.
   
 \begin{command}{\article}
   All text following this command will only be present in the article
@@ -3536,6 +3540,7 @@ slides from the presentattion version in an article as figures.
   Tells the beamer class where to find the presentation version of the
   current file.  
 \end{command}
+
 
 
 \subsubsection{Including Slides from the Presentation Version in the
