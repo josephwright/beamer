@@ -239,10 +239,11 @@
 \def\insertpagenumber{\thepage}
 
 \def\beamer@activecjk{}
+\def\beamer@hypercjk{}
 
 \DeclareOptionBeamer{CJK}{\ExecuteOptions{cjk}}
 \DeclareOptionBeamer{cjk}{
-  \hypersetup{CJKbookmarks=true}
+  \def\beamer@hypercjk{\hypersetup{CJKbookmarks=true}}
 
   \def\beamer@activecjk{
     % Activate all >128 characters. 
@@ -336,8 +337,9 @@
 
 \hypersetup{pdfcreator={LaTeX with beamer class version 2.01}}
 
-% Unicode stuff
+% Coding stuff
 \beamer@loaducs
+\beamer@hypercjk
 
 \expandafter\input\beamer@size
 \geometry{headsep=0pt}
