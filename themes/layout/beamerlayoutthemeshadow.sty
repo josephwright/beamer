@@ -9,27 +9,29 @@
 
 \mode<presentation>
 
-\AtBeginDocument{
-  \pgfdeclarehorizontalshading{beamer@frametitleshade}{\paperheight}{%
-    color(0pt)=(beamerstructure);
-    color(\paperwidth)=(black)}
+\uselayouttheme{split}
 
+\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\paperheight}{%
+  color(0pt)=(frametitle.bg);
+  color(\paperwidth)=(frametitle right.bg)}
+
+\AtBeginDocument{
   \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
     color(0pt)=(bg);
     color(4pt)=(black!50!bg)}
 }
 
-\def\beamer@inserttopshade{%
+\addtoheadtemplate{}{%
   \vskip-0.2pt
-  \beamerline{\pgfuseshading{beamer@topshade}}
+  \pgfuseshading{beamer@topshade}
   \vskip-2pt
 }
 
-\uselayouttheme[shadecommand=beamer@inserttopshade]{split}
-
 \useframetitletemplate{%
-  \nointerlineskip\vskip-2pt%
+  \nointerlineskip%
+  \vskip-2pt%
   \hbox{\leavevmode
+    \usebeamercolor[fg]{frametitle}%
     \advance\beamer@leftmargin by -12bp%
     \advance\beamer@rightmargin by -12bp%
     \beamer@tempdim=\textwidth%
@@ -40,19 +42,21 @@
           \vbox{}\vskip-1ex%
           \leftskip0.3cm%
           \rightskip0.3cm plus1fil\leavevmode
-          \usebeamerfont{frametitle}\color{white}\insertframetitle%
+          \usebeamerfont{frametitle}%
+          \insertframetitle%
           \ifx\insertframesubtitle\@empty%
             \strut\par%
           \else
-            \par{\usebeamerfont*{framesubtitle}{\insertframesubtitle}\strut\par}%
+            \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
           \fi%
           \nointerlineskip
           \vbox{}%
           \end{minipage}}%
-      \color{beamerstructure!75!black}%
       \beamer@tempdim=\ht\beamer@tempbox%
       \advance\beamer@tempdim by 2pt%
       \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{\beamer@tempdim}
+        \colorlet{frametitle.bg}{bg}
+        \usebeamercolor{frametitle right}\colorlet{frametitle right.bg}{bg}
         \pgfrect[clip]{\pgforigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
         \pgfbox[left,base]{\pgfuseshading{beamer@frametitleshade}}
       \end{pgfpicture}

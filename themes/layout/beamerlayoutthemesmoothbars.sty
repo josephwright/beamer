@@ -9,15 +9,12 @@
 
 \newif\ifbeamer@sb@subsection
 
-\DeclareOptionBeamer{showsubsection}[true]{\csname beamer@sb@subsection#1\endcsname}
-\ExecuteOptionsBeamer{showsubsection=true}
+\DeclareOptionBeamer{subsection}[true]{\csname beamer@sb@subsection#1\endcsname}
+\ExecuteOptionsBeamer{subsection=true}
 \ProcessOptionsBeamer
 
-\mode<presentation>
 
-\setbeamercolor{section in head/foot}{fg=white,bg=black}
-\setbeamercolor{subsection in head/foot}{use=structure,bg=structure.fg!50!black,fg=white}
-\setbeamercolor{frametitle}{use=structure,fg=white,bg=structure.fg}
+\mode<presentation>
 
 \beamer@compresstrue
 
@@ -30,7 +27,7 @@
       \usebeamercolor{subsection in head/foot}
       \colorlet{ssec.bg}{bg}
       \usebeamercolor{section in head/foot}
-       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+      \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
          color(0ex)=(global.bg);%
          color(1ex)=(ssec.bg);%
          color(3.25ex)=(ssec.bg);%
@@ -67,54 +64,47 @@
 }
 
                                 % Head
-\useheadtemplate{%
-  \vbox{%
-    \beamerline{\pgfuseshading{beamer@barshade}}%
-    \ifbeamer@sb@subsection%
-      \vskip-9.75ex%
-    \else%
-      \vskip-7ex%
-    \fi%
-    {\setbox\beamer@linebox=\hbox
-      to\textwidth{\hskip-\Gm@lmargin\insertnavigation{\paperwidth}\hskip-\Gm@rmargin}%
-    \ht\beamer@linebox=2.25ex%
-    \dp\beamer@linebox=3.75ex%
-    \box\beamer@linebox}%
-    \ifbeamer@sb@subsection%
-      \beamer@fixedline{%
-          \usebeamercolor[fg]{subsection in head/foot}{\usebeamerfont{subsection in
-              head/foot}\insertsubsection\hfil}%
-        }%
-    \fi%
-    }%
-  }%
+\useheadtemplate*{%
+  \pgfuseshading{beamer@barshade}%
+  \ifbeamer@sb@subsection%
+    \vskip-9.75ex%
+  \else%
+    \vskip-7ex%
+  \fi%
+  \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
+    \insertnavigation{\paperwidth}
+  \end{beamercolorbox}%
+  \ifbeamer@sb@subsection%
+    \begin{beamercolorbox}[ignorebg,ht=2.125ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}\insertsubsection
+    \end{beamercolorbox}%
+  \fi%
+}%
 
 
 \useframetitletemplate{%
   \nointerlineskip%
   \usebeamerfont{headline}%
-  \vskip-0.5ex%
-  \beamerline{\pgfuseshading{beamer@aboveframetitle}}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex]{empty}
+    \pgfuseshading{beamer@aboveframetitle}%
+  \end{beamercolorbox}%
   \vskip-.5ex%
   \nointerlineskip%
-  \usebeamercolor{frametitle}%
-  \beamer@colouredline{bg}{%
-    \begin{minipage}[b]{\paperwidth}%
-      \usebeamerfont*{frametitle}%
-      \vbox{}\vskip-.5ex%
-      \leftskip0.3cm%
-      \rightskip0.3cm plus1fil\leavevmode\color{fg}\insertframetitle%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil]{frametitle}
+    \usebeamerfont*{frametitle}\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%
       \else
         \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
-      \fi%
-      \nointerlineskip
-      \vbox{}%
-    \end{minipage}}%
-  \nointerlineskip%
-  \vskip-0.5pt%
-  \beamerline{\pgfuseshading{beamer@belowframetitle}}%
+      \fi%%
+    \usebeamerfont{headline}%
+    \vskip.5ex  
+  \end{beamercolorbox}%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,ht=.5ex,dp=0ex]{empty}
+    \pgfuseshading{beamer@belowframetitle}%
+  \end{beamercolorbox}%
 }
   
   

@@ -735,7 +735,7 @@
     {\pgfpoint{\the\beamer@tempdim}{0pt}}
     \pgfclosepath
     \pgffill
-    \color{bg*}
+    \usebeamercolor[fg]{button outline}
     \pgfqmoveto{0}{0}
     \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
     \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
@@ -756,10 +756,11 @@
   \kern4pt}}
 
 \newcommand{\beamertemplateoutlinebuttons}
-{\setbeamercolor*{button}{parent=structure,use=structure,bg*=structure.fg!50!bg}}
+{\setbeamercolor*{button outline}{parent=structure,use=structure,fg=structure.fg!50!bg}}
 
 \newcommand{\beamertemplatesolidbuttons}
-{\setbeamercolor*{button}{use=structure,bg*=structure.fg!50!bg,bg=structure.fg!50!bg,fg=white}}
+{\setbeamercolor*{button}{use=structure,bg=structure.fg!50!bg,fg=white}
+ \setbeamercolor*{button outline}{use=structure,fg=structure.fg!50!bg}}
 
 \newcommand{\beamertemplatenavigationsymbolsempty}{
   \usenavigationsymbolstemplate{}}

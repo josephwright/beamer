@@ -7,23 +7,6 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\DeclareOptionBeamer{shadecommand}{\def\beamer@blts@shader{\csname#1\endcsname}}
-
-\ExecuteOptionsBeamer{shadecommand=relax}
-\ProcessOptionsBeamer
-
-\AtBeginDocument{
-  \pgfdeclareverticalshading{topshade}{\paperwidth}{%
-    color(0pt)=(bg);
-    color(0pt)=(black!50!bg)}
-
-  \pgfdeclarehorizontalshading{frametitleshade}{\paperheight}{%
-    color(0pt)=(beamerstructure);
-    color(\paperwidth)=(black)}
-}
-
-
-
 \mode<presentation>
 
 \usesectionheadtemplate
@@ -41,7 +24,6 @@
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex]{subsection in head/foot}%
     \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}%
   \end{beamercolorbox}%
-  \beamer@blts@shader%
 }
 
 \else
@@ -63,7 +45,6 @@
       \vbox to\@tempdimb{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}%
     \end{beamercolorbox}%
   \fi%
-  \beamer@blts@shader%
 }
 
 \fi

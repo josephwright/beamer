@@ -15,13 +15,8 @@
 
 \mode<presentation>
 
-
-\setbeamercolor{upper separation line}{}
-\setbeamercolor{lower separation line}{parent=upper separation line}
-
-\useheadtemplate{%
-  \vbox{%
-    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{upper separation line}
+\useheadtemplate*{%
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{upper separation line head}
     \end{beamercolorbox}
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
@@ -55,13 +50,9 @@
       \fi%
       \insertsubsection
     \end{beamercolorbox}
-    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{lower separation line}
+    \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{lower separation line head}
     \end{beamercolorbox}
-  }%
 }
-
-\ProcessOptionsBeamer
-
 
   
 \mode

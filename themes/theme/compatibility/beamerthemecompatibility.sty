@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemebeginner}[2004/05/08 ver 0.1]
+\ProvidesPackage{beamerthemecompatibility}[2004/05/08 ver 0.1]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -13,7 +13,14 @@
 \usefonttheme[onlysmall]{bold}
 \setbeamerfont{frametitle}{series=\bfseries}
 
-\uselayouttheme[finelinebelow]{miniframestop}
+\uselayouttheme[subsection=false]{miniframes}
+\addtoheadtemplate{}{%
+  \begin{beamercolorbox}[wd=\paperwidth,colsep=0.2pt]{fine separation line}
+  \end{beamercolorbox}%
+}
+
+\setbeamercolor{fine separation line}{use=structure,bg=structure.fg!50!bg}
+
 
 \beamertemplatedefaultframetitle[center]
 

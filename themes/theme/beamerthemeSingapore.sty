@@ -10,8 +10,26 @@
 
 \mode<presentation>
 
-\uselayouttheme[shadebackground=beamerstructure!50!white]{miniframestop}
+
+\uselayouttheme[subsection=false]{miniframes}
 \beamertemplatedefaultframetitle[center]
+
+\AtBeginDocument{%
+  {
+    \usebeamercolor{section in head/foot}
+    \globalcolorstrue
+    \colorlet{section in head/foot.fg}{fg}
+  }
+  
+  \pgfdeclareverticalshading{beamer@headfade}{\paperwidth}
+  {%
+    color(0cm)=(bg);
+    color(1.25cm)=(section in head/foot.fg!25!bg)%
+  }
+}
+
+\usebackgroundtemplate{\pgfuseshading{beamer@headfade}}
+
 \beamertemplatedotitem
 
 \mode
