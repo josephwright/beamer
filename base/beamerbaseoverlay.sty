@@ -365,21 +365,25 @@
 }
 {\beamer@endpause}
 
-\mode
-<all>
-{
-  \let\beamer@musixpause=\pause
-  \let\beamer@music=\music
-  \def\music{\let\beamerpause=\pause\let\pause\beamer@musixpause\beamer@music}
-}
-
-\newcommand{\pause}[1][]{%
+\newcommand{\beamer@@pause}[1][]{%
   \beamer@ifempty{#1}%
     {\global\advance\c@beamerpauses by1\relax}%
     {\global\c@beamerpauses=#1\relax}%
   \onslide<\c@beamerpauses->\relax%
-}%
 
+
+\mode
+<all>
+{
+  \AtBeginDocument
+  {    
+    \let\beamer@musixpause=\pause
+    \let\pause=\beamer@@pause
+    
+    \let\beamer@music=\music
+    \def\music{\let\beamerpause=\pause\let\pause\beamer@musixpause\beamer@music}
+  }
+}
 
 
 
@@ -417,7 +421,7 @@
 \mode
 <article>
 {
-  \newcommand\pause[1][]{}
+  \newcommand\beamer@@pause[1][]{}
   \newcommand<>{\beamer@noargsonslide}{}
   \newcommand<>{\beamer@noargsvisibleonslide}{}
 }
