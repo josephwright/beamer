@@ -152,7 +152,7 @@
         \color{beamerstructure!50!averagebackgroundcolor}
         \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
         \pgfbox[center,base]{\color{white}\inserttocsectionnumber}
-      \end{pgfpicture}\kern1.5ex%
+      \end{pgfpicture}\kern1.25ex%
     }%
     \inserttocsection\par}
   
@@ -169,7 +169,7 @@
       \vrule width2.25ex height1.85ex depth.4ex%
       \hskip-2.25ex%
       \hbox to2.25ex{\hfil\color{white}\inserttocsectionnumber\hfil}}%
-    \kern1ex\inserttocsection\par}
+    \kern1.25ex\inserttocsection\par}
 
   \usetemplatetocsubsection[20!averagebackgroundcolor]
   {\leavevmode\leftskip=5ex\color{black}\llap{\color{beamerstructure!75!averagebackgroundcolor}%
@@ -250,7 +250,7 @@
           \usebeamerfont*{section number projected}%
           \inserttocsectionnumber}
       \end{pgfpicture}%
-      \kern1.5ex}%
+      \kern1.25ex}%
     \inserttocsection\par}
   
   \usetemplatetocsubsection[20!averagebackgroundcolor]
@@ -357,7 +357,7 @@
 }
 
   
-\newcommand{\beamertemplatenumerateesquare}{%
+\newcommand{\beamertemplateenumeratesquare}{%
   \setbeamerfont{item projected}{size=\scriptsize}
     
   \useenumerateitemtemplate{%
@@ -404,6 +404,47 @@
         \hfil}%
     }%
   }
+}
+
+  
+\newcommand{\beamertemplateenumeratecircle}{%
+  \setbeamerfont{item projected}{size=\scriptsize}
+    
+  \useenumerateitemtemplate{%
+    \usebeamerfont*{item projected}%
+    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+      \color{beamerstructure}
+      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+      \pgfbox[center,base]{\color{white}\insertenumlabel}
+    \end{pgfpicture}%
+  }%
+
+  \usesubenumerateitemtemplate{%
+    \usebeamerfont*{item projected}%
+    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+      \color{beamerstructure!75!averagebackgroundcolor}
+      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+      \pgfbox[center,base]{\color{white}\insertsubenumlabel}
+    \end{pgfpicture}%
+  }%
+  
+  \usesubsubenumerateitemtemplate{%
+    \usebeamerfont*{item projected}%
+    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+      \color{beamerstructure!50!averagebackgroundcolor}
+      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+      \pgfbox[center,base]{\color{white}\insertsubsubenumlabel}
+    \end{pgfpicture}%
+  }%
+  
+  \useenumerateitemminitemplate{%
+    \usebeamerfont*{item projected}%
+    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+      \color{beamerstructure}
+      \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
+      \pgfbox[center,base]{\color{white}\insertenumlabel}
+    \end{pgfpicture}%
+  }%
 }
 
 
@@ -862,7 +903,7 @@
     {\usebeamerfont{block head}\alert{\insertblockname}\par}%
     \colorlet{beamerstructure}{beameralert}%
     }{\medskip}
-  \usealertblocktemplate{%
+  \useexampleblocktemplate{%
     \medskip%
     \begingroup%
     {\usebeamerfont{block head}\color{beamerstructure!50!green}\insertblockname\par}%

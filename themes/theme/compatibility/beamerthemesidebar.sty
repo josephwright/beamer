@@ -13,10 +13,9 @@
 \beamer@sidebartabfalse
 \beamer@sidebardarkfalse
 
-\newdimen\beamer@sidebarwidth
-\beamer@sidebarwidth=2.5cm
+\PassOptionsToPackage{width=2.5cm}{beamerlayoutthemesidebar}
 
-\DeclareOptionBeamer{width}[2.5cm]{\beamer@sidebarwidth=#1}
+\DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{tab}[true]{\csname beamer@sidebartab#1\endcsname}
 \DeclareOptionBeamer{dark}[true]{\csname beamer@sidebardark#1\endcsname}
 
@@ -24,168 +23,208 @@
 
 \mode<presentation>
 
-\RequirePackage{pgfshade}
-
 \ifbeamer@sidebardark
-  \beamertemplateboldtitlepage
-  \beamertemplateboldpartpage
-  \beamertemplateboldframetitle
-  \beamertemplateboldblocks
-  \beamertemplatenavigationsymbolsvertical
-\else
-  \beamertemplatelargetitlepage
-  \beamertemplatelargepartpage
-  \beamertemplatelargeframetitle
-  \beamertemplatelargeblocks
-  \beamertemplatenavigationsymbolsvertical
-\fi
-
-\ifbeamer@sidebardark
-  \usetemplatetocsection[50!averagebackgroundcolor]
-  {\color{beamerstructure}\textbf{\inserttocsection}}
-
-  \def\beamernavigationcolorlight{beamerstructure!65!white}
-  \def\beamernavigationcolorstrong{beamerstructure!50!white}
-
+  \usefonttheme{bold}
   \ifbeamer@sidebartab
-    {\tiny\global\beamer@tempdim=2.4375ex}
-
-    \pgfdeclarehorizontalshading{beamer@tabmain}{\the\beamer@tempdim}
-    {color(0pt)=(white);
-      color(\beamer@sidebarwidth)=(beamerstructure!50!averagebackgroundcolor)}
-    \pgfdeclarehorizontalshading{beamer@tab}{\the\beamer@tempdim}{%
-      color(0pt)=(white);
-      color(9pt)=(beamerstructure!50!averagebackgroundcolor);
-      color(\beamer@sidebarwidth)=(beamerstructure)}
-  \fi
-\fi
-  
-
-                                % Sections in headline
-\usesectionsidetemplate
-{%
-  {\tiny
-    \setbox\beamer@tempbox=\hbox{%
-      \ifbeamer@sidebartab%
-        \ifbeamer@sidebardark%
-          \color[gray]{0.3}\lower0.5ex\hbox{\pgfuseshading{beamer@tab}}%
-          \hskip-\beamer@sidebarwidth%
-          \color{beamerstructure!50!black}\bfseries%
-        \else%
-          \color[gray]{0.9}\lower0.375ex\hbox{\vrule width\beamer@sidebarwidth height 2.4375ex}%
-          \hskip-\beamer@sidebarwidth%
-          \color{beamerstructure}%
-        \fi%
-      \else%
-        \ifbeamer@sidebardark%
-          \color{white}\bfseries%
-        \else%
-          \color{black}%
-        \fi%
-      \fi{\kern1.125ex\insertsectionhead}}%
-  \ht\beamer@tempbox=3ex%
-  \dp\beamer@tempbox=0.75ex%
-  \wd\beamer@tempbox=\beamer@sidebarwidth%
-  \box\beamer@tempbox}%
-}
-{%
-  {\tiny
-    \setbox\beamer@tempbox=\hbox{%
-      \ifbeamer@sidebartab%
-        \ifbeamer@sidebardark\color{beamerstructure!50}\bfseries\else\color{beamerstructure}\fi%
-      \else%
-        \ifbeamer@sidebardark\color{beamerstructure!80}\bfseries\else\color{beamerstructure!75}\fi%
-      \fi{\kern1.125ex\insertsectionhead}}%
-  \ht\beamer@tempbox=3ex%
-  \dp\beamer@tempbox=0.75ex%
-  \wd\beamer@tempbox=\beamer@sidebarwidth%
-  \box\beamer@tempbox}%
-}
-
-\usesubsectionsidetemplate
-{%
-  {\tiny
-    \setbox\beamer@tempbox=\hbox{%
-      \ifbeamer@sidebartab%
-        \ifbeamer@sidebardark%
-          \color[gray]{0.3}\lower0.5ex\hbox{\pgfuseshading{beamer@tab}}%
-          \hskip-\beamer@sidebarwidth%
-          \color{white}\bfseries%
-        \else%
-          \color{black!10}\lower0.375ex\hbox{\vrule width\beamer@sidebarwidth height 2.4375ex}%
-          \hskip-\beamer@sidebarwidth%
-          \color{black}%
-        \fi%
-      \else%
-        \ifbeamer@sidebardark\color{white}\bfseries\else\color{black}\fi%
-      \fi{\kern2.25ex\insertsubsectionhead}}%
-  \ht\beamer@tempbox=1.6875ex%
-  \dp\beamer@tempbox=0.75ex%
-  \wd\beamer@tempbox=\beamer@sidebarwidth%
-  \box\beamer@tempbox}%
-}
-{%
-  {\tiny%
-    \setbox\beamer@tempbox=\hbox{%
-      \ifbeamer@sidebartab%
-        \ifbeamer@sidebardark\color{white}\bfseries\else\color{black}\fi%
-      \else%
-        \ifbeamer@sidebardark\color{black!50}\bfseries\else\color{black!50}\fi%
-      \fi{\kern2.25ex\insertsubsectionhead}}%
-  \ht\beamer@tempbox=1.6875ex%
-  \dp\beamer@tempbox=0.75ex%
-  \wd\beamer@tempbox=\beamer@sidebarwidth%
-  \box\beamer@tempbox}%
-}
-
-                                % Head
-\useheadtemplate{}
-
-                                % Foot
-\usefoottemplate{}
-
-                                % Sidebar
-\userightsidebartemplate{\beamer@sidebarwidth}{%
-  \vskip1em
-  \beamer@tempdim=\beamer@sidebarwidth%
-  \advance\beamer@tempdim by -6pt%
-  \tiny
-  \ifbeamer@sidebardark
-    \hskip3pt\color{white}\bfseries\insertshorttitle%
-      [width=\beamer@tempdim,center,respectlinebreaks]\par%
-    \vskip1.5em
-    \hskip3pt\color{beamerstructure!50}\insertshortauthor%
-      [width=\beamer@tempdim,center,respectlinebreaks]\par
-  \else%
-    \hskip3pt\color{beamerstructure}\insertshorttitle%
-      [width=\beamer@tempdim,center,respectlinebreaks]\par%
-    \vskip1.5em
-    \hskip3pt\color{black!75}\insertshortauthor%
-      [width=\beamer@tempdim,center,respectlinebreaks]\par
-  \fi
-  \vskip1.5em
-  \insertverticalnavigation{\beamer@sidebarwidth}%
-  \vfill
-  \hbox to \beamer@sidebarwidth{\hfil\insertnavigationsymbols\hskip3pt}
-  \vskip3pt
-  \hbox to \beamer@sidebarwidth{\hfil\insertlogo\hskip3pt}
-  \vskip3pt
-}
-
-                                % Side bar background
-\ifbeamer@sidebardark
-  \userightsidebarverticalshadingtemplate{beamerstructure}{black}
-\else
-  \ifbeamer@sidebartab
-    \userightsidebarverticalshadingtemplate{beamerstructure!90!white}{white!95!beamerstructure}
+    \PassOptionsToPackage{%
+      side=right,%
+      height=0pt,%
+      sidebarshade={{beamerstructure}{black}}}%
+     {beamerlayoutthemesidebar}
   \else
-    \userightsidebarverticalshadingtemplate{white}{beamerstructure!50!averagebackgroundcolor}
+    \PassOptionsToPackage{%
+      side=right,%
+      height=0pt,%
+      tabcolor={},%
+      sectioncolor={{white}{beamerstructure!80}},
+      subsectioncolor={{white}{black!50}},
+      sidebarshade={{beamerstructure}{black}}}%
+     {beamerlayoutthemesidebar}
+   \fi
+\else  
+  \ifbeamer@sidebartab
+    \PassOptionsToPackage{%
+      side=right,%
+      height=0pt,%
+      tabcolor={black!25},%
+      titlecolor=beamerstructure,
+      authorcolor=black,
+      sectioncolor={{beamerstructure}{beamerstructure}},
+      subsectioncolor={{black}{black}},
+      sidebarshade={{beamerstructure!90!white}{white!95!beamerstructure}}}%
+     {beamerlayoutthemesidebar}
+  \else
+    \PassOptionsToPackage{%
+      side=right,%
+      height=0pt,%
+      titlecolor=beamerstructure,
+      authorcolor=black,
+      tabcolor={},%
+      sectioncolor={{black}{beamerstructure!75}},
+      subsectioncolor={{black}{black!50}},
+      sidebarshade={{white}{beamerstructure!50!averagebackgroundcolor}}%
+      }%
+     {beamerlayoutthemesidebar}
   \fi
 \fi
+
+\uselayouttheme{sidebar}
+
+\mode
+<all>
+
+%% \endinput
   
-                                % Margins
-\beamersetleftmargin{0.5cm}
-\beamersetrightmargin{0.5cm}
+%% \beamertemplatenavigationsymbolsvertical
+
+
+
+%% \ifbeamer@sidebardark
+%%   \usetemplatetocsection[50!averagebackgroundcolor]
+%%   {\color{beamerstructure}\textbf{\inserttocsection}}
+
+%%   \def\beamernavigationcolorlight{beamerstructure!65!white}
+%%   \def\beamernavigationcolorstrong{beamerstructure!50!white}
+
+%%   \ifbeamer@sidebartab
+%%     {\tiny\global\beamer@tempdim=2.4375ex}
+
+%%     \pgfdeclarehorizontalshading{beamer@tabmain}{\the\beamer@tempdim}
+%%     {color(0pt)=(white);
+%%       color(\beamer@sidebarwidth)=(beamerstructure!50!averagebackgroundcolor)}
+%%     \pgfdeclarehorizontalshading{beamer@tab}{\the\beamer@tempdim}{%
+%%       color(0pt)=(white);
+%%       color(9pt)=(beamerstructure!50!averagebackgroundcolor);
+%%       color(\beamer@sidebarwidth)=(beamerstructure)}
+%%   \fi
+%% \fi
+  
+
+%%                                 % Sections in headline
+%% \usesectionsidetemplate
+%% {%
+%%   {\tiny
+%%     \setbox\beamer@tempbox=\hbox{%
+%%       \ifbeamer@sidebartab%
+%%         \ifbeamer@sidebardark%
+%%           \color[gray]{0.3}\lower0.5ex\hbox{\pgfuseshading{beamer@tab}}%
+%%           \hskip-\beamer@sidebarwidth%
+%%           \color{beamerstructure!50!black}\bfseries%
+%%         \else%
+%%           \color[gray]{0.9}\lower0.375ex\hbox{\vrule width\beamer@sidebarwidth height 2.4375ex}%
+%%           \hskip-\beamer@sidebarwidth%
+%%           \color{beamerstructure}%
+%%         \fi%
+%%       \else%
+%%         \ifbeamer@sidebardark%
+%%           \color{white}\bfseries%
+%%         \else%
+%%           \color{black}%
+%%         \fi%
+%%       \fi{\kern1.125ex\insertsectionhead}}%
+%%   \ht\beamer@tempbox=3ex%
+%%   \dp\beamer@tempbox=0.75ex%
+%%   \wd\beamer@tempbox=\beamer@sidebarwidth%
+%%   \box\beamer@tempbox}%
+%% }
+%% {%
+%%   {\tiny
+%%     \setbox\beamer@tempbox=\hbox{%
+%%       \ifbeamer@sidebartab%
+%%         \ifbeamer@sidebardark\color{beamerstructure!50}\bfseries\else\color{beamerstructure}\fi%
+%%       \else%
+%%         \ifbeamer@sidebardark\color{beamerstructure!80}\bfseries\else\color{beamerstructure!75}\fi%
+%%       \fi{\kern1.125ex\insertsectionhead}}%
+%%   \ht\beamer@tempbox=3ex%
+%%   \dp\beamer@tempbox=0.75ex%
+%%   \wd\beamer@tempbox=\beamer@sidebarwidth%
+%%   \box\beamer@tempbox}%
+%% }
+
+%% \usesubsectionsidetemplate
+%% {%
+%%   {\tiny
+%%     \setbox\beamer@tempbox=\hbox{%
+%%       \ifbeamer@sidebartab%
+%%         \ifbeamer@sidebardark%
+%%           \color[gray]{0.3}\lower0.5ex\hbox{\pgfuseshading{beamer@tab}}%
+%%           \hskip-\beamer@sidebarwidth%
+%%           \color{white}\bfseries%
+%%         \else%
+%%           \color{black!10}\lower0.375ex\hbox{\vrule width\beamer@sidebarwidth height 2.4375ex}%
+%%           \hskip-\beamer@sidebarwidth%
+%%           \color{black}%
+%%         \fi%
+%%       \else%
+%%         \ifbeamer@sidebardark\color{white}\bfseries\else\color{black}\fi%
+%%       \fi{\kern2.25ex\insertsubsectionhead}}%
+%%   \ht\beamer@tempbox=1.6875ex%
+%%   \dp\beamer@tempbox=0.75ex%
+%%   \wd\beamer@tempbox=\beamer@sidebarwidth%
+%%   \box\beamer@tempbox}%
+%% }
+%% {%
+%%   {\tiny%
+%%     \setbox\beamer@tempbox=\hbox{%
+%%       \ifbeamer@sidebartab%
+%%         \ifbeamer@sidebardark\color{white}\bfseries\else\color{black}\fi%
+%%       \else%
+%%         \ifbeamer@sidebardark\color{black!50}\bfseries\else\color{black!50}\fi%
+%%       \fi{\kern2.25ex\insertsubsectionhead}}%
+%%   \ht\beamer@tempbox=1.6875ex%
+%%   \dp\beamer@tempbox=0.75ex%
+%%   \wd\beamer@tempbox=\beamer@sidebarwidth%
+%%   \box\beamer@tempbox}%
+%% }
+
+%%                                 % Head
+%% \useheadtemplate{}
+
+%%                                 % Foot
+%% \usefoottemplate{}
+
+%%                                 % Sidebar
+%% \userightsidebartemplate{\beamer@sidebarwidth}{%
+%%   \vskip1em
+%%   \beamer@tempdim=\beamer@sidebarwidth%
+%%   \advance\beamer@tempdim by -6pt%
+%%   \tiny
+%%   \ifbeamer@sidebardark
+%%     \hskip3pt\color{white}\bfseries\insertshorttitle%
+%%       [width=\beamer@tempdim,center,respectlinebreaks]\par%
+%%     \vskip1.5em
+%%     \hskip3pt\color{beamerstructure!50}\insertshortauthor%
+%%       [width=\beamer@tempdim,center,respectlinebreaks]\par
+%%   \else%
+%%     \hskip3pt\color{beamerstructure}\insertshorttitle%
+%%       [width=\beamer@tempdim,center,respectlinebreaks]\par%
+%%     \vskip1.5em
+%%     \hskip3pt\color{black!75}\insertshortauthor%
+%%       [width=\beamer@tempdim,center,respectlinebreaks]\par
+%%   \fi
+%%   \vskip1.5em
+%%   \insertverticalnavigation{\beamer@sidebarwidth}%
+%%   \vfill
+%%   \hbox to \beamer@sidebarwidth{\hfil\insertnavigationsymbols\hskip3pt}
+%%   \vskip3pt
+%%   \hbox to \beamer@sidebarwidth{\hfil\insertlogo\hskip3pt}
+%%   \vskip3pt
+%% }
+
+%%                                 % Side bar background
+%% \ifbeamer@sidebardark
+%%   \beamertemplatesidebarverticalshading[right]{beamerstructure}{black}
+%% \else
+%%   \ifbeamer@sidebartab
+%%     \beamertemplatesidebarverticalshading[right]{beamerstructure!90!white}{white!95!beamerstructure}
+%%   \else
+%%     \beamertemplatesidebarverticalshading[right]{white}{beamerstructure!50!averagebackgroundcolor}
+%%   \fi
+%% \fi
+  
+%%                                 % Margins
+%% \beamersetleftmargin{0.5cm}
+%% \beamersetrightmargin{0.5cm}
 
 \mode
 <all>

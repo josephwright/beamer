@@ -6734,13 +6734,11 @@ descriptions of the commands to which you wish to apply them.
   \begin{itemize}
   \item
     \declare{|activeospeccharacters|} will leave the character code of
-    the characters used in overlay specifications as specified by
+    the pointed brackets as specified by
     other packages. Normally, \beamer\ will turn off the special
-    behaviour of characters like |:| or |!| in styles like |french|
-    since they clash with the implementation of overlay
-    specifications. Using this option, you can reinstall the original
-    behaviour at the price of possible problems when using overlay
-    specifications in the |article| mode.
+    behaviour of the two characters |<| and |>|. Using this option,
+    you can reinstall the original behaviour at the price of possible
+    problems when using overlay specifications in the |article| mode.
   \item
     \declare{|noamsthm|} will suppress the loading of the |amsthm|
     package. No theorems will be defined.
@@ -9667,16 +9665,7 @@ class, extra options or precautions may be necessary.
   When using the |french| style, certain features that clash with the
   functionality of the \beamer\ class will be turned off. For example,
   enumerations are still produced the way the theme dictates, not the
-  way the |french| style does. Also, the characters |:| and |!| will not
-  be a active characters. This means, that the little space that is
-  inserted before them in the |french| style is not inserted. You have
-  to do this  ``by hand.''
-
-  \articlenote
-  To make the characters |:| and |!| active in |article| mode, pass
-  the option |activeospeccharacters| to the package
-  |beamerbasearticle|. However, this may lead to problems with overlay
-  specifications.
+  way the |french| style does.
 \end{package}
 
 \begin{package}{{babel}|[|\declare{|spanish|}|]|}
@@ -9689,7 +9678,7 @@ class, extra options or precautions may be necessary.
   \articlenote
   To make the characters |<| and |>| active in |article| mode, pass
   the option |activeospeccharacters| to the package
-  |beamerbasearticle|. As for the |french| package, this may lead to
+  |beamerbasearticle|. This will lead to
   problems with overlay specifications.
 \end{package}
 

@@ -52,7 +52,7 @@
     \let\itemize\beamer@itemize
     \let\list\beamer@list
     \let\@trivlist\beamer@@trivlist%
-    \catcode`:=12\catcode`|=12\catcode`!=12\catcode`<=12\catcode`>=12}
+    \catcode`<=12\catcode`>=12}
   
   \begingroup\beamer@origdocument%
   \beamer@lastminutepatches%
@@ -71,7 +71,7 @@
   \g@addto@macro\beamer@lastminutepatches{%
     \ifbeamer@articleactive
     \else
-      \catcode`:=12\catcode`!=12\catcode`|=12\catcode`<=12\catcode`>=12   
+      \catcode`<=12\catcode`>=12   
     \fi    
     }
 }
@@ -170,12 +170,12 @@
 \def\beamertemplatelargepartpage{\beamertemplatedefaultpartpage}
 \def\beamertemplateboldpartpage{%
   \setbeamerfont{part}{size=\large}%
-  \setbeamerfont{partname}{typeface=\bfseries}%
+  \setbeamerfont{partname}{series=\bfseries}%
   \beamertemplatedefaultpartpage}
 \def\beamertemplatelargetitlepage{%
   \beamertemplatedefaulttitlepage}
 \def\beamertemplateboldtitlepage{%
-  \setbeamerfont{title}{size=\large,typeface=\bfseries}%
+  \setbeamerfont{title}{size=\large,series=\bfseries}%
   \beamertemplatedefaulttitlepage}
 \@onlypreamble\beamertemplateboldtitlepage
 \@onlypreamble\beamertemplatelargetitlepage
@@ -183,15 +183,15 @@
 \@onlypreamble\beamertemplatelargepartpage
  
 \def\beamertemplateboldcenterframetitle{
-  \setbeamerfont{frametitle}{size={},typeface=\bfseries}
-  \setbeamerfont{framesubtitle}{typeface=\bfseries}
+  \setbeamerfont{frametitle}{size={},series=\bfseries}
+  \setbeamerfont{framesubtitle}{series=\bfseries}
   \beamertemplatedefaultframetitle[center]}
 \@onlypreamble\beamertemplateboldcenterframetitle
 
 \def\beamertemplateboldframetitle{
-  \setbeamerfont{frametitle}{typeface=\bfseries}
-  \setbeamerfont{framesubtitle}{typeface=\bfseries}
-  \beamertemplatedefaultframetitle[center]}
+  \setbeamerfont{frametitle}{series=\bfseries}
+  \setbeamerfont{framesubtitle}{series=\bfseries}
+  \beamertemplatedefaultframetitle[left]}
 \@onlypreamble\beamertemplateboldframetitle
 
 \def\beamertemplatelargeframetitle{
@@ -199,7 +199,7 @@
 \@onlypreamble\beamertemplatelargeframetitle
  
 \def\beamertemplateboldblocks{
-  \setbeamerfont{block head}{size={},typeface=\bfseries}
+  \setbeamerfont{block head}{size={},series=\bfseries}
   \beamertemplatedefaultblocks}
 \@onlypreamble\beamertemplateboldblocks
 

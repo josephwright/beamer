@@ -365,13 +365,13 @@
   \ifx\beamer@againname\@empty%
     \beamer@slideinframe=0\relax%
     \beamer@anotherslidefalse%
-    {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:0| }}%
+    {\beamer@masterdecode{\beamer@whichframes}}%
     \ifbeamer@anotherslide%
       \beamer@slideinframe=2\relax%
       \def\beamer@doifnotinframe{}%
       \def\beamer@doifinframe{\let\beamer@howtotreatframe\beamer@doseveralframes}%
       \beamer@anotherslidefalse%
-      {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:0| }}%
+      {\beamer@masterdecode{\beamer@whichframes}}%
       \ifbeamer@anotherslide%
         \let\beamer@howtotreatframe\beamer@doseveralframes%
       \else% single slide in frame
@@ -420,7 +420,7 @@
   \def\beamer@doifinframe{\begin{beamer@frameslide}%
     #1%
   \end{beamer@frameslide}}%
-  {\setbox0=\hbox{\expandafter\beamer@decode\beamer@whichframes| stop:0| }}%
+  {\beamer@masterdecode{\beamer@whichframes}}%
   \beamer@donow%
   \ifbeamer@anotherslide
   \advance\beamer@slideinframe by 1\relax
@@ -496,7 +496,7 @@
     \refstepcounter{framenumber}%
     \beamer@slideinframe=0\relax%
     \beamer@anotherslidefalse%
-    {\setbox0=\hbox{\expandafter\beamer@decode#1| stop:0| }}%
+    {\beamer@masterdecode{#1}}%
     \ifbeamer@anotherslide%
       \let\beamer@howtotreatframe\beamer@dosingleframe%
     \else% no slides in frame

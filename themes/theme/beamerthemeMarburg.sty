@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemePaloAlto}[2004/04/21 ver 0.1]
+\ProvidesPackage{beamerthemeMarburg}[2003/11/07 ver 0.93]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -7,29 +7,31 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
+\newif\ifbeamer@sidebartab
+\beamer@sidebartabfalse
 
-\PassOptionsToPackage{tab=true}{beamerlayoutthemesidebar}
+\PassOptionsToPackage{right}{beamerlayoutthemesidebar}
+\PassOptionsToPackage{width=2cm}{beamerlayoutthemesidebar}
 
-\DeclareOptionBeamer{cornercolor}{\PassOptionsToPackage{cornercolor=#1}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{left}{\PassOptionsToPackage{side=left}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{right}{\PassOptionsToPackage{side=right}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{side}{\PassOptionsToPackage{side=#1}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{tab}{\PassOptionsToPackage{tab=#1}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{tab}[true]{\csname beamer@sidebartab#1\endcsname}
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
-\uselayouttheme{sidebar}
-\useelementtheme[%
-  shadow=true,
-  blockheadcolor=beamerstructure!75!averagebackgroundcolor,%
-  titlecolor=beamerstructure!75!averagebackgroundcolor]%
-  {rounded}
+\ifbeamer@sidebartab
+  \PassOptionsToPackage{tabcolor=beamerstructure!85!white}{beamerlayoutthemesidebar}
+\else
+  \PassOptionsToPackage{%
+    tabcolor={},%
+    sectioncolor={{white}{beamerstructure!80}},
+    subsectioncolor={{white}{black!50}}}{beamerlayoutthemesidebar}
+\fi  
+
+\uselayouttheme[height=0pt,sidebarshade={{beamerstructure}{black}}]{sidebar}
 
 \mode
 <all>
-
-%%% Local Variables: 
-%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
-%%% End: 

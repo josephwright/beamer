@@ -149,7 +149,7 @@
   \gdef\beamer@closer{}%
   \def\beamer@doifnotinframe{\@gobble}\def\beamer@doifinframe{\@firstofone}%
   {\beamer@saveanother\beamer@slideinframe=1\relax%
-   \setbox0=\hbox{\beamer@decode#1| stop:0| }%
+   \beamer@masterdecode{#1}%
    \beamer@restoreanother}\beamer@donow{#2}%
   \beamer@mode\par}
 \def\beamer@switchmode<#1>{%
@@ -163,7 +163,7 @@
     \gdef\beamer@closer{}%
    }%
   {\beamer@saveanother\beamer@slideinframe=1\relax%
-   \setbox0=\hbox{\beamer@decode#1| stop:0| }%
+   \beamer@masterdecode{#1}%
    \beamer@restoreanother}\beamer@donow%
   \next}
 

@@ -16,15 +16,39 @@
 \reset@font
 
 \def\beamer@lefttext{left}
+\def\beamer@sbt@bg{\beamertemplatesidebarcolor[\beamer@sidebarside]{beamerstructure}}
 
+\DeclareOptionBeamer{sidebarshade}{\def\beamer@sbt@bg{\beamertemplatesidebarverticalshading[\beamer@sidebarside]#1}}
 \DeclareOptionBeamer{cornercolor}{\def\beamersidebar@cornercolor{#1}}
 \DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
 \DeclareOptionBeamer{height}{\beamer@headheight=#1}
 \DeclareOptionBeamer{left}{\ExecuteOptionsBeamer{side=left}}
 \DeclareOptionBeamer{right}{\ExecuteOptionsBeamer{side=right}}
 \DeclareOptionBeamer{side}{\def\beamer@sidebarside{#1}}
-\ExecuteOptionsBeamer{cornercolor=beamerstructure!75!black,side=left}
+\DeclareOptionBeamer{tabcolor}{\def\beamer@sbt@tabcol{#1}}
+\DeclareOptionBeamer{headcolor}{\def\beamer@sbt@headcol{#1}}
+\DeclareOptionBeamer{titlecolor}{\def\beamer@sbt@titlecol{#1}}
+\DeclareOptionBeamer{authorcolor}{\def\beamer@sbt@authorcol{#1}}
+\DeclareOptionBeamer{sectioncolor}{%
+  \expandafter\def\expandafter\beamer@sbt@sectioncola\expandafter{\@firstoftwo#1}
+  \expandafter\def\expandafter\beamer@sbt@sectioncolb\expandafter{\@secondoftwo#1}
+}
+\DeclareOptionBeamer{subsectioncolor}{%
+  \expandafter\def\expandafter\beamer@sbt@subsectioncola\expandafter{\@firstoftwo#1}
+  \expandafter\def\expandafter\beamer@sbt@subsectioncolb\expandafter{\@secondoftwo#1}
+}
+\ExecuteOptionsBeamer{%
+  cornercolor=beamerstructure!75!black,%
+  tabcolor=beamerstructure!70,
+  sectioncolor={{beamerstructure!25}{beamerstructure!25}},
+  subsectioncolor={{white}{white}},  
+  titlecolor=white,
+  headcolor=beamerstructure,
+  authorcolor=beamerstructure!50!averagebackgroundcolor,  
+  side=left}
 \ProcessOptionsBeamer
+
+
 
 \mode<presentation>
 
@@ -47,7 +71,8 @@
         \vbox{}%
         \vskip-1em%
         \vfil
-      }}%
+      }%
+    }%
   }
 
   \useheadtemplate{%
@@ -60,7 +85,7 @@
         \hbox to \beamer@sidebarwidth{\hss\vbox to
           \beamer@headheight{\vss\hbox{\insertlogo}\vss}\hss}%
       \fi%
-      \color{beamerstructure}%
+      \color{\beamer@sbt@headcol}%
       \@tempdima=\paperwidth%
       \advance\@tempdima by-\beamer@sidebarwidth%
       \vrule width\@tempdima height\beamer@headheight%
@@ -78,7 +103,7 @@
 \fi
 
 \def\beamer@colorbox#1#2{%
-  \hbox to \beamer@sidebarwidth{\fboxsep=0pt\colorbox{#1}{#2}}}%
+  \ifx#1\@empty#2\else\hbox to \beamer@sidebarwidth{\fboxsep=0pt\colorbox{#1}{#2}}\fi}%
 \def\beamer@buildsidebarbox#1#2#3{%
   \setbox#1=\hbox{%
     \vbox{%
@@ -99,29 +124,29 @@
 {%
   {\usebeamerfont{section in sidebar}%
     \vbox{\vskip1ex%
-    \beamer@buildsidebarbox{\beamer@tempbox}{1.125ex}{\insertsectionhead}%
-    \beamer@colorbox{beamerstructure!70!averagebackgroundcolor}{\box\beamer@tempbox}%
+      \beamer@buildsidebarbox{\beamer@tempbox}{3pt}{\color{\beamer@sbt@sectioncola}\insertsectionhead}%
+    \beamer@colorbox{\beamer@sbt@tabcol}{\box\beamer@tempbox}%
     }}%
 }
 {%
   {\usebeamerfont{section in sidebar}%
     \vbox{\vskip1ex%
-    \beamer@buildsidebarbox{\beamer@tempbox}{1.125ex}{\insertsectionhead}%
-    \beamer@colorbox{beamerstructure}{\box\beamer@tempbox}%
+    \beamer@buildsidebarbox{\beamer@tempbox}{3pt}{\color{\beamer@sbt@sectioncolb}\insertsectionhead}%
+    {\box\beamer@tempbox}%
   }}%
 }
 
 \usesubsectionsidetemplate
 {%
   {\usebeamerfont{subsection in sidebar}%
-    \beamer@buildsidebarbox{\beamer@tempbox}{2.25ex}{\color{white}\insertsubsectionhead}%
-    \beamer@colorbox{beamerstructure!70!averagebackgroundcolor}{\box\beamer@tempbox}%
+    \beamer@buildsidebarbox{\beamer@tempbox}{5pt}{\color{\beamer@sbt@subsectioncola}\insertsubsectionhead}%
+    \beamer@colorbox{\beamer@sbt@tabcol}{\box\beamer@tempbox}%
     }%
 }
 {%
   {\usebeamerfont{subsection in sidebar}%
-    \beamer@buildsidebarbox{\beamer@tempbox}{2.25ex}{\color{white}\insertsubsectionhead}%
-    \beamer@colorbox{beamerstructure}{\box\beamer@tempbox}%
+    \beamer@buildsidebarbox{\beamer@tempbox}{5pt}{\color{\beamer@sbt@subsectioncolb}\insertsubsectionhead}%
+    {\box\beamer@tempbox}%
   }%
 }
 
@@ -136,18 +161,17 @@
     \beamer@tempdim=\beamer@sidebarwidth%
     \advance\beamer@tempdim by -6pt%
     {\usebeamerfont{title in sidebar}%
-      \vskip1em%
-      \hskip3pt\color{white}%
+      \vskip1.5em%
+      \hskip3pt\color{\beamer@sbt@titlecol}%
       \insertshorttitle[width=\beamer@tempdim,center,respectlinebreaks]\par%
       \vskip1.25em%
     }%
     {%
-      \hskip3pt\color{beamerstructure!50}%
+      \hskip3pt\color{\beamer@sbt@authorcol}%
       \usebeamerfont{author in sidebar}%
       \insertshortauthor[width=\beamer@tempdim,center,respectlinebreaks]\par%
       \vskip1.25em%
     }%
-    \color{beamerstructure!25}%
     \insertverticalnavigation{\beamer@sidebarwidth}%
     \vfill
     \ifx\beamer@sidebarside\beamer@lefttext%
@@ -158,7 +182,7 @@
   }%
   
                                 % Side bar background
-  \beamertemplatesidebarcolor[\beamer@sidebarside]{beamerstructure}
+  \beamer@sbt@bg
 
   \ifx\beamer@sidebarside\beamer@lefttext%
     \usesidebartemplate[right]{0cm}{%

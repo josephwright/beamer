@@ -28,6 +28,30 @@
   \ifx#3#4\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
 
 
+\def\beamer@stoptexts{| stop:0| }
+{
+   \catcode`\|=13
+   \catcode`\:=13
+   \catcode`\,=13
+   \catcode`\.=13
+   \catcode`\+=13
+   \catcode`\-=13
+   \catcode`\(=13
+   \catcode`\)=13
+\gdef\beamer@masterdecode#1{% must be called within a group
+   \ifnum\catcode`\|=13 \edef|{\string|}\fi%
+   \ifnum\catcode`\:=13 \edef:{\string:}\fi%
+   \ifnum\catcode`\,=13 \edef,{\string,}\fi%
+   \ifnum\catcode`\.=13 \edef.{\string.}\fi%
+   \ifnum\catcode`\+=13 \edef+{\string+}\fi%
+   \ifnum\catcode`\-=13 \edef-{\string-}\fi%
+   \ifnum\catcode`\(=13 \edef({\string(}\fi%
+   \ifnum\catcode`\)=13 \edef){\string)}\fi%
+  \edef\beamer@@@temp{#1\beamer@stoptexts}%
+  \setbox0=\hbox{\expandafter\beamer@decode\beamer@@@temp}%
+  }
+}
+
 % Sets dowhat to doif, if \beamer@slideinframe is in the specified
 % interval. Example: 5-7,-3,9,11,13- would mean pages
 % 1,2,3,5,6,7,9,11,13,14,15,16,... 

@@ -7,45 +7,30 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
-\RequirePackage{keyval}[1997/11/10]
 
-\def\ProcessOptionsWithKV#1{%
-  \let\@tempa\@empty
-  \@for\CurrentOption:=\@classoptionslist\do{%
-    \@ifundefined{KV@#1@\CurrentOption}%
-    {}{\edef\@tempa{\@tempa,\CurrentOption,}}}%
-  \edef\@tempa{%
-    \noexpand\setkeys{#1}{\@tempa\@ptionlist{\@currname.\@currext}}}%
-  \@tempa
-  \AtEndOfPackage{\let\@unprocessedoptions\relax}}
+\DeclareOptionBeamer{headheight}{\beamer@boxheadheight=#1}
+\DeclareOptionBeamer{footheight}{\beamer@boxfootheight=#1}
 
 \newdimen\beamer@boxheadheight
 \newdimen\beamer@boxfootheight
 \beamer@boxheadheight=10pt
 \beamer@boxfootheight=10pt
-\define@key{BeamerBoxes}{headheight}{\beamer@boxheadheight=#1}
-\define@key{BeamerBoxes}{footheight}{\beamer@boxfootheight=#1}
-\ProcessOptionsWithKV{BeamerBoxes}
+
+\ProcessOptionsBeamer
 
 % For example:
-%\addheadboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertshorttitle}\hskip0.3cm}
-%\addheadboxtemplate{\color{structure}}{\hskip0.3cm\tiny\color{white}\textbf{\insertshortauthor}}
+%\addheadboxtemplate{\color{black}}{\hfill\color{white}\insertshorttitle\hskip0.3cm}
+%\addheadboxtemplate{\color{structure}}{\hskip0.3cm\color{white}\insertshortauthor}
 
-%\addfootboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertshortinstitute}\hskip0.3cm}
+%\addfootboxtemplate{\color{black}}{\hfill\color{white}\insertshortinstitute\hskip0.3cm}
 %\addfootboxtemplate{\color{structure}}{}
-%\addfootboxtemplate{\color{black}}{\hfill\tiny\color{white}\textbf{\insertframenumber}\hskip0.3cm}
+%\addfootboxtemplate{\color{black}}{\hfill\color{white}\insertframenumber\hskip0.3cm}
 
 
 \mode<presentation>
 
 
                                 % Standard templates
-\beamertemplatelargetitlepage
-\beamertemplatelargepartpage
-\beamertemplatelargeframetitle
-\beamertemplatelargeblocks
-\beamertemplatecircleminiframeinverted
-\beamertemplateplaintoc
 \beamertemplatelightsectionheads
 
 
