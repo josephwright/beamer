@@ -119,7 +119,7 @@ this command to be shown only from the second slide on.
 
 The \beamer\ class uses a different approach (though the
 abovementioned command is also available: |\onslide<2->| will have the
-same effect as |\FromSlide{2}|, expect that |\onslide| transcends
+same effect as |\FromSlide{2}|, except that |\onslide| transcends
 environments; likewise, |\pause| is internally mapped to a command
 with an appropriate overlay specifications). The idea is to add
 \emph{overlay specifications} to certain commands. These
@@ -385,7 +385,7 @@ special:
 \begin{frame}
   \begin{enumerate}
   \item<3-| alert@3>[0.] A zeroth point, shown at the very end.
-  \item<1-| alert@1> The first an main point.
+  \item<1-| alert@1> The first and main point.
   \item<2-| alert@2> The second point.
   \end{enumerate}
 \end{frame}

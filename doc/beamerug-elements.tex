@@ -49,7 +49,7 @@ elements are typeset:
 In the following examples, the color themes |seahorse| and |rose| are
 used to show where and how background colors are
 honoured. Furthermore, background colors have been specified for all
-elements the honour them in the default theme. In the default color
+elements that honour them in the default theme. In the default color
 theme, all of the large rectangular areas are transparent.
 
 \begin{innerthemeexample}{default}
@@ -134,7 +134,7 @@ are rendered:
 \end{itemize}
 
 An outer theme will not specify how things like |itemize| environments
-should be rendered---that is the job an inner theme.
+should be rendered---that is the job of an inner theme.
 
 In the following examples the color theme |seahorse| is
 used. Since the default color theme leaves most backgrounds empty,
@@ -148,7 +148,7 @@ color theme.
   any head- or footlines. However, even this theme honours the
   background color specified for the frame title. If a color is
   specified, a bar occupying the whole page width is put behind the
-  frame title. A background color the frame subtitle is ignored.
+  frame title. A background color of the frame subtitle is ignored.
 \end{outerthemeexample}
 
 \begin{outerthemeexample}{infolines}
@@ -225,7 +225,7 @@ color theme.
 
 \begin{outerthemeexample}[\oarg{options}]{sidebar}
   In this layout, a sidebar is shown that contains a small table of
-  contents with the current section or subsection is hilighted. The
+  contents with the current section or subsection hilighted. The
   frame title is vertically centered in a rectangular area at the top
   that always occupies the same amount of space in all
   frames. Finally, the logo is shown in the ``corner'' resulting from
@@ -249,7 +249,7 @@ color theme.
   corresponding \beamer-colors for subsections. If an entry does not
   fit on a single line it is automatically ``linebroken.'' 
 
-  The following \meta{options} maybe given:
+  The following \meta{options} may be given:
   \begin{itemize}
   \item
     \declare{|height=|\meta{dimension}} specifies the height of the
@@ -261,16 +261,16 @@ color theme.
   \item
     \declare{|hideothersubsections|} causes all subsections except
     those of the current section to be suppressed in the table of
-    contents. This is useful if you have lot's of subsections.
+    contents. This is useful if you have lots of subsections.
   \item
     \declare{|hideallsubsections|} causes all subsections to be
     suppressed in the table of contents.
   \item
     \declare{|left|} puts the sidebar on the left side. Note that in a
-    left-to-right reading culture this is side people look first. Note
+    left-to-right reading culture this is the side people look first. Note
     also that this table of contents is usually \emph{not} the most
     important part of the frame, so you do not necessarily want people
-    to look at is first. Nevertheless, it is the default.
+    to look at it first. Nevertheless, it is the default.
   \item
     \declare{|right|} puts the sidebar of the right side.
   \item
@@ -497,7 +497,7 @@ Your answer is \usebeamertemplate{my template}.
 
   If you add one star, three things happen. First, the template is put
   inside a \TeX-group, thereby limiting most side effects of commands
-  used insider the template. Second, inside this group the
+  used inside the template. Second, inside this group the
   \beamer-color named \meta{element name} is used and the foreground
   color is selected. Third, the \beamer-font \meta{element name} is
   also used. This one-starred version is usually the best version to
@@ -512,7 +512,7 @@ Your answer is \usebeamertemplate{my template}.
   independent of the color that was currently in use when the template
   is used.
 
-  Finally, adding a third star will also cause a start to be added to
+  Finally, adding a third star will also cause a star to be added to
   the |\setbeamerfont*| command. This causes the font used for the
   template also to be reset to normal text, unless the \beamer-font
   \meta{element name} specifies things differently. This three-star
@@ -689,7 +689,7 @@ Your answer is \usebeamertemplate*{answer}.
 ...
 
 \setbeamertemplate{background canvas}{myshading}{red!10}{blue!10}
-%% Defines the shading myshading right here. Subsequent calls the
+%% Defines the shading myshading right here. Subsequent calls to
 %% \usebeamertemplate{background canvas} will yield
 %% ``\pgfuseshading{myshading}''.
 \end{verbatim}

@@ -112,7 +112,7 @@ with the outer theme |sidebar|.
 A ``complete'' color theme is a color theme that completely specifies
 all colors for all parts of a frame. It installs specific colors and
 does not derive the colors from, say, the |structure| \beamer-color.
-Complete complete themes happen to have names of flying animals.
+Complete color themes happen to have names of flying animals.
 
 \begin{colorthemeexample}{albatross}
   The color theme is a ``dark'' or ``inverted'' theme using yellow on
@@ -310,7 +310,7 @@ background was active before should remain active when the color is
 used.
 
 \beamer-colors can \emph{inherit} from other \beamer-colors and the
-default themes make extensive use of this feature. For example, their
+default themes make extensive use of this feature. For example, there
 is a \beamer-color called |structure| and all sorts of elements
 inherit from this color. Thus, if someone changes |structure|, the
 color of all these elements automatically change accordingly. When a
@@ -342,7 +342,7 @@ commands like |\color| or |\colorlet|. Instead, in order to use a
 \beamer-color, you should first call the command |\usebeamercolor|,
 which is explained below. This command will setup two (normal) colors
 called |fg| (for foreground) and |bg| (for, well, guess what). You can
-then say |\color{fg}| the install the foreground color and
+then say |\color{fg}| to install the foreground color and
 |\color{bg}| to install the background color. You can also use the
 colors |fg| and |bg| in any context in which you normally use a color
 like, say, |red|. If a \beamer-color does not have a foreground or a
@@ -795,7 +795,7 @@ object should be placed). To install this effect, you can use:
 \begin{verbatim}
 \setbeamercovered{transparent}
 \end{verbatim}
-This commands allows you to specify in a quite general way how a
+This command allows you to specify in a quite general way how a
 covered item should be rendered. You can even specify different ways
 of rendering the item depending on how long it will take before this
 item is shown or for how long it has already been covered once
@@ -829,7 +829,7 @@ workaround, see the documentation of the \pgf\ package.
     but the effect is stronger.
   \item \declare{|still covered=|\meta{not yet list}} specifies  how
     to render covered items that have not yet been uncovered. The
-    \meta{not yet lest} should be a list of |\opaqueness| commands,
+    \meta{not yet list} should be a list of |\opaqueness| commands,
     see the description of that command, below.
     \example
 \begin{verbatim}

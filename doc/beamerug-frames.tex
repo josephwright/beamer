@@ -16,9 +16,9 @@ a series of slides. You create a frame using the command
 |\frame| or the environment |frame|, which do the same. The command
 takes one parameter, namely the contents of the frame. All of the
 text that is not tagged by overlay specifications is shown on all
-slides of the frame. (Overlay specifications is explain
+slides of the frame. (Overlay specifications are explained
 in more detail in later sections. For the moment, let's just say
-that an overlay specification is a list of number or number ranges in
+that an overlay specification is a list of numbers or number ranges in
 pointed brackets that is put after certain commands as in
 |\uncover<1,2>{Text}|.) If a frame contains commands that have an
 overlay specification, the frame will contain multiple slides;
@@ -312,7 +312,7 @@ otherwise it contains only one slide.
 \end{verbatim}
   \item
     \declare{|shrink|}\opt{|=|\meta{minimum shrink percentage}}. This
-    option will cause the text of the frame to be shrunken if it is
+    option will cause the text of the frame to be shrunk if it is
     too large to fit on the frame. \beamer\ will first normally
     typeset the whole frame. Then it has a look at vertical size of
     the frame text (excluding the frame title). If this vertical size
@@ -323,14 +323,14 @@ otherwise it contains only one slide.
     |squeeze| option to be used, also.
 
     Since the shrinking takes place only after everything has been
-    typeset, shrunken frame text will not fill the frame completely
+    typeset, shrunk frame text will not fill the frame completely
     horizontally. For this reason, you can specify a \meta{minimum
     shrink percentage} like |20|. If this percentage is specified, the
-    frame will be shrunk by \emph{at least} by this percentage. Since
+    frame will be shrunk \emph{at least} by this percentage. Since
     \beamer\ knows this, it can increase the horizontal width
-    proportionally such that the shrunken text once more fills the
+    proportionally such that the shrunk text once more fills the
     entire frame. If, however, the percentage is not enough, the text
-    will be shrunken as needed and you will be punished with a warning
+    will be shrunk as needed and you will be punished with a warning
     message.
 
     The best way to use this option is to identify frames that are
@@ -1399,7 +1399,7 @@ be specified with the following command:
   ``BeginFrame'' style.
 
   \begin{element}{frametitle}\yes\yes\yes
-    \colorfontparents{structure}
+    \colorfontparents{titlelike}
     
     When the frame title and subtitle are to be typeset, this template
     is invoked with the \beamer-color and -font |frametitle| set. This
