@@ -6,9 +6,18 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\def\beamer@ftb@str{\setbeamerfont{structure}{family=\sffamily}}
+\def\beamer@ftb@tstr{\setbeamerfont{tiny structure}{family=\sffamily}}
+
+\DeclareOptionBeamer{onlytinystructure}{\let\beamer@ftb@str=\relax}
+\DeclareOptionBeamer{onlystructure}{\let\beamer@ftb@tstr=\relax}
+
+\ProcessOptionsBeamer
+
 \mode<presentation>
 
-\setbeamerfont{structure}{family=\sffamily}
+\beamer@ftb@str
+\beamer@ftb@tstr
 
 \mode
 <all>

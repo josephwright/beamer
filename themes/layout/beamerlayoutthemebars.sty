@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemebars}[2003/11/07 ver 0.93]
+\ProvidesPackage{beamerlayoutthemebars}[2004/05/09 ver 0.1]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 % Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
@@ -10,22 +10,15 @@
 
 \mode<presentation>
 
-                                % Standard templates
-\beamertemplatelargetitlepage
-\beamertemplatelargepartpage
-\beamertemplatelargeframetitle
-\beamertemplatelargeblocks
-\beamertemplatecircleminiframeinverted
-\beamertemplateplaintoc
 \beamertemplatelightsectionheads
-
+\beamertemplatecircleminiframeinverted
 
                                 % Head
 \useheadtemplate{%
   \vbox{%
     \colouredline{beamerstructure}{\hskip-0.3cm\insertnavigation{\paperwidth}\hskip-0.3cm}%
-    \tinycolouredline{beamerstructure!75!white}{\color{white}\textbf{\insertsubsection\hfill}}%
-  }}
+    \tinycolouredline{beamerstructure!75!white}{\color{white}\usebeamerfont{subsection in head/foot}\insertsubsection\hfill}}%
+}
 
                                 % Footline
 \usefoottemplate{%
@@ -33,10 +26,16 @@
     \hbox to\textwidth{\hfill%
       \setbox\beamer@logobox=\hbox{\raise 2pt\hbox{\insertlogo}}\ht\beamer@logobox=0pt%
       \box\beamer@logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
-    \tinycolouredline{beamerstructure!75}{\color{white}\textbf{\insertshortauthor\hfill\ifx\insertlogo\@empty\insertshortinstitute\fi}}%
-    \tinycolouredline{beamerstructure}{\color{white}\textbf{\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}%
+    \tinycolouredline{beamerstructure!75}{%
+      \color{white}%
+      {\usebeamerfont{author in head/foot}\insertshortauthor}\hfill%
+      \ifx\insertlogo\@empty%
+        {\usebeamerfont{institute in head/foot}\insertshortinstitute}%
+      \fi}%
+    \tinycolouredline{beamerstructure}{%
+      \color{white}%
+      {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}%
   }}}
-
 
                                 % Color of navigation symbols
 \def\beamernavigationcolorlight{beamerstructure!65!white}

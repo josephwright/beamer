@@ -7,8 +7,10 @@
 % of the LaTeX Project Public License Distributed from CTAN
 % archives in directory macros/latex/base/lppl.txt.
 
+\DeclareOptionBeamer{blockheadcolor}{\def\beamer@themerounded@bhc{#1}}
+\DeclareOptionBeamer{titlecolor}{\def\beamer@themerounded@tit{#1}}
 \DeclareOptionBeamer{shadow}{\def\beamer@themerounded@shadow{#1}}
-\ExecuteOptionsBeamer{shadow=false}
+\ExecuteOptionsBeamer{shadow=false,blockheadcolor=beamerstructure!75!black,titlecolor=beamerstructure!75!black}
 \ProcessOptionsBeamer
 
 \mode<presentation>
@@ -19,17 +21,17 @@
 
 \renewcommand{\beamertemplatesetupshadings}{
   \beamerboxessetupshadows
-  \beamerboxesdeclarecolorscheme{block}{beamerstructure!75!black}{beamerstructure!10!averagebackgroundcolor}
+  \beamerboxesdeclarecolorscheme{block}{\beamer@themerounded@bhc}{beamerstructure!10!averagebackgroundcolor}
   \beamerboxesdeclarecolorscheme{alert}{beameralert!75!averagebackgroundcolor}{beameralert!10!averagebackgroundcolor}
   \beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
 }
 
-\beamerboxesdeclarecolorscheme{title}{beamerstructure!75!black}{beamerstructure!75!black}
+\beamerboxesdeclarecolorscheme{title}{\beamer@themerounded@tit}{\beamer@themerounded@tit}
 \usetitlepagetemplate{
     \vbox{}
     \vfill
     \begin{centering}
-      \begin{beamerboxesrounded}[shadow=true,scheme=title]{}
+      \begin{beamerboxesrounded}[shadow=\beamer@themerounded@shadow,scheme=title]{}
           \begin{centering}%
             \color{white}%
             {\usebeamerfont{title}\inserttitle\par}%

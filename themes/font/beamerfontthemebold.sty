@@ -6,10 +6,21 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
+\def\beamer@ftb@str{
+  \setbeamerfont{structure}{series=\bfseries}
+  \setbeamerfont{block head}{size={}}
+}
+\def\beamer@ftb@tstr{\setbeamerfont{tiny structure}{series=\bfseries}}
+
+\DeclareOptionBeamer{onlytinystructure}{\let\beamer@ftb@str=\relax}
+\DeclareOptionBeamer{onlystructure}{\let\beamer@ftb@tstr=\relax}
+
+\ProcessOptionsBeamer
+
 \mode<presentation>
 
-\setbeamerfont{structure}{series=\bfseries}
-\setbeamerfont{block head}{size={}}
+\beamer@ftb@str
+\beamer@ftb@tstr
 
 \mode
 <all>

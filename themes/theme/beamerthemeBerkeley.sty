@@ -1,0 +1,30 @@
+\ProvidesPackage{beamerthemeBerkeley}[2004/04/21 ver 0.1]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@cs.tu-berlin.de>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the LaTeX Project Public License Distributed from CTAN
+% archives in directory macros/latex/base/lppl.txt.
+
+
+\DeclareOptionBeamer{cornercolor}{\PassOptionsToPackage{cornercolor=#1}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{left}{\PassOptionsToPackage{side=left}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{right}{\PassOptionsToPackage{side=right}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{side}{\PassOptionsToPackage{side=#1}{beamerlayoutthemesidebar}}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\uselayouttheme{sidebar}
+\useelementtheme[%
+  blockheadcolor=beamerstructure!75!averagebackgroundcolor,%
+  titlecolor=beamerstructure!75!averagebackgroundcolor]{rectangles}
+
+\mode
+<all>
+
+%%% Local Variables: 
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 

@@ -56,7 +56,7 @@
   \expandafter\geometry\expandafter{#1=\the\beamer@tempdim}%
   \expandafter\gdef\csname beamer@#1sidebartemplate\endcsname{%
     \vbox to \sidebarheight{%
-      \reset@font\usebeamerfont{sidebar}%
+      \usebeamerfont*{sidebar}%
       #3\vfil%
     }%
   }}
@@ -169,11 +169,11 @@
   }
 
 \long\def\usefoottemplate#1{%
-  \gdef\beamer@foottemplate{\offinterlineskip\reset@font\usebeamerfont{footline}\def\\{,}#1}}
+  \gdef\beamer@foottemplate{\offinterlineskip{\usebeamerfont*{footline}\def\\{,}#1}}}
 \def\insertpagenumber{\thepage}
 
 \long\def\useheadtemplate#1{%
-  \gdef\beamer@headtemplate{\offinterlineskip\reset@font\usebeamerfont{headline}#1}}%
+  \gdef\beamer@headtemplate{\offinterlineskip{\usebeamerfont*{headline}#1}}}%
 
 \def\insertvrule#1#2{%
   \hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth

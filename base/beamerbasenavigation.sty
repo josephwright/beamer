@@ -592,12 +592,12 @@
 \def\slideentry#1#2#3#4#5#6{%
   %section number, subsection number, slide number, first/last frame, page number, part number
   \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
-  \ifbeamer@compress%
-  \advance\beamer@xpos by1\relax%
-  \else
-  \beamer@xpos=#3\relax%
-  \beamer@ypos=#2\relax%
-  \fi
+    \ifbeamer@compress%
+      \advance\beamer@xpos by1\relax%
+    \else%
+      \beamer@xpos=#3\relax%
+      \beamer@ypos=#2\relax%
+    \fi%
   \hbox to 0pt{%
     \beamer@tempdim=-\beamer@vboxoffset%
     \advance\beamer@tempdim by-\beamer@boxsize%
@@ -611,7 +611,7 @@
       \kern\beamer@tempdim\hbox{\beamer@link(#4){%
         \ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsectionslide=#3%
         \beamer@minislidehilight\else\beamer@minisliderowhilight\fi\else\beamer@minislide\fi\else\beamer@minislide\fi%
-        }}}\hskip-10cm plus 1fil
+        }}}\hskip-10cm plus 1fil%
   }\fi\fi%
   \else%
   \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
