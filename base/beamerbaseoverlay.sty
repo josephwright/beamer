@@ -290,10 +290,8 @@
         \the\beamer@coveringdepth\endcsname{\beamer@colorhook}%
         \expandafter\xdef\csname beamer@oldpgfextension%
         \the\beamer@coveringdepth\endcsname{\beamer@pgfextension}%
-        \expandafter\xdef\csname beamer@oldcurrent%
-        \the\beamer@coveringdepth\endcsname{\current@color}%
-        \globalcolorlet{beamer@freeze\the\beamer@coveringdepth}%
-        {averagebackgroundcolor}%
+        {\globalcolorstrue\colorlet{beamer@freeze\the\beamer@coveringdepth}%
+        {averagebackgroundcolor}}%
         \xdef\beamer@colorhook{!##2!beamer@freeze%
           \the\beamer@coveringdepth\beamer@colorhook}%
         \gdef\beamer@pgfextension{!##2opaque}%
@@ -338,7 +336,12 @@
 
 \beamersetuncovermixins{}{}
 
-\def\colorhook{\edef\beamer@args{{@hookcolor}{@hookcolor\colorcurrentmixin\beamer@colorhook}}\expandafter\colorlet\beamer@args}
+\newcolormixin\beamer@colorhook
+
+%\newenvironment{colormixin}[1]%
+%{\edef\colorcurrentmixin{!#1\colorcurrentmixin}\color{.}}{}
+
+%\def\colorhook{\colorlet{@}{.\colorcurrentmixin\beamer@colorhook}}
 \def\pgfalternateextension{\colorcurrentmixin\beamer@pgfextension}
 
 \def\beamer@colorhook{}
