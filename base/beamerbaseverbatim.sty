@@ -22,8 +22,8 @@
     \ifx\beamer@test\beamer@stopframefirst%
       \let\next=\beamer@framewritten%
     \else
-      \immediate\write\beamer@verbatimfileout{\string#1}% first token
-                                % has already been read, hence add \string
+      \@temptokena={#1}%
+      \immediate\write\beamer@verbatimfileout{\the\@temptokena}%
       \let\next=\beamer@processframeline%
     \fi%
     \next%
@@ -40,13 +40,16 @@
   }
 }
 
-{\escapechar=-1\relax%
-  \xdef\beamer@stopframe{\string\\end\string\{frame\string\}}
-  \xdef\beamer@stopframefirst{\noexpand\end\string\{frame\string\}}
+\def\beamer@setupstoppers#1{%
+  {
+    \escapechar=-1\relax%
+    \xdef\beamer@stopframe{\string\\end\string\{#1\string\}}
+    \xdef\beamer@stopframefirst{\noexpand\end\string\{#1\string\}}
+}
 }
 
+
 \def\beamer@framewritten{\endgroup%
-  \immediate\closeout\beamer@verbatimfileout%
   \beamer@afterexternalframe%
 }
 

@@ -643,9 +643,9 @@ that the ``height'' of the letters in the font are 11pt. However, this
 and refers to the the vertical size of the lead letters. It thus does
 not need to have any correlation with the actual height of, say, the
 letter x or even the letter M. The letter x of an 11pt Times from
-Adobe will have a different height than the letter x of an 11pt Times
-from UTCs and it will have a totally different height than the letter
-x of an 11pt Helvetica from Adobe.
+Adobe will have a height that is different from the height of the
+letter x of an 11pt Times from UTC and the letter x of an 11pt
+Helvetica from Adobe will have yet another height.
 
 Summing up, the font size has little to do with the actual size of
 letters. Rather, these days it is a convention that 10pt or 11pt is
@@ -660,9 +660,9 @@ for presentations in the usual way. Instead, you should try to think
 of the number of lines that will fit on a slide if you were to fill
 the whole slide with line-by-line text (you are never going to do that
 in practice, though). Depending on how far your audience is removed
-from the projection on on large the projection is, between 10 and 20
-lines should fit on a slide. The less lines, the more readable your
-text will usually be.
+from the projection and on how large the projection is, between 10 and
+20 lines should fit on each slide. The less lines, the more readable
+your text will be.
 
 In \beamer, the default sizes of the fonts are chosen in a way that
 makes it difficult to fit ``too much'' onto a slide. Also, it will
@@ -678,17 +678,17 @@ select depends on the size of normal text.
 
 In a presentation, you will want to use a very small font for text in
 headlines, footlines, or sidebars since the text shown there is not
-vital and is read at the audience pleasure. Naturally, the text should
+vital and is read at the audience's leasure. Naturally, the text should
 still be large enough that it actually \emph{can} be read without
 binoculars. However, in a normal presentation environment the audience
-will still be able to even |\tiny| text from time to time.
+will still be able to read even |\tiny| text when necessary.
 
 However, using small fonts can be tricky. Many PostScript fonts are
 just scaled down when used at small sizes. When a font is
 used at less than its normal size, the characters should actually be
-stroked using a slightly thicker ``pen'' than the one would expect
-when just scaling down characters. For this reason, high quality
-multiple master fonts or the Computer Modern fonts use a differents
+stroked using a slightly thicker ``pen'' than the one resulting from
+just scaling things. For this reason, high quality 
+multiple master fonts or the Computer Modern fonts use different
 fonts for small characters and for normal characters. However, when
 you use a normal Helvetica or Times font, the characters are just
 scaled down. A similar problem arises when you use a light font on a
@@ -703,7 +703,7 @@ small text.
 In the other direction, you can use larger text for titles. However,
 using a larger font does not always have the desired effect. Just
 because a frame title is printed in large letters does not
-mean that is read first. Indeed, have a look at the cover of your
+mean that it is read first. Indeed, have a look at the cover of your
 favorite magazine. Most likely, the magazine's name is the typeset in the
 largest font, but you your attention will nevertheless first go to the
 topics advertised on the cover. Likewise, in the table of contents you
@@ -752,7 +752,7 @@ with just about everything you could wish for: extensive mathematical
 alphabets, outline PostScript versions, real small caps, real oldstyle
 numbers, specially designed small and large letters, and so on.
 
-However, there are reasons using other font families than Computer
+However, there are reasons for using font families other than Computer
 Modern: 
 \begin{itemize}
 \item
@@ -770,13 +770,14 @@ Modern:
   Computer modern needs much more space than more economic fonts like
   Times (this explains why Times is so popular with people who need
   to squeeze their great paper into just twelve pages). To be fair,
-  Times was specifically designed to be economic.
+  Times was specifically designed to be economic (the newspaper
+  company publishing The Times needed robust, but space-economic font).
 \end{itemize}
 
 A small selection of alternatives to Computer Modern:
 \begin{itemize}
 \item
-  Helvetica is a very often-used alternative. However, Helvetica also
+  Helvetica is an often used alternative. However, Helvetica also
   tends to look boring (since we see it everywhere) and it has a very
   large x-height (the height of the letter~x in comparison to a letter
   like~M). A large x-height is usually considered good for languages
@@ -785,12 +786,13 @@ A small selection of alternatives to Computer Modern:
   have never been quite convinced by the argument for this, though.)
   Be warned: the x-height of Helvetica is so different from the
   x-height of Times that mixing the two in a single line looks
-  strange.
+  strange. The packages for loading Times and Helvetica provide
+  options for fixing this, though.
 \item
   Futura is, in my opinion, a beautiful font that is very well-suited
-  for presentations. It's thick letters make it robust against
+  for presentations. Its thick letters make it robust against
   scaling, inversion, and low contrast. Unfortunately, while it is
-  most likely installed on your system somewhere in some for, getting
+  most likely installed on your system somewhere in some form, getting
   \TeX\ to work with it is a complicated process.
 \item
   Times is a possible alternative to Computer Modern. Its main
@@ -807,7 +809,8 @@ Families that you should \emph{not} use for normal text include:
   Script fonts (which look like handwriting). Their stroke width is
   way too small for a presentation.
 \item
-  More delicate serif fonts like Stempel and possibly even Garamond.
+  More delicate serif fonts like Stempel and possibly even Garamond
+  (though Garamond is really a beautiful font for books).
 \item
   Gothic fonts. Only a small fraction of your audience will be able to
   read them fluently. 
@@ -867,7 +870,7 @@ italics:
   different color or bold text seems better suited for presentations
   to create emphasis. 
 \item
-  If you look closely, you'll notice that italic text is not only
+  If you look closely, you will notice that italic text is not only
   slanted but that different letters are actually used (compare a and
   \emph{a}, for example). However, this is only true for serif text,
   not for sans-serif text. Text that is only slanted without using
@@ -927,7 +930,7 @@ impression, but some words of caution:
   spotting a misspelling like ``shepe''  than ``spape''. Small caps
   destroy the shape of words since \textsc{shape}, \textsc{shepe}
   and \textsc{spape} all have the same shape, thus making it much
-  harder to tell them apart. You audience will read small caps more
+  harder to tell them apart. Your audience will read small caps more
   slowly than normal text. This is, by the way, why legal
   disclaimers are often written in uppercase letters: not to make
   them appear more important to you, but to make them much harder to
@@ -939,8 +942,8 @@ impression, but some words of caution:
 \subsubsection{Font Weight}
 
 The ``weight'' of a font refers to the thickness of the
-letters. Usually, font come as regular or as bold fonts. There often
-also exist semibold, ultrabold (or black), thin, or ultrathin
+letters. Usually, fonts come as regular or as bold fonts. There often
+also exist semibold, ultrabold (or black), thin, or ultrathin (or hair)
 versions.
 
 In typography, using a bold font to create emphasis, especially within

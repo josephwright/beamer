@@ -216,11 +216,11 @@
 \define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
 \define@key{beamerframe}{fragile}[true]{%
   \beamer@containsverbatimfalse%
-  \beamer@containsverbatimandoverlaysfalse%
+  \beamer@isfragilefalse%
   \csname beamer@fragile#1\endcsname%
 }
 \def\beamer@fragilefalse{}
-\def\beamer@fragiletrue{\beamer@containsverbatimandoverlaystrue}
+\def\beamer@fragiletrue{\beamer@isfragiletrue}
 \def\beamer@fragilesingleslide{\beamer@containsverbatimtrue}  
 \define@key{beamerframe}{c}[true]{% centered
   \beamer@frametopskip=0pt plus 1fill\relax%
@@ -247,9 +247,10 @@
   \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
   \def\beamer@initfirstlineunskip{}%
 }
+\define@key{beamerframe}{environment}{\def\beamer@frameenvironmentsubst{#1}}
 
 \newif\ifbeamer@containsverbatim
-\newif\ifbeamer@containsverbatimandoverlays
+\newif\ifbeamer@isfragile
 \newif\ifbeamer@autobreak
 \newif\ifbeamer@shrink
 \newif\ifbeamer@plainframe
@@ -394,11 +395,12 @@
   \beamer@autobreakcount=0\relax%
   \beamer@zoomcount=0\relax%
   \beamer@containsverbatimfalse%
-  \beamer@containsverbatimandoverlaysfalse%
+  \beamer@isfragilefalse%
   \beamer@autobreakfalse%
   \beamer@shrinkfalse%
   \beamer@plainframefalse%
   \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
+  \setkeys{beamerframe}{environment=frame}%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
   \refstepcounter{framenumber}%
@@ -435,7 +437,7 @@
       \ifbeamer@autobreak%
         \let\beamer@howtotreatframe\beamer@autobreakframe%
       \fi%
-      \ifbeamer@containsverbatimandoverlays%
+      \ifbeamer@isfragile%
         \let\beamer@howtotreatframe\beamer@doexternalframe%
       \fi%
     \else% no slides in frame
@@ -443,7 +445,7 @@
     \fi%
   \else% again mode
     \let\beamer@howtotreatframe\beamer@doseveralframes%
-    \ifbeamer@containsverbatimandoverlays%
+    \ifbeamer@isfragile%
       \let\beamer@howtotreatframe\beamer@doexternalframe%
     \fi%
   \fi%  
@@ -499,6 +501,7 @@
 
 \def\beamer@doexternalframe{%
   \edef\beamer@verbfilename{\jobname\ifx\beamer@againname\@empty\else.\insertframenumber\fi.vrb}% .vrb for `verbatim'
+  \beamer@setupstoppers{\beamer@frameenvironmentsubst}%
   \immediate\openout\beamer@verbatimfileout=\beamer@verbfilename%
   \expandafter\beamer@verbatimreadframe\@gobble}
 % will return to following command with frame contents written to \beamer@verbfilename
@@ -510,10 +513,24 @@
 \def\beamer@@frameinput<#1>[{\@ifnextchar<{\beamer@@@@frameinput<#1>[}{\beamer@@@frameinput<#1>[<*>][}}
 \def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[#2]}{\beamer@@@frameinput<#1>[#2][]}}
 \def\beamer@@@frameinput<#1>[#2][#3]{%
-  \def\beamer@temp{\frame<#1>[#2][#3,fragile=false]}%
-  \expandafter\beamer@temp\expandafter{\expandafter\input\expandafter{\beamer@verbfilename}}
+  \ifx\beamer@frameenvironmentsubst\beamer@frametext%
+  \else%
+  \immediate\write\beamer@verbatimfileout{\noexpand\beamerclosesubstitutedenvironement{\beamer@frameenvironmentsubst}}%
+  \fi%
+  \immediate\closeout\beamer@verbatimfileout%
+  \edef\beamer@temp{\noexpand\frame<#1>[#2][#3,fragile=false]%
+    {\begingroup\noexpand\input{\beamer@verbfilename}\endgroup}}%
+  \beamer@temp%
+  \ifx\beamer@frameenvironmentsubst\beamer@frametext%
+  \else%
+    \expandafter\endgroup%
+  \fi%
   \beamer@reseteecodes}
 
+\def\beamerclosesubstitutedenvironement#1{
+  \let\end\beamer@specialend%
+  \let\endframe\relax%
+  \csname end#1\endcsname}
 
 \def\beamer@writeslidentry{%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
@@ -531,6 +548,18 @@
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}%
   \beamer@slideinframe=1\relax\beamer@resumemode}
 
+\let\beamer@origend\end
+\def\beamer@specialend#1{%
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\beamer@frametext%
+    \def\beamer@next{}%
+  \else%
+    \def\beamer@next{\expandafter\beamer@origend\expandafter{\beamer@temp}%
+      \let\end\beamer@specialend%
+      \let\endframe\relax%
+    }
+  \fi%
+  \beamer@next}
 
 
 

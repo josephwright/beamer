@@ -121,10 +121,6 @@ otherwise it contains only one slide.
     \item
       Overlays are not supported.
     \item
-      If your frame contains verbatim text, you must specify the
-      option |fragile=singleslide|. Since overlays are not supported
-      anyway, specifying this option never hurts.
-    \item
       Any notes for the frame created using the |\note| command will
       be inserted after the first page of the frame.
     \item
@@ -248,20 +244,49 @@ otherwise it contains only one slide.
 
     In detail, the following happens when this option is given: The
     contents of the frame is scanned and then written to a 
-    special file named \meta{jobname}|.vrb|. Then, the frame is
-    started anew and the content of this file is read back. Since,
-    upon reading of a file, the character codes can be modified,
-    this allows you to use both verbatim text and overlays.
+    special file named \meta{jobname}|.vrb| or, if a label has been
+    assigned to the frame, \meta{jobname}|.|\meta{current frame
+      number}|.vrb|. Then, the frame is started anew and the content
+    of this file is read back. Since, upon reading of a file, the
+    character codes can be modified, this allows you to use both
+    verbatim text and overlays.
 
     To determine the end of the frame, the following rule is used: The
-    first occurence of a single line containing exactlye |\end{frame}|
-    ends the frame. This special is needed since the frame contents
-    is, after all, not interpreted when it is gathered.
+    first occurence of a single line containing exactly
+    |\end{|\meta{frame environment name}|}| ends the frame. The
+    \meta{environment name} normally |frame|, but it can be changed
+    using the |environment| option. This special  rule is needed since
+    the frame contents is, after all, not interpreted when it is
+    gathered. 
 
     You can also add the optional information |=singleslide|. This
     tells \beamer\ that the frame contains only a single slide. In
     this case, the frame contents is \emph{not} written to a special
     file, but interpreted directly, which is ``faster and cleaner.''
+  \item
+    \declare{|environment=|\meta{frame environment name}}. This option
+    is only usedful in conjunction with the |fragile| option (but it
+    is not used for |fragile=singleslide|, only for the plain
+    |fragile|). The \meta{frame environment name} is used to determine
+    the end of the scanning when gathering the frame
+    contents. Normally, the frame ends when the a line reading
+    |\end{frame}| is reached. However, if you use |\begin{frame}|
+    inside another environment, you need to use this option:
+
+    \example
+\begin{verbatim}
+\newenvironment{slide}[1]
+  {\begin{frame}[fragile,environment=slide]
+      \frametitle{#1}}
+  {\end{frame}}
+
+\begin{slide}{My title}
+  Text.
+\end{slide}
+\end{verbatim}
+    If you did not specify the option |environment=slide| in the above
+    example, \TeX\ would ``miss'' the end of the slide since it does
+    not interpret text while gathering the frame contents.
   \item
     \declare{|label=|\meta{name}} causes the frame's contents to
     be stored under the name \meta{name} for later resumption using
@@ -426,23 +451,21 @@ calls the |\frame| command; except if the option |fragile=singleslide|
 is specified, in which case the contents is not collected, but
 control is nevertheless passed on the |\frame| (the internals are a
 bit obscure). You \emph{can} use the |frame| environment inside other
-environments like this:
+environments like this
 \begin{verbatim}
 \newenvironment{myframe}[1]{\begin{frame}\frametitle{#1}}{\end{frame}}
 \end{verbatim}
-However, the actual mechanics are somewhat fragile since the
+or like this
+\begin{verbatim}
+\newenvironment{myframe}[1]
+  {\begin{frame}[fragile,environment=myframe]\frametitle{#1}}
+  {\end{frame}}
+\end{verbatim}
+However, the actual mechanics are somewhat sensitive since the
 ``collecting'' of the frame contents is not easy, so
-do not attempt anything too fancy.
-
-If, for whatever reason, the |frame| environment has a problem with
-some contents, it \emph{might} help to try using the |\frame|
-command instead.
-
-For compatibility with earlier versions, you can also give an overlay
-specification in square brackets. If the sole argument to the |\frame|
-command is an argument in square brackets, the \beamer\ class will try
-to check whether this argument ``looks like'' an overlay
-specification. If so, it is assumed to be an overlay specification.
+do not attempt anything too fancy. As a rule, the beginning of the
+environment can be pretty arbitrary, but the ending must end with
+|\end{frame}|. Anything really complex is likely to fail.
 
 
 

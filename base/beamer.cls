@@ -1,5 +1,5 @@
 \RequirePackage{beamerbasercs}
-\def\beamer@version{3.00}
+\def\beamer@version{3.01}
 
 \ProvidesClassRCS $Header$
 [cvs version \beamer@version\space A class for typesetting presentations]
