@@ -236,6 +236,7 @@ End
 
 Counter
   Name                 subsection
+  Within               section
 End
 
 Counter
@@ -745,7 +746,6 @@ Style LyX-Code
   Font 
     Family  		Typewriter
   EndFont
-
 End
 
 Style Only
@@ -769,6 +769,57 @@ Style Only
   LabelFont 
     Family		Roman		
     Color               Latex
+  EndFont
+End
+
+Style Overprint
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	overprint
+  LabelString		"overprint" 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+  KeepEmpty		1
+
+  # font & label font definition
+
+  LabelFont 
+    Family              Roman
+    Color               latex
+  EndFont
+End
+
+Style OverlayArea
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	overlayarea
+  LabelString		"overlayarea" 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  LabelFont 
+    Family              Roman
+    Color               latex
   EndFont
 End
 
@@ -805,23 +856,6 @@ Style Proof
   CopyStyle		Corollary
   LatexName	 	proof
   LabelString		"Proof. " 
-End
-
-Style TableOfContentsCurrent
-  KeepEmpty             1
-  Margin		First_Dynamic
-  LatexType		Command
-  LatexName		tableofcontents[current]
-  LabelString	        "  [Table of contents with current section hilighted]"
-  LabelType		static
-  Align			Center         
-  Alignpossible         Center
-
-  Font 
-    Family  		Roman
-    Color               latex
-    Size		normal
-  EndFont  
 End
 
 # Title style definition
@@ -912,4 +946,11 @@ SecNumDepth		2
 TocDepth		2
 
 
+Preamble
+  \AtBeginDocument{
+    \let\origtableofcontents=\tableofcontents
+    \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+    \def\gobbletableofcontents#1{\origtableofcontents}
+  }
+EndPreamble
 

@@ -1,0 +1,1088 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass beamer
+\begin_preamble
+%\beamertemplateshadingbackground{red!5}{structure!5}
+
+\usepackage{beamerthemeshadow}
+\usepackage{pgfnodes,pgfarrows}
+
+%\beamertemplatetransparentcovereddynamic
+\beamertemplatetransparentcovered
+
+
+\pgfdeclareimage[width=1cm]{icsi-logo}{beamer-icsi-logo}
+\logo{\pgfuseimage{icsi-logo}}
+\end_preamble
+\language english
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 0
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Title
+
+The Complexity of Finding Paths in Tournaments
+\layout Author
+
+Till Tantau
+\layout Date
+
+January 30th, 2004
+\layout Institute
+
+International Computer Schience Institute
+\newline 
+Berkeley, California
+\begin_inset OptArg
+collapsed true
+
+\layout Standard
+
+ICSI
+\end_inset 
+
+
+\layout Section*
+
+Outline
+\layout BeginFrame
+
+Outline
+\layout Standard
+
+
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+[pausesections]
+\end_inset 
+
+
+\layout EndFrame
+
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+AtBeginSubsection[]{
+\layout Standard
+  
+\backslash 
+frame<handout:0>{ 
+\layout Standard
+    
+\backslash 
+frametitle{Outline}   
+\layout Standard
+    
+\backslash 
+tableofcontents[current,currentsubsection] 
+\layout Standard
+  }
+\layout Standard
+}
+\end_inset 
+
+
+\layout Section
+
+Introduction
+\layout Subsection
+
+What are Tournaments?
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+pgfdeclaremask{knight1-mask}{beamer-knight1-mask} 
+\backslash 
+pgfdeclareimage[height=2cm,mask=knight1-mask]{knight1}{beamer-knight1} 
+\backslash 
+pgfdeclaremask{knight2-mask}{beamer-knight2-mask} 
+\backslash 
+pgfdeclareimage[height=2cm,mask=knight2-mask]{knight2}{beamer-knight2} 
+\backslash 
+pgfdeclaremask{knight3-mask}{beamer-knight3-mask} 
+\backslash 
+pgfdeclareimage[height=2cm,mask=knight3-mask,interpolate=true]{knight3}{beamer-knight3} 
+\backslash 
+pgfdeclaremask{knight4-mask}{beamer-knight4-mask} 
+\backslash 
+pgfdeclareimage[height=2cm,mask=knight4-mask,interpolate=true]{knight4}{beamer-knight4} 
+\end_inset 
+
+
+\layout BeginFrame
+
+Tournaments Consist of Jousts Between Knights
+\layout Columns
+
+\begin_deeper 
+\layout Column
+
+5.75cm
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{1.25cm}{-1cm}{7cm}{4cm}      
+\layout Standard
+  
+\backslash 
+pgfnodebox{A}[virtual]{
+\backslash 
+pgfxy(2,1)}{
+\backslash 
+pgfuseimage{knight1}}{2pt}{2pt}      
+\layout Standard
+  
+\backslash 
+pgfnodebox{B}[virtual]{
+\backslash 
+pgfxy(6,1)}{
+\backslash 
+pgfuseimage{knight2}}{2pt}{2pt}      
+\layout Standard
+  
+\backslash 
+pgfnodebox{C}[virtual]{
+\backslash 
+pgfxy(4,-1)}{
+\backslash 
+pgfuseimage{knight3}}{2pt}{2pt}     
+\layout Standard
+  
+\backslash 
+pgfnodebox{D}[virtual]{
+\backslash 
+pgfxy(4,3)}{
+\backslash 
+pgfuseimage{knight4}}{2pt}{2pt}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfonly<3->{
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}}
+\layout Standard
+  
+\backslash 
+pgfonly<2->{
+\layout Standard
+    
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A}{B}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A}{C}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D}{A}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C}{B}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B}{D}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C}{D}}
+\layout Standard
+
+\backslash 
+end{pgfpicture} 
+\end_inset 
+
+
+\layout Column
+
+6cm
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{What is a Tournament?}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+A group of knights.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+Every two knights have a joust.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<3->
+\end_inset 
+
+In every joust one knight wins.
+\end_deeper 
+\end_deeper 
+\layout Standard
+
+\layout EndFrame
+
+\layout BeginFrame
+
+Tournaments are Complete Directed Graphs
+\layout Columns
+
+\begin_deeper 
+\layout Column
+
+5.75cm
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{1.75cm}{-1cm}{6.75cm}{4cm}
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+  
+\backslash 
+pgfnodecircle{A}[fill]{
+\backslash 
+pgfxy(2.5,1)}{8pt}
+\layout Standard
+  
+\backslash 
+pgfnodecircle{B}[fill]{
+\backslash 
+pgfxy(5.5,1)}{8pt}
+\layout Standard
+  
+\backslash 
+pgfnodecircle{C}[fill]{
+\backslash 
+pgfxy(4,-0.5)}{8pt}
+\layout Standard
+  
+\backslash 
+pgfnodecircle{D}[fill]{
+\backslash 
+pgfxy(4,2.5)}{8pt}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{white}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{A}}{
+\backslash 
+pgfbox[center,center]{$v_2$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{B}}{
+\backslash 
+pgfbox[center,center]{$v_3$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{C}}{
+\backslash 
+pgfbox[center,center]{$v_4$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{D}}{
+\backslash 
+pgfbox[center,center]{$v_1$}}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepstart{2pt}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepend{4pt}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{A}{B}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{A}{C}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{D}{A}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{C}{B}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{B}{D} 
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{D}{C}
+\layout Standard
+
+\backslash 
+end{pgfpicture} 
+\end_inset 
+
+
+\layout Column
+
+6cm
+\layout Definition
+
+A 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+alert{tournament}
+\end_inset 
+
+ is a
+\begin_deeper 
+\layout Itemize
+
+directed graph,
+\layout Itemize
+
+with exactly one edge between
+\newline 
+any two different vertices,
+\layout Itemize
+
+without self-loops.
+\end_deeper 
+\end_deeper 
+\layout EndFrame
+
+\layout BeginFrame
+
+Tournaments Arise Naturally in Different Situations
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Applicatins in Ordering Theory}<1>
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+Elements in a set need to be sorted.
+ 
+\newline 
+The ordering relation may be cyclic, however.
+\end_deeper 
+\layout Standard
+
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Applicatins in Sociology}<2>
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+Several candidates apply for a position.
+\newline 
+Reviewers decide for any two candidates whom they prefer.
+ 
+\end_deeper 
+\layout Standard
+
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{AStructural Complexity Theory}<3>
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+A language 
+\begin_inset Formula $L$
+\end_inset 
+
+ is given and a selector function 
+\begin_inset Formula $f$
+\end_inset 
+
+.
+\newline 
+It chooses from any two words the one more likely to be in 
+\begin_inset Formula $f$
+\end_inset 
+
+.
+\end_deeper 
+\layout EndFrame
+
+\layout Subsection
+
+What Does ``Finding Paths'' Mean?
+\layout BeginFrame
+
+``Finding Paths'' is Ambiguous
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Input for Path Finding Problems}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+A 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+alert<1>{tournament}
+\end_inset 
+
+ 
+\begin_inset Formula $T=(V,E)$
+\end_inset 
+
+.
+\layout Itemize
+
+A 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+alert<1>{source}
+\end_inset 
+
+ 
+\begin_inset Formula $s\in V$
+\end_inset 
+
+ and a 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+alert<1>{target}
+\end_inset 
+
+ 
+\begin_inset Formula $t\in V$
+\end_inset 
+
+.
+\end_deeper 
+\layout Overprint
+
+\begin_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+onslide<1,3,5,7,9>
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+   
+\backslash 
+smallskip
+\backslash 
+centering
+\layout Standard
+    
+\backslash 
+begin{pgfpicture}{1.755cm}{0.75cm}{6.75cm}{2.75cm}
+\layout Standard
+      
+\backslash 
+color{beamerexample}
+\layout Standard
+      
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+      
+\backslash 
+pgfnodecircle{A}[fill]{
+\backslash 
+pgfxy(2.5,1)}{8pt}
+\layout Standard
+      
+\backslash 
+pgfnodecircle{B}[fill]{
+\backslash 
+pgfxy(5.5,1)}{8pt}
+\layout Standard
+      
+\backslash 
+pgfnodecircle{C}[fill]{
+\backslash 
+pgfxy(4,-0.5)}{8pt}
+\layout Standard
+      
+\backslash 
+pgfnodecircle{D}[fill]{
+\backslash 
+pgfxy(4,2.5)}{8pt}
+\layout Standard
+
+\layout Standard
+      
+\backslash 
+color{white}
+\layout Standard
+      
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{B}}{
+\backslash 
+pgfbox[center,center]{$t$}}
+\layout Standard
+      
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{D}}{
+\backslash 
+pgfbox[center,center]{$s$}}
+\layout Standard
+
+\layout Standard
+      
+\backslash 
+color{beamerexample}
+\layout Standard
+      
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+      
+\backslash 
+pgfnodesetsepstart{2pt}
+\layout Standard
+      
+\backslash 
+pgfnodesetsepend{4pt}
+\layout Standard
+      
+\backslash 
+alert<9>{
+\backslash 
+pgfnodeconnline{A}{B}}
+\backslash 
+alert<5,7>{
+\backslash 
+pgfnodeconnline{A}{C}}
+\backslash 
+alert<5,7,9>{
+\backslash 
+pgfnodeconnline{D}{A}}
+\backslash 
+alert<5,7>{
+\backslash 
+pgfnodeconnline{C}{B}}
+\backslash 
+pgfnodeconnline{B}{D}
+\layout Standard
+      
+\backslash 
+pgfnodeconnline{D}{C}
+\layout Standard
+    
+\backslash 
+end{pgfpicture}
+\backslash 
+only<3>{
+\backslash 
+rlap{
+\backslash 
+alert{``Path Exists''}}}
+\backslash 
+only<7>{
+\backslash 
+rlap{
+\backslash 
+alert{Factor 1.5}}}
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+onslide<2,4,6,8>
+\end_inset 
+
+
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{Variants of Path Finding Problems}
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+usedescriptionitemofwidthas{Approximation Problem:}
+\end_inset 
+
+
+\layout Description
+
+Reachability\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+Is there a path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+?
+\layout Description
+
+Construction\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<4->
+\end_inset 
+
+Construct a path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+? 
+\layout Description
+
+Approximation\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<6->
+\end_inset 
+
+Construct a path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+ of length
+\newline 
+approximately their distance.
+\layout Description
+
+Optimization\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<8->
+\end_inset 
+
+Construct a shortest path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+.
+\end_deeper 
+\end_deeper 
+\layout EndFrame
+
+\layout Subsection
+
+What Is Known on Finding Paths in Arbitrary Graphs?
+\layout Section
+
+Finding Paths in Tournaments
+\layout Subsection
+
+Complexity of: Does a Path Exist?
+\layout Subsection
+
+Complexity of: Construct a Path
+\layout Subsection
+
+Complexity of: Construct a Shortest Path
+\layout Section*
+
+Summary
+\layout Subsection*
+
+Summary
+\layout BeginFrame
+
+Summary
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+First point.
+\layout Itemize
+
+Second point.
+\layout Itemize
+
+Third point.
+\end_deeper 
+\layout Standard
+
+\layout EndFrame
+
+\layout Subsection*
+
+For Further Reading
+\layout BeginFrame
+
+For Further Reading
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+beamertemplatebookbibitems
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Moon1968}
+
+\SpecialChar ~
+John Moon.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ 
+\emph on 
+Topics on Tournaments.
+
+\emph default 
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ Holt, Rinehart, and Winston, 1968.
+ 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+beamertemplatearticlebibitems
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {NickelsenT2002}
+
+\SpecialChar ~
+Arfst Nickelsen and Till Tantau.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ On reachability in graphs with bounded independence number.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ In 
+\emph on 
+Proc.
+ of COCOON 2002
+\emph default 
+, Springer-Verlag, 2002.
+\layout Bibliography
+\bibitem {Tantau2004b}
+
+\SpecialChar ~
+Till Tantau 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ A logspace approximation scheme for the shortest path problem for graphs
+ with bounded independence number.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ In 
+\emph on 
+Proc.
+ of STACS 2004
+\emph default 
+, Springer-Verlag, 2002.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ In press.
+\layout Standard
+
+\layout EndFrame
+
+\the_end

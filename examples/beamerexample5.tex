@@ -27,11 +27,11 @@
 \newcommand{\Nat}{\mathbb{N}}
 \newcommand{\Set}[1]{\{#1\}}
 
-\pgfdeclaremask{tu}{tu-logo.mask}
-\pgfdeclaremask{computer}{computer.mask}
-\pgfdeclareimage[interpolate=true,mask=computer,height=2cm]{computerimage}{computer}
-\pgfdeclareimage[interpolate=true,mask=computer,height=2cm]{computerworkingimage}{computerred}
-\pgfdeclareimage[mask=tu,height=.5cm]{logo}{tu-logo}
+\pgfdeclaremask{tu}{beamer-tu-logo-mask}
+\pgfdeclaremask{computer}{beamer-computer-mask}
+\pgfdeclareimage[interpolate=true,mask=computer,height=2cm]{computerimage}{beamer-computer}
+\pgfdeclareimage[interpolate=true,mask=computer,height=2cm]{computerworkingimage}{beamer-computerred}
+\pgfdeclareimage[mask=tu,height=.5cm]{logo}{beamer-tu-logo}
 
 \logo{\pgfuseimage{logo}}
 
@@ -215,6 +215,7 @@
   \pgfrect[clip]{\pgfrelative{\pgfxy(-0.1,0)}{\pgfpoint{#1}{4.25cm}}}{\pgfxy(0.2,1.25)}\ignorespaces}
 
 
+\AtBeginSection[]{\frame{\frametitle{Outline}\tableofcontents[current]}}
 
 \begin{document}
 
@@ -225,7 +226,6 @@
 
 \part{Main Part}
 \section{History}
-\frame{\frametitle{Outline}\tableofcontents[current]}
 
 \subsection{Enumerability in Recursion and Automata Theory}
 
@@ -513,8 +513,6 @@
     
 
 \section[Unification by Logic]{Unification by First-Order Logic}
-\frame{\frametitle{Outline}\tableofcontents[current]}
-
 
 \subsection{Elementary Definitions}
 
@@ -851,7 +849,6 @@
 
 
 \section{Applications}
-\frame{\frametitle{Outline}\tableofcontents[current]}
 
 \subsection{A Separability Result for First-Order Logic}
 

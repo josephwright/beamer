@@ -51,20 +51,20 @@
 \newcommand{\Nat}{\mathbb{N}}
 \newcommand{\Set}[1]{\{#1\}}
 
-\pgfdeclaremask{computer}{computer.mask}
-\pgfdeclaremask{apple}{g4.mask}
-\pgfdeclaremask{ram}{ram.mask}
+\pgfdeclaremask{computer}{beamer-computer-mask}
+\pgfdeclaremask{apple}{beamer-g4-mask}
+\pgfdeclaremask{ram}{beamer-ram-mask}
 
 \pgfdeclareimage[interpolate=true,mask=computer,%
-                 width=1.8361cm,height=2cm]{computerimage}{computer}
+                 width=1.8361cm,height=2cm]{computerimage}{beamer-computer}
 \pgfdeclareimage[interpolate=true,mask=computer,%
-                 width=1.8361cm,height=2cm]{computerworkingimage}{computerred}
+                 width=1.8361cm,height=2cm]{computerworkingimage}{beamer-computerred}
 \pgfdeclareimage[interpolate=true,mask=apple,%
-                 width=1.625cm,height=2cm]{apple}{g4}
+                 width=1.625cm,height=2cm]{apple}{beamer-g4}
 \pgfdeclareimage[interpolate=true,mask=apple,%
-                 width=1.625cm,height=2cm]{appleworking}{g4red}
+                 width=1.625cm,height=2cm]{appleworking}{beamer-g4red}
 \pgfdeclareimage[interpolate=true,mask=ram,%
-                 width=3.811cm,height=1cm]{ram}{ram}
+                 width=3.811cm,height=1cm]{ram}{beamer-ram}
 
 \newcommand{\tape}[9]{%
   \pgfputat{#1}{%
@@ -155,10 +155,10 @@
   Technical University of Berlin}
 \date[DLT 2003]{Developments in Language Theory Conference, 2003}
 
-\pgfdeclaremask{tu}{tu-logo.mask}
-\pgfdeclaremask{ur}{ur-logo.mask}
-\pgfdeclareimage[mask=tu,width=0.6cm]{tu-logo}{tu-logo}
-\pgfdeclareimage[mask=ur,width=1cm]{ur-logo}{ur-logo}
+\pgfdeclaremask{tu}{beamer-tu-logo-mask}
+\pgfdeclaremask{ur}{beamer-ur-logo-mask}
+\pgfdeclareimage[mask=tu,width=0.6cm]{tu-logo}{beamer-tu-logo}
+\pgfdeclareimage[mask=ur,width=1cm]{ur-logo}{beamer-ur-logo}
 
 \logo{\vbox{\hbox to 1cm{\hfil\pgfuseimage{tu-logo}}\vskip0.1cm\hbox{\pgfuseimage{ur-logo}}}}
 
@@ -174,19 +174,21 @@
   \tableofcontents[part=1,pausesections]
 }
 
+\AtBeginSubsection[]
+{
+  \frame<handout:0>
+  {
+    \frametitle{Outline}
+    \tableofcontents[current,currentsubsection]
+  }
+}
+
 
 \part{Main Talk}
 
 \section[Models]{The Model of Overhead-Free Computation}
 
-
 \subsection[Standard Model]{The Standard Model of Linear Space}
-
-\frame<handout:0>
-{
-  \frametitle{Outline}
-  \tableofcontents[current,currentsubsection]
-}
 
 \frame
 {
@@ -281,12 +283,6 @@
 
 
 \subsection[Our Model]{Our Model of Absolutely No Space Overhead}
-
-\frame<handout:0>
-{
-  \frametitle{Outline}
-  \tableofcontents[current,currentsubsection]
-}
 
 \frame
 {
@@ -424,12 +420,6 @@
 
 \subsection{Palindromes}
 
-\frame<handout:0>
-{
-  \frametitle{Outline}
-  \tableofcontents[current,currentsubsection]
-}
-
 \frame
 {
   \frametitle{Palindromes Can be Accepted in an Overhead-Free Way}
@@ -554,12 +544,6 @@
 
 \subsection{Linear Languages}
 
-\frame<handout:0>
-{
-  \frametitle{Outline}
-  \tableofcontents[current,currentsubsection]
-}
-
 \frame
 {
   \frametitle{A Review of Linear Grammars}
@@ -642,13 +626,6 @@
 
 \subsection[Forbidden Subword]{Context-Free Languages with a Forbidden Subword}
 
-\frame<handout:0>
-{
-  \frametitle{Outline}
-  \tableofcontents[current,currentsubsection]
-}
-
-
 \frame
 {
   \frametitle{Definition of Almost-Overhead-Free Computations}
@@ -714,26 +691,42 @@
 
 \subsection[Complete Languages]{Languages Complete for Polynomial Space}
 
-\frame<handout:0>
+\frame<1>[label=pspacecomplete]
 {
-  \frametitle{Outline}
-  \tableofcontents[current,currentsubsection]
-}
-
-
-\frame
-{
-  \frametitle{Some PSPACE-complete Languages\\ Can Be
-    Accepted in an Overhead-Free Way} 
+  \frametitle{Overhead-Free Languages can be PSPACE-Complete}
 
   \begin{Theorem}
     $\DOF$ contains languages that are complete for
     $\Class{PSPACE}$. 
   \end{Theorem}
-  \vskip1em
 
-  \hyperlink{proofdetails}{\beamergotobutton{Proof details}}
-  \nameslide{backfromproofdetails}
+  \only<1>
+  {
+    \vskip1em
+
+    \hyperlink{pspacecomplete<2>}{\beamergotobutton{Proof details}}
+  }
+  \only<2>
+  {% this is only shown in the appendix, where this frame is resumed.
+    \begin{proof}
+      \begin{itemize}
+      \item
+        Let $A \in \Class{DLINSPACE}$ be $\Class{PSPACE}$-complete.\\
+        Such languages are known to exist.
+      \item
+        Let $M$ be a linear space machine that accepts~$A \subseteq
+        \Set{0,1}^*$ with tape alphabet~$\Gamma$.
+      \item
+        Let $h \colon \Gamma \to \Set{0,1}^*$ be an isometric, injective
+        homomorphism.
+      \item
+        Then $h(L)$ is in $\Class{DOF}$ and it is
+        $\Class{PSPACE}$-complete. 
+      \end{itemize}
+    \end{proof}
+
+    \hfill\hyperlink{pspacecomplete<1>}{\beamerreturnbutton{Return}}
+  }
 }
 
 \frame
@@ -762,13 +755,6 @@
 
 
 \subsection[Strict Inclusion]{Linear Space is Strictly More Powerful}
-
-\frame<handout:0>
-{
-  \frametitle{Outline}
-  \tableofcontents[current,currentsubsection]
-}
-
 
 \frame
 {
@@ -916,42 +902,16 @@
 
 \appendix
 
+\AtBeginSubsection{}
 
 \section{\appendixname}
 
 \frame{\frametitle{Appendix Outline}\tableofcontents}
 
 
-\subsection{Overhead Freeness and Completeness}
+\subsection{Complete Languages}
 
-\frame{
-  \frametitle{Overhead-Free Languages can be PSPACE-Complete}
-
-  \begin{Theorem}
-    $\DOF$ contains languages that are complete for
-    $\Class{PSPACE}$. 
-  \end{Theorem}
-
-  \begin{proof}
-    \begin{itemize}
-    \item
-      Let $A \in \Class{DLINSPACE}$ be $\Class{PSPACE}$-complete.\\
-      Such languages are known to exist.
-    \item
-      Let $M$ be a linear space machine that accepts~$A \subseteq
-      \Set{0,1}^*$ with tape alphabet~$\Gamma$.
-    \item
-      Let $h \colon \Gamma \to \Set{0,1}^*$ be an isometric, injective
-      homomorphism.
-    \item
-      Then $h(L)$ is in $\Class{DOF}$ and it is
-      $\Class{PSPACE}$-complete. 
-    \end{itemize}
-  \end{proof}
-
-  \nameslide<1>{proofdetails}
-  \hfill\hyperlink{backfromproofdetails}{\beamerreturnbutton{Return}}
-}
+\resumeframe<2>{pspacecomplete}
 
 
 \subsection{Improvements for Context-Free Languages}

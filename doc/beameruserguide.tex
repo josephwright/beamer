@@ -82,6 +82,7 @@
 \newcommand\sarg[1]{\opt{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}}
 \newcommand\ssarg[1]{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}
 
+\providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
 
 
 
@@ -2725,6 +2726,26 @@ or come last as in |\item[Cat]<1>|.
 \end{description}
 \end{verbatim}
 \end{environment}
+
+
+\begin{command}{\usedescriptionitemofwidthas\marg{long text}}
+  This command overrides the default width of the
+  description label by the width of \meta{long text} for the current
+  \TeX\ group. You should only use this command if, for some reason or
+  another, you cannot give the \meta{long text} as an argument to the
+  |description| environment. This happens, for example, if you create a
+  |description| environment in \LyX.
+
+  \example
+\begin{verbatim}
+\usedescriptionitemofwidthas{longest label}
+\begin{description}
+\item<1->[short] Some text.
+\item<2->[longest label] Some text.
+\item<3->[long label] Some text.
+\end{description}
+\end{verbatim}
+\end{command}
 
 
 
