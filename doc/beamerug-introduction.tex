@@ -63,6 +63,8 @@ The list of features supported by \beamer\ is quite long
 \end{itemize}
 
 
+
+
 \subsection{History}
 
 I created \beamer\ mainly in my spare time. Many other people have
@@ -114,9 +116,65 @@ get certain things done using \beamer.
 \medskip
 \noindent
 This user's guide contains descriptions of all ``public''
-commands provided by the |beamer| class. In each description, the
-described command, environment, or option is printed in red. Text
-shown in green is optional and can be left out.
+commands, environments, and concepts defined by the \beamer-class. The
+following examples show how things are documented. As a general rule,
+red text is \emph{defined}, green text is \emph{optional}, blue text
+indicates special mode considerations.
+
+\begin{command}{\somebeamercommand\oarg{optional arguments}\marg{first
+      argument}\marg{second argument}}
+  Here you will find the explanation of what the command
+  |\somebeamercommand| does. The green argument(s) is optional. The
+  command of this example takes two parameters.
+
+  \example
+  |\somebeamercommand[opt]{my arg}{xxx}|
+\end{command}
+
+\begin{environment}{{somebeamerenvironment}\oarg{optional arguments}\marg{first
+      argument}}
+  Here you will find the explanation of the effect of the environment
+  |somebeamerenvironment|. As with commands, the green arguments are
+  optional.
+
+  \example
+\begin{verbatim}
+\begin{somebeamerenvironment}{Argument}
+  Some text.
+\end{somebeamerenvironment}
+\end{verbatim}
+\end{environment}
+
+\begin{element}{some beamer element}\yes\yes\yes
+  Here you will find an explanation of the template, color,
+  and/or font |some beamer element|.
+  A ``\beamer-element'' is a concept that is explained in more detail
+  in Section~\ref{section-elements}. Roughly spoken, an \emph{element}
+  is part of a presentation that is potentially typeset in some
+  special way. Examples of elements are frame titles, the author's
+  name, or the footnote sign. For most elements there exists a
+  \emph{template}, see Section~\ref{section-elements} once more, and
+  also a \beamer-color and a \beamer-font.
+
+  The three markers to the right of |some beamer element| indicate
+  wheter a template, a \beamer-color, and/or a \beamer-font of the
+  name |some beamer element| exist. Typically, all three exist and are
+  employed together when the element needs to be typeset. However,
+  sometimes templates do not have a color or font associated with them
+  (like parent templates, which are indicated by a check sign in
+  brackets). Also, there exist \beamer-colors and -fonts that do not
+  have an underlying template.
+
+  How to use and change templates is explained in
+  Section~\ref{section-templates}.
+
+  How to use and change colors is explained in
+  Section~\ref{section-colors}.
+
+  How to use and change fonts is explained in
+  Section~\ref{section-fonts}. 
+\end{element}
+
 
 \beamernote
 As next to this paragraph, you will sometimes find the word
@@ -133,12 +191,6 @@ special mode is used to create lecture notes out of a presentation
 \lyxnote
 A paragraph with \textsc{lyx} next to it describes behaviour that is
 special when you use \LyX\ to prepare your presentation.
-
-\appearancenote
-You will find \textsc{appearance} next to special explanations of how
-you can change the appearance of some aspect of your
-presentation. These explanations presume that you have read
-Section~\ref{section-customization}.
 
 
 

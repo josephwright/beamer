@@ -134,13 +134,14 @@ otherwise it contains only one slide.
       the frame that page is. By default, this special note is a
       Roman number. However, this can be changed using the following
       template.
-      \begin{template*}{frametitle continuation}
+      \begin{element}{frametitle continuation}\yes\yes\yes
         The text of this template is inserted at the end of every
         title of a frame with the |allowframebreaks| option set.
         \begin{templateoptions}
           \itemoption{default}{}
           Installs a Roman number as the template. The number
           indicates the current page of the frame.
+          
           \itemoption{from second}{\oarg{text}}
           Installs a template that inserts \meta{text} from the second
           page of a frame on. By default, the text inserted is
@@ -158,7 +159,7 @@ otherwise it contains only one slide.
           just inserts the text |(cont.)| or, possibly, a translation
           thereof (like |(Forts.)| in German). 
         \end{templateinserts}
-      \end{template*}
+      \end{element}
     \end{enumerate}
     If a frame needs to be broken into several pages, the material on
     all but the last page fills only 95\% of each page by
@@ -267,12 +268,13 @@ otherwise it contains only one slide.
   \example A title page, in which the head- and footlines are replaced
   by two graphics.
 \begin{verbatim}
-\usetitlepagetemplate{
+\setbeamertemplate{title page}
+{
   \pgfuseimage{toptitle}
   \vskip0pt plus 1filll
 
   \begin{centering}
-    \Large{\textbf{\inserttitle}}
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}
     
     \insertdate
   \end{centering}
@@ -365,17 +367,17 @@ otherwise it contains only one slide.
   suppress a frame in |article| mode, you can, for example, specify
   |<presentation>| as overlay specification.
 
-  \begin{template*}{frame begin}
+  \begin{element}{frame begin}\yes\no\no
     The text of this template is inserted at the beginning of each
     frame in |article| mode (and only there). You can use it, say, to
     start a |minipage| environment at the beginning of a frame or to
     insert a horizontal bar or whatever.
-  \end{template*}
+  \end{element}
 
-  \begin{template}{frame end}
+  \begin{element}{frame end}\yes\no\no
     The text of this template is inserted at the end of each
     frame in |article| mode.
-  \end{template}
+  \end{element}
 \end{environment}
 
 \begin{command}{\frame\sarg{overlay specification}%
@@ -545,15 +547,17 @@ be specified with the following command:
   entitled \meta{frame title text}. Using the \meta{overlay
     specification} makes it easy to suppress the a frame title once in
   a while. If you generally wish to suppress \emph{all} frame
-  titles in |article| mode, say |\useframetitletemplate{}|.
+  titles in |article| mode, say |\setbeamertemplate<article>{frametitle}{}|.
 
   \lyxnote
   The frame title is the text that follows on the line of the
   ``BeginFrame'' style.
 
-  \begin{template*}{frametitle}
+  \begin{element}{frametitle}\yes\yes\yes
+    \colorfontparents{structure}
+    
     When the frame title and subtitle are to be typeset, this template
-    is invoked with the \beamer\ color and font |frametitle| set. This
+    is invoked with the \beamer-color and -font |frametitle| set. This
     template is \emph{not} invoked when the commands |\frametitle| or
     |\framesubtitle| are called. Rather, it is invoked when the whole
     frame has been completely read. Till then, the frame title and frame
@@ -605,7 +609,7 @@ be specified with the following command:
       \iteminsert{\insertframetitle} yields the frame title.
       \iteminsert{\insertframesubtitle} yields the frame subtitle.
     \end{templateinserts}
-  \end{template*}
+  \end{element}
 \end{command}
 
 
@@ -628,6 +632,13 @@ be specified with the following command:
 
   \articlenote
   By default, the subtitle is not shown in any way in |article| mode.
+
+  \begin{element}{framesubtitle}\no\yes\yes
+    \colorfontparents{frametitle}
+    This element provides a color and a font for the subtitle, but no
+    template. It is the job of the |frametitle| template to also
+    typeset the subtitle.
+  \end{element}
 \end{command}
 
 Be default, all material for a slide is vertically centered. You can
@@ -655,7 +666,6 @@ Each frame has a \emph{background}, which---as the name suggests---is
 object: in \beamer, it consists of a \emph{background canvas} and the
 \emph{main background}.
 
-\appearancenote
 The background canvas can be imagined as a large area on which
 everything (the main background and everything else) is painted on. By
 default, this canvas is a big rectangle filling the whole frame whose
@@ -679,17 +689,22 @@ you wish to include your slides in some other document.
 \setbeamercolor{background canvas}{bg=} 
 \end{verbatim}
 
-\begin{template*}{background canvas}
+\begin{element}{background canvas}\yes\yes\yes
+  \colorparents{normal text}
   The template is inserted ``behind everything.'' The template should
   typically be some \TeX\ commands that produce a rectangle of height
   |\paperheight| and width |\paperwidth|.
 
   \begin{templateoptions}
     \itemoption{default}{}
-    installs a large rectangle of color |background canvas.bg|. Since
-    this color inherits from |normal text|, you can change the
+    installs a large rectangle with the background color. If the
+    background is empty, the canvas is ``transparent.'' Since
+    |background canvas| inherits from |normal text|, you can change the 
     background of the \beamer-color |normal text| to change the
-    color of the default canvas.
+    color of the default canvas. However, to make the canvas
+    transparent, only set the background of the canvas empty; leave
+    the background of normal text white.
+    
     \itemoption{vertical shading}{\oarg{color options}}
     installs a vertically shaded background. \emph{Use with care:
       Background shadings are often distracting!} The following
@@ -712,13 +727,14 @@ you wish to include your slides in some other document.
       default, which is |0.5| is in the middle.
     \end{itemize}
   \end{templateoptions}  
-\end{template*}
+\end{element}
 
 The main background is drawn on top of the background canvas. It can
 be used to add, say, a grid to every frame or a big background picture
 or whatever.
 
-\begin{template}{background}
+\begin{element}{background}\yes\yes\yes
+  \colorparents{background canvas}
   The template is inserted ``behind everything, but on top of the
   background canvas.'' Use it for pictures or grids or anything that
   does not necessarily fill the whole background. When this template
@@ -727,6 +743,7 @@ or whatever.
 
   \begin{templateoptions}
     \itemoption{default}{} is empty.
+    
     \itemoption{grid}{\oarg{grid options}}
     places a grid on the background. The following
     \meta{grid options} may be given:
@@ -737,7 +754,7 @@ or whatever.
       grid lines. The default is 10\% foreground.
     \end{itemize}
   \end{templateoptions}  
-\end{template}
+\end{element}
 
 
 

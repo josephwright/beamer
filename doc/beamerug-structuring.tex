@@ -36,8 +36,7 @@ affiliation, a title graphic, and a date.
   If you use the ``Title'' style in your presentation, a title page is
   automatically inserted.
 
-  
-  \begin{template*}{title page}
+  \begin{element}{title page}\yes\yes\yes
     This template is invoked when the |\titlepage| command is used.
 
     \begin{templateoptions}
@@ -70,7 +69,7 @@ affiliation, a title graphic, and a date.
       \iteminsert{\inserttitlegraphic} inserts the title graphic into a
       template. 
     \end{templateinserts}
-  \end{template*}
+  \end{element}
 \end{command}
 
 For compatibility with other classes, in |article| mode the following
@@ -229,7 +228,7 @@ why; comments would be appreciated).
 \section<article>{Results on the Main Problem}
 \end{verbatim}
 
-  \begin{template*}{section in toc}
+  \begin{element}{section in toc}\yes\yes\yes
     This template is used when a section entry is to be typeset. For
     the permissible \meta{options} see the parent template
     |table of contents|.
@@ -242,14 +241,14 @@ why; comments would be appreciated).
       \iteminsert{\inserttocsectionnumber}
       inserts the number of the current section (in the table of contents).
     \end{templateinserts}
-  \end{template*}
+  \end{element}
 
-  \begin{template}{section in toc shaded}
+  \begin{element}{section in toc shaded}\yes\yes\yes
     This template is used instead of the previous one if the section
     should be shown in a shaded way, because it is not the current
     section.  For the permissible \meta{options} see the parent
     template |table of contents|.
-  \end{template}
+  \end{element}
 \end{command}
 
 \begin{command}{\section\sarg{mode specification}\declare{|*|}\marg{section name}}
@@ -265,7 +264,7 @@ why; comments would be appreciated).
   This command works the same way as the |\section| command.
   \example|\subsection[Applications]{Applications to the Reduction of Pollution}|
 
-  \begin{template*}{subsection in toc}
+  \begin{element}{subsection in toc}\yes\yes\yes
     Like |section in toc|, only for subsection.
 
     In addition to the inserts for the |section in toc| template, the
@@ -278,11 +277,11 @@ why; comments would be appreciated).
       \iteminsert{\inserttocsubsectionnumber}
       inserts the number of the current subsection (in the table of contents).
     \end{templateinserts}
-  \end{template*}
+  \end{element}
 
-  \begin{template}{subsection in toc shaded}
+  \begin{element}{subsection in toc shaded}\yes\yes\yes
     Like |section in toc shaded|, only for subsections.
-  \end{template}
+  \end{element}
 \end{command}
 
 \begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsection name}} 
@@ -429,7 +428,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
   presentation is ``advertised.''
   \example |\frame{\partpage}|
   
-  \begin{template*}{part page}
+  \begin{element}{part page}\yes\yes\yes
     This template is invoked when the |\partpage| command is used.
 
     \begin{templateoptions}
@@ -450,7 +449,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
       \iteminsert{\insertpartromannumber}
       inserts the current part number as a Roman number into a template.
     \end{templateinserts}
-  \end{template*}
+  \end{element}
 \end{command}
 
 \begin{command}{\AtBeginPart\marg{text}}
@@ -664,7 +663,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
   inserting a \TeX-mode text with the options in square brackets
   directly after the table of contents.
 
-  \begin{template*}{table of contents}
+  \begin{element}{sections/subsections in toc}\yes\no\no
     This template is a parent template, whose children are
     |section in toc| and |subsection in toc|. This means that if you
     use the |\setbeamertemplate| command on this template, the command
@@ -704,9 +703,9 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
 
     If none of the above options suits you, you have to change the
     templates |section in toc| and |subsection in toc| directly.
-  \end{template*}
+  \end{element}
 
-  \begin{template}{table of contents shaded}
+  \begin{element}{sections/subsections in toc shaded}\yes\no\no
     A parent template with children
     |section in toc shaded| and |subsection in toc shaded|. These two
     templates are used to render section and subsection entries when
@@ -723,7 +722,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
       \example |\setbeamertemplate{table of contents shaded}[default][50]|
       makes dimmed entries 50\% transparent. 
     \end{templateoptions}
-  \end{template}
+  \end{element}
 \end{command}
 
 
@@ -1469,8 +1468,8 @@ structure your text.
 
 There are three predefined environments for creating lists, namely
 |enumerate|, |itemize|, and |description|. The first
-two can be nested to depth two, but not further (this would
-create totally unreadable slides).
+two can be nested to depth three, but nesting them to this depth
+creates totally unreadable slides.
 
 The |\item| command is overlay-specification-aware. If an overlay
 specification is provided, the item will only be shown on the
@@ -1549,11 +1548,10 @@ or come last as in |\item[Cat]<1>|.
   |\beamerdefaultoverlayspecification| before the environment to get
   the desired effect.
 
-  \appearancenote
   The appearance of an |itemize| list is governed by several
   templates. The first template concerns the way the little marker
   introducing each item is typeset:  
-  \begin{template}{itemize items}
+  \begin{element}{itemize items}\semiyes\no\no
     This template is a parent template, whose children are
     |itemize item|, |itemize subitem|, and |itemize subsubitem|. This
     means that if you use the |\setbeamertemplate| command on this
@@ -1574,30 +1572,37 @@ or come last as in |\item[Cat]<1>|.
       \itemoption{ball}{}
       Uses little balls as item markers.
     \end{templateoptions}
-  \end{template}
+  \end{element}
 
-  \begin{template}{itemize item}
+  \begin{element}{itemize item}\yes\yes\yes
+    \colorfontparents{item}
     This template (with |item| instead of |items|) governs how the
     marker in front of a first-level item is typeset. ``First-level''
     refers to the level of nesting. See the |itemize items| template
     for the \meta{options} that may be given.
 
     When the template is inserted, the \beamer-font and -color
-    |itemize item| is installed. Typically, the font is ignores by the
+    |itemize item| is installed. Typically, the font is ignored by the
     template as some special symbol is drawn anyway, by the font may
     be important if an optional argument is given to the
     |\item| command as in |\item[First]|.
-  \end{template}
 
-  \begin{template}{itemize subitem}
+    The font and color inherit from the |item| font and color, which
+    are explained at the end of this section.
+  \end{element}
+
+  \begin{element}{itemize subitem}\yes\yes\yes
+    \colorfontparents{subitem}
     Like |itemize item|, only for second-level items. An
     item of an itemize inside an enumerate counts a second-level item.
-  \end{template}
+  \end{element}
 
-  \begin{template}{itemize subsubitem}
+  \begin{element}{itemize subsubitem}\yes\yes\yes
+    \colorfontparents{subsubitem}
     Like |itemize item|, only for third-level items.
-  \end{template}
+  \end{element}
 \end{environment}
+
 
 
 
@@ -1659,7 +1664,7 @@ or come last as in |\item[Cat]<1>|.
   \lyxnote
   The same constraints as for |itemize| apply.
   
-  \begin{template*}{enumerate items}
+  \begin{element}{enumerate items}\semiyes\no\no
     Similar to |itemize items|, this template is a parent template,
     whose children are |enumerate item|, |enumerate subitem|,
     |enumerate subsubitem|, and |enumerate mini template|. These
@@ -1680,9 +1685,9 @@ or come last as in |\item[Cat]<1>|.
       \itemoption{ball}{}
       ``Projects'' the numbers onto little balls.
     \end{templateoptions}
-  \end{template*}
+  \end{element}
 
-  \begin{template}{enumerate item}
+  \begin{element}{enumerate item}\yes\yes\yes
     This template governs how the number in front of a first-level
     item is typeset. The level here refers to the level of enumeration
     nesting only. Thus an enumerate inside an itemize is a first-level
@@ -1699,9 +1704,9 @@ or come last as in |\item[Cat]<1>|.
       Arabic number). This insert is also available in the next two
       templates. 
     \end{templateinserts}
-  \end{template}
+  \end{element}
 
-  \begin{template}{enumerate subitem}
+  \begin{element}{enumerate subitem}\yes\yes\yes
     Like |enumerate item|, only for second-level items. 
 
     \begin{templateinserts}
@@ -1711,9 +1716,9 @@ or come last as in |\item[Cat]<1>|.
     \end{templateinserts}
 
     \example |\setbeamertemplate{enumerate subitem}{\insertenumlabel-\insertsubenumlabel}|
-  \end{template}
+  \end{element}
 
-  \begin{template}{enumerate subsubitem}
+  \begin{element}{enumerate subsubitem}\yes\yes\yes
     Like |enumerate item|, only for third-level items. 
 
     \begin{templateinserts}
@@ -1721,9 +1726,9 @@ or come last as in |\item[Cat]<1>|.
       inserts the current number of the second-level enumeration (as an
       Arabic number). 
     \end{templateinserts}
-  \end{template}
+  \end{element}
 
-  \begin{template}{enumerate mini template}
+  \begin{element}{enumerate mini template}\yes\yes\yes
     This template is used to typeset the number that arises from a
     mini template.
 
@@ -1734,33 +1739,32 @@ or come last as in |\item[Cat]<1>|.
       is used in the fourth item, |\insertenumlabel| would yield
       |(iv)|.
     \end{templateinserts}
-  \end{template}
+  \end{element}
 \end{environment}
 
-\appearancenote
 The following templates govern how the \emph{body} of an |itemize| or
 an |enumerate| is typeset.
-\begin{template}{itemize/enumerate body begin}
+\begin{element}{itemize/enumerate body begin}\yes\no\no
   This template is inserted at the beginning of a first-level
   |itemize| or |enumerate| environment. Furthermore, before this
   template is inserted, the \beamer-font and -color
   |itemize/enumerate body| is used.
-\end{template}
-\begin{template}{itemize/enumerate body end}
+\end{element}
+\begin{element}{itemize/enumerate body end}\yes\no\no
   This template is inserted at the end of a first-level
   |itemize| or |enumerate| environment.
-\end{template}
+\end{element}
 There exist corresponding templates like
 |itemize/enumerate subbody being| from second- and third-level itemize
 or enumerates.
 
-\begin{template}{items}
+\begin{element}{items}\semiyes\no\no
   This template is a parent template of |itemize items| and
   |enumerate items|.
   \example |\setbeamertemplate{items}[circle]| will cause all items in
   |itemize| or |enumerate| environments to become circles (of the
   appropriate size, color, and font).
-\end{template}
+\end{element}
 
 
 \label{section-descriptions}
@@ -1806,7 +1810,7 @@ or enumerates.
 
   |\setbeamermargin{descriptionwidthof}|\marg{text}
   
-  \begin{template*}{description item}
+  \begin{element}{description item}\yes\yes\yes
     This template is used to typeset the description items. When this
     template is called, the \beamer-font and -color |description item|
     are installed.
@@ -1822,7 +1826,7 @@ or enumerates.
       \iteminsert{\insertdescriptionitem} inserts the text of the
       current description item.
     \end{templateinserts}
-  \end{template*}
+  \end{element}
 \end{environment}
 
 
@@ -1846,6 +1850,28 @@ or enumerates.
 \end{command}
 
 
+
+In order to simplify changing the color or font of items, the
+different kinds of items inherit form or just use the following
+``general'' \beamer-color and fonts:
+
+\begin{element}{item}\no\yes\yes
+\end{element}
+
+\begin{element}{item projected}\no\yes\yes
+\end{element}
+
+\begin{element}{subitem}\no\yes\yes
+\end{element}
+
+\begin{element}{subitem projected}\no\yes\yes
+\end{element}
+
+\begin{element}{subsubitem}\no\yes\yes
+\end{element}
+
+\begin{element}{subsubitem projected}\no\yes\yes
+\end{element}
 
 \subsubsection{Hilighting}
 
