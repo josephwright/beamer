@@ -87,6 +87,12 @@
 \def\extractclass#1#2@{%
 \item{{{\ttfamily\char`\\documentclass}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}}
 
+\def\solution#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item \textbf{Solution Template
+      }\declare{\texttt{\def\_{\char`\_}#1}}\par\topsep=0pt}
+\def\endsolution{\endlist}
+
+
 \newcommand\opt[1]{{\color{black!50!green}#1}}
 \renewcommand\oarg[1]{\opt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
 \newcommand\sarg[1]{\opt{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}}
@@ -259,10 +265,40 @@ slow machine, this may take a while. See Section~\ref{section-speedup}
 for ways of speeding up the compilation.
 
 
+
+\subsection{Solution Templates: Getting Going Quickly}
+
+In the subdirectories of the directory |beamer/solutions| you will
+find \emph{solution templates} in different languages. A solution
+template is a \TeX-text that ``solves'' a specific problem. Such a
+problem might be ``I need to create a 20 minute talk for a
+conference'' or ``I want to create a slide that introduced the next
+speaker'' or ``I want to create a table that is uncovered piecewise.''
+For such a problem, a solution template consists of a mixture of a
+template and an example that can be used to solve this particular
+problem. Just copy the solution template file (or parts of it) and
+freely adjust them to your needs.  
+
+The collecting of \beamer\ solution templates has only begun and
+currently there are only very few of them. I hope that in the future
+more solutions will become available and I would like to encourage
+users of the \beamer\ class to send me solutions they develop. I would
+also like to encourage users to help in translating solutions to
+languages other than English and German. If you have written a
+solution or a translation, please feel free to send it to me.
+
+
+
+
 \subsection{How to Read this User's Guide}
 
-This user's guide is both intended as a tutorial and as a reference
-guide. If you have not yet installed the package, please read
+First a word of warning: This text has grown rather wildly and is by
+no means perfectly structured or particularly well written. Hopefully
+this will change in the future, ideally by this text being superceded
+by a good book on creating presentations in \LaTeX\ becoming available.
+
+Till then, this user's guide is both intended as a tutorial and as a
+reference guide. If you have not yet installed the package, please read
 Section~\ref{section-installation} first. If you do not have much
 experience with preparing presentations, 
 Section~\ref{section-workflow} might be especially helpful. The later
@@ -276,6 +312,10 @@ In this guide you will find the descriptions of all ``public''
 commands provided by the |beamer| class. In each such
 description, the described command, environment, or option is printed 
 in red. Text shown in green is optional and can be left out.
+
+Whenever a \beamer\ solution template exists for a specific problem, this will
+be pointed out in the (sub-)section that treats the topic of this
+problem. 
 
 You will sometimes find one of the words \textsc{beamer},
 \textsc{article}, or \textsc{lyx} in blue in some description of a
@@ -458,7 +498,7 @@ template |beamerpresentation.lyx|, which is located in the directory
 
 
 
-\section{Workflow}
+\section{Workflow for Creating a Presentation}
 
 \label{section-workflow}
 
@@ -511,10 +551,9 @@ residing in one directory. If you use an extra directory for each
 presentation, you can call your main file |main.tex|. 
 
 To create an initial |main.tex| file for your talk, copy an
-existing file (like the file |beamerexample1.tex| that comes along
-with the distribution) and delete everything that is not going to be
-part of your talk. Adjust the |\author| and other fields as 
-appropriate. 
+existing file from the |beamer/solutions| directory and adapt it to
+your needs. A list of possible \beamer\ solutions that contain
+templates for presentation \TeX-files can be found below.
 
 If you wish your talk to reside in the same file as some different,
 non-presentation article version of your text, it is advisable to
@@ -525,6 +564,37 @@ Section~\ref{section-article-version-workflow} for details.
 You can either open a new file and then select |beamer| as the
 document class or you say ``New from template'' and then use a
 template from the directory |beamer/lyx/templates|.
+
+
+\subsubsection{Solution Templates for Presentations}
+
+The following list of solution templates is sorted by the length of
+the talks for which they provide a template. As always, the solutions
+can be found in the directory |beamer/solutions|.
+
+\begin{solution}{short-talks/speaker\_introduction-ornate-2min}
+  \begin{itemize}
+  \item
+    Introducing another speaker.
+  \item
+    Talk length is about 2min.
+  \item
+    Orante style.
+  \end{itemize}
+\end{solution}
+
+\begin{solution}{conference-talks/conference-ornate-20min}
+  \begin{itemize}
+  \item
+    Talk at a conference/colloquium.
+  \item
+    Talk length is about 20 minutes.
+  \item
+    Ornate style.
+  \end{itemize}
+\end{solution}
+
+
 
 
 

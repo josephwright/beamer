@@ -374,18 +374,45 @@
   \onslide<\c@beamerpauses->%
 }%
 
-\newcommand<>{\onslide}{%
+
+
+\mode
+<all>
+{
+  \def\onslide{\@ifstar{\only}{\@ifnextchar+{\expandafter\beamer@visibleonslide\@gobble}{\beamer@mainonslide}}}
+
+  \newcommand<>{\beamer@visibleonslide}{%
+    \@ifnextchar\bgroup
+    {\visible#1}%
+    {\beamer@noargsvisibleonslide#1}}
+
+  \newcommand<>{\beamer@mainonslide}{%
+    \@ifnextchar\bgroup%
+    {\uncover#1}%
+    {\beamer@noargsonslide#1}%
+  }
+}
+
+\newcommand<>{\beamer@noargsonslide}{%
   \beamer@endpause%
   \alt#1%
   {\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
   {\beamer@startcovered\gdef\beamer@endpause{\beamer@endcovered}}%
 }
 
+\newcommand<>{\beamer@noargsvisibleonslide}{%
+  \beamer@endpause%
+  \alt#1%
+  {\beamer@spacingcoverb\gdef\beamer@endpause{\beamer@spacingcoverb}}%
+  {\pgfsys@begininvisible\gdef\beamer@endpause{\pgfsys@endinvisible}}%
+}
+          
 \mode
 <article>
 {
   \newcommand\pause[1][]{}
-  \newcommand<>\onslide{}
+  \newcommand<>{\beamer@noargsonslide}{}
+  \newcommand<>{\beamer@noargsvisibleonslide}{}
 }
 
   
@@ -616,7 +643,8 @@
 
 
 \newenvironment{overprint}[1][\textwidth]{%
-  \let\onslide=\beamer@onslide%
+  \let\beamer@noargsonslide=\beamer@onslide%
+  \let\beamer@noargsvisibleonslide=\beamer@onslide%
   \beamer@animht=0pt%
   \beamer@animdp=0pt%
   \beamer@animwd=#1\relax%
@@ -656,7 +684,10 @@
 <article>
 {
   \newenvironment{overprint}[1][]%
-    {\let\onslide=\beamer@onslide\begin{onlyenv}}
+  {%
+    \let\beamer@noargsonslide=\beamer@onslide%
+    \let\beamer@noargsvisibleonslide=\beamer@onslide%
+    \begin{onlyenv}}
     {\end{onlyenv}}
 
   \def\beamer@onslide<#1>{\end{onlyenv}\begin{onlyenv}<#1>}

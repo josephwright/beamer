@@ -722,6 +722,28 @@ Style Fact
   LabelString		"Fact. " 
 End
 
+Style FrameSubtitle
+  Margin		Static
+  LatexType		Command
+  LatexName		framesubtitle
+  ParSkip		0.4
+  ItemSep		0
+  TopSep		0
+  BottomSep		1
+  ParSep		1
+  Align			Center
+  AlignPossible		Center
+  LabelType		No_Label
+  OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Series		Bold
+    Color               Blue
+  EndFont
+
+End
+
 # Date style definition
 Style Institute
   Margin		Dynamic
@@ -991,6 +1013,30 @@ Style Theorem
   CopyStyle		Corollary
   LatexName	 	theorem}%{
   LabelString		"Theorem. " 
+End
+
+Style Subtitle
+  Margin		Static
+  LatexType		Command
+  InTitle		1
+  LatexName		subtitle
+  ParSkip		0.4
+  ItemSep		0
+  TopSep		0
+  BottomSep		1
+  ParSep		1
+  Align			Center
+  AlignPossible		Center
+  LabelType		No_Label
+  OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Size		Large
+    Series		Bold
+    Color               Blue
+  EndFont
+
 End
 
 
