@@ -87,7 +87,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 1.21\\
+\title{User's Guide to the Beamer Class, Version 1.21-dev\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -906,8 +906,21 @@ slides of the frame.
 }
 \frame[plain]{\titlepage}
 \end{verbatim}
+  \item
+    \declare{|label=|\meta{name}} causes the frame's contents to
+    be stored under the name \meta{name} for later resumption using
+    the command |\resumeframe|. If this option is given, you cannot
+    include verbatim text in the frame, even if you specify an overlay
+    specification like |<1>|. The frame is still rendered
+    normally. See also |\resumeframe|.
+
+    Furthermore, on each slide of the frame a label with the name
+    \meta{name}|<|\meta{slide number}|>| is created. Note that labels
+    in general, and these labels in particular, can be used as targets
+    for hyperlinks. 
   \end{itemize}
 \end{command}
+
 
 For compatibility with earlier versions, you can also give an overlay
 specification in square brackets. If the sole argument to the |\frame|
@@ -918,6 +931,74 @@ specification. If so, it is assumed to be an overlay specification.
 Note that there is \emph{no} environment for creating frames. The
 reason is that I have simply not been able to come up with any idea of
 how to implement it.
+
+
+\begin{command}{\resumeframe\sarg{overlay
+      specification}\oarg{options}\marg{name}}
+  Resumes a frame that was previously created using |\frame|
+  with the option |label=|\meta{name}. You can use this
+  command to ``continue'' a frame that has been interrupted by another
+  frame. The effect of this command is to call the |\frame| command
+  with the given \meta{overlay specification} and \meta{options} (if
+  present) and with the original frame's contents.
+
+  \example
+\begin{verbatim}
+\frame<1-2>[label=myframe]
+{
+  \begin{itemize}
+  \item \alert<1>{First subject.}
+  \item \alert<2>{Second subject.}
+  \item \alert<3>{Third subject.}
+  \end{itemize}
+}
+
+\frame
+{
+  Some stuff explaining more on the second matter.
+}
+
+\resumeframe<3>{myframe}
+\end{verbatim}
+  The effect of the above code is to create four slides. In the first
+  two, the items 1 and~2 are hilighted. The third slide contains the
+  text ``Some stuff explaining more on the second matter.'' The fourht
+  slide is identical to the first two slides, except that the third
+  point is now hilighted.
+
+  \example
+\begin{verbatim}
+\frame<1>[label=Cantor]
+{
+  \frametitle{Main Theorem}
+
+  \begin{Theorem}
+    $\alpha < 2^\alpha$ for all ordinals~$\alpha$.
+  \end{Theorem}
+
+  \only<1>
+  {
+    \hyperlink{Cantor<2>}{\beamergotobutton{Proof details}}
+  }
+  \only<2>
+  {% this is only shown in the appendix, where this frame is resumed.
+    \begin{proof}
+      As shown by Cantor, ...
+    \end{proof}
+
+    \hfill\hyperlink{Cantor<1>}{\beamerreturnbutton{Return}}
+  }
+}
+
+...
+\appendix
+
+\resumeframe<2>{Cantor}
+\end{verbatim}
+  In this example, the proof details are deferred to a slide in the
+  appendix. Hyperlinks are setup, so that one can jump to the proof
+  and go back.
+\end{command}
 
 
 
@@ -1051,11 +1132,14 @@ the talk, not for the handout version. To make verbatim accessible
 also in the handout version, you would have to specify
 \verb!\frame<1| handout: 1>! and even more if you also have a
 transparencies version. The specification |\frame<all:1>| states
-that the frame has just one slide in all versions.
+that the frame has just one slide in all versions. You may \emph{not}
+use the |label=|\meta{label name} option if you have a verbatim text
+on a slide.
 
 If you need to use verbatim commands in frames that contain several
-slides, you must \emph{declare} your verbatim texts before the frame
-starts. This is done using two special commands:
+slides or on a frame that uses the |label| option, you must
+\emph{declare} your verbatim texts before the frame starts. This is
+done using two special commands:
 
 
 \begin{command}{\defverb\marg{command name}\opt{|*|}%
@@ -1575,10 +1659,10 @@ the following command.
   Redeclares a command that already exists in the same way as
   |\newoverlaycommand|. Inside the parameters, you can 
   still access to original definitions using the command
-  |\original|, see the example.
+  |\beameroriginal|, see the example.
   \example
 \begin{verbatim}
-\renewoverlaycommand{\tiny}{\original{\tiny}}{}
+\renewoverlaycommand{\tiny}{\beameroriginal{\tiny}}{}
 
 \frame
 {
@@ -1706,6 +1790,12 @@ short cuts''.
   presentation where extra details can be shown. In this part, there
   is a return button present on each slide that will jump back to the
   place where the goto button was pressed.
+\item
+  You can use the |\resumeframe| command to ``continue'' frames that
+  you previously started somewhere, but where certain details have
+  been suppressed. You can use the |\resumeframe| command at a
+  much later point, for example only in the appendix to show to
+  additional slides there.
 \end{itemize}
 
 
@@ -1814,6 +1904,55 @@ standard command |\\| does not work.
   \example|\subsection*{Further Reading}|
 \end{command}
 
+Often, you may want a certain type of frame to be shown directly after
+a section or subsection starts. For example, you may wish every
+subsection to start with a frame showing the table of contents with
+the current subsection hilighted. To facilitate this, you can use the
+following two commands.
+
+
+\begin{command}{\AtBeginSection\oarg{special star text}\marg{text}}
+  The given text will be inserted at the beginning of every
+  section. If the \meta{special star text} parameter is specified,
+  this text will be used for starred sections instead. Different calls
+  of this command will not ``add up'' the given texts (like the
+  |\AtBeginDocument| command does), but will  overwrite any previous
+  text. 
+  
+  \example
+\begin{verbatim}
+\AtBeginSection[] % Do nothing for \section*
+{
+  \frame<handout:0>
+  {
+    \frametitle{Outline}
+    \tableofcontents[current]
+  }
+}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\AtBeginSubsection\oarg{special star text}\marg{text}}
+  The given text will be inserted at the beginning of every
+  subsection. If the \meta{special star text} parameter is specified,
+  this text will be used for starred subsections instead. Different calls
+  of this command will not ``add up'' the given texts.
+  
+  \example
+\begin{verbatim}
+\AtBeginSubsection[] % Do nothing for \subsection*
+{
+  \frame<handout:0>
+  {
+    \frametitle{Outline}
+    \tableofcontents[current,currentsubsection]
+  }
+}
+\end{verbatim}
+\end{command}
+
+
 
 
 \subsubsection{Adding Parts}
@@ -1880,6 +2019,16 @@ beginning of a new part. See |beamerexample3.tex| for an example.
   adjusting the part page template, see
   Section~\ref{section-part-page-template}. 
   \example |\frame{\partpage}|
+\end{command}
+
+\begin{command}{\AtBeginPart\marg{text}}
+  The given text will be inserted at the beginning of every
+  part.
+  
+  \example
+\begin{verbatim}
+\AtBeginPart{\frame{\partpage}}
+\end{verbatim}
 \end{command}
 
 
@@ -2510,7 +2659,8 @@ The |\item| command is overlay-specification-aware. If an overlay
 specification is provided, the item will only be shown on the
 specified slides, see the following example. If the |\item|
 command is to take an optional argument and an overlay specification,
-the overlay specification comes first as in |\item<1>[Cat]|.
+the overlay specification can either come first as in |\item<1>[Cat]|
+or come last as in |\item[Cat]<1>|.
 
 \begin{verbatim}
 \frame
@@ -3825,45 +3975,24 @@ subdirectory for files starting with |beamerexample2|.
   Article Version}
 
 In order to include a slide from your presentation in your article
-version, you must do two things: first, you must \emph{name} the slide
-using the following command:
+version, you must do two things: First, you must place a normal
+\LaTeX\ label on the slide using the |\label| command. Since this
+command is overlay-specification-aware, you can also select specific
+slides of a frame. Also, by adding the option |label=|\meta{name} to
+a frame, a label \meta{name}|<|\meta{slide number}|>| is automatically
+added to each slide of the frame.
 
-\begin{command}{\nameslide\sarg{overlay specification}\marg{slide
-      name}}
-  The specified slide gets assigned the name \meta{slide name}. This
-  causes an entry with the slide's page number to be inserted into an
-  auxiliary file with the extension |.snm|. Furthermore, a hyper
-  target of the name \meta{slide name} is also setup (this is just a
-  convenience for jumping to a named slide inside the presentation
-  version). 
-  \example
-\begin{verbatim}
-\frame{
-  \nameslide<1>{slide1}
-  \nameslide<2>{slide2}
-  
-  \frametitle{This is a frame with two overlays.}
-
-  \begin{itemize}
-  \item The first item$\dots$
-    \pause
-  \item $\dots$ and the second one.
-  \end{itemize}
- }
-\end{verbatim}
-\end{command}
-
-Once you have declared a slide, you can use the following command in
+Once you have labeled a slide, you can use the following command in
 your article version to insert the slide into it:
 
-\begin{command}{\includeslide\oarg{options}\marg{slide name}}
+\begin{command}{\includeslide\oarg{options}\marg{label name}}
   This command calls |\pgfimage| with the given \meta{options} for
   the file specified by
   \begin{quote}
     |\setjobnamebeamerversion|\meta{filename}
   \end{quote}
-  Furthermore, the option |page=|\meta{page of slide name} is passed
-  to |\pgfimage|, where the \meta{page of slide name} is read
+  Furthermore, the option |page=|\meta{page of label name} is passed
+  to |\pgfimage|, where the \meta{page of label name} is read
   internally from the file \meta{filename}|.snm|.
   \example
 
@@ -3884,7 +4013,7 @@ your article version to insert the slide into it:
 \end{verbatim}  
 \end{command}
 
-The exact effect of passing the option |page=|\meta{page of slide
+The exact effect of passing the option |page=|\meta{page of label
   name} to the command |\pgfimage| is explained in the documentation
 of |pgf|. In essence, the following happens:
 \begin{itemize}
@@ -3892,7 +4021,7 @@ of |pgf|. In essence, the following happens:
   For old version of |pdflatex| and for any version of |latex|
   together with |dvips|, the |pgf| package will look for a file named
   \begin{quote}
-    \meta{filename}|.page|\meta{page of slide name}|.|\meta{extension}
+    \meta{filename}|.page|\meta{page of label name}|.|\meta{extension}
   \end{quote}
   For each page of your |.pdf| or |.ps| file that is to be included in
   this way, you must create such a file by hand. For example, if the
