@@ -1,0 +1,197 @@
+% $Header$
+
+
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\section{Taking Advantage of Multiple Screens}
+
+\label{section-twoscreens}
+
+This section describes options provided by \beamer\ for taking
+advantage of computers that have more than one video output and 
+can display different outputs on them. For such systems, one video
+output can be attached to a projector and the main presentation is
+shown there. The second video output is attached to a small extra
+monitor (or is just shown on the display of the computer) and shows,
+for example, special notes for you. Alternatively, the two outputs
+might be attached to two different projectors. One can then show the
+main presentation on the first projection and, say, the table of
+contents on the second. Or the second projection might show a version
+translated into a different language. Or the seoncd projection might
+alwyas show the ``previous'' slide. Or \ldots---I am sure you can
+think of further useful things. 
+
+The basic idea behind \beamer's support of two video outputs is the
+following: Using special options you can ask \beamer\ to create a
+\pdf-file in which the ``pages'' are unusually wide or high. By
+default, their height will still be 128mm, but their width will be
+192mm (twice the usual 96mm). These ``superwide'' pages will show 
+the slides of the main presentation on the left and auxilliary
+material on the right (this can be switched using appropriate
+options, though hyperlinks will only work if the presentation is on
+the left and the second screen on the right).
+
+For the presentation you attach two screens to the system. The
+windowing system believe that the screen is twice as wide as it
+actually is. Everything the windowing system puts on the left half of
+this big virtual screen is redirected to the first video output,
+everything on the right half is redirected to the second video
+output. 
+
+When the presentation program displays the specially prepared
+superwide \beamer-presentation, exactly the left half of the screen
+will be filled with the main presentation, the right part is filled
+with the auxilliary material---voilà. Not all presentation programs
+support this special feature. For example, the Acrobat Reader 6.0.2 will
+only use one screen in fullscreen mode on MacOS~X. You will have to
+find out for yourself whether your display program and system support
+showing superwise presentations stretching over two screens.
+
+\beamer\ uses the package |pgfpages| to typeset two-screen
+presentations. Because of this, your first step when creating a
+two-screen presentation is to include this package:
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{pgfpages}
+\end{verbatim}
+
+The next step is to choose an appropriate option for showing something
+special on the second screen. These options are discussed in the
+following sections.
+
+One of the things these options do is to setup a certain
+|pgfpages|-layout that is appropriate for two-screen
+presentations. However, you can still change hte |pgfpages|-layout
+arbitrarily, afterwards. For example, you might wish to enlarge the
+virtual pages. For details, see the documentation of |pgfpages|.
+
+
+\subsection{Showing Notes on the Second Screen}
+
+The first way to use a second screen is to show the presentation
+on the main screen and to show your notes on the second screen. The
+option |show notes on second screen| can be used for this. It is
+described on page~\pageref{command-notesonsecondscreen}.  
+
+
+
+\subsection{Showing Second Mode Material on the Second Screen}
+
+The second way to use the second screen is to show ``a different
+vesion'' of the presentation on the second screen. This different
+version might be a translation or it might just always be the current
+table of contents.
+
+To specify what is shown on the second screen, you can use a special
+\beamer-mode called |second|. This mode behaves similar to modes like
+|handout| or |beamer|, but its effect depends on the exact options
+used:
+
+\begin{beameroption}{second mode text on second screen}{|=|\meta{location}}
+  This option causes the second screen to show the second mode
+  material. The \meta{location} of the second screen can be |left|,
+  |right|, |bottom|, or |top|.
+
+  In detail, the following happens: When a new frame needs to be
+  typeset, \beamer\ checks whether the special option |typeset second|
+  is given. If not, the frame is typeset normally and the slides are
+  put on the main presentation screen  (more precisely, on the logical
+  |pgfpages|-page number zero). The second screen (logical page number
+  one) shows whatever it showed before the frame was typeset.
+
+  If the special frame option |typeset second| is given, after each
+  slide of the frame the frame contents is typeset once more, but this
+  time for the mode |second|. This results in another slide, which
+  is put on the second screen (on logical page number one). Then the
+  whole page is shipped out.
+
+  The |second| mode behaves more like the |beamer| mode than
+  other modes: Any overlay specification for |beamer| will also apply
+  to |second| mode, unless an explicit |second| mode specification is
+  also given. In particular, |\only<1-2>{Text}| will be shown on
+  slides 1 and 2 in |second| mode, but only on the first slide in
+  |handout| mode or |trans| mode.
+
+  \example
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{pgfpages}
+\setbeameroption{second mode text on second screen}
+\begin{document}
+\begin{frame}[typeset second]
+  This text is shown on the left and on the right.
+  \only<second>{This text is only shown on the right.}
+  \only<second:0>{This text is only shown on the left.}
+\end{document}
+\begin{frame}
+  This text is shown on the left. The right shows the same as for the
+  previous frame.
+\end{frame}
+\begin{frame}[typeset second]
+  \alt<second>{The \string\alt command is useful for second
+    mode. Let's show the table of contents, here: \tableofcontents}
+  {Here comes some normal text for the first slide.}
+\end{frame}
+\end{document}
+\end{verbatim}
+
+  \example The following example shows how translations can be added
+  in a comfortable way.
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{pgfpages}
+\setbeameroption{second mode text on second screen}
+\DeclareRobustCommand\translation[1]{\mytranslation#1\relax}
+\long\def\mytranslation#1|#2\relax{\alt<second>{#2}{#1}}
+\title{\translation{Preparing Presentations|Vortr\"age vorbereiten}}
+\author{Till Tantau}
+\begin{document}
+\begin{frame}[typeset second]
+  \titlepage
+\end{frame}
+\begin{frame}[typeset second]
+  \frametitle{\translation{This is the frame title.|Dies ist der Titel des Rahmens.}}
+  \begin{itemize}
+  \item<1-> \translation{First|Erstens}.
+  \item<2-> \translation{Second|Zweitens}.
+  \item<3-> \translation{Third|Drittens}.
+  \end{itemize}
+  \translation{Do not use line-by-line uncovering.|Man sollte Text nicht
+  Zeile f\"ur Zeile aufdecken.}
+\end{frame}
+\end{document}  
+\end{verbatim}
+\end{beameroption}
+
+In the last of the above example, it is a bit bothersome that the
+option |typeset second| has to be added to each frame. The following
+option globally sets this option:
+\begin{beameroption}{always typeset second mode}{|=|\meta{true or false}}
+  When this option is set to true, every following frame will have the
+  option |typeset second| set to true.
+\end{beameroption}
+
+
+\subsection{Showing the Previous Slide on the Second Screen}
+
+\begin{beameroption}{previous slide on second screen}{|=|\meta{location}}
+  This option causes the second screen to show the previous slide that
+  was typeset, unless this is overruled by a frame with the
+  |[typeset second]| option set. The idea is that if you have two
+  projectors you can always present ``the last two'' slides
+  simultaneously and talk about them.
+
+  Using this option will switch off the updating of external files
+  like the table of contents.
+\end{beameroption}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

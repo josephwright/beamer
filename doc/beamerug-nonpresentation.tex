@@ -7,353 +7,65 @@
 % of the GNU Public License, version 2.
 
 
-\section{Managing Non-Presentation Versions and Material}
+\section{Creating Handouts and Lecture Notes}
 
 \label{section-modes}
 
-The \beamer\ package offers different ways of creating special
-versions of your talk and adding material that is not shown during
-the presentation. You can create a \emph{handout} version of the
-presentation that can be distributed to the audience. You can also
-create a version that is more suitable for a presentation using an
-overhead projector. You can add notes for yourself that help
-you remember what to say for specific slides. Finally, you can have a
-completely independent ``article'' version of your presentation 
-coexist in your main file. All special versions are created by
-specifying different class options and rerunning \TeX\ on the main
-file. 
+During a presentation it is very much desirable that the audience has 
+a \emph{handout} or even \emph{lecture notes} available to it. A
+handout allows everyone in the audience to individually go back to
+things he or she has not understood.
+
+Always provide handouts \emph{as early as possible}, preferably weeks
+before the talk. Do \emph{not} retain the handout till the end of the
+talk. 
+
+The \beamer\ package offers two different ways of creating special
+versions of your talk; they are discussed in the following. The first,
+easy, way is to create a handout version by adding the |handout|
+option, which will cause the document to be typeset in |handout|
+mode. It will ``look like'' a presentation, but it can be printed more
+easily (the overlays are ``flattened''). The second, more complicated
+and more powerful way is to create an independent ``article''
+version of your presentation. This version coexists in your main
+file.
 
 
 
 
-
-
-\subsection{Creating Handouts}
+\subsection{Creating Handouts Using the Handout Mode}
 
 \label{handout}
 
-A \emph{handout} is a version of a presentation in which the slides
-are printed on paper and handed out to the audience before or after
-the talk. (See Section~\ref{section-postscript} for how to place
-numerous frames on one page, which is very useful for handouts.)  For
-the handout you typically want to produce as few slides as possible
-per frame. In particular, you do not want to print a new slide for
-each slide of a frame. Rather, only the ``last'' slide should be
-printed.  
-
-In order to create a handout, specify the class option
-|handout|. If you do not specify anything else, this will cause
-all overlay specifications to be suppressed. For most cases this will
-create exactly the desired result.
-
-\begin{classoption}{handout}
-  Create a version that uses the |handout| overlay specifications.
-\end{classoption}
-
-In some cases, you may want a more complex behaviour. For example, if
-you use many |\only| commands to draw an animation. In this case,
-suppressing all overlay specifications is not such a good idea, since
-this will cause all steps of the animation to be shown at the same
-time. In some cases this is not desirable. Also, it might be desirable
-to suppress some |\alert| commands that apply only to specific
-slides in the handout.
-
-For a fine-grained control of what is shown on a handout, you can use
-\emph{mode specifications}. They specify which slides
- of a frame should be shown for a special version, for example for the
-handout version. As explained in
-Section~\ref{section-concept-overlays}, a mode specification is written
-alongside the normal overlay specification inside the pointed
-brackets. It is separated from the normal specification by a vertical
-bar and a space. Here is an example:
-\begin{verbatim}
-  \only<1-3,5-9| handout:2-3,5>{Text}
-\end{verbatim}
-This specification says: ``Normally (in |beamer| mode), insert the
-text on slides 1--3 and 5--9. For the handout version, insert the text
-only on slides 2,~3, and~5.'' If no special mode specification is
-given for handouts, the default is ``always.'' This causes the
-desirable effect that if you do not specify anything, the overlay
-specification is effectively suppressed for the handout.
-
-An especially useful specification is the following:
-\begin{verbatim}
-  \only<3| handout:0>{Not shown on handout.}
-\end{verbatim}
-Since there is no zeroth slide, the text is not shown. Likewise,
-\verb!\alert<3| handout:0>{Text}! will not alert the text on a
-handout.
-
-You can also use a mode specification for the overlay specification
-of the |\frame| command as in the following example.
-\begin{verbatim}
-\frame<1-| handout:0>{Text...}
-\end{verbatim}
-This causes the frame to be suppressed in the handout version. Also,
-you can restrict the presentation such that only specific slides of
-the frame are shown on the handout:
-\begin{verbatim}
-\frame<1-| handout:4-5>{Text...}
-\end{verbatim}
-
-It is also possible to give only an alternate overlay
-specification. For example, |\alert<handout:0>{...}| causes the
-text to be always hilighted during the presentation, but never on the
-handout version. Likewise, |\frame<handout:0>{...}| causes the
-frame to be suppressed for the handout.
-
-Finally, note that it is possible to give more than one alternate
-overlay specification and in any order. For example, the following
-specification states that the text should be inserted on the first
-three slides in the presentation, in the first two slides of the
-transparency version, and not at all in the handout.
-\begin{verbatim}
-  \only<trans:1-2| 1-3| handout:0>{Text}
-\end{verbatim}
-
-If you wish to give the same specification in all versions, you can do
-so by specifying |all:| as the version. For example,
-\begin{verbatim}
-\frame<all:1-2>{blah...}
-\end{verbatim}
-ensures that the frame has two slides in all versions. 
-
-
-
-
-\subsection{Creating Transparencies}
-
-\label{trans}
-
-The main aim of the \beamer\ class is to create presentations for
-beamers. However, it is often useful to print transparencies as
-backup, in case the hardware fails. A transparencies version of a talk
-often has less slides than the main version, since it takes more time
-to switch slides, but it may have more slides than the handout
-version. For example, while in a handout an animation might be
-condensed to a single slide, you might wish to print several slides
-for the transparency version.
-
-You can use the same mechanism as for creating handouts: Specify
-|trans| as a class option and add alternate transparency
-specifications for the |trans| version as needed. An elaborated
+The easiest way of creating a handout for your audience (though not
+the most desirable one) is to use the |handout| option. This option
+works exactly like the |trans| option. An elaborated
 example of different overlay specifications for the presentation, the
 handout, and the transparencies can be found in the file
 |beamerexample1.tex|.
 
-\begin{classoption}{trans}
-  Create a version that uses the |trans| overlay
-  specifications. 
+\begin{classoption}{handout}
+  Create a version that uses the |handout| overlay
+  specifications.
+
+  You might wish to choose a different color and/or presentation theme
+  for the handout.
 \end{classoption}
 
-When printing a presentation using Acrobat, make sure that the option
-``expand small pages to paper size'' in the printer dialog is
-enabled. This is necessary, because slides are only 128mm times 96mm.
-
-
-
-\subsection{Adding Notes}
-
-A \emph{note} is a small piece of paper that is intended as a reminder
-to yourself of what you should say or should keep in 
-mind when presenting a slide.
-
-
-
-\subsubsection{Specifying Note Contents}
-
-To add a note to a slide or a frame, you should use the |\note|
-command. This command can be used both inside and outside frames, but
-it has quite different behaviors then: Inside frames, |\note| commands
-accumulate and append a single note page after the current slide;
-outside frames each |\note| directly inserts a single note page with
-the given parameter as contents. Using the |\note| command inside
-frames is usually preferably over using them outside, since only
-commands issued inside frames profit from the class option
-|onlyslideswithnotes|, see below.
-
-\lyxnote
-In \LyX, only the inside-frame |\note| command with the option
-|[item]| is available in the form of the NoteItem style. 
-
-Inside a frame, the effect of |\note|\meta{text} is the following:
-When you use it somewhere inside the frame on a specific slide, a note
-page is created after the slide, containing the \meta{text}. Since you
-can add an overlay specification to the |\note| command, you can
-specify after which slide the note should be shown. If you use
-multiple |\note| commands on one slide, they ``accumulate'' and are
-all shown on the same note.
-
-To make the accumulation of notes more convenient, you can use the
-|\note| command with the option |[item]|. The notes added with this
-option are accumulated in an |enumerate| list that follows any text
-inserted using |\note|. 
-
-The following example will produce one note page that follows the
-second slide and has two entries. 
+When printing a handout created this way, you will typically wish to
+print at least two and possibly four slides on each page. The easiest
+way of doing so is presumably to use |pgfpages| as follows:
 
 \begin{verbatim}
-\begin{frame}
-  \begin{itemize}
-  \item<1-> Eggs
-  \item<2-> Plants
-    \note[item]<2>{Tell joke about plants.}
-    \note[item]<2>{Make it short.}
-  \item<3-> Animals
-  \end{itemize}
-\end{frame}
+\usepackage{pgfpages}
+\pgfpagelayout{2 on 1}[a4paper,border shrink=5mm]
 \end{verbatim}
+Instead of |2 on 1| you can use |4 on 1| (but then you have to add
+|landscape| to the list of options) and you can use, say,
+|letterpaper| instead of |a4paper|.
 
 
-Outside frames, the command |\note| creates a single note page. It
-is ``independent'' of any usage of the |\note| commands
-inside the previous frame. If you say |\note| inside a frame and
-|\note| right after it, \emph{two} note pages are created.
-
-In the following, the syntax and effects of the |\note| command
-\emph{inside} frames is described:
-
-\begin{command}{\note\sarg{overlay
-      specification}\oarg{options}\marg{note text}}
-  Effects \emph{inside} frames:
-  
-  This command appends the \meta{note text} to
-  the note that follows the current slide. Multiple uses of this
-  command on a slide accumulate. If you 
-  do not specify an \meta{overlay specification}, the 
-  note will be added to \emph{all} slides of the current frame. This
-  is often not what you want, so adding a specification like |<1>| is
-  usually a good idea.
-
-  The following \meta{options} may be given:
-  \begin{itemize}
-  \item \declare{|item|} causes the note to be put as an item in a
-    list that is shown at the end of the note page.
-  \end{itemize}
-    
-  \example|\note<2>{Do not talk longer than 2 minutes about this.}|
-
-  \articlenote
-  Notes are ignored in |article| mode.
-
-  \lyxnote
-  Use the NoteItem style to insert a note item. 
-\end{command}
-
-
-Next, the syntax and effects of the |\note| command
-\emph{outside} frames are described:
-
-\begin{command}{\note\oarg{options}\marg{note text}}
-  Outside frames, this command creates a note page. This command is  
-  \emph{not} affected by the option |notes=onlyframeswithnotes|, see
-  below.
-
-  The following \meta{options} may be given:
-  \begin{itemize}
-  \item \declare{|itemize|} will enclose the whole note page in an
-    |itemize| environment. This is just a convenience.
-  \item \declare{|enumerate|} will enclose the whole note page in an
-    |enumerate| environment.
-  \end{itemize}
-  
-  \example
-\begin{verbatim}
-\frame{some text}
-\note{Talk no more than 1 minute.}
-
-\note[enumerate]
-{
-\item Stress this first.
-\item Then this.
-}
-\end{verbatim}
-
-  \articlenote
-  Notes are ignored in |article| mode.
-\end{command}
-
-
-The following element dictates who the note pages are rendered:
-\begin{element}{note page}\yes\yes\yes
-  This template is used to typeset a note page.  The
-  template should contain a mentioning of the insert |\insertnote|,
-  which will contain the note text. To squeeze more onto note pages
-  you might consider changing the size of the \beamer-font |note page|
-  to something small. The default is |\small|.
-  \begin{templateoptions}
-    \itemoption{default}{}
-    The default template shows the last slide in the upper right
-    corner and some ``hints'' that should help you match a note page
-    to the slide that is currently shown.
-    \itemoption{compress}{}
-    The option produces an output that is similar to the default, only
-    more fits onto each note page at the price of legibility.
-    \itemoption{plain}{}
-    Just inserts the note text, no fancy hints.
-  \end{templateoptions}
-  The following two inserts are useful for note pages:
-  \begin{itemize}
-    \iteminsert{\insertnote}
-    Inserts the text of the current note into the template.
-    \iteminsert{\insertslideintonotes}\marg{magnification}
-    Inserts a ``mini picture'' of the last slide into the current
-    note. The slide will be scaled by the given magnification.
-
-    \example |\insertslideintonotes{0.25}|
-
-    This will give a mini slide whose width and height are one fourth of
-    the usual size.
-  \end{itemize}
-\end{element}
-
-
-
-\subsubsection{Specifying Which Notes and Frames Are Shown}
-
-Since you normally do not wish the notes to be part of your
-presentation, you must explicitly specify the class option
-|notes| to include notes. If this option is not specified, notes
-are suppressed.
-
-The |notes| class option takes several parameters whose effects are
-explained in the following.
-
-
-\begin{classoption}{notes=hide}
-  Notes are not shown. This is the default in a presentation.
-\end{classoption}
-
-\begin{classoption}{notes=show}
-  Include notes in the output file. Normal slides are also included. 
-\end{classoption}
-
-\begin{classoption}{notes=only}
-  Include only the notes in the output file and suppresses all
-  frames. Useful for printing them. If you specify this command, the
-  |.aux| and |.toc| files are \emph{not} updated. So, if you add a
-  section and re\TeX\ your presentation, this will not be reflected in
-  the navigation bars (which you do not see anyway since only notes
-  are output).
-\end{classoption}
-
-\begin{classoption}{notes=onlyslideswithnotes}
-  This includes all notes and those slides that \emph{contain} a
-  |\note|. Frames that are just ``followed'' by a |\note| command will
-  not be included. 
-
-  If you use only |\note| commands, this option will cause the frames
-  and the notes that apply to them to be nicely paired. This is useful
-  for printing.
-\end{classoption}
-
-
-
-
-
-
-
-\subsection{Creating an Article Version}
+\subsection{Creating Handouts Using the Article Mode}
 
 \label{section-article}
 
@@ -366,6 +78,9 @@ structure. Nevertheless, you may wish to have this version coexist
 with your presentation in one file and you may wish to share some part
 of it (like a figure or a formula) with your presentation.
 
+In general, the article version of a talk is better suited as a
+handout thann a handout created using the simple |handout| mode since
+it is more economic and can include more in-depth information.
 
 
 \subsubsection{Starting the Article Mode}
@@ -646,10 +361,13 @@ the |\mode| command to control what part of your text belongs to which
 mode. 
 
 When \beamer\ typesets your text, it is always in one of the following
-four modes:
+five modes:
 \begin{itemize}
 \item
   \declare{|beamer|} is the default mode.
+\item
+  \declare{|second|} is the mode used when a slide for an optional
+  second screen is being typeset.
 \item
   \declare{|handout|} is the mode for creating handouts.
 \item
@@ -667,7 +385,7 @@ names for modes sets:
 \item
   \declare{|all|} refers to all modes.
 \item
-  \declare{|presentation|} refers to the first three modes, that is,
+  \declare{|presentation|} refers to the first four modes, that is,
   to all modes except for the |article| mode.
 \end{itemize}
 

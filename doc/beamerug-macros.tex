@@ -50,6 +50,14 @@
 \def\endclassoption{\endlist}
 
 
+\newcommand\beameroption[2]{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item{{\ttfamily\char`\\setbeameroption\char`\{\declare{#1}{\normalfont\opt{#2}}\char`\}}}
+  \index{#1@\protect\texttt{#1} beamer option}%
+  \index{Beamer options!#1@\protect\texttt{#1}}%
+  \par\topsep=0pt}
+\def\endbeameroption{\endlist}
+
+
 \def\smallpackage{\vbox\bgroup\package}
 \def\endsmallpackage{\egroup\endpackage}
 

@@ -7,8 +7,8 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\def\version{3.01}
-\def\pgfversion{0.63}
+\def\version{3.01-cvs}
+\def\pgfversion{0.65-cvs}
 \def\xcolorversion{2.00}
 
 \usepackage{pgf,xcolor}
@@ -98,10 +98,6 @@ Two further sections treat graphics and animations. Much of the
 material in these sections applies to other packages as well, not just
 to \beamer.
 
-At the end of this part, ``nonpresentation material'' is treated. This
-includes handouts or lecture notes. Several commands can be used to
-facilitate the creation of such handouts or lecture notes.
-
 \include{beamerug-frames}
 \include{beamerug-overlays}
 \include{beamerug-globalstructure}
@@ -109,7 +105,7 @@ facilitate the creation of such handouts or lecture notes.
 \include{beamerug-localstructure}
 \include{beamerug-graphics}
 \include{beamerug-animations}
-\include{beamerug-nonpresentation}
+
 
 
 
@@ -134,11 +130,46 @@ block titles independently of everything else.
 
 
 
+
+\part{Creating Supporting Material}
+
+The objective of the \beamer\ class is to simplify the creation of
+presentations using a projector. However, a presentation rarely exists
+in isolation. Material that accompanies a presentation includes:
+\begin{itemize}
+\item
+  Presentations should normally be accompanied by 
+  \emph{handouts}, written text that the audience can read during
+  and/or after your presentation is given.
+\item
+  You might wish to create notes for yourself that, ideally, are shown
+  to you on your computer screen while the audience sees the
+  presentation. 
+\item
+  You might wish to create a printout of your talk, either for
+  yourself for checking for errors.
+\item
+  You might wish to create a transparancies version of your talk as a
+  fall-back.
+\end{itemize}
+
+This part dicusses how \beamer\ helps you with the creation of the
+above.
+
+
+\include{beamerug-notes}
+\include{beamerug-transparancies}
+\include{beamerug-nonpresentation}
+\include{beamerug-twoscreens}
+
+
+
+
 \part{Howtos}
 
 This part contains explanations-of-how-to-do-things (commonly known as
 \emph{howtos}). These explanations are not really part of the
-``\beamer-core.'' Rather, they explain how to use \beamer\ to achieve
+``\beamer\ core.'' Rather, they explain how to use \beamer\ to achieve
 a certain effect or how get something special done.
 
 The first howto is about tricky uncovering situations.

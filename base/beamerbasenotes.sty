@@ -8,6 +8,36 @@
 \mode<presentation>
 
 \newbox\beamer@frameboxcopy
+\newif\ifbeamer@twoscreensnotes
+
+
+% Notes options
+
+\defbeameroption{hide notes}[]%
+{
+  \beamer@notesfalse
+}
+
+\defbeameroption{show notes}[]%
+{
+  \beamer@notestrue
+}
+
+\defbeameroption{show notes on second screen}[right]%
+{
+  \pgfpagelayout{two screens with optional second}[second #1]
+  \beamer@twoscreensnotestrue
+  \beamer@notestrue
+}
+
+\defbeameroption{show only notes}[]%
+{
+  \beamer@notestrue
+  \beamer@notesnormalsfalse
+  \nofiles
+}
+
+
 
 %
 % Notes
@@ -128,12 +158,14 @@
 \def\beamer@setupnote{%
   \gdef\beamer@notesactions{%
     \beamer@outsideframenote{%
+      \beamer@atbeginnote%
       \beamer@notes%
       \ifx\beamer@noteitems\@empty\else
       \begin{enumerate}\itemsep=0pt\parskip=0pt%
         \beamer@noteitems%
       \end{enumerate}%
-      \fi
+      \fi%
+      \beamer@atendnote%
     }%
     \gdef\beamer@notesactions{}%
   }
@@ -143,6 +175,11 @@
 
 \def\beamer@notesactions{}  
 
+\newcommand\AtBeginNote[1]{\long\def\beamer@atbeginnote{#1}}
+\newcommand\AtEndNote[1]{\long\def\beamer@atendnote{#1}}
+
+\AtBeginNote{}
+\AtEndNote{}
 
 
 
@@ -160,16 +197,6 @@
     \end{pgfmagnify}
   \end{pgfpicture}%
   }}
-
-
-
-%
-% Note templates
-%
-
-
-% Default:
-
 
 
 \mode

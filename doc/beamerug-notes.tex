@@ -1,0 +1,312 @@
+% $Header$
+
+
+% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+\section{Adding Notes for Yourself}
+
+A \emph{note} is text that is intended as a reminder to yourself of
+what you should say or should keep in mind when presenting a
+slide. Notes are usually printed out on paper, but with two-screen
+support they can also be shown on your laptop screen while the main
+presentation is shown on the projector. 
+
+
+
+\subsection{Specifying Note Contents}
+
+To add a note to a slide or a frame, use the |\note|
+command. This command can be used both inside and outside frames, but
+it has quite different behaviors then: Inside frames, |\note| commands
+accumulate and append a single note page after the current slide;
+outside frames each |\note| directly inserts a single note page with
+the given parameter as contents. Using the |\note| command inside
+frames is usually preferably over using them outside, since only
+commands issued inside frames profit from the class option
+|onlyslideswithnotes|, see below.
+
+\lyxnote
+In \LyX, only the inside-frame |\note| command with the option
+|[item]| is available in the form of the NoteItem style. 
+
+Inside a frame, the effect of |\note|\meta{text} is the following:
+When you use it somewhere inside the frame on a specific slide, a note
+page is created after the slide, containing the \meta{text}. Since you
+can add an overlay specification to the |\note| command, you can
+specify after which slide the note should be shown. If you use
+multiple |\note| commands on one slide, they ``accumulate'' and are
+all shown on the same note.
+
+To make the accumulation of notes more convenient, you can use the
+|\note| command with the option |[item]|. The notes added with this
+option are accumulated in an |enumerate| list that follows any text
+inserted using |\note|. 
+
+The following example will produce one note page that follows the
+second slide and has two entries. 
+
+\begin{verbatim}
+\begin{frame}
+  \begin{itemize}
+  \item<1-> Eggs
+  \item<2-> Plants
+    \note[item]<2>{Tell joke about plants.}
+    \note[item]<2>{Make it short.}
+  \item<3-> Animals
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+
+
+Outside frames, the command |\note| creates a single note page. It
+is ``independent'' of any usage of the |\note| commands
+inside the previous frame. If you say |\note| inside a frame and
+|\note| right after it, \emph{two} note pages are created.
+
+In the following, the syntax and effects of the |\note| command
+\emph{inside} frames is described:
+
+\begin{command}{\note\sarg{overlay
+      specification}\oarg{options}\marg{note text}}
+  Effects \emph{inside} frames:
+  
+  This command appends the \meta{note text} to
+  the note that follows the current slide. Multiple uses of this
+  command on a slide accumulate. If you 
+  do not specify an \meta{overlay specification}, the 
+  note will be added to \emph{all} slides of the current frame. This
+  is often not what you want, so adding a specification like |<1>| is
+  usually a good idea.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|item|} causes the note to be put as an item in a
+    list that is shown at the end of the note page.
+  \end{itemize}
+    
+  \example|\note<2>{Do not talk longer than 2 minutes about this.}|
+
+  \articlenote
+  Notes are ignored in |article| mode.
+
+  \lyxnote
+  Use the NoteItem style to insert a note item. 
+\end{command}
+
+
+Next, the syntax and effects of the |\note| command
+\emph{outside} frames are described:
+
+\begin{command}{\note\oarg{options}\marg{note text}}
+  Outside frames, this command creates a note page. This command is  
+  \emph{not} affected by the option |notes=onlyframeswithnotes|, see
+  below.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|itemize|} will enclose the whole note page in an
+    |itemize| environment. This is just a convenience.
+  \item \declare{|enumerate|} will enclose the whole note page in an
+    |enumerate| environment.
+  \end{itemize}
+  
+  \example
+\begin{verbatim}
+\frame{some text}
+\note{Talk no more than 1 minute.}
+
+\note[enumerate]
+{
+\item Stress this first.
+\item Then this.
+}
+\end{verbatim}
+
+  \articlenote
+  Notes are ignored in |article| mode.
+\end{command}
+
+
+The following element dictates who the note pages are rendered:
+\begin{element}{note page}\yes\yes\yes
+  This template is used to typeset a note page.  The
+  template should contain a mentioning of the insert |\insertnote|,
+  which will contain the note text. To squeeze more onto note pages
+  you might consider changing the size of the \beamer-font |note page|
+  to something small. The default is |\small|.
+  \begin{templateoptions}
+    \itemoption{default}{}
+    The default template shows the last slide in the upper right
+    corner and some ``hints'' that should help you match a note page
+    to the slide that is currently shown.
+    \itemoption{compress}{}
+    The option produces an output that is similar to the default, only
+    more fits onto each note page at the price of legibility.
+    \itemoption{plain}{}
+    Just inserts the note text, no fancy hints.
+  \end{templateoptions}
+  The following two inserts are useful for note pages:
+  \begin{itemize}
+    \iteminsert{\insertnote}
+    Inserts the text of the current note into the template.
+    \iteminsert{\insertslideintonotes}\marg{magnification}
+    Inserts a ``mini picture'' of the last slide into the current
+    note. The slide will be scaled by the given magnification.
+
+    \example |\insertslideintonotes{0.25}|
+
+    This will give a mini slide whose width and height are one fourth of
+    the usual size.
+  \end{itemize}
+\end{element}
+
+
+
+\subsection{Specifying Contents for Multiple Notes}
+
+Sometimes you wish some text to be shown on every note or at least on
+every note in a long series of notes. To achieve this effect, you can use
+the following two commands:
+
+\begin{command}{\AtBeginNote\marg{text}}
+  The \meta{text} will be inserted at the beginning of every note in
+  the scope of the command. To stop the effect, either use
+  |\AtBeginNote{}| or enclose the area in a \TeX\ group.
+
+  It is advisable to add a |\par| command or an empty line at the end
+  of the \meta{text} since otherwise any note text will directly
+  follow the \meta{text} without a line break.
+
+  \example
+\begin{verbatim}
+\section{My Section}
+
+\AtBeginNote{Finish this section by 14:35.\par}
+\begin{frame}
+  ...
+  \note{some note}
+\end{frame}
+\begin{frame}
+  ...
+  \note{some other note}
+\end{frame}
+\AtBeginNote{}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\AtEndNote\marg{text}}
+  This command behaves the same way as |\AtBeginNote|, except that the
+  text is inserted at the end (bottom). You may wish to add a |\par|
+  at the beginning of \meta{text}.
+\end{command}
+
+
+\subsection{Specifying Which Notes and Frames Are Shown}
+
+Since you normally do not wish the notes to be part of your
+presentation, you must explicitly say so in the preamble if notes
+should be included in your presentation. You can use the following
+\beamer\ options for this:
+
+\begin{beameroption}{hide notes}
+  Notes are not shown. This is the default in a presentation.
+\end{beameroption}
+
+\begin{beameroption}{show notes}
+  Include notes in the output file. Normal slides are also included
+  and the note pages are interleaved with them. 
+\end{beameroption}
+
+\begin{beameroption}{show notes on second screen}{|=|\meta{location}}
+  \label{command-notesonsecondscreen}
+  When this option is given, a two screen version of your talk is
+  created, see Section~\ref{section-twoscreens} for further
+  details. The second screen, which is displayed on the right by
+  default, shows your notes. By   specifying a different
+  \meta{location}, you can also place the second screen on the |left|,
+  |bottom|, or |top|. 
+
+  \example
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{pgfpages}
+\setbeameroption{notes on second screen}
+\begin{document}
+\begin{frame}
+  A frame.
+  \note{This is shown on the right.}
+\end{frame}
+\end{document}
+\end{verbatim}
+
+  In detail, the following happens: The presentation is typeset
+  normally and shown on the main screen or, to be precise, on
+  |pgfpages|'s logical page number zero. The second screen (logical
+  screen number one) is initialized to be empty.
+
+  Whenever a note page is to be typeset, either because a frame
+  contained |\note| commands or because the frame was followed by a
+  |\note| command, the note page is normally typeset. Then the note
+  page is put on the second screen. Then the whole page is shipped
+  out. (The exact details are bit more complex, but that is what
+  happens, basically.)
+
+  An important effect of this behavior is that a note page
+  \emph{following} a frame is shown next to this frame. Normally, this
+  is exactly what you want and expect. However, if there are multiple
+  note pages for a single slide only the last one is shown,
+  currently. This may change in the future, so do not rely on this
+  effect.
+  \example
+\begin{verbatim}
+\begin{frame}
+  First frame.
+\end{frame}
+\note{This note is not shown at all (currently).}
+\note{This note is shown together with the first frame.}
+
+\begin{frame}
+  Second frame.
+  \note{This note is shown together with the second frame.}
+\end{frame}
+
+\begin{frame}
+  No note text is shown for this frame.
+\end{frame}
+\end{verbatim}
+
+  If you really need multiple note pages for a single slide, you will
+  have to use something more complicated like this:
+\begin{verbatim}
+\begin{frame}<1-3>
+  First frame.
+  \note<1>{First page of notes for this frame.}
+  \note<2>{Second page of notes for this frame.}
+  \note<3>{Third page of notes for this frame.}
+\end{frame}
+\end{verbatim}
+\end{beameroption}
+
+
+\begin{beameroption}{show only notes}
+  Include only the notes in the output file and suppresses all
+  frames. This options is useful for printing them. If you specify
+  this command, the |.aux| and |.toc| files are \emph{not}
+  updated. So, if you add a section and re\TeX\ your presentation,
+  this will not be reflected in the navigation bars (which you do not
+  see anyway since only notes are output).
+\end{beameroption}
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "beameruserguide"
+%%% End: 

@@ -109,8 +109,7 @@
 \DeclareOptionBeamer{notheorems}{\beamer@blocksfalse}
 \DeclareOptionBeamer{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}
 
-\DeclareOptionBeamer{compress}
-{\beamer@compresstrue}
+\DeclareOptionBeamer{compress}{\beamer@compresstrue}
 
 \DeclareOptionBeamer{t}{\beamer@centeredfalse}
 \DeclareOptionBeamer{c}{\beamer@centeredtrue}
@@ -122,23 +121,6 @@
 \def\beamer@currentmode{beamer}
 \DeclareOptionBeamer{handout}{\gdef\beamer@currentmode{handout}}
 \DeclareOptionBeamer{trans}{\gdef\beamer@currentmode{trans}}
-
-\DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
-
-\def\beamer@notesaction@hide{%
-  \beamer@notesfalse}
-\def\beamer@notesaction@show{%
-  \beamer@notestrue}
-\def\beamer@notesaction@only{%
-  \beamer@notestrue
-  \beamer@notesnormalsfalse
-  \nofiles
-}
-\def\beamer@notesaction@onlyslideswithnotes{%
-  \beamer@notestrue%
-  \beamer@frameswithnotesonlytrue%
-  \nofiles
-}
 
 \DeclareOptionBeamer{pdftex}{}% Used by hyperref
 \DeclareOptionBeamer{nativepdf}{}% Used by hyperref
@@ -189,6 +171,27 @@
 
 
 % obsolete options
+\DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
+\def\beamer@notesaction@hide{%
+  \ClassWarning{beamer}{This option is obsolete. Use beamer option
+    ``hide notes'' instead.}%
+  \beamer@notesfalse}
+\def\beamer@notesaction@show{%
+  \ClassWarning{beamer}{This option is obsolete. Use beamer option
+    ``show notes'' instead.}%
+  \beamer@notestrue}
+\def\beamer@notesaction@only{%
+  \ClassWarning{beamer}{This option is obsolete. Use beamer option
+    ``show only notes'' instead.}%
+  \beamer@notestrue
+  \beamer@notesnormalsfalse
+  \nofiles
+}
+\def\beamer@notesaction@onlyslideswithnotes{%
+  \beamer@notestrue%
+  \beamer@frameswithnotesonlytrue%
+  \nofiles
+}
 \DeclareOptionBeamer{inrow}{
   \ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
 \DeclareOptionBeamer{compressnotes}{%
@@ -196,7 +199,8 @@
     \noexpand\setbeamertemplate{note page}[compressed] instead}
   \AtBeginDocument{\beamertemplatenotecompress}}
 \DeclareOptionBeamer{notesonly}{
-  \ClassWarning{beamer}{``notesonly'' is obsolete. Use notes=only instead}
+  \ClassWarning{beamer}{``notesonly'' is obsolete. Use beamer option
+    ``show only notes'' instead.}
   \beamer@notesaction@only}
 \DeclareOptionBeamer{blue}{
   \ClassWarning{beamer}{``blue'' is obsolete. Use color theme structure instead}

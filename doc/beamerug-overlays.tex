@@ -859,6 +859,14 @@ on the first slide of a frame in |beamer| mode, but not at all in
 \verb/<beamer| beamer:1>/ differs from |<beamer>| and from
 |<beamer:1>|.)
 
+As if all this were not already complicated enough, there is another
+mode that behaves in a special way: the mode |second|. For this mode a
+special rule applies: An overlay specification for mode |beamer| also
+applies to mode |second| (but not the other way round). Thus, if we
+are in mode |second|, the specification |<second:2>| means ``on slide
+2'' and |<beamer:2>| also means ``on slide 2''. To get a slide that is
+typeset in |beamer| mode, but not in |second| mode, you can use,
+|<second:0>|. 
 
 
 
