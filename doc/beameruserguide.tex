@@ -8,7 +8,7 @@
 \usepackage{pgf,xcolor}
 \usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
 \usepackage{amsmath,amssymb}
-\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage[pdfborder={0 0 0},bookmarksnumbered]{hyperref}
 \usepackage[latin1]{inputenc}
 
 \pgfdeclareimage[width=6.66666cm,height=5cm]{themebars}{themebars}
@@ -91,7 +91,7 @@
 \newcommand\ssarg[1]{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}
 
 \providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
-
+\pdfstringdef{\LyX}{LyX} 
 
 \newcommand{\beamernote}{\par\noindent\llap{\color{blue}\textsc{beamer}\ \ }}
 \newcommand{\articlenote}{\par\smallskip\noindent\llap{\color{blue}\textsc{article}\ \ }}
@@ -102,7 +102,7 @@
 
 \begin{document}
 
-\title{User's Guide to the Beamer Class, Version 2.11\\
+\title{User's Guide to the Beamer Class, Version 2.11-CVS\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
 \author{Till Tantau\\
   \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
@@ -297,21 +297,36 @@ the files in the \beamer\ package. Which way you should choose depends
 on how permanently you intend to use the class.
 
 
-\subsection{Installing Prebundled Packages Like Debian or Red Hat Packages}
+\subsection{Installing Prebundled Packages}
 
-Currently, I'm not producing prebundled packages of |beamer|. There
-are some out-of-the-box Debian packages and MiK\TeX\ packages around,
-but these are possibly outdated. Once |beamer| stabilizes, there
-will hopefully also be easy-to-install packages. 
+I do not create or manage prebundled packages of \beamer, but,
+fortunately, nice other people do. I cannot give detailed instructions
+on how to install these packages, since I do not manage them, but I
+\emph{can} tell you were to find them. You install them the ``usual
+way'' you install packages. If anyone has any hints and additional
+information on this, please email me.
+
+For Debian, you need the packages at
+\begin{verbatim}
+http://packages.debian.org/latex-beamer
+http://packages.debian.org/pgf
+\end{verbatim}
+
+For MiK\TeX, you need the packages called |latex-beamer|, |pgf| and
+|xcolor|. 
 
 
+\subsection{Installation in a texmf Tree}
 
-\subsection{Temporary Installation}
+If, for whatever reason, you do not wish to use a prebundled package,
+the ``right'' way to install \beamer\ is to put it in a so-called
+|texmf| tree. In the following, I explain how to do this.
 
-If you only wish to install the \beamer\ class for a quick appraisal, do
-the following: Obtain the latest source version (ending
-|.tar.gz|) of the \beamer\ package from 
-\href{http://sourceforge.net/projects/latex-beamer/}{|http://sourceforge.net/projects/latex-beamer/|}
+Obtain the latest source version (ending |.tar.gz|) of the \beamer\
+package from
+\begin{verbatim}
+http://sourceforge.net/projects/latex-beamer/
+\end{verbatim}
 (most likely, you have already done this). Next, you also need at
 least version 0.61 of the \textsc{pgf} package, which can be found at 
 the same place. Finally, you need at least version 1.10 of the
@@ -326,29 +341,8 @@ work. I have not tried earlier versions; they might also work.
 In all cases, the packages contain a bunch of files (for the \beamer\
 class, |beamer.cls| is one of these files and happens to be the
 most important one, for the \textsc{pgf} package |pgf.sty| is
-the most important file). Place all files in three directories. For
-example, |~/beamer/|, |~/pgf/|, and |~/xcolor/| would work fine for
-me. Then setup the environment variable called |TEXINPUTS| to be the
-following string (how exactly this is done depends on your operating
-system and shell): 
-
-\begin{verbatim}
-.:~/beamer/base:~/beamer/art:~/beamer/themes:~/pgf:~/xcolor:
-\end{verbatim}
-
-Naturally, if the |TEXINPUTS| variable is already defined
-differently, you should \emph{add} the five directories to the
-list. Do not forget to place a colon at the end (corresponding to an
-empty path), which will include all standard directories.
-
-
-
-\subsection{Installation in a texmf Tree}
-
-For a more permanent installation, you can place the files of the
-\beamer\ package and of the \textsc{pgf} package (see the previous
-subsection on how to obtain them) in an appropriate |texmf|
-tree. 
+the most important file). You now need to put these files in an
+appropriate |texmf| tree. 
 
 When you ask \TeX\ to use a certain class or package, it usually looks
 for the necessary files in so-called |texmf| trees. These trees
@@ -586,8 +580,15 @@ might  look like this:
 \subsection{...}
 \subsection{...}
 
+\frame{} % to enforce entries in the table of contents
+
 \end{document}
 \end{verbatim}
+
+The empty frame at the end (which should be deleted later) ensures
+that the sections and subsections are actually part of the table of
+contents. This frame is necessary since a |\section| or |\subsection|
+command following the last page of a document have no effect.
 
 \lyxnote
 Use ``View'' to check whether the presentation compiles fine. Note
@@ -6703,37 +6704,31 @@ If you wish to suppress the head- and footline in the title page, use
 
 \begin{command}{\beamertemplateplaintoc}
   Installs a simple table of contents template with indented subsections. 
-  \example |\beamertemplateplaintoc|
 \end{command}
 
 \begin{command}{\beamertemplateballtoc}
   Installs a table of contents template in which small balls are shown
   before each section and subsection.
-  \example |\beamertemplateballtoc|
 \end{command}
 
 \begin{command}{\beamertemplatenumberedsectiontoc}
   Installs a table of contents template in which the sections are
   numbered. 
-  \example |\beamertemplatenumberedsectiontoc|
 \end{command}
 
 \begin{command}{\beamertemplatenumberedcirclesectiontoc}
   Installs a table of contents template in which the sections are
   numbered and the numbers are drawn on a small circle. 
-  \example |\beamertemplatenumberedcirclesectiontoc|
 \end{command}
 
 \begin{command}{\beamertemplatenumberedballsectiontoc}
   Installs a table of contents template in which the sections are
   numbered and the numbers are drawn on a small ball. 
-  \example |\beamertemplatenumberedballsectiontoc|
 \end{command}
 
 \begin{command}{\beamertemplatenumberedsubsectiontoc}
   Installs a table of contents template in which the subsections are
   numbered. 
-  \example |\beamertemplatenumberedsubsectiontoc|
 \end{command}
 
 
@@ -7463,12 +7458,12 @@ You can redefine these commands to change these symbols.
   \example
 \begin{verbatim}
 \usenavigationsymbolstemplate{\vbox{%
-  \hbox{\insertslidenavigationsymbols}
-  \hbox{\insertframenavigationsymbols}
-  \hbox{\insertsubsectionnavigationsymbols}
-  \hbox{\insertsectionnavigationsymbols}
-  \hbox{\insertdocnavigationsymbols}
-  \hbox{\insertbackfindforwardnavigationsymbols}}}
+  \hbox{\insertslidenavigationsymbol}
+  \hbox{\insertframenavigationsymbol}
+  \hbox{\insertsubsectionnavigationsymbol}
+  \hbox{\insertsectionnavigationsymbol}
+  \hbox{\insertdocnavigationsymbol}
+  \hbox{\insertbackfindforwardnavigationsymbol}}}
 \end{verbatim}
 \end{command}
 
@@ -7477,33 +7472,33 @@ You can redefine these commands to change these symbols.
 
 The following inserts are useful for the navigation symbols template:
 
-\begin{command}{\insertslidenavigationsymbols}
+\begin{command}{\insertslidenavigationsymbol}
   Inserts the slide navigation symbol, see
   Section~\ref{section-navigation-symbols}.
 \end{command}
 
-\begin{command}{\insertframenavigationsymbols}
+\begin{command}{\insertframenavigationsymbol}
   Inserts the frame navigation symbol, see
   Section~\ref{section-navigation-symbols}.
 \end{command}
 
-\begin{command}{\insertsubsectionnavigationsymbols}
+\begin{command}{\insertsubsectionnavigationsymbol}
   Inserts the subsection navigation symbol, see
   Section~\ref{section-navigation-symbols}.
 \end{command}
 
-\begin{command}{\insertsectionnavigationsymbols}
+\begin{command}{\insertsectionnavigationsymbol}
   Inserts the section navigation symbol, see
   Section~\ref{section-navigation-symbols}.
 \end{command}
 
-\begin{command}{\insertdocnavigationsymbols}
+\begin{command}{\insertdocnavigationsymbol}
   Inserts the presentation navigation symbol and (if necessary) the
   appendix navigation symbol, see
   Section~\ref{section-navigation-symbols}.
 \end{command}
 
-\begin{command}{\insertbackfindforwardnavigationsymbols}
+\begin{command}{\insertbackfindforwardnavigationsymbol}
   Inserts a back, a find, and a forward navigation symbol, see
   Section~\ref{section-navigation-symbols}.
 \end{command}
@@ -8107,7 +8102,7 @@ to do this is the following:
 \end{verbatim}
 
 The advantage of this approach is that you retain total control over
-the order in which items are shown. By chaning, for example, the last
+the order in which items are shown. By changing, for example, the last
 specification to |<2->|, you can have the last two points uncovered at
 the same time.
 
