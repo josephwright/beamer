@@ -309,7 +309,7 @@
 \DeclareOption{red}
 {\definecolor{structure}{rgb}{0.7,0.2,0.2}}
 
-\DeclareOption{gray}
+\DeclareOption{blackandwhite}
 {\definecolor{structure}{rgb}{0.2,0.2,0.2}}
 
 \DeclareOption{brown}
@@ -582,6 +582,13 @@
 \definecolor{alert}{rgb}{1,0,0}
 
 \AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize 
+
+
+% fix deluxetabular floats
+\AtBeginDocument{
+  \def\@plano@float@#1{\begin{table}}
+  \def\end@plano@float@{\end{table}}
+}
 
 %
 %
@@ -2002,7 +2009,11 @@
   {\unskip\egroup}
 
 \newenvironment{column}[1]{%
+  \ifbeamer@centered%    
   \begin{minipage}[c]{#1}%
+  \else%
+  \begin{minipage}[t]{#1}%
+  \fi%
     \raggedright}
   {\end{minipage}\hfill\ignorespaces}
 
@@ -2948,9 +2959,9 @@
       \@setminipage
     \fi
     \normalsize
-    \@makecaption{#1}{\ignorespaces #3}\par
+    \beamer@makecaption{#1}{\ignorespaces #3}\par
     \endgroup}
-\long\def\@makecaption#1#2{%
+\long\def\beamer@makecaption#1#2{%
   \def\insertcaptionname{\csname#1name\endcsname}%
   \def\insertcaptionnumber{\csname the#1\endcsname}%
   \def\insertcaption{#2}%
