@@ -804,6 +804,7 @@
   \g@addto@macro\beamer@lastminutepatches{
     % Has to be done late...
     \renewcommand<>{\label}{\alt#1{\beameroriginal{\label}}{\@gobble}}
+    \renewcommand<>{\label@in@display}{\alt#1{\beameroriginal{\label@in@display}}{\@gobble}}
   }
 }
 

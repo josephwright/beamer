@@ -105,9 +105,22 @@
 \newcommand{\lyxnote}{\par\smallskip\noindent\llap{\color{blue}\textsc{lyx}\ \ }}
 
 
+\newcommand{\themeexample}[1]{%
+  \hbox to \textwidth{%
+    \pgfimage[width=.3\textwidth,page=1]{beamerug#1}
+    \hfill
+    \pgfimage[width=.3\textwidth,page=2]{beamerug#1}
+    \hfill
+    \pgfimage[width=.3\textwidth,page=3]{beamerug#1}    
+  }}
+
 
 
 \begin{document}
+
+Hi!
+
+\themeexample{themeAntibes}
 
 \title{User's Guide to the Beamer Class, Version \version\\
 \Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
