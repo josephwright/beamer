@@ -1,0 +1,670 @@
+#% Do not delete the line below; configure depends on this
+#  \DeclareLaTeXClass{beamer}
+# Author : Till Tantau <tantau@users.sourceforge.net>
+
+# General textclass parameters
+Columns			1
+Sides			1
+SecNumDepth		2
+TocDepth		2
+DefaultStyle 		Standard
+
+# This is just to show how to declare the default font.
+# The defaults are exactly those shown here.
+DefaultFont
+  Family		Sans
+  Series		Medium
+  Shape			Up
+  Size			Normal
+  Color			None
+EndFont
+
+# Standard style definition
+Style Standard
+  Margin  		Static
+  LatexType 		Paragraph
+  LatexName 		dummy
+  ParIndent		MM
+  ParSkip 		0.4
+  Align 		Left
+  AlignPossible 	Block, Left, Right, Center
+  LabelType 		No_Label
+End
+
+# Itemize style definition
+Style Itemize
+  Margin		Static
+  LatexType		Item_Environment
+  LatexName		itemize
+  NextNoIndent		1
+  LeftMargin		MMN
+  LabelSep		xx
+  ItemSep		0.2
+  TopSep		0.7
+  BottomSep		0.7
+  ParSep		0.3
+  Align			Left
+  AlignPossible		Left
+  LabelType		Static
+  LabelString		*
+End
+
+# Enumerate style definition
+Style Enumerate
+  Margin		Static
+  LatexType		Item_Environment
+  LatexName		enumerate
+  NextNoIndent		1
+  LeftMargin		MMN
+  LabelSep		xx
+  ParSkip		0.0
+  ItemSep		0.2
+  TopSep		0.7
+  BottomSep		0.7
+  ParSep		0.3
+  Align			Left
+  AlignPossible		Left
+  LabelType		Counter_EnumI
+End
+
+# Description style definition
+Style Description
+  Margin		First_Dynamic
+  LatexType		Item_environment
+  LatexName		description
+  NextNoIndent		1
+  LeftMargin		MM
+  LabelSep		xxx
+  ParSkip		0.4
+  ItemSep		0.2
+  TopSep		0.7
+  BottomSep		0.7
+  ParSep		0.3
+  Align			Left
+  AlignPossible		Left
+  LabelType		Manual
+  LabelString		MM
+
+  # label font definition
+  LabelFont 
+    Series		Bold
+  EndFont
+End
+
+Style BeginFrame
+  KeepEmpty	1
+  LatexType	Command
+  LatexName	frame{\frametitle
+  Margin            First_Dynamic
+  NextNoIndent      1
+  ParSkip           0
+  TopSep            2.5
+  BottomSep         0.5
+  ParSep            0
+  Align             Left
+  AlignPossible     Left
+  LabelType         Static
+  LabelBottomSep    0
+  LeftMargin        M
+  LabelString       "Frame   "
+
+  Font
+    Series          Bold
+    Size            Large
+    Color           Blue
+  EndFont
+
+  LabelFont 
+    Family          Roman
+    Color           red
+  EndFont
+End
+
+Style EndFrame
+  KeepEmpty	1
+  LatexType	Command
+  LatexName	relax}
+  Margin            First_Dynamic
+  NextNoIndent      1
+  ParSkip           0
+  TopSep            0
+  BottomSep         1.5
+  ParSep            0
+  Align             Left
+  AlignPossible     Left
+  LabelType         Static
+  LabelBottomSep    0
+  LeftMargin        MMMMM
+  LabelString       "___________________________________________"
+
+  LabelFont 
+    Family          Roman
+    Series          Medium
+    Size            Normal
+    Color           red
+  EndFont
+End
+
+# Section style definition
+Style Section
+  Margin		First_Dynamic
+  LatexType		Command
+  LatexName		section
+  NeedProtect		1
+  NextNoIndent		1
+  LabelSep		xxx
+  ParSkip		0.4
+  TopSep		2
+  BottomSep		0.25
+  ParSep		0.7
+  Align			Left
+  AlignPossible		Left
+  LabelType             Static
+  LabelString		"Section"
+  OptionalArgs				1
+
+  Font 
+    Family              Roman
+    Series 		Bold
+    Size		huge
+  EndFont
+
+  LabelFont 
+    Color           red
+  EndFont
+End
+
+# Subsection style definition
+Style Subsection
+  Margin		First_Dynamic
+  LatexType		Command
+  LatexName		subsection
+  NeedProtect		1
+  NextNoIndent		1
+  LabelSep		xxx
+  ParSkip		0.4
+  TopSep		2
+  BottomSep		0.25
+  ParSep		0.5
+  Align			Left
+  AlignPossible		Left
+  LabelType             Static
+  LabelString		"Subsection"
+  OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Family              Roman
+    Series 		Bold
+    Size		Larger
+  EndFont
+
+  LabelFont 
+    Color           red
+  EndFont
+End
+
+Style AlertBlock
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	alertblock
+  LabelString		"alert block" 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  Font
+    Color               red
+  EndFont
+
+  LabelFont 
+    Family              Roman
+    Color               red
+  EndFont
+End
+
+# Author style definition
+Style Author
+  Margin		Static
+  LatexType		Command
+  InTitle		1
+  LatexName		author
+  LabelSep		xxx
+  ParSkip		0.4
+  TopSep		1.3
+  BottomSep		0.7
+  ParSep		0.7
+  Align			Center
+  AlignPossible		Center
+  LabelType		No_Label
+  OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Size		Large
+    Color               Blue
+  EndFont
+
+End
+
+# Bibliography style definition
+Style Bibliography
+  Margin		First_Dynamic
+  LatexType		Item_Environment
+  LatexName		thebibliography
+  NextNoIndent		1
+  LeftMargin		MM
+  ParSkip		0.4
+  ItemSep		0
+  TopSep		0.7
+  BottomSep		0.7
+  ParSep		0.5
+  Align			Left
+  AlignPossible		Left
+  LabelType		Bibliography
+  LabelString		References
+  LabelBottomSep    0.7
+
+  # label font definition
+  LabelFont 
+    Series		Bold
+    Size		Larger
+  EndFont
+End
+
+Style Block
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	block
+  LabelString		"block" 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  LabelFont 
+    Family              Roman
+    Color               red
+  EndFont
+End
+
+# Caption style definition
+Style Caption
+  Margin		First_Dynamic
+  LatexType		Command
+  LatexName		caption
+  NeedProtect		1
+  LabelSep		xx
+  ParSkip		0.4
+  TopSep		0.5
+  Align			Center
+  AlignPossible		Center
+  LabelType		Sensitive
+  LabelString	Caption
+  OptionalArgs		1
+
+  # label font definition
+  LabelFont 
+    Series		Bold
+  EndFont
+End
+
+Style Corollary
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	corollary
+  LabelString		"Corollary. " 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  LabelFont 
+    Series		Bold
+    Color               Blue
+    Size                Large
+  EndFont
+End
+
+
+# Date style definition
+Style Date
+  Margin		Dynamic
+  LatexType		Command
+  InTitle		1
+  LatexName		date
+  LabelSep		xxx
+  ParSkip		0.4
+  TopSep		0.9
+  BottomSep		0.5
+  ParSep		1
+  Align			Center
+  AlignPossible		Center
+  LabelType		No_Label
+  OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Size		Large
+    Color               Blue
+  EndFont
+End
+
+Style Definition
+  CopyStyle		Corollary
+  LatexName	 	definition
+  LabelString		"Definition. " 
+End
+
+Style Definitions
+  CopyStyle		Corollary
+  LatexName	 	definitions
+  LabelString		"Definitions. " 
+End
+
+Style Example
+  CopyStyle		Corollary
+  LatexName	 	example
+  LabelString		"Example. " 
+
+  LabelFont 
+    Series		Bold
+    Color               Green
+  EndFont
+End
+
+Style Examples
+  CopyStyle		Corollary
+  LatexName	 	examples
+  LabelString		"Examples. " 
+End
+
+Style ExampleBlock
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+  LabelSep              xx
+
+  LatexName	 	exampleblock
+  LabelString		"example block" 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  Font
+    Color               green
+  EndFont
+
+  LabelFont 
+    Family              Roman
+    Color               red
+  EndFont
+End
+
+Style Fact
+  CopyStyle		Corollary
+  LatexName	 	fact
+  LabelString		"Fact. " 
+End
+
+# Date style definition
+Style Institute
+  Margin		Dynamic
+  LatexType		Command
+  InTitle		1
+  LatexName		institute
+  LabelSep		xxx
+  ParSkip		0.4
+  TopSep		0.9
+  BottomSep		0.5
+  ParSep		1
+  Align			Center
+  AlignPossible		Center
+  LabelType		No_Label
+  OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Size		Large
+    Color               Blue
+  EndFont
+End
+
+Style LyX-Code
+  Margin		Static
+  LatexType		Environment
+  LatexName		lyxcode
+  NextNoIndent		1
+  LeftMargin		MMM
+  RightMargin		MMM
+  TopSep		0.5
+  BottomSep		0.5
+  Align			Left
+  AlignPossible		Block, Left, Right, Center
+  LabelType		No_Label
+  FreeSpacing 	    	1
+
+  # define the environment lyxcode
+  Preamble
+  \newenvironment{lyxcode}
+    {\begin{list}{}{
+      \setlength{\rightmargin}{\leftmargin}
+      \setlength{\listparindent}{0pt}% needed for AMS classes
+      \raggedright
+      \setlength{\itemsep}{0pt}
+      \setlength{\parsep}{0pt}
+      \normalfont\ttfamily}%
+     \def\{{\char`\{}
+     \def\}{\char`\}}
+     \def\textasciitilde{\char`\~}
+     \item[]}
+    {\end{list}}
+  EndPreamble
+
+  # standard font definition
+  Font 
+    Family  		Typewriter
+  EndFont
+
+End
+
+Style Only
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+
+  LatexName	 	onlyenv
+  LabelString		"only on slides " 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  LabelFont 
+    Family		Roman		
+    Color               Red
+  EndFont
+End
+
+# Part style definition
+Style Part
+  Margin		Dynamic
+  LatexType		Command
+  LatexName		part
+  NeedProtect		1
+  NextNoIndent          1
+  Labelsep		xxx
+  ParSkip               0.4
+  TopSep                4
+  BottomSep             4
+  ParSep                0.8
+  Align			Center         
+  Alignpossible         Center
+  LabelType             Static
+  LabelString		"Part "
+
+  # standard font definition
+  Font 
+    Family              Roman
+    Series              Bold
+    Size                Huge
+  EndFont
+
+  LabelFont
+    Color               Red
+  EndFont
+End
+  
+Style Proof
+  CopyStyle		Corollary
+  LatexName	 	proof
+  LabelString		"Proof. " 
+End
+
+Style TableOfContentsCurrent
+  KeepEmpty             1
+  Margin		First_Dynamic
+  LatexType		Command
+  LatexName		tableofcontents[current]
+  LabelString	        "  [Table of contents with current section hilighted]"
+  LabelType		static
+
+  Font 
+    Family  		Roman
+    Color               red
+    Size		normal
+  EndFont  
+End
+
+# Title style definition
+Style Title
+  Margin		Static
+  LatexType		Command
+  InTitle		1
+  LatexName		title
+  ParSkip		0.4
+  ItemSep		0
+  TopSep		0
+  BottomSep		1
+  ParSep		1
+  Align			Center
+  AlignPossible		Center
+  LabelType		No_Label
+  OptionalArgs				1
+
+  # standard font definition
+  Font 
+    Size		Largest
+    Color               Blue
+  EndFont
+
+End
+
+Style Theorem
+  CopyStyle		Corollary
+  LatexName	 	theorem
+  LabelString		"Theorem. " 
+End
+
+
+Style Uncover
+  Margin		First_Dynamic
+  LatexType		Environment
+  NextNoIndent		0
+  ParIndent		MM
+  Align			Left
+  LabelType		Static
+
+  LatexName	 	uncoverenv
+  LabelString		"uncovered on slides " 
+
+  ParSkip           0.5
+  TopSep            1
+  BottomSep         1
+  ParSep            0
+
+  # font & label font definition
+
+  LabelFont 
+    Family		Roman		
+    Color               Red
+  EndFont
+End
+
+
+
+
+# Input lyxmacros.inc
+
+Float
+  Type                  table
+  GuiName		Table
+  Placement             tbp
+  Extension             lot
+  NumberWithin          none
+  Style                 plain
+  ListName              "List of Tables"
+  LaTeXBuiltin          true
+End
+  
+Float
+  Type                  figure
+  GuiName               Figure
+  Placement             tbp
+  Extension             lof
+  NumberWithin          none
+  Style                 plain
+  ListName              "List of Figures"
+  LaTeXBuiltin          true
+End
+
+TitleLaTeXName frame{\titlepage}
+
+SecNumDepth		2
+TocDepth		2
+
+
+Input stdcounters.inc
+
+

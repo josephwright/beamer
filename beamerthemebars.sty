@@ -67,7 +67,7 @@
     \hbox to\textwidth{\hfill%
       \setbox\logobox=\hbox{\raise 2pt\hbox{\insertlogo}}\ht\logobox=0pt%
       \box\logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
-    \tinycolouredline{structure!75}{\color{white}\textbf{\insertshortauthor\hfill}}%
+    \tinycolouredline{structure!75}{\color{white}\textbf{\insertshortauthor\hfill\ifx\insertlogo\@empty\insertshortinstitute\fi}}%
     \tinycolouredline{structure}{\color{white}\textbf{\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}%
   }}}
 

@@ -954,12 +954,13 @@
   {\beamer@exitcode\vskip0pt plus 1.5fill\end{pauses}}
 
 \def\frametitle#1{%
+  \@ifempty{#1}{}{%
   \vskip0pt plus -1fill%
   {\gdef\insertframetitle{#1}\@headrenderer}
   \vskip0.25em%
   \ifbeamer@centered
   \vfill%
-  \fi
+  \fi}%
 }
 
 \long\def\useframetitletemplate#1{\def\@headrenderer{#1}}
