@@ -8,17 +8,6 @@
 % archives in directory macros/latex/base/lppl.txt.
 
 \RequirePackage{pgfshade}
-\RequirePackage{keyval}[1997/11/10]
-
-\def\ProcessOptionsWithKV#1{%
-  \let\@tempa\@empty
-  \@for\CurrentOption:=\@classoptionslist\do{%
-    \@ifundefined{KV@#1@\CurrentOption}%
-    {}{\edef\@tempa{\@tempa,\CurrentOption,}}}%
-  \edef\@tempa{%
-    \noexpand\setkeys{#1}{\@tempa\@ptionlist{\@currname.\@currext}}}%
-  \@tempa
-  \AtEndOfPackage{\let\@unprocessedoptions\relax}}
 
 \newif\ifbeamer@sidebartab
 \newif\ifbeamer@sidebardark
@@ -28,10 +17,12 @@
 
 \newdimen\beamer@sidebarwidth
 \beamer@sidebarwidth=2.5cm
-\define@key{beamersidebar}{width}{\beamer@sidebarwidth=#1}
-\define@key{beamersidebar}{tab}[true]{\csname beamer@sidebartab#1\endcsname}
-\define@key{beamersidebar}{dark}[true]{\csname beamer@sidebardark#1\endcsname}
-\ProcessOptionsWithKV{beamersidebar}
+
+\DeclareOptionBeamer{width}[2.5cm]{\beamer@sidebarwidth=#1}
+\DeclareOptionBeamer{tab}[true]{\csname beamer@sidebartab#1\endcsname}
+\DeclareOptionBeamer{dark}[true]{\csname beamer@sidebardark#1\endcsname}
+
+\ProcessOptionsBeamer
 
 \ifbeamer@sidebardark
   \beamertemplateboldtitlepage
@@ -79,7 +70,7 @@
           \hskip-\beamer@sidebarwidth%
           \color{structure}\bfseries%
         \else%
-          \color[gray]{0.1}\lower0.375ex\hbox{\vrule width\beamer@sidebarwidth height 2.4375ex}%
+          \color[gray]{0.9}\lower0.375ex\hbox{\vrule width\beamer@sidebarwidth height 2.4375ex}%
           \hskip-\beamer@sidebarwidth%
           \color{structure}%
         \fi%
@@ -169,7 +160,7 @@
       \else%
         \color{structure}\insertshorttitle%
         \vskip.5em
-        \color{black!75}\insertshortauthor5
+        \color{black!75}\insertshortauthor
       \fi%
     \end{minipage}}%
   \vskip1em

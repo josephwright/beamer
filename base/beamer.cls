@@ -101,40 +101,13 @@
 \newif\ifbeamer@compress
 \newif\ifbeamer@centered
 \newif\ifbeamer@draftmode
-\newif\ifbeamer@compressnotes
 \newif\ifbeamer@suppressreplacements % decides whether fonts should be substituted
+\newif\ifbeamer@frameswithnotesonly
 
 
+\RequirePackage{beamerbaseoptions}
+% For option management
 
-\RequirePackage{pgf}
-% For all sorts of things...
-
-\RequirePackage{xxcolor}
-% For color management.
-
-\RequirePackage{amssymb}
-% For \blacktriangleright
-
-\RequirePackage{keyval}
-% For \tableofcontents parameters
-
-\RequirePackage[%
-  papersize={12.80cm,9.60cm},
-  hmargin=1cm,%
-  vmargin=0cm,%
-  head=0.5cm,% will be changed later
-  headsep=0pt,%
-  foot=0.5cm% will be changed later
-  ]{geometry}
-% For the page layout
-
-\RequirePackage[implicit=false,%
-  bookmarks=true,%
-  bookmarksopen=true,%
-  pdfborder={0 0 0},%
-  pdfhighlight={/N}%
-  ]{hyperref}
-% For hyperlinks
 
 
 %
@@ -149,86 +122,77 @@
 \beamer@notesnormalstrue
 \beamer@compressfalse
 \beamer@draftmodefalse
-\beamer@compressnotesfalse
+\beamer@frameswithnotesonlyfalse
 
-\DeclareOption{inrow}
-{\ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
-
-\DeclareOption{compress}
+\DeclareOptionBeamer{compress}
 {\beamer@compresstrue}
 
-\DeclareOption{compressnotes}
-{\beamer@compressnotestrue}
-
-\DeclareOption{slidescentered}
+\DeclareOptionBeamer{slidescentered}
 {\beamer@centeredtrue}
 
-\DeclareOption{slidestop}
+\DeclareOptionBeamer{slidestop}
 {\beamer@centeredfalse}
 
-\DeclareOption{blue}
-{\definecolor{structure}{rgb}{0.2,0.2,0.7}}
+\DeclareOptionBeamer{blue}{\def\beamer@structurecolor{0.2,0.2,0.7}}
+\DeclareOptionBeamer{red}{\def\beamer@structurecolor{0.7,0.2,0.2}}
+\DeclareOptionBeamer{blackandwhite}{\def\beamer@structurecolor{0.2,0.2,0.2}}
+\DeclareOptionBeamer{brown}{\def\beamer@structurecolor{0.66,0.4,0.166}}
 
-\DeclareOption{red}
-{\definecolor{structure}{rgb}{0.7,0.2,0.2}}
-
-\DeclareOption{blackandwhite}
-{\definecolor{structure}{rgb}{0.2,0.2,0.2}}
-
-\DeclareOption{brown}
-{\definecolor{structure}{rgb}{0.66,0.4,0.166}}
-
-\DeclareOption{leqno}{\input{leqno.clo}}
-\DeclareOption{fleqn}{\input{fleqn.clo}}
+\DeclareOptionBeamer{leqno}{\input{leqno.clo}}
+\DeclareOptionBeamer{fleqn}{\input{fleqn.clo}}
 
 \def\beamer@currentmode{default}
-\DeclareOption{handout}{\gdef\beamer@currentmode{handout}}
-\DeclareOption{trans}{\gdef\beamer@currentmode{trans}}
+\DeclareOptionBeamer{handout}{\gdef\beamer@currentmode{handout}}
+\DeclareOptionBeamer{trans}{\gdef\beamer@currentmode{trans}}
 
-\DeclareOption{notes}{\beamer@notestrue}
-\DeclareOption{notesonly}{\beamer@notestrue\beamer@notesnormalsfalse}
+\DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
 
-\DeclareOption{sans}{%
+\def\beamer@notesaction@hide{\beamer@notesfalse}
+\def\beamer@notesaction@show{\beamer@notestrue}
+\def\beamer@notesaction@only{\beamer@notestrue\beamer@notesnormalsfalse}
+\def\beamer@notesaction@frameswithnotes{\beamer@notestrue\beamer@frameswithnotesonlytrue}
+
+\DeclareOptionBeamer{sans}{%
   \def\familydefault{\sfdefault}
   \def\mathfamilydefault{\sfdefault}
   \beamer@sansmathtrue
 }
-\DeclareOption{serif}{%
+\DeclareOptionBeamer{serif}{%
   \def\familydefault{\rmdefault}
   \def\mathfamilydefault{\rmdefault}
   \beamer@sansmathfalse
 }
 
-\DeclareOption{mathsans}{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
-\DeclareOption{mathserif}{\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
+\DeclareOptionBeamer{mathsans}{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
+\DeclareOptionBeamer{mathserif}{\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
 
-\DeclareOption{professionalfont}{\beamer@suppressreplacementstrue}
+\DeclareOptionBeamer{professionalfont}{\beamer@suppressreplacementstrue}
 
-\DeclareOption{nodefaultblocks}{\beamer@blocksfalse}
+\DeclareOptionBeamer{nodefaultblocks}{\beamer@blocksfalse}
 
-\DeclareOption{pdftex}{}% Used by hyperref
-\DeclareOption{nativepdf}{}% Used by hyperref
-\DeclareOption{pdfmark}{}% Used by hyperref
-\DeclareOption{dvips}{}% Used by hyperref
-\DeclareOption{dviwindo}{}% Used by hyperref
-\DeclareOption{dvipsone}{}% Used by hyperref
-\DeclareOption{vtex}{}% Used by hyperref
-\DeclareOption{ps2pdf}{}% Used by hyperref
+\DeclareOptionBeamer{pdftex}{}% Used by hyperref
+\DeclareOptionBeamer{nativepdf}{}% Used by hyperref
+\DeclareOptionBeamer{pdfmark}{}% Used by hyperref
+\DeclareOptionBeamer{dvips}{}% Used by hyperref
+\DeclareOptionBeamer{dviwindo}{}% Used by hyperref
+\DeclareOptionBeamer{dvipsone}{}% Used by hyperref
+\DeclareOptionBeamer{vtex}{}% Used by hyperref
+\DeclareOptionBeamer{ps2pdf}{}% Used by hyperref
 
 \def\beamer@size{{size11.clo}}
-\DeclareOption{bigger}{\def\beamer@size{{size12.clo}}}
-\DeclareOption{smaller}{\def\beamer@size{{size10.clo}}}
+\DeclareOptionBeamer{bigger}{\def\beamer@size{{size12.clo}}}
+\DeclareOptionBeamer{smaller}{\def\beamer@size{{size10.clo}}}
 
-\DeclareOption{8pt}{\def\beamer@size{{size8.clo}}}
-\DeclareOption{9pt}{\def\beamer@size{{size9.clo}}}
-\DeclareOption{10pt}{\def\beamer@size{{size10.clo}}}
-\DeclareOption{11pt}{\def\beamer@size{{size11.clo}}}
-\DeclareOption{12pt}{\def\beamer@size{{size12.clo}}}
-\DeclareOption{14pt}{\def\beamer@size{{size14.clo}}}
-\DeclareOption{17pt}{\def\beamer@size{{size17.clo}}}
-\DeclareOption{20pt}{\def\beamer@size{{size20.clo}}}
+\DeclareOptionBeamer{8pt}{\def\beamer@size{{size8.clo}}}
+\DeclareOptionBeamer{9pt}{\def\beamer@size{{size9.clo}}}
+\DeclareOptionBeamer{10pt}{\def\beamer@size{{size10.clo}}}
+\DeclareOptionBeamer{11pt}{\def\beamer@size{{size11.clo}}}
+\DeclareOptionBeamer{12pt}{\def\beamer@size{{size12.clo}}}
+\DeclareOptionBeamer{14pt}{\def\beamer@size{{size14.clo}}}
+\DeclareOptionBeamer{17pt}{\def\beamer@size{{size17.clo}}}
+\DeclareOptionBeamer{20pt}{\def\beamer@size{{size20.clo}}}
 
-\DeclareOption{draft}{\beamer@draftmodetrue}
+\DeclareOptionBeamer{draft}{\beamer@draftmodetrue}
 \AtBeginDocument{
   \ifbeamer@draftmode
   \gdef\beamer@foottemplate{%
@@ -253,8 +217,8 @@
 
 \def\beamer@activecjk{}
 
-\DeclareOption{CJK}{\ExecuteOptions{cjk}}
-\DeclareOption{cjk}{
+\DeclareOptionBeamer{CJK}{\ExecuteOptions{cjk}}
+\DeclareOptionBeamer{cjk}{
   \hypersetup{CJKbookmarks=true}
 
   \def\beamer@activecjk{
@@ -268,17 +232,65 @@
     }
   }  
 }
- 
+
+
+% obsolete options
+\DeclareOptionBeamer{inrow}
+{\ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
+
+\DeclareOptionBeamer{compressnotes}{%
+  \ClassWarning{beamer}{``compressnotes'' option no longer supported. Use
+    \noexpand\beamertemplatenotecompress instead}
+  \AtBeginDocument{\beamertemplatenotecompress}}
+
+\DeclareOptionBeamer{notesonly}{\ClassWarning{beamer}{``notesonly'' no
+    longer supported. Use notes=only instead}\beamer@notesaction@only}
+
+
+
+\PassOptionsToPackage{bookmarks=true,bookmarksopen=true,pdfborder={0 0 0},pdfhighlight={/N}}{hyperref}
+  
+\DeclareOptionBeamer{pgf}{\PassOptionsToPackage{#1}{pgf}}
+\DeclareOptionBeamer{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
+\DeclareOptionBeamer{color}{\PassOptionsToPackage{#1}{color}}
+\DeclareOptionBeamer{xcolor}{\PassOptionsToPackage{#1}{xcolor}}
 
 %
 % Process Options
 %
-\ExecuteOptions{blue,sans,slidescentered}
 
-\ProcessOptions
+\ExecuteOptionsBeamer{blue,sans,slidescentered}
+
+\ProcessOptionsBeamer
   
+\RequirePackage{pgf}
+% For all sorts of things...
+
+\RequirePackage{xxcolor}
+% For color management.
+
+\RequirePackage{amssymb}
+% For \blacktriangleright
+
+\RequirePackage[%
+  papersize={12.80cm,9.60cm},
+  hmargin=1cm,%
+  vmargin=0cm,%
+  head=0.5cm,% will be changed later
+  headsep=0pt,%
+  foot=0.5cm% will be changed later
+  ]{geometry}
+% For the page layout
+
+\RequirePackage[implicit=false]{hyperref}
+% For hyperlinks
+
+\hypersetup{pdfcreator={LaTeX with beamer class}}
+
+
 \expandafter\input\beamer@size
 \geometry{headsep=0pt}
+\definecolor{structure}{rgb}{\beamer@structurecolor}
 
 
 \RequirePackage{beamerbasecompatibility}
@@ -318,6 +330,9 @@
 
 \RequirePackage{beamerbaseoverlay}
 % Overlay stuff
+
+\RequirePackage{beamerbasenotes}
+% Commands for adding notes
 
 \RequirePackage{beamerbasetoc}
 % Table of Contents Format

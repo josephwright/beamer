@@ -781,4 +781,35 @@
 }
 
 
+%
+% Note templates
+%
+
+\newcommand{\beamertemplatenoteempty}{
+  \usetemplatenote{\small\insertnote}}
+
+\newcommand{\beamertemplatenotecompress}{
+\usetemplatenote{
+  \let\\=\relax%
+  \insertvrule{2.5em}{white!90!black}%
+  \vskip-2.25em
+  \nointerlineskip
+  \tiny
+  \setbox\beamer@tempbox=\hbox{\hbox{\insertsection}}%
+  \ht\beamer@tempbox=1em
+  \box\beamer@tempbox
+  \nointerlineskip
+  \setbox\beamer@tempbox=\hbox{\hbox{\quad\insertsubsection}}%
+  \ht\beamer@tempbox=1em
+  \box\beamer@tempbox
+  \nointerlineskip
+  \setbox\beamer@tempbox=\hbox{\hbox{\quad\quad\insertframetitle}}%
+  \ht\beamer@tempbox=1em
+  \box\beamer@tempbox
+  \vskip1em
+  \small
+  \nointerlineskip
+  \insertnote
+}
+}
 \common

@@ -59,9 +59,9 @@
 \def\beamer@structure#1{\begin{structureenv}#1\end{structureenv}}
 
 \long\def\usealerttemplate#1#2{%
-  \gdef\beamer@templatestartalert{#1}\gdef\beamer@templateendalert{#2}}
+  \def\beamer@templatestartalert{#1}\def\beamer@templateendalert{#2}}
 \long\def\usestructuretemplate#1#2{%
-  \gdef\beamer@templatestartstructure{#1}\gdef\beamer@templateendstructure{#2}}
+  \def\beamer@templatestartstructure{#1}\def\beamer@templateendstructure{#2}}
 
 \usealerttemplate{%
   \def\bmb@scheme{alert}%
@@ -91,16 +91,16 @@
 \common
 {
   \long\def\useblocktemplate#1#2{%
-    \gdef\beamer@beginblocktemplate{#1}
-    \gdef\beamer@endblocktemplate{#2}}
+    \def\beamer@beginblocktemplate{#1}
+    \def\beamer@endblocktemplate{#2}}
 
   \long\def\usealertblocktemplate#1#2{%
-    \gdef\beamer@beginalertblocktemplate{#1}
-    \gdef\beamer@endalertblocktemplate{#2}}
+    \def\beamer@beginalertblocktemplate{#1}
+    \def\beamer@endalertblocktemplate{#2}}
 
   \long\def\useexampleblocktemplate#1#2{%
-    \gdef\beamer@beginexampleblocktemplate{#1}
-    \gdef\beamer@endexampleblocktemplate{#2}}
+    \def\beamer@beginexampleblocktemplate{#1}
+    \def\beamer@endexampleblocktemplate{#2}}
 }
 \newoverlayenvironment{block}[1]{%
   \def\insertblockname{#1}%
@@ -252,7 +252,7 @@
 \def\endenumerate{\ifhmode\unskip\fi\endlist\csname\@enumctr endtemplate\endcsname}
 
 \def\useenumerateitemminitemplate#1{%
-  \gdef\beamer@autoenumtemplate{#1}}
+  \def\beamer@autoenumtemplate{#1}}
 \useenumerateitemminitemplate{\color{beamerstructure}\insertenumlabel}
 
 
@@ -278,33 +278,33 @@
 \def\enditemize{\ifhmode\unskip\fi\endlist\csname\@itemctr endtemplate\endcsname}
 
 \def\useenumerateitemtemplate#1{% 
-  \gdef\labelenumi{\def\insertenumlabel{\theenumi}#1}}
+  \def\labelenumi{\def\insertenumlabel{\theenumi}#1}}
 
 \def\useenumeratetemplate#1#2{% before and after
-  \gdef\enumistarttemplate{#1}%
-  \gdef\enumiendtemplate{#2}}
+  \def\enumistarttemplate{#1}%
+  \def\enumiendtemplate{#2}}
 
 \def\usesubenumerateitemtemplate#1{%
-  \gdef\labelenumii{\def\insertenumlabel{\theenumi}\def\insertsubenumlabel{\theenumii}#1}}
+  \def\labelenumii{\def\insertenumlabel{\theenumi}\def\insertsubenumlabel{\theenumii}#1}}
 
 \def\usesubenumeratetemplate#1#2{% before and after
-  \gdef\enumiistarttemplate{#1}%
-  \gdef\enumiiendtemplate{#2}}
+  \def\enumiistarttemplate{#1}%
+  \def\enumiiendtemplate{#2}}
 
 
 \def\useitemizeitemtemplate#1{%
-  \gdef\labelitemi{#1}\let\beamer@labelitemi\labelitemi}%itemilabeltemplate{#1}}
+  \def\labelitemi{#1}\let\beamer@labelitemi\labelitemi}%itemilabeltemplate{#1}}
 
 \def\useitemizetemplate#1#2{% before and after
-  \gdef\itemistarttemplate{#1}%
-  \gdef\itemiendtemplate{#2}}
+  \def\itemistarttemplate{#1}%
+  \def\itemiendtemplate{#2}}
 
 \def\usesubitemizeitemtemplate#1{%
-  \gdef\labelitemii{#1}\let\beamer@labelitemii\labelitemii}%itemiilabeltemplate{#1}}
+  \def\labelitemii{#1}\let\beamer@labelitemii\labelitemii}%itemiilabeltemplate{#1}}
 
 \def\usesubitemizetemplate#1#2{% before and after
-  \gdef\itemiistarttemplate{#1}%
-  \gdef\itemiiendtemplate{#2}}
+  \def\itemiistarttemplate{#1}%
+  \def\itemiiendtemplate{#2}}
 
 
 \def\description{\@ifnextchar[{\@description}{\beamer@descdefault\beamer@descdefaulttemp\@@description}}
@@ -316,7 +316,7 @@
 \long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep\normalfont\descriptionitemtemplate}
 
-\def\usedescriptionitemtemplate#1#2{\gdef\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
+\def\usedescriptionitemtemplate#1#2{\def\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
   \global\advance\beamer@descdefaulttemp by \labelsep}
 \usedescriptionitemtemplate{\color{beamerstructure}\insertdescriptionitem}{2cm}
 
@@ -465,13 +465,13 @@
   \setbox\beamer@tempbox=\hbox{\ }\hskip-\wd\beamer@tempbox\setbox\beamer@tempbox=\hbox{}\ht\beamer@tempbox=1.5em\box\beamer@tempbox}
 
 \long\def\usebibitemtemplate#1{%
-  \gdef\biblabeltemplate{#1}}
+  \def\biblabeltemplate{#1}}
 
 \long\def\usebibliographyblocktemplate#1#2#3#4{%
-  \gdef\firstblocktemplate{#1}%
-  \gdef\secondblocktemplate{#2}%
-  \gdef\thirdblocktemplate{#3}%
-  \gdef\otherblocktemplate{#4}}
+  \def\firstblocktemplate{#1}%
+  \def\secondblocktemplate{#2}%
+  \def\thirdblocktemplate{#3}%
+  \def\otherblocktemplate{#4}}
 
 \beamertemplatearticlebibitems
 \usebibliographyblocktemplate
@@ -550,7 +550,7 @@
   \vskip\belowcaptionskip}
 
 \long\def\usecaptiontemplate#1{%
-  \gdef\beamer@captiontemplate{#1}}
+  \def\beamer@captiontemplate{#1}}
 \usecaptiontemplate{%
   {\small\structure{\insertcaptionname:} \insertcaption}}
 

@@ -359,6 +359,19 @@ options or precautions may be necessary.
   deactivated. 
 \end{package}
 
+\begin{package}{{color}}
+  The |color| package is automatically loaded by |beamer.cls|. This
+  makes it impossible to pass options to |color| in the preamble of
+  your document. To pass a \meta{list of options} to |color|, you must
+  use the following class option:
+
+  \begin{classoption}{{color={\normalfont\meta{list of options}}}}
+    Causes the \meta{list of options} to be passed on to the |color|
+    package. If the \meta{list of options} contains more than one
+    option you must enclose it in curly brackets.
+  \end{classoption}
+\end{package}
+
 \begin{package}{{CJK}}
   When using the |CJK| package, you must use the class option
   \declare{|CJK|}. See |beamerexample4.tex| for an example.
@@ -390,6 +403,20 @@ options or precautions may be necessary.
   package. 
 \end{package}
 
+\begin{package}{{hyperref}}
+  The |hyperref| package is automatically loaded by |beamer.cls| and
+  certain options are setup. In order pass additional options to
+  |hyperref| or to override options, you can use the following class
+  option: 
+
+  \begin{classoption}{{hyperref={\normalfont\meta{list of options}}}}
+    Causes the \meta{list of options} to be passed on to the |hyperref|
+    package.
+
+    \example |\documentclass[hyperref={bookmarks=false}]{beamer}|
+  \end{classoption}
+\end{package}
+
 \begin{package}{{inputenc}|[|\declare{|utf8|}|]|}
   Currently, you cannot use utf8 encoded text in |\section| and
   |\subsection| commands, if that text uses characters outside the
@@ -404,6 +431,7 @@ options or precautions may be necessary.
   |colored| option of |\defverbatim|.
 \end{package}
 
+
 \begin{package}{{\normalfont\meta{professional font package}}}
   If you use a professional font package, \beamer's internal
   redefinition of how variables are typeset may interfere with the
@@ -416,6 +444,16 @@ options or precautions may be necessary.
   See |\usepackage[utf8]{inputenc}|.
 \end{package}
 
+
+\begin{package}{{xcolor}}
+  The |xcolor| package is automatically loaded by |beamer.cls|. The
+  same applies as to |color|.
+
+  \begin{classoption}{{xcolor={\normalfont\meta{list of options}}}}
+    Causes the \meta{list of options} to be passed on to the |xcolor|
+    package.
+  \end{classoption}
+\end{package}
 
 
 

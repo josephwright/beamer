@@ -1,0 +1,134 @@
+\ProvidesPackage{beamerbasenotes}[2004/02/05 ver 1.30]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+
+
+\presentation
+
+%
+% Notes
+%
+
+\long\def\note#1{%
+  \ifbeamer@notes
+  \begingroup
+    \useitemizeitemtemplate{\textbullet}
+    \usesubitemizeitemtemplate{--}    
+    \useenumerateitemtemplate{\insertenumlabel.}
+    \usesubenumerateitemtemplate{\insertenumlabel.\insertsubenumlabel}
+    \def\@oddhead{}
+    \def\@oddfoot{}
+    \let\@evenhead\@oddhead
+    \let\@evenfoot\@oddfoot
+    \def\beamer@backgroundtemplate{}
+    \vbox to\textheight{%
+      \vskip-\headheight%
+      \def\insertnote{\vbox{}#1}%
+      \beamer@notetemplate%
+      \vskip-4pt% foot separator
+      \vskip-\footheight}%
+    \clearpage
+  \endgroup
+  \fi}
+
+\long\def\noteitems#1{\note{\begin{enumerate}#1\end{enumerate}}}
+
+
+%
+% Notes in frames
+%
+
+\newoverlaycommand{\noteitem}{\beamer@noteitem}{\@gobble}
+\def\beamer@noteitem#1{%
+  \expandafter\gdef\expandafter\beamer@noteitems\expandafter{\beamer@noteitems%
+    \item#1}}
+
+\def\beamer@framenotesbegin{% at beginning of slide
+  \gdef\beamer@noteitems{}%
+}
+\def\beamer@framenotesend
+{% at end of slide
+  \ifx\beamer@noteitems\@empty%
+    % possibly suppress this slide
+    \ifbeamer@frameswithnotesonly
+      % suppress frame
+      \setbox\beamer@framebox=\box\voidb@x%
+    \fi%
+  \else
+    \gdef\beamer@notesactions{\noteitems{\beamer@noteitems}\gdef\beamer@notesactions{}}
+  \fi
+  \ifbeamer@notesnormals%
+  \else%
+    \setbox\beamer@framebox=\box\voidb@x%
+  \fi%
+}
+
+\def\beamer@notesactions{}  
+
+%
+% Note templates
+%
+
+\newcommand{\usetemplatenote}[1]{\def\beamer@notetemplate{#1}}
+
+% Default:
+\usetemplatenote{\small
+  \let\\=\relax%
+  \insertvrule{6.75em}{white!90!black}
+  \vskip-6.75em
+  \nointerlineskip
+  \vbox{
+  \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
+    \begin{pgfrotateby}{\pgfdegree{90}}
+      \pgfputat{\pgfpoint{-2cm}{0.2cm}}%
+      {\pgfbox[base,left]{\footnotesize\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
+    \end{pgfrotateby}
+  \end{pgfpicture}}
+  \nointerlineskip
+  \vbox to 6.75em{\vskip0.5em
+  \hbox{\begin{minipage}[t]{10cm}\insertshorttitle\end{minipage}}%
+  \setbox\beamer@tempbox=\hbox{\insertsection}%
+  \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip4pt\raise3pt\hbox{\vrule
+        width0.4pt height7pt\vrule width 9pt
+        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{10cm}\let\\=\space\insertsection\end{minipage}}\fi%
+  }%
+  \setbox\beamer@tempbox=\hbox{\insertsubsection}%
+  \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip17.4pt\raise3pt\hbox{\vrule
+        width0.4pt height7pt\vrule width 9pt
+        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{10cm}\let\\=\space\insertsubsection\end{minipage}}\fi%
+  }%
+  \setbox\beamer@tempbox=\hbox{\insertframetitle}%
+  \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip30.8pt\raise3pt\hbox{\vrule
+        width0.4pt height7pt\vrule width 9pt
+        height0.4pt}}\hskip1pt\hbox{\begin{minipage}[t]{10cm}\let\\=\space\insertframetitle\end{minipage}}\fi%
+  }%
+  \vfil}
+  \vskip.25em
+  \nointerlineskip
+  \insertnote
+  \vfill
+}
+
+
+\article
+{
+  \long\def\note#1{}
+  \long\def\noteitems#1{}
+  \long\def\noteitem#1{}
+}
+
+
+
+\common
+% End in common mode
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

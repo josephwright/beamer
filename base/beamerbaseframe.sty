@@ -46,7 +46,7 @@
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
     \refstepcounter{subsectionslide}%
     \xdef\beamer@framestartpage{\the\c@page}% only first time
-  }{\clearpage}% cleanup from previous slide
+  }{\clearpage\beamer@notesactions}% cleanup from previous slide
   \hypersetup{pdfpagetransition=R}%
   \hypersetup{pdfpageduration=}%
   \xdef\beamer@frameendpage{\the\c@page}% every time
@@ -60,11 +60,14 @@
     \fi%
   \fi%
   % Start slide:
-  \setbox\beamer@framebox=\vbox to\textheight\bgroup\vbox{}\par%
-  \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
-  \vfill}%
-  {\beamer@exitcode\vskip0pt plus 1.5fill\end{beamer@framepauses}%}%
-  \egroup\box\beamer@framebox}
+  \beamer@framenotesbegin%
+    \setbox\beamer@framebox=\vbox to\textheight\bgroup\vbox{}\par%
+    \beamer@entrycode\begin{beamer@framepauses}%\vspace*{-\baselineskip}%
+    \vfill}%
+  {\beamer@exitcode\vskip0pt plus 1.5fill\end{beamer@framepauses}%
+  \egroup%
+  \beamer@framenotesend%  
+  \box\beamer@framebox}
 
 
 
@@ -167,7 +170,10 @@
   \else% again mode
     \let\beamer@howtotreatframe\beamer@doseveralframes%
   \fi%
-  \ifbeamer@notesnormals\else\let\beamer@howtotreatframe\beamer@donoframe\fi%
+%  \ifbeamer@notesnormals%
+%  \else%
+%    \let\beamer@howtotreatframe\beamer@donoframe%
+%  \fi%
   \beamer@howtotreatframe}
 \long\def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
@@ -227,7 +233,7 @@
     \addtocontents{nav}%
       {\protect\headcommand{% 
         \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
-    \clearpage%
+    \clearpage\beamer@notesactions%
   }
 }
 \def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}\beamer@resumemode}
@@ -328,77 +334,6 @@
   \def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<>}}
   \def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
   \def\beamer@@againframe<#1>[#2]#3{} % do nothing
-}
-
-
-
-%
-% Notes
-%
-
-\long\def\note#1{%
-  \ifbeamer@notes
-  {
-  \def\@oddhead{}
-  \def\@oddfoot{}
-  \let\@evenhead\@oddhead
-  \let\@evenfoot\@oddfoot
-  \def\beamer@backgroundtemplate{}
-  \vbox{%
-    \let\\=\space%
-    \vskip-\headheight%
-    \ifbeamer@compressnotes
-      \insertvrule{2.5em}{white!90!black}
-      \vskip2.5em
-      \nointerlineskip
-      \tiny
-      \setbox\beamer@tempbox=\hbox{\raise7em\hbox{\insertsection}}%
-      \ht\beamer@tempbox=0pt
-      \box\beamer@tempbox
-      \nointerlineskip
-      \setbox\beamer@tempbox=\hbox{\raise6em\hbox{\quad\insertsubsection}}%
-      \ht\beamer@tempbox=0pt
-      \box\beamer@tempbox
-      \nointerlineskip
-      \setbox\beamer@tempbox=\hbox{\raise5em\hbox{\quad\quad\insertframetitle}}%
-      \ht\beamer@tempbox=0pt
-      \box\beamer@tempbox
-      \nointerlineskip
-    \else    
-      \insertvrule{8em}{white!90!black}
-      \vskip-8.5em
-      \hbox{\vbox{
-      \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
-        \begin{pgfrotateby}{\pgfdegree{90}}
-          \pgfputat{\pgfpoint{-2cm}{0.25cm}}{\pgfbox[base,left]{\footnotesize\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
-        \end{pgfrotateby}
-      \end{pgfpicture}}}
-      \hbox{\vbox{\begin{minipage}[t]{8cm}\insertshorttitle\end{minipage}}}%
-      \setbox\beamer@tempbox=\hbox{\insertsection}%
-      \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\let\\=\space\insertsection\end{minipage}}}\fi}%
-      \setbox\beamer@tempbox=\hbox{\insertsubsection}%
-      \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip17.4pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\let\\=\space\insertsubsection\end{minipage}}}\fi}%
-      \setbox\beamer@tempbox=\hbox{\insertframetitle}%
-      \hbox{\ifdim\wd\beamer@tempbox>1pt{\hskip30.8pt\raise3pt\hbox{\vrule width0.4pt height9pt\vrule width 9pt height0.4pt}}\hskip1pt\hbox{\vbox{\begin{minipage}[t]{8cm}\let\\=\space\insertframetitle\end{minipage}}}\fi}%
-    \fi
-    }
-  \ifbeamer@compressnotes
-  \vskip-2em  
-  \else
-  \vskip2.5em
-  \fi
-  \small
-  #1%
-  \clearpage
-  }\fi}
-
-\long\def\noteitems#1{\note{\begin{itemize}#1\end{itemize}}}
-
-
-\article
-{
-  \long\def\note#1{}
-  \long\def\noteitems#1{}
 }
 
 
