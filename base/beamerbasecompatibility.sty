@@ -200,7 +200,7 @@
 \@onlypreamble\beamertemplatelargeframetitle
  
 \def\beamertemplateboldblocks{
-  \setbeamerfont{block head}{size={},series=\bfseries}
+  \setbeamerfont{block title}{size={},series=\bfseries}
   \beamertemplatedefaultblocks}
 \@onlypreamble\beamertemplateboldblocks
 
@@ -209,6 +209,17 @@
 \def\beamertemplateshadowblocks{\beamertemplateboxedblocks[shadow=true]{rounded}}
 \def\beamertemplaterectblocks{\beamertemplateboxedblocks{rect}}
 \def\beamertemplateplaintoc{\beamertemplatedefaulttoc}
+\def\beamertemplatecircleminiframeinverted{%
+  \beamertemplatecircleminiframe%
+  \usebeamercolor{mini frames}{use=structure,fg=white,bg=structure.bg}}
+\def\beamertemplatesphereminiframe{\beamertemplatecircleminiframe}
+\def\beamertemplatesphereminiframeinverted{\beamertemplatecircleminiframeinverted}
+
+\def\beamertemplatelightsectionheads
+{\usesectionheadtemplate{\hfill\insertsectionhead}{\hfill\color{fg!50!bg}\insertsectionhead}
+ \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}}
+\let\beamertemplatedarksectionheads=\beamertemplatedefaultsectionheads
+
 
 \define@key{beamertoc}{current}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}}
 \define@key{beamertoc}{hidesubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}}

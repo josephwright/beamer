@@ -171,9 +171,6 @@
 
 \def\beamer@linkspace#1{\vbox to7.5pt{}\kern#1}
 
-\def\beamernavigationcolorlight{beamerstructure!20!averagebackgroundcolor}
-\def\beamernavigationcolorstrong{beamerstructure!40!averagebackgroundcolor}
-
 \pgfdefobject{beamerslidenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
  {\pgfqmoveto{4}{0.5}
   \pgfqlineto{2}{2}
@@ -188,9 +185,10 @@
 
 \def\insertslidenavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \color{\beamernavigationcolorlight}%
+    \usebeamercolor{navigation symbols}
+    \color{fg*}
     \pgfuseobject{beamerslidenavlight}%
-    \color{\beamernavigationcolorstrong}%
+    \color{fg}
     \pgfuseobject{beamerslidenavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinkslideprev{\beamer@linkspace{6pt}}%
@@ -223,9 +221,10 @@
 
 \def\insertframenavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \color{\beamernavigationcolorlight}%
+    \usebeamercolor{navigation symbols}
+    \color{fg*}
     \pgfuseobject{beamerframenavlight}%
-    \color{\beamernavigationcolorstrong}%
+    \color{fg}
     \pgfuseobject{beamerframenavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinkframeendprev{\beamer@linkspace{5pt}}%
@@ -263,9 +262,10 @@
 
 \def\insertsubsectionnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \color{\beamernavigationcolorlight}%
+    \usebeamercolor{navigation symbols}
+    \color{fg*}
     \pgfuseobject{beamersubsectionnavlight}%
-    \color{\beamernavigationcolorstrong}%
+    \color{fg}
     \pgfuseobject{beamersubsectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinksubsectionendprev{\beamer@linkspace{5pt}}%
@@ -304,9 +304,10 @@
 
 \def\insertsectionnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \color{\beamernavigationcolorlight}%
+    \usebeamercolor{navigation symbols}
+    \color{fg*}
     \pgfuseobject{beamersectionnavlight}%
-    \color{\beamernavigationcolorstrong}%
+    \color{fg}
     \pgfuseobject{beamersectionnavstrong}%
   \end{pgfpicture}\kern-20pt%
   \hyperlinksectionendprev{\beamer@linkspace{5pt}}%
@@ -369,16 +370,17 @@
 \def\insertdocnavigationsymbol{%
   \ifx\beamer@startpageofappendix\@empty%
     \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-      \color{\beamernavigationcolorstrong}%
+      \usebeamercolor[fg]{navigation symbols}
       \pgfuseobject{beamerdocnavstrongsingle}%
     \end{pgfpicture}\kern-20pt%
     \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
     \hyperlinkpresentationend{\beamer@linkspace{11pt}}%
   \else%
     \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-      \color{\beamernavigationcolorlight}%
+      \usebeamercolor{navigation symbols}
+      \color{fg*}
       \pgfuseobject{beamerdocnavlight}%
-      \color{\beamernavigationcolorstrong}%
+      \color{fg}
       \pgfuseobject{beamerdocnavstrong}%
     \end{pgfpicture}\kern-20pt%
     \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
@@ -421,7 +423,8 @@
 
 \def\insertbackfindforwardnavigationsymbol{%
   \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
-    \color{\beamernavigationcolorlight!50!\beamernavigationcolorstrong}%
+    \usebeamercolor{navigation symbols}
+    \color{fg!50!fg*}
     \pgfuseobject{beamerbackfindforwardnav}%
   \end{pgfpicture}\kern-20pt%
   \Acrobatmenu{GoBack}{\beamer@linkspace{7pt}}%
@@ -486,16 +489,16 @@
 
 \def\beamerbutton#1{%
   \def\insertbuttontext{#1}%
-  \beamer@buttontemplate}
+  {\beamer@buttontemplate}}
 \def\beamergotobutton#1{%
   \def\insertbuttontext{\insertgotosymbol#1}%
-  \beamer@buttontemplate}%
+  {\beamer@buttontemplate}}%
 \def\beamerskipbutton#1{%
   \def\insertbuttontext{\insertskipsymbol#1}%
-  \beamer@buttontemplate}%
+  {\beamer@buttontemplate}}%
 \def\beamerreturnbutton#1{%
   \def\insertbuttontext{\insertreturnsymbol#1}%
-  \beamer@buttontemplate}%
+  {\beamer@buttontemplate}}%
 
 \mode
 <article>
@@ -513,7 +516,7 @@
 
 \def\insertnavigation#1{%
   \vbox{%
-    \usebeamerfont{section in head/foot}%
+    \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
     \beamer@xpos=0\relax%
     \beamer@ypos=1\relax%
     \hbox to #1{\hskip.3cm\setbox\beamer@sectionbox=\hbox{\kern1sp}%
@@ -533,7 +536,7 @@
     \def\insertsectionheadnumber{#1}%
     \def\insertpartheadnumber{#5}%
     \ifnum\c@section=#1%
-    \usebeamerfont{section in head/foot}%
+    \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
     \hyperlink{Navigation#3}{\beamer@sectionheadhilight}\else%
     \hyperlink{Navigation#3}{\beamer@sectionheadnohilight}\fi}%
   \ht\beamer@sectionbox=1.875ex%
@@ -554,7 +557,7 @@
       \def\insertsectionheadnumber{##1}%
       \def\insertpartheadnumber{##5}%
       \hbox{%
-        \usebeamerfont{section in sidebar}%
+        \usebeamerfont{section in sidebar}\usebeamercolor[fg]{section in sidebar}%
           \hyperlink{Navigation##3}{%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=0\relax%
@@ -576,7 +579,7 @@
       \def\insertpartheadnumber{##6}%
       \beamer@tocifnothide{\ifnum\c@section=##1\ifnum\c@subsection=##2\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
       {\hbox{%
-        \usebeamerfont{subsection in sidebar}%
+        \usebeamerfont{subsection in sidebar}\usebeamercolor[fg]{subsection in sidebar}%
           \beamer@link(##4){%
           \ifnum\c@section=##1%
             \ifnum\c@subsection=##2%
@@ -613,8 +616,24 @@
       \advance\beamer@tempdim by -\beamer@boxsize%
       \advance\beamer@tempdim by 1pt%
       \kern\beamer@tempdim\hbox{\beamer@link(#4){%
-        \ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsectionslide=#3%
-        \beamer@minislidehilight\else\beamer@minisliderowhilight\fi\else\beamer@minislide\fi\else\beamer@minislide\fi%
+          \ifnum\c@section=#1%
+            \ifnum\c@subsection=#2%
+              \usebeamercolor[fg]{mini frames}%
+              \ifnum\c@subsectionslide=#3%
+                \beamer@minislidehilight%
+              \else%
+                \beamer@minisliderowhilight%
+              \fi%
+            \else%
+              \usebeamercolor{mini frames}%
+              \color{fg!50!bg}%
+              \beamer@minislide%
+            \fi%
+          \else%
+            \usebeamercolor{mini frames}%
+            \color{fg!50!bg}%
+            \beamer@minislide%
+          \fi%
         }}}\hskip-10cm plus 1fil%
   }\fi\fi%
   \else%
@@ -655,7 +674,7 @@
 
 \def\insertsectionnavigation#1{%
   \hbox to #1{%
-    \vbox{\usebeamerfont{section in head/foot}%
+    \vbox{\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
      \vskip0.5625ex%
      \def\slideentry##1##2##3##4##5##6{}%
      \def\sectionentry##1##2##3##4##5{%
@@ -675,7 +694,7 @@
   \hbox to #1{%
      \def\slideentry##1##2##3##4##5##6{}%
      #2\hskip.3cm%
-     \usebeamerfont{section in head/foot}%
+     \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
      \setbox\beamer@sectionbox=\hbox{}%
      \ht\beamer@sectionbox=1.875ex%
      \dp\beamer@sectionbox=0.75ex%
@@ -686,7 +705,7 @@
 \def\insertsubsectionnavigation#1{%
   \hbox to #1{%
     \vbox{%
-      \usebeamerfont{section in head/foot}%
+      \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
       \vskip0.5625ex%
       \beamer@currentsubsection=0%
       \def\sectionentry##1##2##3##4##5{}%
@@ -706,7 +725,7 @@
 
 \def\insertsubsectionnavigationhorizontal#1#2#3{%
   \hbox to #1{%
-    \usebeamerfont{section in head/foot}%
+    \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
     \beamer@currentsubsection=0%
     \def\sectionentry##1##2##3##4##5{}%
     \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%

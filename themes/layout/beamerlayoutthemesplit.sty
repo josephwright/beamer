@@ -23,14 +23,15 @@
   {\color{white}\insertsubsectionhead}
   {\color{white!50!beamerstructure}\insertsubsectionhead}
 
+\AtBeginDocument{
+  \pgfdeclareverticalshading{topshade}{\paperwidth}{%
+    color(0pt)=(bg);
+    color(0pt)=(black!50!bg)}
 
-\pgfdeclareverticalshading{topshade}{\paperwidth}{%
-  color(0pt)=(averagebackgroundcolor);
-  color(0pt)=(black!50!averagebackgroundcolor)}
-
-\pgfdeclarehorizontalshading{frametitleshade}{\paperheight}{%
-  color(0pt)=(beamerstructure);
-  color(\paperwidth)=(black)}
+  \pgfdeclarehorizontalshading{frametitleshade}{\paperheight}{%
+    color(0pt)=(beamerstructure);
+    color(\paperwidth)=(black)}
+}
 
                                 % Head
 \ifbeamer@compress

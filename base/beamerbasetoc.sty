@@ -102,7 +102,7 @@
         \else
           \vfill
         \fi
-        {\usebeamerfont{section in toc}%
+        {\usebeamerfont{section in toc}\usebeamercolor[fg]{section in toc}%
          \hbox{\vbox{\beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{sectiontemplate}}}
          \par%
         }%
@@ -138,7 +138,7 @@
       \def\inserttocsubsectionnumber{#2}%
       \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@oss\else\beamer@toc@ooss\fi}%
-      {\usebeamerfont{subsection in toc}%
+      {\usebeamerfont{subsection in toc}\usebeamercolor[fg]{subsection in toc}%
         \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
         {beamer@subsectiontemplate}%
       }%

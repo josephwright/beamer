@@ -9,14 +9,15 @@
 
 \mode<presentation>
 
+\AtBeginDocument{
+  \pgfdeclarehorizontalshading{beamer@frametitleshade}{\paperheight}{%
+    color(0pt)=(beamerstructure);
+    color(\paperwidth)=(black)}
 
-\pgfdeclarehorizontalshading{beamer@frametitleshade}{\paperheight}{%
-  color(0pt)=(beamerstructure);
-  color(\paperwidth)=(black)}
-
-\pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
-  color(0pt)=(averagebackgroundcolor);
-  color(4pt)=(black!50!averagebackgroundcolor)}
+  \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
+    color(0pt)=(bg);
+    color(4pt)=(black!50!bg)}
+}
 
 \def\beamer@inserttopshade{%
   \vskip-0.2pt

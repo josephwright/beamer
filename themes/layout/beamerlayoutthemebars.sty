@@ -17,41 +17,35 @@
 
 \mode<presentation>
 
-\beamertemplatelightsectionheads
-\beamertemplatecircleminiframeinverted
+\setbeamercolor{section in head/foot}{use=structure,bg=structure.fg,fg=white}
+\setbeamercolor{subsection in head/foot}{use=structure,bg=structure.fg!75!bg,fg=white}
+\setbeamercolor{author in head/foot}{use=structure,bg=structure.fg!75!bg,fg=white}
+\setbeamercolor{title in head/foot}{use=structure,bg=structure.fg,fg=white}
 
                                 % Head
 \useheadtemplate{%
   \vbox{%
-    \colouredline{beamerstructure}{\hskip-0.3cm\insertnavigation{\paperwidth}\hskip-0.3cm}%
-    \tinycolouredline{beamerstructure!75!white}{\color{white}\usebeamerfont{subsection in head/foot}\insertsubsection\hfill}}%
+    \beamercolorbox[wd=\paperwidth]%
+      {section in head/foot}{\vskip2pt\insertnavigation{\paperwidth}\vskip2pt}%
+    \beamercolorbox[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=.3cm,rightskip=.3cm plus1fil]%
+      {subsection in head/foot}{\usebeamerfont{subsection in head/foot}\insertsubsection}%
+  }%
 }
 
-
 \ifbeamer@theme@footline
-
                                 % Footline
-\usefoottemplate{%
-  \vbox{%
-    \hbox to\textwidth{\hfill%
-      \setbox\beamer@logobox=\hbox{\raise 2pt\hbox{\insertlogo}}\ht\beamer@logobox=0pt%
-      \box\beamer@logobox\hskip-\Gm@rmargin\hskip0.1cm}\vskip2pt%
-    \tinycolouredline{beamerstructure!75}{%
-      \color{white}%
-      {\usebeamerfont{author in head/foot}\insertshortauthor}\hfill%
-      \ifx\insertlogo\@empty%
+  \usefoottemplate{%
+    \vbox{%
+      \beamercolorbox[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=.3cm,rightskip=.3cm plus1fil]%
+      {author in head/foot}{%
+        \leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
+        \hfill%
         {\usebeamerfont{institute in head/foot}\insertshortinstitute}%
-      \fi}%
-    \tinycolouredline{beamerstructure}{%
-      \color{white}%
-      {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill\lower1pt\hbox{\insertnavigationsymbols}%
-  }}}
-
-                                % Color of navigation symbols
-\def\beamernavigationcolorlight{beamerstructure!65!white}
-\def\beamernavigationcolorstrong{beamerstructure!50!white}
-
-\userightsidebartemplate{0cm}{}
+      }%
+      \beamercolorbox[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=.3cm,rightskip=.3cm plus1fil]%
+      {title in head/foot}{{\usebeamerfont{title in head/foot}\insertshorttitle}}%
+      \vskip1ex
+    }}
 
 \fi
 

@@ -15,86 +15,74 @@
 
 \mode<presentation>
 
+\setbeamercolor{section in head/foot}{fg=white,bg=black}
+\setbeamercolor{subsection in head/foot}{use=structure,bg=structure.fg!50!black,fg=white}
+\setbeamercolor{frametitle}{use=structure,fg=white,bg=structure.fg}
+
 \beamer@compresstrue
 
 \AtBeginDocument{
   {
     \usebeamerfont*{headline}
+    \colorlet{global.bg}{bg}
 
     \ifbeamer@sb@subsection
-      \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
-        color(0ex)=(averagebackgroundcolor);%
-        color(1ex)=(beamerstructure!50!black);%
-        color(3.25ex)=(beamerstructure!50!black);%
-        color(4.25ex)=(black);%
-        color(9ex)=(black)%
-      }
-      \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
-        color(0ex)=(beamerstructure);%
-        color(1ex)=(beamerstructure);%
-        color(2ex)=(beamerstructure!25!black)
-      }
+      \usebeamercolor{subsection in head/foot}
+      \colorlet{ssec.bg}{bg}
+      \usebeamercolor{section in head/foot}
+       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
+         color(0ex)=(global.bg);%
+         color(1ex)=(ssec.bg);%
+         color(3.25ex)=(ssec.bg);%
+         color(4.25ex)=(bg);%
+         color(9.75ex)=(bg)%
+       }
+       \usebeamercolor{frametitle}
+       \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+         color(0ex)=(bg);%
+         color(1ex)=(bg);%
+         color(2ex)=(ssec.bg)
+       }
     \else
+      \usebeamercolor{section in head/foot}
+      \colorlet{sec.bg}{bg}
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
-        color(0ex)=(averagebackgroundcolor);%
-        color(1ex)=(black);%
-        color(6.25ex)=(black)%
-      }
-      \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
-        color(0ex)=(beamerstructure);%
-        color(1ex)=(beamerstructure);%
-        color(2ex)=(black)
-      }
-    \fi  
+         color(0ex)=(global.bg);%
+         color(1ex)=(bg);%
+         color(7ex)=(bg)%
+       }
+     \usebeamercolor{frametitle}
+       \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
+         color(0ex)=(bg);%
+         color(1ex)=(bg);%
+         color(2ex)=(sec.bg)
+       }
+     \fi  
+
     \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
-      color(0ex)=(averagebackgroundcolor);%
-      color(1ex)=(beamerstructure)
+      color(0ex)=(global.bg);%
+      color(1ex)=(bg)
     }
   }
 }
-
-\usesectionheadtemplate
-  {\hfill\color{white}\insertsectionhead}
-  {\hfill\color{black!50}\insertsectionhead}
-
-\useminislidetemplate
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{white}
-      \pgfcircle[fillstroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{white}
-      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{black!50!averagebackgroundcolor}
-      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {.14cm}{.03cm}
 
                                 % Head
 \useheadtemplate{%
   \vbox{%
     \beamerline{\pgfuseshading{beamer@barshade}}%
     \ifbeamer@sb@subsection%
-      \vskip-9ex%
+      \vskip-9.75ex%
     \else%
-      \vskip-6.25ex%
+      \vskip-7ex%
     \fi%
     {\setbox\beamer@linebox=\hbox
       to\textwidth{\hskip-\Gm@lmargin\insertnavigation{\paperwidth}\hskip-\Gm@rmargin}%
     \ht\beamer@linebox=2.25ex%
-    \dp\beamer@linebox=3ex%
+    \dp\beamer@linebox=3.75ex%
     \box\beamer@linebox}%
     \ifbeamer@sb@subsection%
       \beamer@fixedline{%
-          \color{white}{\usebeamerfont{subsection in
+          \usebeamercolor[fg]{subsection in head/foot}{\usebeamerfont{subsection in
               head/foot}\insertsubsection\hfil}%
         }%
     \fi%
@@ -109,16 +97,17 @@
   \beamerline{\pgfuseshading{beamer@aboveframetitle}}%
   \vskip-.5ex%
   \nointerlineskip%
-  \beamer@colouredline{beamerstructure}{%
+  \usebeamercolor{frametitle}%
+  \beamer@colouredline{bg}{%
     \begin{minipage}[b]{\paperwidth}%
       \usebeamerfont*{frametitle}%
       \vbox{}\vskip-.5ex%
       \leftskip0.3cm%
-      \rightskip0.3cm plus1fil\leavevmode\color{white}\insertframetitle%
+      \rightskip0.3cm plus1fil\leavevmode\color{fg}\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%
       \else
-        \par{\usebeamerfont*{framesubtitle}{\insertframesubtitle}\strut\par}%
+        \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
       \fi%
       \nointerlineskip
       \vbox{}%

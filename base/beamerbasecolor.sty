@@ -9,49 +9,197 @@
 
 \mode<presentation>
 
-%
-% Average background color management
-%
-\def\beamersetaveragebackground#1{%
-  \colorlet{averagebackgroundcolor}{#1}}
 
-\beamersetaveragebackground{white}
 
-\mode
-<article>
-{
-  \def\beamersetaveragebackground#1{}
+
+%
+% Color theme stuff
+%
+
+\define@key{beamerthc}{fg}
+  {\expandafter\def\csname beamer@thcfg@\beamer@temp\endcsname{\def\beamer@thc@fg{#1}}}
+\define@key{beamerthc}{fg*}
+  {\expandafter\def\csname beamer@thcfgs@\beamer@temp\endcsname{\def\beamer@thc@fgs{#1}}}
+\define@key{beamerthc}{bg}
+  {\expandafter\def\csname beamer@thcbg@\beamer@temp\endcsname{\def\beamer@thc@bg{#1}}}
+\define@key{beamerthc}{bg*}
+  {\expandafter\def\csname beamer@thcbgs@\beamer@temp\endcsname{\def\beamer@thc@bgs{#1}}}
+\define@key{beamerthc}{parent}
+  {\expandafter\def\csname beamer@thcinherits@\beamer@temp\endcsname{%
+    \@for\@temp:={#1}\do{\expandafter\beamer@thc@docolor\expandafter{\@temp}}}}
+\define@key{beamerthc}{use}
+  {\expandafter\def\csname beamer@thcuse@\beamer@temp\endcsname{%
+    \@for\@temp:={#1}\do{\expandafter\beamer@thc@usecolor\expandafter{\@temp}}}}
+
+\def\beamer@thc@prepcolor{% 
+  \let\beamer@thc@fg=\@empty%
+  \let\beamer@thc@fgs=\@empty%
+  \let\beamer@thc@bg=\@empty%
+  \let\beamer@thc@bgs=\@empty%
+}
+
+\def\beamer@thc@docolor#1{%
+  \csname beamer@thcuse@#1\endcsname%
+  \csname beamer@thcinherits@#1\endcsname%
+  \csname beamer@thcfg@#1\endcsname%
+  \csname beamer@thcfgs@#1\endcsname%
+  \csname beamer@thcbg@#1\endcsname%
+  \csname beamer@thcbgs@#1\endcsname%
+}
+
+\def\beamer@thc@usecolor#1{%
+  {%
+    \def\beamer@thc@fg{fg}%
+    \def\beamer@thc@bg{bg}%
+    \def\beamer@thc@fgs{fg*}%
+    \def\beamer@thc@bgs{bg*}%
+    \beamer@thc@docolor{#1}%
+    \global\let\beamer@thc@gfg\beamer@thc@fg%
+    \global\let\beamer@thc@gbg\beamer@thc@bg%
+    \global\let\beamer@thc@gfgs\beamer@thc@fgs%
+    \global\let\beamer@thc@gbgs\beamer@thc@bgs%
+  }%
+  \colorlet{#1.fg}{\beamer@thc@gfg}%
+  \colorlet{#1.bg}{\beamer@thc@gbg}%
+  \colorlet{#1.fg*}{\beamer@thc@gfgs}%
+  \colorlet{#1.bg*}{\beamer@thc@gbgs}%  
+}
+
+\def\setbeamercolor{\@ifstar{\beamer@clearbeamercolor}{\beamer@setbeamercolor}}
   
-  \ifbeamer@articlexcolor
-    \colorlet{averagebackgroundcolor}{white}
-  \fi
+\newcommand\beamer@clearbeamercolor[2]{%
+  \def\beamer@temp{#1}%
+  \expandafter\let\csname beamer@thcfg@#1\endcsname=\relax%
+  \expandafter\let\csname beamer@thcfgs@#1\endcsname=\relax%
+  \expandafter\let\csname beamer@thcbg@#1\endcsname=\relax%
+  \expandafter\let\csname beamer@thcbgs@#1\endcsname=\relax%
+  \setkeys{beamerthc}{use={},parent={}}%
+  \setkeys{beamerthc}{#2}%
+}
+\newcommand\beamer@setbeamercolor[2]{%
+  \def\beamer@temp{#1}%
+  \setkeys{beamerthc}{#2}%
+}
+
+\newcommand\ifbeamercolorempty[2][]{%
+  \beamer@thc@prepcolor%
+  \beamer@thc@docolor{#2}%
+  \expandafter\ifx\csname beamer@thc@#1\endcsname\@empty%
+    \expandafter\@firstoftwo%
+  \else%
+    \expandafter\@secondoftwo%
+  \fi%
+}
+
+\def\usebeamercolor{\@ifstar{\beamer@usebeamercolor[fg]{normal text}\beamer@usebeamercolor}{\beamer@usebeamercolor}}
+\newcommand\beamer@usebeamercolor[2][]{%
+  \beamer@thc@prepcolor%
+  \beamer@thc@docolor{#2}%
+  \ifx\beamer@thc@fg\@empty%
+    \@namelet{\string\color@ temp@fg}{\string\color@ fg}%
+  \else%
+    \colorlet{temp@fg}{\csname beamer@thc@fg\endcsname}%
+  \fi%
+  \ifx\beamer@thc@fgs\@empty%
+    \@namelet{\string\color@ temp@fg*}{\string\color@ fg*}%
+  \else%
+    \colorlet{temp@fg*}{\csname beamer@thc@fgs\endcsname}%
+  \fi%
+  \ifx\beamer@thc@bg\@empty%
+    \@namelet{\string\color@ temp@bg}{\string\color@ bg}%
+  \else%
+    \colorlet{temp@bg}{\csname beamer@thc@bg\endcsname}%
+  \fi%
+  \ifx\beamer@thc@bgs\@empty%
+    \@namelet{\string\color@ temp@bg*}{\string\color@ bg*}%
+  \else%
+    \colorlet{temp@bg*}{\csname beamer@thc@bgs\endcsname}%
+  \fi%
+  \@namelet{\string\color@ parent.fg}{\string\color@ fg}%  
+  \@namelet{\string\color@ parent.fg*}{\string\color@ fg*}%  
+  \@namelet{\string\color@ parent.bg}{\string\color@ bg}%
+  \@namelet{\string\color@ parent.bg*}{\string\color@ bg*}%
+  \@namelet{\string\color@ fg}{\string\color@ temp@fg}%  
+  \@namelet{\string\color@ fg*}{\string\color@ temp@fg*}%  
+  \@namelet{\string\color@ bg}{\string\color@ temp@bg}%
+  \@namelet{\string\color@ bg*}{\string\color@ temp@bg*}%
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\@empty%
+  \else%
+    \color{#1}%
+  \fi%
+}
+
+\colorlet{fg}{black}
+\colorlet{fg*}{black}
+\colorlet{bg}{white}
+\colorlet{bg*}{white}
+
+
+
+%
+% Colored boxes
+%
+
+\define@key{beamercolbox}{wd}{\def\beamer@colbox@wd{#1}}
+\define@key{beamercolbox}{ht}{\def\beamer@colbox@ht{#1}}
+\define@key{beamercolbox}{dp}{\def\beamer@colbox@dp{#1}}
+\define@key{beamercolbox}{leftskip}{\def\beamer@colbox@ls{#1}}
+\define@key{beamercolbox}{rightskip}{\def\beamer@colbox@rs{#1}}
+\define@key{beamercolbox}{left}[]{\def\beamer@colbox@ls{0pt}\def\beamer@colbox@rs{0pt plus1fill}}
+\define@key{beamercolbox}{center}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt plus1fill}}
+\define@key{beamercolbox}{right}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt}}
+\define@key{beamercolbox}{sep}{\def\beamer@colbox@sep{#1}}
+\define@key{beamercolbox}{colsep}{\def\beamer@colbox@colsep{#1}}
+
+\newcommand\beamercolorbox[3][]{%
+  {%
+    \setkeys{beamercolbox}{wd=\textwidth,ht={},dp={},leftskip=0pt,rightskip=0pt plus1fil,sep=0pt,colsep=0pt}
+    \setkeys{beamercolbox}{#1}%
+    \ifbeamercolorempty[bg]{#2}{\@tempswafalse}{\@tempswatrue}%
+    \usebeamercolor{#2}%
+    \hsize=\beamer@colbox@wd%
+    \setbox\beamer@tempbox=\hbox{\vbox{%
+      \leftskip=\beamer@colbox@ls%
+      \advance\leftskip by\beamer@colbox@sep%
+      \rightskip=\beamer@colbox@rs%
+      \advance\rightskip by\beamer@colbox@sep%
+      \color{fg}%
+      \if@tempswa%
+        \advance\leftskip by\beamer@colbox@colsep%
+        \advance\rightskip by\beamer@colbox@colsep%
+        \ifdim\beamer@colbox@colsep>0pt\vskip\beamer@colbox@colsep\fi%
+      \fi%
+      \ifdim\beamer@colbox@sep>0pt\vskip\beamer@colbox@sep\fi%
+      #3%
+      \ifdim\beamer@colbox@sep>0pt\vskip\beamer@colbox@sep\fi%
+      \if@tempswa\ifdim\beamer@colbox@colsep>0pt\vskip\beamer@colbox@colsep\fi\fi%
+    }}%
+    \wd\beamer@tempbox=\beamer@colbox@wd%
+    \@tempdima=\wd\beamer@tempbox%
+    \ifx\beamer@colbox@ht\@empty%
+    \else%
+      \ht\beamer@tempbox=\beamer@colbox@ht%
+    \fi%
+    \ifx\beamer@colbox@dp\@empty%
+    \else%
+      \dp\beamer@tempbox=\beamer@colbox@dp%
+    \fi%
+    \if@tempswa\setbox\beamer@tempbox=\vbox{\fboxsep=0pt\colorbox{bg}{\hbox{\box\beamer@tempbox}}}\fi%
+    \ifdim\@tempdima>\textwidth%
+      \setbox\beamer@tempbox=\hbox to\textwidth{\hss\box\beamer@tempbox\hss}%
+    \fi%
+    \box\beamer@tempbox%
+  }%
 }
 
 
 
 %
-% This needs to be managed differently in the future...
+% Install these colors at the start of the document
 %
-\colorlet{alert}{red!95!black}
 
-\colorlet{beameralert}{alert}
-\colorlet{beamerexample}{green!50!black}
-\colorlet{beamerstructure}{structure}
-
-\mode
-<article>
-{
-  \ifbeamer@articlexcolor
-    \definecolor{alert}{rgb}{1,0,0}
-
-    \colorlet{beameralert}{alert}
-    \colorlet{beamerexample}{green!50!black}
-    \colorlet{beamerstructure}{black}
-    \colorlet{structure}{beamerstructure}
-  \fi
-    
-}
-
+\AtBeginDocument{\usebeamercolor{normal text}\color{fg}}%
 
 
 %
@@ -92,6 +240,47 @@
 \else
   \def\beamer@postscriptcolorhack{}%
 \fi
+
+
+
+
+% compatibility:
+
+\AtBeginDocument{
+  \colorlet{averagebackgroundcolor}{bg}
+  \def\beamersetaveragebackground#1{\setbeamercolor{bg=#1}}
+}
+
+\mode
+<article>
+{
+  \def\beamersetaveragebackground#1{}
+  
+  \ifbeamer@articlexcolor
+    \colorlet{averagebackgroundcolor}{white}
+  \fi
+}
+
+\colorlet{alert}{red!95!black}
+
+\colorlet{beameralert}{alert}
+\colorlet{beamerexample}{green!50!black}
+\colorlet{beamerstructure}{structure}
+
+\mode
+<article>
+{
+  \ifbeamer@articlexcolor
+    \definecolor{alert}{rgb}{1,0,0}
+
+    \colorlet{beameralert}{alert}
+    \colorlet{beamerexample}{green!50!black}
+    \colorlet{beamerstructure}{black}
+    \colorlet{structure}{beamerstructure}
+  \fi
+    
+}
+
 
 \mode
 <all>

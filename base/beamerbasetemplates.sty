@@ -26,17 +26,19 @@
     \vbox{}
     \vfill
     \begin{centering}
-      {\usebeamerfont{title}\structure{\inserttitle}\par}%
-      \ifx\insertsubtitle\@empty%
-      \else%
-        \vskip0.25em%
-        {\usebeamerfont{subtitle}\structure{\insertsubtitle}\par}%
-      \fi%
+      \beamercolorbox[sep=8pt,center]{title}{%
+        \usebeamerfont{title}\inserttitle\par%
+        \ifx\insertsubtitle\@empty%
+        \else%
+          \vskip0.25em%
+          {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+        \fi%     
+        }%
       \vskip1em\par
-      {\usebeamerfont{author}\insertauthor\par}\vskip1em
-      {\usebeamerfont{institute}\insertinstitute\par}\vskip1em
-      {\usebeamerfont{date}\insertdate\par}\vskip1.5em
-      \inserttitlegraphic\par
+      \beamercolorbox[sep=8pt,center]{author}{\usebeamerfont{author}\insertauthor\par}
+      \beamercolorbox[sep=8pt,center]{institute}{\usebeamerfont{institute}\insertinstitute\par}
+      \beamercolorbox[sep=8pt,center]{date}{\usebeamerfont{date}\insertdate\par}\vskip0.5em
+      {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
     \end{centering}
     \vfill
   }
@@ -46,10 +48,9 @@
 \newcommand{\beamertemplatedefaultpartpage}{
   \usepartpagetemplate{
     \begin{centering}
-      \usebeamerfont{partpage}%
-      \structure{\partname~\insertromanpartnumber}
+      {\usebeamerfont{partname}\usebeamercolor[fg]{partname}\partname~\insertromanpartnumber}
       \vskip1em\par
-      {\usebeamerfont{partname}\insertpart\par}
+      \beamercolorbox[sep=8pt,center]{part title}{\usebeamerfont{part title}\insertpart\par}
     \end{centering}
   }
 } 
@@ -63,27 +64,25 @@
 
 \newcommand{\beamertemplatedefaultframetitle}[1][left]{%
   \useframetitletemplate{%
-    \vskip0.25em%
-    \begin{beamer@fte#1}%
-      {\usebeamerfont{frametitle}\structure{\insertframetitle}\par}%
+    \@tempdima=\textwidth%
+    \advance\@tempdima by\beamer@leftmargin%
+    \advance\@tempdima by\beamer@rightmargin%
+    \beamercolorbox[sep=0.3cm,#1,wd=\the\@tempdima]{frametitle}{%
+      \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
+      {\usebeamerfont{frametitle}\insertframetitle\par}%
       {%
         \ifx\insertsubtitle\@empty%
         \else%
-        {\usebeamerfont{framesubtitle}\structure{\insertframesubtitle}\par}%
+        {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}%
         \fi
       }%
-    \end{beamer@fte#1}%
+      \if@tempswa\else\vskip-.3cm\fi%
+    }
   }
 }
 \@onlypreamble\beamertemplatedefaultframetitle
 
-\newenvironment{beamer@ftecenter}{\begin{centering}}{\end{centering}}
-\newenvironment{beamer@fteleft}{%
-  \leftskip-\beamer@leftmargin\advance\leftskip by0.3cm%
-  \rightskip-\beamer@rightmargin plus1fil\advance\rightskip by0.3cm\leavevmode}{}
-\newenvironment{beamer@fteright}{%
-  \vskip0.5cm\leftskip1cm plus1fill%
-  \rightskip1cm\leavevmode}{}
+\def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip by1.7cm}
 
 
 
@@ -113,156 +112,129 @@
   \usesidebarbackgroundtemplate[#1]{\pgfuseshading{beamer@#1sidebar}}}
 
 
+
+%
+% Spheres
+%
+
+\pgfdeclareradialshading[bg,parent.bg]{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
+{%
+  color(0cm)=(bg!35!white);
+  color(0.44ex)=(bg!75!white);
+  color(0.88ex)=(bg!70!black!90!parent.bg);
+  color(1.2ex)=(bg!50!black!90!parent.bg);
+  color(1.3ex)=(parent.bg)}
+
+\pgfdeclareradialshading[bg,parent.bg]{bigsphere}{\pgfpoint{-0.1849315ex}{.2260273ex}}%
+{%
+  color(0cm)=(bg!15);
+  color(0.1643835ex)=(bg!75);
+  color(0.3287671ex)=(bg!70!black);
+  color(0.4520547ex)=(bg!50!black);
+  color(0.53ex)=(parent.bg)}
+
+\pgfdeclareradialshading[bg,parent.bg]{smallsphere}{\pgfpoint{-0.1479452ex}{0.18287671ex}}%
+{%
+  color(0cm)=(bg!15); 
+  color(0.1315068ex)=(bg!75);
+  color(0.2630136ex)=(bg!70!black);
+  color(0.36164383ex)=(bg!50!black);
+  color(0.427ex)=(parent.bg)}
+
+\def\beamer@usesphere#1#2{%
+  \hbox{\usebeamercolor{#1}\normalsize\pgfuseshading{#2}}}
+
+
 %
 % Table of contents templates
 %
 
 \newcommand{\beamertemplatedefaulttoc}{
-  \usetemplatetocsection[20!averagebackgroundcolor]
-    {\structure{\inserttocsection\par}}
-
-  \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=1.5em\color{black}\inserttocsubsection\par}
+  \usetemplatetocsection[20!parent.bg]{\inserttocsection\par}
+  \usetemplatetocsubsection[20!parent.bg]{\leavevmode\leftskip=1.5em\inserttocsubsection\par}
 }
 \@onlypreamble\beamertemplatedefaulttoc
 
-
 \newcommand{\beamertemplatenumberedsubsectiontoc}{
-  \usetemplatetocsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=2em\color{beamerstructure}\inserttocsection}
-
-  \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=2em\color{black}\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
+  \usetemplatetocsection[20!parent.bg]{\leavevmode\leftskip=2em\inserttocsection}
+  \usetemplatetocsubsection[20!parent.bg]
+    {\leavevmode\leftskip=2em\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
 }
+\@onlypreamble\beamertemplatenumberedsubsectiontoc  
 
 \newcommand{\beamertemplatenumberedsectiontoc}{
-  \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\color{beamerstructure}\inserttocsectionnumber. \inserttocsection\par}
-
-  \usetemplatetocsubsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=2.5em\color{black}\inserttocsubsection\par}
+  \usetemplatetocsection[20!parent.bg]{\leavevmode\inserttocsectionnumber. \inserttocsection\par}
+  \usetemplatetocsubsection[20!parent.bg]{\leavevmode\leftskip=2.5em\inserttocsubsection\par}
 }
+\@onlypreamble\beamertemplatenumberedsectiontoc
 
 \newcommand{\beamertemplatenumberedcirclesectiontoc}{
-  \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=2ex\color{beamerstructure}%
+  \usetemplatetocsection[20!parent.bg]
+  {\leavevmode\leftskip=2ex%
     \llap{%
       \usebeamerfont*{section number projected}%
+      \usebeamercolor{section number projected}%
       \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-        \color{beamerstructure!50!averagebackgroundcolor}
+        \color{bg}
         \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-        \pgfbox[center,base]{\color{white}\inserttocsectionnumber}
+        \pgfbox[center,base]{\color{fg}\inserttocsectionnumber}
       \end{pgfpicture}\kern1.25ex%
     }%
-    \inserttocsection\par}
-  
-  \usetemplatetocsubsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=2em\color{black}\inserttocsubsection\par}
+    \inserttocsection\par}  
+  \usetemplatetocsubsection[20!parent.bg]
+  {\leavevmode\leftskip=2em\inserttocsubsection\par}
 }
+\@onlypreamble\beamertemplatenumberedcirclesectiontoc
 
 \newcommand{\beamertemplatenumberedsquaresectiontoc}{
-  \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=1.75ex\color{beamerstructure}%
+  \usetemplatetocsection[20!parent.bg]
+  {\leavevmode\leftskip=1.75ex%
     \llap{%
       \usebeamerfont*{section number projected}%
-      \color{beamerstructure!75!averagebackgroundcolor}%
+      \usebeamercolor[bg]{section number projected}%
       \vrule width2.25ex height1.85ex depth.4ex%
       \hskip-2.25ex%
-      \hbox to2.25ex{\hfil\color{white}\inserttocsectionnumber\hfil}}%
+      \hbox to2.25ex{\hfil\color{fg}\inserttocsectionnumber\hfil}}%
     \kern1.25ex\inserttocsection\par}
-
-  \usetemplatetocsubsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=5ex\color{black}\llap{\color{beamerstructure!75!averagebackgroundcolor}%
+  \usetemplatetocsubsection[20!parent.bg]
+  {\leavevmode\leftskip=5ex\llap{%
+      \usebeamercolor[bg]{subsection number projected}%
       \vrule width1ex height1ex\kern1ex}\inserttocsubsection\par}
 }
-
+\@onlypreamble\beamertemplatenumberedsquaresectiontoc
 
 \newcommand{\beamertemplatenumberedballsectiontoc}{
-  \AtBeginDocument{
   \setbeamerfont{section number projected}{size=\scriptsize}
-  \normalsize
-  
-  \pgfdeclareradialshading{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
-  {color(0cm)=(beamerstructure!35!white);
-    color(0.44ex)=(beamerstructure!75!white);
-    color(0.88ex)=(beamerstructure!70!black!90!averagebackgroundcolor);
-    color(1.2ex)=(beamerstructure!50!black!90!averagebackgroundcolor);
-    color(1.3ex)=(averagebackgroundcolor)}
 
-  \begin{colormixin}{20!averagebackgroundcolor}
-  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
-  {color(0cm)=(beamerstructure!35!white);
-    color(0.44ex)=(beamerstructure!75!white);
-    color(0.88ex)=(beamerstructure!70!black!90!averagebackgroundcolor);
-    color(1.2ex)=(beamerstructure!50!black!90!averagebackgroundcolor);
-    color(1.3ex)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{tocsphere.!20opaque}{tocsphereshaded}
-  \pgfaliasshading{tocsphere.!20!averagebackgroundcolor}{tocsphereshaded}
-
-  \begin{colormixin}{15!averagebackgroundcolor}
-  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
-  {color(0cm)=(beamerstructure!35!white);
-    color(0.44ex)=(beamerstructure!75!white);
-    color(0.88ex)=(beamerstructure!70!black!90!averagebackgroundcolor);
-    color(1.2ex)=(beamerstructure!50!black!90!averagebackgroundcolor);
-    color(1.3ex)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{tocsphere.!15opaque}{tocsphereshaded}
-
-  \begin{colormixin}{10!averagebackgroundcolor}
-  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
-  {color(0cm)=(beamerstructure!35!white);
-    color(0.44ex)=(beamerstructure!75!white);
-    color(0.88ex)=(beamerstructure!70!black!90!averagebackgroundcolor);
-    color(1.2ex)=(beamerstructure!50!black!90!averagebackgroundcolor);
-    color(1.3ex)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{tocsphere.!10opaque}{tocsphereshaded}
-
-  \begin{colormixin}{5!averagebackgroundcolor}
-  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
-  {color(0cm)=(beamerstructure!35!white);
-    color(0.44ex)=(beamerstructure!75!white);
-    color(0.88ex)=(beamerstructure!70!black!90!averagebackgroundcolor);
-    color(1.2ex)=(beamerstructure!50!black!90!averagebackgroundcolor);
-    color(1.3ex)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{tocsphere.!5opaque}{tocsphereshaded}
-
-  \begin{colormixin}{2!averagebackgroundcolor}
-  \pgfdeclareradialshading{tocsphereshaded}{\pgfpoint{-0.5ex}{0.6ex}}%
-  {color(0cm)=(beamerstructure!35!white);
-    color(0.44ex)=(beamerstructure!75!white);
-    color(0.88ex)=(beamerstructure!70!black!90!averagebackgroundcolor);
-    color(1.2ex)=(beamerstructure!50!black!90!averagebackgroundcolor);
-    color(1.3ex)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \pgfaliasshading{tocsphere.!2opaque}{tocsphereshaded}
-  }
-  
-  \usetemplatetocsection[20!averagebackgroundcolor]
-  {\leavevmode\leftskip=2.75ex\color{beamerstructure}%
+  \usetemplatetocsection[20!parent.bg]
+  {\leavevmode\leftskip=2.75ex%
     \llap{%
+      \colorlet{parent.bg}{bg}%
+      \usebeamercolor{section number projected}%
       \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
-        \pgfbox[center,center]{\pgfuseshading{tocsphere}}
-        \pgfbox[center,center]{\color{white!90!beamerstructure}%
+        \pgfbox[center,center]{\normalfont\pgfuseshading{tocsphere}}
+        \pgfbox[center,center]{\color{fg!90!bg}%
           \usebeamerfont*{section number projected}%
           \inserttocsectionnumber}
       \end{pgfpicture}%
       \kern1.25ex}%
     \inserttocsection\par}
   
-  \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=5ex\color{black}\llap{\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\kern1ex}\inserttocsubsection\par}
+  \usetemplatetocsubsection[20!parent.bg]
+  {%
+    \leavevmode\leftskip=5ex%
+    \llap{\raise0.1ex\beamer@usesphere{subsection number projected}{bigsphere}\kern1ex}%
+    \inserttocsubsection\par%
+  }
 }
 
 \newcommand{\beamertemplateballtoc}{
-  \usetemplatetocsection[20!averagebackgroundcolor]
-    {\leavevmode\color{beamerstructure}\raise0.1ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}\ \inserttocsection\par}
+  \usetemplatetocsection[20!parent.bg]
+  {\leavevmode\raise0.1ex\beamer@usesphere{section number projected}{bigsphere}\kern1.25ex\inserttocsection\par}
 
-  \usetemplatetocsubsection[20!averagebackgroundcolor]
-    {\leavevmode\leftskip=1.5em\color{black}\raise0.2ex\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}\ \inserttocsubsection\par}
+  \usetemplatetocsubsection[20!parent.bg]
+  {\leavevmode\leftskip=1.5em\raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}%
+    \kern1ex\inserttocsubsection\par}
 }
 
 
@@ -271,78 +243,80 @@
 %
 
 \newcommand{\beamertemplatedotitem}{%
-  \useitemizeitemtemplate{\small\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
-  \usesubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
-  \usesubsubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\color{beamerstructure}\textbullet}}
+  \useitemizeitemtemplate{\small\raise0.5pt\hbox{\textbullet}}
+  \usesubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\textbullet}}
+  \usesubsubitemizeitemtemplate{\footnotesize\raise0.5pt\hbox{\textbullet}}
   }
 
 \newcommand{\beamertemplateballitem}{%
-  \useitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}}
-  \usesubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}}
-  \usesubsubitemizeitemtemplate{\raise0.2pt\hbox{\pgfuseshading{bmb@cs\bmb@scheme smallsphere}}}
+  \useitemizeitemtemplate{\raise0.2pt\beamer@usesphere{item projected}{bigsphere}}
+  \usesubitemizeitemtemplate{\raise0.2pt\beamer@usesphere{subitem projected}{smallsphere}}%
+  \usesubsubitemizeitemtemplate{\raise0.2pt\beamer@usesphere{subsubitem projected}{smallsphere}}%
 
   \useenumerateitemtemplate{
-    \color{beamerstructure}%
     \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+      \colorlet{parent.bg}{bg}
+      \usebeamercolor{item projected}
       \begin{pgfmagnify}{1.75}{1.75}
-        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
       \end{pgfmagnify}
       \pgfputat{\pgfpoint{0pt}{0.5pt}}
       {%
         \pgfbox[center,center]{%
-          \color{white}%
+          \color{fg}%
           \usebeamerfont*{item projected}%
           \insertenumlabel}}
     \end{pgfpicture}}
   \usesubenumerateitemtemplate{%
-    \color{beamerstructure}%
     \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+      \colorlet{parent.bg}{bg}
+      \usebeamercolor{subitem projected}
       \begin{pgfmagnify}{1.4}{1.4}
-        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
       \end{pgfmagnify}
       \pgfbox[center,center]{%
-          \color{white}%
+          \color{fg}%
           \usebeamerfont*{item projected}%
           \insertsubenumlabel}
     \end{pgfpicture}}
   \usesubsubenumerateitemtemplate{%
-    \color{beamerstructure}%
     \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+      \colorlet{parent.bg}{bg}
+      \usebeamercolor{subsubitem projected}
       \begin{pgfmagnify}{1.4}{1.4}
-        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
       \end{pgfmagnify}
       \pgfbox[center,center]{%
-          \color{white}%
+          \color{fg}%
           \usebeamerfont*{item projected}%
           \insertsubsubenumlabel}
     \end{pgfpicture}}
   \useenumerateitemminitemplate{%
-    \color{beamerstructure}%
     \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+      \colorlet{parent.bg}{bg}
+      \usebeamercolor{item projected}
       \begin{pgfmagnify}{1.75}{1.75}
-        \pgfbox[center,center]{\pgfuseshading{bmb@cs\bmb@scheme bigsphere}}
+        \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
       \end{pgfmagnify}
       \pgfputat{\pgfpoint{0pt}{0.5pt}}
         {\pgfbox[center,center]{%
-          \color{white}%
+          \color{fg}%
           \usebeamerfont*{item projected}%
           \insertenumlabel}}
     \end{pgfpicture}}
-
-  \AtBeginDocument{\beamertemplatesetupshadings}
 }
 \@onlypreamble\beamertemplateballitem
 
 \newcommand{\beamertemplatetriangleitem}{%
-  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
-  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
-  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
+  \useitemizeitemtemplate{\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}
+  \usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{$\blacktriangleright$}}
+  \usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{$\blacktriangleright$}}
   }
 
 \newcommand{\beamertemplatesquareitem}{%
-  \useitemizeitemtemplate{\hbox{\color{beamerstructure}\vrule width 1ex height 1ex}}
-  \usesubitemizeitemtemplate{\small\hbox{\color{beamerstructure!75!averagebackgroundcolor}\vrule width 1ex height 1ex}}
-  \usesubsubitemizeitemtemplate{\small\hbox{\color{beamerstructure!50!averagebackgroundcolor}\vrule width 1ex height 1ex}}
+  \useitemizeitemtemplate{\hbox{\vrule width 1ex height 1ex}}
+  \usesubitemizeitemtemplate{\small\hbox{\vrule width 1ex height 1ex}}
+  \usesubsubitemizeitemtemplate{\small\hbox{\vrule width 1ex height 1ex}}
   }
 
 
@@ -351,9 +325,9 @@
 %
 
 \newcommand{\beamertemplateenumeratealpha}{
-  \useenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.}
-  \usesubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel}
-  \usesubsubenumerateitemtemplate{\color{beamerstructure}\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+  \useenumerateitemtemplate{\insertenumlabel.}
+  \usesubenumerateitemtemplate{\insertenumlabel.\insertsubenumlabel}
+  \usesubsubenumerateitemtemplate{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
 }
 
   
@@ -363,44 +337,48 @@
   \useenumerateitemtemplate{%
     \hbox{%
       \usebeamerfont*{item projected}%
-      \color{beamerstructure}\vrule width2.25ex height1.85ex depth.4ex%
+      \usebeamercolor[bg]{item projected}%
+      \vrule width2.25ex height1.85ex depth.4ex%
       \hskip-2.25ex%
       \hbox to2.25ex{%
         \hfil%
-        \color{white}\insertenumlabel%
+        \color{fg}\insertenumlabel%
         \hfil}%
     }%
   }
   \usesubenumerateitemtemplate{%
     \hbox{%
       \usebeamerfont*{item projected}%
-      \color{beamerstructure!75!averagebackgroundcolor}\vrule width2.25ex height1.85ex depth.4ex%
+      \usebeamercolor[bg]{subitem projected}%
+      \vrule width2.25ex height1.85ex depth.4ex%
       \hskip-2.25ex%
       \hbox to2.25ex{%
         \hfil%
-        \color{white}\insertsubenumlabel%
+        \color{fg}\insertsubenumlabel%
         \hfil}%
     }%
   }
   \usesubsubenumerateitemtemplate{%
     \hbox{%
       \usebeamerfont*{item projected}%
-      \color{beamerstructure!50!averagebackgroundcolor}\vrule width2.25ex height1.85ex depth.4ex%
+      \usebeamercolor[bg]{subsubitem projected}%
+      \vrule width2.25ex height1.85ex depth.4ex%
       \hskip-2.25ex%
       \hbox to2.25ex{%
         \hfil%
-        \color{white}\insertsubsubenumlabel%
+        \color{fg}\insertsubsubenumlabel%
         \hfil}%
     }%
   }
   \useenumerateitemminitemplate{%
     \hbox{%
       \usebeamerfont*{item projected}%
-      \color{beamerstructure}\vrule width2.25ex height1.85ex depth.4ex%
+      \usebeamercolor[bg]{item projected}%
+      \vrule width2.25ex height1.85ex depth.4ex%
       \hskip-2.25ex%
       \hbox to2.25ex{%
         \hfil%
-        \color{white}\insertenumlabel%
+        \color{fg}\insertenumlabel%
         \hfil}%
     }%
   }
@@ -412,37 +390,37 @@
     
   \useenumerateitemtemplate{%
     \usebeamerfont*{item projected}%
+    \usebeamercolor[bg]{item projected}%
     \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \color{beamerstructure}
       \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{white}\insertenumlabel}
+      \pgfbox[center,base]{\color{fg}\insertenumlabel}
     \end{pgfpicture}%
   }%
 
   \usesubenumerateitemtemplate{%
     \usebeamerfont*{item projected}%
+    \usebeamercolor[bg]{subitem projected}%
     \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \color{beamerstructure!75!averagebackgroundcolor}
       \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{white}\insertsubenumlabel}
+      \pgfbox[center,base]{\color{fg}\insertsubenumlabel}
     \end{pgfpicture}%
   }%
   
   \usesubsubenumerateitemtemplate{%
     \usebeamerfont*{item projected}%
+    \usebeamercolor[bg]{subsubitem projected}%
     \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \color{beamerstructure!50!averagebackgroundcolor}
       \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{white}\insertsubsubenumlabel}
+      \pgfbox[center,base]{\color{fg}\insertsubsubenumlabel}
     \end{pgfpicture}%
   }%
   
   \useenumerateitemminitemplate{%
     \usebeamerfont*{item projected}%
+    \usebeamercolor[bg]{item projected}%
     \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
-      \color{beamerstructure}
       \pgfcircle[fill]{\pgfpoint{0pt}{.75\pgfex}}{1.2\pgfex}
-      \pgfbox[center,base]{\color{white}\insertenumlabel}
+      \pgfbox[center,base]{\color{fg}\insertenumlabel}
     \end{pgfpicture}%
   }%
 }
@@ -460,28 +438,11 @@
 % Headline stuff
 %
 
-\newcommand{\beamertemplatelightsectionheads}
+\newcommand{\beamertemplatedefaultsectionheads}
 {
-  \usesectionheadtemplate
-  {\hfill\color{white}\insertsectionhead}
-  {\hfill\color{white!50!beamerstructure}\insertsectionhead}
-
-  \usesubsectionheadtemplate
-  {\color{white}\insertsubsectionhead}
-  {\color{white!50!beamerstructure}\insertsubsectionhead}
+  \usesectionheadtemplate{\insertsectionhead}{\color{fg!50!bg}\insertsectionhead}
+  \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}
 }
-
-\newcommand{\beamertemplatedarksectionheads}
-{
-  \usesectionheadtemplate
-  {\color{beamerstructure}\insertsectionhead}
-  {\color{beamerstructure!50!averagebackgroundcolor}\insertsectionhead}
-
-  \usesubsectionheadtemplate
-  {\color{beamerstructure}\insertsubsectionhead}
-  {\color{beamerstructure!50!averagebackgroundcolor}\insertsubsectionhead}
-}
-
 
 
 %
@@ -492,112 +453,55 @@
 
 \newcommand{\beamertemplatefootpagenumber}{%
   \usefoottemplate{%
-  \hfil{\color{black!50!averagebackgroundcolor}\insertpagenumber}}}
+  \hfil{\color{.!50!bg}\insertpagenumber}}}
 
 %
 % Mini navigation bar frame templates
 %
 
-\newcommand{\beamertemplatesphereminiframe}{
-  \pgfdeclareradialshading{minispherehilight}{\pgfpoint{-0.63pt}{0.77pt}}%
-  {color(0cm)=(white);
-    color(0.56pt)=(white);
-    color(1.12pt)=(beamerstructure!25);
-    color(1.54pt)=(beamerstructure!30!black);
-    color(1.82pt)=(averagebackgroundcolor)}
-  \pgfdeclareradialshading{minispheresemidull}{\pgfpoint{-0.63pt}{0.77pt}}%
-  {color(0cm)=(beamerstructure!15);
-    color(0.56pt)=(beamerstructure!50);
-    color(1.12pt)=(beamerstructure!70!black);
-    color(1.54pt)=(beamerstructure!50!black);
-    color(1.82pt)=(averagebackgroundcolor)}
-  \begin{colormixin}{25!averagebackgroundcolor}
-  \pgfdeclareradialshading{minispheredull}{\pgfpoint{-0.63pt}{0.77pt}}%
-  {color(0cm)=(beamerstructure!15);
-    color(0.56pt)=(beamerstructure!50);
-    color(1.12pt)=(beamerstructure!70!black);
-    color(1.54pt)=(beamerstructure!50!black);
-    color(1.82pt)=(averagebackgroundcolor)}
-  \end{colormixin}
-  \def\beamer@sphereradius{0.05cm}
-  \useminislidetemplate
-  {\pgfuseshading{minispherehilight}}
-  {\pgfuseshading{minispheresemidull}}
-  {\pgfuseshading{minispheredull}}
-  {.14cm}{.03cm}
-}
+%%  \pgfdeclareradialshading{minispherehilight}{\pgfpoint{-0.63pt}{0.77pt}}%
+%%   {color(0cm)=(white);
+%%     color(0.56pt)=(white);
+%%     color(1.12pt)=(beamerstructure!25);
+%%     color(1.54pt)=(beamerstructure!30!black);
+%%     color(1.82pt)=(bg)}
+%%   \pgfdeclareradialshading{minispheresemidull}{\pgfpoint{-0.63pt}{0.77pt}}%
+%%   {color(0cm)=(beamerstructure!15);
+%%     color(0.56pt)=(beamerstructure!50);
+%%     color(1.12pt)=(beamerstructure!70!black);
+%%     color(1.54pt)=(beamerstructure!50!black);
+%%     color(1.82pt)=(bg)}
+%%   \begin{colormixin}{25!bg}
+%%   \pgfdeclareradialshading{minispheredull}{\pgfpoint{-0.63pt}{0.77pt}}%
+%%   {color(0cm)=(beamerstructure!15);
+%%     color(0.56pt)=(beamerstructure!50);
+%%     color(1.12pt)=(beamerstructure!70!black);
+%%     color(1.54pt)=(beamerstructure!50!black);
+%%     color(1.82pt)=(bg)}
+%%   \end{colormixin}
+%%   \def\beamer@sphereradius{0.05cm}
+%%   \useminislidetemplate
+%%   {\pgfuseshading{minispherehilight}}
+%%   {\pgfuseshading{minispheresemidull}}
+%%   {\pgfuseshading{minispheredull}}
+%%   {.14cm}{.03cm}
 
-\newcommand{\beamertemplatesphereminiframeinverted}{
-  \pgfdeclareradialshading{minispherehilight}{\pgfpoint{-0.63pt}{0.77pt}}%
-  {color(0cm)=(white);
-    color(0.56pt)=(beamerstructure!25);
-    color(1.12pt)=(beamerstructure!30);
-    color(1.54pt)=(beamerstructure!30!black);
-    color(1.82pt)=(black)}
-  \pgfdeclareradialshading{minispheresemidull}{\pgfpoint{-0.63pt}{0.77pt}}%
-  {color(0cm)=(beamerstructure!15);
-    color(0.56pt)=(beamerstructure!50);
-    color(1.12pt)=(beamerstructure!70!black);
-    color(1.54pt)=(beamerstructure!50!black);
-    color(1.82pt)=(black)}
-  \begin{colormixin}{25!beamerstructure}
-  \pgfdeclareradialshading{minispheredull}{\pgfpoint{-0.63pt}{0.77pt}}%
-  {color(0cm)=(beamerstructure!15);
-    color(0.56pt)=(beamerstructure!50);
-    color(1.12pt)=(beamerstructure!70!black);
-    color(1.54pt)=(beamerstructure!50!black);
-    color(1.82pt)=(black)}
-  \end{colormixin}
-  \def\beamer@sphereradius{0.05cm}
-  \useminislidetemplate
-  {\pgfuseshading{minispherehilight}}
-  {\pgfuseshading{minispheresemidull}}
-  {\pgfuseshading{minispheredull}}
-  {.14cm}{.03cm}
-}
 
 \newcommand{\beamertemplatecircleminiframe}{
   \def\beamer@sphereradius{0.05cm}
   \useminislidetemplate
   {%
     \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{beamerstructure}
       \pgfcircle[fillstroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
     \end{pgfpicture}%
   }
   {%
     \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{beamerstructure}
       \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
     \end{pgfpicture}%
   }
   {%
     \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{beamerstructure!50!averagebackgroundcolor}
-      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {.14cm}{.03cm}
-}
-
-\newcommand{\beamertemplatecircleminiframeinverted}{
-  \def\beamer@sphereradius{0.05cm}
-  \useminislidetemplate
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{white}
-      \pgfcircle[fillstroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{white}
-      \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
-    \end{pgfpicture}%
-  }
-  {%
-    \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-      \color{beamerstructure!50!averagebackgroundcolor}
       \pgfcircle[stroke]{\pgfpoint{\beamer@sphereradius}{\beamer@sphereradius}}{\beamer@sphereradius}%
     \end{pgfpicture}%
   }
@@ -607,38 +511,33 @@
 \newcommand{\beamertemplateboxminiframe}{
   \useminislidetemplate{%
     \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \color{beamerstructure}
-      \pgfrect[fillstroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
+      \pgfrect[fillstroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
     \end{pgfpicture}%
   }  
   {%
     \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \color{beamerstructure}
-      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
+      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
     \end{pgfpicture}%
   }
   {%
     \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-      \color{beamerstructure!50!averagebackgroundcolor}
-      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\boxsize}{\the\boxsize}}
+      \pgfrect[stroke]{\pgforigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
     \end{pgfpicture}%
   }
   {.1cm}{.05cm}
-  }
+}
+
 
 \newcommand{\beamertemplateticksminiframe}{
   \useminislidetemplate
   {%
-    \color{beamerstructure}%
-    \hskip-0.4pt\vrule height\boxsize width1.2pt%
+    \hskip-0.4pt\vrule height\beamer@boxsize width1.2pt%
   }  
   {%
-    \color{beamerstructure}%
-    \vrule height\boxsize width0.4pt%
+    \vrule height\beamer@boxsize width0.4pt%
   }
   {%
-    \color{beamerstructure!50!averagebackgroundcolor}%
-    \vrule height\boxsize width0.4pt%
+    \vrule height\beamer@boxsize width0.4pt%
   }
   {.1cm}{.05cm}}
 
@@ -649,7 +548,7 @@
 
 \newcommand{\beamertemplatesolidbackgroundcolor}[1]{
   \usebackgroundtemplate{\color{#1}\vrule width \paperwidth height\paperwidth}
-  \beamersetaveragebackground{#1}
+  \setbeamercolor{normal text}{bg=#1}
   }
 
 \newcommand{\beamertemplateshadingbackground}[2]{
@@ -659,7 +558,8 @@
   \usebackgroundtemplate{\pgfuseshading{background}}%
   \colorlet{beamer@backgroundshadestart}{#1}%
   \colorlet{beamer@backgroundshadeend}{#2}%
-  \beamersetaveragebackground{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
+  \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
+  \setbeamercolor{normal text}{bg=beamer@average}
   }
   
 \newcommand{\beamertemplategridbackground}[1][0.5cm]{
@@ -730,14 +630,14 @@
 
 \newcommand{\beamertemplatecaptionwithnumber}{
 \usecaptiontemplate{%
-  {\structure{\insertcaptionname~\insertcaptionnumber:}
+  {{\usebeamercolor[fg]{caption name}\insertcaptionname~\insertcaptionnumber:}
     \insertcaption}}}
 
 \newcommand{\beamertemplatecaptionownline}{
 \usecaptiontemplate{%
   {%
     \begin{minipage}{\textwidth}
-      \structure{\insertcaptionname}\\
+      {\usebeamercolor[fg]{caption name}\insertcaptionname}\\
       \insertcaption
     \end{minipage}}}}
 
@@ -799,9 +699,9 @@
 \newdimen\beamer@dimb%
 \newdimen\beamer@blockheadheight%
 
-\newcommand{\beamertemplateoutlinebuttons}
+\newcommand{\beamertemplateroundedbuttons}
 {\usebuttontemplate{%
-  \color{beamerstructure}
+  \usebeamercolor[fg]{button}
   \setbox\beamer@tempbox=\hbox{\usebeamerfont{button}\insertbuttontext}%
   \ht\beamer@tempbox=6pt%
   \dp\beamer@tempbox=0pt%
@@ -810,8 +710,23 @@
   \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2pt
   \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4pt
   \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
-    \color{beamerstructure!50!averagebackgroundcolor}
+    \color{bg}
     \pgfsetlinewidth{0.8pt}
+    \pgfqmoveto{0}{0}
+    \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
+    \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
+    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\beamer@dima}{8pt}}%
+    {\pgfpoint{\the\beamer@dimb}{6.2pt}}%
+    {\pgfpoint{\the\beamer@dimb}{4pt}}
+    \pgfcurveto%
+    {\pgfpoint{\the\beamer@dimb}{1.8pt}}%
+    {\pgfpoint{\the\beamer@dima}{0pt}}%
+    {\pgfpoint{\the\beamer@tempdim}{0pt}}
+    \pgfclosepath
+    \pgffill
+    \color{bg*}
     \pgfqmoveto{0}{0}
     \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
     \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
@@ -831,36 +746,11 @@
   \box\beamer@tempbox%
   \kern4pt}}
 
-\newcommand{\beamertemplatesolidbuttons}
-{\usebuttontemplate{%
-  \setbox\beamer@tempbox=\hbox{{\tiny\color{white}\insertbuttontext}}%
-  \ht\beamer@tempbox=6pt%
-  \dp\beamer@tempbox=0pt%
-  \setbox\beamer@tempbox=\vbox{\box\beamer@tempbox\vskip2pt}%
-  \beamer@tempdim=\wd\beamer@tempbox%
-  \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2bp
-  \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4bp
-  \begin{pgfpicture}{-4bp}{0bp}{\the\beamer@tempdim}{8bp}
-    \color{beamerstructure!50!averagebackgroundcolor}
-    \pgfsetlinewidth{0.8bp}
-    \pgfqmoveto{0}{0}
-    \pgfqcurveto{-2.2}{0}{-4}{1.8}{-4}{4}
-    \pgfqcurveto{-4}{6.2}{-2.2}{8}{0}{8}
-    \pgflineto{\pgfpoint{\the\beamer@tempdim}{8bp}}
-    \pgfcurveto%
-    {\pgfpoint{\the\beamer@dima}{8bp}}%
-    {\pgfpoint{\the\beamer@dimb}{6.2bp}}%
-    {\pgfpoint{\the\beamer@dimb}{4bp}}
-    \pgfcurveto%
-    {\pgfpoint{\the\beamer@dimb}{1.8bp}}%
-    {\pgfpoint{\the\beamer@dima}{0bp}}%
-    {\pgfpoint{\the\beamer@tempdim}{0bp}}
-    \pgffill
-  \end{pgfpicture}%
-  \hskip-\beamer@tempdim%
-  \box\beamer@tempbox%
-  \kern4pt}}
+\newcommand{\beamertemplateoutlinebuttons}
+{\setbeamercolor*{button}{parent=structure,use=structure,bg*=structure.fg!50!bg}}
 
+\newcommand{\beamertemplatesolidbuttons}
+{\setbeamercolor*{button}{use=structure,bg*=structure.fg!50!bg,bg=structure.fg!50!bg,fg=white}}
 
 \newcommand{\beamertemplatenavigationsymbolsempty}{
   \usenavigationsymbolstemplate{}}
@@ -896,17 +786,17 @@
 \newcommand{\beamertemplatedefaultblocks}{
   \useblocktemplate{%
     \medskip%
-    {\usebeamerfont{block head}\structure{\insertblockname}\par}%
+    {\usebeamerfont{block title}\structure{\insertblockname}\par}%
     }{\medskip}
   \usealertblocktemplate{%
     \medskip%
-    {\usebeamerfont{block head}\alert{\insertblockname}\par}%
+    {\usebeamerfont{block title}\alert{\insertblockname}\par}%
     \colorlet{beamerstructure}{beameralert}%
     }{\medskip}
   \useexampleblocktemplate{%
     \medskip%
     \begingroup%
-    {\usebeamerfont{block head}\color{beamerstructure!50!green}\insertblockname\par}%
+    {\usebeamerfont{block title}\color{beamerstructure!50!green}\insertblockname\par}%
     \color{black!50!green}%
     \colorlet{beamerstructure}{beamerstructure!50!green}%
     }{\endgroup\medskip}
@@ -915,32 +805,27 @@
 
 
 
-\newcommand{\beamertemplatesetupshadings}{
-  \beamerboxessetupshadows
-  \beamerboxesdeclarecolorscheme{block}{beamerstructure!75!averagebackgroundcolor}{beamerstructure!10!averagebackgroundcolor}
-  \beamerboxesdeclarecolorscheme{alert}{beameralert!75!averagebackgroundcolor}{beameralert!10!averagebackgroundcolor}
-  \beamerboxesdeclarecolorscheme{example}{beamerexample!75!averagebackgroundcolor}{beamerexample!10!averagebackgroundcolor}
-}
+\beamerboxesdeclarecolorscheme{block}{beamerstructure!75!bg}{beamerstructure!10!bg}
+\beamerboxesdeclarecolorscheme{alert}{beameralert!75!bg}{beameralert!10!bg}
+\beamerboxesdeclarecolorscheme{example}{beamerexample!75!bg}{beamerexample!10!bg}
 
 \newcommand{\beamertemplateboxedblocks}[2][shadow=false]{
-  \AtBeginDocument{\beamertemplatesetupshadings}
-
   \useblocktemplate{%
     \medskip%
     \begin{beamerboxes#2}[scheme=block,#1]%
-      {\usebeamerfont{block head boxed}\color{white}\insertblockname}%
+      {\usebeamerfont{block title boxed}\color{white}\insertblockname}%
       \raggedright}%      
     {\end{beamerboxes#2}\smallskip}
   \usealertblocktemplate{%
     \medskip%
     \begin{beamerboxes#2}[scheme=alert,#1]%
-      {\usebeamerfont{block head boxed}\color{white}\insertblockname}%
+      {\usebeamerfont{block title boxed}\color{white}\insertblockname}%
       \raggedright}%
     {\end{beamerboxes#2}\smallskip}
   \useexampleblocktemplate{%
     \medskip%
     \begin{beamerboxes#2}[scheme=example,#1]
-      {\usebeamerfont{block head boxed}\color{white}\insertblockname}%
+      {\usebeamerfont{block title boxed}\color{white}\insertblockname}%
       \raggedright}%
     {\end{beamerboxes#2}\smallskip}
 }

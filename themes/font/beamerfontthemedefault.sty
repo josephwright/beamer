@@ -8,30 +8,61 @@
 
 \mode<presentation>
 
-\usefonttheme{sizes}
+\setbeamerfont{structure}{}
+\setbeamerfont{tiny structure}{size=\tiny}
 
-\setbeamerfont{title}{inheritsfrom=structure}
-\setbeamerfont{subtitle}{inheritsfrom=title}
-\setbeamerfont{partname}{inheritsfrom=structure}
-\setbeamerfont{section in toc}{inheritsfrom=structure}
+\setbeamerfont{title}{size=\Large,parent=structure}
+\setbeamerfont{title in head/foot}{}
+\setbeamerfont{title in sidebar}{size=\tiny}
 
-\setbeamerfont{headline}{inheritsfrom={tiny structure}}
-\setbeamerfont{footline}{inheritsfrom={tiny structure}}
-\setbeamerfont{sidebar}{inheritsfrom={tiny structure}}
+\setbeamerfont{subtitle}{size=\normalsize,parent=title}
 
-\setbeamerfont{frametitle}{inheritsfrom=structure}
-\setbeamerfont{framesubtitle}{inheritsfrom=frametitle}
+\setbeamerfont{author}{}
+\setbeamerfont{author in head/foot}{}
+\setbeamerfont{author in sidebar}{size=\tiny}
 
-\setbeamerfont{caption head}{inheritsfrom={structure,caption}}
+\setbeamerfont{institute}{size=\scriptsize}
+\setbeamerfont{institute in head/foot}{}
+\setbeamerfont{institute in sidebar}{}
 
-\setbeamerfont{block head}{inheritsfrom={structure,block}}
-\setbeamerfont{block head boxed}{inheritsfrom={structure,block}}
+\setbeamerfont{date}{}
+\setbeamerfont{date in head/foot}{}
+\setbeamerfont{date in sidebar}{}
 
-\setbeamerfont{item}{inheritsfrom=structure}
+\setbeamerfont{partname}{size=\Large}
+\setbeamerfont{part title}{parent=title}
 
-\setbeamerfont{projected text}{inheritsfrom={tiny structure}}
-\setbeamerfont{item projected}{inheritsfrom={item,projected text}}
-\setbeamerfont{section number projected}{inheritsfrom={section in toc,projected text}}
+\setbeamerfont{section in toc}{parent=structure}
+\setbeamerfont{section in head/foot}{}
+\setbeamerfont{section in sidebar}{size=\tiny}
+\setbeamerfont{section number projected}{size=\small,parent={section in toc,projected text}}
+
+\setbeamerfont{subsection in toc}{}
+\setbeamerfont{subsection in head/foot}{}
+\setbeamerfont{subsection in sidebar}{}
+
+\setbeamerfont{headline}{parent={tiny structure}}
+\setbeamerfont{footline}{parent={tiny structure}}
+\setbeamerfont{sidebar}{size=\Tiny,parent={tiny structure}}
+
+\setbeamerfont{frametitle}{parent=structure,size=\Large}
+\setbeamerfont{framesubtitle}{parent=frametitle,size=\footnotesize}
+
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{caption head}{parent={structure,caption}}
+
+\setbeamerfont{button}{size=\tiny}
+
+\setbeamerfont{block}{}
+\setbeamerfont{block title}{size=\large,parent={structure,block}}
+\setbeamerfont{block title boxed}{size=\normalsize,parent={structure,block}}
+
+\setbeamerfont{item}{parent=structure}
+\setbeamerfont{item projected}{size=\tiny,parent={item,projected text}}
+
+\setbeamerfont{description item}{parent=item}
+
+\setbeamerfont{projected text}{parent={tiny structure}}
 
 \mode
 <all>

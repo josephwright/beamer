@@ -82,11 +82,11 @@
 <presentation>
 {
 \usealerttemplate{%
-  \def\bmb@scheme{alert}%
-  \colorlet{beamerstructure}{beameralert!85!beamerstructure}%
-  \colorlet{beamerexample}{beameralert!85!beamerexample}%
-  \color{beameralert}}{}
-\usestructuretemplate{\color{beamerstructure}}{}
+  \usebeamercolor[fg]{alerted text}%
+  \setbeamercolor{structure}{parent=alerted text}%
+  \setbeamercolor{block structure}{parent=alerted text}%
+  }{}
+\usestructuretemplate{\usebeamercolor[fg]{structure}}{}
 }
 
 \mode
@@ -122,9 +122,8 @@
 \newenvironment<>{block}[1]{%
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
-    \reset@font%
     \par%
-    \usebeamerfont{block}%
+    \usebeamerfont*{block}%
     \beamer@beginblocktemplate}
   {\par%
     \beamer@endblocktemplate%
@@ -133,9 +132,9 @@
 \newenvironment<>{alertblock}[1]{%
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
-    \reset@font%
     \par%
-    \usebeamerfont{block}%
+    \usebeamerfont*{block}%
+    \setbeamercolor{block structure}{parent=alerted text}%
     \beamer@beginalertblocktemplate}
   {\par%
     \beamer@endalertblocktemplate%
@@ -144,9 +143,9 @@
 \newenvironment<>{exampleblock}[1]{%
   \begin{actionenv}#2%
     \def\insertblockname{#1}%
-    \reset@font%
     \par%
-    \usebeamerfont{block}%
+    \usebeamerfont*{block}%
+    \setbeamercolor{block structure}{parent=example text}%
     \beamer@beginexampleblocktemplate}
   {\par%
     \beamer@endexampleblocktemplate%
@@ -271,23 +270,33 @@
 
 
 \def\useenumerateitemtemplate#1{% 
-  \def\labelenumi{\def\insertenumlabel{\theenumi}#1}}
+  \def\labelenumi{%
+    \def\insertenumlabel{\theenumi}%
+    \usebeamercolor[fg]{enumerate item}%
+    #1}}
 
 \def\useenumeratetemplate#1#2{% before and after
   \def\enumistarttemplate{#1}%
   \def\enumiendtemplate{#2}}
 
 \def\usesubenumerateitemtemplate#1{%
-  \def\labelenumii{\def\insertenumlabel{\theenumi}\def\insertsubenumlabel{\theenumii}#1}}
+  \def\labelenumii{%
+    \def\insertenumlabel{\theenumi}%
+    \def\insertsubenumlabel{\theenumii}%
+    \usebeamercolor[fg]{enumerate subitem}%
+    #1}}
 
 \def\usesubenumeratetemplate#1#2{% before and after
   \def\enumiistarttemplate{#1}%
   \def\enumiiendtemplate{#2}}
 
 \def\usesubsubenumerateitemtemplate#1{%
-  \def\labelenumiii{\def\insertenumlabel{\theenumi}%
+  \def\labelenumiii{%
+    \def\insertenumlabel{\theenumi}%
     \def\insertsubenumlabel{\theenumii}%
-    \def\insertsubsubenumlabel{\theenumiii}#1}}
+    \def\insertsubsubenumlabel{\theenumiii}%
+    \usebeamercolor[fg]{enumerate subsubitem}%
+    #1}}
 
 \def\usesubsubenumeratetemplate#1#2{% before and after
   \def\enumiiistarttemplate{#1}%
@@ -295,21 +304,21 @@
 
 
 \def\useitemizeitemtemplate#1{%
-  \def\labelitemi{#1}\let\beamer@labelitemi\labelitemi}
+  \def\labelitemi{\usebeamercolor[fg]{itemize item}#1}\let\beamer@labelitemi\labelitemi}
 
 \def\useitemizetemplate#1#2{% before and after
   \def\itemistarttemplate{#1}%
   \def\itemiendtemplate{#2}}
 
 \def\usesubitemizeitemtemplate#1{%
-  \def\labelitemii{#1}\let\beamer@labelitemii\labelitemii}
+  \def\labelitemii{\usebeamercolor[fg]{itemize subitem}#1}\let\beamer@labelitemii\labelitemii}
 
 \def\usesubitemizetemplate#1#2{% before and after
   \def\itemiistarttemplate{#1}%
   \def\itemiiendtemplate{#2}}
 
 \def\usesubsubitemizeitemtemplate#1{%
-  \def\labelitemiii{#1}\let\beamer@labelitemiii\labelitemiii}
+  \def\labelitemiii{\usebeamercolor[fg]{itemize subsubitem}#1}\let\beamer@labelitemiii\labelitemiii}
 
 \def\usesubsubitemizetemplate#1#2{% before and after
   \def\itemiiistarttemplate{#1}%
@@ -325,11 +334,11 @@
   \raggedright}
 \def\enddescription{\ifhmode\unskip\fi\endlist}
 \long\def\beamer@descriptionitem#1{\def\insertdescriptionitem{#1}%
-  \hfil\hspace\labelsep\usebeamerfont*{item}\descriptionitemtemplate}
+  \hfil\hspace\labelsep\usebeamerfont*{description item}\usebeamercolor[fg]{description item}\descriptionitemtemplate}
 
 \def\usedescriptionitemtemplate#1#2{\def\descriptionitemtemplate{#1}\global\beamer@descdefaulttemp=#2%
   \global\advance\beamer@descdefaulttemp by \labelsep}
-\usedescriptionitemtemplate{\color{beamerstructure}\insertdescriptionitem}{2cm}
+\usedescriptionitemtemplate{\insertdescriptionitem}{2cm}
 
 \def\usedescriptionitemofwidthas#1{%
   \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\descriptionitemtemplate}%
@@ -531,7 +540,8 @@
     \if@minipage
       \@setminipage
     \fi
-    \usebeamerfont*{caption}
+    \usebeamerfont*{caption}%
+    \usebeamercolor[fg]{caption}%
     \beamer@makecaption{#1}{\ignorespaces #3}\par\nobreak
     \endgroup}
 \long\def\beamer@makecaption#1#2{%
