@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{beamer}
-[2004/04/19 v2.20 Class for Typesetting a Beamer Presentation]
+[2004/09/17 v2.21-cvs Class for Typesetting a Beamer Presentation]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %

@@ -285,6 +285,14 @@
   % Fix $$ usage in align:
   \let\beamer@orig@start@align=\start@align
   \def\start@align{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@align}
+  
+  % Fix $$ usage in gather:
+  \let\beamer@orig@start@gather=\start@gather
+  \def\start@gather{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@gather}
+  
+  % Fix $$ usage in multicolumn:
+  \let\beamer@orig@start@multline=\start@multline
+  \def\start@multline{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@multline}
 
   % Fix \text:
   \let\beamer@orig@text@=\text@
