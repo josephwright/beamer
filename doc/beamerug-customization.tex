@@ -16,68 +16,6 @@
 
 \label{section-sidebar-templates}
 
-In the following, only the commands for the left sidebars are
-listed. Each of these commands also exists for the right sidebar,
-with ``left'' replaced by ``right'' everywhere.
-
-
-\begin{command}{\useleftsidebartemplate\marg{horizontal size}\marg{template}}
-  When the sidebar is typeset, the \meta{template} is invoked inside a
-  |\vbox| of the height of the sidebar. Thus, the below example
-  will produce a sidebar of half a centimeter width, in which the word
-  ``top'' is printed just below the headline and ``bottom'' is printed
-  just above the footline.
-  \example
-\begin{verbatim}
-\useleftsidebartemplate{1cm}{
-  top
-  \vfill
-  bottom
-}
-\end{verbatim}
-\end{command}
-
-\begin{command}{\useleftsidebarbackgroundtemplate\marg{template}}
-  The template is shown behind whatever is shown in the left side
-  bar. 
-  \example
-\begin{verbatim}
-\useleftsidebarbackgroundtemplate
-  {\color{red}\vrule height\paperheight width\beamer@leftsidebar}
-\end{verbatim}
-\end{command}
-
-
-\begin{command}{\useleftsidebarcolortemplate\marg{color expression}}
-  Uses the given color as background for the sidebar.
-  \example
-\begin{verbatim}
-\useleftsidebarcolortemplate{\color{red}}
-\useleftsidebarcolortemplate{\color[rgb]{1,0,0.5}}
-\end{verbatim}
-\end{command}
-
-\begin{command}{\useleftsidebarverticalshadingtemplate\marg{bottom
-      color expression}\marg{top color expression}}
-  Installs a smooth vertical transition between the given colors as
-  background for the sidebar.
-  \example
-\begin{verbatim}
-\useleftsidebarverticalshadingtemplate{white}{red}
-\end{verbatim}
-\end{command}
-
-
-\begin{command}{\useleftsidebarhorizontalshadingtemplate\marg{left end
-      color expression}\marg{right end color expression}}
-  Installs a smooth horizontal transition between the given colors as
-  background for the sidebar.
-  \example
-\begin{verbatim}
-\useleftsidebarhorizontalshadingtemplate{white}{red}
-\end{verbatim}
-\end{command}
-
 
 \begin{command}{\usesectionsidetemplate\marg{current section
       template}\marg{other section template}}

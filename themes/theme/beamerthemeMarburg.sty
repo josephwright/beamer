@@ -26,11 +26,14 @@
 
 \setbeamercolor*{frametitle}{use=structure,fg=structure.fg}
 
-\setbeamercolor{sidebar}{parent=palette primary}
-\setbeamercolor{sidebar top}{parent=palette fourth}
-\setbeamercolor{sidebar bottom}{parent=palette primary}
-
 \useoutertheme[height=0pt]{sidebar}
+
+\setbeamercolor{sidebar}{parent=palette primary}
+
+{\usebeamercolor{palette fourth}}
+{\usebeamercolor{palette primary}}
+
+\setbeamertemplate{sidebar canvas \beamer@sidebarside}[vertical shading][top=palette fourth.bg,bottom=palette primary.bg]
 
 \mode
 <all>

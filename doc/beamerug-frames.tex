@@ -736,15 +736,17 @@ table of contents, but they could also be added for purely aesthetic
 reasons.
 
 When you install a sidebar template, you must explicitly specify the
-horizontal size of the sidebar. The vertical size is determined
-automatically. Each sidebar can have its own background, which can be
-setup using special sidebar background templates.
+horizontal size of the sidebar using the command |\setbeamesize| with
+the option |sidebar left width| or |sidebar right width|. The vertical
+size is determined automatically. Each sidebar has its own background
+canvas, which can be setup using the sidebar canvas templates. 
 
 Adding a sidebar of a certain size, say 1cm, will make the main text
 1cm narrower. The distance between the inner side of a side
 bar and the outer side of the text, as specified by
-the command |\beamersetleftmargin| and its counterpart for the
-right margin, is not changed when a sidebar is installed.
+the command |\setbeamersize| with the option |text margin left| and
+its counterpart for the right margin, is not changed when a sidebar is
+installed. 
 
 Internally, the sidebars are typeset by showing them as part of the
 headline. The \beamer\ class keeps track of six dimensions, three 
@@ -758,6 +760,128 @@ the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is
 exactly  |\Gm@lmargin|. Thus, if you wish to put some text right
 next to the left sidebar, you might write
 |\hskip-\beamer@leftmargin| to get there.
+
+\begin{element}{sidebar left}\yes\yes\yes
+  \colorfontparents{sidebar}
+  The template is used to typeset the left sidebar. As mentioned
+  above, the size of the left sidebar is set using the command
+\begin{verbatim}
+\setbeamersize{sidebar widt left=2cm}
+\end{verbatim}
+  \beamer\ will not clip sidebars automatically if they are too
+  large.
+
+  When the sidebar is typeset, it is put inside a |\vbox|. You should
+  currently setup things like the |\hsize| or the |\parskip|
+  yourself. 
+
+  \begin{templateoptions}
+    \itemoption{default}{}
+    installs an empty template.
+    \itemoption{sidebar theme}{}
+    This option is available, if the outer theme |sidebar| is loaded
+    with the |left| option. In this case, this options is selected
+    automatically. It shows a mini table of contents in the sidebar.
+  \end{templateoptions}
+\end{element}
+
+\begin{element}{sidebar right}\yes\yes\yes
+  \colorfontparents{sidebar}
+  This template works the same way as the template for the left.
+  
+  \begin{templateoptions}
+    \itemoption{default}{}
+    The default right sidebar has zero width. Nevertheless, it shows
+    navigational symbols and, if installed, a logo at the bottom of
+    the sidebar, protruding to the left into the text.
+    \itemoption{sidebar theme}{}
+    This option is available, if the outer theme |sidebar| is loaded
+    with the |left| option. In this case, this options is selected
+    automatically. It shows a mini table of contents in the sidebar.
+  \end{templateoptions}
+\end{element}
+
+\begin{element}{sidebar canvas left}\yes\no\no
+  Like the overall background canvas, this canvas is drawn behind the
+  actual text of the sidebar. This template should normally insert a
+  rectangle of the size of the sidebar, though a too large height will
+  not lead to an error or warning. When this template is called, the
+  \beamer-color |sidebar left| will have been installed.
+
+  \begin{templateoptions}
+  \item{default}{}
+    uses a large rectangle colored with |sidebar.bg| as the sidebar
+    canvas. However, if the background of |sidebar| is empty, nothing
+    is drawn and the canvas is ``transparent.''
+    
+    \itemoption{vertical shading}{\oarg{color options}}
+    installs a vertically shaded background. The following
+    \meta{color options} may be given:
+    \begin{itemize}
+    \item \declare{|top=|\meta{color}} specifies the color at the
+      top of the sidebar. By default, 25\% of the foreground of the
+      \beamer-color |palette primary| is used.
+    \item \declare{|bottom=|\meta{color}} specifies the color at the
+      bottom of the sidebar (more precisely, at a distance of the page
+      height below the top of the sidebar). By default, the background of
+      |normal text| at the moment of invocation of this command is
+      used. 
+    \item \declare{|middle=|\meta{color}} specifies the color
+      for the middle of the sidebar. Thus, if this option is given, the
+      shading changes from the bottom color to this color and then
+      to the top color.
+    \item \declare{|midpoint=|\meta{factor}} specifies at which
+      point of the page the middle color is used. A factor of |0| is
+      the bottom of the page, a factor of |1| is the top. The
+      default, which is |0.5|, is in the middle.
+    \end{itemize}
+    Note that you must give ``real'' \LaTeX\ colors here. This often
+    makes it necessary to invoke the command |\usebeamercolor| before
+    this command can be used.
+
+    Also note, that the width of the sidebar should be setup before
+    this option is used.
+
+    \example A stylish, but not very useful shading:
+\begin{verbatim}
+{\usebeamercolor{palette primary}}
+\setbeamertemplate{sidebar canvas}[vertical shading]
+[top=palette primary.bg,middle=white,bottom=palette primary.bg]
+\end{verbatim}
+    
+    \itemoption{horizontal shading}{\oarg{color options}}
+    installs a horizontally shaded background. The following
+    \meta{color options} may be given:
+    \begin{itemize}
+    \item \declare{|left=|\meta{color}} specifies the color at the
+      left of the sidebar.
+    \item \declare{|right=|\meta{color}} specifies the color at the
+      right of the sidebar.
+    \item \declare{|middle=|\meta{color}} specifies the color
+      in the middle of the sidebar.
+    \item \declare{|midpoint=|\meta{factor}} specifies at which
+      point of the sidebar the middle color is used. A factor of |0| is
+      the left of the sidebar, a factor of |1| is the right. The
+      default, which is |0.5|, is in the middle.
+    \end{itemize}
+
+    \example Adds two ``pillars''
+\begin{verbatim}
+\setbeamersize{sidebar width left=0.5cm,sidebar width right=0.5cm}
+
+{\usebeamercolor{sidebar}}
+
+\setbeamertemplate{sidebar canvas left}[horizontal shading]
+[left=white,middle=sidebar.bg,right=white]
+\setbeamertemplate{sidebar canvas right}[horizontal shading]
+[left=white,middle=sidebar.bg,right=white]
+\end{verbatim}
+  \end{templateoptions}  
+\end{element}
+
+\begin{element}{sidebar canvas right}\yes\no\no
+  Works exactly as for the left side.
+\end{element}
 
 
 
@@ -1430,13 +1554,20 @@ command:
   The following \meta{options} can be given:
   \begin{itemize}
   \item
-    \declare{|left text margin=|\meta{\TeX\ dimension}} sets a new left
+    \declare{|text margin left=|\meta{\TeX\ dimension}} sets a new left
     margin. This excludes the left sidebar. Thus, it is the distance
     between the right edge of the left sidebar and the left edge of
     the text.
   \item
-    \declare{|right text margin=|\meta{\TeX\ dimension}} sets a new right
+    \declare{|text margin right=|\meta{\TeX\ dimension}} sets a new right
     margin.
+  \item
+    \declare{|sidebar width left=|\meta{\TeX\ dimension}} sets the
+    size of the left sidebar. Currently, this command should be given
+    \emph{before} a shading is installed for the sidebar canvas.
+  \item
+    \declare{|sidebar width right=|\meta{\TeX\ dimension}} sets the
+    size of the right sidebar.
   \item
     \declare{|description width=|\meta{\TeX\ dimension}} sets the
     default width of description labels, see
@@ -1459,9 +1590,6 @@ command:
   \articlenote
   This command has no effect in |article| mode.
 \end{command}
-
-%For more information on sidebars, see
-%Section~\ref{section-sidebar-templates}. 
 
 
 

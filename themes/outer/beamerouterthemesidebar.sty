@@ -113,8 +113,9 @@
 \ifdim\beamer@sidebarwidth>0pt
 
                                 % Sidebar
-  \usesidebartemplate[\beamer@sidebarside]{\beamer@sidebarwidth}{%
-    \usebeamercolor{sidebar}%
+  \setbeamersize{sidebar width \beamer@sidebarside=\beamer@sidebarwidth}
+  \defbeamertemplate*{sidebar \beamer@sidebarside}{sidebar theme}
+  {
     \beamer@tempdim=\beamer@sidebarwidth%
     \advance\beamer@tempdim by -6pt%
     {\usebeamerfont{title in sidebar}%
@@ -141,36 +142,15 @@
     \fi%
   }%
   
-                                % Side bar background
-  \AtBeginDocument{
-    \ifbeamercolorempty[bg]{sidebar top}{
-      \ifbeamercolorempty[bg]{sidebar}{}%
-      {
-        {
-          \usebeamercolor{sidebar}
-          \globalcolorstrue
-          \colorlet{@sidebar.bg}{sidebar.bg}
-        }
-        \beamertemplatesidebarcolor[\beamer@sidebarside]{@sidebar.bg}
-      }
-      }
-      {
-        {
-          \usebeamercolor{sidebar top}
-          \usebeamercolor{sidebar bottom}
-        }
-        \beamertemplatesidebarverticalshading[\beamer@sidebarside]{sidebar bottom.bg}{sidebar top.bg}
-      }
-  }
-
   \ifx\beamer@sidebarside\beamer@lefttext%
-    \usesidebartemplate[right]{0cm}{%
+    \defbeamertemplate*{sidebar right}{sidebar theme}
+    {%
       \vfill%
       \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
       \vskip2pt}
   \fi
                                 % Margins
-  \setbeamersize{left text margin=0.5cm,right text margin=0.5cm}
+  \setbeamersize{text margin left=0.5cm,text margin right=0.5cm}
 \fi
 
 \mode

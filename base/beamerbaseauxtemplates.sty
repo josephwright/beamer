@@ -79,8 +79,48 @@
 
 \define@key{beamer@backgroundshade}{top}{\def\beamer@bgst{#1}}
 \define@key{beamer@backgroundshade}{bottom}{\def\beamer@bgsb{#1}}
+\define@key{beamer@backgroundshade}{right}{\def\beamer@bgst{#1}}
+\define@key{beamer@backgroundshade}{left}{\def\beamer@bgsb{#1}}
 \define@key{beamer@backgroundshade}{middle}{\def\beamer@bgsm{#1}}
 \define@key{beamer@backgroundshade}{midpoint}{\def\beamer@bgsmp{#1}}
+
+\def\beamer@calcvertshading#1#2#3{%
+  {\usebeamercolor{palette primary}}
+  \usebeamercolor{normal text}
+  \setkeys{beamer@backgroundshade}{top=palette primary.bg!25!bg,bottom=bg,middle={},midpoint=0.5}%
+  \setkeys{beamer@backgroundshade}{#3}
+  \ifx\beamer@bgsm\@empty
+    \pgfdeclareverticalshading{#1}{#2}%
+      {color(0cm)=(\beamer@bgsb); color(\the\paperheight)=(\beamer@bgst)}
+    \colorlet{beamer@backgroundshadestart}{\beamer@bgsb}%
+    \colorlet{beamer@backgroundshadeend}{\beamer@bgst}%
+    \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
+  \else
+    \pgfdeclareverticalshading{#1}{#2}%
+      {color(0cm)=(\beamer@bgsb); color(\beamer@bgsmp\paperheight)=(\beamer@bgsm); color(\the\paperheight)=(\beamer@bgst)}
+    \colorlet{beamer@average}{\beamer@bgsm}
+  \fi%
+}
+
+\def\beamer@calchorishading#1#2#3{%
+  {\usebeamercolor{palette primary}}
+  \usebeamercolor{normal text}
+  \setkeys{beamer@backgroundshade}{left=palette primary.bg!25!bg,right=bg,middle={},midpoint=0.5}%
+  \setkeys{beamer@backgroundshade}{#3}
+  \ifx\beamer@bgsm\@empty
+    \pgfdeclarehorizontalshading{#1}{\the\paperheight}%
+      {color(0cm)=(\beamer@bgsb); color(#2)=(\beamer@bgst)}
+    \colorlet{beamer@backgroundshadestart}{\beamer@bgsb}%
+    \colorlet{beamer@backgroundshadeend}{\beamer@bgst}%
+    \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
+  \else
+    \pgfdeclarehorizontalshading{#1}{\the\paperheight}%
+      {color(0cm)=(\beamer@bgsb); color(\beamer@bgsmp#2)=(\beamer@bgsm); color(#2)=(\beamer@bgst)}
+    \colorlet{beamer@average}{\beamer@bgsm} 
+  \fi%
+}
+
+
 
 \defbeamertemplate{background canvas}{vertical shading}[1][]
 {%
@@ -88,24 +128,53 @@
 }
 [action]
 {
-  {\usebeamercolor{palette primary}}
-  \usebeamercolor{normal text}
-  \setkeys{beamer@backgroundshade}{top=palette primary.bg!25!bg,bottom=bg,middle={},midpoint=0.5}%
-  \setkeys{beamer@backgroundshade}{#1}
-  \ifx\beamer@bgsm\@empty
-    \pgfdeclareverticalshading{beamer@backgroundshading}{\the\paperwidth}%
-      {color(0cm)=(\beamer@bgsb); color(\the\paperheight)=(\beamer@bgst)}
-    \colorlet{beamer@backgroundshadestart}{\beamer@bgsb}%
-    \colorlet{beamer@backgroundshadeend}{\beamer@bgst}%
-    \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
-  \else
-    \pgfdeclareverticalshading{beamer@backgroundshading}{\the\paperwidth}%
-      {color(0cm)=(\beamer@bgsb); color(\beamer@bgsmp\paperheight)=(\beamer@bgsm); color(\the\paperheight)=(\beamer@bgst)}
-    \colorlet{beamer@average}{\beamer@bgsm}
-  \fi%
-  \setbeamercolor{normal text}{bg=beamer@average}
+  \beamer@calcvertshading{beamer@backgroundshading}{\the\paperwidth}{#1}
+  \colorlet{beamer@@average}{beamer@average}
+  \setbeamercolor{normal text}{bg=beamer@@average}
 }
 
+
+
+
+%
+% Side bars
+%
+
+\defbeamertemplate{sidebar canvas left}{vertical shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasleftshading}%
+}
+[action]
+{
+  \beamer@calcvertshading{beamer@sidebarcanvasleftshading}{\the\beamer@leftsidebar}{#1}
+}
+
+\defbeamertemplate{sidebar canvas right}{vertical shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasrightshading}%
+}
+[action]
+{
+  \beamer@calcvertshading{beamer@sidebarcanvasrightshading}{\the\beamer@rightsidebar}{#1}
+}
+
+\defbeamertemplate{sidebar canvas left}{horizontal shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasleftshading}%
+}
+[action]
+{
+  \beamer@calchorishading{beamer@sidebarcanvasleftshading}{\beamer@leftsidebar}{#1}
+}
+
+\defbeamertemplate{sidebar canvas right}{horizontal shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasrightshading}%
+}
+[action]
+{
+  \beamer@calchorishading{beamer@sidebarcanvasrightshading}{\beamer@rightsidebar}{#1}
+}
 
 
 
@@ -474,34 +543,6 @@
   \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
 }
 
-
-
-
-%
-% Side bars
-%
-
-\newcommand{\beamertemplaterightsidebarlogonavigation}{
-  \usesidebartemplate[right]{0cm}{%
-    \vfill%
-    \llap{\normalcolor\insertlogo\hskip0.1cm}%
-    \vskip2pt%
-    \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
-    \vskip2pt}
-}
-
-\newcommand{\beamertemplatesidebarcolor}[2][left]{
-  \usesidebarbackgroundtemplate[#1]{\color{#2}\vrule height\paperheight
-    width\csname beamer@#1sidebar\endcsname}
-}
-
-\newcommand{\beamertemplatesidebarverticalshading}[3][left]{%
-  \pgfdeclareverticalshading{beamer@#1sidebar}{\csname beamer@#1sidebar\endcsname}{color(0cm)=(#2); color(\paperheight)=(#3)}%
-  \usesidebarbackgroundtemplate[#1]{\pgfuseshading{beamer@#1sidebar}}}
-
-\newcommand{\beamertemplatesidebarhorizontalshading}[3][left]{%
-  \pgfdeclarehorizontalshading{beamer@#1sidebar}{\textheight}{color(0cm)=(#2); color(\beamer@leftsidebar)=(#3)}%
-  \usesidebarbackgroundtemplate[#1]{\pgfuseshading{beamer@#1sidebar}}}
 
 
 

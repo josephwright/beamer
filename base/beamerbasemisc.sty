@@ -77,6 +77,24 @@
   \let\sectionentry=\beamer@sectionentryorig
   \let\slideentry=\beamer@slideentryorig
   \beamer@calculateheadfoot
+  \ifbeamer@draftmode
+    \setbeamertemplate{footline}{
+    \color{black!25}%
+    \kern-\Gm@lmargin\vrule width\paperwidth
+    height\footheight\kern-\Gm@rmargin}
+    \setbeamertemplate{headline}{
+    \color{black!25}%
+    \kern-\Gm@lmargin\vrule width\paperwidth
+    height\headheight\kern-\Gm@rmargin}
+    \setbeamertemplate{sidebar left}{%
+    \color{black!20}%
+    \vrule width \beamer@leftsidebar height\sidebarheight}
+    \setbeamertemplate{sidebar right}{%
+    \color{black!20}%
+    \vrule width \beamer@rightsidebar height\sidebarheight}
+    \setbeamertemplate{sidebar canvas left}{}
+    \setbeamertemplate{sidebar canvas right}{}
+  \fi
   \makeatother
 }
 

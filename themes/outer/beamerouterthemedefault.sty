@@ -70,10 +70,6 @@
 
 
 
-% Sidebars
-
-\beamertemplaterightsidebarlogonavigation
-
 
 
 % Headline and footline
@@ -94,6 +90,34 @@
 {%
   \ifbeamercolorempty[bg]{background canvas}{}{\color{bg}\vrule width\paperwidth height\paperheight}%
 }
+
+
+% Sidebar
+
+\defbeamertemplate*{sidebar left}{default}
+{}
+
+\defbeamertemplate*{sidebar right}{default}
+{
+  \vfill%
+  \llap{\insertlogo\hskip0.1cm}%
+  \vskip2pt%
+  \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+  \vskip2pt%
+}
+
+\defbeamertemplate*{sidebar canvas left}{default}
+{%
+  \ifbeamercolorempty[bg]{sidebar left}{}
+  {\color{bg}\vrule height\sidebarheight width\beamer@leftsidebar}%
+}
+
+\defbeamertemplate*{sidebar canvas right}{default}
+{%
+  \ifbeamercolorempty[bg]{sidebar right}{}
+  {\color{bg}\vrule height\sidebarheight width\beamer@rightsidebar}%
+}
+
 
 
 

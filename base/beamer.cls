@@ -164,26 +164,6 @@
 \DeclareOptionBeamer{20pt}{\def\beamer@size{{size20.clo}}}
 
 \DeclareOptionBeamer{draft}{\beamer@draftmodetrue}
-\AtBeginDocument{
-  \ifbeamer@draftmode
-  \gdef\beamer@foottemplate{%
-    \color{black!25}%
-    \kern-\Gm@lmargin\vrule width\paperwidth
-    height\footheight\kern-\Gm@rmargin}
-  \gdef\beamer@headtemplate{%
-    \color{black!25}%
-    \kern-\Gm@lmargin\vrule width\paperwidth
-    height\headheight\kern-\Gm@rmargin}
-  \gdef\beamer@leftsidebartemplate{%
-    \color{black!20}%
-    \vrule width \beamer@leftsidebar height\sidebarheight}
-  \gdef\beamer@rightsidebartemplate{%
-    \color{black!20}%
-    \vrule width \beamer@rightsidebar height\sidebarheight}
-  \gdef\beamer@leftsidebarbackground{}
-  \gdef\beamer@rightsidebarbackground{}
-  \fi
-  }
 \def\insertpagenumber{\thepage}
 
 \def\beamer@activecjk{}
@@ -212,7 +192,7 @@
   \ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
 \DeclareOptionBeamer{compressnotes}{%
   \ClassWarning{beamer}{``compressnotes'' is obsolete. Use
-    \noexpand\beamertemplatenotecompress instead}
+    \noexpand\setbeamertemplate{note page}[compressed] instead}
   \AtBeginDocument{\beamertemplatenotecompress}}
 \DeclareOptionBeamer{notesonly}{
   \ClassWarning{beamer}{``notesonly'' is obsolete. Use notes=only instead}

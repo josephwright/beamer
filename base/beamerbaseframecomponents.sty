@@ -17,26 +17,26 @@
 \beamer@leftmargin=1cm
 \beamer@rightmargin=1cm
 
-\define@key{beamer@margin}{left}{%
-  \beamer@leftmargin=#1\relax%
-  % Reset left margin now
-  \beamer@tempdim=\beamer@leftmargin%
-  \advance\beamer@tempdim by\beamer@leftsidebar%
-  \edef\beamer@changegeometryleft{\noexpand\geometry{left=\the\beamer@tempdim}}%
-}
-\define@key{beamer@margin}{right}{%
-  \beamer@rightmargin=#1\relax%
-  % Reset right margin now
-  \beamer@tempdim=\beamer@rightmargin%
-  \advance\beamer@tempdim by\beamer@rightsidebar%
-  \edef\beamer@changegeometryright{\noexpand\geometry{right=\the\beamer@tempdim}}%
-}
+\newif\ifbeamer@dogeometry
 
+\define@key{beamer@margin}{text margin left}{\beamer@leftmargin=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{text margin right}{\beamer@rightmargin=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{sidebar width left}{\beamer@leftsidebar=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{sidebar width right}{\beamer@rightsidebar=#1\beamer@dogeometrytrue}
 
-\newcommand{\setbeamersize}[1]{
+\newcommand{\setbeamersize}[1]{%
+  \beamer@dogeometryfalse%
   \setkeys{beamer@margin}{#1}%
-  \csname beamer@changegeometryleft\endcsname%
-  \csname beamer@changegeometryright\endcsname%
+  \ifbeamer@dogeometry%
+    % Reset left margin now
+    \beamer@tempdim=\beamer@leftmargin%
+    \advance\beamer@tempdim by\beamer@leftsidebar%
+    \geometry{left=\the\beamer@tempdim}%
+    % Reset right margin now
+    \beamer@tempdim=\beamer@rightmargin%
+    \advance\beamer@tempdim by\beamer@rightsidebar%
+    \geometry{right=\the\beamer@tempdim}%
+  \fi%
 }
 
 \mode
@@ -47,45 +47,9 @@
 
 
 
-%
-%
-% Sidebars
-%
-%
-
-\newcommand\usesidebartemplate[3][left]{%
-  \csname beamer@#1sidebar\endcsname=#2\relax%
-  \expandafter\beamer@tempdim\expandafter=\csname beamer@#1margin\endcsname%
-  \advance\beamer@tempdim by#2\relax%
-  \expandafter\geometry\expandafter{#1=\the\beamer@tempdim}%
-  \expandafter\def\csname beamer@#1sidebartemplate\endcsname{%
-    \vbox to \sidebarheight{%
-      \usebeamerfont*{sidebar}%
-      #3\vfil%
-    }%
-  }}
-
-\usesidebartemplate[left]{0cm}{}
-\usesidebartemplate[right]{0cm}{}
 
 
-\newcommand\usesidebarbackgroundtemplate[2][left]{%
-  \expandafter\def\csname beamer@#1sidebarbackground\endcsname{%
-    \vbox to \sidebarheight{%
-      #2\vss%
-    }}}
-\usesidebarbackgroundtemplate[left]{}
-\usesidebarbackgroundtemplate[right]{}
-
-
-
-
-
-%
-%
-% Head lines and foot lines
-%
-%
+% Constructing a frame:
 
 \let\@mkboth\@gobbletwo
 \def\ps@navigation{
@@ -103,10 +67,18 @@
       \hbox{%
         {%
           \setbox\beamer@tempbox=\hbox{\hskip-\Gm@lmargin%
-            {\setbox\beamer@tempbox=\hbox{\normalcolor\beamer@leftsidebarbackground}%
+            {\setbox\beamer@tempbox=\hbox{\vbox to \sidebarheight{%
+                  \usebeamercolor*{sidebar left}%
+                  \usebeamertemplate{sidebar canvas left}%
+                  \vss%
+                }}%
               \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
               \box\beamer@tempbox}%
-            {\beamer@leftsidebartemplate}}%
+            {%
+              \vbox to \sidebarheight{%
+                \usebeamertemplate***{sidebar left}%
+                \vfil%
+            }}}%
           \beamer@tempdim=\ht\beamer@tempbox%
           \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
           \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
@@ -114,10 +86,18 @@
         }%        
         {% print right sidebar first, since it should be overwritten by headline
           \setbox\beamer@tempbox=\hbox{\hskip\textwidth\hskip\beamer@rightmargin%
-            {\setbox\beamer@tempbox=\hbox{\normalcolor\beamer@rightsidebarbackground}%
+            {\setbox\beamer@tempbox=\hbox{\vbox to \sidebarheight{%
+                  \usebeamercolor*{sidebar right}%
+                  \usebeamertemplate{sidebar canvas right}%
+                  \vss%
+                }}%
               \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
               \box\beamer@tempbox}%
-            {\beamer@rightsidebartemplate}}%
+            {%
+              \vbox to \sidebarheight{%
+                \usebeamertemplate***{sidebar right}%
+                \vfil%
+            }}}%
           \beamer@tempdim=\ht\beamer@tempbox%
           \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
           \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
