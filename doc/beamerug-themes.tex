@@ -7,8 +7,6 @@
 
 \section{Themes}
 
-\subsection{The Five Different Kinds of Themes}
-
 \emph{Themes} make it easy to change the appearance of a
 presentation. The \beamer\ class uses five different kinds of themes:
 \begin{description}
@@ -38,12 +36,11 @@ presentation. The \beamer\ class uses five different kinds of themes:
   presentation can be specified independently.
 \item[Element Themes]
   An element theme specifies how certain ``elements'' of a
-  presentation are rendered. ``Elements'' are everything that needs to
+  presentation are typeset. ``Elements'' refers to everything that needs to
   be typeset and that is not part of the headlines, footlines, and
   sidebars. This includes all enumerations, itemize environments,
   block environments, theorem environments, or the table of
-  contents. For each of these, an element theme dictates how these
-  ``elements'' should be typeset. For example, an element theme might
+  contents. For example, an element theme might
   specify that in an enumeration the number should be typeset without
   a dot and that a small circle should be shown behind it. The element
   theme would \emph{not} specify what color should be used for the
@@ -51,11 +48,11 @@ presentation. The \beamer\ class uses five different kinds of themes:
   should be used (this is the job of the font theme).
 \item[Layout Themes]
   A layout theme specifies what the layout of the presentation slides
-  should look like. Thus, it specifies whether there are head- and
+  should look like. It specifies whether there are head- and
   footlines, what is shown in them, whether there is a sidebar, where
   the logo goes, where the navigation symbols and bars go, and so
   on. It also specifies where the frametitle is put and how it is
-  rendered. 
+  typeset. 
 \end{description}
 
 The different themes reside in the four subdirectories |theme|, |color|,
@@ -102,13 +99,49 @@ color themes and font themes are discussed in the sections on colors
 and fonts, respectively.
 
 
+\subsection{Guidelines}
+
+\beamer\ comes with a number of different themes. Here are some
+guidelines that might help you in choosing a theme for your
+presentation: 
+
+\begin{itemize}
+\item
+  Different themes are appropriate for different occasions. Do not
+  become too attached to a favorite theme; choose a 
+  theme according to occasion.
+\item
+  A longer talk is more likely to require navigational hints
+  than a short one. When you give a 90 minute lecture to students, you
+  should choose a theme that always shows a sidebar with the current
+  topic hilighted so that everyone always knows exactly what's the
+  current ``status'' of your talk is; when you give a ten-minute
+  introductory speech, a table of contents is likely to just seem
+  silly.
+\item
+  First choose a presentation theme that has a layout that is
+  appropriate for your talk.
+\item
+  Next you might wish to change the colors by installing a different
+  color theme. This can drastically change the appearance of your
+  presentation. A ``colorful'' theme like |Berkeley| will look much
+  less flashy sober if you use the color themes |seahorse| and |lily|. 
+\item
+  You might also wish to change the fonts by installing a different
+  font theme.
+\end{itemize}
+
+
+
+
+
 \subsection{Presentation Themes}
 
 A presentation theme dictates for every single detail
 of a presentation what it looks like. Normally, having chosen a
 particular presentation theme, you do not need to specify anything
 else having to do with the appearence of your presentation---the
-creator of the theme should have taken of the for you. However, you
+creator of the theme should have taken of that for you. However, you
 still \emph{can} change things afterward either by using a different
 color, font, element, or even layout theme; or by changing specific
 colors, fonts, or templates directly.
@@ -116,7 +149,7 @@ colors, fonts, or templates directly.
 When I started naming the presentation themes, I soon ran out of ideas
 on how to call them. Instead of giving them more and more cumbersome
 names, I decided to switch to a different naming convention:
-Except for two exceptions, all presentation themes are named after
+Except for two special cases, all presentation themes are named after
 cities. These cities happen to be cities in which or near which there
 was a conference or workshop that I attended or that a
 co-author of mine attended. 
@@ -125,10 +158,10 @@ co-author of mine attended.
 \subsubsection{Presentation Themes Without Navigation Bars}
 
 \begin{themeexample}{default}
-As the name suggests, this theme is installed by default. It is a
-sober no-nonsense theme that makes minimal use of color or font
-variations. This theme is useful for all kinds of talks, except for
-very long talks.
+  As the name suggests, this theme is installed by default. It is a
+  sober no-nonsense theme that makes minimal use of color or font
+  variations. This theme is useful for all kinds of talks, except for
+  very long talks.
 \end{themeexample}
 
 
@@ -167,21 +200,21 @@ very long talks.
   was slightly adapted from a theme contributed by Manuel Carro.
   The following \meta{options} may be given:
   \begin{itemize}
-  \item \declare{|secheader|} causes a headline to be inserted the
-    shows the current section and subsection. By default, this
+  \item \declare{|secheader|} causes a headline to be inserted showing
+    the current section and subsection. By default, this
     headline is not shown.
   \end{itemize}
 \end{themeexample}
 
 
 \begin{themeexample}{Pittsburgh}
-  A sober theme. The right-flushed frame titles cause a certain
-  ``tension'' inside each frame.
+  A sober theme. The right-flushed frame titles creates an interesting 
+  ``tension'' inside each frame. 
 \end{themeexample}
 
 
 \begin{themeexample}[\oarg{options}]{Rochester}
-  A dominant theme without any navigational elements. Can be made less
+  A dominant theme without any navigational elements. It can be made less
   dominant by using a different color theme.
 
   The following \meta{options} may be given:
@@ -269,7 +302,7 @@ very long talks.
   for the |Berkeley| theme can be given. 
 \end{themeexample}
 
-\begin{themeexample}[\meta{options}]{Marburg}
+\begin{themeexample}[\oarg{options}]{Marburg}
   A very dominat variation of the |Goettingen| theme. The same
   \meta{options} may be given.
 \end{themeexample}

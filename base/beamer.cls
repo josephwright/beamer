@@ -117,11 +117,6 @@
 \DeclareOptionBeamer{slidestop}
 {\beamer@centeredfalse}
 
-% Obsolete, do not use:
-\DeclareOptionBeamer{blue}{\def\beamer@structurecolor{0.2,0.2,0.7}}
-\DeclareOptionBeamer{red}{\def\beamer@structurecolor{0.7,0.2,0.2}}
-\DeclareOptionBeamer{blackandwhite}{\def\beamer@structurecolor{0.2,0.2,0.2}}
-\DeclareOptionBeamer{brown}{\def\beamer@structurecolor{0.66,0.4,0.166}}
 
 \DeclareOptionBeamer{leqno}{\input{leqno.clo}}
 \DeclareOptionBeamer{fleqn}{\input{fleqn.clo}}
@@ -229,25 +224,30 @@
   }  
 }
 
-\DeclareOptionBeamer{musixtex}
-{% code adapted from patch by Jérôme Marrec
-  \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
-  \RequirePackage{etex}
-  \RequirePackage{musixtex}
-}
 
 
 % obsolete options
-\DeclareOptionBeamer{inrow}
-{\ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
-
+\DeclareOptionBeamer{inrow}{
+  \ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
 \DeclareOptionBeamer{compressnotes}{%
-  \ClassWarning{beamer}{``compressnotes'' option no longer supported. Use
+  \ClassWarning{beamer}{``compressnotes'' is obsolete. Use
     \noexpand\beamertemplatenotecompress instead}
   \AtBeginDocument{\beamertemplatenotecompress}}
-
-\DeclareOptionBeamer{notesonly}{\ClassWarning{beamer}{``notesonly'' no
-    longer supported. Use notes=only instead}\beamer@notesaction@only}
+\DeclareOptionBeamer{notesonly}{
+  \ClassWarning{beamer}{``notesonly'' is obsolete. Use notes=only instead}
+  \beamer@notesaction@only}
+\DeclareOptionBeamer{blue}{
+  \ClassWarning{beamer}{``blue'' is obsolete. Use color theme structure instead}
+  \def\beamer@loadlater{\usecolortheme[rgb={0.2,0.2,0.7}]{structure}}}
+\DeclareOptionBeamer{red}{
+  \ClassWarning{beamer}{``red'' is obsolete. Use color theme structure instead}
+  \def\beamer@loadlater{\usecolortheme[rgb={0.7,0.2,0.2}]{structure}}}
+\DeclareOptionBeamer{blackandwhite}{
+  \ClassWarning{beamer}{``blackandwhite'' is obsolete. Use color theme structure instead}
+  \def\beamer@loadlater{\usecolortheme[rgb={0.2,0.2,0.2}]{structure}}}
+\DeclareOptionBeamer{brown}{
+  \ClassWarning{beamer}{``brown'' is obsolete. Use color theme structure instead}
+  \def\beamer@loadlater{\usecolortheme[rgb={0.66,0.4,0.166}]{structure}}}
 
 
 
@@ -327,14 +327,6 @@
 \expandafter\input\beamer@size
 \geometry{headsep=0pt}
 
-\ifx\beamer@structurecolor\@undefined
-\else
-\AtBeginDocument
-{
-  \definecolor{beamer@structure}{rgb}{\beamer@structurecolor}
-  \setbeamercolor{structure}{fg=beamer@structure}
-}
-\fi
 
 \RequirePackage{beamerbasecompatibility}
 % Fixes other packages
@@ -396,6 +388,10 @@
 % Commands for including and building themes
 
 \usetheme{default}
+
+
+% Stuff that should be loaded later:
+\csname beamer@loadlater\endcsname
 
 %%% Local Variables: 
 %%% mode: latex

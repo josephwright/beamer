@@ -7,7 +7,7 @@ themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
   Pittsburgh Rochester Singapore Szeged Warsaw \
   default boxes
 
-fontthemes = bold default italics romanum sansserifstructure serifstructure
+fontthemes = bold default italics smallcaps sansserifstructure serifstructure
 
 colorthemes = default crane albatross seahorse whale rose orchid sidebartab lily structure
 
@@ -26,23 +26,23 @@ beameruserguide.pdf: $(doc).tex \
 	pdflatex $(doc).tex
 	(egrep -q $(rerun) $(doc).log && pdflatex $(doc).tex) || true
 
-beamerugtheme%.pdf: beamerthemeexample.tex ../themes/theme/beamertheme%.sty
+beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../themes/theme/beamertheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugtheme%.pdf=%)}\\input beamerthemeexample.tex;
 	mv beamerthemeexample.pdf $@
 
-beamerugfonttheme%.pdf: beamerfontthemeexample.tex
+beamerugfonttheme%.pdf: beamerfontthemeexample.tex beamerthemeexamplebase.tex ../themes/font/beamerfonttheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugfonttheme%.pdf=%)}\\input beamerfontthemeexample.tex;
 	mv beamerfontthemeexample.pdf $@
 
-beamerugcolortheme%.pdf: beamercolorthemeexample.tex
+beamerugcolortheme%.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../themes/color/beamercolortheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugcolortheme%.pdf=%)}\\input beamercolorthemeexample.tex;
 	mv beamercolorthemeexample.pdf $@
 
-beamerugelementtheme%.pdf: beamerelementthemeexample.tex
+beamerugelementtheme%.pdf: beamerelementthemeexample.tex beamerthemeexamplebase.tex ../themes/elements/beamerelementtheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugelementtheme%.pdf=%)}\\input beamerelementthemeexample.tex;
 	mv beamerelementthemeexample.pdf $@
 
-beameruglayouttheme%.pdf: beamerlayoutthemeexample.tex
+beameruglayouttheme%.pdf: beamerlayoutthemeexample.tex beamerthemeexamplebase.tex ../themes/layout/beamerlayouttheme%.sty
 	pdflatex \\def\\themename{$(@:beameruglayouttheme%.pdf=%)}\\input beamerlayoutthemeexample.tex;
 	mv beamerlayoutthemeexample.pdf $@
 

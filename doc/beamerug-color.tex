@@ -8,11 +8,6 @@
 \label{section-colors}
 
 
-\subsection{Introduction}
-
-
-
-
 The color management of the \beamer\ class relies on the packages
 |xcolor|, which is a stand-alone extension of the |color| package, 
 and on |xxcolor|, which in turn is an extension of
@@ -28,8 +23,40 @@ classes.
 
 
 
-\subsection{Color Themes}
 
+\subsection{Guidelines}
+
+\begin{itemize}
+\item
+  Use colors sparsely. The prepared themes are already quite
+  colorful (blue~= structure, red~= alert, green~= example). If you
+  add more colors for things like code, math text, etc., you should
+  have a \emph{very} good reason. 
+\item
+  Be careful when using bright colors on white background,
+  \emph{especially} when using green. What looks good on your monitor
+  may look bad during a presentation due to the different ways
+  monitors, beamers, and printers reproduce colors. Add lots of black
+  to pure colors when you use them on bright backgrounds.
+\item
+  Maximize contrast. Normal text should be black on white or at least
+  something very dark on something very bright. \emph{Never} do things
+  like ``light green text on not-so-light green background.''
+\item
+  Background shadings decrease the legibility without increasing the
+  information content. Do not add a background shading just because it
+  ``somehow looks nicer.'' 
+\item
+  Inverse video (bright text on dark background) can be a problem
+  during presentations in bright environments since only a small
+  percentage of the presentation area is light up by the
+  beamer. Inverse video is harder to reproduce on printouts and on
+  transparencies. 
+\end{itemize}
+
+
+
+\subsection{Color Themes}
 
 \subsubsection{Default and Special-Purpose Color Themes}
 
@@ -106,7 +133,7 @@ classes.
 
 
 
-\subsection{Complete Color Themes}
+\subsubsection{Complete Color Themes}
 
 A ``complete'' color theme is a color theme that completely specifies
 all colors for all parts of a frame. It installs specific colors and
@@ -147,7 +174,7 @@ Complete complete themes happen to have bird names.
 \end{colorthemeexample}
 
 
-\subsection{Block Color Themes}
+\subsubsection{Block Color Themes}
 
 Block themes only specify the colors of block environments. They can
 be used together with other (color) themes. If they are used to change the
@@ -178,7 +205,7 @@ been loaded. Block themes happen to have flower names.
 \end{colorthemeexample}
 
 
-\subsection{Palette Color Themes}
+\subsubsection{Palette Color Themes}
 
 A palette color theme  changes the palette colors, on which the colors
 used in the headline, footline, and sidebar 
@@ -217,78 +244,6 @@ titles. They have happen to sea-animal names.
 
 
 
-\subsection{Colors of Main Text Elements}
-
-By default, the following colors are used in a presentation:
-\begin{itemize}
-\item
-  Normal text is typeset in |black|.
-\item
-  All ``structural'' elements, like titles, navigation bars, block
-  titles, and so on, are typeset using the color
-  |beamerstructure|. By default, this color is bluish. Using one of
-  the class options |red|, |blackandwhite|, or |brown|
-  changes this. You can also change this color simply be redefining
-  the color |beamerstructure|.
-\item
-  All ``alert'' text is typeset by setting the default color and the
-  structure color to 85\% of red. To change this, you can either
-  redefine the color |beameralert|, or you can change the whole alert
-  template. 
-\item
-  All examples are typeset using 50\% of green. To change this, you
-  must change the example templates.
-\end{itemize}
-
-\begin{classoption}{brown}
-  Changes the main color of the navigation and title bars
-  to a brownish color.
-\end{classoption}
-
-\begin{classoption}{red}
-  Changes the main color of the navigation and title bars
-  to a reddish color.
-\end{classoption}
-
-\begin{classoption}{blackandwhite}
-  Changes the main color of the navigation and title bars
-  to monochrome.
-\end{classoption}
-
-
-
-\subsection{Average Background Color}
-
-\label{section-average}
-
-In some situations, for example when creating a transparency effect,
-it is useful to have access to the current background
-color. One can then, for example, mix a color with the background
-color to create a ``transparent'' color.
-
-Unfortunately, it is not always clear what exactly the background
-color is. If the background is a shading or a picture, different parts
-of a slide have different background colors. In these cases, one can
-at least try to mix-in an \emph{average} background color, called
-|averagebackgroundcolor|. If a shading or picture is not too
-colorful, this works fairly well.
-
-To specify the average background color, use the following command:
-
-\begin{command}{\beamersetaveragebackground\marg{color expression}}
-  Installs the given color as the average background color. See the
-  |xcolor| package for the syntax of color expressions.
-  \example |\beamersetaveragebackground{red!10}|
-\end{command}
-
-If you use the commands from Section~\ref{section-backgrounds} for
-installing a background coloring, the average background color is
-computed automatically for you. When you directly use the command
-|\usebackgroundtemplate|, you should must set the average
-background color afterward.
-
-
-
 
 \subsection{Transparency Effects}
 \label{section-transparent}
@@ -310,9 +265,12 @@ some degree.
 Ideally, there would be an option to make covered text
 ``transparent.'' This would mean that when covered text is shown, it
 would instead be mixed with the background behind it. Unfortunately,
-|pgf| does not support real transparency yet.
-Nevertheless, one can come ``quite close'' to transparent text using
-the special command
+|pgf| does not support real transparency yet. Instead, transparency is
+created by mixing the color of the object you want to show with the
+current background color (the color |bg|, which has hopefully been
+setup such that it is the average color of the background on which the
+object should be placed). To specify the ``degree of
+transparency'', you can use the special command
 \begin{verbatim}
 \beamersetuncovermixins{#1}{#2}
 \end{verbatim}
@@ -321,9 +279,8 @@ covered item should be rendered. You can even specify different ways
 of rendering the item depending on how long it will take before this
 item is shown or for how long it has already been covered once
 more. The transparency effect will automatically apply to all colors,
-\emph{except} for the colors in images and shadings. For images and
-shadings there is a workaround, see the documentation of the
-\pgf\ package. 
+\emph{except} for the colors in images. For images there is a
+workaround, see the documentation of the \pgf\ package. 
 
 As a convenience, several commands install a predefined uncovering
 behavior.
@@ -372,46 +329,6 @@ behavior.
   contain any number of |\opaqueness| commands.
 \end{command}
 
-%\begin{command}{\mixinon\ssarg{overlay specification}\marg{mix-in specification}}
-%  The \meta{overlay specification} specifies on which slides the
-%  \meta{mix-in specification} should be applied to all colors. Unlike
-%  other overlay specifications, this \meta{overlay specification} is a
-%  ``relative'' overlay specification. For example, the specification
-%  ``3'' here means ``things that will be uncovered three slides
-%  ahead,'' respectively ``things that have once more been covered for
-%  three slides.'' More precisely, if an item is uncovered for more
-%  than one slide and then covered once more, only the ``first moment
-%  of uncovering'' is used for the calculation of how long the item has
-%  been covered once more.
-
-%  \emph{Mix-in} specifications are a concept introduced by the
-%  |xcolor| package. The \meta{mix-in specification} specifies how colors
-%  should be altered by adding another color to them. The specification
-%  consists of two parts, separated by an exclamation mark. The first
-%  part is a number between 0 and 100, where 0 means ``do not mix in the
-%  text color at all'' and 100 means ``use only the text color''. The
-%  second part is the color that should be mixed in. This second part may
-%  be omitted (along with the exclamation mark), in which case ``white''
-%  is used as mix-in color. Any color that has been defined using the
-%  |\definecolor| command is permissible as a mix-in color.
-
-%  The mix-in specifications is added to the \pgf\ alternate
-%  extension for shadings and images (see the \pgf\
-%  documentation). Nested uses of mix-in accumulate. 
-%  \example
-%\begin{verbatim}
-%\beamersetuncovermixins{\mixinon<1>{15!blue}{\mixinon<1->{15!white}}
-%\pgfdeclareimage{book}{book}
-%\pgfdeclareimage{book.!15!averagebackgroundcolor}{filenameforbooknearlyblue}
-%\pgfdeclareimage{book.!15!white}{filenameforbooknearlywhite}
-%\end{verbatim}
-%  For all items that become uncovered on the next slide or that have
-%  just been covered on the previous slide (depending on whether this
-% command is used as part of the first or second parameter of the command
-%  |\beamersetuncovermixins|), use only 15\% of the actual color and
-%  85\% of the average background color.
-%\end{command}
-
 \begin{command}{\opaqueness\ssarg{overlay
       specification}\marg{percentage of opaqueness}}
   The \meta{overlay specification} specifies on which slides covered
@@ -444,6 +361,10 @@ behavior.
   Makes everything that is uncovered in two slides only 15 percent
   opaque. 
 \end{command}
+
+
+
+\subsection{Changing the Colors Used for Different Elements of a Presentation}
 
 
 

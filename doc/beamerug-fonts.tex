@@ -35,7 +35,7 @@ of a presentation.
 
 
 
-\subsection{A Review of Font Attributes}
+\subsection{Guidelines}
 
 A font has numerous attributes like weight, family, or size. All of
 these have an impact on the usability of the font in
@@ -45,7 +45,7 @@ A description of how to actually change font attributes globally or
 locally is given in the next sections.
 
 
-\subsubsection{The Font Size}
+\subsubsection{Font Size}
 
 \label{section-sizes}
 
@@ -138,7 +138,7 @@ that is typeset in bold or in italics.
 
 
 
-\subsubsection{The Font Family}
+\subsubsection{Font Families}
 
 The other central property of any font is its family. Examples of font
 families are Times or Helvetica or Futura. As the name suggests, a lot
@@ -265,7 +265,7 @@ very different.
 
 
 
-\subsubsection{The Font Shape: Italics and Small Capitals}
+\subsubsection{Font Shapes: Italics and Small Capitals}
 
 \label{section-italics}
 \label{section-smallcaps}
@@ -351,7 +351,7 @@ impression, but some words of caution:
 
 
 
-\subsubsection{The Font Weight}
+\subsubsection{Font Weight}
 
 The ``weight'' of a font refers to the thickness of the
 letters. Usually, font come as regular or as bold fonts. There often
@@ -429,7 +429,7 @@ explained in the next subsection.
   italics. 
 \end{fontthemeexample}
 
-\begin{fontthemeexample}[\oarg{options}]{romanum}
+\begin{fontthemeexample}[\oarg{options}]{smallcaps}
   Again, this theme does exactly the same as the |bold| font theme,
   only this time text is set using small caps. The same
   \meta{options} as for the |bold| theme are supported. See
@@ -463,23 +463,22 @@ explained in the next subsection.
 
 
 
-\subsection{Special Commands for Changing the Fonts Used in A Presentation}
 
-\LaTeX\ offers numerous commands for changing the font
-temporarily. For example, |\bfseries| will switch to boldface,
-|\itshape| will switch to an italic font, and so on. However, to
-globally change the font attributes of all fonts used in a
-presentation, special commands are needed. In the following, these
-commands are described.
+\subsection{Font Changes That Cannot Be Made Using Font Themes} 
+
+While most font decisions can be made using font themes, for
+historical reasons some changes can only be made using class
+options or by loading special packages. These options are explained in
+the following. Possibly, these options will be replaced by themes in
+the future. 
 
 
 
-\subsubsection{Choosing Between Serif Sans-Serif Text}
+\subsubsection{Choosing Serif or Sans-Serif Text}
 
-You must globally decide whether normal text should be typeset in
-sans-serif or in serif. To choose this, use either the class option
-|sans| or |serif|. By default, |sans| is selected, so you do not
-need to specify this.
+The class options |sans| and |serif| globally decide whether normal
+text should be typeset in sans-serif or in serif. By default, |sans|
+is selected, so you do not need to specify this.
 
 \begin{classoption}{sans}
   Use a sans-serif font during the presentation. (Default.)
@@ -530,58 +529,6 @@ the command |\operatorname| from the |amsmath| package. Using this
 command instead of |\mathrm| or |\mathsf| directly will  automatically
 adjust  upright mathematical text if you switch from sans-serif to
 serif or back.
-
-
-
-
-\subsubsection{Choosing a Font Family}
-
-\label{section-substition}
-
-Independently of the serif/sans-serif choice, you can switch the font
-family of normal text globally. To do so, you can use one of the
-prepared packages of \LaTeX's font mechanism. For example, to change
-to Times/Helvetica, simply add 
-\begin{verbatim}
-\usepackage{mathptmx}
-\usepackage{helvet}
-\end{verbatim}
-in your preamble. Note that if you do not specify |serif| as a
-class option, Helvetica (not Times) will be selected as the text
-font.
-
-There may be many other fonts available on your
-installation. Typically, at least some of the following packages
-should be available: |avant|, |bookman|, |chancery|, |charter|,
-|euler|, |helvet|, |mathtime|, |mathptm|, |mathptmx|, |newcent|,
-|palatino|, |pifont|, |utopia|.
-
-If you use the |mathtime| package (you have to buy some of the fonts),
-you also need to specify the |serif| option.
-
-If you use professional fonts (fonts that you buy and that come with a
-complete set of every symbol in all modes), you may need to specify the
-class option |professionalfont|. This will tell \beamer\ that it
-should not meddle with the fonts you use. The reason is that \beamer\ 
-normally replaces certain character glyphs in mathematical text by
-more appropriate versions. For example, \beamer\ will normally replace
-glyphs such that the italic characters from the main font are used for
-variables in mathematical text. If your professional font package
-takes care of this already, \beamer's meddling should be switched
-off. Note that \beamer's substitution is automatically turned off if
-one of the following packages is loaded: |mathtime|, |mathpmnt|,
-|lucidabr|, |mtpro|, and |hvmath|. If your favorite professional font
-package is not among these, use the |professionalfont| option (and
-write me an email, so that the package can be added).
-
-\begin{classoption}{professionalfont}
-  Deactivates \beamer's internal font replacements for mathematical
-  text. This option should be used if you use a professional font
-  package that sets up all mathematical fonts correctly.
-\end{classoption}
-
-
-
 
 
 \subsubsection{Choosing a Font Size for Normal Text}
@@ -640,6 +587,54 @@ To specify the font size, you can use the following class options:
 
 \begin{classoption}{20pt}
   This is really huge. Requires |extsize| to be installed.
+\end{classoption}
+
+
+
+\subsubsection{Choosing a Font Family}
+
+\label{section-substition}
+
+Independently of the serif/sans-serif choice, you can switch the font
+family of normal text globally. To do so, you can use one of the
+prepared packages of \LaTeX's font mechanism. For example, to change
+to Times/Helvetica, simply add 
+\begin{verbatim}
+\usepackage{mathptmx}
+\usepackage{helvet}
+\end{verbatim}
+in your preamble. Note that if you do not specify |serif| as a
+class option, Helvetica (not Times) will be selected as the text
+font.
+
+There may be many other fonts available on your
+installation. Typically, at least some of the following packages
+should be available: |avant|, |bookman|, |chancery|, |charter|,
+|euler|, |helvet|, |mathtime|, |mathptm|, |mathptmx|, |newcent|,
+|palatino|, |pifont|, |utopia|.
+
+If you use the |mathtime| package (you have to buy some of the fonts),
+you also need to specify the |serif| option.
+
+If you use professional fonts (fonts that you buy and that come with a
+complete set of every symbol in all modes), you may need to specify the
+class option |professionalfont|. This will tell \beamer\ that it
+should not meddle with the fonts you use. The reason is that \beamer\ 
+normally replaces certain character glyphs in mathematical text by
+more appropriate versions. For example, \beamer\ will normally replace
+glyphs such that the italic characters from the main font are used for
+variables in mathematical text. If your professional font package
+takes care of this already, \beamer's meddling should be switched
+off. Note that \beamer's substitution is automatically turned off if
+one of the following packages is loaded: |mathtime|, |mathpmnt|,
+|lucidabr|, |mtpro|, and |hvmath|. If your favorite professional font
+package is not among these, use the |professionalfont| option (and
+write me an email, so that the package can be added).
+
+\begin{classoption}{professionalfont}
+  Deactivates \beamer's internal font replacements for mathematical
+  text. This option should be used if you use a professional font
+  package that sets up all mathematical fonts correctly.
 \end{classoption}
 
 

@@ -3,41 +3,14 @@
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 
-\section{Workflow When Building a Presentation}
+\section{Workflow For Building a Presentation}
 
 \label{section-workflow}
 
 This section presents a possible workflow for creating a \beamer\ 
 presentation and possibly a handout to go along with it. Technical
 questions are addressed, like which programs to call with 
-which parameters, and hints are given on how to create a
-presentation. If you have already created numerous presentations, you
-may wish to skip the first of the following steps 
-and only have a look at how to convert the |.tex| file into a
-|.pdf| or |.ps| file.
-
-
-\subsection{Step Zero: Know the Time Constraints}
-
-When you start to create a presentation, the very first thing you
-should worry about is the amount of time you have for your
-presentation. Depending on the occasion, this can
-be anything between 2 minutes and two hours. A simple rule for the
-number of frames is that you should have at most one frame per
-minute.
-
-In most situations, you will have less time for your presentation that
-you would like. \emph{Do not try to squeeze more into a
-  presentation than time allows for.} No matter how important some
-detail seems to you, it is better to leave it out, but get the main
-message across, than getting neither the main message nor the detail
-across. 
-
-In many situations, a quick appraisal of how much time you have will
-show that you won't be able to mention certain details. Knowing this can
-save you hours of work on preparing slides that you would have to remove
-later anyway.
-
+which parameters.
 
 
 
@@ -71,7 +44,7 @@ document class or you say ``New from template'' and then use a
 template from the directory |beamer/solutions|.
 
 
-\subsubsection{Solution Templates for Presentations}
+\subsubsection*{Solution Templates for Presentations}
 
 The following list of solution templates is sorted by the length of
 the talks for which they provide a template. As always, the solutions
@@ -122,59 +95,21 @@ can be found in the directory |beamer/solutions|.
 
 \subsection{Step Two: Structure Your Presentation}
 
-With the time constraints in mind, make a mental inventory of the
-things you can reasonably talk about within the time available. Then
-categorize the inventory into sections and subsections. For very long
-talks (like a 90 minute lecture), you might also divide your talk into
-independent parts (like a ``review of the previous lecture part'' and
-a ``main part''). Put |\section| and |\subsection| commands into
+The next step is to fill the presentation file with |\section| and
+|\subsection| to create a prelimenary outline. You'll find some hints
+on how to create a good outline in
+Section~\ref{section-structure-guidelines}.
+
+Put |\section| and |\subsection| commands into
 the (more or less empty) main file. Do not create any frames until you
-have a first working version of a possible table of contents. Do not
-feel afraid to change it later on as you work on the talk.
-
-You should not use more than four sections and not less than two per
-part. Even four sections are usually too much, unless they follow 
-a very easy pattern. Five and more sections are simply too hard to
-remember for the audience. After all, when you present the table of
-contents, the audience will not yet really be able to grasp the
-importance and relevance of the different sections and will most
-likely have forgotten them by the time you reach them.
-
-Ideally, a table of contents should be understandable by itself. In
-particular, it should be comprehensible \emph{before} someone has
-heard your talk. Keep section and subsection titles
-self-explaining. Note that each part has its own table of contents. 
-
-Both the sections and the subsections should follow a logical
-pattern. Begin with an explanation of what your talk is all about. (Do
-not assume that everyone knows this. The Ignorant Audience Law states:
-The audience always knows less than you think it should know, even if
-you take the Ignorant Audience Law into account.) Then explain what
-you or someone else has found out concerning the subject
-matter. Always conclude your talk with a summary that repeats the main
-message of the talk in a short and simple way. People pay most
-attention at the beginning and at the end of talks. The summary is
-your ``second chance'' to get across a message.
-
-You can also add an appendix part using the |\appendix| command. Put
-everything into this part that you do not actually intend to talk
-about, but that might come in handy when questions are asked.
-
-
-
-\subsection{Step Three: Creating a PDF or PostScript File}
-
-\beamernote
-Once a first version of the structure is finished, you should create a
-first PDF or PostScript file of your (still empty) talk. This file
-will only contain the title page and the table of contents. The file
-might  look like this:
+have a first working version of a possible table of contents.
+The file might look like this:
 
 \begin{verbatim}
 \documentclass{beamer}
 %% This is the file main.tex
 
-\usepackage{beamerthemesplit}
+\usetheme{Berlin}
 
 \title{Example Presentation Created with the Beamer Package}
 \author{Till Tantau}
@@ -212,6 +147,15 @@ that the sections and subsections are actually part of the table of
 contents. This frame is necessary since a |\section| or |\subsection|
 command following the last page of a document have no effect.
 
+
+
+\subsection{Step Three: Creating a PDF or PostScript File}
+
+\beamernote
+Once a first version of the structure is finished, you should try to
+create a first PDF or PostScript file of your (still empty) talk to
+ensure that everything is working properly. This file
+will only contain the title page and the table of contents.
 \lyxnote
 Use ``View'' to check whether the presentation compiles fine. Note
 that you must put the table of contents inside a frame, but that the
@@ -328,194 +272,8 @@ You can convert a PostScript file to a pdf file using
 Use ``View Postscript'' to view the PostScript version.
 
 
-\subsection{Step Four: Create Frames}
 
-Once the table of contents looks satisfactory, start creating frames
-for your presentation. In the following, some guidelines that I stick
-to are given on what to put on slides and what not to put. You can
-certainly ignore any of these guidelines, but you should be aware of
-it when you ignore a rule and you should be able to justify it to
-yourself. 
-
-\lyxnote
-To create a frame, use the style ``BeginFrame''. The frame title
-is given on the line of this style. The frame ends automatically with
-the start of the next frame, with a section or subsection command, and
-with an empyt line in the sylte ``EndFrame''. Note that the last frame
-of your presentation must be ended using ``EndFrame'' and that the
-last frame before the appendix must be ended this way.
-
-\subsubsection{Guidelines on What to Put on a Frame}
-
-\begin{itemize}
-\item
-  A frame with too little on it is better than a
-  frame with too much on it.
-\item
-  Do not assume that everyone in the audience is an expert on the
-  subject matter. (Remember the Ignorant Audience Law.) Even if the
-  people listening to you should be experts, they may last have heard
-  about things you consider obvious several years ago. You should
-  always have the time for a quick reminder of what exactly a
-  ``semantical complexity class'' or an ``$\omega$-complete partial
-  ordering'' is.
-\item
-  Never put anything on a slide that you are not going to explain
-  during the talk, not even to impress anyone with how
-    complicated your subject matter really is. However, you may
-  explain things that are not on a slide.
-\item
-  Keep it simple. Typically, your audience will see a slide for less
-  than 50 seconds. They will not have the time to puzzle through long
-  sentences or complicated formulas.
-\end{itemize}
-
-
-\subsubsection{Guidelines on Titles}
-
-\begin{itemize}
-\item
-  Put a title on each frame. The title explains the contents of the
-  frame to people who did not follow all details on the slide.
-\item
-  The title should really \emph{explain} things, not just give a
-  cryptic summary that cannot be understood unless one has understood
-  the whole slide. For example, a title like ``The Poset'' will have
-  everyone puzzled what this slide might be about. Titles like
-  ``Review of the Definition of Partially Ordered Sets (Posets)'' or
-  ``A Partial Ordering on the Columns of the Genotype Matrix'' are
-  \emph{much} more informative.
-\item
-  Ideally, titles on consecutive frames should ``tell a story'' all by
-  themselves.
-\item
-  In English, you should \emph{either} \emph{always} capitalize all words in
-  a frame title except for words like ``a'' or ``the'' (as in a
-  title), \emph{or} you \emph{always} use the normal lowercase
-  letters. Do \emph{not} mix this; stick to one rule. The same is true
-  for block titles. For example, do not use titles like ``A short
-  Review of Turing machines.'' Either use ``A Short Review of Turing
-  Machines.'' or ``A short review of Turing machines.'' (Turing is
-  still spelled with a capital letter since it is a name).
-\item
-  In English, the title of the whole document should be
-  capitalized, regardless of whether you capitalize anything else.
-\item
-  In German and other languages that have lots of capitalized words,
-  always use the correct upper-/lowercase letters. Never capitalize
-  anything in addition to what is usually capitalized.
-\end{itemize}
-
-
-
-\subsubsection{Guidelines on the Body Text}
-
-\begin{itemize}
-\item
-  \emph{Never} use a smaller font size to ``fit more on a frame.''
-\item
-  Prefer enumerations and itemize environments over plain text. Do not
-  use long sentences.
-\item
-  Do not hyphenate words. If absolutely necessary, hyphenate words
-  ``by hand,'' using the command~|\-|.
-\item
-  Break lines ``by hand'' using the command~|\\|. Do not rely on
-  automatic line breaking. Break where there is a logical pause. For 
-  example, good breaks in ``the tape alphabet is larger
-  than the input alphabet'' are before ``is'' and before the second
-  ``the.'' Bad breaks are before either ``alphabet'' and before
-  ``larger.''
-\item
-  Text and numbers in figures should have the \emph{same} size as
-  normal text. Illegible numbers on axes usually ruin a chart and its
-  message. 
-\end{itemize}
-
-
-\subsubsection{Guidelines on Graphics}
-
-\begin{itemize}
-\item
-  Put (at least) one graphic on each slide, whenever
-  possible. Visualizations help an audience enormously.
-\item
-  Usually, place graphics to the left of the text. (Use the
-  |columns| environment.) 
-\item
-  Graphics should have the same typographic parameters as the
-  text: Use the same fonts (at the same size) in graphics as in the
-  main text. A small dot in a graphic should have exactly the same 
-  size as a small dot in a text. The line width should be the same as
-  the stroke width used in creating the glyphs of the font. For
-  example, an 11pt non-bold Computer Modern font has a stroke width of
-  0.4pt.
-\item
-  While bitmap graphics, like photos, can be much more colorful than the
-  rest of the text, vector graphics should follow the same ``color
-  logic'' as the main text (like black~= normal lines, red~= hilighted
-  parts, green~= examples, blue~= structure).
-\item
-  Like text, you should explain everything that is shown on a
-  graphic. Unexplained details make the audience puzzle whether this
-  was something important that they have missed. Be careful when
-  importing graphics from a paper or some other source. They usually
-  have much more detail than you will be able to explain.
-\end{itemize}
-
-For technical hints on how to create graphics, see
-Section~\ref{section-graphics}.
-
-
-\subsubsection{Guidelines on Colors}
-
-\begin{itemize}
-\item
-  Use colors sparsely. The prepared themes are already quite
-  colorful (blue~= structure, red~= alert, green~= example). If you
-  add more colors, you should have a \emph{very} good reason.
-\item
-  Be careful when using bright colors on white background,
-  \emph{especially} when using green. What looks good on your monitor
-  may look bad during a presentation due to the different ways
-  monitors, beamers, and printers reproduce colors. Add lots of black
-  to pure colors when you use them on bright backgrounds.
-\item
-  Maximize contrast. Normal text should be black on white or at least
-  something very dark on something very bright. \emph{Never} do things
-  like ``light green text on not-so-light green background.''
-\item
-  Background shadings decrease the legibility without increasing the
-  information content. Do not add a background shading just because it
-  ``somehow looks nicer.'' In the examples that come along with the
-  \beamer\ class, the backgrounds are intended as demonstrations, not
-  as recommendations.
-\item
-  Inverse video (bright text on dark background) can be a problem
-  during presentations in bright environments since only a small
-  percentage of the presentation area is light up by the
-  beamer. Inverse video is harder to reproduce on printouts and on
-  transparencies. 
-\end{itemize}
-
-
-\subsubsection{Guidelines on Animations and Special Effects}
-
-\begin{itemize}
-\item
-  Use animations to explain the dynamics of systems, algorithms, etc.
-\item
-  Do \emph{not} use animations just to attract the attention of your
-  audience. This often distracts attention away from the main topic of the
-  slide.
-\item
-  Do \emph{not} use distracting special effects like ``dissolving''
-  slides unless you have a very good reason for using them. If you use
-  them, use them sparsely. 
-\end{itemize}
-
-
-\subsubsection{Ways of Improving Compilation Speed}
+\subsubsection*{Ways of Improving Compilation Speed}
 \label{section-speedup}
 
 While working on your presentation, it may sometimes be useful to
@@ -562,6 +320,25 @@ Second, you can use the following command:
 \againframe{example1} % Will be included
 \end{verbatim}
 \end{command}
+
+
+
+\subsection{Step Four: Create Frames}
+
+Once the table of contents looks satisfactory, start creating frames
+for your presentation by adding |frame| environments. You'll find
+guidelines on what to put on a frame in
+Section~\ref{section-frame-guidelines}. 
+
+\lyxnote
+To create a frame, use the style ``BeginFrame''. The frame title
+is given on the line of this style. The frame ends automatically with
+the start of the next frame, with a section or subsection command, and
+with an empyt line in the sylte ``EndFrame''. Note that the last frame
+of your presentation must be ended using ``EndFrame'' and that the
+last frame before the appendix must be ended this way.
+
+
 
 
 

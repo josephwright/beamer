@@ -6,16 +6,86 @@
 
 \section{Graphics, Animations, Sounds, and Slide Transitions}
 
+\subsection{Guidelines}
+
+As always, I start this section with some guidelines on the usage
+of graphics and animations that I stick to. The technical issues are
+addressed in later subsections.
+
+
+\subsubsection{Graphics}
+
+\begin{itemize}
+\item
+  Graphics often convey concepts or ideas much more efficiently than
+  text: A picture can say more than a thousand words. (Although,
+  sometimes a word can say more than a thousand pictures.)
+\item
+  Put (at least) one graphic on each slide, whenever
+  possible. Visualizations help an audience enormously.
+\item
+  Usually, place graphics to the left of the text. (Use the
+  |columns| environment.) In a left-to-right reading culture, we look
+  at the left first.
+\item
+  Graphics should have the same typographic parameters as the
+  text: Use the same fonts (at the same size) in graphics as in the
+  main text. A small dot in a graphic should have exactly the same 
+  size as a small dot in a text. The line width should be the same as
+  the stroke width used in creating the glyphs of the font. For
+  example, an 11pt non-bold Computer Modern font has a stroke width of
+  0.4pt.
+\item
+  While bitmap graphics, like photos, can be much more colorful than the
+  rest of the text, vector graphics should follow the same ``color
+  logic'' as the main text (like black~= normal lines, red~= hilighted
+  parts, green~= examples, blue~= structure).
+\item
+  Like text, you should explain everything that is shown on a
+  graphic. Unexplained details make the audience puzzle whether this
+  was something important that they have missed. Be careful when
+  importing graphics from a paper or some other source. They usually
+  have much more detail than you will be able to explain.
+\end{itemize}
+
+
+
+
+\subsubsection{Animations and Special Effects}
+
+\begin{itemize}
+\item
+  Use animations to explain the dynamics of systems, algorithms, etc.
+\item
+  Do \emph{not} use animations just to attract the attention of your
+  audience. This often distracts attention away from the main topic of the
+  slide. No matter how cute a rotating,
+  flying theorem seems to look and no matter how badly you feel your
+  audience needs some action to keep it happy, most people in the
+  audience will typically feel you are making fun of them. 
+\item
+  Do \emph{not} use distracting special effects like ``dissolving''
+  slides unless you have a very good reason for using them. If you use
+  them, use them sparsely. 
+  They \emph{can} be useful in some situations: For example, you might
+  show a   young boy on a slide and might wish to dissolve this slide
+  into   slide showing a grown man instead. In this case, the
+  dissolving  gives the audience visual feedback that the young boy
+  ``slowly becomes'' the man. 
+\end{itemize}
+
+
+
+
+
 \subsection{Graphics}
 \label{section-graphics}
 
-Graphics often convey concepts or ideas much more efficiently than
-text: A picture can say more than a thousand words. (Although,
-sometimes a word can say more than a thousand pictures.) In the
-following, the advantages and disadvantages of different possible ways
-of creating graphics for \beamer\ presentations are discussed. Much of
-the information presented in the following is not really special to
-\beamer, but applies to any other document class as well.
+In the following, the advantages and disadvantages of different
+possible ways of creating graphics for \beamer\ presentations are
+discussed. Much of the information presented in the following is not
+really special to \beamer, but applies to any other document class as well.
+
 
 \subsubsection{Including External Graphic Files Versus Inlines Graphics}
 
@@ -206,14 +276,6 @@ this program works is explained in Section~\ref{section-mpmulti}.
 
 
 \subsection{Animations}
-
-A word of warning first: Animations can be very distracting. No matter
-how cute a rotating, flying theorem seems to look and no matter
-how badly you feel your audience needs some action to keep it happy,
-most people in the audience will typically feel you are making fun of
-them. 
-
-
 
 \subsubsection{Including External Animation Files}
 
@@ -775,6 +837,9 @@ following command is useful:
   stops the playback of all sounds.
 \end{command}
 
+
+
+
 \subsection{Slide Transitions}
 
 \textsc{pdf} in general, and the Acrobat Reader in particular, offer a
@@ -783,13 +848,6 @@ transition is a visual effect that is used to show the slide. For
 example, instead of just showing the slide immediately, whatever was
 shown before might slowly ``dissolve'' and be replaced by the slide's
 content.
-
-Slide transitions should be used with great care. Most of the time,
-they only distract. However, they can be useful in some situations:
-For example, you might show a young boy on a slide and might wish to
-dissolve this slide into slide showing a grown man instead. In this
-case, the dissolving gives the audience visual feedback that the young
-boy ``slowly becomes'' the man.
 
 There are a number of commands that can be used to specify what effect
 should be used when the current slide is presented. Consider the
