@@ -499,13 +499,35 @@
 \def\beamer@endslide{\end{beamer@frameslide}\beamer@writeslidentry\beamer@reseteecodes}
 \def\beamer@singletoken{\beamer@next\egroup}
 
+\expandafter\ifx\csname scantokens\endcsname\relax%
+  \let\scantokes=\relax%
+\fi%
+
 \def\beamer@doexternalframe{%
   \edef\beamer@verbfilename{\jobname\ifx\beamer@againname\@empty\else.\insertframenumber\fi.vrb}% .vrb for `verbatim'
   \beamer@setupstoppers{\beamer@frameenvironmentsubst}%
-  \immediate\openout\beamer@verbatimfileout=\beamer@verbfilename%
+  \ifx\scantokens\relax%etex check
+    \immediate\openout\beamer@verbatimfileout=\beamer@verbfilename%
+  \fi%
   \expandafter\beamer@verbatimreadframe\@gobble}
 % will return to following command with frame contents written to \beamer@verbfilename
 \def\beamer@afterexternalframe{%
+  \ifx\scantokens\relax%
+    \ifx\beamer@frameenvironmentsubst\beamer@frametext%
+    \else%
+      \immediate\write\beamer@verbatimfileout{\noexpand\beamerclosesubstitutedenvironement{\beamer@frameenvironmentsubst}}%
+    \fi%
+    \immediate\closeout\beamer@verbatimfileout%
+    \def\beamer@rereadcommand{\noexpand\input{\beamer@verbfilename}}%
+  \else%
+    \ifx\beamer@frameenvironmentsubst\beamer@frametext%
+    \else%
+      \global\beamer@verbatimtoks\expandafter\expandafter\expandafter{%
+      \expandafter\the\expandafter\beamer@verbatimtoks\expandafter\beamerclosesubstitutedenvironement%
+      \expandafter{\beamer@frameenvironmentsubst}}%
+    \fi%
+    \def\beamer@rereadcommand{\noexpand\scantokens{\the\beamer@verbatimtoks}}%
+  \fi%
   \expandafter\beamer@doframeinput\beamer@frameoptions\relax}
 
 \def\beamer@doframeinput{\@ifnextchar<{\beamer@frameinput}{\beamer@frameinput<*>}}
@@ -513,13 +535,9 @@
 \def\beamer@@frameinput<#1>[{\@ifnextchar<{\beamer@@@@frameinput<#1>[}{\beamer@@@frameinput<#1>[<*>][}}
 \def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[#2]}{\beamer@@@frameinput<#1>[#2][]}}
 \def\beamer@@@frameinput<#1>[#2][#3]{%
-  \ifx\beamer@frameenvironmentsubst\beamer@frametext%
-  \else%
-  \immediate\write\beamer@verbatimfileout{\noexpand\beamerclosesubstitutedenvironement{\beamer@frameenvironmentsubst}}%
-  \fi%
-  \immediate\closeout\beamer@verbatimfileout%
+  \global\advance\c@framenumber by-1\relax%
   \edef\beamer@temp{\noexpand\frame<#1>[#2][#3,fragile=false]%
-    {\begingroup\noexpand\input{\beamer@verbfilename}\endgroup}}%
+    {\begingroup\beamer@rereadcommand\endgroup}}%
   \beamer@temp%
   \ifx\beamer@frameenvironmentsubst\beamer@frametext%
   \else%
