@@ -56,11 +56,15 @@
       \else%
         \hfill%
       \fi%
-      \usebeamercolor[bg]{logo}%
-      \vrule width\beamer@sidebarwidth height \beamer@headheight%
-      \hskip-\beamer@sidebarwidth%
-      \hbox to \beamer@sidebarwidth{\hss\vbox to
-        \beamer@headheight{\vss\hbox{\color{fg}\insertlogo}\vss}\hss}%
+      \ifdim\beamer@sidebarwidth>0pt%  
+        \usebeamercolor[bg]{logo}%
+        \vrule width\beamer@sidebarwidth height \beamer@headheight%
+        \hskip-\beamer@sidebarwidth%
+        \hbox to \beamer@sidebarwidth{\hss\vbox to
+          \beamer@headheight{\vss\hbox{\color{fg}\insertlogo}\vss}\hss}%
+      \else%
+        \vrule width0pt height \beamer@headheight%  
+      \fi%
     \end{beamercolorbox}
   }
 \fi
@@ -129,6 +133,7 @@
     \vfill
     \ifx\beamer@sidebarside\beamer@lefttext%
     \else%
+      \usebeamercolor{normal text}%
       \llap{\insertnavigationsymbols\hskip0.1cm}%
       \vskip2pt%
     \fi%
@@ -154,7 +159,7 @@
           \usebeamercolor[bg]{sidebar bottom}
           {\globalcolorstrue\colorlet{sidebar bottom.bg}{bg}}
         }
-        \beamertemplatesidebarverticalshading[\beamer@sidebarside]{sidebar top.bg}{sidebar bottom.bg}
+        \beamertemplatesidebarverticalshading[\beamer@sidebarside]{sidebar bottom.bg}{sidebar top.bg}
       }
   }
 

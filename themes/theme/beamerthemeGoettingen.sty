@@ -12,23 +12,19 @@
 
 \PassOptionsToPackage{right}{beamerlayoutthemesidebar}
 \PassOptionsToPackage{width=2cm}{beamerlayoutthemesidebar}
-\PassOptionsToPackage{sidebarshade={{beamerstructure!10}{beamerstructure!25}}}{beamerlayoutthemesidebar}
 
 \DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{left}{\PassOptionsToPackage{side=left}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{right}{\PassOptionsToPackage{side=right}{beamerlayoutthemesidebar}}
-\DeclareOptionBeamer{side}{\PassOptionsToPackage{side=#1}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerlayoutthemesidebar}}
+\DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerlayoutthemesidebar}}
 
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
-\uselayouttheme[height=0pt,
-  titlecolor=black,
-  authorcolor=beamerstructure,
-  tabcolor=beamerstructure!50,
-  sectioncolor={{beamerstructure}{beamerstructure}},
-  subsectioncolor={{black}{black}}]{sidebar}
+\uselayouttheme[height=0pt]{sidebar}
+
+\setbeamercolor{sidebar top}{use=structure,bg=structure.fg!25}
+\setbeamercolor{sidebar bottom}{use=structure,bg=structure.fg!10}
 
 \mode
 <all>

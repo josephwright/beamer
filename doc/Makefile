@@ -9,9 +9,9 @@ themes = Antibes Berkeley Berlin Copenhagen Darmstadt \
 
 fontthemes = bold default italics romanum sansserifstructure serifstructure
 
-colorthemes = default crane snowtiger
+colorthemes = default Kranich
 
-layoutthemes = bars lined miniframestop shadow sidebar smoothbars smoothtree split tree
+layoutthemes = miniframes shadow sidebar smoothbars smoothtree split tree
 
 elementthemes = circles rectangles rounded
 
@@ -26,7 +26,7 @@ beameruserguide.pdf: $(doc).tex \
 	pdflatex $(doc).tex
 	(egrep -q $(rerun) $(doc).log && pdflatex $(doc).tex) || true
 
-beamerugtheme%.pdf: beamerthemeexample.tex
+beamerugtheme%.pdf: beamerthemeexample.tex ../themes/theme/beamertheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugtheme%.pdf=%)}\\input beamerthemeexample.tex;
 	mv beamerthemeexample.pdf $@
 

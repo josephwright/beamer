@@ -75,11 +75,18 @@
 
 \def\smallpackage{\vbox\bgroup\package}
 \def\endsmallpackage{\egroup\endpackage}
+
 \def\package#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
-\extracttheme#1@\par\topsep=0pt}
+\extracttheme#1@usepackage@\par\topsep=0pt}
 \def\endpackage{\endlist}
-\def\extracttheme#1#2@{%
-\item{{{\ttfamily\char`\\usepackage}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}}
+%\def\extracttheme#1#2@{%
+%\item{{{\ttfamily\char`\\usepackage}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}}
+
+\def\theme#1#2{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\extracttheme#2@#1@\par\topsep=0pt}
+\def\endtheme{\endlist}
+\def\extracttheme#1#2@#3@{%
+\item{{{\ttfamily\char`\\#3}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}}
 
 \def\class#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
 \extractclass#1@\par\topsep=0pt}
@@ -109,7 +116,7 @@
   \smallskip\par\noindent
   \pgfimage[width=.45\textwidth,page=1]{beamerug#1}\qquad\pgfimage[width=.45\textwidth,page=2]{beamerug#1}
   \smallskip\par}
-\newcommand{\themeexample}[1]{\genericthemeexample{theme#1}}
+\newcommand{\themeexample}[1]{\begin{theme}{usetheme}{{#1}}\example\genericthemeexample{theme#1}\end{theme}}
 \newcommand{\fontthemeexample}[1]{\genericthemeexample{fonttheme#1}}
 \newcommand{\colorthemeexample}[1]{\genericthemeexample{colortheme#1}}
 \newcommand{\layoutthemeexample}[1]{\genericthemeexample{layouttheme#1}}

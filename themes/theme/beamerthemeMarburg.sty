@@ -24,16 +24,24 @@
 
 \mode<presentation>
 
+\usecolortheme{sidebardark}
+
 \ifbeamer@sidebartab
-  \PassOptionsToPackage{tabcolor=beamerstructure!85!white}{beamerlayoutthemesidebar}
+  \setbeamercolor{section in sidebar current}{use=structure,bg=structure.fg!85}
 \else
-  \PassOptionsToPackage{%
-    tabcolor={},%
-    sectioncolor={{white}{beamerstructure!80}},
-    subsectioncolor={{white}{black!50}}}{beamerlayoutthemesidebar}
+  \setbeamercolor{section in sidebar}{use=structure,fg=structure.fg!80}
+  \setbeamercolor*{section in sidebar current}{fg=white}
+
+  \setbeamercolor{subsection in sidebar}{fg=black!50}
+  \setbeamercolor*{subsection in sidebar current}{fg=white}
 \fi  
 
-\uselayouttheme[height=0pt,sidebarshade={{beamerstructure}{black}}]{sidebar}
+\setbeamercolor*{frametitle}{use=structure,fg=structure.fg}
+
+\setbeamercolor{sidebar top}{bg=black}
+\setbeamercolor{sidebar bottom}{use=structure,bg=structure.fg}
+
+\uselayouttheme[height=0pt]{sidebar}
 
 \mode
 <all>

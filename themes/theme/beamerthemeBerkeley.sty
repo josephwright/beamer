@@ -11,7 +11,6 @@
 \DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerlayoutthemesidebar}}
 
-\DeclareOptionBeamer{cornercolor}{\PassOptionsToPackage{cornercolor=#1}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerlayoutthemesidebar}}
 \DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerlayoutthemesidebar}}
@@ -20,9 +19,13 @@
 \mode<presentation>
 
 \uselayouttheme{sidebar}
-\useelementtheme[%
-  blockheadcolor=beamerstructure!75!averagebackgroundcolor,%
-  titlecolor=beamerstructure!75!averagebackgroundcolor]{rectangles}
+\useelementtheme{rectangles}
+
+\usecolortheme{sidebardark}
+\usecolortheme{blocksdark}
+
+\setbeamercolor{title}{use=structure,fg=white,bg=structure.fg}
+\setbeamerfont{block title}{size={}}
 
 \mode
 <all>

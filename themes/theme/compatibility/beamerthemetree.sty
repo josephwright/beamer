@@ -9,12 +9,13 @@
 
 \mode<presentation>
 
-\def\beamer@thmtreestyle{lines}
-\DeclareOptionBeamer{bars}{\def\beamer@thmtreestyle{bars}}
+\def\beamer@theme@col{treelined}
+\DeclareOptionBeamer{bars}{\def\beamer@theme@col{treedark}}
 \ProcessOptionsBeamer
 
 \usefonttheme[onlysmall]{bold}
-\uselayouttheme[\beamer@thmtreestyle]{tree}
+\usecolortheme{\beamer@theme@col}
+\uselayouttheme{tree}
 
 \mode
 <all>

@@ -26,49 +26,47 @@
 \ifbeamer@sidebardark
   \usefonttheme{bold}
   \ifbeamer@sidebartab
-    \PassOptionsToPackage{%
-      right,%
-      height=0pt,%
-      sidebarshade={{beamerstructure}{black}}}%
-     {beamerlayoutthemesidebar}
+    \usecolortheme{sidebardark}
+    \setbeamercolor{sidebar top}{use=structure,bg=black}
+    \setbeamercolor{sidebar bottom}{use=structure,bg=structure.fg}
+
+    \setbeamercolor*{frametitle}{use=structure,fg=structure.fg}
   \else
-    \PassOptionsToPackage{%
-      right,%
-      height=0pt,%
-      tabcolor={},%
-      sectioncolor={{white}{beamerstructure!80}},
-      subsectioncolor={{white}{black!50}},
-      sidebarshade={{beamerstructure}{black}}}%
-     {beamerlayoutthemesidebar}
-   \fi
+    \usecolortheme{sidebardark}
+    \setbeamercolor{section in sidebar}{use=structure,fg=structure.fg!80}
+    \setbeamercolor*{section in sidebar current}{fg=white}
+
+    \setbeamercolor{subsection in sidebar}{fg=black!50}
+    \setbeamercolor*{subsection in sidebar current}{fg=white}
+
+    \setbeamercolor{sidebar top}{use=structure,bg=black}
+    \setbeamercolor{sidebar bottom}{use=structure,bg=structure.fg}
+
+    \setbeamercolor*{frametitle}{use=structure,fg=structure.fg}
+  \fi
 \else  
   \ifbeamer@sidebartab
-    \PassOptionsToPackage{%
-      right,%
-      height=0pt,%
-      tabcolor={black!25},%
-      titlecolor=beamerstructure,
-      authorcolor=black,
-      sectioncolor={{beamerstructure}{beamerstructure}},
-      subsectioncolor={{black}{black}},
-      sidebarshade={{beamerstructure!90!white}{white!95!beamerstructure}}}%
-     {beamerlayoutthemesidebar}
+    \setbeamercolor{section in sidebar}{use=structure,fg=structure.fg}
+    \setbeamercolor*{section in sidebar current}{parent=section in sidebar,bg=black!25}
+
+    \setbeamercolor{subsection in sidebar}{fg=black}
+    \setbeamercolor*{subsection in sidebar current}{fg=black,bg=black!25}
+
+    \setbeamercolor{sidebar top}{use=structure,bg=white!95!structure.fg}
+    \setbeamercolor{sidebar bottom}{use=structure,bg=structure.fg!90!white}
   \else
-    \PassOptionsToPackage{%
-      right,%
-      height=0pt,%
-      titlecolor=beamerstructure,
-      authorcolor=black,
-      tabcolor={},%
-      sectioncolor={{black}{beamerstructure!75}},
-      subsectioncolor={{black}{black!50}},
-      sidebarshade={{white}{beamerstructure!50!averagebackgroundcolor}}%
-      }%
-     {beamerlayoutthemesidebar}
+    \setbeamercolor{section in sidebar}{use=structure,fg=structure.fg!75}
+    \setbeamercolor*{section in sidebar current}{fg=black}
+
+    \setbeamercolor{subsection in sidebar}{fg=black!50}
+    \setbeamercolor*{subsection in sidebar current}{fg=black}
+
+    \setbeamercolor{sidebar bottom}{bg=white}
+    \setbeamercolor{sidebar top}{use=structure,bg=structure.fg!50!bg}
   \fi
 \fi
 
-\uselayouttheme{sidebar}
+\uselayouttheme[right,height=0pt]{sidebar}
 
 \mode
 <all>
