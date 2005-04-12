@@ -27,6 +27,41 @@
 
 \begin{document}
 
+{
+  \parindent0pt
+\vbox{}
+\vskip 3.5cm
+\Huge
+The \textsc{beamer} \textit{class}
+
+\Large
+Manual for version \version.
+\vskip 3cm
+
+\normalsize
+\begin{verbatim}
+\begin{frame}
+  \frametitle{There Is No Largest Prime Number}
+  \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+  \begin{theorem}
+    There is no largest prime number.
+  \end{theorem}
+  \begin{proof}
+    \begin{enumerate}
+    \item<1-| alert@1> Suppose $p$ were the largest prime number.
+    \item<2-> Let $q$ be the product of the first $p$ numbers.
+    \item<3-> Then $q+1$ is not divisible by any of them.
+    \item<1-> Thus $q+1$ is also prime and greater than $p$.\qedhere
+    \end{enumerate}      
+  \end{proof}
+\end{frame}
+\end{verbatim}
+\pgfimage[width=.45\textwidth,page=2]{beamerugthemePittsburgh}\qquad\pgfimage[width=.45\textwidth,page=2]{beamerugthemeFrankfurt}
+\vskip 0cm plus 1.5fill
+\vbox{}         
+\clearpage
+}
+
 \index{Themes|see{Presentation themes}}
 \index{Templates|see{Beamer templates}}
 \index{Colors|see{Beamer colors}}
