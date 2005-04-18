@@ -94,7 +94,8 @@
       \fi%
       \vskip-\parskip\vbox{}%
       \beamer@initfirstlineunskip%
-      \ifbeamer@plainframe\nointerlineskip\fi}%
+      \ifbeamer@plainframe\nointerlineskip\fi%
+    \beamer@checkframetitle}%
     {\end{beamer@framepauses}%
   \egroup%
   \ifx\beamer@frametitle\@empty%
@@ -139,6 +140,20 @@
   \beamer@undolabels%
   \beamer@framenotesend%
   \box\beamer@framebox}
+
+
+\mode
+<all>
+{
+  \def\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+  \def\beamer@inlineframetitle#1{%
+    \frametitle{#1}%
+    \@ifnextchar\bgroup{\beamer@inlineframesubtitle}{}%
+  }
+  \def\beamer@inlineframesubtitle#1{%
+    \framesubtitle{#1}%
+  }
+}
 
 
 
@@ -621,18 +636,29 @@
     \setbox\beamer@tempbox\vbox\bgroup%
     \beamer@inframetrue%
     \usebeamertemplate{frame begin}%
-    \bgroup%
-    \aftergroup\beamer@endframe%
-    \ifx\@currenvir\beamer@frametext\else\expandafter\let\expandafter\beamer@next\fi}
+    \bgroup\aftergroup\beamer@endframe%
+    \beamer@article@startframe}%
   \def\beamer@dosingleframe{%
     \bgroup%
     \beamer@inframetrue%
     \usebeamertemplate{frame begin}%
     \bgroup\aftergroup\beamer@endframe%
-    \ifx\@currenvir\beamer@frametext\else\expandafter\let\expandafter\beamer@next\fi}
+    \beamer@article@startframe}%
   \def\beamer@endframe{%
     \usebeamertemplate{frame end}\egroup}
 
+  \def\beamer@article@startframe{%
+    \ifx\@currenvir\beamer@frametext%
+      \let\beamer@next=\beamer@checkframetitle%
+    \else%
+      \let\beamer@next=\beamer@article@framecmd%
+    \fi%
+    \beamer@next}%
+  
+  \def\beamer@article@framecmd{%
+    \afterassignment\beamer@checkframetitle
+    \let\beamer@next=}
+  
   \providecommand\includeonlyframes[1]{}% no effect
 }
 

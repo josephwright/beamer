@@ -25,13 +25,20 @@ overlay specification, the frame will contain multiple slides;
 otherwise it contains only one slide.
 
 \begin{environment}{{frame}\sarg{overlay specification}%
-    \opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}}
+    \opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\opt{\marg{title}\marg{subtitle}}}
   The \meta{overlay specification} dictates which slides of a frame are
   to be shown. If left out, the number is calculated automatically.
   The \meta{environment contents} can be normal \LaTeX\ text, but may not contain
   |\verb| commands or |verbatim| environments or any environment that
   changes the character codes, unless the |fragile| options
   is given.
+
+  The optional \meta{title} is detected by an opening brace, that is,
+  if the first thing in the frame is an opening brace then it is
+  assumed that a frame title follows. Likewise, the optional
+  \meta{subtitle} is detected the same way, that is, by an opening
+  brace following the \meta{title}. The title and subtitle can also be
+  given using the |\frametitle| and |\framesubtitle| commands.
  
   The normal \LaTeX\ command |\frame| is available \emph{inside}
   frames with its usual meaning. Both outside and inside frames it is
@@ -39,6 +46,10 @@ otherwise it contains only one slide.
  
   \example
 \begin{verbatim}
+\begin{frame}{A title}
+  Some content.
+\end{frame}
+%% Same effect:
 \begin{frame}
   \frametitle{A title}
   Some content.
@@ -47,8 +58,7 @@ otherwise it contains only one slide.
   
   \example
 \begin{verbatim}
-\begin{frame}<beamer>  % frame is only shown in beamer mode
-  \frametitle{Outline}
+\begin{frame}<beamer>{Outline}  % frame is only shown in beamer mode
   \tabelofcontent[current]
 \end{frame}
 \end{verbatim}
@@ -198,9 +208,7 @@ otherwise it contains only one slide.
 
     \example
 \begin{verbatim}
-\begin{frame}[allowframebreaks]
-  \frametitle{References}
-
+\begin{frame}[allowframebreaks]{References}
   \begin{thebibliography}{XX}
 
   \bibitem...
@@ -212,9 +220,7 @@ otherwise it contains only one slide.
 \end{verbatim}
     \example
 \begin{verbatim}
-\begin{frame}[allowframebreaks,allowdisplaybreaks]
-  \frametitle{A Long Equation}
-
+\begin{frame}[allowframebreaks,allowdisplaybreaks]{A Long Equation}
   \begin{align}
     \zeta(2) &= 1 + 1/4 + 1/9 + \cdots \\
     &= ... \\
@@ -432,7 +438,7 @@ otherwise it contains only one slide.
 You \emph{can} use the |frame| environment inside other
 environments like this
 \begin{verbatim}
-\newenvironment{myframe}[1]{\begin{frame}\frametitle{#1}}{\end{frame}}
+\newenvironment{slide}{\begin{frame}}{\end{frame}}
 \end{verbatim}
 or like this
 \begin{verbatim}
@@ -444,7 +450,22 @@ However, the actual mechanics are somewhat sensitive since the
 ``collecting'' of the frame contents is not easy, so
 do not attempt anything too fancy. As a rule, the beginning of the
 environment can be pretty arbitrary, but the ending must end with
-|\end{frame}|. Anything really complex is likely to fail.
+|\end{frame}| and should not contain any |\end{xxx}|. Anything really
+complex is likely to fail. If you need some |\end{xxx}| there, define
+a new command that contains this stuff as in the following example:
+\begin{verbatim}
+\newenvironment{itemizeframe}
+  {\begin{frame}\startitemizeframe}
+  {\stopitemizeframe\end{frame}}
+
+\newcommand\startitemizeframe{\begin{bfseries}\begin{itemize}}
+\newcommand\stopitemizeframe{\end{itemize}\end{bfseries}}
+
+\begin{itemizeframe}
+\item First item
+\end{itemizeframe}
+
+\end{verbatim}
 
 
 
