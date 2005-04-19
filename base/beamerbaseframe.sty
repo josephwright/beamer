@@ -512,11 +512,11 @@
 
 \def\beamer@dosingleframe{%
   \beamer@slideinframe=1\relax%
-  \begin{beamer@frameslide}%
+  \begin{beamer@frameslide}\relax%
     \bgroup\aftergroup\beamer@endslide\afterassignment\beamer@checkslide\let\beamer@next}
 \def\beamer@checkslide{%
   \ifcat\bgroup\noexpand\beamer@next%
-  \let\beamer@do\relax%
+  \let\beamer@do\beamer@checkframetitle%
   \else\let\beamer@do\beamer@singletoken\fi%
   \beamer@do}
 \def\beamer@endslide{\end{beamer@frameslide}\beamer@writeslidentry\beamer@reseteecodes}
