@@ -178,8 +178,11 @@
 \def\beamer@autobreakframe{%
   \beamer@slideinframe=1\relax%
   \advance\beamer@autobreakcount by1\relax%
-  \begin{beamer@frameslide}%
-    \bgroup\aftergroup\beamer@endautobreak\let\beamer@next% gobble opening brace
+  \begin{beamer@frameslide}\relax%
+    \bgroup%
+    \aftergroup\beamer@endautobreak%
+    \afterassignment\beamer@checkframetitle%
+    \let\beamer@next% gobble opening brace
   }
 \def\beamer@endautobreak{\end{beamer@frameslide}%
   \beamer@writeslidentry%
