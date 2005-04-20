@@ -200,7 +200,7 @@
     % Ok, frame was overful -> split it!
     \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
     \global\setbox\beamer@splitbox=\box\beamer@framebox%
-    \@tempdima=\ht\@tempboxa%
+    \@tempdima=\ht\beamer@splitbox%
     \ifdim\@tempdima<\beamer@autobreaklastheight%
       \global\beamer@autobreaklastheight=\@tempdima\relax%
     \else%

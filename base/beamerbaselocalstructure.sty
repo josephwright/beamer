@@ -18,7 +18,7 @@
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
 \long\def\beamer@@frametitle[#1]#2{%
   \beamer@ifempty{#2}{}{%
-    \gdef\insertframetitle{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}%
+    \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
   \gdef\beamer@frametitle{#2}%
   \gdef\beamer@shortframetitle{#1}%
 }%
@@ -34,7 +34,7 @@
 \mode
 <all>
 {
-  \newcommand<>\framesubtitle[1]{\only#2{\gdef\insertframesubtitle{#1}}}
+  \newcommand<>\framesubtitle[1]{\only#2{\beamer@ifempty{#1}{}{\gdef\insertframesubtitle{{#1}}}}}
 }
 
 
