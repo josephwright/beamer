@@ -253,7 +253,7 @@
     \def\insertsubsubsection{}%
     \def\insertsubsectionhead{#1}%
     \def\insertsubsubsectionhead{}%
-    \Hy@writebookmark{\the\c@subsection}{#1}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
+    \Hy@writebookmark{\the\c@subsection}{#2}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
     \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
     \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}%
   \fi%
@@ -313,7 +313,7 @@
     \edef\subsubsectionlink{{Navigation\the\c@page}{\noexpand\subsubsecname}}%
     \def\insertsubsubsection{\expandafter\hyperlink\subsubsectionlink}%
     \def\insertsubsubsectionhead{#1}%
-    \Hy@writebookmark{\the\c@subsubsection}{#1}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}{4}{toc}%
+    \Hy@writebookmark{\the\c@subsubsection}{#2}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}{4}{toc}%
     \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}\hyper@anchorend%
     \beamer@ifempty{#2}{\beamer@atbeginsubsubsections}{\beamer@atbeginsubsubsection}%
   \fi%
