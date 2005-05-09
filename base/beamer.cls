@@ -300,7 +300,7 @@
 \beamer@filterclassoptions
 
 
-\RequirePackage{pgfcore,pgfbaseshade,pgfbaseimage}
+\RequirePackage{pgfcore,pgfbaseimage}
 % For all sorts of things...
 
 \RequirePackage{xxcolor}

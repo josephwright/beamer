@@ -202,13 +202,13 @@
 {
   \ifx\includegraphics\@undefined
   \else
-    \renewcommand<>\includegraphics{\alt#1{\beameroriginal\includegraphics}{\beamer@gobbleoptional}}
+    \renewcommand<>\includegraphics[2][]{\only#3{\beameroriginal\includegraphics[#1]{#2}}\ignorespaces}
   \fi
 
   \ifx\pgfuseimage\@undefined
   \else
-    \renewcommand<>\pgfuseimage{\alt#1{\beameroriginal\pgfuseimage}{\beamer@gobbleoptional}}
-    \renewcommand<>\pgfimage{\alt#1{\beameroriginal\pgfimage}{\beamer@gobbleoptional}}
+    \renewcommand<>\pgfuseimage[2][]{\only#3{\beameroriginal\pgfuseimage[#1]{#2}}\ignorespaces}
+    \renewcommand<>\pgfimage[2][]{\only#3{\beameroriginal\pgfimage[#1]{#2}}\ignorespaces}
   \fi
 }
 

@@ -58,8 +58,8 @@ class, extra options or precautions may be necessary.
   \beamernote
   The |color| package is automatically loaded by |beamer.cls|. This
   makes it impossible to pass options to |color| in the preamble of
-  your document. To pass a \meta{list of options} to |color|, you must
-  use the following class option:
+  your document in the normal manner. To pass a \meta{list of options}
+  to |color|, you can use the following class option:
 
   \begin{classoption}{color={\normalfont\meta{list of options}}}
     Causes the \meta{list of options} to be passed on to the |color|
@@ -70,6 +70,13 @@ class, extra options or precautions may be necessary.
   \articlenote
   The |color| package is not loaded automatically if
   |beamerarticle| is loaded with the |noxcolor| option.
+\end{package}
+
+\begin{package}{{colortbl}}
+  \beamernote
+  With newer versions of |xcolor.sty|, you need to pass the option
+  |table| to |xcolor.sty| if you wish to use |colortbl|. See the notes
+  on |xcolor| below, on how to do this.
 \end{package}
 
 \begin{package}{{CJK}}
