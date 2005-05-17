@@ -102,7 +102,7 @@
       \advance\bmb@dima by8bp%
       \pgfpathrectangle{\pgfpoint{-4bp}{-1bp}}{\pgfpoint{\bmb@dima}{8bp}}
       \pgfusepath[clip]
-      \pgflowlevelobj{\pgftransformshift{\pgfpoint{-4bp}{0bp}}}{\pgfbox[left,base]{\pgfuseshading{bmb@transition}}}%
+      \pgftransformshiftobj{\pgfpoint{-4bp}{0bp}}{\pgftext[left,base]{\pgfuseshading{bmb@transition}}}%
     \end{pgfpicture}%
   }%
   \nointerlineskip%
@@ -135,20 +135,20 @@
   \hbox{%
     \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
       \ifbmb@shadow%
-      \pgflowlevelobj{\pgftransformshift{\pgfpoint{4bp}{-3bp}}}{\pgfbox[center,center]{\copy\bmb@boxshadowball}}
+      \pgftransformshiftobj{\pgfpoint{4bp}{-3bp}}{\pgftext{\copy\bmb@boxshadowball}}
       \begin{pgfscope}
         {%
         \advance\bmb@temp by-1bp%
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
         \pgfusepath[clip]
         }%
-        \pgflowlevelobj{\pgftransformshift{\pgfpoint{\bmb@temp}{1bp}}}{\pgfbox[center,center]{\box\bmb@boxshadowballlarge}}
+        \pgftransformshiftobj{\pgfpoint{\bmb@temp}{1bp}}{\pgftext{\box\bmb@boxshadowballlarge}}
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by-4bp%
         \pgfpathrectangle{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
         \pgfusepath[clip]
-        \pgflowlevelobj{\pgftransformshift{\pgfpoint{4bp}{-7bp}}}{\pgfbox[left,base]{\copy\bmb@boxshadow}}%
+        \pgftransformshiftobj{\pgfpoint{4bp}{-7bp}}{\pgftext[left,base]{\copy\bmb@boxshadow}}%
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by 4bp%
@@ -158,13 +158,13 @@
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \pgfusepath[clip]
         \advance\bmb@dima by-4bp%
-        \pgflowlevelobj{\pgftransformshift{\pgfpoint{\bmb@temp}{\bmb@dima}}}{\pgfbox[center,center]{\box\bmb@boxshadowball}}
+        \pgftransformshiftobj{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgftext{\box\bmb@boxshadowball}}
         \advance\bmb@dima by-1bp%
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \pgfusepath[clip]
         \advance\bmb@temp by4bp%
-        \pgflowlevelobj{\pgftransformshift{\pgfpoint{\bmb@temp}{-3bp}}}%
-        {\pgflowlevelobj{\pgftransformrotate{90}}{\pgfbox[left,base]{\box\bmb@boxshadow}}}%
+        \pgftransformshiftobj{\pgfpoint{\bmb@temp}{-3bp}}%
+        {\pgftransformrotateobj{90}{\pgftext[left,base]{\box\bmb@boxshadow}}}%
       \end{pgfscope}
       \fi%
       \unhbox\bmb@colorbox%

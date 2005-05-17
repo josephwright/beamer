@@ -222,7 +222,7 @@
       \color{bg}
       \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
       \pgfusepath[fill]
-      \pgfbox[center,base]{\color{fg}\inserttocsectionnumber}
+      \pgftext[base]{\color{fg}\inserttocsectionnumber}
     \end{pgfpicture}\kern1.25ex%
   }%
   \inserttocsection\par}
@@ -290,8 +290,8 @@
   \llap{%
     \normalsize%
     \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
-      \pgfbox[center,center]{\beamer@usesphere{section number projected}{tocsphere}}
-      \pgfbox[center,center]{%
+      \pgftext{\beamer@usesphere{section number projected}{tocsphere}}
+      \pgftext{%
         \usebeamerfont*{section number projected}%
         \usebeamercolor{section number projected}%
         \color{fg!90!bg}%
@@ -358,14 +358,9 @@
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
     \usebeamercolor[fg]{item projected}
-    \begin{pgflowlevelscope}{\pgftransformscale{1.75}}
-      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgflowlevelscope}
-    \pgflowlevelobj{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}}
-    {%
-      \pgfbox[center,center]{%
-        \usebeamerfont*{item projected}%
-        \insertenumlabel}}
+    \pgftransformscaleobj{1.75}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    \pgftransformshiftobj{\pgfpoint{0pt}{0.5pt}}
+      {\pgftext{\usebeamerfont*{item projected}\insertenumlabel}}
   \end{pgfpicture}%
 }
 
@@ -373,10 +368,8 @@
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
     \usebeamercolor[fg]{subitem projected}
-    \begin{pgflowlevelscope}{\pgftransformscale{1.4}}
-      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgflowlevelscope}
-    \pgfbox[center,center]{%
+    \pgftransformscaleobj{1.4}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    \pgftext{%
       \usebeamerfont*{subitem projected}%
       \insertsubenumlabel}
   \end{pgfpicture}%
@@ -386,10 +379,8 @@
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
     \usebeamercolor[fg]{subsubitem projected}
-    \begin{pgflowlevelscope}{\pgftransformscale{1.4}}
-      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgflowlevelscope}
-    \pgfbox[center,center]{%
+    \pgftransformscaleobj{1.4}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    \pgftext{%
       \usebeamerfont*{subitem projected}%
       \insertsubsubenumlabel}
   \end{pgfpicture}%
@@ -399,13 +390,11 @@
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
     \usebeamercolor[fg]{\beameritemnestingprefix item projected}
-    \begin{pgflowlevelscope}{\pgftransformscale{1.75}}
-      \pgfbox[center,center]{\normalsize\pgfuseshading{bigsphere}}
-    \end{pgflowlevelscope}
-    \pgflowlevelobj{\pgftransformshift{\pgfpoint{0pt}{0.5pt}}}
+    \pgftransformscaleobj{1.75}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    \pgftransformshiftobj{\pgfpoint{0pt}{0.5pt}}
     {%
       \usebeamerfont*{\beameritemnestingprefix item projected}%
-      \pgfbox[center,center]{\insertenumlabel}}
+      \pgftext{\insertenumlabel}}
   \end{pgfpicture}
 }
 
@@ -483,7 +472,7 @@
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
-    \pgfbox[center,base]{\color{fg}\insertenumlabel}
+    \pgftext[base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
 }
 [action]
@@ -496,7 +485,7 @@
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
-    \pgfbox[center,base]{\color{fg}\insertsubenumlabel}
+    \pgftext[base]{\color{fg}\insertsubenumlabel}
   \end{pgfpicture}%
 }
 
@@ -507,7 +496,7 @@
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
-    \pgfbox[center,base]{\color{fg}\insertsubsubenumlabel}
+    \pgftext[base]{\color{fg}\insertsubsubenumlabel}
   \end{pgfpicture}%
 }
 
@@ -518,7 +507,7 @@
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
     \pgfusepath[fill]
-    \pgfbox[center,base]{\color{fg}\insertenumlabel}
+    \pgftext[base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
 }
 

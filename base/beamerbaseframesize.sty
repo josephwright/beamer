@@ -101,15 +101,15 @@
       \setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
           \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
           \begin{pgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
-            \pgfbox[left,top]{\box\@tempboxa}
+            \pgftext[left,top]{\box\@tempboxa}
             \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
             \pgfusepath[clip]
-            \begin{pgflowlevelscope}{\pgftransformscale{\beamer@temp}}
+            \begin{pgftransformscalescope}{\beamer@temp}
               \@tempdima=#4\relax%
               \@tempdimb=#5\relax%
-              \pgflowlevel{\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}}
-              \pgfbox[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}
-            \end{pgflowlevelscope}
+              \pgftransformshiftobj{\pgfpoint{-\@tempdima}{\@tempdimb}}{%
+              \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}}
+            \end{pgftransformscalescope}
           \end{pgfpicture}%
         }}%
       \setbox\beamer@framebox=\vbox{%
@@ -157,8 +157,8 @@
     \edef\beamer@factortemp{\strip@pt\@tempdimc}%
     \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
       \begin{pgfpicture}{0pt}{-\beamer@frametextheight}{0pt}{0pt}
-        \pgflowlevelobj{\pgftransformscale{\beamer@factortemp}}{%
-          \pgfbox[left,top]{\box\beamer@framebox}}%
+        \pgftransformscaleobj{\beamer@factortemp}{%
+          \pgftext[left,top]{\box\beamer@framebox}}%
       \end{pgfpicture}%
     }%
 %  \fi%
