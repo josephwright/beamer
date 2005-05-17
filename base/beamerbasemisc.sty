@@ -207,7 +207,7 @@
 
   \ifx\pgfuseimage\@undefined
   \else
-    \renewcommand<>\pgfuseimage[2][]{\only#3{\beameroriginal\pgfuseimage[#1]{#2}}\ignorespaces}
+    \renewcommand<>\pgfuseimage[1]{\only#2{\beameroriginal\pgfuseimage{#1}}\ignorespaces}
     \renewcommand<>\pgfimage[2][]{\only#3{\beameroriginal\pgfimage[#1]{#2}}\ignorespaces}
   \fi
 }
