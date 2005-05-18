@@ -328,24 +328,24 @@
 }%
 
 
-\define@key{beamer@mixin}{still covered}{\gdef\beamer@uncoverbeforeactions{\ignorespaces#1}}
-\define@key{beamer@mixin}{again covered}{\gdef\beamer@uncoverafteractions{\ignorespaces#1}}
+\define@key{beamer@mixin}{still covered}{\def\beamer@uncoverbeforeactions{\ignorespaces#1}}
+\define@key{beamer@mixin}{again covered}{\def\beamer@uncoverafteractions{\ignorespaces#1}}
 
 \define@key{beamer@mixin}{invisible}[]{%
-  \gdef\beamer@uncoverbeforeactions{\ignorespaces}
-  \gdef\beamer@uncoverafteractions{\ignorespaces}}
+  \def\beamer@uncoverbeforeactions{\ignorespaces}
+  \def\beamer@uncoverafteractions{\ignorespaces}}
 
 \define@key{beamer@mixin}{transparent}[15]{%
-  \gdef\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1->{#1}}
-  \gdef\beamer@uncoverafteractions{\ignorespaces\opaqueness<1->{#1}}}
+  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1->{#1}}
+  \def\beamer@uncoverafteractions{\ignorespaces\opaqueness<1->{#1}}}
 
 \define@key{beamer@mixin}{dynamic}[]{%
-  \gdef\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1-2>{10}\opaqueness<3->{5}}
-  \gdef\beamer@uncoverafteractions{\ignorespaces\opaqueness<1-2>{10}\opaqueness<3->{5}}}
+  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1-2>{10}\opaqueness<3->{5}}
+  \def\beamer@uncoverafteractions{\ignorespaces\opaqueness<1-2>{10}\opaqueness<3->{5}}}
 
 \define@key{beamer@mixin}{highly dynamic}[]{%
-  \gdef\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}
-  \gdef\beamer@uncoverafteractions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}}
+  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}
+  \def\beamer@uncoverafteractions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}}
 
 
 \def\setbeamercovered#1{%
