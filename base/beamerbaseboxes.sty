@@ -77,8 +77,8 @@
       \else%        
         \color{upper.bg}%
       \fi%  
-      \pgfpathqmoveto{-4}{-1}
-      \pgfpathqcurveto{-4}{1.2}{-2.2}{3}{0}{3}
+      \pgfpathqmoveto{-4bp}{-1bp}
+      \pgfpathqcurveto{-4bp}{1.2bp}{-2.2bp}{3bp}{0bp}{3bp}
       \pgfpathlineto{\pgfpoint{\bmb@temp}{3bp}}
       \pgfpathcurveto%
       {\pgfpoint{\bmb@dima}{3bp}}%
@@ -88,7 +88,7 @@
       \advance\bmb@dima by-2pt%
       \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
       \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
-      \pgfusepath[fill]
+      \pgfusepath{fill}
     \end{pgfpicture}%
     \copy\bmb@box%
   }%
@@ -101,7 +101,7 @@
       \bmb@dima=\bmb@width%
       \advance\bmb@dima by8bp%
       \pgfpathrectangle{\pgfpoint{-4bp}{-1bp}}{\pgfpoint{\bmb@dima}{8bp}}
-      \pgfusepath[clip]
+      \pgfusepath{clip}
       \pgftransformshiftobj{\pgfpoint{-4bp}{0bp}}{\pgftext[left,base]{\pgfuseshading{bmb@transition}}}%
     \end{pgfpicture}%
   }%
@@ -140,14 +140,14 @@
         {%
         \advance\bmb@temp by-1bp%
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
-        \pgfusepath[clip]
+        \pgfusepath{clip}
         }%
         \pgftransformshiftobj{\pgfpoint{\bmb@temp}{1bp}}{\pgftext{\box\bmb@boxshadowballlarge}}
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by-4bp%
         \pgfpathrectangle{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
-        \pgfusepath[clip]
+        \pgfusepath{clip}
         \pgftransformshiftobj{\pgfpoint{4bp}{-7bp}}{\pgftext[left,base]{\copy\bmb@boxshadow}}%
       \end{pgfscope}
       \begin{pgfscope}
@@ -156,20 +156,20 @@
         \advance\bmb@dima by\bmb@prevheight%
         \advance\bmb@dima by 4bp%
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
-        \pgfusepath[clip]
+        \pgfusepath{clip}
         \advance\bmb@dima by-4bp%
         \pgftransformshiftobj{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgftext{\box\bmb@boxshadowball}}
         \advance\bmb@dima by-1bp%
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
-        \pgfusepath[clip]
+        \pgfusepath{clip}
         \advance\bmb@temp by4bp%
         \pgftransformshiftobj{\pgfpoint{\bmb@temp}{-3bp}}%
         {\pgftransformrotateobj{90}{\pgftext[left,base]{\box\bmb@boxshadow}}}%
       \end{pgfscope}
       \fi%
       \unhbox\bmb@colorbox%
-      \pgfpathqmoveto{-4}{1}
-      \pgfpathqcurveto{-4}{-1.2}{-2.2}{-3}{0}{-3}
+      \pgfpathqmoveto{-4bp}{1bp}
+      \pgfpathqcurveto{-4bp}{-1.2bp}{-2.2bp}{-3bp}{0bp}{-3bp}
       \pgfpathlineto{\pgfpoint{\the\bmb@temp}{-3bp}}
       \pgfpathcurveto%
       {\pgfpoint{\the\bmb@dima}{-3bp}}%
@@ -179,7 +179,7 @@
       \bmb@dima=\ht\bmb@box%
       \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
       \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
-      \pgfusepath[fill]
+      \pgfusepath{fill}
       }
       \ifbmb@shadow%
       {
@@ -190,31 +190,31 @@
         \advance\bmb@dima by\bmb@prevheight%
         \advance\bmb@dima by 1bp%
         \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath
+        \pgfusepath{stroke}
         \bmb@temp=\bmb@dima
         \advance\bmb@dima by 1bp%
         \color{black!31!bg}
         \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
         \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath
+        \pgfusepath{stroke}
         \advance\bmb@dima by 1bp%
         \advance\bmb@temp by 1bp%
         \color{black!19!bg}
         \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
         \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath
+        \pgfusepath{stroke}
         \advance\bmb@dima by 1bp%
         \advance\bmb@temp by 1bp%
         \color{black!6!bg}
         \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
         \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath
+        \pgfusepath{stroke}
         \advance\bmb@dima by 1.5bp%
         \advance\bmb@temp by 1bp%
         \color{bg}
         \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
         \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath
+        \pgfusepath{stroke}
       }
       \fi
     \end{pgfpicture}%

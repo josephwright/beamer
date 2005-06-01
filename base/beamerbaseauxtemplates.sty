@@ -69,7 +69,7 @@
   \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
     \beamer@bggc
     \pgfpathgrid[stepx=\beamer@bggw,stepy=\beamer@bggw]{\pgfpointorigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
-    \pgfusepath
+    \pgfusepath{stroke}
   \end{pgfpicture}%    
 }
 
@@ -221,7 +221,7 @@
     \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
       \color{bg}
       \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
-      \pgfusepath[fill]
+      \pgfusepath{fill}
       \pgftext[base]{\color{fg}\inserttocsectionnumber}
     \end{pgfpicture}\kern1.25ex%
   }%
@@ -471,7 +471,7 @@
   \usebeamercolor[bg]{item projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
-    \pgfusepath[fill]
+    \pgfusepath{fill}
     \pgftext[base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
 }
@@ -484,7 +484,7 @@
   \usebeamercolor[bg]{subitem projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
-    \pgfusepath[fill]
+    \pgfusepath{fill}
     \pgftext[base]{\color{fg}\insertsubenumlabel}
   \end{pgfpicture}%
 }
@@ -495,7 +495,7 @@
   \usebeamercolor[bg]{subsubitem projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
-    \pgfusepath[fill]
+    \pgfusepath{fill}
     \pgftext[base]{\color{fg}\insertsubsubenumlabel}
   \end{pgfpicture}%
 }
@@ -506,7 +506,7 @@
   \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
   \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
     \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
-    \pgfusepath[fill]
+    \pgfusepath{fill}
     \pgftext[base]{\color{fg}\insertenumlabel}
   \end{pgfpicture}%
 }
@@ -577,7 +577,7 @@
 {%
   \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
     \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
-    \pgfusepath[fill,stroke]
+    \pgfusepath{fill,stroke}
   \end{pgfpicture}%
 }
 [action]
@@ -589,7 +589,7 @@
 {%
   \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
     \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
-    \pgfusepath[stroke]
+    \pgfusepath{stroke}
   \end{pgfpicture}%
 }
 

@@ -9,7 +9,7 @@
 \RequirePackage{keyval}
 \RequirePackage{pgf}
 
-\define@key{multimediasym}{fill}[]{\def\mm@action{\pgfusepath[fill,stroke]}}
+\define@key{multimediasym}{fill}[]{\def\mm@action{\pgfusepath{fill,stroke}}}
 
 \newcommand\speakersymbol[1][]{%
   \def\mm@action{}%
@@ -31,7 +31,7 @@
     \pgfpathcurveto{\pgfpoint{1.7\pgfex}{.5\pgfex}}{\pgfpoint{1.7\pgfex}{1\pgfex}}{\pgfpoint{1.5\pgfex}{1.25\pgfex}}
     \pgfpathmoveto{\pgfpoint{1.75\pgfex}{0pt}}
     \pgfpathcurveto{\pgfpoint{2\pgfex}{.25\pgfex}}{\pgfpoint{2\pgfex}{1.25\pgfex}}{\pgfpoint{1.75\pgfex}{1.5\pgfex}}
-    \pgfusepath[stroke]
+    \pgfusepath{stroke}
   \end{pgfpicture}}
 
 
