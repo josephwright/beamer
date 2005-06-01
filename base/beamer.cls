@@ -301,7 +301,7 @@
 
 
 \RequirePackage{pgfcore,pgfbaseimage}
-% For all sorts of things...
+% We need only the core and some image stuff for icons.
 
 \RequirePackage{xxcolor}
 % For color management.
