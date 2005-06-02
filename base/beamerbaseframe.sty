@@ -417,13 +417,13 @@
   \beamer@autobreakfalse%
   \beamer@shrinkfalse%
   \beamer@plainframefalse%
+  \global\advance\beamer@zoomframecount by1\relax%
   \csname beamer@dosecondmode\beamer@defaultdosecondmode\endcsname%
   \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
   \setkeys{beamerframe}{environment=frame}%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
   \refstepcounter{framenumber}%
-  \global\advance\beamer@zoomframecount by1\relax%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\beamer@framestartpage{}%
   \gdef\beamer@whichframes{#1}%
