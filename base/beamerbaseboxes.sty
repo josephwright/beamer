@@ -102,7 +102,7 @@
       \advance\bmb@dima by8bp%
       \pgfpathrectangle{\pgfpoint{-4bp}{-1bp}}{\pgfpoint{\bmb@dima}{8bp}}
       \pgfusepath{clip}
-      \pgftransformshiftobj{\pgfpoint{-4bp}{0bp}}{\pgftext[left,base]{\pgfuseshading{bmb@transition}}}%
+      {\pgftransformshift{\pgfpoint{-4bp}{0bp}}\pgftext[left,base]{\pgfuseshading{bmb@transition}}}%
     \end{pgfpicture}%
   }%
   \nointerlineskip%
@@ -135,20 +135,20 @@
   \hbox{%
     \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
       \ifbmb@shadow%
-      \pgftransformshiftobj{\pgfpoint{4bp}{-3bp}}{\pgftext{\copy\bmb@boxshadowball}}
+      {\pgftransformshift{\pgfpoint{4bp}{-3bp}}\pgftext{\copy\bmb@boxshadowball}}
       \begin{pgfscope}
         {%
         \advance\bmb@temp by-1bp%
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
         \pgfusepath{clip}
         }%
-        \pgftransformshiftobj{\pgfpoint{\bmb@temp}{1bp}}{\pgftext{\box\bmb@boxshadowballlarge}}
+        {\pgftransformshift{\pgfpoint{\bmb@temp}{1bp}}\pgftext{\box\bmb@boxshadowballlarge}}
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by-4bp%
         \pgfpathrectangle{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
         \pgfusepath{clip}
-        \pgftransformshiftobj{\pgfpoint{4bp}{-7bp}}{\pgftext[left,base]{\copy\bmb@boxshadow}}%
+        {\pgftransformshift{\pgfpoint{4bp}{-7bp}}\pgftext[left,base]{\copy\bmb@boxshadow}}%
       \end{pgfscope}
       \begin{pgfscope}
         \advance\bmb@temp by 4bp%
@@ -158,13 +158,14 @@
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \pgfusepath{clip}
         \advance\bmb@dima by-4bp%
-        \pgftransformshiftobj{\pgfpoint{\bmb@temp}{\bmb@dima}}{\pgftext{\box\bmb@boxshadowball}}
+        {\pgftransformshift{\pgfpoint{\bmb@temp}{\bmb@dima}}\pgftext{\box\bmb@boxshadowball}}
         \advance\bmb@dima by-1bp%
         \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
         \pgfusepath{clip}
         \advance\bmb@temp by4bp%
-        \pgftransformshiftobj{\pgfpoint{\bmb@temp}{-3bp}}%
-        {\pgftransformrotateobj{90}{\pgftext[left,base]{\box\bmb@boxshadow}}}%
+        {\pgftransformshift{\pgfpoint{\bmb@temp}{-3bp}}%
+          \pgftransformrotate{90}%
+          \pgftext[left,base]{\box\bmb@boxshadow}}%
       \end{pgfscope}
       \fi%
       \unhbox\bmb@colorbox%

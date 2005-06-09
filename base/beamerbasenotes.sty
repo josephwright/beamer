@@ -194,7 +194,7 @@
       \pgfpathrectangle{\pgforigin}{\pgfpoint{\paperwidth}{\paperheight}}
       \pgfusepath{fill}
       \color{black}
-      \pgftransformshiftobj{\pgfpoint{\beamer@origlmargin}{\footheight}}{\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
+      {\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgfmagnify}
   \end{pgfpicture}%
   }}

@@ -358,9 +358,9 @@
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
     \usebeamercolor[fg]{item projected}
-    \pgftransformscaleobj{1.75}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
-    \pgftransformshiftobj{\pgfpoint{0pt}{0.5pt}}
-      {\pgftext{\usebeamerfont*{item projected}\insertenumlabel}}
+    {\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    {\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+      \pgftext{\usebeamerfont*{item projected}\insertenumlabel}}
   \end{pgfpicture}%
 }
 
@@ -368,7 +368,7 @@
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
     \usebeamercolor[fg]{subitem projected}
-    \pgftransformscaleobj{1.4}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    {\pgftransformscale{1.4}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
     \pgftext{%
       \usebeamerfont*{subitem projected}%
       \insertsubenumlabel}
@@ -379,7 +379,7 @@
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
     \usebeamercolor[fg]{subsubitem projected}
-    \pgftransformscaleobj{1.4}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    {\pgftransformscale{1.4}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
     \pgftext{%
       \usebeamerfont*{subitem projected}%
       \insertsubsubenumlabel}
@@ -390,11 +390,10 @@
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
     \usebeamercolor[fg]{\beameritemnestingprefix item projected}
-    \pgftransformscaleobj{1.75}{\pgftext{\normalsize\pgfuseshading{bigsphere}}}
-    \pgftransformshiftobj{\pgfpoint{0pt}{0.5pt}}
-    {%
-      \usebeamerfont*{\beameritemnestingprefix item projected}%
-      \pgftext{\insertenumlabel}}
+    {\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    {\pgftransformshift{\pgfpoint{0pt}{0.5pt}}%
+     \usebeamerfont*{\beameritemnestingprefix item projected}%
+     \pgftext{\insertenumlabel}}
   \end{pgfpicture}
 }
 

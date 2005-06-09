@@ -104,12 +104,13 @@
             \pgftext[left,top]{\box\@tempboxa}
             \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
             \pgfusepath{clip}
-            \begin{pgftransformscalescope}{\beamer@temp}
+            \begingroup
+              \pgftransformscale{\beamer@temp}
               \@tempdima=#4\relax%
               \@tempdimb=#5\relax%
-              \pgftransformshiftobj{\pgfpoint{-\@tempdima}{\@tempdimb}}{%
+              {\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}%
               \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}}
-            \end{pgftransformscalescope}
+            \endgroup
           \end{pgfpicture}%
         }}%
       \setbox\beamer@framebox=\vbox{%
@@ -157,7 +158,7 @@
     \edef\beamer@factortemp{\strip@pt\@tempdimc}%
     \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
       \begin{pgfpicture}{0pt}{-\beamer@frametextheight}{0pt}{0pt}
-        \pgftransformscaleobj{\beamer@factortemp}{%
+        {\pgftransformscale{\beamer@factortemp}%
           \pgftext[left,top]{\box\beamer@framebox}}%
       \end{pgfpicture}%
     }%
