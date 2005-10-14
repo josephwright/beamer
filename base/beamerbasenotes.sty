@@ -25,7 +25,7 @@
 
 \defbeameroption{show notes on second screen}[right]%
 {
-  \pgfpagelayout{two screens with optional second}[second #1]
+  \pgfpagesuselayout{two screens with optional second}[second #1]
   \beamer@twoscreensnotestrue
   \beamer@notestrue
 }
@@ -87,7 +87,7 @@
           \vskip-4pt% foot separator
           \vskip-\footheight}\hskip-\Gm@lmargin\hskip1cm}%
       \ifbeamer@twoscreensnotes%
-        \pgfcurrentpagewillbelogicalpage{2}%
+        \pgfpagescurrentpagewillbelogicalpage{2}%
         \advance\c@page by-1\relax%
       \fi%
       \clearpage
@@ -189,13 +189,13 @@
 
 \newcommand{\insertslideintonotes}[1]{{%
   \begin{pgfpicture}{0cm}{0cm}{#1\paperwidth}{#1\paperheight}
-    \begin{pgfmagnify}{#1}{#1}
+    \begin{pgflowlevelscope}{\pgftransformscale{#1}}%
       \color[gray]{0.8}
-      \pgfpathrectangle{\pgforigin}{\pgfpoint{\paperwidth}{\paperheight}}
+      \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\paperheight}}
       \pgfusepath{fill}
       \color{black}
       {\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
-    \end{pgfmagnify}
+    \end{pgflowlevelscope}
   \end{pgfpicture}%
   }}
 
