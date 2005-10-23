@@ -5,12 +5,14 @@ themes = AnnArbor Antibes Berkeley Berlin Bergen Boadilla  Copenhagen Darmstadt 
   Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
   Luebeck Malmoe Madrid Marburg Montpellier PaloAlto \
   Pittsburgh Rochester Singapore Szeged Warsaw \
+  CambridgeUS \
   default boxes
 
 fontthemes = default serif structurebold structureitalicserif structuresmallcapsserif 
 
 colorthemes = default crane albatross seahorse whale dolphin \
-  rose orchid sidebartab lily structure dove seagull beetle fly wolverine
+  rose orchid sidebartab lily structure dove seagull beetle fly wolverine \
+  beaver 
 
 outerthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
 
