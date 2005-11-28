@@ -9,9 +9,14 @@
 \mode
 <all>
 
-\IfFileExists{translator.sty}{\RequirePackage{translator}}{}
-\providecommand\translation[2][]{#2}
-
+\IfFileExists{translator.sty}{
+  \RequirePackage{translator}
+  \usedictionary{translator-theorem-dictionary}
+}
+{
+  % Fake:
+  \providecommand\translate[2][]{#2}
+}
 
 \mode
 <presentation>
@@ -103,8 +108,9 @@
 
   \def\th@example{\th@remark}
 
-  \newcommand{\ExampleInline}[1]{\translation{Example}: \ignorespaces#1}
+  \newcommand{\ExampleInline}[1]{\translate{Example}: \ignorespaces#1}
 
+  % Compatiblity:
   \newcommand{\BeispielInline}[1]{Beispiel: \ignorespaces#1}
 }
 
@@ -113,23 +119,23 @@
 {
   \ifbeamer@blocks
     \ifbeamer@countsect
-      \newtheorem{theorem}{\translation{Theorem}}[section]
+      \newtheorem{theorem}{\translate{Theorem}}[section]
     \else
-      \newtheorem{theorem}{\translation{Theorem}}
+      \newtheorem{theorem}{\translate{Theorem}}
     \fi
-    \newtheorem{corollary}[theorem]{\translation{Corollary}}
-    \newtheorem{fact}[theorem]{\translation{Fact}}
-    \newtheorem{lemma}[theorem]{\translation{Lemma}}
-    \newtheorem{problem}[theorem]{\translation{Problem}}
-    \newtheorem{solution}[theorem]{\translation{Solution}}
+    \newtheorem{corollary}[theorem]{\translate{Corollary}}
+    \newtheorem{fact}[theorem]{\translate{Fact}}
+    \newtheorem{lemma}[theorem]{\translate{Lemma}}
+    \newtheorem{problem}[theorem]{\translate{Problem}}
+    \newtheorem{solution}[theorem]{\translate{Solution}}
 
     \theoremstyle{definition}
-    \newtheorem{definition}[theorem]{\translation{Definition}}
-    \newtheorem{definitions}[theorem]{\translation{Definitions}}
+    \newtheorem{definition}[theorem]{\translate{Definition}}
+    \newtheorem{definitions}[theorem]{\translate{Definitions}}
     
     \theoremstyle{example}
-    \newtheorem{example}[theorem]{\translation{Example}}
-    \newtheorem{examples}[theorem]{\translation{Examples}}
+    \newtheorem{example}[theorem]{\translate{Example}}
+    \newtheorem{examples}[theorem]{\translate{Examples}}
 
     
     % Compatibility
