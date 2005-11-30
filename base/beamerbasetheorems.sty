@@ -12,11 +12,9 @@
 \IfFileExists{translator.sty}{
   \RequirePackage{translator}
   \usedictionary{translator-theorem-dictionary}
-}
-{
-  % Fake:
-  \providecommand\translate[2][]{#2}
-}
+}{}
+
+\providecommand\translate[2][]{#2}
 
 \mode
 <presentation>
