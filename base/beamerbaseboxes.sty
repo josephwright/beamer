@@ -113,7 +113,7 @@
     \setbox\bmb@boxshadowball=\hbox{\pgfuseshading{bmb@shadowball}}%
     \setbox\bmb@boxshadowballlarge=\hbox{\pgfuseshading{bmb@shadowballlarge}}%
   \fi%
-  \setbox\bmb@colorbox=\hbox{\color{lower.bg}}%
+  \setbox\bmb@colorbox=\hbox{{\pgfpicturetrue\pgfsetcolor{lower.bg}}}%
   \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
     \vskip2pt%
     \usebeamercolor[fg]{\bmb@lower}%
