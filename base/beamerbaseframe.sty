@@ -147,11 +147,7 @@
 {
   \def\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
   \def\beamer@inlineframetitle#1{%
-    \frametitle{#1}%
-    \@ifnextchar\bgroup{\beamer@inlineframesubtitle}{}%
-  }
-  \def\beamer@inlineframesubtitle#1{%
-    \framesubtitle{#1}%
+    \@ifnextchar\bgroup{\frametitle{#1}\framesubtitle}{\frametitle{#1}\relax}%
   }
 }
 
@@ -526,7 +522,10 @@
   \edef\beamer@verbfilename{\jobname\ifx\beamer@againname\@empty\else.\insertframenumber\fi.vrb}% .vrb for `verbatim'
   \beamer@setupstoppers{\beamer@frameenvironmentsubst}%
   \immediate\openout\beamer@verbatimfileout=\beamer@verbfilename%
-  \expandafter\beamer@verbatimreadframe\@gobble}
+  \expandafter\beamer@checktitleverbatim\@gobble}
+\def\beamer@checktitleverbatim{\@ifnextchar\bgroup{\beamer@verbatim@frametitle}{\beamer@verbatimreadframe}}
+\def\beamer@verbatim@frametitle#1{\@ifnextchar\bgroup{\beamer@verbatim@framesubtitle{#1}}{\beamer@verbatimreadframe\frametitle{#1}}}
+\def\beamer@verbatim@framesubtitle#1#2{\beamer@verbatimreadframe\frametitle{#1}\framesubtitle{#2}}
 % will return to following command with frame contents written to \beamer@verbfilename
 \def\beamer@afterexternalframe{%
   \ifx\beamer@frameenvironmentsubst\beamer@frametext%
@@ -619,6 +618,8 @@
   \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<*>}}
   \def\beamer@frame<#1>{\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
   \long\def\beamer@@frame<#1>[#2]{%
+    \global\let\insertframetitle=\@empty%
+    \global\let\insertframesubtitle=\@empty%
     \beamer@slideinframe=1\relax%
     \refstepcounter{framenumber}%
     \beamer@slideinframe=0\relax%

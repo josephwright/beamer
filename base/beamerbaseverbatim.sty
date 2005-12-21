@@ -19,7 +19,16 @@
     \catcode\count@=11%
   }%
   \beamer@makeinnocent\^^L% and whatever other special cases
-  \endlinechar`\^^M \catcode`\^^M=12 \beamer@processframefirstline}
+  \endlinechar`\^^M \catcode`\^^M=12%
+  \@ifnextchar\bgroup{\afterassignment\beamer@specialprocessframefirstline\let\beamer@temp=}{\beamer@processframefirstline}}%
+
+{
+  \catcode`\{=12%
+  \catcode`\<=1%
+  \gdef\beamer@specialprocessframefirstline<%
+    \beamer@processframefirstline{%
+  }
+}
 
 {\catcode`\^^M=12\endlinechar=-1%
   \long\gdef\beamer@processframefirstline#1^^M{%

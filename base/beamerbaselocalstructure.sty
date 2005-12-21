@@ -34,16 +34,20 @@
 \mode
 <all>
 {
-  \newcommand<>\framesubtitle[1]{\only#2{\beamer@ifempty{#1}{}{\gdef\insertframesubtitle{{#1}}}}}
+  \let\beamer@aftersubtitle=\relax
+  \newcommand<>\framesubtitle[1]{\only#2{\beamer@ifempty{#1}{}{\gdef\insertframesubtitle{{#1}}\beamer@aftersubtitle}}}
 }
 
 
 \mode
 <article>
 {
-  \newcommand<>\frametitle[2][]{\only#3{\gdef\insertframetitle{#2}\beamer@headrenderer}}
-  \long\def\useframetitletemplate#1{\def\beamer@headrenderer{#1}}
-  \useframetitletemplate{\paragraph*{\insertframetitle}\ \par}
+  \newcommand<>\frametitle[2][]{\only#3{\gdef\insertframetitle{#2}%
+      \@ifnextchar\framesubtitle{\beamer@donextsubtitle}{\usebeamertemplate{frametitle}}}}
+  \def\beamer@donextsubtitle{%
+    % Ugly hack...
+    \def\beamer@aftersubtitle{\usebeamertemplate{frametitle}\let\beamer@aftersubtitle=\relax}
+    }
 }
 
 
