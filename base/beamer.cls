@@ -164,8 +164,8 @@
   \def\beamer@hypercjk{\hypersetup{CJKbookmarks=true}}
 
   \def\beamer@activecjk{
-    % Activate all >128 characters. 
-    \count@=128
+    % Activate all >=128 characters. 
+    \count@=127
     \@whilenum\count@<254 \do{%
       \advance\count@ by 1
       \lccode`\~=\count@
