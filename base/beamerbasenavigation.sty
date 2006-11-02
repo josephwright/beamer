@@ -536,6 +536,7 @@
 \def\beamer@nav@subsectionstyle#1{\beamer@toc@sprocess\beamer@nav@css\beamer@nav@oss\beamer@nav@ooss#1///}
 \beamer@nav@subsectionstyle{show}
 
+\def\beamer@subsectionentry#1#2#3#4#5{}% no effect by default.
 \def\beamer@subsubsectionentry#1#2#3#4#5#6{}% no effect by default.
 
 \def\insertverticalnavigation#1{%
@@ -562,20 +563,19 @@
             {\usebeamertemplate{section in sidebar shaded}}%
           \fi}}}%
       \beamer@currentsubsection=0\relax\fi}%
-    \def\slideentry##1##2##3##4##5##6{%
-      \ifnum##6=\c@part%
-      \ifnum##2>\beamer@currentsubsection%
-      \beamer@currentsubsection=##2%
+    \def\slideentry##1##2##3##4##5##6{}%
+    \def\beamer@subsectionentry##1##2##3##4##5{%
+      \ifnum##1=\c@part%
+      \def\insertpartheadnumber{##1}%
+      \def\insertsectionheadnumber{##2}%
+      \def\insertsubsectionheadnumber{##3}%
       \def\insertsubsectionhead{##5}%
-      \def\insertsectionheadnumber{##1}%
-      \def\insertsubsectionheadnumber{##2}%
-      \def\insertpartheadnumber{##6}%
-      \beamer@tocifnothide{\ifnum\c@section=##1\ifnum\c@subsection=##2\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
+       \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
       {\hbox{{%
         \usebeamerfont{subsection in sidebar}\usebeamercolor[fg]{subsection in sidebar}%
-          \beamer@link(##4){%
-          \ifnum\c@section=##1%
-            \ifnum\c@subsection=##2%
+          \hyperlink{Navigation##4}{%
+          \ifnum\c@section=##2%
+            \ifnum\c@subsection=##3%
               \ifnum\c@subsubsection=0\relax%
                 {\usebeamertemplate{subsection in sidebar}}%
               \else%
@@ -588,7 +588,7 @@
             {\usebeamertemplate{subsection in sidebar shaded}}%
           \fi}}}%
       }%
-      \fi\fi}%
+      \fi}%
     \def\beamer@subsubsectionentry##1##2##3##4##5##6{%
       \ifnum##1=\c@part%
       \def\insertpartheadnumber{##1}%
@@ -615,9 +615,10 @@
           \fi}}}%
       }%
       \fi}%
-    \beamer@currentsubsection=0\relax%
+    %\beamer@currentsubsection=0\relax%
     \dohead%
-  }}
+  }%
+}
 
 \def\slideentry#1#2#3#4#5#6{%
   %section number, subsection number, slide number, first/last frame, page number, part number
