@@ -1,14 +1,17 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
 \RequirePackage{beamerbasercs}
 \def\beamer@version{3.06}
 
 \ProvidesClassRCS $Header$
 [cvs version \beamer@version\space A class for typesetting presentations]
-
-% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
-%
-% This program can be redistributed and/or modified under the terms
-% of the GNU Public License, version 2.
-
 
 
 \RequirePackage{beamerbasemodes}

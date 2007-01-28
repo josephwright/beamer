@@ -1,21 +1,26 @@
-% $Header$
-
-% Copyright 2003, 2004 by Till Tantau <tantau@users.sourceforge.net>.
+% Copyright 2007 by Till Tantau
 %
-% This program can be redistributed and/or modified under the terms
-% of the GNU Public License, version 2.
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
 
 \section{Installation}
 
 \label{section-installation}
 
-
 There are different ways of installing the \beamer\ class, depending
 on your installation and needs. When installing the class, you may
 need to install some other packages as well as described below. Before
-installing, you may wish to review the \textsc{gpl} license under
-which the class is distributed, see Section~\ref{section-license} below.
+installing, you may wish to review the licenses under
+which the class is distributed, see Section~\ref{section-license}.
 
+Fortunately, most likely your system will already have \beamer\
+preinstalled, so you can skip this section.
 
 
 \subsection{Versions and Dependencies}
@@ -84,16 +89,14 @@ package from
 \begin{verbatim}
 http://sourceforge.net/projects/latex-beamer/
 \end{verbatim}
-(most likely, you have already done this). Next, you also need at
-the \textsc{pgf} package, which can be found at the same
-place. Finally, you need the  \textsc{xcolor} package, which can also
-be found at that place (although the version on CTAN might be newer).
+(most likely, you have already done this). Next, you also need the
+\textsc{pgf} package and the \textsc{xcolor} packages, 
+which you need to install separately (see their installation
+instructions). 
 
-In all cases, the packages contain a bunch of files (for the \beamer\
-class, |beamer.cls| is one of these files and happens to be the
-most important one, for the \textsc{pgf} package |pgf.sty| is
-the most important file). You now need to put these files in an
-appropriate |texmf| tree. 
+The package contains a bunch of files; |beamer.cls| is one of
+these files and happens to be the most important one. You now need to
+put these files in an appropriate |texmf| tree. 
 
 When you ask \TeX\ to use a certain class or package, it usually looks
 for the necessary files in so-called |texmf| trees. These trees
@@ -119,16 +122,11 @@ local tree. Installation in the root tree can cause problems, since an
 update of the whole \TeX\ installation will replace this whole tree.
 
 Inside whatever |texmf| directory you have chosen, create
-the sub-sub-sub-directories
-\begin{itemize}
-\item
-  |texmf/tex/latex/beamer|,
-\item
-  |texmf/tex/latex/pgf|, and
-\item
-  |texmf/tex/latex/xcolor|
-\end{itemize}
-and place all files in these three directories.
+the sub-sub-sub-directory
+\begin{verbatim}
+texmf/tex/latex/beamer 
+\end{verbatim} 
+and place all files of the package in this directory.
 
 Finally, you need to rebuild \TeX's filename database. This done by
 running the command  |texhash| or |mktexlsr| (they are
@@ -136,11 +134,11 @@ the same). In MiK\TeX, there is a menu option to do this.
 
 \lyxnote
 For usage of the \beamer\ class with \LyX, you have to do all of the
-above. Then you also have to make \LyX\ aware of the file
-|beamer/lyx/layouts/beamer.layout|. To do so, link (or, not
-so good in case of later updates, copy) this file to the directory
-|.lyx/layouts/| in your home directory. Then use \LyX's Reconfigure
-command to make \LyX\ aware of this file.
+above. You also have to make \LyX\ aware of the file
+|beamer.layout|. This file is \emph{not part of the beamer package}
+since it is updated and managed by the \LyX\ development team. This
+means that in reasonbaly up-to-date \LyX\ versions this file will
+already be installed and nothing needs to be done. 
 
 \vskip1em
 For a more detailed explanation of the standard installation process
@@ -155,21 +153,25 @@ However, note that the \beamer\ package does not come with a
 \subsection{Updating the Installation}
 
 To update your installation from a previous version, simply replace
-everything in the directories like |texmf/tex/latex/beamer| with the
-files of the new version. The easiest way to do this is to first
-delete the old version and then proceed as described above. Sometimes,
-there are changes in the syntax of certain command from version to
-version. If things no longer work that used to work, you wish to have
-a look at the release notes and at the change log.
+everything in the directory
+\begin{verbatim}
+texmf/tex/latex/beamer
+\end{verbatim}
+with the files of the new version. The easiest way to do this is to
+first delete the old version and then proceed as described above.
 
 
 \subsection{Testing the Installation}
 
-To test your installation, copy the file |beamerexample1.tex|
-from the examples subdirectory to some place where you usually
+To test your installation, copy the file
+|generic-ornate-15min-45min.en.tex| from the directory
+\begin{verbatim}
+beamer/solutions/generic-talks
+\end{verbatim}
+to some place where you usually
 create presentations. Then run the command |pdflatex| several times on
-the file and check whether the resulting |beamerexample1.pdf|
-looks correct. If so, you are all set.
+the file and check whether the resulting \textsc{pdf} file looks
+correct. If so, you are all set. 
 
 \lyxnote
 To test the \LyX\ installation, create a new file from the
@@ -178,8 +180,6 @@ template |generic-ornate-15min-45min.en.lyx|, which is located in the directory
 
 
 \input{beamerug-compatibility}
-
-\input{beamerug-license}
 
 %%% Local Variables: 
 %%% mode: latex
