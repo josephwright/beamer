@@ -55,6 +55,7 @@
 \define@key{multimedia}{start}{\mm@convert#1{\mm@start}{/Start}}%
 \define@key{multimedia}{stop}[]{\def\mm@do{/Operation /Stop}}
 \define@key{multimedia}{width}{\@tempdima=#1\relax}
+\define@key{multimedia}{open}[]{\def\mm@playmode{/Mode /Open}}
 
 \def\mm@convert#1s{\mm@@convert{#1}}
 \def\mm@@convert#1#2#3{%
@@ -209,7 +210,7 @@
     \else%
       \ifmm@inline%  
         \pdfobj stream 
-        attr {\mm@r\space \mm@c\space \mm@b\space \mm@e\space}
+        attr {/Type /Sound \mm@r\space \mm@c\space \mm@b\space}
         file {#3}%
         \pdfrefobj \pdflastobj%
       \else
