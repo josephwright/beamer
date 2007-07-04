@@ -31,7 +31,7 @@
   \setkeys{\@currname}{#1}}
 
 \def\DeclareOptionBeamer#1{\@ifnextchar[{\beamer@dokv{#1}}{\beamer@dokv{#1}[]}}
-\long\def\beamer@dokv#1[#2]#3{\define@key{\@currname}{#1}[#2]{#3}}
+\long\def\beamer@dokv#1[#2]#3{\define@key{\@currname}{#1}[{#2}]{#3}}
 
 
 \def\beamer@filterclassoptions{

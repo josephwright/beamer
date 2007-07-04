@@ -48,20 +48,20 @@
   {\def\beamer@@oar{#1}}\beamer@defbeamertemplate}
 \def\beamer@defbeamertemplate{\@ifstar{\beamer@sbttrue\beamer@sbtoo}{\beamer@sbtfalse\beamer@sbtoo}}
 \def\beamer@sbtoo#1#2{\@ifnextchar[{\beamer@sbto{#1}{#2}}{\beamer@sbto{#1}{#2}[0]}}
-\def\beamer@sbto#1#2[#3]{\@ifnextchar[{\beamer@@sbto{#1}{#2}[#3]}{\def\beamer@sbtotemp{}\beamer@@@sbto{#1}{#2}[#3]}}
-\long\def\beamer@@sbto#1#2[#3][#4]{\long\def\beamer@sbtotemp{[#4]}\beamer@@@sbto{#1}{#2}[#3]}
+\def\beamer@sbto#1#2[#3]{\@ifnextchar[{\beamer@@sbto{#1}{#2}[{#3}]}{\def\beamer@sbtotemp{}\beamer@@@sbto{#1}{#2}[{#3}]}}
+\long\def\beamer@@sbto#1#2[#3][#4]{\long\def\beamer@sbtotemp{[{#4}]}\beamer@@@sbto{#1}{#2}[{#3}]}
 \long\def\beamer@@@sbto#1#2[#3]#4{%
-  \beamer@sbttoks={\beamer@@@@sbto{#1}{#2}[#3]{#4}}%
+  \beamer@sbttoks={\beamer@@@@sbto{#1}{#2}[{#3}]{#4}}%
   \@ifnextchar[{\the\beamer@sbttoks}{\the\beamer@sbttoks[action]{}}%
 }
 \long\def\beamer@@@@sbto#1#2[#3]#4[#5]#6{%
-  \edef\beamer@@sbtoarg{\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[#3]}%
+  \edef\beamer@@sbtoarg{\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[{#3}]}%
   \expandafter\expandafter\expandafter\newcommand\expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
     \expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname{#4}#6}%
   \let\beamer@@next=\beamer@resetsbtoarg%
   \expandafter\mode\beamer@@oar{\let\beamer@@next=\relax}%
   \beamer@@next%
-  \ifbeamer@sbt\setbeamertemplate{#1}[#2]\relax\relax\relax\relax\relax\relax\relax\relax\relax\fi% 
+  \ifbeamer@sbt\setbeamertemplate{#1}[{#2}]\relax\relax\relax\relax\relax\relax\relax\relax\relax\fi% 
 }
 \def\beamer@resetsbtoarg{%
   \expandafter\expandafter\expandafter\renewcommand\expandafter\beamer@@sbtoarg\beamer@sbtotemp{}
@@ -73,14 +73,14 @@
 
 
 \def\defbeamertemplateparent#1{\@ifnextchar[{\beamer@sbtoparo{#1}}{\beamer@sbtoparo{#1}[*]}}
-\def\beamer@sbtoparo#1[#2]#3{\@ifnextchar[{\beamer@sbtopar{#1}[#2]{#3}}{\beamer@sbtopar{#1}[#2]{#3}[0]}}
+\def\beamer@sbtoparo#1[#2]#3{\@ifnextchar[{\beamer@sbtopar{#1}[{#2}]{#3}}{\beamer@sbtopar{#1}[{#2}]{#3}[0]}}
 \def\beamer@sbtopar#1[#2]#3[#4]{\@ifnextchar[
-  {\beamer@@sbtopar{#1}[#2]{#3}[#4]}
-  {\def\beamer@sbtotemp{}\beamer@@@sbtopar{#1}[#2]{#3}[#4]}}
-\long\def\beamer@@sbtopar#1[#2]#3[#4][#5]{\long\def\beamer@sbtotemp{[#5]}\beamer@@@sbtopar{#1}[#2]{#3}[#4]}
+  {\beamer@@sbtopar{#1}[{#2}]{#3}[{#4}]}
+  {\def\beamer@sbtotemp{}\beamer@@@sbtopar{#1}[{#2}]{#3}[{#4}]}}
+\long\def\beamer@@sbtopar#1[#2]#3[#4][#5]{\long\def\beamer@sbtotemp{[{#5}]}\beamer@@@sbtopar{#1}[{#2}]{#3}[{#4}]}
 \long\def\beamer@@@sbtopar#1[#2]#3[#4]#5{%
   \expandafter\def\csname beamer@@tmpgrp@#1\endcsname{#3}%
-  \edef\beamer@@sbtoarg{\noexpand\newcommand\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[#4]}%
+  \edef\beamer@@sbtoarg{\noexpand\newcommand\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[{#4}]}%
   \expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
     \def\beamer@sbtlist{#3}%
     \@for\beamer@templ:=\beamer@sbtlist\do

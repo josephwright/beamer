@@ -345,7 +345,7 @@
 \newcommand{\ExampleInline}[1]{{\usebeamercolor[fg]{example text}\translate{Example}: \ignorespaces#1}}
 \def\usenavigationsymbolstemplate{\setbeamertemplate{navigation symbols}}
 \def\insertnavigationsymbols{\usebeamertemplate***{navigation symbols}}
-\def\beamersetaveragebackground#1{\setbeamercolor{normal text}{bg=#1}}
+\def\beamersetaveragebackground#1{\setbeamercolor{normal text}{bg={#1}}}
 \def\useminislidetemplate#1#2#3#4#5{%
   \setbeamertemplate{mini frame}{#1}%
   \setbeamertemplate{mini frame in current subsection}{#2}%
@@ -433,13 +433,13 @@
   \setbeamersize{sidebar width #1=#2}
   \setbeamertemplate{sidebar #1}{#3}
 }
-\newcommand\beamertemplatesidebarcolor[2][left]{\setbeamercolor{sidebar #1}{bg=#2}}
+\newcommand\beamertemplatesidebarcolor[2][left]{\setbeamercolor{sidebar #1}{bg={#2}}}
 \def\beamertemplaterightsidebarlogonavigation{\setbeamertemplate{sidebar right}[default]
   \setbeamersize{sidebar width right=0pt}}
 \newcommand{\beamertemplatesidebarverticalshading}[3][left]{%
-  \setbeamertemplate{sidebar canvas #1}[vertical shading][top=#3,bottom=#2]}
+  \setbeamertemplate{sidebar canvas #1}[vertical shading][top={#3},bottom={#2}]}
 \newcommand{\beamertemplatesidebarhorizontalshading}[3][left]{%
-  \setbeamertemplate{sidebar canvas #1}[vertical shading][right=#3,left=#2]}
+  \setbeamertemplate{sidebar canvas #1}[vertical shading][right={#3},left={#2}]}
 \define@key{beamer@margin}{descriptionwidth}{%
   \beamer@descriptionwidth=#1\relax%
 }
@@ -455,7 +455,7 @@
   \def\beamersetrightmargin#1{\setbeamersize{text margin right=#1}}
   \long\def\useframetemplate#1#2{\setbeamertemplate{frame begin}{#1}\setbeamertemplate{frame end}{#2}}
   \def\usebackgroundtemplate{\setbeamertemplate{background canvas}}
-  \def\beamertemplatesolidbackgroundcolor#1{\setbeamercolor{normal text}{bg=#1}}
+  \def\beamertemplatesolidbackgroundcolor#1{\setbeamercolor{normal text}{bg={#1}}}
   \long\def\useblocktemplate#1#2{%
     \setbeamertemplate{block begin}{#1}%
     \setbeamertemplate{block end}{#2}}
@@ -465,8 +465,8 @@
   \long\def\useexampleblocktemplate#1#2{%
     \setbeamertemplate{block example begin}{#1}%
     \setbeamertemplate{block example end}{#2}}
-  \newcommand{\beamertemplategridbackground}[1][]{\setbeamertemplate{background}[grid][step=#1]}
-  \newcommand{\beamertemplateshadingbackground}[2]{\setbeamertemplate{background canvas}[vertical shading][bottom=#1,top=#2]}
+  \newcommand{\beamertemplategridbackground}[1][]{\setbeamertemplate{background}[grid][step={#1}]}
+  \newcommand{\beamertemplateshadingbackground}[2]{\setbeamertemplate{background canvas}[vertical shading][bottom={#1},top={#2}]}
   \newcommand\usealerttemplate[2]{\setbeamertemplate{alerted text begin}{#1}\setbeamertemplate{alerted text end}{#2}}
   \newcommand\usestructuretemplate[2]{\setbeamertemplate{structure begin}{#1}\setbeamertemplate{structure end}{#2}}
   \newcommand{\beamertemplatebookbibitems}{\setbeamertemplate{bibliography item}[book]}

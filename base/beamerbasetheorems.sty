@@ -92,13 +92,13 @@
     \RequirePackage{amsthm}
 
     \renewenvironment<>{proof}[1][\proofname]
-    {\begin{actionenv}#2\begin{originalproof}[#1]}{\end{originalproof}\end{actionenv}}
+    {\begin{actionenv}#2\begin{originalproof}[{#1}]}{\end{originalproof}\end{actionenv}}
 
     % Make new theorem overlay-specification-aware
     \let\beamer@origthm=\@thm
     \def\@thm#1#2#3{\def\beamer@store{{#1}{#2}{#3}}\beamer@readspec}
     \newcommand<>\beamer@readspec[1][]{\def\beamer@storeaction{\begin{actionenv}#2}%
-      \expandafter\beamer@origthm\beamer@store[#1]}
+      \expandafter\beamer@origthm\beamer@store[{#1}]}
 
     \let\beamer@origbegintheorem=\@begintheorem
     \def\@begintheorem{\beamer@storeaction\beamer@origbegintheorem}

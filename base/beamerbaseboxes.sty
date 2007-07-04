@@ -12,8 +12,8 @@
 \RequirePackage{keyval}
 
 \def\beamerboxesdeclarecolorscheme#1#2#3{% scheme name, upper color, lower color
-  \setbeamercolor{@scheme upper #1}{fg=white,bg=#2}
-  \setbeamercolor{@scheme lower #1}{bg=#3}
+  \setbeamercolor{@scheme upper #1}{fg=white,bg={#2}}
+  \setbeamercolor{@scheme lower #1}{bg={#3}}
 }
 
 \define@key{beamerboxes}{scheme}{\def\bmb@upper{@scheme upper #1}\def\bmb@lower{@scheme lower #1}}

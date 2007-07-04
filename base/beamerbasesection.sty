@@ -163,8 +163,8 @@
 \newcommand<>{\section}{\alt#1{\@ifnextchar[\beamer@section\beamer@@section}{\beamer@secgobble}}
 
 \def\beamer@@section{\@ifnextchar*\beamer@@ssection\beamer@@@section}
-\long\def\beamer@@ssection*#1{\beamer@section[#1]{}}
-\long\def\beamer@@@section#1{\beamer@section[#1]{#1}}
+\long\def\beamer@@ssection*#1{\beamer@section[{#1}]{}}
+\long\def\beamer@@@section#1{\beamer@section[{#1}]{#1}}
 \long\def\beamer@section[#1]#2{%
   \beamer@savemode%
   \mode<all>%
@@ -236,8 +236,8 @@
 
 \def\beamer@@subsection{\@ifnextchar*\beamer@@ssubsection\beamer@@@subsection}
 \long\def\beamer@@ssubsection*#1{%
-  \beamer@ifempty{#1}{\beamer@untitledsubsection}{\beamer@subsection[#1]{}}}
-\def\beamer@@@subsection#1{\beamer@subsection[#1]{#1}}
+  \beamer@ifempty{#1}{\beamer@untitledsubsection}{\beamer@subsection[{#1}]{}}}
+\def\beamer@@@subsection#1{\beamer@subsection[{#1}]{#1}}
 \def\beamer@subsection[#1]#2{%
   \beamer@savemode%
   \mode<all>%
@@ -302,8 +302,8 @@
 \newcommand<>{\subsubsection}{\alt#1{\@ifnextchar[\beamer@subsubsection\beamer@@subsubsection}{\beamer@secgobble}}
 
 \def\beamer@@subsubsection{\@ifnextchar*\beamer@@ssubsubsection\beamer@@@subsubsection}
-\long\def\beamer@@ssubsubsection*#1{\beamer@subsubsection[#1]{}}
-\def\beamer@@@subsubsection#1{\beamer@subsubsection[#1]{#1}}
+\long\def\beamer@@ssubsubsection*#1{\beamer@subsubsection[{#1}]{}}
+\def\beamer@@@subsubsection#1{\beamer@subsubsection[{#1}]{#1}}
 \def\beamer@subsubsection[#1]#2{%
   \beamer@savemode%
   \mode<all>%

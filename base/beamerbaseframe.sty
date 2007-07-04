@@ -542,10 +542,10 @@
 \def\beamer@doframeinput{\@ifnextchar<{\beamer@frameinput}{\beamer@frameinput<*>}}
 \def\beamer@frameinput<#1>{\@ifnextchar[{\beamer@@frameinput<#1>}{\beamer@@frameinput<#1>[]}}
 \def\beamer@@frameinput<#1>[{\@ifnextchar<{\beamer@@@@frameinput<#1>[}{\beamer@@@frameinput<#1>[<*>][}}
-\def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[#2]}{\beamer@@@frameinput<#1>[#2][]}}
+\def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[{#2}]}{\beamer@@@frameinput<#1>[{#2}][]}}
 \def\beamer@@@frameinput<#1>[#2][#3]{%
   \global\advance\c@framenumber by-1\relax%
-  \edef\beamer@temp{\noexpand\frame<#1>[#2][#3,fragile=false]%
+  \edef\beamer@temp{\noexpand\frame<#1>[#2][{#3,fragile=false}]%
     {\begingroup\noexpand\input{\beamer@verbfilename}\endgroup}}%
   \beamer@temp%
   \ifx\beamer@frameenvironmentsubst\beamer@frametext%
@@ -693,8 +693,8 @@
 \mode
 <all>
 {
-  \renewcommand<>{\pagebreak}[1][4]{\only#2{\beameroriginal\pagebreak[#1]}}
-  \renewcommand<>{\nopagebreak}[1][4]{\only#2{\beameroriginal\nopagebreak[#1]}}
+  \renewcommand<>{\pagebreak}[1][4]{\only#2{\beameroriginal\pagebreak[{#1}]}}
+  \renewcommand<>{\nopagebreak}[1][4]{\only#2{\beameroriginal\nopagebreak[{#1}]}}
   \def\framebreak{\pagebreak<presentation>}
   \def\noframebreak{\nopagebreak<presentation>}
 }
@@ -739,13 +739,13 @@
 \def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<*>}}
 \def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
 \def\beamer@@againframe<#1>[{\@ifnextchar<{\beamer@@@@againframe<#1>[}{\beamer@@@againframe<#1>[<*>][}}
-\def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[#2]}{\beamer@@@againframe<#1>[#2][]}}
+\def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[{#2}]}{\beamer@@@againframe<#1>[{#2}][]}}
 \def\beamer@@@againframe<#1>[#2][#3]#4{%
   \@ifundefined{beamer@again@#4}%
   {\ClassError{beamer}{No frame has been designated to resume under
       the name "#4"}{}}%
   {%
-  \def\beamer@temp{\frame<#1>[#2][#3,relabel=#4]}%
+  \def\beamer@temp{\frame<#1>[#2][{#3,relabel=#4}]}%
   \expandafter\let\expandafter\beamer@templet\csname beamer@again@#4\endcsname%
   \expandafter\beamer@temp\beamer@templet}%
 }
@@ -756,7 +756,7 @@
   \def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<>}}
   \def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
   \def\beamer@@againframe<#1>[{\@ifnextchar<{\beamer@@@@againframe<#1>[}{\beamer@@againframe<#1>[<*>][}}
-  \def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[#2]}{\beamer@@@againframe<#1>[#2][]}}
+  \def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[{#2}]}{\beamer@@@againframe<#1>[{#2}][]}}
   \def\beamer@@@againframe<#1>[#2][#3]#4{} % do nothing
 }
 

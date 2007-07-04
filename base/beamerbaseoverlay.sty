@@ -209,7 +209,7 @@
   \beamer@prechecka{#3}}
 \long\def\beamer@prechecka#1{\@ifnextchar<{\beamer@preget{#1}}{\beamer@precheckb{#1}}}
 \long\def\beamer@preget#1<#2>{\def\beamer@ospec{<#2>}\beamer@precheckb{#1}}
-\long\def\beamer@precheckb#1{\@ifnextchar[{\beamer@pregetb}{\beamer@pregetb[#1]}}
+\long\def\beamer@precheckb#1{\@ifnextchar[{\beamer@pregetb}{\beamer@pregetb[{#1}]}}
 \long\def\beamer@pregetb[#1]{%
   \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
   \advance\beamer@argscount by-1\relax%
@@ -227,7 +227,7 @@
   \beamer@parseargs}
 
 \def\beamer@parseargs{%
-  \ifnum\beamer@argscount=0%
+  \ifnum\beamer@argscount=0\relax%
     \let\next=\beamer@finalargscheck%
   \else%
     \let\next=\beamer@lookforarg%
@@ -365,7 +365,7 @@
 \def\beamer@colorhook{}
 \def\beamer@pgfextension{}
 
-\beamer@coveringdepth=0
+\beamer@coveringdepth=0\relax
 
 
 \mode
@@ -458,7 +458,7 @@
 
 \let\beamer@origitem=\item
 \def\beamer@callorigitem{\@ifnextchar[\beamer@@callorigitem{\beamer@origitem\kern0pt\ignorespaces}}
-\def\beamer@@callorigitem[#1]{\beamer@origitem[#1]\kern0pt\ignorespaces}
+\def\beamer@@callorigitem[#1]{\beamer@origitem[{#1}]\kern0pt\ignorespaces}
 
 \def\item{%
   \@ifnextchar\relax\beamer@origitem{%
@@ -476,14 +476,14 @@
     \next%
   }}
 \def\beamer@defaultparse{\expandafter\beamer@parseitem\beamer@defaultospec}
-\long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[#1]}{%
+\long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[{#1}]}{%
     \ifx\beamer@defaultospec\beamer@emptyospec%
       \let\next=\beamer@callorigitem%
     \else%
       \let\next=\beamer@defaultparse%
     \fi%
-    \next[#1]}}
-\long\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[#1]}
+    \next[{#1}]}}
+\long\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[{#1}]}
 
 \def\beamer@parseitem<#1>{%
   \gdef\beamer@closeitem{\end{actionenv}}%
@@ -504,7 +504,7 @@
 
 
 \newcount\beamer@trivlistdepth
-\beamer@trivlistdepth=0
+\beamer@trivlistdepth=0\relax
   
 \let\beamer@orig@trivlist=\@trivlist
 \def\@trivlist{%
@@ -535,8 +535,8 @@
     \def\item{\@ifnextchar<\beamer@@item\beamer@item}
     \def\beamer@@item<#1>{\beamer@item}
     \def\beamer@item{\@ifnextchar[\beamer@@@item\beamer@origitem}
-    \def\beamer@@@item[#1]{\@ifnextchar<{\beamer@@@@item[#1]}{\beamer@origitem[#1]}}
-    \def\beamer@@@@item[#1]<#2>{\beamer@origitem[#1]}
+    \def\beamer@@@item[#1]{\@ifnextchar<{\beamer@@@@item[{#1}]}{\beamer@origitem[{#1}]}}
+    \def\beamer@@@@item[#1]<#2>{\beamer@origitem[{#1}]}
   }
 }
 
@@ -725,24 +725,24 @@
 \mode
 <all>
 {
-  \newcommand<>{\transblindshorizontal}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /H}}}
-  \newcommand<>{\transblindsvertical}[1][]{\only#2{\beamer@dotrans[#1]{Blinds /Dm /V}}}
-  \newcommand<>{\transboxin}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /I}}}
-  \newcommand<>{\transboxout}[1][]{\only#2{\beamer@dotrans[#1]{Box /M /O}}}
-  \newcommand<>{\transcover}[1][]{\only#2{\beamer@dotrans[#1]{Cover}}}
-  \newcommand<>{\transdissolve}[1][]{\only#2{\beamer@dotrans[#1]{Dissolve}}}
-  \newcommand<>{\transfade}[1][]{\only#2{\beamer@dotrans[#1]{Fade}}}
-  \newcommand<>{\transglitter}[1][]{\only#2{\beamer@dotrans[#1]{Glitter}}}
-  \newcommand<>{\transpush}[1][]{\only#2{\beamer@dotrans[#1]{Push}}}
-  \newcommand<>{\transsplitverticalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /I}}}
-  \newcommand<>{\transsplitverticalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /V /M /O}}}
-  \newcommand<>{\transsplithorizontalin}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /I}}}
-  \newcommand<>{\transsplithorizontalout}[1][]{\only#2{\beamer@dotrans[#1]{Split /Dm /H /M /O}}}
-  \newcommand<>{\transuncover}[1][]{\only#2{\beamer@dotrans[#1]{Uncover}}}
-  \newcommand<>{\transwipe}[1][]{\only#2{\beamer@dotrans[#1]{Wipe}}}
+  \newcommand<>{\transblindshorizontal}[1][]{\only#2{\beamer@dotrans[{#1}]{Blinds /Dm /H}}}
+  \newcommand<>{\transblindsvertical}[1][]{\only#2{\beamer@dotrans[{#1}]{Blinds /Dm /V}}}
+  \newcommand<>{\transboxin}[1][]{\only#2{\beamer@dotrans[{#1}]{Box /M /I}}}
+  \newcommand<>{\transboxout}[1][]{\only#2{\beamer@dotrans[{#1}]{Box /M /O}}}
+  \newcommand<>{\transcover}[1][]{\only#2{\beamer@dotrans[{#1}]{Cover}}}
+  \newcommand<>{\transdissolve}[1][]{\only#2{\beamer@dotrans[{#1}]{Dissolve}}}
+  \newcommand<>{\transfade}[1][]{\only#2{\beamer@dotrans[{#1}]{Fade}}}
+  \newcommand<>{\transglitter}[1][]{\only#2{\beamer@dotrans[{#1}]{Glitter}}}
+  \newcommand<>{\transpush}[1][]{\only#2{\beamer@dotrans[{#1}]{Push}}}
+  \newcommand<>{\transsplitverticalin}[1][]{\only#2{\beamer@dotrans[{#1}]{Split /Dm /V /M /I}}}
+  \newcommand<>{\transsplitverticalout}[1][]{\only#2{\beamer@dotrans[{#1}]{Split /Dm /V /M /O}}}
+  \newcommand<>{\transsplithorizontalin}[1][]{\only#2{\beamer@dotrans[{#1}]{Split /Dm /H /M /I}}}
+  \newcommand<>{\transsplithorizontalout}[1][]{\only#2{\beamer@dotrans[{#1}]{Split /Dm /H /M /O}}}
+  \newcommand<>{\transuncover}[1][]{\only#2{\beamer@dotrans[{#1}]{Uncover}}}
+  \newcommand<>{\transwipe}[1][]{\only#2{\beamer@dotrans[{#1}]{Wipe}}}
 }
 
-\newcommand<>{\transduration}[1]{\only#2{\hypersetup{pdfpageduration=#1}}}
+\newcommand<>{\transduration}[1]{\only#2{\hypersetup{pdfpageduration={#1}}}}
 
 \mode
 <article>
@@ -759,7 +759,7 @@
 \def\animatevalue<#1-#2>#3#4#5{%
   \only<#1-#2>{}% enforce these frames
   \ifnum\beamer@slideinframe<#1\relax%
-    #3=#4%
+    #3=#4\relax%
   \else%
     \ifnum\beamer@slideinframe<#2\relax%
       #3=#4\relax%
@@ -775,7 +775,7 @@
       \multiply#3 by\beamer@animationtempa%
       \advance#3 by#4%
     \else
-      #3=#5%
+      #3=#5\relax%
     \fi%
   \fi%  
 }
@@ -784,7 +784,7 @@
 <article>
 {
   \def\animate<#1>{}
-  \def\animatevalue<#1-#2>#3#4#5{#3=#4}
+  \def\animatevalue<#1-#2>#3#4#5{#3=#4\relax}
 }
 
 
