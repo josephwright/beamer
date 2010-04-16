@@ -6,8 +6,11 @@
 % 2. under the GNU Public License.
 %
 % See the file doc/licenses/LICENSE for more details.
-
-\ProvidesPackageRCS $Header$
+%
+% version 1.71 bugfix for \pgfpagescurrentpagewillbelogicalpage (hv)
+%
+%
+\ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/base/beamerbasetwoscreens.sty,v 1.71 2009/06/14 20:48:21 herbert Exp $
 
 \mode
 <presentation>
@@ -44,7 +47,7 @@
       \def\beamer@doifinframe{\begin{beamer@frameslide}%
           #1%
         \end{beamer@frameslide}%
-        \pgfcurrentpagewillbelogicalpage{2}%
+        \pgfpagescurrentpagewillbelogicalpage{2}%
         \clearpage%
       }%
       {\beamer@masterdecode{\beamer@whichframes}}%
