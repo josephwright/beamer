@@ -74,8 +74,21 @@
       \usebeamerfont{part title}\insertpart\par
     \end{beamercolorbox}
   \end{centering}
-} 
+}
 
+
+% Section page: default
+
+\defbeamertemplate*{section page}{default}[1][]
+{
+  \begin{centering}
+    {\usebeamerfont{part name}\usebeamercolor[fg]{part name}\sectionname~\insertsectionnumber}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
+      \usebeamerfont{part title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
 
 
 

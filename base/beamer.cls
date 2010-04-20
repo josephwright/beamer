@@ -8,7 +8,7 @@
 % See the file doc/licenses/LICENSE for more details.
 
 \RequirePackage{beamerbasercs}
-\def\beamer@version{3.07}
+\def\beamer@version{3.08}
 
 \ProvidesClassRCS $Header$
 [cvs version \beamer@version\space A class for typesetting presentations]
