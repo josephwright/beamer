@@ -1,6 +1,7 @@
 % Copyright 2007 by Till Tantau
 % (fix for subfig, Jul 2008, by Kanru Chen)
-% (tiny change, Feb 2010, by Vladimir Lomov and Karl Berry, for geometry 5.0)
+% (fix for geometry 5.0, Feb 2010, by Vladimir Lomov and Karl Berry)
+% (fix for hyperref section* and subsection*, Mar 2010, by Heiko Oberdiek)
 %
 % This file may be distributed and/or modified
 %
@@ -118,7 +119,42 @@
 \expandafter\def\csname Parent-1\endcsname{}
 \expandafter\def\csname Parent0\endcsname{}
 \expandafter\def\csname Parent1\endcsname{}
-\def\phantomsection{}
+%\def\phantomsection{} % this command produces very weird results.
+
+%
+% Heiko's fix for correct generation of section* and subsection* bookmarks
+%
+\long\def\@LongEmpty{}
+\newcommand*{\org@beamer@section}{}
+\let\org@beamer@section\beamer@section{}%
+\long\def\beamer@section[#1]#2{%
+  \let\org@writebookmark\Hy@writebookmark{}%
+  \long\def\@secname{#1}%
+  \ifx\@secname\@LongEmpty{}%
+    \def\Hy@writebookmark##1##2##3##4##5{}%
+  \fi
+  \long\def\@secname{#2}%
+  \ifx\@secname\@LongEmpty{}%
+    \def\Hy@writebookmark##1##2##3##4##5{}%
+  \fi
+  \org@beamer@section[{#1}]{#2}%
+  \let\Hy@writebookmark\org@writebookmark{}%
+}
+\newcommand*{\org@beamer@subsection}{}
+\let\org@beamer@subsection\beamer@subsection{}%
+\long\def\beamer@subsection[#1]#2{%
+  \let\org@writebookmark\Hy@writebookmark{}%
+  \long\def\@secname{#1}%
+  \ifx\@secname\@LongEmpty{}%
+    \def\Hy@writebookmark##1##2##3##4##5{}%
+  \fi
+  \long\def\@secname{#2}%
+  \ifx\@secname\@LongEmpty{}%
+    \def\Hy@writebookmark##1##2##3##4##5{}%
+  \fi
+  \org@beamer@subsection[{#1}]{#2}%
+  \let\Hy@writebookmark\org@writebookmark{}%
+}
 
 %
 % Bugfix for old versions of pdfmark
