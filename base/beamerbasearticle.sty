@@ -13,10 +13,14 @@
 \newif\ifbeamer@articlexcolor
 \beamer@articlexcolortrue
 
+\newif\ifbeamer@articlehyperref
+\beamer@articlehyperreftrue
+
 \newif\ifbeamer@articleactive
 \beamer@articleactivefalse
 
 \DeclareOption{noxcolor}{\beamer@articlexcolorfalse}
+\DeclareOption{nohyperref}{\beamer@articlehyperreffalse}
 \DeclareOption{nodefaultblocks}{\beamer@blocksfalse}% obsolete. use notheorems
 \DeclareOption{notheorems}{\beamer@blocksfalse}
 \DeclareOption{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}
@@ -31,9 +35,17 @@
 
 \RequirePackage{amssymb}
 
-\RequirePackage[implicit=false]{hyperref}
+\ifbeamer@articlexcolor
+  \PassOptionsToPackage{bookmarks=true,%
+    bookmarksopen=true,%
+    pdfborder={0 0 0},%
+    pdfhighlight={/N},%
+    linkbordercolor={.5 .5 .5}}{hyperref}
 
-\hypersetup{pdfcreator={LaTeX with beamer class version \beamer@version\space (article mode)}}
+  \RequirePackage{hyperref}
+  % For hyperlinks
+  \hypersetup{pdfcreator={LaTeX with beamer class version \beamer@version\space (article mode)}}
+\fi
 
 \RequirePackage{beamerbaseoptions}
 % For option management
