@@ -154,7 +154,7 @@
 %
 % Section Definitions
 %
-\def\sectionname{Section}
+\def\sectionname{Section} % FIXME make this cooperate with babel
 \newcounter{section}
 \renewcommand\thesection{\@arabic\c@section}
 \beamer@sectionstartpage=1\relax
@@ -237,8 +237,9 @@
 \newcommand<>{\subsection}{\alt#1{\@ifnextchar[\beamer@subsection\beamer@@subsection}{\beamer@secgobble}}
 
 \def\beamer@@subsection{\@ifnextchar*\beamer@@ssubsection\beamer@@@subsection}
-\long\def\beamer@@ssubsection*#1{%
-  \beamer@ifempty{#1}{\beamer@untitledsubsection}{\beamer@subsection[{#1}]{}}}
+\long\def\beamer@@ssubsection*#1{\beamer@subsection[{#1}]{}}
+%\long\def\beamer@@ssubsection*#1{%
+%  \beamer@ifempty{#1}{\beamer@untitledsubsection}{\beamer@subsection[{#1}]{}}}
 \def\beamer@@@subsection#1{\beamer@subsection[{#1}]{#1}}
 \def\beamer@subsection[#1]#2{%
   \beamer@savemode%
