@@ -10,8 +10,8 @@
 \def\beamer@version{3.08}
 
 \RequirePackage{beamerbasercs}
-%\ProvidesClassRCS $Header$
-[cvs version \beamer@version\space A class for typesetting presentations]
+\ProvidesClassRCS $Header$
+[development version \beamer@version\space A class for typesetting presentations]
 
 
 \RequirePackage{beamerbasemodes}
