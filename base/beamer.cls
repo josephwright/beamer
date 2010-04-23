@@ -10,7 +10,7 @@
 \def\beamer@version{3.08}
 
 \RequirePackage{beamerbasercs}
-\ProvidesClassRCS $Header$
+%\ProvidesClassRCS $Header$
 [cvs version \beamer@version\space A class for typesetting presentations]
 
 

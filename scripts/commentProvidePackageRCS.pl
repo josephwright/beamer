@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 # Written by Lucia Načinović on 2010-04-22 (with help of a Perl tutorial).
+# Modifications by Vedran Miletić. Surprisingly, it still works.
 
 use File::Find;
 use strict;
@@ -15,7 +16,7 @@ sub process
 	my $line;
 
 
-	if ( $File::Find::name =~ /\.cls$/ or $File::Find::name =~ /\.sty$/ or $File::Find::name =~ /\.tex$/ )
+	if ( $File::Find::name =~ /\.sty$/ or $File::Find::name =~ /\.tex$/ )
 	{
 
 		open (FILE, $File::Find::name ) or
