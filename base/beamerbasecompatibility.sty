@@ -124,36 +124,38 @@
 %
 % Heiko's fix for correct generation of section* and subsection* bookmarks
 %
-\long\def\@LongEmpty{}
-\newcommand*{\org@beamer@section}{}
-\let\org@beamer@section\beamer@section{}%
-\long\def\beamer@section[#1]#2{%
-  \let\org@writebookmark\Hy@writebookmark{}%
-  \long\def\@secname{#1}%
-  \ifx\@secname\@LongEmpty{}%
-    \def\Hy@writebookmark##1##2##3##4##5{}%
-  \fi
-  \long\def\@secname{#2}%
-  \ifx\@secname\@LongEmpty{}%
-    \def\Hy@writebookmark##1##2##3##4##5{}%
-  \fi
-  \org@beamer@section[{#1}]{#2}%
-  \let\Hy@writebookmark\org@writebookmark{}%
-}
-\newcommand*{\org@beamer@subsection}{}
-\let\org@beamer@subsection\beamer@subsection{}%
-\long\def\beamer@subsection[#1]#2{%
-  \let\org@writebookmark\Hy@writebookmark{}%
-  \long\def\@secname{#1}%
-  \ifx\@secname\@LongEmpty{}%
-    \def\Hy@writebookmark##1##2##3##4##5{}%
-  \fi
-  \long\def\@secname{#2}%
-  \ifx\@secname\@LongEmpty{}%
-    \def\Hy@writebookmark##1##2##3##4##5{}%
-  \fi
-  \org@beamer@subsection[{#1}]{#2}%
-  \let\Hy@writebookmark\org@writebookmark{}%
+\g@addto@macro\beamer@lastminutepatches{%
+  \long\def\@LongEmpty{}
+  \newcommand*{\org@beamer@section}{}
+  \let\org@beamer@section\beamer@section{}%
+  \long\def\beamer@section[#1]#2{%
+    \let\org@writebookmark\Hy@writebookmark{}%
+    \long\def\@secname{#1}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \long\def\@secname{#2}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \org@beamer@section[{#1}]{#2}%
+    \let\Hy@writebookmark\org@writebookmark{}%
+  }
+  \newcommand*{\org@beamer@subsection}{}
+  \let\org@beamer@subsection\beamer@subsection{}%
+  \long\def\beamer@subsection[#1]#2{%
+    \let\org@writebookmark\Hy@writebookmark{}%
+    \long\def\@secname{#1}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \long\def\@secname{#2}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \org@beamer@subsection[{#1}]{#2}%
+    \let\Hy@writebookmark\org@writebookmark{}%
+  }
 }
 
 %
