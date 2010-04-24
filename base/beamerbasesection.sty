@@ -9,10 +9,6 @@
 
 \ProvidesPackageRCS $Header$
 
-
-\mode<presentation>
-
-
 \mode
 <all>
 {
@@ -20,6 +16,15 @@
   \def\beamer@secstargobble*{\beamer@gobbleoptional}
 }
 
+\mode
+<presentation>
+
+\IfFileExists{translator.sty}{
+  \RequirePackage{translator}
+  \usedictionary{translator-basic-dictionary}
+}{}
+
+\providecommand\translate[2][]{#2}
 
 %
 % Lecture Definitions
@@ -154,7 +159,7 @@
 %
 % Section Definitions
 %
-\def\sectionname{Section} % FIXME make this cooperate with babel
+\def\sectionname{\translate{Section}}
 \newcounter{section}
 \renewcommand\thesection{\@arabic\c@section}
 \beamer@sectionstartpage=1\relax
