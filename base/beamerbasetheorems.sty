@@ -10,75 +10,66 @@
 
 \ProvidesPackageRCS $Header$
 
-\mode
-<all>
-
-\IfFileExists{translator.sty}{
-  \RequirePackage{translator}
-  \usedictionary{translator-theorem-dictionary}
-}{}
-
-\providecommand\translate[2][]{#2}
 
 \mode
 <presentation>
 
 \ifbeamer@ams
 
-\RequirePackage{amsmath}
-\RequirePackage{amsthm}
+  \RequirePackage{amsmath}
+  \RequirePackage{amsthm}
 
-% For old versions of amsthm
-\providecommand\thm@space@setup{}
-\providecommand\pushQED[1]{\def\beamer@qed{#1}}
-\providecommand\popQED{\beamer@qed}
-\providecommand\qedhere{\qed}
+  % For old versions of amsthm
+  \providecommand\thm@space@setup{}
+  \providecommand\pushQED[1]{\def\beamer@qed{#1}}
+  \providecommand\popQED{\beamer@qed}
+  \providecommand\qedhere{\qed}
 
-% Redfine certain amsthm internals:
-\def\@thm#1#2#3{%
-  \ifhmode\unskip\unskip\par\fi
-  \normalfont
-  \let\thmheadnl\relax
-  \let\thm@swap\@gobble
-  \thm@headpunct{.}% add period after heading
-  \thm@space@setup
-  #1% style overrides
-  \def\inserttheoremname{#3}
-  \def\inserttheorempunctuation{\the\thm@headpunct}
-  \def\@tempa{#2}%
-  \ifx\@empty\@tempa
-    \def\inserttheoremnumber{}
-  \else
-    \refstepcounter{#2}%
-    \expandafter\def\expandafter\inserttheoremnumber\expandafter{ \csname the#2\endcsname}
-  \fi
-  \beamer@begintheorem%
-}
+  % Redfine certain amsthm internals:
+  \def\@thm#1#2#3{%
+    \ifhmode\unskip\unskip\par\fi
+    \normalfont
+    \let\thmheadnl\relax
+    \let\thm@swap\@gobble
+    \thm@headpunct{.}% add period after heading
+    \thm@space@setup
+    #1% style overrides
+    \def\inserttheoremname{#3}
+    \def\inserttheorempunctuation{\the\thm@headpunct}
+    \def\@tempa{#2}%
+    \ifx\@empty\@tempa
+      \def\inserttheoremnumber{}
+    \else
+      \refstepcounter{#2}%
+      \expandafter\def\expandafter\inserttheoremnumber\expandafter{ \csname the#2\endcsname}
+    \fi
+    \beamer@begintheorem%
+  }
 
-\let\beamer@origxthm=\@xthm
-\def\@xthm#1{\resetcounteronoverlays{#1}\beamer@origxthm{#1}}
+  \let\beamer@origxthm=\@xthm
+  \def\@xthm#1{\resetcounteronoverlays{#1}\beamer@origxthm{#1}}
 
-\def\inserttheoremheadfont{\the\thm@headfont}
-\def\inserttheoremblockenv{block}
+  \def\inserttheoremheadfont{\the\thm@headfont}
+  \def\inserttheoremblockenv{block}
 
-\def\th@example{%
-  \normalfont % body font
-  \def\inserttheoremblockenv{exampleblock}  
-}
+  \def\th@example{%
+    \normalfont % body font
+    \def\inserttheoremblockenv{exampleblock}  
+  }
 
-\newcommand<>\beamer@begintheorem[1][]{%
-  \beamer@ifempty{#1}
-  {\def\inserttheoremaddition{}}
-  {\def\inserttheoremaddition{#1}}
-  \usebeamertemplate{theorem begin}#2}
-\def\@endtheorem{\usebeamertemplate{theorem end}}
+  \newcommand<>\beamer@begintheorem[1][]{%
+    \beamer@ifempty{#1}
+    {\def\inserttheoremaddition{}}
+    {\def\inserttheoremaddition{#1}}
+    \usebeamertemplate{theorem begin}#2}
+  \def\@endtheorem{\usebeamertemplate{theorem end}}
 
-\renewenvironment<>{proof}[1][\proofname]{%
-  \par
-  \def\insertproofname{#1\@addpunct{.}}%
-  \pushQED{\qed}
-  \usebeamertemplate{proof begin}#2}
-{\popQED\usebeamertemplate{proof end}}
+  \renewenvironment<>{proof}[1][\proofname]{%
+    \par
+    \def\insertproofname{#1\@addpunct{.}}%
+    \pushQED{\qed}
+    \usebeamertemplate{proof begin}#2}
+  {\popQED\usebeamertemplate{proof end}}
 
 \fi
 
@@ -168,4 +159,4 @@
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
-%%% End: 
+%%% End:

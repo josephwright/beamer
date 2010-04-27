@@ -30,88 +30,23 @@
 
 \ProcessOptions
 
-\mode<article>
-  
-\RequirePackage{keyval}
-
-\RequirePackage{amssymb}
-
-\ifbeamer@articlexcolor
-  \PassOptionsToPackage{bookmarks=true,%
-    bookmarksopen=true,%
-    pdfborder={0 0 0},%
-    pdfhighlight={/N},%
-    linkbordercolor={.5 .5 .5}}{hyperref}
-
-  \RequirePackage{hyperref}
-  % For hyperlinks
-  \hypersetup{pdfcreator={LaTeX with beamer class version \beamer@version\space (article mode)}}
-\fi
-
 \RequirePackage{beamerbaseoptions}
 % For option management
+
+\ifbeamer@articlehyperref
+  \RequirePackage{hyperref}
+  % For hyperlinks
+
+  \hypersetup{pdfcreator={LaTeX with beamer class version \beamer@version\space (article mode)}}
+\fi
 
 \ifbeamer@articlexcolor
   \RequirePackage[override]{xcolor}
   % For color support
 \fi
 
-\RequirePackage{beamerbasecompatibility}
-% Fixes other packages
-  
-\RequirePackage{beamerbasefont}
-% Font stuff
-  
-\RequirePackage{beamerbasemisc}
-% Miscellaneous commands
-
-\RequirePackage{beamerbasetwoscreens}
-% Stuff for two screens
-
-\RequirePackage{beamerbaseoverlay}
-% Overlay stuff
-
-\RequirePackage{beamerbasetitle}
-% Commands for constructing the title page
-
-\RequirePackage{beamerbasesection}
-% Parts, sections, subsections, appendix
-
-\RequirePackage{beamerbaseframe}
-% Commands for constructing frames
-
-\RequirePackage{beamerbaseverbatim}
-% Commands for constructing frames
-
-\RequirePackage{beamerbaseframesize}
-% Commands for changing the size of frames
-
-\RequirePackage{beamerbaseframecomponents}
-% Headlines, sidebars, columns
-
-\RequirePackage{beamerbasecolor}
-% Headlines, sidebars, columns
-
-\RequirePackage{beamerbasenotes}
-% Commands for constructing frames
-
-\RequirePackage{beamerbasetoc}
-% Table of Contents Format
-
-\RequirePackage{beamerbasetemplates}
-% For default templates
-
-\RequirePackage{beamerbaselocalstructure}
-% Commands for local structure like alert, itemize, etc.
-
-\RequirePackage{beamerbasenavigation}
-% Navigation buttons
-
-\RequirePackage{beamerbasetheorems}
-% Theorems
-
-\RequirePackage{beamerbasethemes}
-% Commands for including and building themes
+\RequirePackage{beamerbaserequires}
+% Beamer packages required both by presentation and article modes
 
 
 % Default article templates:
@@ -135,7 +70,8 @@
 \mode
 <all>
 
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: ../examples/beamerexample1.tex
-%%% End: 
+%%% End:

@@ -13,7 +13,8 @@
 % 
 % Basic commands for including themes
 %
-\mode<presentation>
+\mode
+<presentation>
 {
   \def\beamer@calltheme#1#2#3{%
     \def\beamer@themelist{#2}
@@ -27,7 +28,8 @@
   \newcommand\useinnertheme[2][]{\beamer@calltheme{#1}{#2}{beamerinnertheme}}
 }
 
-\mode<article>
+\mode
+<article>
 {
   \newcommand\usetheme[2][]{}
   \newcommand\usecolortheme[2][]{}
@@ -35,6 +37,11 @@
   \newcommand\useoutertheme[2][]{}
   \newcommand\useinnertheme[2][]{}
 }
+
+\mode
+<all>
+% End in common mode
+
 
 %%% Local Variables: 
 %%% mode: latex

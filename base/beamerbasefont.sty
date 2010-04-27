@@ -8,17 +8,19 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
-
 \ProvidesPackageRCS $Header$
 
 
-\mode<presentation>
+\RequirePackage{amssymb}
+% For \blacktriangleright; not explicitly required by article, but can cause
+% weird situations if users find that symbols works in presentation, but not
+% in article mode.
 
+\mode<presentation>
 
 %
 % Font theme stuff
 %
-
 \define@key{beamerthm}{size}
   {\expandafter\def\csname beamer@thmfsize@\beamer@temp\endcsname{#1}}
 \define@key{beamerthm}{size*}
@@ -171,9 +173,6 @@
 
 
 
-      
-
-  
 \AtBeginDocument{%
 \def\beamer@cmr{cmr}
 \edef\beamer@fmdef{\mathfamilydefault}
@@ -311,9 +310,9 @@
 }
 
 
-
 \mode
 <all>
+
 
 %%% Local Variables: 
 %%% mode: latex

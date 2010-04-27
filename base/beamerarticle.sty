@@ -8,11 +8,12 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
-\providecommand\beamer@version{3.08}
-
 \RequirePackage{beamerbasercs}
 \ProvidesPackageRCS $Header$
 
+
+\RequirePackage{beamerbasemodes}
+% Setup modes and check for article option
 
 \DeclareOption{noxcolor}{\PassOptionsToPackage{noxcolor}{beamerbasearticle}}
 \DeclareOption{nohyperref}{\PassOptionsToPackage{nohyperref}{beamerbasearticle}}
@@ -23,8 +24,6 @@
 
 \ProcessOptions
 
-\RequirePackage{beamerbasemodes}
-% Setup modes and check for article option
 
 \def\beamer@slide#1#2{\expandafter\gdef\csname beamer@slide#1\endcsname{#2}}
 \beamer@inpresentationfalse
@@ -32,8 +31,9 @@
 \ifx\beamer@currentmode\@undefined
   \def\beamer@currentmode{article}
 \fi
-  
-\mode<all>
+
+\mode
+<all>
 
 \RequirePackage{beamerbasearticle}
 
@@ -41,4 +41,4 @@
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: ../examples/beamerexample1.tex
-%%% End: 
+%%% End:

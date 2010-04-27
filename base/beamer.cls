@@ -8,8 +8,6 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
-\def\beamer@version{3.08}
-
 \RequirePackage{beamerbasercs}
 \ProvidesClassRCS $Header$
 [development version \beamer@version\space A class for typesetting presentations]
@@ -308,10 +306,7 @@
 % We need only the core and some image stuff for icons.
 
 \RequirePackage{xxcolor}
-% For color management.
-
-\RequirePackage{amssymb}
-% For \blacktriangleright
+% For color management (comes with pgf).
 
 \RequirePackage[%
   papersize={12.80cm,9.60cm},
@@ -323,6 +318,11 @@
   ]{geometry}
 % For the page layout
 
+% Geometry settings
+\expandafter\input\beamer@size
+\geometry{headsep=0pt}
+
+
 \RequirePackage[implicit=false]{hyperref}
 % For hyperlinks
 
@@ -332,15 +332,9 @@
 \beamer@loaducs
 \beamer@hypercjk
 
-\expandafter\input\beamer@size
-\geometry{headsep=0pt}
 
-
-\RequirePackage{beamerbasecompatibility}
-% Fixes other packages
-
-\RequirePackage{beamerbasefont}
-% Font stuff
+\RequirePackage{beamerbaserequires}
+% Beamer packages required both by presentation and article modes
 
 % Defaults
 \normalfont
@@ -352,64 +346,13 @@
   \addtocontents{nav}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
 }
 
-\RequirePackage{beamerbasemisc}
-% Miscellaneous commands
-
-\RequirePackage{beamerbasetwoscreens}
-% Stuff for using two screens
-
-\RequirePackage{beamerbaseoverlay}
-% Overlay stuff
-
-\RequirePackage{beamerbasetitle}
-% Commands for constructing the title page
-
-\RequirePackage{beamerbasesection}
-% Parts, sections, subsections, appendix
-
-\RequirePackage{beamerbaseframe}
-% Commands for constructing frames
-
-\RequirePackage{beamerbaseverbatim}
-% Commands for constructing frames
-
-\RequirePackage{beamerbaseframesize}
-% Commands for constructing frames
-
-\RequirePackage{beamerbaseframecomponents}
-% Headlines, sidebars, columns
-
-\RequirePackage{beamerbasecolor}
-% Color management
-
-\RequirePackage{beamerbasenotes}
-% Commands for adding notes
-
-\RequirePackage{beamerbasetoc}
-% Table of Contents Format
-
-\RequirePackage{beamerbasetemplates}
-% For default templates
-
-\RequirePackage{beamerbaselocalstructure}
-% Commands for local structure like alert, itemize, etc.
-
-\RequirePackage{beamerbasenavigation}
-% Navigation buttons
-
-\RequirePackage{beamerbasetheorems}
-% Theorems
-
-\RequirePackage{beamerbasethemes}
-% Commands for including and building themes
-
 \usetheme{default}
 
-% Compatibility stuff:
+% Compatibility stuff
 \csname beamer@loadlater\endcsname
 
 
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
-%%% End: 
+%%% End:
