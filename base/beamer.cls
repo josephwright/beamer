@@ -352,7 +352,3 @@
 \csname beamer@loadlater\endcsname
 
 
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
-%%% End:
