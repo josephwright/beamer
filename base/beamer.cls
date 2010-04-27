@@ -292,6 +292,36 @@
 }
 
 %
+% Geometry
+%
+\newlength\beamer@paperwidth
+\beamer@paperwidth 12.80cm
+\newlength\beamer@paperheight
+\beamer@paperheight 9.60cm
+
+\DeclareOptionBeamer{169layout}{%
+  \beamer@paperwidth 16.00cm
+  \beamer@paperheight 9.00cm
+}
+
+\DeclareOptionBeamer{1610layout}{%
+  \beamer@paperwidth 16.00cm
+  \beamer@paperheight 10.00cm
+}
+
+\RequirePackage[%
+  papersize={\beamer@paperwidth,\beamer@paperheight},
+  hmargin=1cm,%
+  vmargin=0cm,%
+  head=0.5cm,% might be changed later
+  headsep=0pt,%
+  foot=0.5cm% might be changed later
+  ]{geometry}
+
+% Load corresponding size file
+\expandafter\input\beamer@size
+
+%
 % Process Options
 %
 
@@ -307,21 +337,6 @@
 
 \RequirePackage{xxcolor}
 % For color management (comes with pgf).
-
-\RequirePackage[%
-  papersize={12.80cm,9.60cm},
-  hmargin=1cm,%
-  vmargin=0cm,%
-  head=0.5cm,% will be changed later
-  headsep=0pt,%
-  foot=0.5cm% will be changed later
-  ]{geometry}
-% For the page layout
-
-% Geometry settings
-\expandafter\input\beamer@size
-\geometry{headsep=0pt}
-
 
 \RequirePackage[implicit=false]{hyperref}
 % For hyperlinks
