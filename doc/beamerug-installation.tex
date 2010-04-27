@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -28,7 +29,7 @@ preinstalled, so you can skip this section.
 This documentation is part of version \version\ of the \beamer\
 class. \beamer\ needs a reasonably recent version of several standard
 packages to run and also the following versions of two special
-packages (later versions should work, but not necessarily): 
+packages (later versions should work, but not necessarily):
 \begin{itemize}
 \item
   |pgf.sty| version \pgfversion,
@@ -41,7 +42,7 @@ If you use |pdflatex| or |lyx|, which are optional, you need
 \item
   |lyx| version 1.3.3. Other versions might work.
 \item
-  |pdflatex| version 0.14 or higher. Earlier versions do not work. 
+  |pdflatex| version 0.14 or higher. Earlier versions do not work.
 \end{itemize}
 
 
@@ -62,7 +63,7 @@ page first.
 The command ``|aptitude install latex-beamer|'' should do the
 trick. If necessary, the packages |pgf| and |latex-xcolor| will be
 automatically installed. Sit back and relax. In detail, the following
-packages are installed: 
+packages are installed:
 \begin{verbatim}
 http://packages.debian.org/latex-beamer
 http://packages.debian.org/pgf
@@ -73,7 +74,7 @@ http://packages.debian.org/latex-xcolor
 \subsubsection{MiKTeX}
 
 For MiK\TeX, use the update wizard to install the (latest versions of
-the) packages called |latex-beamer|, |pgf|, and |xcolor|. 
+the) packages called |latex-beamer|, |pgf|, and |xcolor|.
 
 
 
@@ -90,13 +91,13 @@ package from
 http://sourceforge.net/projects/latex-beamer/
 \end{verbatim}
 (most likely, you have already done this). Next, you also need the
-\textsc{pgf} package and the \textsc{xcolor} packages, 
+\textsc{pgf} package and the \textsc{xcolor} packages,
 which you need to install separately (see their installation
-instructions). 
+instructions).
 
 The package contains a bunch of files; |beamer.cls| is one of
 these files and happens to be the most important one. You now need to
-put these files in an appropriate |texmf| tree. 
+put these files in an appropriate |texmf| tree.
 
 When you ask \TeX\ to use a certain class or package, it usually looks
 for the necessary files in so-called |texmf| trees. These trees
@@ -113,7 +114,7 @@ are simply huge directories that contain these files. By default,
   |c:\Program Files\TeXLive\texmf-local\|.
 \item
   Your personal  |texmf| tree, which is usually located in your home
-  directory at |~/texmf/| or |~/Library/texmf/|.   
+  directory at |~/texmf/| or |~/Library/texmf/|.
 \end{itemize}
 
 You should install the packages either in the local tree or in
@@ -124,8 +125,8 @@ update of the whole \TeX\ installation will replace this whole tree.
 Inside whatever |texmf| directory you have chosen, create
 the sub-sub-sub-directory
 \begin{verbatim}
-texmf/tex/latex/beamer 
-\end{verbatim} 
+texmf/tex/latex/beamer
+\end{verbatim}
 and place all files of the package in this directory.
 
 Finally, you need to rebuild \TeX's filename database. This done by
@@ -138,7 +139,7 @@ above. You also have to make \LyX\ aware of the file
 |beamer.layout|. This file is \emph{not part of the beamer package}
 since it is updated and managed by the \LyX\ development team. This
 means that in reasonbaly up-to-date \LyX\ versions this file will
-already be installed and nothing needs to be done. 
+already be installed and nothing needs to be done.
 
 \vskip1em
 For a more detailed explanation of the standard installation process
@@ -171,7 +172,7 @@ beamer/solutions/generic-talks
 to some place where you usually
 create presentations. Then run the command |pdflatex| several times on
 the file and check whether the resulting \textsc{pdf} file looks
-correct. If so, you are all set. 
+correct. If so, you are all set.
 
 \lyxnote
 To test the \LyX\ installation, create a new file from the
@@ -181,7 +182,7 @@ template |generic-ornate-15min-45min.en.lyx|, which is located in the directory
 
 \input{beamerug-compatibility}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

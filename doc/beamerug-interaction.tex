@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -13,26 +14,25 @@
 
 \label{section-nonlinear}
 
-
 \subsection{Adding Hyperlinks and Buttons}
 
 To create anticipated nonlinear jumps in your talk structure, you
 can add hyperlinks to your presentation. A hyperlink is a text
 (usually rendered as a button) that, when you click on it, jumps the
 presentation to some other slide. Creating such a button is a
-three-step process: 
+three-step process:
 \begin{enumerate}
 \item
   You specify a target using the command |\hypertarget| or (easier)
   the command |\label|. In some cases, see below, this step may be
-  skipped. 
+  skipped.
 \item
   You render the button using |\beamerbutton| or a similar
   command. This will \emph{render} the button, but clicking it will
-  not yet have any effect. 
+  not yet have any effect.
 \item
   You put the button inside a |\hyperlink| command. Now clicking it
-  will jump to the target of the link.  
+  will jump to the target of the link.
 \end{enumerate}
 
 \begin{command}{\hypertarget\sarg{overlay specification}%
@@ -67,7 +67,7 @@ The |\label| command creates a hypertarget as a side-effect and the
 |label=|\meta{name} option of the |\frame| command creates a label
 named \meta{name}|<|\meta{slide number}|>| for each slide of the frame
 as a side-effect. Thus the above example could be written more easily
-as: 
+as:
 \begin{verbatim}
 \begin{frame}[label=threeitems]
   \begin{itemize}
@@ -128,7 +128,7 @@ a button will be used for.
 
   \begin{element}{button border}\no\yes\no
     The foreground of this color is used to render the border of
-    buttons. 
+    buttons.
   \end{element}
 \end{command}
 
@@ -167,7 +167,7 @@ a button will be used for.
 
 \begin{command}{\beamerreturnbutton\marg{button text}}
   The symbol drawn for this button is usually a left-pointing
-  arrow. Use this button if pressing it will return from a detour. 
+  arrow. Use this button if pressing it will return from a detour.
 
   \example
 \begin{verbatim}
@@ -220,7 +220,7 @@ at the beginning.
 \begin{command}{\hyperlinkslidenext\sarg{overlay specification}\marg{link text}}
   Clicking the text jumps one slide forward.
 \end{command}
-  
+
 \begin{command}{\hyperlinkframestart\sarg{overlay specification}\marg{link text}}
   Clicking the text jumps to the first slide of the current frame.
 \end{command}
@@ -276,7 +276,7 @@ by ``|section|''.
 Sometimes you may wish some slides of a frame to be shown in your main
 talk, but wish some ``supplementary'' slides of the frame to be shown
 only in the the appendix. In this case, the |\againframe| commands is
-useful. 
+useful.
 
 
 \begin{command}{\againframe\sarg{overlay
@@ -289,7 +289,7 @@ useful.
   interrupted by another frame. The effect of this command is to call
   the |\frame| command with the given \meta{overlay specification},
   \meta{default overlay specification} (if present), and
-  \meta{options} (if present) and with the original frame's contents. 
+  \meta{options} (if present) and with the original frame's contents.
 
   \example
 \begin{verbatim}
@@ -371,7 +371,7 @@ complex details merit an explanation. In this case, use the command
 |\framezoom|. It allows you to specify that clicking on a certain area
 of a frame should zoom out this area. You can then explain the
 details. Clicking on the zoomed out picture will take you back to the
-original one. 
+original one.
 
 \begin{command}{\framezoom\ssarg{button overlay
       specification}\ssarg{zoomed overlay
@@ -404,7 +404,7 @@ original one.
     pixel. The color of this  button is the |linkbordercolor| of
     |hyperref|. \beamer\ sets this color to a 50\% gray by default. To
     change this, you can use the command
-    |\hypersetup{linkbordercolor={|\meta{red}| |\meta{green}| |\meta{blue}|}}|, 
+    |\hypersetup{linkbordercolor={|\meta{red}| |\meta{green}| |\meta{blue}|}}|,
     where \meta{red}, \meta{green}, and \meta{blue} are values between
     0 and 1.
   \end{itemize}
@@ -440,7 +440,7 @@ original one.
   If you do not wish to have the frame title shown on a zoomed slide,
   you can add an overlay specification to the |\frametitle| command
   that simply suppresses the title for the slide. Also, by using the
-  |plain| option, you can have the zoomed slide fill the whole page. 
+  |plain| option, you can have the zoomed slide fill the whole page.
 
   \example A simple case
 \begin{verbatim}
@@ -476,7 +476,7 @@ original one.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

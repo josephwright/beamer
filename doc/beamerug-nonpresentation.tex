@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -9,19 +10,18 @@
 
 % $Header$
 
-
 \section{Creating Handouts and Lecture Notes}
 
 \label{section-modes}
 
-During a presentation it is very much desirable that the audience has 
+During a presentation it is very much desirable that the audience has
 a \emph{handout} or even \emph{lecture notes} available to it. A
 handout allows everyone in the audience to individually go back to
 things he or she has not understood.
 
 Always provide handouts \emph{as early as possible}, preferably weeks
 before the talk. Do \emph{not} retain the handout till the end of the
-talk. 
+talk.
 
 The \beamer\ package offers two different ways of creating special
 versions of your talk; they are discussed in the following. The first,
@@ -95,7 +95,7 @@ or |book| or some other class as the document class instead of
 The package |beamerarticle| defines virtually all of \beamer's
 commands in a way that is sensible for the |article| mode. Also,
 overlay specifications can be given to commands like |\textbf| or
-|\item| once |beamerarticle| has been 
+|\item| once |beamerarticle| has been
 loaded. Note that, except for |\item|, these overlay specifications
 also work: by writing |\section<presentation>{Name}| you will suppress
 this section command in the article version. For the exact effects
@@ -123,7 +123,7 @@ descriptions of the commands to which you wish to apply them.
     |\newtheorem| command still makes the defined environments
     overlay-specification-aware. Using this option allows you to
     define the standard environments in whatever way you like while
-    retaining the power of the extensions to |amsthm|.    
+    retaining the power of the extensions to |amsthm|.
   \item
     \declare{|envcountsect|} causes theorem, definitions and the like
     to be numbered with each section. Thus instead of Theorem~1 you
@@ -157,7 +157,7 @@ text \emph{between} frames to be suppressed. More precisely, we want
 all text except for commands like |\section| and so on to be
 suppressed. This behaviour can be enforced by specifying the option
 |ignorenonframetext| in the presentation version. The option will
-insert a |\mode*| at the beginning of your presentation. 
+insert a |\mode*| at the beginning of your presentation.
 
 The following example shows a simple usage of the |article| mode:
 
@@ -238,7 +238,7 @@ The following workflow steps are optional, but they can simplify the
 creation of the article version.
 
 \begin{itemize}
-\item 
+\item
   In the main file |main.tex|, delete the first line, which sets the
   document class.
 \item
@@ -247,7 +247,7 @@ creation of the article version.
 \begin{verbatim}
 \documentclass[ignorenonframetext]{beamer}
 \input{main.tex}
-\end{verbatim} 
+\end{verbatim}
 \item
   Create an extra file named, say, |main.article.tex| with the
   following content:
@@ -259,7 +259,7 @@ creation of the article version.
 \end{verbatim}
 \item
   You can now run |pdflatex| or |latex| on the two files
-  |main.beamer.tex| and |main.article.tex|. 
+  |main.beamer.tex| and |main.article.tex|.
 \end{itemize}
 
 The command |\setjobnamebeamerversion| tells the article version where
@@ -268,7 +268,7 @@ slides from the presentation version in an article as figures.
 
 \begin{command}{\setjobnamebeamerversion\marg{filename without extension}}
   Tells the \beamer\ class where to find the presentation version of the
-  current file.  
+  current file.
 \end{command}
 
 An example of this workflow approach can be found in the |examples|
@@ -323,7 +323,7 @@ your article version to insert the slide into it:
     \end{center}
     \caption{The second slide (original size). Now the second item is also shown.}
   \end{figure}
-\end{verbatim}  
+\end{verbatim}
 \end{command}
 
 The exact effect of passing the option |page=|\meta{page of label
@@ -361,7 +361,7 @@ of |pgf|. In essence, the following happens:
 
 This subsection describes how modes work exactly and how you can use
 the |\mode| command to control what part of your text belongs to which
-mode. 
+mode.
 
 When \beamer\ typesets your text, it is always in one of the following
 five modes:
@@ -425,7 +425,7 @@ one argument. It behaves essentially the same way as |\only|.
 
 The second flavor of the |\mode| command takes no argument. ``No
 argument'' means that it is not followed by an opening brace, but any
-other symbol. 
+other symbol.
 
 \begin{command}{\mode\sarg{mode specification}}
   In the specified mode, this command actually has no effect. The
@@ -457,7 +457,7 @@ other symbol.
     cannot contain any verbatim text that contains unbalanced braces.
   \item
     The first flavor cannot cope with arguments that contain
-    |\include|. 
+    |\include|.
   \item
     If the text mainly belongs to one mode with only small amounts of
     text from another mode inserted, this second flavor is nice to
@@ -472,7 +472,7 @@ other symbol.
   \emph{Note:} When a \TeX\ file ends, \TeX\ must not be in the
   gobbling state. Switch this state off using |\mode| on one line and
   |<all>| on the next.
-  
+
   \example
 \begin{verbatim}
 \mode<article>
@@ -577,12 +577,12 @@ Extra text in article version.
   Some text.
 \end{frame}
 \mode<all>
-\end{verbatim}  
+\end{verbatim}
 \end{command}
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

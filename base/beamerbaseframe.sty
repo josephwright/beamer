@@ -49,7 +49,7 @@
     \ifx\beamer@againname\@empty%
       {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
     \else%
-      {\let\@elt\beamer@labelrestorecounter\beamer@overlaycounterresets}%      
+      {\let\@elt\beamer@labelrestorecounter\beamer@overlaycounterresets}%
     \fi%
   \fi%
   \global\c@beamerpauses=1\relax%
@@ -122,7 +122,7 @@
   \ifbeamer@shrink%
     \beamer@shrinkframebox%
   \fi%
-  \ifx\beamer@zoomer\@empty  
+  \ifx\beamer@zoomer\@empty
     \setbox\beamer@framebox=\vbox{%
       \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
       \nointerlineskip\unvbox\beamer@frametitlebox%
@@ -162,17 +162,17 @@
 
 %
 % Resetting counters
-%  
+%
 \def\resetcounteronoverlays#1{%
-  \@cons\beamer@overlaycounterresets{{c@#1}}%  
+  \@cons\beamer@overlaycounterresets{{c@#1}}%
 }
 
 \def\resetcountonoverlays#1{%
-  \@cons\beamer@overlaycounterresets{{#1}}%  
+  \@cons\beamer@overlaycounterresets{{#1}}%
 }
 
 \def\beamer@overlaycounterresets{}
-  
+
 \resetcounteronoverlays{equation}
 \resetcounteronoverlays{parentequation}
 \resetcounteronoverlays{footnote}
@@ -237,7 +237,7 @@
 }
 \def\beamer@fragilefalse{}
 \def\beamer@fragiletrue{\beamer@isfragiletrue}
-\def\beamer@fragilesingleslide{\beamer@containsverbatimtrue}  
+\def\beamer@fragilesingleslide{\beamer@containsverbatimtrue}
 \define@key{beamerframe}{c}[true]{% centered
   \beamer@frametopskip=0pt plus 1fill\relax%
   \beamer@framebottomskip=0pt plus 1.5fill\relax%
@@ -315,7 +315,7 @@
       \let\@next=\beamer@process@envbody % A little tricky! Note the grouping
       \@checkend{#2}%
     \else%
-      % ok, just expand it, presumably it will generate the desired \end{frame}  
+      % ok, just expand it, presumably it will generate the desired \end{frame}
       \let\@next=\beamer@process@expander%
     \fi
   \else
@@ -373,7 +373,7 @@
     \expandafter\beamer@framecommand\beamer@frameoptions\bgroup}%
 }
 
-  
+
 % Check for old version:
 
 \def\beamer@framecommand{%
@@ -468,7 +468,7 @@
     \ifbeamer@isfragile%
       \let\beamer@howtotreatframe\beamer@doexternalframe%
     \fi%
-  \fi%  
+  \fi%
   \beamer@howtotreatframe}
 \long\def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
@@ -568,7 +568,7 @@
           \protect\slideentry{\the\c@section}{\the\c@subsection}{\the\c@subsectionslide}%
           {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\the\c@part}}}%
     \addtocontents{nav}%
-      {\protect\headcommand{% 
+      {\protect\headcommand{%
         \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
     \clearpage\beamer@notesactions%
   }
@@ -619,7 +619,7 @@
 <article>
 {
   \def\endframe{\egroup}
-  
+
   \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<*>}}
   \def\beamer@frame<#1>{\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
   \long\def\beamer@@frame<#1>[#2]{%
@@ -660,11 +660,11 @@
       \let\beamer@next=\beamer@article@framecmd%
     \fi%
     \beamer@next}%
-  
+
   \def\beamer@article@framecmd{%
     \afterassignment\beamer@checkframetitle
     \let\beamer@next=}
-  
+
   \providecommand\includeonlyframes[1]{}% no effect
 }
 
@@ -769,7 +769,7 @@
 % End in common mode
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
-%%% End: 
+%%% End:

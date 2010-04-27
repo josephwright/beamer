@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -20,7 +21,7 @@
 The |pause| command offers an easy, but not very flexible
 way of creating frames that are uncovered piecewise. If you say
 |\pause| somewhere in a frame, only the text on the frame up to the
-|\pause| command is shown on the first slide. On the 
+|\pause| command is shown on the first slide. On the
 second slide, everything is shown up to the second |\pause|, and
 so forth. You can also use |\pause| inside environments; its effect
 will last after the environment. However, taking this to
@@ -31,9 +32,9 @@ A much more fine-grained control over what is shown on each slide can
 be attained using overlay specifications, see the next
 sections. However, for many simple cases the |\pause|
 command is sufficient.
- 
+
 The effect of |\pause| lasts till the next |\pause|, |\onslide|, or
-the end of the frame.   
+the end of the frame.
 
 \begin{verbatim}
 \begin{frame}
@@ -84,7 +85,7 @@ the end of the frame.
 \begin{frame}
   \begin{itemize}
   \item
-    A    
+    A
   \pause
   \item
     B
@@ -127,7 +128,7 @@ same effect as |\FromSlide{2}|, except that |\onslide| transcends
 environments; likewise, |\pause| is internally mapped to a command
 with an appropriate overlay specifications). The idea is to add
 \emph{overlay specifications} to certain commands. These
-specifications are always given in pointed 
+specifications are always given in pointed
 brackets and follow the command ``as soon as possible,'' though in
 certain cases \beamer\ also allows overlay specification to be
 given a little later. In the simplest case, the specification contains
@@ -159,21 +160,21 @@ For a second example, consider the following frame:
 The command |\only|, which is introduced by \beamer, normally simply
 inserts its parameter into the current frame. However, if an
 overlay-specification is present, it ``throws away'' its parameter on
-slides that are not mentioned. 
+slides that are not mentioned.
 
 Overlay specifications can only be written behind certain commands,
 not every command. Which commands you can use and which effects this
 will have is explained in the next section. However, it is quite
 easy to redefine an existing command such that it becomes ``overlay
 specification aware,'' see also
-Section~\ref{section-overlay-commands}. 
+Section~\ref{section-overlay-commands}.
 
 The syntax of (basic) overlay specifications is the following: They
 are comma-separated lists of slides and ranges. Ranges are specified
 like this: |2-5|, which means slide two through to five. The start or
 the end of a range can be omitted. For example, |3-| means
 ``slides three, four, five, and so on'' and |-5| means the same as
-|1-5|. A complicated example is |-3,6-8,10,12-15|, which selects the 
+|1-5|. A complicated example is |-3,6-8,10,12-15|, which selects the
 slides 1, 2, 3, 6, 7, 8, 10, 12, 13, 14, and 15.
 
 
@@ -184,7 +185,7 @@ in \TeX-mode (otherwise the pointed brackets may be ``escaped'' by
 add an overlay specification to an item, simply insert a \TeX-mode
 text like |<3>| as the first thing in that item. Likewise, you can add
 an overlay specification to environments like |theorem| by giving
-them in \TeX-mode right at the start of the environment. 
+them in \TeX-mode right at the start of the environment.
 
 
 \subsection{Commands with Overlay Specifications}
@@ -215,7 +216,7 @@ special:
 
   If no \meta{text} is given, the following happens: All text
   following this command will only be shown  (uncovered) on the
-  specified slides. On non-specified slides, the text still 
+  specified slides. On non-specified slides, the text still
   occupies space. If no slides are specified, the following
   text is always shown. You need not call this command in the same
   \TeX\ group, its effect transcends block groups. However, this
@@ -226,7 +227,7 @@ special:
   as covered, but as invisible. The difference is the same as the
   difference between |\uncover| and |\visible|. The modifier |*| may
   not be given if no \meta{text} argument is present.
-  
+
   \example
 \begin{verbatim}
 \begin{frame}
@@ -260,7 +261,7 @@ special:
   \visible<2>{Same effect as the previous command.}
 
   \onslide*<3>{Same effect as the following command.}
-  \only<3>{Same effect as the previous command.}  
+  \only<3>{Same effect as the previous command.}
 \end{frame}
 \end{verbatim}
 \end{command}
@@ -272,7 +273,7 @@ special:
   may be present), the \meta{text} is inserted only into the specified
   slides. For other slides, the text is simply thrown away. In
   particular, it occupies no space.
-  
+
   \example |\only<3->{Text inserted from slide 3 on.}|
 
   Since the overlay specification may also be given after the text,
@@ -295,7 +296,7 @@ special:
   text still occupies space and it is still typeset, but it is not
   shown or only shown as if transparent. For details on how to specify
   whether the text is invisible or just transparent see
-  Section~\ref{section-transparent}. 
+  Section~\ref{section-transparent}.
   \example |\uncover<3->{Text shown from slide 3 on.}|
 
   \articlenote
@@ -307,7 +308,7 @@ special:
   is that if the text is not shown, it is never shown in a transparent
   way, but rather it is not shown at all. Thus, for this command the
   transparency settings have no effect.
-  
+
   \example |\visible<2->{Text shown from slide 2 on.}|
 
   \articlenote
@@ -316,20 +317,20 @@ special:
 
 \begin{command}{\invisible\sarg{overlay specification}\marg{text}}
   This command is the opposite of |\visible|.
-  
+
   \example |\invisible<-2>{Text shown from slide 3 on.}|
 \end{command}
 
 \begin{command}{\alt\sarg{overlay specification}%
     \marg{default text}\marg{alternative text}\sarg{overlay specification}}
-  Only one \meta{overlay specification} may be given. 
+  Only one \meta{overlay specification} may be given.
   The default text is shown on the specified slides, otherwise the
   alternative text. The specification must always be present.
   \example |\alt<2>{On Slide 2}{Not on slide 2.}|
 
   Once more, giving the overlay specification at the end is useful
   when the command is used inside other commands.
-  
+
   \example Here is the definition of |\uncover|:
 \begin{verbatim}
 \newcommand{\uncover}{\alt{\@firstofone}{\makeinvisible}}
@@ -350,7 +351,7 @@ special:
 \end{verbatim}
 
   As a possible application of the |\temporal| command consider the
-  following example: 
+  following example:
   \example
 \begin{verbatim}
 \def\colorize<#1>{%
@@ -373,8 +374,8 @@ special:
   \beamernote
   Only one \meta{alert specification} may be given. The effect of
   \meta{alert specification} is described in
-  Section~\ref{section-action-specifications}. 
-  
+  Section~\ref{section-action-specifications}.
+
   \example
 \begin{verbatim}
 \begin{frame}
@@ -421,7 +422,7 @@ in the same way as |\item|.
   labelling a frame is to use the |label=|\meta{name} option of the
   |frame| environment. However, this will cause the whole frame to be
   kept in memory till the end of the compilation, which may pose a
-  problem. 
+  problem.
   \example
 \begin{verbatim}
 \begin{frame}
@@ -469,7 +470,7 @@ second slide an example is added, and on the third slide the proof is
 also shown.
 
 For each of the basic commands |\only|, |\alt|, |\visible|,
-|\uncover|, and |\invisible| there exists 
+|\uncover|, and |\invisible| there exists
 ``environment versions'' |onlyenv|, |altenv|, |visibleenv|,
 |uncoverenv|, and |invisibleenv|. Except for |altenv|
 and |onlyenv|, these environments do the same as the commands.
@@ -502,11 +503,11 @@ text}\sarg{overlay specification}}
   environment and \meta{end text} will be inserted at the end. On all
   other slides, \meta{alternate begin text} and \meta{alternate end
     text} will be used.
-  
+
   \example
 \begin{verbatim}
 \begin{frame}
-  This 
+  This
   \begin{altenv}<2>{(}{)}{[}{]}
     word
   \end{uncoverenv}
@@ -539,7 +540,7 @@ but less user-friendly.
 \begin{environment}{{overlayarea}\marg{area width}\marg{area height}}
   Everything within the environment will be placed in a rectangular
   area of the specified size. The area will have the same size on all
-  slides of a frame, regardless of its actual contents. 
+  slides of a frame, regardless of its actual contents.
   \example
 \begin{verbatim}
 \begin{overlayarea}{\textwidth}{3cm}
@@ -579,7 +580,7 @@ but less user-friendly.
   \lyxnote
   Use the style ``Overprint'' to insert an |overprint|
   environment. You have to use \TeX-mode to insert the |\onslide|
-  commands. 
+  commands.
 \end{environment}
 
 
@@ -608,7 +609,7 @@ shown not on overlay~1, but from overlay~1 on, and so on. While this
 is easy to achieve by changing the overlay specification |<1>| to
 |<1->|, the graphics must also be shown \emph{on top of each
   other}. An easy way to achieve this is to use \TeX's |\llap|
-command like this: 
+command like this:
 
 \begin{verbatim}
 \begin{frame}
@@ -644,12 +645,12 @@ Section~\ref{section-xmpmulti} for details.
 
 \subsubsection{Making Commands and Environments Overlay-Specification-Aware}
 
-This section explains how to define new commands that are 
+This section explains how to define new commands that are
 overlay-specification-aware. Also, it explains how to setup counters
 correctly that should be increased from frame to frame (like equation
 numbering), but not from slide to slide. You may wish to skip this
 section, unless you  want to write your own extensions to the \beamer\
-class. 
+class.
 
 \beamer\ extends the syntax of \LaTeX's standard command
 |\newcommand|:
@@ -677,19 +678,19 @@ class.
   of \meta{command name} is optional. If no optional argument is
   specified in square brackets, the \meta{default optional value} is
   used.
-  
+
   \example The following command will typeset its argument in red on
   the specified slides:
 \begin{verbatim}
 \newcommand<>{\makered}[1]{{\color#2{red}#1}}
 \end{verbatim}
-  
+
   \example Here is \beamer's definition of |\emph|:
 \begin{verbatim}
 \newcommand<>{\emph}[1]{{\only#2{\itshape}#1}}
 \end{verbatim}
 
-  
+
   \example Here is \beamer's definition of |\transdissolve| (the
   command |\beamer@dotrans| mainly passes its argument to |hyperref|):
 \begin{verbatim}
@@ -700,7 +701,7 @@ class.
 \begin{command}{\renewcommand\declare{|<>|}\marg{existing command name}%
     \oarg{argument number}\oarg{default optional value}\marg{text}}
   Redeclares a command that already exists in the same way as
-  |\newcommand<>|. Inside \meta{text}, you can 
+  |\newcommand<>|. Inside \meta{text}, you can
   still access to original definitions using the command
   |\beameroriginal|, see the example.
   \example This command is used in \beamer\ to make |\hyperlink| overlay-specification-aware:
@@ -722,7 +723,7 @@ class.
   arguments like |#1|. In particular, you do not have access to the
   overlay specification. In this case, it is usually a good idea to
   use |altenv| environment in the \meta{begin text}.
-  
+
   \example Declare your own action block:
 \begin{verbatim}
 \newenvironment<>{myboldblock}[1]{%
@@ -740,7 +741,7 @@ class.
 \end{verbatim}
 
   \example Text in the following environment is normally bold and
-  italic on non-specified slides: 
+  italic on non-specified slides:
 \begin{verbatim}
 \newenvironment<>{boldornormal}
   {\begin{altenv}#1
@@ -750,7 +751,7 @@ class.
 \end{verbatim}
 
   Incidentally, since |altenv| also accepts its argument at the end,
-  the same effect could have been achieved using just 
+  the same effect could have been achieved using just
   \begin{verbatim}
 \newenvironment{boldornormal}
   {\begin{altenv}
@@ -785,14 +786,14 @@ been invoked.
 
 \begin{command}{\resetcounteronoverlays\marg{counter name}}
   After you have invoked this command, the value of the specified
-  counter will be the same on all slides of every frame. 
+  counter will be the same on all slides of every frame.
   \example |\resetcounteronoverlays{equation}|
 \end{command}
- 
+
 \begin{command}{\resetcountonoverlays\marg{count register name}}
   The same as |\resetcounteronoverlays|, except that this
   command should be used with counts that have been created using the
-  \TeX\ primitive |\newcount| instead of \LaTeX's  |\definecounter|. 
+  \TeX\ primitive |\newcount| instead of \LaTeX's  |\definecounter|.
   \example
 \begin{verbatim}
 \newcount\mycount
@@ -852,7 +853,7 @@ examples:
 \end{verbatim}
 
 You can also mix pure mode specifications and overlay specifications,
-although this can get confusing: 
+although this can get confusing:
 \begin{verbatim}
 \only<article| beamer:1>{Riddle}
 \end{verbatim}
@@ -870,7 +871,7 @@ applies to mode |second| (but not the other way round). Thus, if we
 are in mode |second|, the specification |<second:2>| means ``on slide
 2'' and |<beamer:2>| also means ``on slide 2''. To get a slide that is
 typeset in |beamer| mode, but not in |second| mode, you can use,
-|<second:0>|. 
+|<second:0>|.
 
 
 
@@ -886,7 +887,7 @@ specifications}. In an action specification, the list of slide numbers
 and ranges is prefixed by \meta{action}|@|, where \meta{action} is the
 name of a certain action to be taken on the specified slides:
 \begin{verbatim}
-\item<3-| alert@3> Shown from slide 3 on, alerted on slide 3. 
+\item<3-| alert@3> Shown from slide 3 on, alerted on slide 3.
 \end{verbatim}
 In the above example, the |\item| command, which allows actions to be
 specified, will uncover the item text from slide three on and it will,
@@ -895,7 +896,7 @@ additionally, alert this item exactly on slide 3.
 Not all commands can take an action specification. Currently, only
 |\item| (though not in |article| mode currently), |\action|, the
 environment |actionenv|, and the block environments (like |block| or
-|theorem|) handle them. 
+|theorem|) handle them.
 
 By default, the following actions are available:
 \begin{itemize}
@@ -932,7 +933,7 @@ You can then  write
 This will change the itemization symbol before |Text.| to |X| on
 slide~2 in |beamer| mode. The definition of |checkenv| used the fact
 that |\only| also accepts an overlay-specification given after its
-argument. 
+argument.
 
 The whole action mechanism is base on the following environment:
 
@@ -955,8 +956,8 @@ The whole action mechanism is base on the following environment:
   |description| (see these for details). Also, the default action
   specification can be set using the command
   |\beamerdefaultoverlayspecification|, see below.
- 
-  \example 
+
+  \example
 \begin{verbatim}
 \begin{frame}
   \begin{actionenv}<2-| alert@3-4,6>
@@ -970,8 +971,8 @@ The whole action mechanism is base on the following environment:
   \end{uncoverenv}
 \end{frame}
 \end{verbatim}
-\end{environment} 
- 
+\end{environment}
+
 \begin{command}{\action\sarg{action specification}\marg{text}}
   This has the same effect as putting \meta{text} in an |actionenv|.
 
@@ -1084,7 +1085,7 @@ change this counter yourself using the normal \LaTeX\ commands
 Any occurence of a |+|-sign may be followed by an \emph{offset} in
 round brackets. This offset will be added to the value of
 |beamerpauses|. Thus, if |beamerpauses| is 2, then |<+(1)->| expands to
-|<3->| and |<+(-1)-+>| expands to |<1-2>|. 
+|<3->| and |<+(-1)-+>| expands to |<1-2>|.
 
 There is another special sign you can use in an overlay specification
 that behaves similarly to the |+|-sign: a dot. When you write |<.->|,
@@ -1113,7 +1114,7 @@ altering ends.
 \item This is \alert<.>{important}.
 \item We want to \alert<.>{highlight} this and \alert<.>{this}.
 \item What is the \alert<.>{matrix}?
-\end{itemize}  
+\end{itemize}
 \end{verbatim}
 
 
@@ -1121,7 +1122,7 @@ altering ends.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -7,9 +8,7 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
-
 \section{Themes}
-
 
 \subsection{Five Flavors of Themes}
 
@@ -27,7 +26,7 @@ presentation. The \beamer\ class uses five different kinds of themes:
   (the creator of the theme) thought that a presentation should look
   like. Presentation themes typically only choose a particular color
   theme, font theme, inner theme, and outer theme that go well
-  together. 
+  together.
 \item[Color Themes]
   A color theme only dictates which colors are used in a
   presentation. If you have chosen a particular presentation theme
@@ -58,7 +57,7 @@ presentation. The \beamer\ class uses five different kinds of themes:
   head- and footlines, what is shown in them, whether there is a
   sidebar, where the logo goes, where the navigation symbols and bars
   go, and so on. It also specifies where the frametitle is put and how
-  it is typeset. 
+  it is typeset.
 \end{description}
 
 The different themes reside in the four subdirectories |theme|, |color|,
@@ -69,9 +68,9 @@ be used:
 
 \begin{command}{\usetheme\oarg{options}\marg{name list}}
   Installs the presentation theme named \meta{name}. Currently, the
-  effect of this command is the same as saying |\usepackage| for the 
+  effect of this command is the same as saying |\usepackage| for the
   style file named |beamertheme|\meta{name}|.sty| for each \meta{name}
-  in the \meta{name list}.  
+  in the \meta{name list}.
 \end{command}
 
 
@@ -124,7 +123,7 @@ co-author of mine attended.
 If a theme has not been developped by me (that is, if someone else is
 to blame), this is indicated with the theme. I have sometimes slightly
 changed or ``corrected'' submitted themes, but I still list the
-original authors. 
+original authors.
 
 
 \begin{themeexample}{default}
@@ -167,7 +166,7 @@ original authors.
 }
 \end{verbatim}
     While being more complicated, the above commands offer more
-    flexibility.     
+    flexibility.
   \end{command}
 
   \begin{command}{\addfootbox\marg{beamer color}\marg{box template}}
@@ -228,7 +227,7 @@ original authors.
 
 
 \begin{themeexample}{Pittsburgh}
-  A sober theme. The right-flushed frame titles creates an interesting 
+  A sober theme. The right-flushed frame titles creates an interesting
   ``tension'' inside each frame.
 
   Pittsburgh is a town in the eastern USA. It hosts the second
@@ -255,7 +254,7 @@ original authors.
 \subsection{Presentation Themes with a Tree-Like Navigation Bar}
 
 \begin{themeexample}{Antibes}
-  A dominant theme with a tree-like navigation at the top. The 
+  A dominant theme with a tree-like navigation at the top. The
   rectangular elements mirror the rectangular navigation at the
   top. The theme can be made less dominant by using a different color
   theme.
@@ -313,7 +312,7 @@ original authors.
     space.
   \item \declare{|hideothersubsections|} causes only the subsections
     of the current section to be shown. This is useful, if you need to
-    save  space.      
+    save  space.
   \item \declare{|left|} puts the sidebar on the left (default).
   \item \declare{|right|} puts the sidebar on the right.
   \item \declare{|width=|\meta{dimension}} sets the width of the
@@ -327,7 +326,7 @@ original authors.
 \begin{themeexample}[\oarg{options}]{PaloAlto}
   A variation in the |Berkeley| theme with less dominance of
   rectangular areas. The same \meta{options} as for the |Berkeley|
-  theme can be given. 
+  theme can be given.
 
   Palo Alto is also near San Francisco. It hosted the Bay Area Theory
   Workshop 2004.
@@ -336,22 +335,22 @@ original authors.
 \begin{themeexample}[\oarg{options}]{Goettingen}
   A relatively sober theme useful for a longer talk that demands a
   sidebar with a full table of contents.  The same \meta{options} as
-  for the |Berkeley| theme can be given. 
+  for the |Berkeley| theme can be given.
 
-  G\"ottingen is a town in Germany. It hosted the 42nd Theorietag. 
+  G\"ottingen is a town in Germany. It hosted the 42nd Theorietag.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Marburg}
   A very dominant variation of the |Goettingen| theme. The same
   \meta{options} may be given.
 
-  Marburg is a town in Germany. It hosted the 46th Theorietag. 
+  Marburg is a town in Germany. It hosted the 46th Theorietag.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Hannover}
   In this theme, the sidebar on the left is balanced by
   right-flushed frame titles.
-    
+
   The following \meta{options} may be given:
   \begin{itemize}
   \item \declare{|hideallsubsections|} causes only sections to be
@@ -359,12 +358,12 @@ original authors.
     space.
   \item \declare{|hideothersubsections|} causes only the subsections
     of the current section to be shown. This is useful, if you need to
-    save  space.      
+    save  space.
   \item \declare{|width=|\meta{dimension}} sets the width of the
     sidebar.
   \end{itemize}
 
-  Hannover is a town in Germany. It hosted the 48th Theorietag. 
+  Hannover is a town in Germany. It hosted the 48th Theorietag.
 \end{themeexample}
 
 
@@ -379,7 +378,7 @@ original authors.
   conferences where the audience is not likely to know the title of
   the talk or who is presenting it.  The theme can be made less
   dominant by using a different color theme.
-  
+
   The following \meta{options} may be given:
   \begin{itemize}
   \item \declare{|compress|} causes the mini frames in the headline to
@@ -410,14 +409,14 @@ original authors.
   an informational main part. By using a different color theme, this
   separation can be lessened.
 
-  Darmstadt is a town in Germany. 
+  Darmstadt is a town in Germany.
 \end{themeexample}
 
 \begin{themeexample}{Frankfurt}
   A variation on the |Darmstadt| theme that is slightly less cluttered
   by leaving out the subsection information.
 
-  Frankfurt is a town in Germany. 
+  Frankfurt is a town in Germany.
 \end{themeexample}
 
 \begin{themeexample}{Singapore}
@@ -427,7 +426,7 @@ original authors.
 \end{themeexample}
 
 \begin{themeexample}{Szeged}
-  A sober theme with a strong dominance of horizontal lines. 
+  A sober theme with a strong dominance of horizontal lines.
 
   Szeged is on the south border of Hungary. It hosted \textsc{dlt} 2003.
 \end{themeexample}
@@ -493,11 +492,11 @@ the old themes. (When switching, you may want to use the font theme
   |shadow| & Try |Warsaw| instead. \\
   |split| & Try |Malmoe| instead. \\
   |tree| & Try |Montpellier| and, for the bars version, |Antibes| or
-  |JuansLesPins|. 
+  |JuansLesPins|.
 \end{tabular}
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

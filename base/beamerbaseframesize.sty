@@ -89,7 +89,7 @@
       \ifdim\@tempdimb<\@tempdima%
         \@tempdima=\@tempdimb%
       \fi%
-      \edef\beamer@temp{\strip@pt\@tempdima}%  
+      \edef\beamer@temp{\strip@pt\@tempdima}%
       \@tempdimc=\beamer@frametextheight%
       \advance\@tempdimc by4pt%
       \@tempdimb=\paperwidth%
@@ -196,8 +196,8 @@
     \let\beamer@next=\beamer@reseteecodes%
   \else%
     \let\beamer@next=\beamer@continueautobreak%
-  \fi%      
-  \beamer@next%  
+  \fi%
+  \beamer@next%
 }
 
 \def\beamer@autobreakframebox{%
@@ -212,7 +212,7 @@
     \else%
       \setbox\@tempboxa=\vbox{\unvbox\@tempboxa\unvbox\beamer@splitbox}%
       \global\setbox\beamer@splitbox=\box\voidb@x%
-    \fi% 
+    \fi%
     \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa%
       \vskip\beamer@framebottomskipautobreak%
       \ifvoid\beamer@splitbox%
@@ -223,7 +223,7 @@
           \unvbox \beamer@footins%
           \global\setbox\beamer@footins=\box\voidb@x%
         \fi%
-      \fi%       
+      \fi%
       \beamer@exitcode%
     }%
   \else%
@@ -243,7 +243,7 @@
 
 \newtoks\beamer@frametitletoks
 \newtoks\beamer@framesubtitletoks
-  
+
 \def\beamer@continueautobreak{%
   \refstepcounter{framenumber}%
   \expandafter\beamer@frametitletoks\expandafter{\beamer@frametitle}%
@@ -270,7 +270,7 @@
 % End in common mode
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
-%%% End: 
+%%% End:

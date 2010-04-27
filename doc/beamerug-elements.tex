@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -9,14 +10,13 @@
 
 % $Header$
 
-
 \section{Inner Themes, Outer Themes, and Templates}
 
 \label{section-elements}
 
 This section discusses the inner and outer themes that are
 available in \beamer. These themes install certain \emph{templates}
-for the different elements of a presentation. The template mechanism is 
+for the different elements of a presentation. The template mechanism is
 explained at the end of the section.
 
 Before we plunge into the details, let us agree on some terminology
@@ -29,7 +29,7 @@ outer themes, where the \emph{inner} themes only install templates for
 elements that are typically ``inside the main text,'' while \emph{outer}
 themes install templates for elements ``around the main text.'' Thus,
 from the templates's point of view, there is no real difference
-between inner and outer themes. 
+between inner and outer themes.
 
 
 
@@ -65,7 +65,7 @@ theme, all of the large rectangular areas are transparent.
   for elements. For example, if you set the background color for block
   titles to green, block titles will have a green background. The
   background specifications are currently honoured for the following
-  elements: 
+  elements:
   \begin{itemize}
   \item Title, author, institute, and date fields in the title
     page.
@@ -77,12 +77,12 @@ theme, all of the large rectangular areas are transparent.
 \begin{innerthemeexample}{circles}
   In this theme, |itemize| and |enumerate| items start with a small
   circle. Likewise, entries in the table of contents start with
-  circles. 
+  circles.
 \end{innerthemeexample}
 
 \begin{innerthemeexample}{rectangles}
   In this theme, |itemize| and |enumerate| items and table of contents
-  entries  start with small rectangles. 
+  entries  start with small rectangles.
 \end{innerthemeexample}
 
 \begin{innerthemeexample}[\oarg{options}]{rounded}
@@ -109,8 +109,8 @@ theme, all of the large rectangular areas are transparent.
   left. However, only the position is changed by changing some spacing
   parameters; the code used to draw the items is not changed
   otherwise. Because of this, you can load another inner theme first
-  and then load this theme afterwards. 
-  
+  and then load this theme afterwards.
+
   This theme is a ``dirty'' an inner theme since it messes with things
   that an inner theme should not mess with. In particular, it changes
   the width of the left sidebar to a large value. However, you can
@@ -129,12 +129,12 @@ An outer theme dictates (roughly) the overall layout of frames. It
 specifies where any navigational elements should go (like a mini table
 of contents or navigational mini frames) and what they should look
 like. Typically, an outer theme specifies how the following elements
-are rendered: 
+are rendered:
 \begin{itemize}
 \item The head- and footline.
 \item The sidebars.
 \item The logo.
-\item The frame title.  
+\item The frame title.
 \end{itemize}
 
 An outer theme will not specify how things like |itemize| environments
@@ -143,7 +143,7 @@ should be rendered---that is the job of an inner theme.
 In the following examples the color theme |seahorse| is
 used. Since the default color theme leaves most backgrounds empty,
 most of the outer themes look too unstructured with the default
-color theme. 
+color theme.
 
 
 \begin{outerthemeexample}{default}
@@ -207,7 +207,7 @@ color theme.
   \item \declare{|subsection=|\meta{true or false}} shows or suppresses
     line showing the subsection in the headline. It is shown by
     default.
-  \end{itemize}  
+  \end{itemize}
 \end{outerthemeexample}
 
 \begin{outerthemeexample}[\oarg{options}]{smoothbars}
@@ -224,7 +224,7 @@ color theme.
   \item \declare{|subsection=|\meta{true or false}} shows or suppresses
     line showing the subsection in the headline. It is shown by
     default.
-  \end{itemize}  
+  \end{itemize}
 \end{outerthemeexample}
 
 \begin{outerthemeexample}[\oarg{options}]{sidebar}
@@ -251,7 +251,7 @@ color theme.
   The colors of the entries in the table of contents are drawn from
   the \beamer-color |section in sidebar| and |section in sidebar current| as well as the
   corresponding \beamer-colors for subsections. If an entry does not
-  fit on a single line it is automatically ``linebroken.'' 
+  fit on a single line it is automatically ``linebroken.''
 
   The following \meta{options} may be given:
   \begin{itemize}
@@ -321,7 +321,7 @@ color theme.
   \item
     \declare{|hooks|} causes little ``hooks'' to be drawn in front of
     the section and subsection entries. These are supposed to increase
-    the tree-like appearance. 
+    the tree-like appearance.
   \end{itemize}
 \end{outerthemeexample}
 
@@ -346,9 +346,9 @@ This section explains how \beamer's template management works.
 
 If you only wish to modify the appearance of a single or few elements,
 you do not need to create a whole new inner or outer theme. Instead,
-you can modify the appropriate template. 
+you can modify the appropriate template.
 
-A template specifies how an element of a presentation is typeset. For 
+A template specifies how an element of a presentation is typeset. For
 example, the |frametitle| template dictates where the frame title is
 put, which font is used, and so on.
 
@@ -441,12 +441,12 @@ the case, it is specially indicated.
 \smallskip
 
 Here are a few hints that might be helpful when you wish to set a
-template: 
+template:
 \begin{itemize}
 \item
   Usually, you might wish to copy code from an existing template. The
   code often takes care of some things that you may not yet have
-  thought about. The default inner and outer themes might be useful 
+  thought about. The default inner and outer themes might be useful
   starting points. Also, the file |beamerbaseauxtemplates.sty|
   contains interesting ``auxilliary'' templates.
 \item
@@ -465,7 +465,7 @@ template:
   ``having a look'' at their heights. This recalculation is done right
   at the beginning of the document, \emph{after} all packages have
   been loaded and even \emph{after} these have executed their
-  |\AtBeginDocument| initialization. 
+  |\AtBeginDocument| initialization.
 \item
   Getting the boxes right inside any template is often a bit of a
   hassle. You may wish to consult the \TeX\ book for the glorious
@@ -525,10 +525,10 @@ Your answer is \usebeamertemplate{my template}.
 
 \begin{command}{\ifbeamertemplateempty\marg{beamer template
       name}\marg{executed if empty}\marg{executed otherwise}}
-  This command checks whether a template is defined and set to a    
+  This command checks whether a template is defined and set to a
   non-empty text. If the text is empty or the template is not
   defined at all, \meta{executed if empty} is executed. Otherwise,
-  \meta{executed otherwise} is executed. 
+  \meta{executed otherwise} is executed.
 \end{command}
 
 \begin{command}{\expandbeamertemplate\marg{beamer template name}}
@@ -548,7 +548,7 @@ To set  a \beamer-template, you can use the following command:
   \meta{args} must be a single argument and the text of the template
   \meta{element name} is setup to be this text. Upon later invocation
   of the template by the command |\usebeamertemplate| this text is
-  used. 
+  used.
 
   \example
 \begin{verbatim}
@@ -610,7 +610,7 @@ Your answer is \usebeamertemplate*{answer}.
 
   If a new template is installed, any additions will be deleted. On
   the other hand, you can repeatedly use this command to add multiple
-  things. 
+  things.
 \end{command}
 
 \begin{command}{\defbeamertemplate\sarg{mode specification}\opt{|*|}%
@@ -650,7 +650,7 @@ Your answer is \usebeamertemplate*{answer}.
 
   As for the |\newcommand| command, you can also specify a
   \meta{default optional argument}:
-  
+
 \begin{verbatim}
 \defbeamertemplate{itemize item}{square}[1][1ex]{\hrule width #1 height #1}
 
@@ -697,7 +697,7 @@ Your answer is \usebeamertemplate*{answer}.
 %% \usebeamertemplate{background canvas} will yield
 %% ``\pgfuseshading{myshading}''.
 \end{verbatim}
-      
+
   \articlenote
   Normally, this command has no effect in |article| mode. However, if
   a \meta{mode specification} is given, this command is applied for
@@ -713,7 +713,7 @@ Your answer is \usebeamertemplate*{answer}.
   mode.
 
   \example |\defbeamertemplate<all>{my template}{default}{something}| applies
-  to all modes.  
+  to all modes.
 \end{command}
 
 It is often useful to have access to the same template option via
@@ -721,7 +721,7 @@ different names. For this, you can use the following command to create
 aliases:
 \begin{command}{\defbeamertemplatealias\marg{element name}\marg{new
       predefined option name}\marg{existing predefined option  name}}
-  Causes the two predefined options to have the same effect.  
+  Causes the two predefined options to have the same effect.
 \end{command}
 
 There is no inheritance relation among templates as there is for
@@ -756,7 +756,7 @@ argument}\marg{arguments for children}}
   we'll come to that). If |\setbeamertemplate| is called with some
   predefined option name, the children are called with the
   \meta{arguments for children} instead. Let's look at two examples:
-  
+
   \example The following is the typical, simple usage:
 \begin{verbatim}
 \defbeamertemplateparent{itemize items}{itemize item,itemize subitem,itemize subsubitem}
@@ -821,14 +821,14 @@ argument}\marg{arguments for children}}
   option names a possibly different definition is used. You can
   imaging that leaving out the optional \meta{predefined option name}
   means ``this \meta{argument for children} applies to all predefined
-  option names that have not been specially defined differently.''     
+  option names that have not been specially defined differently.''
 \end{command}
 
 
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

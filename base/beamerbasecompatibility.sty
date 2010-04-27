@@ -43,10 +43,10 @@
 \def\document{%
   \beamer@firstminutepatches%
   \endgroup%
-  
-  \AtBeginDocument{% fix spanish.ldf's meddling with < and > 
+
+  \AtBeginDocument{% fix spanish.ldf's meddling with < and >
     %
-    % Fix spanish.ldf's meddling with < and > 
+    % Fix spanish.ldf's meddling with < and >
     %
     \@ifundefined{deactivatequoting}{}{\deactivatequoting}
 
@@ -63,7 +63,7 @@
     \let\list\beamer@list
     \let\@trivlist\beamer@@trivlist%
     \catcode`<=12\catcode`>=12}
-    
+
   \begingroup\beamer@origdocument%
   \beamer@lastminutepatches%
   \ifbeamer@ignorenonframe%
@@ -81,13 +81,13 @@
   \g@addto@macro\beamer@lastminutepatches{%
     \ifbeamer@articleactive
     \else
-      \catcode`<=12\catcode`>=12   
-    \fi    
+      \catcode`<=12\catcode`>=12
+    \fi
     }
 }
 
 
-\AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize 
+\AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize
 
 
 
@@ -96,7 +96,7 @@
 % Fix for older versions of geometry
 % We used to test \ifGm@compatii,
 % but as of geometry v5.0, it is no longer provided.
-% 
+%
 \ifx\Gm@lmargin\@undefined
 \def\Gm@lmargin{\Geom@lmargin}\def\Gm@rmargin{\Geom@rmargin}
 \else
@@ -178,7 +178,7 @@
 
 %
 %
-% Fix for babel 
+% Fix for babel
 %
 %
 \providecommand\textlatin{}
@@ -217,7 +217,7 @@
 
   \define@key{beamerverb}{colored}[true]{\def\beamer@colorsup{}}
   \define@key{beamerverb}{width}{\def\beamer@verbwidth{#1}}
-  
+
   \newcommand{\defverbatim}[2][]{%
     \def\beamer@colorsup{\def\set@color{}\def\reset@color{}}%
     \setkeys{beamerverb}{width=\textwidth}%
@@ -440,7 +440,7 @@
   \usebeamercolor{mini frames}{use=structure,fg=white,bg=structure.bg}}
 \def\beamertemplatesphereminiframe{\beamertemplatecircleminiframe}
 \def\beamertemplatesphereminiframeinverted{\beamertemplatecircleminiframeinverted}
-\def\beamertemplatelightsectionheads{\usesectionheadtemplate{\hfill\insertsectionhead}{\hfill\color{fg!50!bg}\insertsectionhead} 
+\def\beamertemplatelightsectionheads{\usesectionheadtemplate{\hfill\insertsectionhead}{\hfill\color{fg!50!bg}\insertsectionhead}
  \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}}
 \let\beamertemplatedarksectionheads=\beamertemplatedefaultsectionheads
 \def\usecontinuationtemplate{\setbeamertemplate{frametitle continuation}}
@@ -521,7 +521,7 @@
   \newcommand{\beamertemplatebookbibitems}{\setbeamertemplate{bibliography item}[book]}
   \newcommand{\beamertemplatearticlebibitems}{\setbeamertemplate{bibliography item}[article]}
   \newcommand{\beamertemplatetextbibitems}{\setbeamertemplate{bibliography item}[text]}
-  \newcommand{\beamertemplatearrowbibitems}{\setbeamertemplate{bibliography item}[triangle]}  
+  \newcommand{\beamertemplatearrowbibitems}{\setbeamertemplate{bibliography item}[triangle]}
 
   \def\beamertemplatetransparentcovereddynamic{\setbeamercovered{highly dynamic}}
   \def\beamertemplatetransparentcovereddynamicmedium{\setbeamercovered{dynamic}}
@@ -535,7 +535,7 @@
 \mode
 <all>
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: ../examples/beamerexample1.tex
-%%% End: 
+%%% End:

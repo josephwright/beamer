@@ -73,7 +73,7 @@
     \long\def\beamer@todo{#2}%
   \else%
     \expandafter\long\expandafter\def\expandafter\beamer@todo%
-    \expandafter{\expandafter\uncover\expandafter<\expandafter a\expandafter l\expandafter l\expandafter:\beamer@decodefound>{#2}}% 
+    \expandafter{\expandafter\uncover\expandafter<\expandafter a\expandafter l\expandafter l\expandafter:\beamer@decodefound>{#2}}%
   \fi%
   \expandafter\beamer@processactions\beamer@decaction{}%
   \beamer@todo}
@@ -215,7 +215,7 @@
   \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
   \advance\beamer@argscount by-1\relax%
   \beamer@parseargs%
-} 
+}
 
 \def\beamer@sortzero#1{\beamer@ifnextcharospec{\beamer@sortzeroread{#1}}{#1{}}}
 \def\beamer@sortzeroread#1<#2>{#1{<#2>}}
@@ -268,7 +268,7 @@
   #1%
   \ifx\beamer@lastskiptext\beamer@zeropt\else%
   \ifvmode\vskip\beamer@lastskipcover\fi\ifhmode\hskip\beamer@lastskipcover\fi\fi%
-}  
+}
 
 
 
@@ -279,7 +279,7 @@
   \gdef\beamer@do{#1%
     \expandafter\gdef\csname beamer@doafter%
     \the\beamer@coveringdepth\endcsname{#2}}}
-  
+
 \def\beamer@startcovered{%
   \beamer@smuggle{%
   \global\advance\beamer@coveringdepth by 1\relax%
@@ -400,10 +400,10 @@
 <all>
 {
   \AtBeginDocument
-  {    
+  {
     \let\beamer@musixpause=\pause
     \let\pause=\beamer@@pause
-    
+
     \let\beamer@music=\music
     \def\music{\let\beamerpause=\pause\let\pause\beamer@musixpause\beamer@music}
   }
@@ -441,7 +441,7 @@
   {\beamer@spacingcover\gdef\beamer@endpause{\beamer@spacingcover}}%
   {\beamer@begininvisible\gdef\beamer@endpause{\beamer@endinvisible}}%
 }
-          
+
 \mode
 <article>
 {
@@ -450,9 +450,9 @@
   \newcommand<>{\beamer@noargsvisibleonslide}{}
 }
 
-  
 
-  
+
+
 %
 % Make item overlays
 %
@@ -506,7 +506,7 @@
 
 \newcount\beamer@trivlistdepth
 \beamer@trivlistdepth=0\relax
-  
+
 \let\beamer@orig@trivlist=\@trivlist
 \def\@trivlist{%
   \global\advance\beamer@trivlistdepth by1\relax%
@@ -704,7 +704,7 @@
 
 
 %
-% Transitions - DISTRACTING and to be used with CARE!!!! 
+% Transitions - DISTRACTING and to be used with CARE!!!!
 %
 
 \define@key{beamertrans}{direction}{\def\beamer@transdir{ /Di #1 }}
@@ -778,7 +778,7 @@
     \else
       #3=#5\relax%
     \fi%
-  \fi%  
+  \fi%
 }
 
 \mode
@@ -802,7 +802,7 @@
 }
 
 \def\beamer@label<#1>#2{\alt<#1>{\beamer@origlabel{#2}\beamer@nameslide{#2}}{\beamer@dummynameslide}}
-\def\beamer@label@in@display<#1>#2{\alt<#1>{\beamer@origlabel@in@display{#2}\beamer@nameslide{#2}}{\beamer@dummynameslide}}  
+\def\beamer@label@in@display<#1>#2{\alt<#1>{\beamer@origlabel@in@display{#2}\beamer@nameslide{#2}}{\beamer@dummynameslide}}
 
 \mode
 <article>
@@ -823,7 +823,7 @@
 \mode
 <all>
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
-%%% End: 
+%%% End:

@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -8,7 +9,6 @@
 % See the file doc/licenses/LICENSE for more details.
 
 % $Header$
-
 
 \section{Animations, Sounds, and Slide Transitions}
 
@@ -55,7 +55,7 @@ though much less flexible, must be taken if the viewer application is
 unable to display the movie itself.
 
 \begin{command}{\movie\oarg{options}\marg{poster text}\marg{movie
-  filename}} 
+  filename}}
   This command will insert the movie with the filename \meta{movie
   filename} into the \pdf\ file. The movie file must reside at some
   place where the viewer application will be able to find it,
@@ -66,7 +66,7 @@ unable to display the movie itself.
   along with the \pdf\ file. (Nevertheless, one often says that the
   movie is ``embedded'' in the document, but that just means that one can
   click on the movie when viewing the document and the movie will
-  start to play.) 
+  start to play.)
 
   The movie will use a rectangular area whose size is determined
   either by the |width=| and |height=| options or by the size of the
@@ -90,7 +90,7 @@ unable to display the movie itself.
   images. In this case, the \meta{posert text} might be a symbol
   representing the sound. There is also a different, dedicated
   command for including sounds in a \pdf\ file, see the |\sound|
-  command in Section~\ref{section-sound}. 
+  command in Section~\ref{section-sound}.
 
   Unless further options are given, the movie will start only when the
   user clicks on it. Whether the viewer application can actually
@@ -120,11 +120,11 @@ unable to display the movie itself.
   viewer application). Which application is chosen is left to the
   discreetion of the viewer application, which tries to make its
   choice according to the extension of the \meta{movie filename} and
-  according to some mapping table for mapping extensions 
+  according to some mapping table for mapping extensions
   to viewer applications. How this mapping table can be modified
   depends on the viewer application, please see the release notes of
   your viewer.
-  
+
   The following \meta{options} may be given:
   \begin{itemize}
   \item
@@ -167,7 +167,7 @@ unable to display the movie itself.
     a different part of it. The \meta{movie label} is not a normal
     label. It should not be too fancy, since it is inserted literally
     into the \pdf\ code. In particular, it should not contain closing
-    parentheses. 
+    parentheses.
   \item
     \declare{|loop|}. Causes the movie to start again when the end has
     been reached. Normally, the movie just stops at the end.
@@ -403,7 +403,7 @@ Some animations reside in external files in the following way: For
 each stage of the animation there is an image file containing
 an image for this stage. You can include such a series of images
 conveniently by using the style |mpmulti.sty| from the ppower4
-package. This style, written by Klaus Guntermann, 
+package. This style, written by Klaus Guntermann,
 introduces a command called |\multiinclude| that takes the base name
 of a graphic file like |mygraphic| and will then search for files
 called |mygraphic.0|, |mygraphic.1|, and so on, till no more files are
@@ -418,7 +418,7 @@ the next graphic on each slide.
 
 If you try to use |mpmulti.sty| directly, you will run into the
 problem that it includes a file called |pause.sty|, which is part of
-the ppower4 package. 
+the ppower4 package.
 
 You might also consider using the style |xmpmulti.sty| that comes with
 \beamer. This file is mainly identical to |mpmulti|, except for two
@@ -426,14 +426,14 @@ differences: First, it does not include |pause.sty|, a style that
 conceptually clashes with \beamer, although \beamer\ contains a
 workaround that sidesteps the problem. Second, it extends the
 |\multiinclude| command by allowing a special default overlay
-specification to be given. The effect of this is explained below. 
+specification to be given. The effect of this is explained below.
 
 \begin{package}{{xmpmulti}}
   Defines the command |\multiinclude|. The code of this package is
   due to Klaus Guntermann with some additions of mine. It can used
   together with \beamer\ and with ppower4, i.\,e., it can be used as a
   replacement for |mpmulti| if the |pause| package is also included in
-  a ppower4-presentation. 
+  a ppower4-presentation.
 \end{package}
 
 \begin{command}{\multiinclude\opt{|[<|\meta{default overlay
@@ -460,7 +460,7 @@ specification to be given. The effect of this is explained below.
   \multiinclude{gra}
 \end{frame}
 \end{verbatim}
-  
+
   The effect of providing a \meta{default overlay specification} is
   the following: First, no |\pause| command is inserted between
   graphics. Instead, each graphic is surrounded by an |actionenv|
@@ -506,9 +506,9 @@ specification to be given. The effect of this is explained below.
     \declare{|start=|\meta{number}} specifies the start
     \meta{number}. The default is zero.
   \item
-    \declare{|end=|\meta{number}} specifies the end 
+    \declare{|end=|\meta{number}} specifies the end
     \meta{number}. The default is infinity.
-  \end{itemize}  
+  \end{itemize}
 \end{command}
 
 Note that, if you do not use the |format=| option, the
@@ -595,15 +595,15 @@ using it:
     filename} into the \pdf\ file. As for |\movie|, the file must be
   accessible when the sound is to be played. Unlike |\movie|, you can
   however use the option |inlinesound| to actually embed the sound
-  data in the \pdf\ file. 
+  data in the \pdf\ file.
 
   Also as for a movie, the \meta{sound poster text} will be be put in
   a box that, when clicked on, will start playing the movie. However,
   you might also leave this box empty and only use the |autostart|
   option. Once playback of a sound has started, it can only be stopped
   by starting the playback of a different sound or by use of the
-  |\hyperlinkmute| command. 
-  
+  |\hyperlinkmute| command.
+
   The supported sound formats depend on the viewer application. My
   version of the Acrobat Reader supports |.aif| and |.au|. I also need
   to specify information like the sampling rate, even though this
@@ -651,7 +651,7 @@ using it:
     \declare{|label=|}\meta{sound label}. Assigns a label to the sound
     such that it can later be referenced by the command
     |\hyperlinksound|, which can be used to start a sound. The
-    \meta{sound label} is not a normal label. 
+    \meta{sound label} is not a normal label.
   \item
     \declare{|loop|} or \declare{|repeat|}. Causes the sound to start
     again when the end has been reached.
@@ -660,7 +660,7 @@ using it:
     sound is played in addition to any sound that is already
     playing. If set to |false| all other sounds (though not sound from
     movies) are stopped before the the sound is played. The default is
-    |false|. 
+    |false|.
   \item
     \declare{|samplingrate=|}\meta{number}. Specifies the number of
     samples per second in the sound file. If this number is 44100,
@@ -679,7 +679,7 @@ using it:
 \end{command}
 
 Just like movies, sounds can also serve as  destinations of special
-sound hyperlinks. 
+sound hyperlinks.
 
 \begin{command}{\hyperlinksound\oarg{options}\marg{sound
       label}\marg{text}}
@@ -697,7 +697,7 @@ sound hyperlinks.
     sound is played in addition to any sound that is already
     playing. If set to |false| all other sounds (though not sound from
     movies) is stopped before the the sound is played. The default is
-    |false|. 
+    |false|.
   \end{itemize}
 \end{command}
 
@@ -779,54 +779,54 @@ You must insert these commands using \TeX-mode.
   Show the slide as if horizontal blinds where pulled away.
   \example|\transblindshorizontal|
 \end{command}
-  
+
 \begin{command}{\transblindsvertical\sarg{overlay specification}\oarg{options}}
   Show the slide as if vertical blinds where pulled away.
   \example|\transblindsvertical<2,3>|
 \end{command}
-  
+
 \begin{command}{\transboxin\sarg{overlay specification}\oarg{options}}
   Show the slide by moving to the center from all four sides.
   \example|\transboxin<1>|
 \end{command}
-  
+
 \begin{command}{\transboxout\sarg{overlay specification}\oarg{options}}
   Show the slide by showing more and more of a rectangular area that
   is centered on the slide center.
   \example|\transboxout|
 \end{command}
- 
+
 \begin{command}{\transdissolve\sarg{overlay specification}\oarg{options}}
   Show the slide by slowly dissolving what was shown before.
   \example|\transdissolve[duration=0.2]|
 \end{command}
-  
+
 \begin{command}{\transglitter\sarg{overlay specification}\oarg{options}}
   Show the slide with a glitter effect that sweeps in the specified
   direction.
   \example|\transglitter<2-3>[direction=90]|
 \end{command}
-  
+
 \begin{command}{\transsplitverticalin\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two vertical lines from the sides inward.
   \example|\transsplitverticalin|
 \end{command}
-  
+
 \begin{command}{\transsplitverticalout\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two vertical lines from the center outward.
   \example|\transsplitverticalout|
 \end{command}
-  
+
 \begin{command}{\transsplithorizontalin\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two horizontal lines from the sides inward.
   \example|\transsplithorizontalin|
 \end{command}
-  
+
 \begin{command}{\transsplithorizontalout\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping two horizontal lines from the center outward.
   \example|\transsplithorizontalout|
 \end{command}
- 
+
 \begin{command}{\transwipe\sarg{overlay specification}\oarg{options}}
   Show the slide by sweeping a single line in the specified direction,
   thereby ``wiping out'' the previous contents.
@@ -847,7 +847,7 @@ using the following overlay-specification-aware command:
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

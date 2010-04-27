@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -16,10 +17,10 @@
 The first subsection introduces the predefined font
 themes that come with \beamer\ and which make it easy to change the
 fonts used in a presentation. The next subsection describes further
-special commands for changing some basic attributes of the fonts used in a 
+special commands for changing some basic attributes of the fonts used in a
 presentation. The last subsection explains how you can get a much more
 fine-grained control over the fonts used for every individual element
-of a presentation. 
+of a presentation.
 
 
 
@@ -78,7 +79,7 @@ explained in the next subsection.
   |mathpmnt|, |lucidabr|, |mtpro|, and |hvmath|. If your favorite
   professional font package is not among these, use the
   |professionalfont| option (and write me an email, so that the
-  package can be added). 
+  package can be added).
 \end{fontthemeexample*}
 
 
@@ -96,7 +97,7 @@ explained in the next subsection.
     causes mathematical text still to be typeset using sans
     serif. This option only makes sense if you also use the
     |stillsansseriftext| option since sans serif math inside serif
-    text look silly. 
+    text look silly.
   \item
     \declare{|stillsansserifsmall|}
     will cause ``small'' text to be still typeset using sans
@@ -119,7 +120,7 @@ explained in the next subsection.
     ``terrible typographic effect'' if you choose the wrong fonts
     combinations or sizes. You'll need some typographic experience to
     judge this correctly. If in doubt, try asking someone who should
-    now. 
+    now.
   \item
     \declare{|onlymath|}
     is a short-cut for selecting all of the above options except for
@@ -135,7 +136,7 @@ explained in the next subsection.
     mathematical text using serif letters. Also, if you have a lot of
     mathematical text, the audience may be quicker to ``parse'' it if
     it is typeset the way people usually read mathematical text: in a
-    serif font. 
+    serif font.
   \end{itemize}
 \end{fontthemeexample}
 
@@ -156,7 +157,7 @@ explained in the next subsection.
     \declare{|onlylarge|}
     will cause only ``large'' text to be typeset in bold. These are
     the main title, frame titles, and section entries in the table of
-    contents.     
+    contents.
   \end{itemize}
 
   As pointed out in Section~\ref{section-sizes}, you should use this
@@ -166,7 +167,7 @@ explained in the next subsection.
   The normal themes do not install this theme by default, while the
   old compatibility themes do. Since you can reload the theme once it
   has been loaded, you cannot use this theme with the old
-  compatibility themes to set also titles to a bold font. 
+  compatibility themes to set also titles to a bold font.
 \end{fontthemeexample}
 
 \begin{fontthemeexample}[\oarg{options}]{structureitalicserif}
@@ -174,8 +175,8 @@ explained in the next subsection.
   |structurebold| makes text bold, this theme typesets it in italics and
   in the standard serif font. The same \meta{options} as for the
   |structurebold| theme are supported. See
-  Section~\ref{section-italics} for the pros and cons 
-  of using italics.  
+  Section~\ref{section-italics} for the pros and cons
+  of using italics.
 \end{fontthemeexample}
 
 \begin{fontthemeexample}[\oarg{options}]{structuresmallcapsserif}
@@ -183,7 +184,7 @@ explained in the next subsection.
   only this time text is set using small caps and a serif
     font. The same \meta{options} as for the |structurebold| theme are
   supported. See Section~\ref{section-smallcaps} for the pros and cons
-  of using small caps.  
+  of using small caps.
 \end{fontthemeexample}
 
 
@@ -191,7 +192,7 @@ explained in the next subsection.
 
 
 
-\subsection{Font Changes Made Without Using Font Themes} 
+\subsection{Font Changes Made Without Using Font Themes}
 
 While most font decisions can be made using font themes, for
 historical reasons some changes can only be made using class
@@ -205,7 +206,7 @@ the future.
 As pointed out in Section~\ref{section-sizes}, measuring the default
 font size in points is not really a good idea for
 presentations. Nevertheless, \beamer\ does just that, setting the
-default font size to 11pt as usual. This may seem ridiculously small, but 
+default font size to 11pt as usual. This may seem ridiculously small, but
 the actual size of each frame is just 128mm times 96mm and the viewer
 application enlarges the font. By specifying a default font size
 smaller than 11pt you can put more onto each slide, by specifying a
@@ -251,7 +252,7 @@ To specify the font size, you can use the following class options:
 
 \begin{classoption}{17pt}
   This is about the default size of PowerPoint. Requires |extsize| to
-  be installed. 
+  be installed.
 \end{classoption}
 
 \begin{classoption}{20pt}
@@ -266,7 +267,7 @@ To specify the font size, you can use the following class options:
 
 By default, \beamer\ uses the Computer Modern fonts. To change this,
 you can use one of the prepared packages of \LaTeX's font
-mechanism. For example, to change to Times/Helvetica, simply add 
+mechanism. For example, to change to Times/Helvetica, simply add
 \begin{verbatim}
 \usepackage{mathptmx}
 \usepackage{helvet}
@@ -300,7 +301,7 @@ this reason, using the T1-encoded EC fonts on such small installations
 will produce \pdf\ files that render poorly.
 
 MiK\TeX\ (for Windows platforms) and \texttt{teTeX} for
-\textsc{unix}\slash Linux can be installed with different levels of 
+\textsc{unix}\slash Linux can be installed with different levels of
 completeness. Concerning the Computer Modern fonts, the following
 packages can be installed: |cm-super| fonts, |lmodern| (Latin Modern)
 fonts, and |lgc| fonts, the latter containing the Latin, Greek, and
@@ -349,16 +350,16 @@ background, either of which may be empty, a \beamer-font has a size, a
 shape, a series, and a family, each of which may be empty. The
 inheritance relation among \beamer-fonts is not necessarily the same
 as between \beamer-colors, though I have tried to match them whenever
-possible. 
+possible.
 
 Multiple inheritance plays a more important rule for
 fonts than it does for colors. A font might inherit the attributes of
 two different fonts. If one of them specifies that the font should be,
 say, boldface and the other specifies that the font should be, say,
-large, then the child font will be both large and bold. 
+large, then the child font will be both large and bold.
 
 As for fonts, the description of the font used for an element is given
-after the description of the element. 
+after the description of the element.
 
 
 \subsubsection{Using Beamer's Fonts}
@@ -366,7 +367,7 @@ after the description of the element.
 To use a \beamer-font, you can use the command
 |\usebeamerfont|. Inside the templates for elements, this command will
 (typically) have already been called for you, so you will only
-seldomly have to use this command. 
+seldomly have to use this command.
 
 \begin{command}{\usebeamerfont\opt{|*|}\marg{beamer-font name}}
   This command changes the current font to the font specified by the
@@ -444,14 +445,14 @@ changing \beamer-fonts.
     other ones; the standard commands take care of choosing
     appropriate sizes for you. Do not use this options unless you have
     a good reason. This command has the same effect as
-    |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.  
+    |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.
   \item \declare{|shape=|\meta{shape command}} sets the shape
     attribute of the font. The command should be command like
     |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
   \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets
     the shape attribute of the font using the \LaTeX's abbreviations
     for attributes. This command has the same effect as
-    |shape={\fontshape|\marg{shape attributes abbreviation}|}|.  
+    |shape={\fontshape|\marg{shape attributes abbreviation}|}|.
   \item \declare{|series=|\meta{series command}} sets the ``series''
     attribute of the font. The command should be command like
     |\bfseries|.
@@ -460,7 +461,7 @@ changing \beamer-fonts.
         abbreviation}|}|.
   \item \declare{|family=|\meta{family command}} sets the font family
     attribute. The command should be a \LaTeX-font command like
-    |\rmfamily| or |\sffamily|. 
+    |\rmfamily| or |\sffamily|.
   \item \declare{|family*=|\marg{family name}} sets the font family
     attribute to the given \meta{family name}. The command has the
     same effect as |family={\fontfamily|\marg{family name}|}|. The
@@ -500,7 +501,7 @@ This text is small and bold.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

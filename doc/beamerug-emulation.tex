@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -9,13 +10,12 @@
 
 % $Header$
 
-
 \section[How To Import Presentations Based on Other Packages and Classes]
 {How To Import Presentations Based on\\ Other Packages and Classes}
 
 The \beamer\ class comes with a number of emulation layers for classes
 or packages that do not support \beamer\ directly. For example, the
-package |beamerseminar| maps some (not all) commands of the \seminar\ 
+package |beamerseminar| maps some (not all) commands of the \seminar\
 class to appropriate \beamer\ commands. This way, individual slides or
 whole sets of slides that have been prepared for a presentation using
 \seminar\ can be used inside \beamer, provided they are reasonably
@@ -28,7 +28,7 @@ class for preparing your presentations. The intension of these layers
 is just to help speed up creating \beamer\ presentations that use
 parts of old presentations. You can simply copy these parts in
 verbatim, without having to worry about the subtle differences in
-syntax. 
+syntax.
 
 A useful effect of using an emulation layer is that you get access to
 all the features of \beamer\ while using the syntax of another
@@ -43,7 +43,7 @@ nice article version of a \prosper\ talk.
 The package |beamerprosper| maps the commands of the \prosper\
 package, developed by Fr\'ed\'eric Goualard, to \beamer\
 commands. Also, some commands of the \textsc{ha}-\prosper\ package,
-developed by Hendri Adriaens, are mapped to \beamer\ commands. 
+developed by Hendri Adriaens, are mapped to \beamer\ commands.
 \emph{These mappings cannot perfectly emulate all of Prosper!} Rather,
 these mappings are intended as an aid when porting parts of
 presentations created using \prosper\ to \beamer. \emph{No styles are
@@ -53,7 +53,7 @@ that mimicks existing \prosper\ styles; I have not done that and do
 not intend to).
 
 The workflow for creating a \beamer\ presentation that uses \prosper\
-code is the following: 
+code is the following:
 \begin{enumerate}
 \item
   Use the document class |beamer|, not |prosper|. Most options
@@ -67,7 +67,7 @@ code is the following:
   gives you more fine-grained control).
 \item
   If you also copy the title commands, it may be necessary to adjust
-  the content of commands like |\title| 
+  the content of commands like |\title|
   or |\author|. Note that in \prosper\ the |\email| command is given
   outside the |\author| command, whereas in \beamer\ and also in
   \textsc{ha}-\prosper\ it is given inside.
@@ -124,7 +124,7 @@ problems:
     \declare{|framesassubsections|} causes each frame to create its
     own subsection with the frame title as subsection name. This
     behaviour mimicks \textsc{ha}-\textsc{prosper}'s behaviour. In a
-    long talk this will create way too many subsections. 
+    long talk this will create way too many subsections.
   \end{itemize}
 
   \articlenote
@@ -180,7 +180,7 @@ My notes for these slides.
 \end{notes}
 \end{document}
 \end{verbatim}
-  
+
   You can run, for example, pdf\LaTeX\ on the file to get a \beamer\
   presentation with overlays. Adding the |notes| option will also show
   the note. Certain commands, like |\LeftFoot|, are ignored. You can
@@ -258,7 +258,7 @@ listed.
   necessary overlays is computed automatically by \beamer.
 
   \example The following code fragments have the same effect:
-  
+
 \begin{verbatim}
 \overlays{2}{
 \begin{slide}{A Title}
@@ -404,12 +404,12 @@ listed.
 \end{command}
 
 \begin{command}{\onlyInPS\meta{PS text}}
-  The \meta{PS text} is only included if |latex| is used. 
+  The \meta{PS text} is only included if |latex| is used.
 \end{command}
 
 \begin{environment}{{notes}\marg{title}}
   Mapped to |\note{\textbf{|\meta{title}|}|\meta{environment contents}|}|
-  (more or less). 
+  (more or less).
 \end{environment}
 
 The following commands are parsed by \beamer, but have no effect:
@@ -452,7 +452,7 @@ The workflow for the migration is the following:
 \item
   If you copy parts of a presentation that is mixed with normal text,
   add the |ignorenonframetext| option and place \emph{every} |slide|
-  environment inside a |frame| since \beamer\ will not recognize the 
+  environment inside a |frame| since \beamer\ will not recognize the
   |\begin{slide}| as the beginning of a frame.
 \item
   Add a |\usepackage{beamerseminar}| to start the emulation. Add the
@@ -466,12 +466,12 @@ The workflow for the migration is the following:
 \item
   If a |\newslide| command is used in a |slide| (or similarly
   |slide*|) environment that contains an overlay, you must replace it
-  by a closing |\end{slide}| and an opening |\begin{slide}|. 
+  by a closing |\end{slide}| and an opening |\begin{slide}|.
 \item
   Next, for each |slide| or |slide*| environment that contains an
   overlay, you must place a |frame| environment around it. You can
   remove the |slide| environment (and hence effectively replace it by
-  |frame|), unless you use the |accumulate| option. 
+  |frame|), unless you use the |accumulate| option.
 \item
   If you use |\section| or |\subsection| commands inside slides, you
   will have to move them \emph{outside} the frames. It may then be
@@ -524,7 +524,7 @@ problems:
     want to present an ``accumulated'' version of the overlays. This
     is what this option does: When the new material of the $i$th
     overlay is shown, the material of all previous overlays is also
-    shown. 
+    shown.
   \end{itemize}
 
   \example
@@ -568,7 +568,7 @@ article version.
   You can use all normal \beamer\ commands and concepts, like
   overlay-specifications, in the file. You can also create an
   |article| version by using the class |article| and
-  including the package |beamerarticle|. 
+  including the package |beamerarticle|.
 \end{package}
 
 In the following, the effect of \seminar\ commands in \beamer\ are
@@ -669,7 +669,7 @@ The following commands are parsed by \beamer, but have no effect:
 The package |beamerfoils| maps a subset of the commands of the \foils\
 package to \beamer. Since this package defines only few non-standard
 \TeX\ commands and since \beamer\ implements all the standard
-commands, the emulation layer is pretty simple. 
+commands, the emulation layer is pretty simple.
 
 A copyright notice: The Foil\TeX\ package has a restricted
 license. For this reason, no example from the \foils\ package is
@@ -679,7 +679,7 @@ code of the \foils\ package (rather, it just maps \foils\ commands to
 \emph{emulation} offered by the \beamer\ class is ``free'' and legally
 so. IBM has a copyright on the \foils\ class, not on the effect the
 commands of this class have. (At least, that's my understanding of
-things.) 
+things.)
 
 The workflow for the migration is the following:
 \begin{enumerate}
@@ -696,7 +696,7 @@ The workflow for the migration is the following:
   |allowframebreaks| option, thus no overlays are allowed). This frame
   will persist till the next occurrence of |\foilhead| or of the new
   command |\endfoil|. Note that a |\frame| command will \emph{not} end
-  a frame started using |\foilhead|. 
+  a frame started using |\foilhead|.
 \item
   If you rely on automatic frame creation based on |\foilhead|, you
   will need to insert an |\endfoil| before the end of the document to
@@ -719,11 +719,11 @@ The workflow for the migration is the following:
 
   \example In the following example, frames are automatically
   created. The |\endfoil| at the end is needed to close the last
-  frame. 
+  frame.
 \begin{verbatim}
 \documentclass{beamer}
 \usepackage{beamerfoils}
-  
+
 \begin{document}
 
 \maketitle
@@ -732,7 +732,7 @@ The workflow for the migration is the following:
 
 This is on the first frame.
 \pagebreak
-This is on the second frame, which is a continuation of the first. 
+This is on the second frame, which is a continuation of the first.
 
 \foilhead{Third Frame}
 
@@ -741,13 +741,13 @@ This is on the third frame.
 \endfoil
 \end{document}
 \end{verbatim}
-  
+
   \example In this example, frames are manually inserted. No
   |\endfoil| is needed.
 \begin{verbatim}
 \documentclass{beamer}
 \usepackage{beamerfoils}
-  
+
 \begin{document}
 
 \frame{\maketitle}
@@ -788,7 +788,7 @@ listed.
   frames, a new frame is started with the option
   |allowframebreaks|. If a frame was previously started using this
   command, it will be closed before the next frame is started. The
-  \meta{dimension} is ignored. 
+  \meta{dimension} is ignored.
 \end{command}
 
 \begin{command}{\rotatefoilhead\oarg{dimension}\marg{frame title}}
@@ -799,7 +799,7 @@ listed.
   This is a command that is \emph{not} available in \foils. In
   \beamer, it can be used to end a frame that has automatically been
   opened using |\foildhead|. This command must be given before the end
-  of the document if the last frame was opened using |\foildhead|.  
+  of the document if the last frame was opened using |\foildhead|.
 \end{command}
 
 \begin{environment}{{boldequation}\opt{|*|}}
@@ -827,7 +827,7 @@ The following additional theorem-like environments are predefined:
 \item |Proposition*|,
 \item |Definition*|.
 \end{itemize}
-For example, the first is defined using |\newtheorem*{Theorem*}{Theorem}|. 
+For example, the first is defined using |\newtheorem*{Theorem*}{Theorem}|.
 
 The following commands are parsed by \beamer, but have not effect:
 \begin{itemize}
@@ -908,21 +908,21 @@ listed.
 \begin{command}{\liststepwise\marg{text}}
   Same as |\stepwise|, only an invisible horizontal line is inserted
   before the \meta{text}. This is presumable useful for solving some
-  problems related to vertical spacing in \texpower. 
+  problems related to vertical spacing in \texpower.
 \end{command}
 
 \begin{command}{\step\marg{text}}
   This is either mapped to |\only<+(1)->|\meta{text} or to
   |\uncover<+(1)->|\meta{text}, depending on whether this command is
   used inside a |\stepwise| environment or inside a |\parstepwise|
-  environment. 
+  environment.
 \end{command}
 
 \begin{command}{\steponce\marg{text}}
   This is either mapped to |\only<+(1)>|\meta{text} or to
   |\uncover<+(1)>|\meta{text}, depending on whether this command is
   used inside a |\stepwise| environment or inside a |\parstepwise|
-  environment. 
+  environment.
 \end{command}
 
 \begin{command}{\switch\marg{alternate text}\marg{text}}
@@ -947,7 +947,7 @@ listed.
   Same as |\step|, but the \meta{text} is shown one the same slide as
   the previous |\step| command. This is implemented by first
   decreasing the countern  |beamerpauses| by one before calling
-  |\step|. 
+  |\step|.
 \end{command}
 
 \begin{command}{\reswitch\marg{alternate text}\meta{text}}
@@ -969,13 +969,13 @@ listed.
 \begin{command}{\boxedsteps}
   Temporarily (for the current \TeX\ group) changes the effect of
   |\step| to issue an |\uncover|, even if used inside a |\stepwise|
-  environment. 
+  environment.
 \end{command}
 
 \begin{command}{\nonboxedsteps}
   Temporarily (for the current \TeX\ group) changes the effect of
   |\step| to issue an |\only|, even if used inside a |\parstepwise|
-  environment. 
+  environment.
 \end{command}
 
 \begin{command}{\code\marg{text}}
@@ -989,7 +989,7 @@ listed.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

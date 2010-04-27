@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -15,7 +16,7 @@
 \label{section-twoscreens}
 
 This section describes options provided by \beamer\ for taking
-advantage of computers that have more than one video output and 
+advantage of computers that have more than one video output and
 can display different outputs on them. For such systems, one video
 output can be attached to a projector and the main presentation is
 shown there. The second video output is attached to a small extra
@@ -26,13 +27,13 @@ main presentation on the first projection and, say, the table of
 contents on the second. Or the second projection might show a version
 translated into a different language. Or the seoncd projection might
 alwyas show the ``previous'' slide. Or \ldots---I am sure you can
-think of further useful things. 
+think of further useful things.
 
 The basic idea behind \beamer's support of two video outputs is the
 following: Using special options you can ask \beamer\ to create a
 \pdf-file in which the ``pages'' are unusually wide or high. By
 default, their height will still be 128mm, but their width will be
-192mm (twice the usual 96mm). These ``superwide'' pages will show 
+192mm (twice the usual 96mm). These ``superwide'' pages will show
 the slides of the main presentation on the left and auxilliary
 material on the right (this can be switched using appropriate
 options, though hyperlinks will only work if the presentation is on
@@ -43,7 +44,7 @@ windowing system believe that the screen is twice as wide as it
 actually is. Everything the windowing system puts on the left half of
 this big virtual screen is redirected to the first video output,
 everything on the right half is redirected to the second video
-output. 
+output.
 
 When the presentation program displays the specially prepared
 superwide \beamer-presentation, exactly the left half of the screen
@@ -78,7 +79,7 @@ virtual pages. For details, see the documentation of |pgfpages|.
 The first way to use a second screen is to show the presentation
 on the main screen and to show your notes on the second screen. The
 option |show notes on second screen| can be used for this. It is
-described on page~\pageref{command-notesonsecondscreen}.  
+described on page~\pageref{command-notesonsecondscreen}.
 
 
 
@@ -129,7 +130,7 @@ used:
   This text is shown on the left and on the right.
   \only<second>{This text is only shown on the right.}
   \only<second:0>{This text is only shown on the left.}
-\end{document}
+\end{frame}
 \begin{frame}
   This text is shown on the left. The right shows the same as for the
   previous frame.
@@ -166,7 +167,7 @@ used:
   \translation{Do not use line-by-line uncovering.|Man sollte Text nicht
   Zeile f\"ur Zeile aufdecken.}
 \end{frame}
-\end{document}  
+\end{document}
 \end{verbatim}
 \end{beameroption}
 
@@ -194,7 +195,7 @@ option globally sets this option:
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

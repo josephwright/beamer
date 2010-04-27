@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -15,7 +16,7 @@ A \emph{note} is text that is intended as a reminder to yourself of
 what you should say or should keep in mind when presenting a
 slide. Notes are usually printed out on paper, but with two-screen
 support they can also be shown on your laptop screen while the main
-presentation is shown on the projector. 
+presentation is shown on the projector.
 
 
 
@@ -33,7 +34,7 @@ commands issued inside frames profit from the class option
 
 \lyxnote
 In \LyX, only the inside-frame |\note| command with the option
-|[item]| is available in the form of the NoteItem style. 
+|[item]| is available in the form of the NoteItem style.
 
 Inside a frame, the effect of |\note|\meta{text} is the following:
 When you use it somewhere inside the frame on a specific slide, a note
@@ -46,10 +47,10 @@ all shown on the same note.
 To make the accumulation of notes more convenient, you can use the
 |\note| command with the option |[item]|. The notes added with this
 option are accumulated in an |enumerate| list that follows any text
-inserted using |\note|. 
+inserted using |\note|.
 
 The following example will produce one note page that follows the
-second slide and has two entries. 
+second slide and has two entries.
 
 \begin{verbatim}
 \begin{frame}
@@ -75,11 +76,11 @@ In the following, the syntax and effects of the |\note| command
 \begin{command}{\note\sarg{overlay
       specification}\oarg{options}\marg{note text}}
   Effects \emph{inside} frames:
-  
+
   This command appends the \meta{note text} to
   the note that follows the current slide. Multiple uses of this
-  command on a slide accumulate. If you 
-  do not specify an \meta{overlay specification}, the 
+  command on a slide accumulate. If you
+  do not specify an \meta{overlay specification}, the
   note will be added to \emph{all} slides of the current frame. This
   is often not what you want, so adding a specification like |<1>| is
   usually a good idea.
@@ -89,14 +90,14 @@ In the following, the syntax and effects of the |\note| command
   \item \declare{|item|} causes the note to be put as an item in a
     list that is shown at the end of the note page.
   \end{itemize}
-    
+
   \example|\note<2>{Do not talk longer than 2 minutes about this.}|
 
   \articlenote
   Notes are ignored in |article| mode.
 
   \lyxnote
-  Use the NoteItem style to insert a note item. 
+  Use the NoteItem style to insert a note item.
 \end{command}
 
 
@@ -104,7 +105,7 @@ Next, the syntax and effects of the |\note| command
 \emph{outside} frames are described:
 
 \begin{command}{\note\oarg{options}\marg{note text}}
-  Outside frames, this command creates a note page. This command is  
+  Outside frames, this command creates a note page. This command is
   \emph{not} affected by the option |notes=onlyframeswithnotes|, see
   below.
 
@@ -115,7 +116,7 @@ Next, the syntax and effects of the |\note| command
   \item \declare{|enumerate|} will enclose the whole note page in an
     |enumerate| environment.
   \end{itemize}
-  
+
   \example
 \begin{verbatim}
 \frame{some text}
@@ -220,7 +221,7 @@ should be included in your presentation. You can use the following
 
 \begin{beameroption}{show notes}
   Include notes in the output file. Normal slides are also included
-  and the note pages are interleaved with them. 
+  and the note pages are interleaved with them.
 \end{beameroption}
 
 \begin{beameroption}{show notes on second screen}{|=|\meta{location}}
@@ -230,7 +231,7 @@ should be included in your presentation. You can use the following
   details. The second screen, which is displayed on the right by
   default, shows your notes. By   specifying a different
   \meta{location}, you can also place the second screen on the |left|,
-  |bottom|, or |top|. 
+  |bottom|, or |top|.
 
   \example
 \begin{verbatim}
@@ -308,7 +309,7 @@ should be included in your presentation. You can use the following
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

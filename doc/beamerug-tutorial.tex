@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -11,7 +12,7 @@
 
 \section{Tutorial: Euclid's Presentation}
 \label{section-tutorial}
- 
+
 This section presents a short tutorial that focuses on those features
 of \beamer\ that you are likely to use when you start using
 \beamer. It  leaves out all the glorious details that are explained
@@ -22,7 +23,7 @@ in great detail later on.
 \subsection{Problem Statement}
 
 We wish to help Prof.\ Euclid of the University of Alexandria to
-create a presentation on his latest discovery: There are 
+create a presentation on his latest discovery: There are
 infinitely many prime numbers! Euclid wrote a paper on this and it got
 accepted at the 27th International Symposium on Prime Numbers $-280$
 (ISPN~'80). Euclid wishes to use the \beamer\ class
@@ -45,7 +46,7 @@ template to this subdirectory, renaming to |main.tex|.
 
 \lyxnote
 If Euclid uses \LyX, he would choose ``New from template'' and pick
-the template file 
+the template file
 \begin{verbatim}
 beamer/solutions/conference-talks/conference-ornate-20min.en.lyx
 \end{verbatim}
@@ -54,13 +55,13 @@ He opens the file in his favorite editor. It starts
 \begin{verbatim}
 \documentclass{beamer}
 \end{verbatim}
-which Euclid finds hardly surprising. Next comes a line reading 
+which Euclid finds hardly surprising. Next comes a line reading
 \begin{verbatim}
 \mode<presentation>
-\end{verbatim} 
+\end{verbatim}
 which Euclid does not understand. Since he finds more stuff in the file
 that he does not understand, he decides to ignore all of that for time
-being, hoping that it all serves some good purpose. 
+being, hoping that it all serves some good purpose.
 
 
 \subsection{Title Material}
@@ -69,18 +70,18 @@ The next thing that seems logical is the place where the |\title|
 command is used. Naturally, he replaces it with
 \begin{verbatim}
 \title{There Is No Largest Prime Number}
-\end{verbatim} 
+\end{verbatim}
 since this was the title of the paper. He sees that the command
 |\title| also takes an optional ``short'' argument in square brackets,
 which is shown in places where there is little space, but he decides
 that the title is short enough by itself.
 
 Euclid next adjusts the |\author| and |\date| fields as follows:
-\begin{verbatim} 
+\begin{verbatim}
 %\author{Euclid of Alexandria}
 %\date[ISPN '80]{27th International Symposium of Prime Numbers}
-\end{verbatim} 
-For the date, he felt that the name was a little long, so a short 
+\end{verbatim}
+For the date, he felt that the name was a little long, so a short
 version is given (|ISPN '80|). On second thought, Euclid decides to
 add his email address and replaces the |\author| field as follows:
 \begin{verbatim}
@@ -89,11 +90,11 @@ add his email address and replaces the |\author| field as follows:
 Somehow Euclid does not like the fact that there is no ``|\email|''
 command in \beamer. He decides to write an email to \beamer's author,
 asking him to fix this, but postpones this for later when the
-presentation is finished. 
+presentation is finished.
 
 There are two fields that Euclid does not know, but whose meaning he
 can guess: |\subtitle| and |\institute|. He adjusts them. (Euclid does
-not need to use the |\and| command, which is 
+not need to use the |\and| command, which is
 used to separate several authors, nor the |\inst| command, which just
 makes its argument a superscript).
 
@@ -125,7 +126,7 @@ title page, which seems quite logical.
 The title page frame is created automatically by \LyX. All other
 frames start with the style BeginFrame and end either with the style
 EndFrame or, automatically, with the start of the next frame,
-subsection, or section. 
+subsection, or section.
 
 
 \subsection{Creating the Presentation PDF File}
@@ -206,7 +207,7 @@ finds the command that causes this: The |\AtBeginSubsection| inserts a
 frame with only the current subsection hilighted at the beginning of
 each section. If Euclid does not like this, he can just delete the
 whole |\AtBeginSubsection| stuff and the table of contents at the
-beginning of each subsection disappear. 
+beginning of each subsection disappear.
 
 The |\section| and |\subsection| commands take optional short
 arguments. These short arguments are used whenever a short form of the
@@ -227,7 +228,7 @@ of the presentation, as follows:
 \begin{verbatim}
 \begin{frame}
   \frametitle{What Are Prime Numbers?}
-  A prime number is a number that has exactly two divisors. 
+  A prime number is a number that has exactly two divisors.
 \end{frame}
 \end{verbatim}
 This yields the desired result. It might be a good idea to put some
@@ -241,7 +242,7 @@ awkward. It's easier to just paint the text in red.
 
 Next, Euclid decides to make it even clearer that he is giving a
 definition by putting a |definition| environment around the
-definition. 
+definition.
 \begin{verbatim}
 \begin{frame}
   \frametitle{What Are Prime Numbers?}
@@ -307,14 +308,14 @@ Euclid finds quite useful. After some experimentation he finds that
 writes an email about this to \beamer's author, but receives a polite
 answer stating that the implementation of |align| does wicked things
 and there is no fix for this. Also, Euclid is pointed to the last part
-of the user's guide, where a workaround is described. 
+of the user's guide, where a workaround is described.
 
 
 \subsection{Using Overlay Specifications}
 
 The next frame is to show his main argument and is put in a ``Results''
 section. Euclid desires a more complicated overlay behavior for this
-frame: In an enumeration of four points he 
+frame: In an enumeration of four points he
 wishes to uncover the points one-by-one, but he wishes the fourth
 point to be shown at the same time as the first. The idea is to
 illustrate his new proof method, namely proof by contradiction, where
@@ -335,7 +336,7 @@ beginning. For this, Euclid uses \emph{overlay specifications}:
     \item<2-> Let $q$ be the product of the first $p$ numbers.
     \item<3-> Then $q + 1$ is not divisible by any of them.
     \item<1-> Thus $q + 1$ is also prime and greater than $p$.\qedhere
-    \end{enumerate}      
+    \end{enumerate}
   \end{proof}
   \uncover<4->{The proof used \textit{reductio ad absurdum}.}
 \end{frame}
@@ -362,7 +363,7 @@ but that would be on an ugly empty line here.
 
 The |\item| command is not the only command that takes overlay
 specifications. Another useful command that takes one is the
-|\uncover| command. It only shows its argument on the slides specified 
+|\uncover| command. It only shows its argument on the slides specified
 in the overlay specification. On all other slides, the argument is
 hidden (though it still occupies space). The command |\only| is
 similar and Euclid could also have tried
@@ -380,7 +381,7 @@ sometimes wish things to ``really disappear'' on some slides and then
 to the top. Then a differing text height does not cause
 wobbling. Vertical flushing can also be achieved for only a single
 frame be by giving the optional argument |[t]| like this to the
-|frame| environment as in 
+|frame| environment as in
 \begin{verbatim}
 \begin{frame}[t]
   \frametitle{There Is No Largest Prime Number}
@@ -415,11 +416,11 @@ similar to the |theorem| environment, Euclid decides to use the
 \end{verbatim}
 He could also have defined his own theorem-like environment by putting
 the following in the preamble:
-\begin{verbatim} 
+\begin{verbatim}
 %\newtheorem{answeredquestions}[theorem]{Answered Questions}
 %\newtheorem{openquestions}[theorem]{Open Questions}
 \end{verbatim}
-The optional argument |[theorem]| ensures that these environments are 
+The optional argument |[theorem]| ensures that these environments are
 numbered the same way as everything else. Since these numbers are not
 shown anyway, it does not really matter whether they are given, but
 it's a good practice and, perhaps, Euclid might need these numbers
@@ -465,7 +466,7 @@ environment, |\column| commands create new columns.
 Trying this, he is not quite satisfied with the result as the block on
 the left has a different height than the one on the right. He thinks it
 would be nicer if they were vertically top-aligned. So he adds the
-|[t]| option to the |columns| environment. 
+|[t]| option to the |columns| environment.
 
 Euclid is somewhat please to find out that a |\pause| at the end of
 the first column allows him to ``uncover'' the second column only on
@@ -478,7 +479,7 @@ the second slide of the frame.
 Euclid decides that he would like to add a citation to his open
 questions list, since he would like to attribute the question to his
 good old friend Christian. Euclid is not really sure whether using a
-bibliography in his talk is a good idea, but he goes ahead anyway. 
+bibliography in his talk is a good idea, but he goes ahead anyway.
 
 To this end, he adds an entry to the bibliography, which he
 fortunately already finds in the solution file. Having the
@@ -491,7 +492,7 @@ like this:
   \begin{thebibliography}{10}
   \bibitem{Goldbach1742}[Goldbach, 1742]
     Christian Goldbach.
-    \newblock A problem we should try to solve before the ISPN '43 deadline, 
+    \newblock A problem we should try to solve before the ISPN '43 deadline,
     \newblock \emph{Letter to Leonhard Euler}, 1742.
   \end{thebibliography}
 \end{verbatim}
@@ -519,7 +520,7 @@ he must add the |fragile| option to the frame:
 \begin{frame}[fragile]
   \frametitle{An Algorithm For Finding Primes Numbers.}
 
-%\begin{verbatim} 
+%\begin{verbatim}
 int main (void)
 {
   std::vector<bool> is_prime (100, true);
@@ -530,7 +531,7 @@ int main (void)
         for (int j = i; j < 100; is_prime [j] = false, j+=i);
       }
   return 0;
-} 
+}
 \end{verbatim}
 \unskip{\MacroFont|\end{verbatim}|}
                                 %\begin{verbatim}
@@ -554,7 +555,7 @@ might now typeset his algorithm as follows:
 \begin{frame}[fragile]
   \frametitle{An Algorithm For Finding Primes Numbers.}
 
-\begin{semiverbatim}    
+\begin{semiverbatim}
 \uncover<1->{\alert<0>{int main (void)}}
 \uncover<1->{\alert<0>{\{}}
 \uncover<1->{\alert<1>{  \alert<4>{std::}vector<bool> is_prime (100, true);}}
@@ -600,8 +601,8 @@ He settles on the |Frankfurt| theme but decides that the light-dark
 contrast is too strong. He adds
 \begin{verbatim}
 \usecolortheme{seahorse}
-\usecolortheme{rose} 
-\end{verbatim}  
+\usecolortheme{rose}
+\end{verbatim}
 The result seems some more subdued to him.
 
 Euclid decides that the font used for the titles is not quite
@@ -655,7 +656,7 @@ things to be taken care of, but he also understands that \beamer's
 author also needs some time to do research or otherwise he would have
 nothing to given presentations about.
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

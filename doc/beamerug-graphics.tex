@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -9,9 +10,7 @@
 
 % $Header$
 
-
 \section{Graphics}
-
 
 \label{section-graphics}
 
@@ -96,7 +95,7 @@ packages that help you do this. They have various degrees of
 sophistication. Inlining graphics suffers from none of the
 disadvantages mentioned above for including external graphic files,
 but the main disadvantage is that it is often hard to use
-these packages. In some sense, you ``program'' your graphics, which 
+these packages. In some sense, you ``program'' your graphics, which
 requires a bit of practice.
 
 When choosing a graphic package, there are a few things to keep in
@@ -164,9 +163,9 @@ graphics.
 
 The MetaPost program converts a plain text file ending |.mp|
 into an |.mps| file (although for some unfathomable reason the
-extension is not added). The |.mp| file 
+extension is not added). The |.mp| file
 must contain text written in the MetaFont programming language. Since
-|.mps| files are actually also |.eps| files, you can use the normal 
+|.mps| files are actually also |.eps| files, you can use the normal
 |\includegraphics| command to include them.
 
 However, as a special bonus, you can \emph{also}
@@ -178,7 +177,7 @@ package implements some filters to convert such PostScript output to
 of |.eps|. The following command can be used to make the |graphics|
 package just \emph{assume} the extension |.mps| for any file it knows
 nothing about (like files ending with |.1|, which is what MetaPost
-loves to produce): 
+loves to produce):
 \begin{verbatim}
 \DeclareGraphicsRule{*}{mps}{*}{}
 \end{verbatim}
@@ -200,7 +199,7 @@ also reside in a |.mp| file, but by convention such a file is called
 single encapsulated PostScript file, but several, ending |.0|, |.1|,
 |.2|, and so on. The idea is that |.0| might contain a main graphics
 and the following pictures contain overlay material that should be
-incrementally added to this graphic. 
+incrementally added to this graphic.
 
 To include the series of resulting files, you can use the command
 |\multiinclude| from the |mpmulti| or from the |xmpmulti| package. How
@@ -210,7 +209,7 @@ this program works is explained in Section~\ref{section-mpmulti}.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

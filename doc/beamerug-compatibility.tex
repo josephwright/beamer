@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -49,7 +50,7 @@ class, extra options or precautions may be necessary.
   When using the |spanish| style, certain features that clash with the
   functionality of the \beamer\ class will be turned off. In particular,
   the special behaviour of the pointed brackets |<| and |>| is
-  deactivated. 
+  deactivated.
 
   \articlenote
   To make the characters |<| and |>| active in |article| mode, pass
@@ -87,7 +88,7 @@ class, extra options or precautions may be necessary.
   \beamernote
   When using the |CJK| package for using Asian fonts, you must use the
   class option \declare{|CJK|}. See |beamerexample4.tex| for an
-  example. 
+  example.
 \end{package}
 
 \begin{package}{{deluxetable}}
@@ -130,13 +131,13 @@ class, extra options or precautions may be necessary.
   default. For example, the sans-serif text and the typewriter text
   are not replaced. To use outline fonts for these, write
   |\usepackage{lmodern}| \emph{before} including the |fourier|
-  package. 
+  package.
 \end{package}
 
 \begin{package}{{HA-prosper}}
   You cannot use this package with \beamer. However, you might try to
   use the package |beamerprosper| instead, see
-  Section~\ref{section-prosper}. 
+  Section~\ref{section-prosper}.
 \end{package}
 
 \begin{package}{{hyperref}}
@@ -144,7 +145,7 @@ class, extra options or precautions may be necessary.
   The |hyperref| package is automatically loaded by |beamer.cls| and
   certain options are setup. In order pass additional options to
   |hyperref| or to override options, you can use the following class
-  option: 
+  option:
 
   \begin{classoption}{hyperref={\normalfont\meta{list of options}}}
     Causes the \meta{list of options} to be passed on to the |hyperref|
@@ -163,13 +164,13 @@ class, extra options or precautions may be necessary.
 \begin{package}{{inputenc}|[|\declare{|utf8|}|]|}
   \beamernote
   When using Unicode, you may wish to use one of the following class
-  options: 
+  options:
   \begin{classoption}{ucs}
     Loads the package |ucs| and passes the correct Unicode options to
     |hyperref|. Also, it preloads the Unicode code pages zero and
     one.
   \end{classoption}
-  
+
   \begin{classoption}{utf8}
     Same as the option |ucs|, but also sets the input encoding to
     |utf8|. You could also use the option |ucs| and say
@@ -203,19 +204,19 @@ class, extra options or precautions may be necessary.
 \begin{package}{{musixtex}}
   When using  MusiX\TeX\ to typeset musical scores, your document must
   be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or
-  |latex|.  
+  |latex|.
 
   Inside  a |music| environment, the |\pause| is redefined to match
   MusiX\TeX's definition (a rest during one quarter of a whole). You can
   use the |\beamerpause| command  to create overlays in this
-  environment.  
+  environment.
 \end{package}
 
 \begin{package}{{pdfpages}}
   Commands like |\includepdf| only work \emph{outside} frames as they
   produce pages ``by themselves.'' You may also wish to say
 \begin{verbatim}
-\setbeamercolor{background canvas}{bg=} 
+\setbeamercolor{background canvas}{bg=}
 \end{verbatim}
   when you use such a command since the background (even a white
   background) will otherwise be printed over the image you try to include.
@@ -228,7 +229,7 @@ class, extra options or precautions may be necessary.
 \end{frame}
 
 {
-  \setbeamercolor{background canvas}{bg=} 
+  \setbeamercolor{background canvas}{bg=}
   \includepdf{somepdfimages.pdf}
 }
 
@@ -266,7 +267,7 @@ class, extra options or precautions may be necessary.
 \begin{package}{{texpower}}
   You cannot use this package with \beamer. However, you might try to
   use the package |beamertexpower| instead, see
-  Section~\ref{section-texpower}.  
+  Section~\ref{section-texpower}.
 \end{package}
 
 \begin{package}{{textpos}}
@@ -277,7 +278,7 @@ class, extra options or precautions may be necessary.
   using |textpos|, so that it will place boxes \emph{before}
   everything. Alternatively, you can install an empty background
   template, but this may result in an incorrect display in certain
-  situtations with older versions of the Acrobat Reader. 
+  situtations with older versions of the Acrobat Reader.
 \end{package}
 
 \begin{package}{{ucs}}
@@ -306,7 +307,7 @@ class, extra options or precautions may be necessary.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -43,7 +44,7 @@ with the outer theme |sidebar|.
   colors and even less backgrounds. The default color theme sets up
   the default parent relations between the different \beamer-colors.
 
-  The main colors set in the |default| color theme are the following: 
+  The main colors set in the |default| color theme are the following:
   \begin{itemize}
   \item
     |normal text| is black on white.
@@ -53,7 +54,7 @@ with the outer theme |sidebar|.
     |example text| is a dark green (green with 50\% black).
   \item
     |structure| is set to a light version of MidnightBlue
-    (more precisely, 20\% red, 20\% green, and 70\% blue).  
+    (more precisely, 20\% red, 20\% green, and 70\% blue).
   \end{itemize}
   Use this theme for a no-nonsense presentation. Since this theme is
   loaded by default, you cannot ``reload'' it after having loaded
@@ -61,8 +62,8 @@ with the outer theme |sidebar|.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}[\oarg{options}]{structure}
-  The example was created using |\usecolortheme[named=SeaGreen]{structure}|. 
-  
+  The example was created using |\usecolortheme[named=SeaGreen]{structure}|.
+
   This theme offers a convenient way of changing the color used for
   structural elements. More precisely, it just changes the foreground
   of the \beamer-color |structure|. You can also achieve this by
@@ -150,7 +151,7 @@ Complete color themes happen to have names of flying animals.
   \item \declare{|overlystylish|} installs a background canvas that
     is, in my opinion, way too stylish. But then, I do not want
     to press my taste on other people. When using this option, it is
-    probably a very good idea to also use the |lily| color theme.      
+    probably a very good idea to also use the |lily| color theme.
   \end{itemize}
 
   \example The |overlystylish| option together with the |lily| color theme:
@@ -164,7 +165,7 @@ Complete color themes happen to have names of flying animals.
   black text for normal text. The ``outer stuff'' like the headline
   and the footline use, however, a bluish color. To change this color,
   change the background of |palette primary|.
-  
+
   Great care must be taken with this theme since both the white/gray
   and the black/gray contrasts are much lower than with other
   themes. Make sure that the contrast is high enough for the actual
@@ -176,7 +177,7 @@ Complete color themes happen to have names of flying animals.
 
 \begin{colorthemeexample}{crane}
   This theme uses the colors of the Lufthansa, whose logo is a
-  crane. It is \emph{not} an official theme by that company, however. 
+  crane. It is \emph{not} an official theme by that company, however.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{dove}
@@ -206,14 +207,14 @@ Complete color themes happen to have names of flying animals.
 
 \begin{colorthemeexample}{wolverine}
   The theme is based on the colors of the University of Michigan's
-  mascot, a wolverine. 
+  mascot, a wolverine.
 
   \themeauthor Madhusudan Singh.
 \end{colorthemeexample}
 
 
 \begin{colorthemeexample}{beaver}
-  The theme is based on the colors of the MIT's mascot, a beaver. 
+  The theme is based on the colors of the MIT's mascot, a beaver.
 
   \themeauthor Madhusudan Singh.
 \end{colorthemeexample}
@@ -254,10 +255,10 @@ been loaded. Inner color themes happen to have flower names.
 \subsubsection{Outer Color Themes}
 
 An outer color theme changes the palette colors, on which the colors
-used in the headline, footline, and sidebar 
+used in the headline, footline, and sidebar
 are based by default. Outer color themes normally do not change the
 color of inner elements, except possibly for |titlelike|. They have
-happen to sea-animal names. 
+happen to sea-animal names.
 
 \begin{colorthemeexample}{whale}
   Installs a white-on-dark palette for the headline, footline, and
@@ -268,7 +269,7 @@ happen to sea-animal names.
   While this color theme can appear to be aggressive, you should note
   that a dark bar at the border of a frame will have a somewhat
   different appearance during a presentation than it has on paper:
-  During a presentation the projection on the 
+  During a presentation the projection on the
   wall is usually surrounded by blackness. Thus, a dark bar will
   not create a contrast as opposed to the way it does on
   paper. Indeed, using this theme will cause the main part of the
@@ -276,7 +277,7 @@ happen to sea-animal names.
 
   The counterpart to the theme with respect to blocks is the |orchid|
   theme. However, pairing it with the |rose| color theme is also
-  interesting. 
+  interesting.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{seahorse}
@@ -293,7 +294,7 @@ happen to sea-animal names.
 \begin{colorthemeexample}{dolphin}
   A color theme somewhere in the middle between the whale and the
   seahorse. It was graciously donated by Manuel Carro. Like the
-  seahorse, it goes well with the |rose| and the |lily| color theme. 
+  seahorse, it goes well with the |rose| and the |lily| color theme.
 \end{colorthemeexample}
 
 
@@ -350,7 +351,7 @@ change.
 The default color theme, which is always loaded, installs numerous
 \beamer-colors and inheritance relations between them. These colors
 are explained throughout this guide. The color used for, say,
-frametitles is discussed in the section on frametitles, and so on.  
+frametitles is discussed in the section on frametitles, and so on.
 
 
 \subsubsection{Using Beamer's Colors}
@@ -365,10 +366,10 @@ then say |\color{fg}| to install the foreground color and
 |\color{bg}| to install the background color. You can also use the
 colors |fg| and |bg| in any context in which you normally use a color
 like, say, |red|. If a \beamer-color does not have a foreground or a
-background, the colors |fg| or |bg| (or both) remain unchanged. 
+background, the colors |fg| or |bg| (or both) remain unchanged.
 
 Inside templates, this command will typically have already been called
-for you with the option |[fg]|. 
+for you with the option |[fg]|.
 
 \begin{command}{\usebeamercolor\opt{|*|}\oarg{fg or
       bg}\marg{beamer-color name}}
@@ -376,7 +377,7 @@ for you with the option |[fg]|.
   foreground and background color of the \meta{beamer-color name}. If
   the \beamer-color does not specify a foreground, |fg| is left
   unchanged; if does not specify a background, |bg| is left
-  unchanged. 
+  unchanged.
 
   You will often wish to directly use the color |fg| or |bg| after
   using this command. For this common situation, the optional argument
@@ -432,7 +433,7 @@ for you with the option |[fg]|.
     \colorbox{bg}{Frame Title}
   }
 \end{verbatim}
-  
+
   \articlenote
   This command has no effect in |article| mode.
 \end{command}
@@ -479,14 +480,14 @@ To set or to change a \beamer-color, you can use the command
 
   \example |\setbeamercolor{normal text}{fg=black,bg=mylightgrey}|
   \example |\setbeamercolor{alerted text}{fg=red!80!black}|
-  
+
   The effect of this command is accumulative, thus the following two
   commands
 \begin{verbatim}
 \setbeamercolor{section in toc}{fg=blue}
 \setbeamercolor{section in toc}{bg=white}
 \end{verbatim}
-  have the same effect as 
+  have the same effect as
 \begin{verbatim}
 \setbeamercolor{section in toc}{fg=blue,bg=white}
 \end{verbatim}
@@ -588,7 +589,7 @@ To set or to change a \beamer-color, you can use the command
 
 
 
-  
+
 \subsection{The Color of Mathematical Text}
 
 By default, mathematical text does not have any special color---it
@@ -601,7 +602,7 @@ the color of mathematical text. Simply change the following colors:
 \begin{element}{math text}\no\yes\no
   This color is the parent of |math text inlined| and
   |math text displayed|. It is empty by default. See those colors for
-  details. 
+  details.
 \end{element}
 
 \begin{element}{math text inlined}\no\yes\no
@@ -610,7 +611,7 @@ the color of mathematical text. Simply change the following colors:
   typeset using this color. This is done via some |\everymath| hackery
   and may not work in all cases. If not, you'll have to try to find a
   way around the problem. The background is currently
-  ignored. 
+  ignored.
 \end{element}
 
 \begin{element}{math text displayed}\no\yes\no
@@ -620,14 +621,14 @@ the color of mathematical text. Simply change the following colors:
   between |$$| and |$$| or inside environments like |equation| or
   |align|. The setup of this color is somewhat fragile, use at your
   own risk. The background is currently
-  ignored.   
+  ignored.
 \end{element}
 
 \begin{element}{normal text in math text}\no\yes\no
   If the foreground of this color is set, normal text inside
   mathematical text (which is introduced using the |\text| command)
   will be typeset using this color. The background is currently
-  ignored. 
+  ignored.
 \end{element}
 
 
@@ -678,7 +679,7 @@ In detail, the following palette colors are used by outer themes.
   foreground ranges from |structure.fg| to |black|.
 
   For the sidebar, there is an extra set of palette colors, see
-  |palette sidebar primary|. 
+  |palette sidebar primary|.
 \end{element}
 
 \begin{element}{palette secondary}\no\yes\no
@@ -716,7 +717,7 @@ In detail, the following palette colors are used by outer themes.
 \subsection{Miscellaneous  Colors}
 
 In this section some ``basic'' colors are listed that do not
-``belong'' to any special commands. 
+``belong'' to any special commands.
 
 \begin{element}{normal text}\no\yes\yes
   The color is used for normal text. At the beginning of
@@ -724,7 +725,7 @@ In this section some ``basic'' colors are listed that do not
   |\normalcolor|. The background of this color is used by the
   default background canvas for the background of the
   presentation, see Section~\ref{section-canvas}. The background is
-  also the default value of the normal color |bg|. 
+  also the default value of the normal color |bg|.
 
   Since the color is the ``root'' of all other \beamer-colors, both a
   foreground and a background must be installed. In particular, to get
@@ -738,7 +739,7 @@ In this section some ``basic'' colors are listed that do not
 
 \begin{element}{example text}\no\yes\yes
   The color/font is used when text is typeset inside an |example|
-  block. 
+  block.
 \end{element}
 
 \begin{element}{titlelike}\no\yes\yes
@@ -820,7 +821,7 @@ of rendering the item depending on how long it will take before this
 item is shown or for how long it has already been covered once
 more. The transparency effect will automatically apply to all colors,
 \emph{except} for the colors in images. For images there is a
-workaround, see the documentation of the \pgfname\ package. 
+workaround, see the documentation of the \pgfname\ package.
 
 \begin{command}{\setbeamercovered\marg{options}}
   This command offers several different options, the most important of
@@ -843,7 +844,7 @@ workaround, see the documentation of the \pgfname\ package.
     during a presentation.
   \item \declare{|dynamic|} Makes all covered text quite transparent,
     but in a dynamic way. The longer it will take till the text is
-    uncovered, the stronger the transparency. 
+    uncovered, the stronger the transparency.
   \item \declare{|highly dynamic|} Has the same effect as |dynamic|,
     but the effect is stronger.
   \item \declare{|still covered=|\meta{not yet list}} specifies  how
@@ -880,11 +881,11 @@ workaround, see the documentation of the \pgfname\ package.
   implemented, this command causes all colors to get a mixing of
   \meta{percentage of opaqueness} of the current
   |bg|. At some future point this command might result in real
-  transparency. 
+  transparency.
 
   The alternate \pgfname\ extension used inside an opaque area is
   \meta{percentage of opaqueness}|opaque|. In case of nested calls,
-  only the innermost opaqueness specification is used. 
+  only the innermost opaqueness specification is used.
   \example
 \begin{verbatim}
 \setbeamercovered{still covered={\opaqueness<1->{15}},again covered={\opaqueness<1->{15}}}
@@ -892,14 +893,14 @@ workaround, see the documentation of the \pgfname\ package.
 \pgfdeclareimage{book.!15opaque}{filenameforbooknearlytransparent}
 \end{verbatim}
   Makes everything that is uncovered in two slides only 15 percent
-  opaque. 
+  opaque.
 \end{command}
 
 
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

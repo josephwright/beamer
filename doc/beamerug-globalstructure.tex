@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -15,11 +16,11 @@ This section lists the commands that are used for structuring a
 presentation ``globally'' using commands like |\section| or
 |\part|. These commands are use to create a \emph{static} structure,
 meaning that the resulting presentation is normally presented one slide
-after the other in the order the slides occur. 
+after the other in the order the slides occur.
 Section~\ref{section-nonlinear} explains which commands can be used to
 create the \emph{interactive} structure. For the interactive structure,
 you must interact with the presentation program, typically by clicking
-on hyperlinks, to advance the presentation. 
+on hyperlinks, to advance the presentation.
 
 \subsection{Adding a Title Page}
 
@@ -69,13 +70,13 @@ affiliation, a title graphic, and a date.
       \iteminsert{\insertsubtitle} inserts a version of the document title
       that is useful for the title page.
       \iteminsert{\inserttitlegraphic} inserts the title graphic into a
-      template. 
+      template.
     \end{templateinserts}
   \end{element}
 \end{command}
 
 For compatibility with other classes, in |article| mode the following
-command is also provided: 
+command is also provided:
 
 \begin{command}{\maketitle}
   \beamernote
@@ -87,7 +88,7 @@ command is also provided:
 
 Before you invoke the title page command, you must specify all
 elements you wish to be shown. This is done using the following
-commands: 
+commands:
 
 \begin{command}{\title\oarg{short title}\marg{title}}
   The \meta{short tile} is used in headlines and footlines. Inside
@@ -215,7 +216,7 @@ why; comments would be appreciated).
     section name} is used in the navigation bars instead. If a
     \meta{mode specification} is given, the command only has an effect
     for the specified modes.
-    
+
   \example|\section[Summary]{Summary of Main Results}|
 
   \articlenote
@@ -256,13 +257,13 @@ why; comments would be appreciated).
 \begin{command}{\section\sarg{mode specification}\declare{|*|}\marg{section name}}
   Starts a section without an entry in the table of contents. No
   heading is created, but the \meta{section name} is shown in the
-  navigation bar. 
+  navigation bar.
   \example|\section*{Outline}|
   \example|\section<beamer>*{Outline}|
 \end{command}
 
 \begin{command}{\subsection\sarg{mode specification}\oarg{short
-  subsection name}\marg{subsection name}} 
+  subsection name}\marg{subsection name}}
   This command works the same way as the |\section| command.
   \example|\subsection[Applications]{Applications to the Reduction of Pollution}|
 
@@ -270,7 +271,7 @@ why; comments would be appreciated).
     Like |section in toc|, only for subsection.
 
     In addition to the inserts for the |section in toc| template, the
-    following commands are available for this template: 
+    following commands are available for this template:
     \begin{templateinserts}
       \iteminsert{\inserttocsubsection}
       inserts the table of contents version of the current subsection
@@ -286,7 +287,7 @@ why; comments would be appreciated).
   \end{element}
 \end{command}
 
-\begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsection name}} 
+\begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsection name}}
   Starts a subsection without an entry in the table of contents. No
   heading is created, but the \meta{subsection name} is shown in the
   navigation bar, \emph{except} if \meta{subsection name} is empty. In
@@ -308,7 +309,7 @@ why; comments would be appreciated).
   \subsection*{A subsection}
 
   \frame{Normal frame, shown in navigation bar. The subsection name is
-    also shown in the navigation bar, but not in the table of contents.} 
+    also shown in the navigation bar, but not in the table of contents.}
 \end{verbatim}
 \end{command}
 
@@ -322,14 +323,14 @@ why; comments would be appreciated).
   I \emph{strongly} discourage the use of subsubsections in
   presentations. If you do not use them, you will give a better
   presentation.
-  
+
   \example|\subsubsection[Applications]{Applications to the Reduction of Pollution}|
-  
+
   \begin{element}{subsubsection in toc}\yes\yes\yes
     Like |subsection in toc|, only for subsection.
 
     In addition to the inserts for the |subsection in toc| template, the
-    following commands are available for this template: 
+    following commands are available for this template:
     \begin{templateinserts}
       \iteminsert{\inserttocsubsubsection}
       inserts the table of contents version of the current subsubsection
@@ -345,7 +346,7 @@ why; comments would be appreciated).
   \end{element}
 \end{command}
 
-\begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsubsection name}} 
+\begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsubsection name}}
   Starts a subsection without an entry in the table of contents. No
   heading is created, but the \meta{subsubsection name} is shown in
   a possible sidebar.
@@ -364,8 +365,8 @@ following  commands.
   this text will be used for starred sections instead. Different calls
   of this command will not ``add up'' the given texts (like the
   |\AtBeginDocument| command does), but will  overwrite any previous
-  text. 
-  
+  text.
+
   \example
 \begin{verbatim}
 \AtBeginSection[] % Do nothing for \section*
@@ -390,7 +391,7 @@ following  commands.
   subsection. If the \meta{special star text} parameter is specified,
   this text will be used for starred subsections instead. Different calls
   of this command will not ``add up'' the given texts.
-  
+
   \example
 \begin{verbatim}
 \AtBeginSubsection[] % Do nothing for \subsection*
@@ -454,7 +455,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
   \frame{...}
   \subsection{Learning Objectives}
   \frame{...}
-  
+
   \part{Today's Lecture}
   \frame{\partpage}
   \section{Topic A}
@@ -473,7 +474,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
   Works like |\titlepage|, only that the current part, not the current
   presentation is ``advertised.''
   \example |\frame{\partpage}|
-  
+
   \begin{element}{part page}\yes\yes\yes
     This template is invoked when the |\partpage| command is used.
 
@@ -501,7 +502,7 @@ beginning of a new part. See |beamerexample3.tex| for an example.
 \begin{command}{\AtBeginPart\marg{text}}
   The given text will be inserted at the beginning of every
   part.
-  
+
   \example
 \begin{verbatim}
 \AtBeginPart{\frame{\partpage}}
@@ -520,7 +521,7 @@ frames from a file to be presented. This command takes (among other
 things) a label name. If you say |\includeonlylecture| with this label
 name, then only the frames following the corresponding |\lecture|
 command are shown. The frames following other |\lecture| commands are
-suppressed. 
+suppressed.
 
 By default, the |\lecture| command has no other effect. It does not
 create any frames or introduce entries in the table of
@@ -528,11 +529,11 @@ contents. However, you can use |\AtBeginLecture| to have \beamer\
 insert, say, a title page at the beginning of (each) lecture.
 
 \begin{command}{\lecture\oarg{short lecture name}\marg{lecture
-  name}\marg{lecture label}} 
+  name}\marg{lecture label}}
   Starts a lecture. The \meta{lecture name} will be available via the
   |\insertlecture| command. The \meta{short lecture name} is available
   via the |\insertshortlecture| command.
-  
+
   \example
 \begin{verbatim}
 \begin{document}
@@ -571,7 +572,7 @@ insert, say, a title page at the beginning of (each) lecture.
 \begin{command}{\AtBeginLecture\marg{text}}
   The given text will be inserted at the beginning of every
   lecture.
-  
+
   \example
 \begin{verbatim}
 \AtBeginLecture{\frame{\Large Today's Lecture: \insertlecture}}
@@ -619,7 +620,7 @@ that can be used to create certain special effects.
     be shown in a semi-transparent way. Also, all subsections but
     those in the current section are shown in the semi-transparent
     way. This command is a shorthand for specifying the following
-    options: 
+    options:
 \begin{verbatim}
 sectionstyle=show/shaded,subsectionstyle=show/show/shaded
 \end{verbatim}
@@ -674,7 +675,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
     normally, the second will show it in a semi-transparent way, and
     the third will completely suppress it. You can
     also omit the second style, in which case the first is used for
-    all sections (this is not really useful). 
+    all sections (this is not really useful).
   \item
     \declare{|subsectionstyle=|\meta{style for current
       subsection}|/|\meta{style for other subsections in current
@@ -703,7 +704,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
   The options are ignored in |article| mode.
 
   \lyxnote
-  You can give options to the |\tableofcontents| command by 
+  You can give options to the |\tableofcontents| command by
   inserting a \TeX-mode text with the options in square brackets
   directly after the table of contents.
 
@@ -752,9 +753,9 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
   \begin{element}{sections/subsections in toc shaded}\semiyes\no\no
     A parent template with children
     |section in toc shaded| and |subsection in toc shaded|. They are
-    used to render section and subsection entries when 
+    used to render section and subsection entries when
     they are currently shaded; like all non-current subsections in
-    |\tableofcontents[currentsubsection]|. 
+    |\tableofcontents[currentsubsection]|.
 
     \begin{templateoptions}
       \itemoption{default}{\oarg{opaqueness}}
@@ -764,7 +765,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
       opaque. The default is 20\%.
 
       \example |\setbeamertemplate{table of contents shaded}[default][50]|
-      makes dimmed entries 50\% transparent. 
+      makes dimmed entries 50\% transparent.
     \end{templateoptions}
   \end{element}
 \end{command}
@@ -804,11 +805,11 @@ entries.
   the template for bibliographies.
 
   The environment must be placed inside a frame. If the bibliography
-  does not fit on one frame, you should 
+  does not fit on one frame, you should
   split it (create a new frame and a second |thebibliography|
   environment) or use the |allowframebreaks| option. Even better, you
   should reconsider whether it is a good idea to present so many
-  references. 
+  references.
   \example
 \begin{verbatim}
 \begin{frame}
@@ -830,7 +831,7 @@ entries.
 
   Four templates govern the appearance of the author, title, journal,
   and note text. These author templates are inserted before the first block
-  of the entry (the first block is all text before the first occurrence of a 
+  of the entry (the first block is all text before the first occurrence of a
   |\newblock| command). The title template is inserted before
   the second block (the text between the first and second occurrence
   of |\newblock|). Likewise for the journal and note templates.
@@ -857,21 +858,21 @@ entries.
     paragraph, causing a line break. The default color is the normal
     text color.
   \end{element}
-  
+
   \begin{element}{bibliography entry journal}\yes\yes\yes
     This template is inserted before the journal of a bibliography
     entry (the second |\newblock|). By default, this template starts a
     new paragraph. The default color is a slightly transparent version
     of the structure color.
   \end{element}
-  
-  
+
+
   \begin{element}{bibliography entry note}\yes\yes\yes
     This template is inserted before any note text at the end of a
     bibliography entry (it is inserted before the third
     |\newblock|). By default, this template starts a new
     paragraph. The default color is the same as for the journal.
-  \end{element}  
+  \end{element}
 \end{environment}
 
 
@@ -880,7 +881,7 @@ entries.
   The \meta{citation text} is inserted into the text when the item is
   cited using |\cite{|\meta{label name}|}| in the main presentation
   text. For a \beamer\ presentation, this should usually be as long as
-  possible.  
+  possible.
 
   Use |\newblock| commands to separate the authors's names, the title, the
   book/journal reference, and any notes. If the \meta{overlay specification}
@@ -908,10 +909,10 @@ entries.
       Draws a cute little article icon as the reference. Use this for
       journal articles, parts of books (like conference proceedings),
       or technical reports.
-      
+
       \itemoption{article}{}
       Alias for the default.
-      
+
       \itemoption{book}{}
       Draws a cute little book icon as the reference. Use this for,
       well, books.
@@ -922,7 +923,7 @@ entries.
 
       \itemoption{text}{}
       Uses the reference text (like ``[Dijkstra, 1982]'') as the
-      reference text. Be sure you what you are doing if you use this. 
+      reference text. Be sure you what you are doing if you use this.
     \end{templateoptions}
     The following insert is useful for the template:
     \begin{itemize}
@@ -941,7 +942,7 @@ command. You should put frames and perhaps whole subsections into the
 appendix that you do not intend to show during your presentation, but
 which might be useful to answer a question. The |\appendix| command
 essentially just starts a new part named |\appendixname|. However, it
-also sets up certain hyperlinks. 
+also sets up certain hyperlinks.
 Like other parts, the appendix is kept separate of your actual
 talk.
 
@@ -975,7 +976,7 @@ talk.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

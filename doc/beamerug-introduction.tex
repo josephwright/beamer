@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -11,10 +12,10 @@
 
 \section{Introduction}
 
-\beamer\ is a \LaTeX\ class for creating presentations that are 
+\beamer\ is a \LaTeX\ class for creating presentations that are
 held using a projector, but it can also be used to create transparency
 slides. Preparing presentations with \beamer\ is different from
-preparing them with \textsc{wysiwyg} programs like OpenOffice's Impress, 
+preparing them with \textsc{wysiwyg} programs like OpenOffice's Impress,
 Apple's Keynotes, or KOffice's KPresenter. A \beamer\ presentation is
 created like any other \LaTeX\ document: It has a preamble and a body,
 the body contains |\section|s and |\subsection|s, the different
@@ -63,7 +64,7 @@ The list of features supported by \beamer\ is quite long
   memory stick, you do not have to worry about which version of the
   presentation program might be installed there. Also, your
   presentation is going to look exactly the way it looked on your
-  computer. 
+  computer.
 \end{itemize}
 
 
@@ -104,7 +105,7 @@ encodings), Thomas Baumann (for the emacs stuff), Stefan M\"uller (for
 not loosing hope), Uwe Kern (for \textsc{xcolor}), Hendri Adriaens
 (for \textsc{ha-prosper}), Ohura Makoto (for spotting typos). People
 who have contributed to the themes include Paul Gomme, Manuel Carro,
-and Marlon Régis Schmitz.  
+and Marlon Régis Schmitz.
 
 
 
@@ -114,7 +115,7 @@ and Marlon Régis Schmitz.
 \subsection{How to Read this User's Guide}
 
 You should start with the first part. If you have not yet installed
-the package, please read Section~\ref{section-installation} first. If 
+the package, please read Section~\ref{section-installation} first. If
 you are new to \beamer, you should next read the tutorial in
 Section~\ref{section-tutorial}. When you set down to create your first
 real presentation using \beamer, read Section~\ref{section-workflow}
@@ -134,7 +135,7 @@ graphics or animations).
 The third part explains how you can change the appearance of your
 presentation easily either using themes or by specifying colors or
 fonts for specific elements of a presentation (like, say, the font
-used for the numbers in an enumerate). 
+used for the numbers in an enumerate).
 
 The last part contains ``howtos,'' which are explanations of how to
 get certain things done using \beamer.
@@ -185,7 +186,7 @@ indicates special mode considerations.
   also a \beamer-color and a \beamer-font.
 
   For each element, it is indicated whether a template, a
-  \beamer-color, and/or a \beamer-font of the  
+  \beamer-color, and/or a \beamer-font of the
   name |some beamer element| exist. Typically, all three exist and are
   employed together when the element needs to be typeset, that is,
   when the template is inserted the \beamer-color and -font are
@@ -195,7 +196,7 @@ indicates special mode considerations.
 
   Using and changing templates is explained in
   Section~\ref{section-templates}. Here is the essence: To change a
-  template, you can say 
+  template, you can say
 \begin{verbatim}
 \setbeamertemplate{some beamer element}{your definition for this template}
 \end{verbatim}
@@ -216,7 +217,7 @@ indicates special mode considerations.
 \setbeamertemplate{some beamer element}[cirlce]{3pt}
 %% New a circle is used
 \end{verbatim}
-  
+
   \beamer-colors are explained in Section~\ref{section-colors}. Here
   is the essence: To change the foreground of the color to, say, red, use
 \begin{verbatim}
@@ -230,7 +231,7 @@ indicates special mode considerations.
   background will not always be ``honoured,'' since it is difficult to
   show a colored background correctly and an extra effort must be made
   by the templates (while the foreground color is usually used
-  automatically). 
+  automatically).
 
   \beamer-fonts are explained in Section~\ref{section-fonts}. Here is
   the essence: To change the size of the font to, say, large, use:
@@ -238,7 +239,7 @@ indicates special mode considerations.
 \setbeamerfont{some beamer element}{size=\large}
 \end{verbatim}
   In addition to the size, you can use things like |series=\bfseries|
-  to set the series, |shape=\itshape| to change the shape, 
+  to set the series, |shape=\itshape| to change the shape,
   |family=\sffamily| to change the family, and you can use them in
   conjunction. Add a star to the command to first ``reset'' the font.
 \end{element}
@@ -301,7 +302,7 @@ When you need help with \beamer, please do the following:
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "beameruserguide"
-%%% End: 
+%%% End:

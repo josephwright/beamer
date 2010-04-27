@@ -166,7 +166,7 @@
   \def\beamer@hypercjk{\hypersetup{CJKbookmarks=true}}
 
   \def\beamer@activecjk{
-    % Activate all >=128 characters. 
+    % Activate all >=128 characters.
     \count@=127
     \@whilenum\count@<254 \do{%
       \advance\count@ by 1
@@ -174,7 +174,7 @@
       \catcode\count@=\active
       \lowercase{\def~{\kern1ex}}
     }
-  }  
+  }
 }
 
 
@@ -230,7 +230,7 @@
   \ClassWarning{beamer}{``slidestop'' is obsolete. Use ``t'' instead}
   \beamer@centeredfalse}
 \DeclareOptionBeamer{sans}{%
-  \ClassWarning{beamer}{``sans'' is obsolete. Just remove this option}  
+  \ClassWarning{beamer}{``sans'' is obsolete. Just remove this option}
   \def\familydefault{\sfdefault}
   \def\mathfamilydefault{\sfdefault}
   \beamer@sansmathtrue
@@ -242,10 +242,10 @@
   \beamer@sansmathfalse
 }
 \DeclareOptionBeamer{mathsans}{
-  \ClassWarning{beamer}{``mathsans'' is obsolete. Use font theme ``serif'' with option ``butsansserifmath''}  
+  \ClassWarning{beamer}{``mathsans'' is obsolete. Use font theme ``serif'' with option ``butsansserifmath''}
   \def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
 \DeclareOptionBeamer{mathserif}{
-  \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}  
+  \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}
   \def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
 \DeclareOptionBeamer{professionalfont}{
   \ClassWarning{beamer}{``professionalfont'' is obsolete. Use font theme ``professionalfonts'' instead}
@@ -263,7 +263,7 @@
   pdfborder={0 0 0},%
   pdfhighlight={/N},%
   linkbordercolor={.5 .5 .5}}{hyperref}
-  
+
 \DeclareOptionBeamer{pgf}{\PassOptionsToPackage{#1}{pgf}}
 \DeclareOptionBeamer{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
 \DeclareOptionBeamer{color}{\PassOptionsToPackage{#1}{color}}
@@ -352,7 +352,7 @@
 \csname beamer@loadlater\endcsname
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
 %%% End:

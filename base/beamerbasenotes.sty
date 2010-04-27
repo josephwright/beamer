@@ -64,7 +64,7 @@
     \ifbeamer@notes
     \begingroup
       \setbeamertemplate{itemize item}{\textbullet}
-      \setbeamertemplate{itemize subitem}{--}    
+      \setbeamertemplate{itemize subitem}{--}
       \setbeamertemplate{enumerate item}{\insertenumlabel.}
       \setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
       \def\@oddhead{}
@@ -98,7 +98,7 @@
       \clearpage
       \endgroup
     \fi%
-  \fi%  
+  \fi%
   \beamer@resumemode}
 
 %
@@ -120,7 +120,7 @@
       \fi%
     }%
   \fi%
-  }    
+  }
 
 \def\note{%
   \ifbeamer@inframe%
@@ -139,7 +139,7 @@
 {% at end of slide
   \global\setbox\beamer@frameboxcopy=\copy\beamer@framebox%
   \ifx\beamer@noteitems\@empty%
-    \ifx\beamer@notes\@empty% 
+    \ifx\beamer@notes\@empty%
       % possibly suppress this slide
       \ifbeamer@frameswithnotesonly
         % suppress frame
@@ -176,9 +176,9 @@
   }
 }
 
-  
 
-\def\beamer@notesactions{}  
+
+\def\beamer@notesactions{}
 
 \newcommand\AtBeginNote[1]{\long\def\beamer@atbeginnote{#1}}
 \newcommand\AtEndNote[1]{\long\def\beamer@atendnote{#1}}
@@ -217,7 +217,7 @@
 <all>
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
-%%% End: 
+%%% End:

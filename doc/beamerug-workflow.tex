@@ -1,4 +1,5 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
 %
@@ -13,9 +14,9 @@
 
 \label{section-workflow}
 
-This section presents a possible workflow for creating a \beamer\ 
+This section presents a possible workflow for creating a \beamer\
 presentation and possibly a handout to go along with it. Technical
-questions are addressed, like which programs to call with 
+questions are addressed, like which programs to call with
 which parameters.
 
 
@@ -32,7 +33,7 @@ Christmas talk), followed by some reminder text of what the talk is
 all about. Putting the date at the front in this format causes your
 presentation folders to be listed nicely when you have several of them
 residing in one directory. If you use an extra directory for each
-presentation, you can call your main file |main.tex|. 
+presentation, you can call your main file |main.tex|.
 
 To create an initial |main.tex| file for your talk, copy an
 existing file from the |beamer/solutions| directory and adapt it to
@@ -131,7 +132,7 @@ To create a |PDF| version of this file, run the program
 |pdflatex| on |main.tex| at least twice. Your need to run it twice, so
 that \TeX\ can create the table of contents. (It may even be necessary
 to run it more often since all sorts of auxiliary files are
-created.) In the following example, the greater-than-sign is the prompt. 
+created.) In the following example, the greater-than-sign is the prompt.
 
 \begin{verbatim}
 > pdflatex main.tex
@@ -178,7 +179,7 @@ You can then run |latex| twice, followed by |dvips|.
 
 The option (|-P pdf|) tells |dvips| to use
 Type~1 outline fonts instead of the usual Type~3 bitmap fonts. You may
-wish to omit this option if there is a problem with it. 
+wish to omit this option if there is a problem with it.
 
 You can convert a PostScript file to a pdf file using
 
@@ -217,7 +218,7 @@ Second, you can use the following command:
   are still executed, so that you still have the correct navigation
   bars. By labeling the current frame as, say, |current| and then
   saying |\includeonlyframes{current}|, you can work on a single frame
-  quickly.  
+  quickly.
 
   The \meta{frame label list} is a comma-separated list (without
   spaces) of the names of frames that have been labeled. To label a
@@ -247,7 +248,7 @@ Second, you can use the following command:
 Once the table of contents looks satisfactory, start creating frames
 for your presentation by adding |frame| environments. You'll find
 guidelines on what to put on a frame in
-Section~\ref{section-frame-guidelines}. 
+Section~\ref{section-frame-guidelines}.
 
 \lyxnote
 To create a frame, use the style ``BeginFrame''. The frame title
@@ -272,7 +273,7 @@ talk into the given amount of time. You are almost sure to loose your
 audience this way.
 
 Do not try to create the ``perfect'' presentation immediately. Rather,
-test and retest the talk and modify it as needed. 
+test and retest the talk and modify it as needed.
 
 
 
@@ -295,7 +296,7 @@ facilities to have this version coexist with your presentation version
 in one file and to share code. Also, you can include slides of your
 presentation as figures in your article version. Details on how to
 setup the article version can be found in
-Section~\ref{section-article}.  
+Section~\ref{section-article}.
 
 \lyxnote
 Creating an article version is not really possible in \LyX. You
@@ -350,7 +351,7 @@ grand (though unreadable) overview.
 
 If you put several slides on one page and if these slides normally
 have a white background, it may be useful to write the following in
-your preamble: 
+your preamble:
 
 \begin{verbatim}
 \mode<handout>{\setbeamercolor{background canvas}{bg=black!5}}
@@ -377,7 +378,7 @@ border if several slides are put on one page.
 
 %% In order to create a white margin around the whole page (which is sometimes
 %% useful for printing), add the option |-m 1cm| to the options of
-%% |psnup|. 
+%% |psnup|.
 
 %% To put two or four slides on one page, use |-2|, respectively
 %% |-4| instead of |-1| as the first parameter for
