@@ -10,7 +10,15 @@
 
 \ProvidesPackageRCS $Header$
 
-\mode<presentation>
+\mode
+<presentation>
+
+\IfFileExists{translator.sty}{
+  \RequirePackage{translator}
+  \usedictionary{translator-basic-dictionary}
+}{}
+
+\providecommand\translate[2][]{#2}
 
 % Maximum dead cycles
 \maxdeadcycles=1000
@@ -122,22 +130,25 @@
 \setlength\fboxrule{.4\p@}
 
 
-\newcommand\contentsname{Contents}
-\newcommand\listfigurename{List of Figures}
-\newcommand\listtablename{List of Tables}
-\newcommand\refname{References}
-\newcommand\bibname{Bibliography}
-\newcommand\indexname{Index}
-\newcommand\figurename{Figure}
-\newcommand\algorithmname{Algorithm}
-\newcommand\tablename{Table}
-\newcommand\partname{Part}
-\newcommand\chaptername{Chapter}
-\newcommand\appendixname{Appendix}
-\newcommand\abstractname{Abstract}
+\newcommand\contentsname{\translate{Contents}}
+\newcommand\listfigurename{\translate{List of Figures}}
+\newcommand\listtablename{\translate{List of Tables}}
+\newcommand\refname{\translate{References}}
+\newcommand\bibname{\translate{Bibliography}}
+\newcommand\indexname{\translate{Index}}
+\newcommand\figurename{\translate{Figure}}
+\newcommand\algorithmname{\translate{Algorithm}}
+\newcommand\tablename{\translate{Table}}
+\newcommand\partname{\translate{Part}}
+\newcommand\chaptername{\translate{Chapter}}
+\newcommand\appendixname{\translate{Appendix}}
+\newcommand\abstractname{\translate{Abstract}}
+% This is suboptimal; for full localization babel should be used.
 \def\today{\ifcase\month\or
-  January\or February\or March\or April\or May\or June\or
-  July\or August\or September\or October\or November\or December\fi
+  \translate{January}\or \translate{February}\or \translate{March}\or
+  \translate{April}\or \translate{May}\or \translate{June}\or
+  \translate{July}\or \translate{August}\or \translate{September}\or
+  \translate{October}\or \translate{November}\or \translate{December}\fi
   \space\number\day, \number\year}
 \setlength\columnsep{10\p@}
 \setlength\columnseprule{0\p@}
