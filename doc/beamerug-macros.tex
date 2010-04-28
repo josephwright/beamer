@@ -1,0 +1,226 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\def\beamer{\textsc{beamer}}
+\def\pdf{\textsc{pdf}}
+\def\pgfname{\textsc{pgf}}
+\def\pstricks{\textsc{pstricks}}
+\def\prosper{\textsc{prosper}}
+\def\seminar{\textsc{seminar}}
+\def\texpower{\textsc{texpower}}
+\def\foils{\textsc{foils}}
+
+{
+  \makeatletter
+  \gdef\stripcommand#1{\expandafter\@gobble\string#1}
+}
+
+\def\declare#1{{\color{red!75!black}#1}}
+
+\def\command#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item\extractcommand#1@\par\topsep=0pt}
+\def\endcommand{\endlist}
+\def\extractcommand#1#2@{\strut\declare{\texttt{\string#1}}#2%
+  \index{\stripcommand#1@\protect\myprintocmmand{\stripcommand#1}}}
+
+\def\myprintocmmand#1{\texttt{\char`\\#1}}
+
+\def\example{\par\smallskip\noindent\textit{Example: }}
+\def\themeauthor{\par\smallskip\noindent\textit{Theme author: }}
+
+\def\environment#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\extractenvironement#1@\par\topsep=0pt}
+\def\endenvironment{\endlist}
+\def\extractenvironement#1#2@{%
+\item{{\ttfamily\char`\\begin\char`\{\declare{#1}\char`\}}#2}%
+  {\itemsep=0pt\parskip=0pt\item{\meta{environment contents}}%
+  \item{\ttfamily\char`\\end\char`\{\declare{#1}\char`\}}}%
+  \index{#1@\protect\texttt{#1} environment}%
+  \index{Environments!#1@\protect\texttt{#1}}}
+
+\def\classoption#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item{{\ttfamily\char`\\documentclass[\declare{#1}]\char`\{beamer\char`\}}}
+  \index{#1@\protect\texttt{#1} class option}%
+  \index{Class options for \textsc{beamer}!#1@\protect\texttt{#1}}%
+  \par\topsep=0pt}
+\def\endclassoption{\endlist}
+
+
+\newcommand\beameroption[2]{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item{{\ttfamily\char`\\setbeameroption\char`\{\declare{#1}{\normalfont\opt{#2}}\char`\}}}
+  \index{#1@\protect\texttt{#1} beamer option}%
+  \index{Beamer options!#1@\protect\texttt{#1}}%
+  \par\topsep=0pt}
+\def\endbeameroption{\endlist}
+
+
+\def\smallpackage{\vbox\bgroup\package}
+\def\endsmallpackage{\egroup\endpackage}
+
+\def\package#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\extracttheme#1@usepackage@package@Packages@\par\topsep=0pt}
+\def\endpackage{\endlist}
+%\def\extracttheme#1#2@{%
+%\item{{{\ttfamily\char`\\usepackage}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}}
+
+\def\theme#1#2#3#4{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\extracttheme#2@#1@#3@#4@\par\topsep=0pt}
+\def\endtheme{\endlist}
+\def\extracttheme#1#2@#3@#4@#5@{%
+\item{{{\ttfamily\char`\\#3}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}%
+  \index{#1@\protect\texttt{#1} #4}%
+  \index{#5!#1@\protect\texttt{#1}}
+}
+
+\def\class#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\extractclass#1@\par\topsep=0pt}
+\def\endclass{\endlist}
+\def\extractclass#1#2@{%
+\item{{{\ttfamily\char`\\documentclass}#2{\ttfamily\char`\{\declare{#1}\char`\}}}}%
+  \index{#1@\protect\texttt{#1} class}%
+  \index{Classes!#1@\protect\texttt{#1}}}
+
+\def\typesetsol#1{\texttt{\def\_{\char`\_}#1}}
+
+\def\solution#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item \textbf{Solution Template }\declare{\typesetsol{#1}}\par\topsep=0pt%
+  \index{#1@\protect\typesetsol{#1} solution}%
+  \index{Solutions!#1@\protect\typesetsol{#1}}}
+\def\endsolution{\endlist}
+
+\def\template#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item {\ttfamily\char`\\setbeamertemplate\char`\{\declare{#1}\char`\}}\oarg{options}\opt{\meta{args}}\par\topsep=0pt}
+\def\endtemplate{\endlist}
+\newenvironment{template*}[1]{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item \leavevmode\llap{\color{blue}\vtop
+    to0pt{\llap{\textsc{appear-\!}}\vskip-3pt\llap{\textsc{ance}}\vss}\ \ }{\ttfamily\char`\\setbeamertemplate\char`\{\declare{#1}\char`\}}\oarg{options}\opt{\meta{args}}\par\topsep=0pt}
+{\endlist}
+
+\newenvironment{element}[4]{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item \textbf{\ifx#2\semiyes Parent Beamer-Template\else%
+    Beamer\applier#2{-Template}\applier#3{\applier#2{/}-Color}\applier#4{\ifx#2\yes/\else\ifx#3\yes/\fi\fi
+      -Font}\fi}
+    {\ttfamily{\declare{#1}}}\par\topsep=0pt%
+  \edef\parameters{%
+    \ifx#2\semiyes parent template\else%
+    \applier#2{template}\applier#3{\applier#2{/}color}\applier#4{\ifx#2\yes/\else\ifx#3\yes/\fi\fi font}\fi}
+  \index{#1@\protect\texttt{#1} \parameters}%
+  \applier#2{\index{Beamer templates!#1@\protect\texttt{#1}}}%
+  \applier#3{\index{Beamer colors!#1@\protect\texttt{#1}}}%
+  \applier#4{\index{Beamer fonts!#1@\protect\texttt{#1}}}%
+}
+{\endlist}
+
+\def\applier#1#2{\ifx#1\yes#2\fi}
+
+\def\templateoptions{\par
+  The following template options are predefined:
+  \begin{itemize}}
+\def\endtemplateoptions{\end{itemize}}
+
+\def\itemoption#1#2{\item {\texttt{[\declare{#1}]}}#2}
+
+\def\yes{\hbox to .6cm{\ding{51}\hfil}}
+\def\semiyes{\hbox to .6cm{(\ding{51})\hfil}}
+\def\no{\hbox to .6cm{\ding{55}\hfil}}
+
+\def\choosecol#1{}%\ifx#1\yes\color{green!50!black}\else\color{red!50!black}\fi}
+
+\def\templatefontcolor#1#2#3#4{%
+  \item\declare{\texttt{#1}}\hfill%
+  {\choosecol#2Template #2} {\choosecol#3Color #3} {\choosecol#4Font #4}\par}
+
+\def\fontparents#1{Font parents: \texttt{#1}\par}
+\def\colorparents#1{Color parents: \texttt{#1}\par}
+\def\colorfontparents#1{Color/font parents: \texttt{#1}\par}
+
+\def\templateinserts{\begin{itemize}}
+\def\endtemplateinserts{\end{itemize}}
+
+\def\iteminsert#1{\item {\texttt{\declare{\string#1}}}%
+  \index{Inserts!\stripcommand#1@\protect\myprintocmmand{\stripcommand#1}}}
+
+\newcommand\opt[1]{{\color{black!50!green}#1}}
+\renewcommand\oarg[1]{\opt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
+\newcommand\sarg[1]{\opt{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}}
+\newcommand\ssarg[1]{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}
+
+\providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+
+\newcommand{\beamernote}{\par\smallskip\noindent\llap{\color{blue}\vtop to0pt{\llap{\textsc{presen-\!}}\vskip-3pt\llap{\textsc{tation}}\vss}\ \ }}
+\newcommand{\articlenote}{\par\smallskip\noindent\llap{\color{blue}\textsc{article}\ \ }}
+\newcommand{\lyxnote}{\par\smallskip\noindent\llap{\color{blue}\textsc{lyx}\ \ }}
+\newcommand{\appearancenote}{\par\smallskip\noindent\appearancenotetext}
+
+\def\appearancenotetext{\llap{\color{blue}\vtop
+    to0pt{\llap{\textsc{appear-\!}}\vskip-3pt\llap{\textsc{ance}}\vss}\ \ }}
+
+\newcommand{\templatenote}{\par\smallskip\noindent\llap{\color{blue}\textsc{template}\ \ }}
+\newcommand{\colornote}{\par\smallskip\noindent\llap{\color{blue}\textsc{color}\ \ }}
+\newcommand{\fontnote}{\par\smallskip\noindent\llap{\color{blue}\textsc{font}\ \ }}
+
+\newcommand{\genericthemeexample}[2][]{%
+  \smallskip\par\noindent
+  \pgfimage[width=.45\textwidth,page=1]{beamerug#2}\qquad\pgfimage[width=.45\textwidth,page=2]{beamerug#2}
+  \smallskip\par}
+\newenvironment{themeexample}[2][]
+{\begin{theme}{usetheme}{{#2}#1}{presentation theme}{Presentation themes}
+    \example\genericthemeexample{theme#2}
+  }
+{\end{theme}}
+\newenvironment{innerthemeexample}[2][]
+{\begin{theme}{useinnertheme}{{#2}#1}{inner theme}{Inner themes}
+    \example\genericthemeexample{innertheme#2}
+  }
+{\end{theme}}
+\newenvironment{outerthemeexample}[2][]
+{\begin{theme}{useoutertheme}{{#2}#1}{outer theme}{Outer themes}
+    \example\genericthemeexample{outertheme#2}
+  }
+{\end{theme}}
+\newenvironment{colorthemeexample}[2][]
+{\begin{theme}{usecolortheme}{{#2}#1}{color theme}{Color themes}
+    \example\genericthemeexample{colortheme#2}
+  }
+{\end{theme}}
+\newenvironment{fontthemeexample}[2][]
+{\begin{theme}{usefonttheme}{{#2}#1}{font theme}{Font themes}
+    \example\genericthemeexample{fonttheme#2}
+  }
+{\end{theme}}
+\newenvironment{fontthemeexample*}[2][]
+{\begin{theme}{usefonttheme}{{#2}#1}{font theme}{Font themes}}
+{\end{theme}}
+
+\def\partname{Part}
+
+\makeatletter
+\def\index@prologue{\section*{Index}\addcontentsline{toc}{section}{Index}
+  This index currently contains only automatically generated entries.
+  \bigskip
+}
+\c@IndexColumns=2
+  \def\theindex{\@restonecoltrue
+    \columnseprule \z@  \columnsep 35\p@
+    \twocolumn[\index@prologue]%
+       \parindent -30pt
+       \columnsep 15pt
+       \parskip 0pt plus 1pt
+       \leftskip 30pt
+       \rightskip 0pt plus 2cm
+       \small
+       \def\@idxitem{\par}%
+    \let\item\@idxitem \ignorespaces}
+  \def\endtheindex{\onecolumn}
+\def\noindexing{\let\index=\@gobble}
+\makeatother
+

@@ -1,0 +1,331 @@
+% $Header$
+
+% This file is a demonstration on how a seminar file should be
+% changed to make it work with beamer.
+
+
+% Copyright notice:
+
+% Except for the changes indicated by CHANGED, this file is the original
+% file semsamp2.tex, which is part of the examples of the seminar
+% package. 
+
+
+%% BEGIN semsamp2.tex
+% This is a sample document for seminar.sty, v0.93 (and maybe later).
+%
+% This file contains both landscape and portrait mode slides.
+% Choose one of the following to print them out:
+%  - If using PSTricks, try the semcolor style option.
+%  - If using Rokicki's dvips, try the semrot style option.
+%  - To print the landscape slides, put \landscapeonly in the preamble.
+%    To print the portrait slides, include the portrait style option and
+%    put \portraitonly in the preamble.
+%
+%
+
+% CHANGED: commented the following:
+%\documentstyle[%
+%  slidesonly,%  Try notes or notesonly instead.
+%  %notes,%      Use instead of slidesonly to typeset the notes.
+%  %notesonly,%  Use instead of slidesonly to typeset notes and slides.
+%  %semcolor,%   Try me if using PSTricks.
+%  %semrot,%     Try me if using Rokicki's dvips.
+%  %semhelv,%    Try me if using a PostScript printer.
+%  %article,%    Try me.
+%  %portrait,%   Try me.
+%  %sem-a4,%     Try me if using A4 paper.
+%  semlayer%     This must be included, but you need the semcolor option to
+%  ]{seminar}                                  % actually see the overlays.
+%
+%\slidesmag{5}
+%\articlemag{1}
+%
+%%\twoup                     % Try me for twoup printing.
+%
+%%\portraitonly              % To print only portrait slides
+%%\landscapeonly             % To print only landscape slides
+%
+%%\notslides{\ref{questions}-7,1}   %Try me: The slides are omitted.
+%%\onlyslides{\ref{questions}-7,1}  %Try me: Only these slides are included.
+%%\onlynotestoo                     %Try me: For selecting notes as well.
+%
+%\colorlayers{red,blue}      % Try deleting this if using the semcolor option,
+%                            % to get \blue and \red to use PostScript color.
+%
+%%\overlaysfalse             % Suppress overlays with semcolor option.
+%%\layersfalse               % Suppress color layers with semcolor option.
+%
+%\rotateheaderstrue          % Try this out if using rotation macros.
+
+% CHANGED: Added following three lines:
+\documentclass[ignorenonframetext]{beamer}
+\usepackage[accumulated]{beamerseminar}
+                                % remove ``accumulated'' option
+                                % for original behaviour
+\usepackage{beamerthemeclassic}
+
+\title{Example for seminar.sty}
+\author{Policarpa Salabarrieta}
+\date{July 21, 1991}
+
+\newcommand{\sref}[1]{SLIDE \ref{#1}}
+
+% CHANGED: different definition of \heading
+%\newcommand{\heading}[1]{\begin{center}\large\bf #1\end{center}}
+\let\heading=\frametitle
+
+% CHANGED: Commented:
+%\newpagestyle{MH}%
+%  {University of Guaduas, March 13, 1998\hfil\thepage}{}
+%\pagestyle{MH}
+
+\begin{document}
+
+% CHANGED: Added \frame
+\frame{
+\maketitle          % This won't show up when \onlynotestoo is in effect.
+}
+
+% CHANGED: Commented
+%\begin{slide}
+%  \ifslidesonly              % Title slide only for slidesonly selection.
+%    \maketitle
+%    \addtocounter{slide}{-1}
+%    \slidepagestyle{empty}
+%  \fi
+%\end{slide}
+
+
+This is a lot of gobbledy-gook intended only to illustrate some of the
+features of seminar.sty.
+
+ The phrase information overload rings a bell with just about anyone.
+Certainly you all receive more working papers or more applications for
+graduate school than you can readily read. Nevertheless, the term information
+overload is ill-defined. (\sref{too_much}, top)
+
+ A message like this when you check your email conjures up the notion of
+information overload. More generally, information overload always means too
+much information, in some sense or another. But what does ``too much'' mean?
+(\sref{too_much}, bottom) It might just mean that people cannot process all
+the information they receive. That is certainly true for everyone. A claim
+that is much stronger, and that is implicit when people complain about
+informaton overload, is that people {\em should} receive less information, by
+some criterion.
+
+% CHANGED: Added \frame
+\frame{
+\begin{slide}\label{too_much}%
+\begin{center}
+  \large\bf
+ Information overload = ``Too much'' information
+\end{center}
+\smallskip
+
+\begin{verse} \bf\tt
+  You have 134 unread messages:\\
+  Do you want to read them now?
+\end{verse}
+
+\begin{enumerate}
+  {\overlay2
+  \item People {\overlay1 cannot process all} the information they receive.}
+  \item People {\em should} receive less information.
+ \end{enumerate}
+\end{slide}
+}
+
+  In this paper, I use the term ``information overload'' in both senses.
+(\sref{overload}, bottom). Specifically, I say that an {\em individual} is
+overloaded with information if she receives more information than she can
+process. But I say that there is information overload in a {\em network} if
+there is some mechanism that  makes the senders and/or receivers better off by
+restricting the flow of  information. This latter notion of information
+overload is an equilibrium property, and it depends on what we mean by
+``better off.''
+
+% CHANGED: Added \frame
+\frame{
+\begin{slide*}\label{overload}
+\ptsize{12}
+
+\begin{itemize}{\overlay1
+  \item There is information {\overlay0 overload in a network if} there is
+some mechanism that, compared to the {\em status quo}, makes the senders
+and/or receivers better off by restricting the flow} of information.'
+
+  \item There is information overload in a network if there is some mechanism
+that, compared to the {\em status quo}, makes the senders and/or receivers
+better off by restricting the flow of information.
+\end{itemize}
+
+\end{slide*}
+}
+
+(\sref{questions})
+  The purpose of my paper is to show why there can be information overload in
+a network and what kind of mechanisms can make the receivers and/or senders
+better off. Since the cost of communication is one factor that restricts
+communication, I am thus also going to look at how the welfare of the senders
+and receivers depends on the cost of communication.
+
+  Most messages don't become jumbled and we can choose which ones to process. 
+But some of us may have a bias towards choosing to process more information
+than we should, like the graduate student who feels compelled to read every
+article on the usual lengthy reading list, and just ends up getting confused
+and ruffling through the papers.
+
+% CHANGED: Added \frame
+\frame{
+\begin{slide}[7.3in,5.5in] \label{questions}
+\heading{Questions}
+
+\begin{itemize}
+  {\overlay1\item When could {\blue there be overload} in networks?}
+  \item What mechanims make the receivers and senders better off?
+  \item How does the welfare {\red of the senders} and receivers depend on the
+cost of communication?
+\end{itemize}
+\end{slide}
+}
+
+However, experiments in consumer research and psychology have failed to find
+that such a bias is prevalent. This is in spite of the fact that it is common
+for stress and cognitive strain to increase with information load. We may
+incur such stress and strain because the information we choose to process is
+valuable to us.
+
+More commonly, then, we can and do choose to process roughly as much
+information as we can handle efficiently. This is called screening. But when
+we choose which messages to begin to process, we're ignorant of their
+contents, since otherwise there would be no reason to process them in the
+first place. Therefore, if we receive more junk mail, then some of the
+important mail gets crowded out, and we are effectively less informed.
+
+
+% CHANGED: Added \frame
+\frame{
+\begin{slide} \label{informed}
+\begin{center}
+  {\bf Being more informed} \par
+    \smallskip
+  is always better,\par
+    \medskip
+  \overlay1{but it's not the same as \par
+    \smallskip
+  {\bf receiving more information}}
+\end{center}
+\end{slide}
+}
+
+  Why would the senders communicate too many messages in the first place? If I
+present too much material in this seminar, you have to choose which parts to
+ignore and I would rather make that decision myself, since I know what I most
+want to get across. Thus, it is in my interest not to overload you with
+information. Generally, whenever there is a single sender of messages, that
+sender will prefer to screen rather than have the receiver screen, because the
+sender has an interest in which messages the receiver processes.
+But when there are more senders, one sender's  messages tend to crowd out the
+messages of the other senders, as in this example here. If the senders don't
+take this external cost into account when sending messages, they may
+collectively overload the receiver. (\sref{akbar})
+
+There are several reasons that our scarcity of attention, that is, our limited
+capacity to process information, can mean that we become less informed when we
+receive  more information. I have a cartoon here to illustrate these reasons.
+(\sref{akbar})
+
+% CHANGED: Added \frame
+\frame{
+\begin{slide}\label{akbar}\def\slidefuzz{15pt}
+  {\large A tax $\tau$ on communication is said to support
+$\tilde{\cal{X}}(c)$ if $\tilde{\cal{X}}(c)$ is an equilibrium for
+$\Gamma(c+\tau)$.}
+\medskip
+
+ {\bf Proposition 6.} {\em Assume $\tilde{\cal{X}}(c)$ is not an equilibrium
+for $\Gamma(c)$.\vspace{-3pt}
+\begin{enumerate}
+ \item If $\mbox{supp}(\gamma)=[0,1]^n$, there is no tax that supports
+$\tilde{\cal{X}}(c)$.
+ \item If $\mbox{supp}(\gamma)=S^{n-1}$, there is a tax that supports
+$\tilde{\cal{X}}(c)$ if and only if $m=1$, $p_j>c\, \forall j$, and
+   \begin{enumerate}
+     \item $n=2$; or
+     \item $n=3$ and $p_i^{-1}+p_j^{-1}\geq p_k^{-1}$ for all distinct
+$i,j,k$; or
+     \item $n=4$ and $p_1=p_2=p_3=p_4$.
+\end{enumerate}
+\end{enumerate}}
+\end{slide}
+}
+  If, by restricting communication, we eliminate the less relevant messages,
+then we can become more informed. But how can we achieve this? Restricting the
+flow of information shifts the task of screening messages from the receivers
+to the senders. Unlike the receivers, the senders do know the contents of the
+messages they originate. If the senders' interests coincide with those of the
+receiver and if the senders have sufficient knowledge about the receivers,
+then the senders will choose the messages which are most relevant to the
+receivers. This may make the receivers, and even the senders, better off.
+
+  The network in Slide \ref{architectures} attains the minimal delay $c(8,24)
+= 6$ using 8 processors. It is an example of the efficient one-shot networks
+described by Foo. We will focus on a class of networks that are similar to the
+Foo networks but that may differ slightly. For $q$, $c$ and $n$ such that $1
+\leq q \leq \lfloor n/2 \rfloor$ and $c(q,n) \leq c \leq n$, let $R_{nqc}$ be
+the class of essential networks for adding $n$ items using  $q$ processors in
+$c$ cycles that have the following  properties:
+
+% CHANGED: Added \frame
+\frame{
+\begin{slide*}\label{architectures}
+\heading{Architecture}
+
+\begin{center}
+\setlength{\unitlength}{1.65in}
+\begin{picture}(1.1,1.6)(3.5,5.0)
+\put(4.0,6.5){\circle*{.04}}
+\put(4.1,6.5){1}
+\put(4.0,6.0){\circle*{.04}}
+\put(4.1,6.0){2}
+\put(4.0,6.1){\vector(0,1){.3}}
+\put(3.5,6.0){\circle*{.04}}
+\put(3.6,6.0){3}
+\put(3.6,6.1){\vector(1,1){.3}}
+\put(4.0,5.5){\circle*{.04}}
+\put(4.1,5.5){4}
+\put(4.0,5.6){\vector(0,1){.3}}
+\put(4.5,6.0){\circle*{.04}}
+\put(4.6,6.0){5}
+\put(4.4,6.1){\vector(-1,1){.3}}
+\put(4.5,5.5){\circle*{.04}}
+\put(4.6,5.5){6}
+\put(4.4,5.6){\vector(-1,1){.3}}
+\put(3.5,5.5){\circle*{.04}}
+\put(3.6,5.5){7}
+\put(3.5,5.6){\vector(0,1){.3}}
+\put(4.0,5.0){\circle*{.04}}
+\put(4.1,5.0){8}
+\put(4.0,5.1){\vector(0,1){.3}}
+\end{picture}
+\end{center}
+\end{slide*}
+}
+
+Why would the senders communicate too many messages in the first place? If I
+present too much material in this seminar, you have to choose which parts to
+ignore and I would rather make that decision myself, since I know what I most
+want to get across. Thus, it is in my interest not to overload you with
+information.
+
+Generally, whenever there is a single sender of messages, that sender will
+prefer to screen rather than have the receiver screen, because the sender has
+an interest in which messages the receiver processes. But when there are more
+senders, one sender's  messages tend to crowd out the messages of the other
+senders, as in this example here. If the senders don't take this external cost
+into account when sending messages, they may collectively overload the
+receiver. (\sref{architectures})
+
+\end{document}
+%% END semsamp2.tex

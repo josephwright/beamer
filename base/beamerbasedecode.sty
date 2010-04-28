@@ -1,0 +1,259 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\newcount\beamer@slideinframe
+\newcount\beamer@minimum
+\newif\ifbeamer@anotherslide
+\newif\ifbeamer@localanotherslide
+
+\newif\ifbeamer@plusencountered
+
+%
+%
+% Empty test
+%
+%
+\long\def\beamer@ifempty#1{\beamer@xifempty#1@@..\@nil}
+\long\def\beamer@xifempty#1#2@#3#4#5\@nil{%
+  \ifx#3#4\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
+\let\beamer@ifnextchar=\@ifnextchar
+
+\def\beamer@stoptexts{| stop:0| }
+{
+   \catcode`\|=13
+   \catcode`\:=13
+   \catcode`\,=13
+   \catcode`\.=13
+   \catcode`\+=13
+   \catcode`\-=13
+   \catcode`\(=13
+   \catcode`\)=13
+   \catcode`\ =13
+\gdef\beamer@masterdecode#1{% must be called within a group
+\ifnum\catcode`\|=13\edef|{\string|}\fi%
+\ifnum\catcode`\:=13\edef:{\string:}\fi%
+\ifnum\catcode`\,=13\edef,{\string,}\fi%
+\ifnum\catcode`\.=13\edef.{\string.}\fi%
+\ifnum\catcode`\+=13\edef+{\string+}\fi%
+\ifnum\catcode`\-=13\edef-{\string-}\fi%
+\ifnum\catcode`\(=13\edef({\string(}\fi%
+\ifnum\catcode`\)=13\edef){\string)}\fi%
+\ifnum\catcode`\ =13\edef {\string }\fi%
+\edef\beamer@@@temp{#1\beamer@stoptexts}%
+\beamer@localanotherslidefalse%
+\setbox0=\hbox{%
+\expandafter\beamer@decode\beamer@@@temp%
+\ifbeamer@localanotherslide\global\beamer@localanotherslidetrue\fi}%
+}%
+}
+
+% Sets dowhat to doif, if \beamer@slideinframe is in the specified
+% interval. Example: 5-7,-3,9,11,13- would mean pages
+% 1,2,3,5,6,7,9,11,13,14,15,16,...
+%
+% As a side effect, \@another is called whenever the there is a number
+% in the list that is larger than the current serialnumber
+
+\def\beamer@allsign{*}
+
+\def\beamer@decode{%
+  \beamer@plusencounteredfalse%
+  \global\beamer@minimum=10000\relax%
+  \gdef\beamer@decaction{}%
+  \gdef\beamer@decactionrev{}%
+  \global\let\beamer@decodefound=\beamer@allsign%
+  \beamer@@decodefind}
+\def\beamer@@decodefind#1|{%
+  \beamer@ifnextchar\@undefined% get rid of spaces
+  {\beamer@@@decodefind#1:|}{\beamer@@@decodefind#1:|}}
+\def\beamer@@@decodefind#1:#2|{%
+  \beamer@ifempty{#2}%
+  {\beamer@decodefind beamer:#1:}%
+  {\beamer@decodefind #1:#2}}
+
+
+\def\beamer@default{default}
+\def\beamer@articlemode{article}
+\def\beamer@secondmode{second}
+\def\beamer@beamermode{beamer}
+\def\beamer@presentationmode{presentation}
+\def\beamer@modeall{all}
+\def\beamer@ovmodestop{stop}
+\def\beamer@decodefind#1:#2:{%
+  \def\beamer@ovmode{#1}%
+  \beameratdecodeaction{#2}%
+  \expandafter\futurelet\expandafter\next\expandafter\beamer@checkcat\beamer@spec:%
+  \expandafter\beamer@decodeplus\beamer@spec+:%
+  \expandafter\beamer@decodedot\beamer@spec.:%
+  \ifx\beamer@ovmode\beamer@ovmodestop%
+    \expandafter\beamer@@decode\beamer@decodefound,!%
+    \let\beamer@next=\relax%
+    \ifbeamer@plusencountered\global\advance\c@beamerpauses by1\relax\fi%
+  \else
+    \ifx\beamer@ovmode\beamer@currentmode%
+      \beamer@@decodefound%
+    \else%
+      \ifx\beamer@ovmode\beamer@modeall%
+        \beamer@@decodefound%
+      \else%
+        \ifx\beamer@ovmode\beamer@presentationmode%
+          \ifx\beamer@currentmode\beamer@articlemode%
+          \else%
+            \beamer@@decodefound%
+          \fi%
+        \else%
+          \ifx\beamer@ovmode\beamer@beamermode%
+            \ifx\beamer@currentmode\beamer@secondmode%
+              \beamer@@decodefound%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi%
+    \let\beamer@next=\beamer@@decodefind%
+  \fi%
+ \beamer@next}
+
+\def\beamer@checkcat#1:{%
+  \ifcat\next a%
+    \gdef\beamer@ovmode{#1}%
+    \ifx\beamer@decodefound\beamer@allsign
+      \gdef\beamer@decodefound{0}%
+    \fi%
+    \gdef\beamer@spec{1-}%
+  \fi%
+  }
+
+\def\beamer@@decodefound{%
+  \ifx\beamer@action\beamer@default%
+    \expandafter\gdef\expandafter\beamer@decodefound\expandafter{\beamer@spec}%
+  \else
+    \xdef\beamer@decaction{\beamer@decaction{\beamer@action<\beamer@spec>}}
+    \xdef\beamer@decactionrev{{\beamer@action}\beamer@decactionrev}
+  \fi}
+\def\beamer@currentaction{default}
+
+{
+\makeatother
+\gdef\beameratdecodeaction#1{%
+  \beameratdecodeactionb#1@:}
+\gdef\beameratdecodeactionb#1@#2:{%
+  \beameratdecodeactionc{#1}{#2}}
+\gdef\beameratgetridofat#1@{%
+  \gdef\beameratspec{#1}%
+}
+}
+
+\def\beameratdecodeactionc#1#2{%
+  \gdef\beamer@spec{#2}%
+  \ifx\beamer@spec\@empty%
+    \xdef\beamer@spec{#1}%
+    \gdef\beamer@action{default}%
+  \else%
+    \xdef\beamer@action{#1}%
+    \beameratgetridofat#2%
+    \xdef\beamer@spec{\beameratspec}
+  \fi%
+}
+
+\def\beamer@decodeplus{%
+  \def\beamer@spec{}\beamer@@decodeplus}
+\def\beamer@@decodeplus#1+#2:{%
+  \edef\beamer@spec{\beamer@spec#1}% everything up to first +
+  \beamer@ifempty{#2}{}
+  {% ok, check if followed by number:
+    \beamer@plusencounteredtrue%
+    \beamer@@@decodeplus#2:}}
+\def\beamer@@@decodeplus{%
+  \beamer@ifnextchar({\beamer@relnumber}{\beamer@relnumber(0)}}
+\def\beamer@relnumber(#1){%
+  \beamer@plusencounteredtrue%
+  \beamer@tempcount={#1}\relax
+  \advance\beamer@tempcount by\c@beamerpauses\relax%
+  \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
+  \beamer@@decodeplus}
+
+\def\beamer@decodedot{%
+  \def\beamer@spec{}\beamer@@decodedot}
+\def\beamer@@decodedot#1.#2:{%
+  \edef\beamer@spec{\beamer@spec#1}% everything up to first .
+  \beamer@ifempty{#2}{}{\beamer@@@decodedot#2:}}
+\def\beamer@@@decodedot{%
+  \beamer@ifnextchar({\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
+\def\beamer@relnumberdot(#1){%
+  \beamer@tempcount={#1}\relax
+  \advance\beamer@tempcount by\c@beamerpauses\relax%
+  \advance\beamer@tempcount by-1\relax%
+  \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
+  \beamer@@decodedot}
+
+\def\beamer@doifnotinframe{}
+\def\beamer@@decode{%
+  \beamer@ifnextchar!%
+  {\beamer@decodeend}%
+  {%
+    \beamer@ifnextchar*%
+    {\beamer@decodeall}{%
+      \beamer@ifnextchar-%
+      {\beamer@decodeuntil}%
+      {\beamer@decodenumber}}}}
+\def\beamer@decodeend!{}
+\def\beamer@decodeall*,{%
+  \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
+  \ifnum1>\beamer@slideinframe%
+  \global\beamer@anotherslidetrue%
+  \beamer@localanotherslidetrue%
+  \fi%
+  \gdef\beamer@doifnotinframe{\beamer@doifinframe}\beamer@@decode}
+\def\beamer@decodeuntil-#1,{%
+  \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum\beamer@slideinframe>#1\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
+  \beamer@@decode}
+\def\beamer@decodenumber#1{%
+  \beamer@ifnextchar,%
+  {\beamer@decodeone{#1}}%
+  {\beamer@ifnextchar-%
+    {\beamer@decodenumberto{#1}}%
+    {\beamer@decodegobble{#1}}}}
+\def\beamer@decodegobble#1#2{%
+  \beamer@decodenumber{#1#2}}
+\def\beamer@decodenumberto#1-{
+  \beamer@ifnextchar,%
+  {\beamer@decodeto{#1}}%
+  {\beamer@decodebetween{#1}}}
+\def\beamer@decodeto#1,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum={#1}\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
+  \beamer@@decode}
+\def\beamer@decodebetween#1#2,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum={#1}\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#2>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\else\ifnum#2<\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi\fi%
+  \beamer@@decode}
+\def\beamer@decodeone#1,{%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum={#1}\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1=\beamer@slideinframe\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
+  \beamer@@decode}
+
+\def\beamer@donow{\beamer@doifnotinframe}
+
+\def\beamer@saveanother{\let\beamer@savedif=\ifbeamer@anotherslide}
+\def\beamer@restoreanother{\global\let\ifbeamer@anotherslide=\beamer@savedif}
+
+
+
+
+

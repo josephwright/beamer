@@ -1,0 +1,233 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+
+% Common packages
+
+\usepackage[german]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\mode<article>
+{
+  \usepackage{times}
+  \usepackage{mathptmx}
+  \usepackage[left=1.5cm,right=6cm,top=1.5cm,bottom=3cm]{geometry}
+}
+
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{colortbl}
+\usepackage{yfonts}
+\usepackage{colortbl}
+\usepackage{translator} % comment this, if not available
+
+
+% Common settings for all lectures in this course
+
+\def\lecturename{Logik für Informatiker}
+
+\title{\insertlecture}
+
+\author{Till Tantau}
+
+\institute
+{
+  Institut für Theoretische Informatik\\
+  Universität zu Lübeck
+}
+
+\subject{Vorlesung \lecturename}
+
+
+
+
+% Beamer version theme settings
+
+\useoutertheme[height=0pt,width=2cm,right]{sidebar}
+\usecolortheme{rose,sidebartab}
+\useinnertheme{circles}
+\usefonttheme[only large]{structurebold}
+
+\setbeamercolor{sidebar right}{bg=black!15}
+\setbeamercolor{structure}{fg=blue}
+\setbeamercolor{author}{parent=structure}
+
+\setbeamerfont{title}{series=\normalfont,size=\LARGE}
+\setbeamerfont{title in sidebar}{series=\bfseries}
+\setbeamerfont{author in sidebar}{series=\bfseries}
+\setbeamerfont*{item}{series=}
+\setbeamerfont{frametitle}{size=}
+\setbeamerfont{block title}{size=\small}
+\setbeamerfont{subtitle}{size=\normalsize,series=\normalfont}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{bibliography item}[book]
+\setbeamertemplate{sidebar right}
+{
+  {\usebeamerfont{title in sidebar}%
+    \vskip1.5em%
+    \hskip3pt%
+    \usebeamercolor[fg]{title in sidebar}%
+    \insertshorttitle[width=2cm-6pt,center,respectlinebreaks]\par%
+    \vskip1.25em%
+  }%
+  {%
+    \hskip3pt%
+    \usebeamercolor[fg]{author in sidebar}%
+    \usebeamerfont{author in sidebar}%
+    \insertshortauthor[width=2cm-2pt,center,respectlinebreaks]\par%
+    \vskip1.25em%
+  }%
+  \hbox to2cm{\hss\insertlogo\hss}
+  \vskip1.25em%
+  \insertverticalnavigation{2cm}%
+  \vfill
+  \hbox to 2cm{\hfill\usebeamerfont{subsection in
+      sidebar}\strut\usebeamercolor[fg]{subsection in
+      sidebar}\insertshortlecture.\insertframenumber\hskip5pt}%
+  \vskip3pt%
+}%
+
+\setbeamertemplate{title page}
+{
+  \vbox{}
+  \vskip1em
+  {\huge Kapitel \insertshortlecture\par}
+  {\usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle\par}%
+  \ifx\insertsubtitle\@empty%
+  \else%
+    \vskip0.25em%
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+  \fi%     
+  \vskip1em\par
+  Vorlesung \emph{\lecturename}\ vom \insertdate\par
+  \vskip0pt plus1filll
+  \leftskip=0pt plus1fill\insertauthor\par
+  \insertinstitute\vskip1em
+}
+
+\logo{\includegraphics[width=2cm]{beamerexample-lecture-logo.pdf}}
+
+
+
+% Article version layout settings
+
+\mode<article>
+
+\makeatletter
+\def\@listI{\leftmargin\leftmargini
+  \parsep 0pt
+  \topsep 5\p@   \@plus3\p@ \@minus5\p@
+  \itemsep0pt}
+\let\@listi=\@listI
+
+
+\setbeamertemplate{frametitle}{\paragraph*{\insertframetitle\
+    \ \small\insertframesubtitle}\ \par
+}
+\setbeamertemplate{frame end}{%
+  \marginpar{\scriptsize\hbox to 1cm{\sffamily%
+      \hfill\strut\insertshortlecture.\insertframenumber}\hrule height .2pt}}
+\setlength{\marginparwidth}{1cm}
+\setlength{\marginparsep}{4.5cm}
+
+\def\@maketitle{\makechapter}
+
+\def\makechapter{
+  \newpage
+  \null
+  \vskip 2em%
+  {%
+    \parindent=0pt
+    \raggedright
+    \sffamily
+    \vskip8pt
+    {\fontsize{36pt}{36pt}\selectfont Kapitel \insertshortlecture \par\vskip2pt}
+    {\fontsize{24pt}{28pt}\selectfont \color{blue!50!black} \insertlecture\par\vskip4pt}
+    {\Large\selectfont \color{blue!50!black} \insertsubtitle\par}
+    \vskip10pt
+
+    \normalsize\selectfont Druckfassung der
+    Vorlesung \emph{\lecturename} vom \@date\par\vskip1.5em
+    \hfill Till Tantau, Institut für Theoretische Informatik, Universität zu Lübeck
+  }
+  \par
+  \vskip 1.5em%
+}
+
+\let\origstartsection=\@startsection
+\def\@startsection#1#2#3#4#5#6{%
+  \origstartsection{#1}{#2}{#3}{#4}{#5}{#6\normalfont\sffamily\color{blue!50!black}\selectfont}}
+
+\makeatother
+
+\mode
+<all>
+
+
+
+
+% Typesetting Listings
+
+\usepackage{listings}
+\lstset{language=Java}
+
+\alt<presentation>
+{\lstset{%
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\slshape\color{green!50!black},
+  keywordstyle=\bfseries\color{blue!50!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  escapechar=\#,
+  emphstyle=\color{red}}
+}
+{
+  \lstset{%
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    escapechar=\#,
+    emphstyle=\bfseries\color{red}
+  }
+}
+
+
+
+% Common theorem-like environments
+
+\theoremstyle{definition}
+\newtheorem{exercise}[theorem]{\translate{Exercise}}
+
+
+
+
+% New useful definitions:
+
+\newbox\mytempbox
+\newdimen\mytempdimen
+
+\newcommand\includegraphicscopyright[3][]{%
+  \leavevmode\vbox{\vskip3pt\raggedright\setbox\mytempbox=\hbox{\includegraphics[#1]{#2}}%
+    \mytempdimen=\wd\mytempbox\box\mytempbox\par\vskip1pt%
+    \fontsize{3}{3.5}\selectfont{\color{black!25}{\vbox{\hsize=\mytempdimen#3}}}\vskip3pt%
+}}
+
+\newenvironment{colortabular}[1]{\medskip\rowcolors[]{1}{blue!20}{blue!10}\tabular{#1}\rowcolor{blue!40}}{\endtabular\medskip}
+
+\def\equad{\leavevmode\hbox{}\quad}
+
+\newenvironment{greencolortabular}[1]
+{\medskip\rowcolors[]{1}{green!50!black!20}{green!50!black!10}%
+  \tabular{#1}\rowcolor{green!50!black!40}}%
+{\endtabular\medskip}
+
+
+

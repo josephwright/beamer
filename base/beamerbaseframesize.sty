@@ -1,0 +1,272 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode<presentation>
+
+
+\define@key{beamerframe}{allowdisplaybreaks}[4]{%
+  \def\beamer@displaybreak{\allowdisplaybreaks[{#1}]}}
+\define@key{beamerframe}{allowframebreaks}[0.95]{%
+  \def\beamer@autobreakfactor{#1}\beamer@autobreaktrue}
+\define@key{beamerframe}{squeeze}[]{%
+  \def\beamer@cramped{\itemsep0pt\topsep0.5pt\relax}}
+\define@key{beamerframe}{shrink}[0]{%
+  \def\beamer@shrinkpercentage{#1}%
+  \@tempdima=-#1pt%
+  \@tempdima=0.01\@tempdima%
+  \advance\@tempdima by1pt%
+  \edef\beamer@shrinkfactor{\strip@pt\@tempdima}%
+  \@tempcnta=\@tempdima%
+  \divide\@tempcnta by256\relax%
+  \@tempdima=256pt%
+  \divide\@tempdima by\@tempcnta%
+  \edef\beamer@shrinkfactorinv{\strip@pt\@tempdima}%
+  \beamer@shrinktrue%
+  \def\beamer@cramped{\itemsep0pt\topsep0.5pt\relax}}
+
+
+%
+% Zoom stuff
+%
+
+\define@key{beamerzoom}{border}[1]{\def\beamer@zoomborderwidth{#1}}
+
+\def\framezoom<#1><#2>{\@ifnextchar[{\beamer@framezoom<#1><#2>}{\beamer@framezoom<#1><#2>[]}}
+\def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){%
+  \par\nointerlineskip%
+  \global\beamer@slidehaszoomtrue%
+  \advance\beamer@zoomcount by1\relax%
+  \def\beamer@zoomborderwidth{0}%
+  \edef\beamer@labelzoomed{beamer@labelzoomed@\the\beamer@zoomframecount @\the\beamer@zoomcount}%
+  \setkeys{beamerzoom}{#3}%
+  \only<#1>{%
+    {\hypersetup{pdfhighlight={/P},pdfborder={0 0 \beamer@zoomborderwidth}}%
+    \global\setbox\@tempboxa=\vbox{\hyperlink{\beamer@labelzoomed}{\vbox to #7{\hbox
+          to#6{\hfil}\vfil}}}}%
+    \ht\@tempboxa=0pt%
+    \wd\@tempboxa=0pt%
+    \dp\@tempboxa=0pt%
+    \setbox\@tempboxa=\vbox{\moveright#4\hbox{\lower#5\vbox{\box\@tempboxa}}}%
+    \ht\@tempboxa=0pt%
+    \wd\@tempboxa=0pt%
+    \dp\@tempboxa=0pt%
+    \global\setbox\beamer@zoombox=\vbox to0pt{\unvbox\beamer@zoombox\box\@tempboxa}%
+  }%
+  \only<#2>{%
+    \@ifundefined{\beamer@labelzoomed}%
+    {%
+      \hypertarget{\beamer@labelzoomed}{}%
+      \expandafter\gdef\csname\beamer@labelzoomed\endcsname{}%
+    }{}%
+    \gdef\beamer@zoomer{%
+      % compute zoom factor
+      \@tempdima=\beamer@frametextheight%
+      \@tempdimb={#7}\relax%
+      \@tempcnta=\@tempdimb%
+      \divide\@tempcnta by4096\relax%
+      \multiply\@tempdima by16\relax%
+      \divide\@tempdima by\@tempcnta%
+      \@tempdimb=\paperwidth%
+      \ifbeamer@plainframe%
+      \else%
+        \advance\@tempdimb by-\beamer@leftsidebar%
+        \advance\@tempdimb by-\beamer@rightsidebar\relax%
+      \fi%
+      \@tempdimc={#6}\relax%
+      \@tempcntb=\@tempdimc%
+      \divide\@tempcntb by4096\relax%
+      \multiply\@tempdimb by16\relax%
+      \divide\@tempdimb by\@tempcntb%
+      \ifdim\@tempdimb<\@tempdima%
+        \@tempdima=\@tempdimb%
+      \fi%
+      \edef\beamer@temp{\strip@pt\@tempdima}%
+      \@tempdimc=\beamer@frametextheight%
+      \advance\@tempdimc by4pt%
+      \@tempdimb=\paperwidth%
+      \ifbeamer@plainframe%
+      \else%
+        \advance\@tempdimb by-\beamer@leftsidebar%
+        \advance\@tempdimb by-\beamer@rightsidebar\relax%
+      \fi%
+      \setbox\@tempboxa=\vbox{\hsize=\@tempdimb\Acrobatmenu{GoBack}{\vbox to
+          \beamer@frametextheight{\hbox to\@tempdimb{\hfil}\vfil}}}%
+      \ht\@tempboxa=0pt%
+      \wd\@tempboxa=0pt%
+      \dp\@tempboxa=0pt%
+      \setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
+          \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
+          \begin{pgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
+            \pgftext[left,top]{\box\@tempboxa}
+            \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%
+            \pgfusepath{clip}
+            \begingroup
+              \pgftransformscale{\beamer@temp}
+              \@tempdima={#4}\relax%
+              \@tempdimb={#5}\relax%
+              {\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}%
+              \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}}
+            \endgroup
+          \end{pgfpicture}%
+        }}%
+      \setbox\beamer@framebox=\vbox{%
+        \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+        \nointerlineskip\unvbox\beamer@frametitlebox%
+        \nobreak%
+        \box\beamer@framebox%
+        \nobreak%
+        \vss%
+        \beamer@exitcode%
+      }%
+      \global\setbox\beamer@footins=\box\voidb@x% no footnotes in zoomed slides
+    }%
+  }%
+}
+
+\mode
+<article>
+{
+  \def\framezoom<#1><#2>{\@ifnextchar[{\beamer@framezoom<#1><#2>}{\beamer@framezoom<#1><#2>[]}}
+  \def\beamer@framezoom<#1><#2>[#3](#4,#5)(#6,#7){}
+}
+
+
+%
+% Shrink stuff
+%
+
+\def\beamer@shrinkframebox{%
+  \@tempdima=\ht\beamer@framebox%
+%  \ifdim\@tempdima>\beamer@frametextheight%
+    \@tempcnta=\@tempdima%
+    \divide\@tempcnta by 65536\relax%
+    \@tempdimc=\beamer@frametextheight%
+    \divide\@tempdimc by\@tempcnta\relax%
+    \ifdim\@tempdimc>\beamer@shrinkfactor pt%
+      \@tempdimc=\beamer@shrinkfactor pt%
+    \else%
+      \@tempdima=-100\@tempdimc%
+      \advance\@tempdima by100pt%
+      \ClassWarning{beamer}{Frame text is shrunk by a factor of %
+      \strip@pt\@tempdima\space percent instead of
+      \beamer@shrinkpercentage\space percent}%
+    \fi%
+    \edef\beamer@factortemp{\strip@pt\@tempdimc}%
+    \setbox\beamer@framebox=\vbox to\beamer@frametextheight{%
+      \begin{pgfpicture}{0pt}{-\beamer@frametextheight}{0pt}{0pt}
+        {\pgftransformscale{\beamer@factortemp}%
+          \pgftext[left,top]{\box\beamer@framebox}}%
+      \end{pgfpicture}%
+    }%
+%  \fi%
+}
+
+
+
+%
+% Auto break stuff
+%
+
+\splittopskip=10pt
+\newbox\beamer@splitbox
+\newcount\beamer@autobreakcount
+\newdimen\beamer@autobreaklastheight
+
+\def\beamer@autobreakframe{%
+  \beamer@slideinframe=1\relax%
+  \advance\beamer@autobreakcount by1\relax%
+  \begin{beamer@frameslide}\relax%
+    \bgroup%
+    \aftergroup\beamer@endautobreak%
+    \afterassignment\beamer@checkframetitle%
+    \let\beamer@next% gobble opening brace
+  }
+\def\beamer@endautobreak{\end{beamer@frameslide}%
+  \beamer@writeslidentry%
+  \ifvoid\beamer@splitbox%
+    \let\beamer@next=\beamer@reseteecodes%
+  \else%
+    \let\beamer@next=\beamer@continueautobreak%
+  \fi%
+  \beamer@next%
+}
+
+\def\beamer@autobreakframebox{%
+  \global\setbox\beamer@splitbox=\box\voidb@x%
+  \ifbeamer@autobreak%
+    % Ok, frame was overful -> split it!
+    \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
+    \global\setbox\beamer@splitbox=\box\beamer@framebox%
+    \@tempdima=\ht\beamer@splitbox%
+    \ifdim\@tempdima<\beamer@autobreaklastheight%
+      \global\beamer@autobreaklastheight=\@tempdima\relax%
+    \else%
+      \setbox\@tempboxa=\vbox{\unvbox\@tempboxa\unvbox\beamer@splitbox}%
+      \global\setbox\beamer@splitbox=\box\voidb@x%
+    \fi%
+    \setbox\beamer@framebox=\vbox to\textheight{\unvbox\@tempboxa%
+      \vskip\beamer@framebottomskipautobreak%
+      \ifvoid\beamer@splitbox%
+        \ifvoid\beamer@footins%
+        \else%
+          \usebeamercolor*[fg]{footnote}%
+          \footnoterule%
+          \unvbox \beamer@footins%
+          \global\setbox\beamer@footins=\box\voidb@x%
+        \fi%
+      \fi%
+      \beamer@exitcode%
+    }%
+  \else%
+    \setbox\beamer@framebox=\vbox to\textheight{\unvbox\beamer@framebox%
+      \vskip\beamer@framebottomskip%
+      \ifvoid\beamer@footins%
+      \else%
+        \usebeamercolor*[fg]{footnote}%
+        \footnoterule%
+        \unvbox \beamer@footins%
+        \global\setbox\beamer@footins=\box\voidb@x%
+      \fi%
+      \beamer@exitcode}%
+    \global\setbox\beamer@footins=\box\voidb@x%
+  \fi%
+  }
+
+\newtoks\beamer@frametitletoks
+\newtoks\beamer@framesubtitletoks
+
+\def\beamer@continueautobreak{%
+  \refstepcounter{framenumber}%
+  \expandafter\beamer@frametitletoks\expandafter{\beamer@frametitle}%
+  \expandafter\beamer@framesubtitletoks\expandafter{\beamer@shortframetitle}%
+  \edef\beamer@callframetitle{\noexpand\frametitle[\the\beamer@framesubtitletoks]{\the\beamer@frametitletoks}}%
+  \expandafter\expandafter\expandafter\beamer@autobreakframe
+  \expandafter\expandafter\expandafter{%
+    \expandafter\beamer@callframetitle%
+    \expandafter\framesubtitle\expandafter{\insertframesubtitle}%
+    \unvbox\beamer@splitbox}%
+}
+
+
+\newcommand\insertcontinuationcount{\the\beamer@autobreakcount}
+\newcommand\insertcontinuationcountroman{\@Roman\beamer@autobreakcount}
+\newcommand\insertcontinuationtext{(cont.)}
+
+
+
+
+
+\mode
+<all>
+% End in common mode
+
+

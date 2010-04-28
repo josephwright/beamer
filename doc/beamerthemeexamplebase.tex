@@ -1,0 +1,56 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\beamertemplatesolidbackgroundcolor{black!5}
+\beamertemplatetransparentcovered
+
+\usepackage{times}
+
+\title{There Is No Largest Prime Number}
+\subtitle{With an introduction to a new proof technique}
+
+\author[Euklid]{Euklid of Alexandria}
+\institute[Univ. Alexandria]{Department of Mathematics\\ University of Alexandria}
+\date[ISPN '80]{27th International Symposium on Prime Numbers, --280}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \tableofcontents
+\end{frame}
+
+\section{Results}
+\subsection{Proof of the Main Theorem}
+
+\begin{frame}<1>
+  \frametitle{There Is No Largest Prime Number}
+  \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+
+  \begin{theorem}
+    There is no largest prime number.
+  \end{theorem}
+  \begin{proof}
+    \begin{enumerate}
+      % The strange way of typesetting math is to minimize font usage
+      % in order to keep the file sizes of the examples small.
+    \item<1-| alert@1> Suppose $p$ were the largest prime number.
+    \item<2-> Let $q$ be the product of the first $p$ numbers.
+    \item<3-> Then $q$\;+\,$1$ is not divisible by any of them.
+    \item<1-> Thus $q$\;+\,$1$ is also prime and greater than $p$.\qedhere
+    \end{enumerate}
+  \end{proof}
+\end{frame}
+
+\end{document}
+
+

@@ -1,0 +1,41 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\renewcommand{\exerSolnInput}
+{%
+    \let\webnewpage=\relax
+    \immediate\closeout\ex@solns
+    \ifeq@nosolutions\else
+        \iftherearesolutions%
+            \eqsolutionshook
+            \input{\jobname.sol}%
+        \fi
+    \fi
+}
+\renewcommand{\quizSolnInput}
+{%
+    \let\webnewpage=\relax
+    \immediate\closeout\quiz@solns
+    \ifeq@noquizsolutions\else
+        \iftherearequizsolutions%
+            \input{\jobname.qsl}%
+        \fi
+    \fi
+}
+\def\eqEXt{\frame[containsverbatim]\bgroup}
+\def\endeqEXt{\egroup}
+\def\eqSQt{\frame[containsverbatim]\bgroup}
+\def\endeqSQt{\egroup}
+\def\eqQt{\frame[containsverbatim]\bgroup}
+\def\endeqQt{\egroup}
+
+

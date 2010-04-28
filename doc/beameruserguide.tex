@@ -1,0 +1,262 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\documentclass{ltxdoc}
+
+\def\version{3.07}
+\def\pgfversion{1.00}
+\def\xcolorversion{2.00}
+
+\usepackage{pgf,xcolor}
+\usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[pdfborder={0 0 0},bookmarksnumbered]{hyperref}
+\usepackage[latin1]{inputenc}
+\usepackage{pifont}
+\usepackage{makeidx}
+
+\input{beamerug-macros}
+
+\makeindex
+
+%\includeonly{beamerug-introduction}
+
+\begin{document}
+
+{
+  \parindent0pt
+\vbox{}
+\vskip 3.5cm
+\Huge
+The \textsc{beamer} \textit{class}
+
+\Large
+Manual for version \version.
+\vskip 3cm
+
+\normalsize
+\begin{verbatim}
+\begin{frame}
+  \frametitle{There Is No Largest Prime Number}
+  \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+  \begin{theorem}
+    There is no largest prime number.
+  \end{theorem}
+  \begin{proof}
+    \begin{enumerate}
+    \item<1-| alert@1> Suppose $p$ were the largest prime number.
+    \item<2-> Let $q$ be the product of the first $p$ numbers.
+    \item<3-> Then $q+1$ is not divisible by any of them.
+    \item<1-> Thus $q+1$ is also prime and greater than $p$.\qedhere
+    \end{enumerate}
+  \end{proof}
+\end{frame}
+\end{verbatim}
+\pgfimage[width=.45\textwidth,page=2]{beamerugthemePittsburgh}\qquad\pgfimage[width=.45\textwidth,page=2]{beamerugthemeFrankfurt}
+\vskip 0cm plus 1.5fill
+\vbox{}
+\clearpage
+}
+
+{
+  \vbox{}
+  \vskip0pt plus 1fill
+  Für alle, die die Schönheit von Wissenschaft anderen zeigen wollen.
+  \vskip0pt plus 3fill
+
+  \parindent=0pt
+  Copyright 2007 by Till Tantau
+
+  \medskip
+  Permission is granted to copy, distribute and/or modify \emph{the documentation}
+  under the terms of the \textsc{gnu} Free Documentation License, Version 1.2
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+  A copy of the license is included in the section entitled \textsc{gnu}
+  Free Documentation License.
+
+  \medskip
+  Permission is granted to copy, distribute and/or modify \emph{the
+    code of the package} under the terms of the \textsc{gnu} Public License, Version 2
+  or any later version published by the Free Software Foundation.
+  A copy of the license is included in the section entitled \textsc{gnu}
+  Public License.
+
+  \medskip
+  Permission is also granted to distribute and/or modify \emph{both
+    the documentation and the code} under the conditions of the LaTeX
+  Project Public License, either version 1.3 of this license or (at
+  your option) any later version. A copy of the license is included in
+  the section entitled \LaTeX\ Project Public License.
+
+  \vbox{}
+  \clearpage
+}
+
+\index{Themes|see{Presentation themes}}
+\index{Templates|see{Beamer templates}}
+\index{Colors|see{Beamer colors}}
+\index{Fonts|see{Beamer fonts}}
+\index{Beamer elements|see{Beamer templates, colors, and fonts}}
+\index{Elements|see{Beamer templates, colors, and fonts}}
+\index{Template inserts|see{Inserts}}
+
+\title{User Guide to the Beamer Class, Version \version\\
+\Large\href{http://latex-beamer.sourceforge.net}{\texttt{http://latex-beamer.sourceforge.net}}}
+\author{Till Tantau\\
+  \href{mailto:tantau@users.sourceforge.net}{\texttt{tantau@users.sourceforge.net}}}
+
+\maketitle
+
+\tableofcontents
+
+
+\include{beamerug-introduction}
+
+
+
+\part{Getting Started}
+
+This part helps you getting started. It starts with an explanation of
+how to install the class. Hopefully, this will be very simple, with a
+bit of luck the whole class is already correctly installed! You will
+also find an explanation of special things you should consider when
+using certain other packages.
+
+Next, a short tutorial is given that explains most of the features
+that you'll need in a typical presentation. Following the tutorial you
+will find a ``possible workflow'' for creating a
+presentation. Following this workflow may help you avoid problems
+later on.
+
+This part includes a guidelines sections. Following these guidelines
+can help you create good presentations (no guarantees, though). This
+guideline section is kept as general as possible; most what is said in
+that section applies to presentations in general, independently of
+whether they have been created using \beamer\ or not.
+
+At the end of this part you will find a summary of the solutions
+templates that come with \beamer. You can use solutions templates to
+kick-start the creation of your presentation.
+
+\include{beamerug-installation}
+\include{beamerug-tutorial}
+\include{beamerug-workflow}
+\include{beamerug-guidelines}
+\include{beamerug-solutions}
+\include{beamerug-license}
+
+
+
+\part{Building a Presentation}
+
+This part contains an explanation of all the commands that are used to
+create presentations. It starts with a section treating the commands
+and environments used to create \emph{frames}, the basic building
+blocks of presentations. Next, the creation of overlays is
+explained.
+
+The following three sections concern commands and methods
+of \emph{structuring} a presentation. In order, the \emph{static
+  global} structure, the \emph{interactive global} structure, and the
+\emph{local} structure are treated.
+
+Two further sections treat graphics and animations. Much of the
+material in these sections applies to other packages as well, not just
+to \beamer.
+
+\include{beamerug-frames}
+\include{beamerug-overlays}
+\include{beamerug-globalstructure}
+\include{beamerug-interaction}
+\include{beamerug-localstructure}
+\include{beamerug-graphics}
+\include{beamerug-animations}
+
+
+
+
+\part{Changing the Way Things Look}
+
+\beamer\ offers ways to change the appearance of an appearance at all
+levels of detail. On the top level, \emph{themes} can be used to
+globally change the appearance conveniently. On the bottom level,
+\emph{templates} allow you to specify the appearance of every minute
+detail individually.
+
+Two important aspects of the ``appearance'' of a presentation are
+treated in extra sections: colors and fonts. Here, too, color and
+font themes can be used to globally change the colors or fonts used in
+a presentation, while you can still change the color or font of, say,
+block titles independently of everything else.
+
+\include{beamerug-themes}
+\include{beamerug-elements}
+\include{beamerug-color}
+\include{beamerug-fonts}
+
+
+
+
+\part{Creating Supporting Material}
+
+The objective of the \beamer\ class is to simplify the creation of
+presentations using a projector. However, a presentation rarely exists
+in isolation. Material that accompanies a presentation includes:
+\begin{itemize}
+\item
+  Presentations should normally be accompanied by
+  \emph{handouts}, written text that the audience can read during
+  and/or after your presentation is given.
+\item
+  You might wish to create notes for yourself that, ideally, are shown
+  to you on your computer screen while the audience sees the
+  presentation.
+\item
+  You might wish to create a printout of your talk, either for
+  yourself for checking for errors.
+\item
+  You might wish to create a transparancies version of your talk as a
+  fall-back.
+\end{itemize}
+
+This part dicusses how \beamer\ helps you with the creation of the
+above.
+
+
+\include{beamerug-notes}
+\include{beamerug-transparancies}
+\include{beamerug-nonpresentation}
+\include{beamerug-twoscreens}
+
+
+
+
+\part{Howtos}
+
+This part contains explanations-of-how-to-do-things (commonly known as
+\emph{howtos}). These explanations are not really part of the
+``\beamer\ core.'' Rather, they explain how to use \beamer\ to achieve
+a certain effect or how get something special done.
+
+The first howto is about tricky uncovering situations.
+
+The second howto explains how you can import (parts or) presentations
+created using some other \LaTeX-presentation class, like \prosper.
+
+\include{beamerug-tricks}
+\include{beamerug-emulation}
+
+
+\printindex
+
+\end{document}

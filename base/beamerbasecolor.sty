@@ -1,0 +1,399 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode<presentation>
+
+%
+% Color theme stuff
+%
+
+\define@key{beamerthc}{fg}
+  {\expandafter\def\csname beamer@thcfg@\beamer@temp\endcsname{\def\beamer@thc@fg{#1}}}
+\define@key{beamerthc}{bg}
+  {\expandafter\def\csname beamer@thcbg@\beamer@temp\endcsname{\def\beamer@thc@bg{#1}}}
+\define@key{beamerthc}{parent}
+  {\expandafter\def\csname beamer@thcinherits@\beamer@temp\endcsname{%
+    \@for\@temp:={#1}\do{\expandafter\beamer@thc@docolor\expandafter{\@temp}}}}
+\define@key{beamerthc}{use}
+  {\expandafter\def\csname beamer@thcuse@\beamer@temp\endcsname{%
+    \@for\@temp:={#1}\do{\expandafter\beamer@thc@usecolor\expandafter{\@temp}}}}
+
+\def\beamer@thc@prepcolor{%
+  \let\beamer@thc@fg=\@empty%
+  \let\beamer@thc@bg=\@empty%
+}
+
+\def\beamer@thc@docolor#1{%
+  \csname beamer@thcuse@#1\endcsname%
+  \csname beamer@thcinherits@#1\endcsname%
+  \csname beamer@thcfg@#1\endcsname%
+  \csname beamer@thcbg@#1\endcsname%
+}
+
+\def\beamer@thc@usecolor#1{%
+  \begingroup%
+    \beamer@thc@prepcolor%
+    \beamer@thc@docolor{#1}%
+    \ifx\beamer@thc@fg\@empty\def\beamer@thc@fg{fg}\fi%
+    \ifx\beamer@thc@bg\@empty\def\beamer@thc@bg{bg}\fi%
+    \global\let\beamer@thc@gfg\beamer@thc@fg%
+    \global\let\beamer@thc@gbg\beamer@thc@bg%
+    \globalcolorstrue%
+    \colorlet{#1.fg}{\beamer@thc@gfg}%
+    \colorlet{#1.bg}{\beamer@thc@gbg}%
+  \endgroup%
+}
+
+\def\setbeamercolor{\@ifstar{\beamer@clearbeamercolor}{\beamer@setbeamercolor}}
+
+\newcommand\beamer@clearbeamercolor[2]{%
+  \def\beamer@temp{#1}%
+  \expandafter\let\csname beamer@thcfg@#1\endcsname=\relax%
+  \expandafter\let\csname beamer@thcbg@#1\endcsname=\relax%
+  \setkeys{beamerthc}{use={},parent={}}%
+  \setkeys{beamerthc}{#2}%
+}
+\newcommand\beamer@setbeamercolor[2]{%
+  \def\beamer@temp{#1}%
+  \setkeys{beamerthc}{#2}%
+}
+
+\newcommand\ifbeamercolorempty[2][]{%
+  \beamer@thc@prepcolor%
+  \beamer@thc@docolor{#2}%
+  \expandafter\ifx\csname beamer@thc@#1\endcsname\@empty%
+    \expandafter\@firstoftwo%
+  \else%
+    \expandafter\@secondoftwo%
+  \fi%
+}
+
+
+\def\usebeamercolor{\@ifstar{\beamer@usebeamercolor[fg]{normal text}\beamer@usebeamercolor}{\beamer@usebeamercolor}}
+\newcommand\beamer@usebeamercolor[2][]{%
+  \beamer@thc@prepcolor%
+  \beamer@thc@docolor{#2}%
+  \ifx\beamer@thc@fg\@empty%
+    \@namelet{\string\color@ temp@fg}{\string\color@ fg}%
+  \else%
+    \colorlet{temp@fg}{\csname beamer@thc@fg\endcsname}%
+  \fi%
+  \ifx\beamer@thc@bg\@empty%
+    \@namelet{\string\color@ temp@bg}{\string\color@ bg}%
+  \else%
+    \colorlet{temp@bg}{\csname beamer@thc@bg\endcsname}%
+  \fi%
+  \@namelet{\string\color@ parent.fg}{\string\color@ fg}%
+  \@namelet{\string\color@ parent.bg}{\string\color@ bg}%
+  \@namelet{\string\color@ fg}{\string\color@ temp@fg}%
+  \@namelet{\string\color@ bg}{\string\color@ temp@bg}%
+  \begingroup%
+    \global\@namelet{\string\color@ #2.fg}{\string\color@ temp@fg}%
+    \global\@namelet{\string\color@ #2.bg}{\string\color@ temp@bg}%
+  \endgroup%
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\@empty%
+  \else%
+    \color{#1}%
+  \fi%
+}
+
+\colorlet{fg}{black}
+\colorlet{bg}{white}
+
+
+\mode
+<article>
+{
+  \newcommand\setbeamercolor{\@ifstar{\@gobbletwo}{\@gobbletwo}}
+  \newcommand\usebeamercolor{\@ifstar{\beamer@optgog}{\beamer@optgog}}
+  \newcommand\beamer@optgog[2][]{}
+}
+
+
+
+%
+% Colored boxes
+%
+
+\define@key{beamercolbox}{wd}{\def\beamer@colbox@wd{#1}}
+\define@key{beamercolbox}{ht}{\def\beamer@colbox@ht{#1}}
+\define@key{beamercolbox}{dp}{\def\beamer@colbox@dp{#1}}
+\define@key{beamercolbox}{leftskip}{\def\beamer@colbox@ls{#1}}
+\define@key{beamercolbox}{rightskip}{\def\beamer@colbox@rs{#1}}
+\define@key{beamercolbox}{left}[]{\def\beamer@colbox@ls{0pt}\def\beamer@colbox@rs{0pt plus1fill}}
+\define@key{beamercolbox}{center}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt plus1fill}}
+\define@key{beamercolbox}{right}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt}}
+\define@key{beamercolbox}{sep}{\def\beamer@colbox@sep{#1}}
+\define@key{beamercolbox}{colsep}{\def\beamer@colbox@colsep{#1}}
+\define@key{beamercolbox}{colsep*}{\def\beamer@colbox@colseps{#1}}
+\define@key{beamercolbox}{shadow}[true]{\def\beamer@colbox@shadow{#1}}
+\define@key{beamercolbox}{rounded}{\csname beamer@colbox@rounded#1\endcsname}
+\define@key{beamercolbox}{ignorebg}[true]{\csname beamer@colbox@ignorebg#1\endcsname}
+\define@key{beamercolbox}{vmode}[]{\def\beamer@vmode{}}
+
+\newif\ifbeamer@colbox@rounded
+\newif\ifbeamer@colbox@ignorebg
+
+\newenvironment{beamercolorbox}[2][]{%
+  \begingroup%
+    \def\beamer@colbox@coladd{0pt}%
+    \def\beamer@vmode{\leavevmode}%
+    \setkeys{beamercolbox}{%
+      wd=\textwidth,ht={},dp={},%
+      leftskip=0pt,rightskip=0pt plus1fil,%
+      sep=0pt,colsep=0pt,colsep*=0pt,%
+      shadow=false,rounded=false,ignorebg=false}%
+    \setkeys{beamercolbox}{#1}%
+    \ifbeamercolorempty[bg]{#2}{\@tempswafalse}{\@tempswatrue}%
+    \ifbeamer@colbox@ignorebg\@tempswafalse\fi%
+    \def\beamer@colbox@color{#2}%
+    \hsize=\beamer@colbox@wd%
+    \setbox\beamer@tempbox=\hbox\bgroup\vbox\bgroup%
+      \leftskip=\beamer@colbox@ls%
+      \advance\leftskip by\beamer@colbox@sep%
+      \rightskip=\beamer@colbox@rs%
+      \advance\rightskip by\beamer@colbox@sep%
+      \ifbeamer@colbox@ignorebg%
+        \colorlet{beamer@temp@color}{bg}%
+        \usebeamercolor[fg]{#2}%
+        \colorlet{bg}{beamer@temp@color}%
+      \else%
+        \usebeamercolor[fg]{#2}%
+      \fi%
+      \if@tempswa%
+        \advance\leftskip by\beamer@colbox@colsep%
+        \advance\rightskip by\beamer@colbox@colsep%
+        \ifdim\beamer@colbox@colsep=0pt\else\vskip\beamer@colbox@colsep\fi%
+        \ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi%
+      \fi%
+      \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
+      \beamer@vmode\ignorespaces}{%
+      \ifdim\beamer@colbox@sep=0pt\else\vskip\beamer@colbox@sep\fi%
+      \if@tempswa\ifdim\beamer@colbox@colsep=0pt\else\vskip\beamer@colbox@colsep\fi\fi%
+      \if@tempswa\ifdim\beamer@colbox@colseps=0pt\else\vskip\beamer@colbox@colseps\fi\fi%
+    \egroup\egroup%
+    \wd\beamer@tempbox=\hsize%
+    \@tempdima=\wd\beamer@tempbox%
+    \ifx\beamer@colbox@ht\@empty%
+    \else%
+      \ht\beamer@tempbox=\beamer@colbox@ht%
+    \fi%
+    \ifx\beamer@colbox@dp\@empty%
+    \else%
+      \dp\beamer@tempbox=\beamer@colbox@dp%
+    \fi%
+    \ifbeamer@colbox@rounded%
+      \if@tempswa%
+        \begin{beamerboxesrounded}[%
+          shadow=\beamer@colbox@shadow,%
+          lower=\beamer@colbox@color,%
+          upper=normal text,%
+          width=\beamer@colbox@wd]{}%
+          \box\beamer@tempbox%
+        \end{beamerboxesrounded}%
+      \else%
+        \ifdim\@tempdima>\textwidth%
+          \setbox\beamer@tempbox=\hbox to\textwidth{\hss\box\beamer@tempbox\hss}%
+        \fi%
+        \box\beamer@tempbox%
+      \fi%
+    \else%
+      \if@tempswa\setbox\beamer@tempbox=\vbox{%
+        \usebeamercolor{\beamer@colbox@color}%
+        \advance\hsize by \beamer@colbox@colseps\relax%
+        \advance\hsize by \beamer@colbox@colseps\relax%
+        \hskip-\beamer@colbox@colseps%
+        \fboxsep=0pt\colorbox{bg}{%
+          \hskip\beamer@colbox@colseps%
+          \hbox{\box\beamer@tempbox}%
+          \hskip\beamer@colbox@colseps%
+        }%
+        \hskip-\beamer@colbox@colseps%
+      }\fi%
+      \ifdim\@tempdima>\textwidth%
+        \setbox\beamer@tempbox=\hbox to\textwidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@rightmargin\relax}%
+      \fi%
+      \box\beamer@tempbox%
+    \fi%
+  \endgroup%
+}
+
+\mode
+<article>
+{
+  \newenvironment{beamercolorbox}[2][]{}{}
+}
+
+
+%
+% Install these colors at the start of the document
+%
+
+\AtBeginDocument{
+  \usebeamercolor*{alerted text} % Define these colors
+  \usebeamercolor*{example text} % Define these colors
+  \usebeamercolor*{structure}    % Define these colors
+  \usebeamercolor{normal text}
+  \color{fg}
+  \def\normalcolor{\color{normal text.fg}}
+}
+
+
+
+
+%
+% Math mode color hackery
+%
+
+\newcommand\beamer@setmathcolor{%
+  \usebeamercolor{math text inlined}%
+  \ifbeamercolorempty[fg]{math text inlined}{}{\color{fg}}}
+
+\newcommand\donotcoloroutermaths{%
+  \everymath{\everymath{\beamer@setmathcolor}}}
+
+\newcommand\beamer@setdisplaymathcolor{%
+  \usebeamercolor{math text displayed}%
+  \ifbeamercolorempty[fg]{math text displayed}{}{\color{fg}\aftergroup\ignorespaces}}%
+
+\newcommand\donotcolorouterdisplaymaths{%
+  \everydisplay{\everydisplay{\beamer@setdisplaymathcolor}}}
+
+\AtBeginDocument
+{
+  \everymath\expandafter{\the\everymath\beamer@setmathcolor}
+  \everydisplay\expandafter{\the\everydisplay\beamer@setdisplaymathcolor}
+}
+
+\AtBeginDocument{
+  % Fix $ usage in tabular:
+  \let\beamer@orig@tabular=\@tabular
+  \def\@tabular{\donotcoloroutermaths\beamer@orig@tabular}
+
+  % Fix $ usage in underline:
+  \let\beamer@orig@underline=\underline
+  \def\underline#1{{\donotcoloroutermaths\beamer@orig@underline{#1}}}
+
+  % Fix $ usage in underline:
+  \let\beamer@orig@@textsuperscript=\@textsuperscript
+  \def\@textsuperscript#1{{\donotcoloroutermaths\beamer@orig@@textsuperscript{#1}}}
+
+  % Fix $ usage in parbox:
+  \let\beamer@orig@pboxswture=\@pboxswtrue
+  \def\@pboxswtrue{\donotcoloroutermaths\beamer@orig@pboxswture}
+
+  % Fix $$ usage in align:
+  \let\beamer@orig@start@align=\start@align
+  \def\start@align{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@align}
+
+  % Fix $$ usage in gather:
+  \let\beamer@orig@start@gather=\start@gather
+  \def\start@gather{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@gather}
+
+  % Fix $$ usage in multicolumn:
+  \let\beamer@orig@start@multline=\start@multline
+  \def\start@multline{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@start@multline}
+
+  % Fix $$ usage in eqnarray:
+  \let\beamer@orig@eqnarray=\eqnarray
+  \def\eqnarray{\donotcolorouterdisplaymaths\donotcoloroutermaths\beamer@setdisplaymathcolor\beamer@orig@eqnarray}
+
+  % Fix \text:
+  \let\beamer@orig@text@=\text@
+  \def\text@#1{{\ifbeamercolorempty[fg]{normal text in math text}{}{\usebeamercolor[fg]{normal text in math text}}\beamer@orig@text@{#1}}}
+}
+
+
+%
+% Allow mixins to survive groups:
+%
+
+\let\beamerorig@set@color=\set@color
+\let\beamerorig@reset@color=\reset@color
+
+\edef\beamer@zeropt{\the\z@}
+
+\def\beamer@current@colorhook{}
+
+\def\set@color{%
+  \edef\beamer@current@colorhook{\beamer@colorhook}%
+  \beamerorig@set@color}
+\def\reset@color{%
+  \beamer@lastskip=\lastskip%
+  \edef\beamer@lastskiptexta{\the\lastskip}%
+  \ifx\beamer@lastskiptexta\beamer@zeropt\else%
+    \ifvmode\unskip\fi%
+    \ifhmode\unskip\fi%
+  \fi%
+  \ifx\beamer@current@colorhook\beamer@colorhook%
+    \beamerorig@reset@color%
+  \else% mixin changed -> recalculate
+    \colorlet{beamer@tempcolor}{.}%
+    \applycolormixins{beamer@tempcolor}%
+    \@namelet{current@color}{\string\color@beamer@tempcolor}%
+    \beamerorig@reset@color%
+    \pgfsys@color@unstacked{beamer@tempcolor}%
+  \fi%
+  \ifx\beamer@lastskiptexta\beamer@zeropt%
+  \else%
+    \ifvmode\vskip\beamer@lastskip\fi%
+    \ifhmode\hskip\beamer@lastskip\fi%
+  \fi%
+}
+
+
+
+% compatibility:
+
+\AtBeginDocument{
+  \colorlet{structure}{structure.fg}
+  \colorlet{beamerstructure}{structure.fg}
+  \colorlet{averagebackgroundcolor}{normal text.bg}
+}
+
+\mode
+<article>
+{
+  \def\beamersetaveragebackground#1{}
+
+  \ifbeamer@articlexcolor
+    \colorlet{averagebackgroundcolor}{white}
+  \fi
+}
+
+\colorlet{alert}{red!95!black}
+\definecolor{structure}{rgb}{0.2,0.2,0.7} % dummy -- not used
+
+\colorlet{beameralert}{alert}
+\colorlet{beamerexample}{green!50!black}
+\colorlet{beamerstructure}{structure} % dummy
+
+\mode
+<article>
+{
+  \ifbeamer@articlexcolor
+    \definecolor{alert}{rgb}{1,0,0}
+
+    \colorlet{beameralert}{alert}
+    \colorlet{beamerexample}{green!50!black}
+    \colorlet{beamerstructure}{black}
+    \colorlet{structure}{beamerstructure}
+  \fi
+
+}
+
+
+\mode
+<all>
+
+

@@ -1,0 +1,68 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\documentclass[hyperref={draft}]{beamer}
+
+\ifx\themename\undefined
+  \def\themename{default}
+\fi
+
+\useoutertheme[height=0pt]{sidebar}
+
+\def\albatrossname{albatross}
+\def\flyname{fly}
+\def\beetlename{beetle}
+\def\structurename{structure}
+
+\def\albatrossnamestylish{albatrossstylish}
+
+\ifx\themename\structurename
+  \usecolortheme[cmyk={0.69,0,0.50,0}]{\themename}
+\else
+  \ifx\themename\albatrossnamestylish
+    \usecolortheme[overlystylish]{albatross}
+    \usecolortheme{lily}
+  \else
+    \usecolortheme{\themename}
+  \fi
+\fi
+
+\ifx\themename\albatrossname
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
+\ifx\themename\albatrossnamestylish
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
+\ifx\themename\flyname
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
+\ifx\themename\beetlename
+  \makeatletter
+  \let\beamertemplatesolidbackgroundcolor=\@gobble
+  \makeatother
+\fi
+
+
+
+
+\input{beamerthemeexamplebase}
+
+

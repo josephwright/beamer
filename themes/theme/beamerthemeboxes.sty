@@ -1,0 +1,121 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\DeclareOptionBeamer{headheight}{\beamer@boxheadheight=#1}
+\DeclareOptionBeamer{footheight}{\beamer@boxfootheight=#1}
+
+\newdimen\beamer@boxheadheight
+\newdimen\beamer@boxfootheight
+\beamer@boxheadheight=10pt
+\beamer@boxfootheight=10pt
+
+\ProcessOptionsBeamer
+
+% For example:
+%\addheadboxtemplate{\color{black}}{\hfill\color{white}\insertshorttitle\hskip0.3cm}
+%\addheadboxtemplate{\color{structure}}{\hskip0.3cm\color{white}\insertshortauthor}
+
+%\addfootboxtemplate{\color{black}}{\hfill\color{white}\insertshortinstitute\hskip0.3cm}
+%\addfootboxtemplate{\color{structure}}{}
+%\addfootboxtemplate{\color{black}}{\hfill\color{white}\insertframenumber\hskip0.3cm}
+
+
+\mode<presentation>
+
+
+                                % Head
+\newcount\beamer@headboxes
+\newdimen\beamer@headboxsizes
+\newcount\beamer@currentbox
+\def\addheadboxtemplate#1#2{
+  \expandafter\def\csname beamer@headbox\the\beamer@headboxes\endcsname{#2}
+  \expandafter\def\csname beamer@headbg\the\beamer@headboxes\endcsname{#1}
+  \advance\beamer@headboxes by 1\relax
+  \beamer@headboxsizes=\paperwidth
+  \divide\beamer@headboxsizes by\beamer@headboxes
+}
+
+\def\addheadbox#1#2{\addheadboxtemplate{\usebeamercolor[bg]{#1}}{\usebeamercolor[fg]{#1}\usebeamerfont{#1}#2}}
+
+
+\defbeamertemplate*{headline}{boxes theme}
+{%
+  \leavevmode
+  \beamer@currentbox=0\relax%
+  \loop%
+  \ifnum\beamer@currentbox<\beamer@headboxes%
+  \hbox to\beamer@headboxsizes{%
+   % Background
+    {%
+      \csname beamer@headbg\the\beamer@currentbox\endcsname%
+      \vrule width\beamer@headboxsizes height\beamer@boxheadheight%
+      \hskip-\beamer@headboxsizes%
+    }%
+    % Box
+    {%
+      \setbox\beamer@tempbox=\hbox to\beamer@headboxsizes{%
+        \csname beamer@headbox\the\beamer@currentbox\endcsname\hfil}%
+      \dp\beamer@tempbox=0pt%
+      \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
+      \ht\beamer@tempbox=\beamer@boxheadheight%
+      \dp\beamer@tempbox=0pt%
+      \box\beamer@tempbox%
+    }}%
+  \advance\beamer@currentbox by 1%
+  \repeat%
+}%
+
+
+                                % Foot
+\newcount\beamer@footboxes
+\newdimen\beamer@footboxsizes
+\def\addfootboxtemplate#1#2{
+  \expandafter\def\csname beamer@footbox\the\beamer@footboxes\endcsname{#2}
+  \expandafter\def\csname beamer@footbg\the\beamer@footboxes\endcsname{#1}
+  \advance\beamer@footboxes by 1\relax
+  \beamer@footboxsizes=\paperwidth
+  \divide\beamer@footboxsizes by\beamer@footboxes
+}
+
+\def\addfootbox#1#2{\addfootboxtemplate{\usebeamercolor[bg]{#1}}{\usebeamercolor[fg]{#1}\usebeamerfont{#1}#2}}
+
+\defbeamertemplate*{footline}{boxes theme}
+{%
+  \leavevmode
+  \beamer@currentbox=0\relax%
+  \loop%
+  \ifnum\beamer@currentbox<\beamer@footboxes%
+  \hbox to\beamer@footboxsizes{%
+                                % Background
+    {%
+      \csname beamer@footbg\the\beamer@currentbox\endcsname%
+      \vrule width\beamer@footboxsizes height\beamer@boxfootheight%
+      \hskip-\beamer@footboxsizes%
+    }%
+                                % Box
+    {%
+      \setbox\beamer@tempbox=\hbox to\beamer@footboxsizes{%
+        \csname beamer@footbox\the\beamer@currentbox\endcsname\hfil}%
+      \dp\beamer@tempbox=0pt%
+      \setbox\beamer@tempbox=\hbox{\vbox{\box\beamer@tempbox\vskip3pt}}%
+      \ht\beamer@tempbox=\beamer@boxfootheight%
+      \dp\beamer@tempbox=0pt%
+      \box\beamer@tempbox%
+    }%
+  }%
+  \advance\beamer@currentbox by 1%
+  \repeat%
+}%
+
+
+\mode
+<all>
