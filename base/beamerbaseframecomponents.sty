@@ -21,10 +21,10 @@
 
 \newif\ifbeamer@dogeometry
 
-\define@key{beamer@margin}{text margin left}{\beamer@leftmargin={#1}\beamer@dogeometrytrue}
-\define@key{beamer@margin}{text margin right}{\beamer@rightmargin={#1}\beamer@dogeometrytrue}
-\define@key{beamer@margin}{sidebar width left}{\beamer@leftsidebar={#1}\beamer@dogeometrytrue}
-\define@key{beamer@margin}{sidebar width right}{\beamer@rightsidebar={#1}\beamer@dogeometrytrue}
+\define@key{beamer@margin}{text margin left}{\beamer@leftmargin=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{text margin right}{\beamer@rightmargin=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{sidebar width left}{\beamer@leftsidebar=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{sidebar width right}{\beamer@rightsidebar=#1\beamer@dogeometrytrue}
 
 \newcommand{\setbeamersize}[1]{%
   \beamer@dogeometryfalse%

@@ -177,7 +177,7 @@
   \beamer@ifnextchar({\beamer@relnumber}{\beamer@relnumber(0)}}
 \def\beamer@relnumber(#1){%
   \beamer@plusencounteredtrue%
-  \beamer@tempcount={#1}\relax
+  \beamer@tempcount=#1\relax
   \advance\beamer@tempcount by\c@beamerpauses\relax%
   \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
   \beamer@@decodeplus}
@@ -190,7 +190,7 @@
 \def\beamer@@@decodedot{%
   \beamer@ifnextchar({\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
 \def\beamer@relnumberdot(#1){%
-  \beamer@tempcount={#1}\relax
+  \beamer@tempcount=#1\relax
   \advance\beamer@tempcount by\c@beamerpauses\relax%
   \advance\beamer@tempcount by-1\relax%
   \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
@@ -232,18 +232,18 @@
   {\beamer@decodeto{#1}}%
   {\beamer@decodebetween{#1}}}
 \def\beamer@decodeto#1,{%
-  \ifnum#1<\beamer@minimum\global\beamer@minimum={#1}\fi%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
   \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
   \ifnum#1>\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
   \beamer@@decode}
 \def\beamer@decodebetween#1#2,{%
-  \ifnum#1<\beamer@minimum\global\beamer@minimum={#1}\fi%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
   \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
   \ifnum#2>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
   \ifnum#1>\beamer@slideinframe\else\ifnum#2<\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi\fi%
   \beamer@@decode}
 \def\beamer@decodeone#1,{%
-  \ifnum#1<\beamer@minimum\global\beamer@minimum={#1}\fi%
+  \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
   \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
   \ifnum#1=\beamer@slideinframe\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
   \beamer@@decode}

@@ -479,7 +479,7 @@
 \def\beamertemplateticksminiframe{\setbeamertemplate{mini frames}[tick]}
 \def\beamertemplateboxminiframe{\setbeamertemplate{mini frames}[box]}
 \newcommand\usesidebartemplate[3][left]{%
-  \setbeamersize{sidebar width #1={#2}}
+  \setbeamersize{sidebar width #1=#2}
   \setbeamertemplate{sidebar #1}{#3}
 }
 \newcommand\beamertemplatesidebarcolor[2][left]{\setbeamercolor{sidebar #1}{bg={#2}}}
@@ -490,7 +490,7 @@
 \newcommand{\beamertemplatesidebarhorizontalshading}[3][left]{%
   \setbeamertemplate{sidebar canvas #1}[vertical shading][right={#3},left={#2}]}
 \define@key{beamer@margin}{descriptionwidth}{%
-  \beamer@descriptionwidth={#1}\relax%
+  \beamer@descriptionwidth=#1\relax%
 }
 \define@key{beamer@margin}{descriptionwidthof}{%
   \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\usebeamertemplate**{description item}}%
@@ -500,8 +500,8 @@
 \mode
 <all>
 {
-  \def\beamersetleftmargin#1{\setbeamersize{text margin left={#1}}}
-  \def\beamersetrightmargin#1{\setbeamersize{text margin right={#1}}}
+  \def\beamersetleftmargin#1{\setbeamersize{text margin left=#1}}
+  \def\beamersetrightmargin#1{\setbeamersize{text margin right=#1}}
   \long\def\useframetemplate#1#2{\setbeamertemplate{frame begin}{#1}\setbeamertemplate{frame end}{#2}}
   \def\usebackgroundtemplate{\setbeamertemplate{background canvas}}
   \def\beamertemplatesolidbackgroundcolor#1{\setbeamercolor{normal text}{bg={#1}}}

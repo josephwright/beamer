@@ -183,13 +183,13 @@
   \else
     \expandafter\def\expandafter#1\expandafter{\expandafter\beamer@sort\expandafter{\csname beamerx@\string#1\endcsname}{#2}}%
   \fi%
-  \beamer@argscount={#2}\relax%
+  \beamer@argscount=#2\relax%
   \advance\beamer@argscount by 1\relax%
   \expandafter\newcommand\csname beamerx@\string#1\endcsname[\beamer@argscount]{#3}%
 }
 \long\def\beamer@newcomopt#1#2[#3]#4{%
   \expandafter\def\expandafter#1\expandafter{\expandafter\beamer@presort\expandafter{\csname beamerx@\string#1\endcsname}{#2}{#3}}%
-  \beamer@argscount={#2}\relax%
+  \beamer@argscount=#2\relax%
   \advance\beamer@argscount by 1\relax%
   \expandafter\newcommand\csname beamerx@\string#1\endcsname[\beamer@argscount]{#4}%
 }
@@ -199,14 +199,14 @@
 \def\renewcommand{\@ifnextchar<{\beamer@renewcom}{\beamer@origrenewcommand}}
 \def\beamer@renewcom<>#1{%
   \expandafter\def\expandafter\beamer@name\expandafter{\csname @orig\string#1\endcsname}%
-  \expandafter\let\beamer@name={#1}\relax%
+  \expandafter\let\beamer@name=#1\relax%
   \newcommand<>#1}
 
 
 \long\def\beamer@presort#1#2#3{%
   \long\def\beamer@todo{#1}%
   \def\beamer@ospec{}%
-  \beamer@argscount={#2}\relax%
+  \beamer@argscount=#2\relax%
   \beamer@prechecka{#3}}
 \long\def\beamer@prechecka#1{\@ifnextchar<{\beamer@preget{#1}}{\beamer@precheckb{#1}}}
 \long\def\beamer@preget#1<#2>{\def\beamer@ospec{<#2>}\beamer@precheckb{#1}}
@@ -224,7 +224,7 @@
 \def\beamer@sort#1#2{%
   \long\def\beamer@todo{#1}%
   \def\beamer@ospec{}%
-  \beamer@argscount={#2}\relax%
+  \beamer@argscount=#2\relax%
   \beamer@parseargs}
 
 \def\beamer@parseargs{%
@@ -392,7 +392,7 @@
 \newcommand{\beamer@@pause}[1][]{%
   \beamer@ifempty{#1}%
     {\global\advance\c@beamerpauses by1\relax}%
-    {\global\c@beamerpauses={#1}\relax}%
+    {\global\c@beamerpauses=#1\relax}%
   \onslide<\c@beamerpauses->\relax%
 }
 
@@ -630,8 +630,8 @@
 % Insert area
 %
 \newenvironment{overlayarea}[2]{%
-  \beamer@animht={#1}\relax%
-  \beamer@animwd={#2}\relax%
+  \beamer@animht=#1\relax%
+  \beamer@animwd=#2\relax%
   \setbox\beamer@areabox=\vbox to#2\bgroup%
   \strut\begin{minipage}[t]{#1}%
   }
@@ -656,7 +656,7 @@
   \let\beamer@noargsvisibleonslide=\beamer@onslide%
   \beamer@animht=0pt%
   \beamer@animdp=0pt%
-  \beamer@animwd={#1}\relax%
+  \beamer@animwd=#1\relax%
   \setbox\beamer@animcurrent=\box\beamer@animshowbox% makes animshowbox empty
   \setbox\beamer@animcurrent=\hbox{}%
   \def\beamer@endaction{}%
@@ -760,13 +760,13 @@
 \def\animatevalue<#1-#2>#3#4#5{%
   \only<#1-#2>{}% enforce these frames
   \ifnum\beamer@slideinframe<#1\relax%
-    #3={#4}\relax%
+    #3=#4\relax%
   \else%
     \ifnum\beamer@slideinframe<#2\relax%
-      #3={#4}\relax%
+      #3=#4\relax%
       #3=-#3\relax%
       \advance#3 by#5\relax%
-      \beamer@animationtempa={#2}\relax%
+      \beamer@animationtempa=#2\relax%
       \advance\beamer@animationtempa by-#1%
       \ifnum\beamer@animationtempa>0%
         \divide#3 by\beamer@animationtempa%
@@ -776,7 +776,7 @@
       \multiply#3 by\beamer@animationtempa%
       \advance#3 by#4%
     \else
-      #3={#5}\relax%
+      #3=#5\relax%
     \fi%
   \fi%
 }
@@ -785,7 +785,7 @@
 <article>
 {
   \def\animate<#1>{}
-  \def\animatevalue<#1-#2>#3#4#5{#3={#4}\relax}
+  \def\animatevalue<#1-#2>#3#4#5{#3=#4\relax}
 }
 
 

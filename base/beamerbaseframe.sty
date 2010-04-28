@@ -747,7 +747,7 @@
   {\ClassError{beamer}{No frame has been designated to resume under
       the name "#4"}{}}%
   {%
-  \def\beamer@temp{\frame<#1>[#2][{#3,relabel={#4}}]}%
+  \def\beamer@temp{\frame<#1>[#2][{#3,relabel=#4}]}%
   \expandafter\let\expandafter\beamer@templet\csname beamer@again@#4\endcsname%
   \expandafter\beamer@temp\beamer@templet}%
 }

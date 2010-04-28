@@ -47,7 +47,7 @@
 \define@key{beamertoc}{hideallsubsections}[]{\beamer@toc@subsectionstyle{hide}}
 \define@key{beamertoc}{hideothersubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}}
 
-\define@key{beamertoc}{part}{\beamer@showpartnumber={#1}\relax}
+\define@key{beamertoc}{part}{\beamer@showpartnumber=#1\relax}
 \define@key{beamertoc}{sections}{\beamer@parsetocsections#1[]}
 \define@key{beamertoc}{firstsection}{\beamer@sectionadjust=-#1\relax\advance\beamer@sectionadjust by 1\relax}
 \def\beamer@parsetocsections{\@ifnextchar<\beamer@@parsetocsections\beamer@@@parsetocsections}
@@ -92,13 +92,13 @@
   {
   \beamer@saveanother%
   \gdef\beamer@todo{}%
-  \beamer@slideinframe={#1}\relax%
+  \beamer@slideinframe=#1\relax%
   \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
-      \beamer@tempcount={#5}\relax%
+      \beamer@tempcount=#5\relax%
       \advance\beamer@tempcount by\beamer@sectionadjust%
       \edef\inserttocsectionnumber{\the\beamer@tempcount}%
       \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
-      \beamer@tocifnothide{\ifnum\c@section={#1}\beamer@toc@cs\else\beamer@toc@os\fi}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
       {
         \ifbeamer@pausesections\pause\fi%
         \ifx\beamer@toc@ooss\beamer@hidetext
@@ -109,7 +109,7 @@
         {%
           \hbox{\vbox{%
               \def\beamer@breakhere{\\}%
-              \beamer@tocact{\ifnum\c@section={#1}\beamer@toc@cs\else\beamer@toc@os\fi}{section in toc}}}%
+              \beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{section in toc}}}%
          \par%
         }%
       }%
@@ -128,18 +128,18 @@
   {
     \beamer@saveanother%
     \gdef\beamer@todo{}%
-    \beamer@slideinframe={#1}\relax%
+    \beamer@slideinframe=#1\relax%
     \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
       \ifbeamer@pausesubsections\pause\fi%
-      \beamer@tempcount={#6}%
+      \beamer@tempcount=#6%
       \advance\beamer@tempcount by\beamer@sectionadjust%
       \edef\inserttocsectionnumber{\the\beamer@tempcount}%
       \def\inserttocsubsectionnumber{#2}%
       \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
-      \beamer@tocifnothide{\ifnum\c@section={#1}\beamer@toc@oss\else\beamer@toc@ooss\fi}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@oss\else\beamer@toc@ooss\fi}%
       {%
         \def\beamer@breakhere{\\}%
-        \beamer@tocact{\ifnum\c@section={#1}\ifnum\c@subsection={#2}\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
+        \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
         {subsection in toc}%
       }%
     }}%
@@ -156,19 +156,19 @@
   {
     \beamer@saveanother%
     \gdef\beamer@todo{}%
-    \beamer@slideinframe={#2}\relax%
+    \beamer@slideinframe=#2\relax%
     \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
       \ifbeamer@pausesubsections\pause\fi%
-      \beamer@tempcount={#6}%
+      \beamer@tempcount=#6%
       \advance\beamer@tempcount by\beamer@sectionadjust%
       \edef\inserttocsectionnumber{\the\beamer@tempcount}%
       \def\inserttocsubsectionnumber{#3}%
       \def\inserttocsubsubsectionnumber{#4}%
       \def\inserttocsubsubsection{\hyperlink{Navigation#5}{#7}}%
-      \beamer@tocifnothide{\ifnum\c@section={#2}\beamer@toc@oss\else\beamer@toc@ooss\fi}%
+      \beamer@tocifnothide{\ifnum\c@section=#2\beamer@toc@oss\else\beamer@toc@ooss\fi}%
       {%
         \def\beamer@breakhere{\\}%
-        \beamer@tocact{\ifnum\c@section={#2}\ifnum\c@subsection={#3}\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
+        \beamer@tocact{\ifnum\c@section=#2\ifnum\c@subsection=#3\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
         {subsubsection in toc}%
       }%
     }}%

@@ -70,7 +70,7 @@
     \gdef\beamer@zoomer{%
       % compute zoom factor
       \@tempdima=\beamer@frametextheight%
-      \@tempdimb={#7}\relax%
+      \@tempdimb=#7\relax%
       \@tempcnta=\@tempdimb%
       \divide\@tempcnta by4096\relax%
       \multiply\@tempdima by16\relax%
@@ -81,7 +81,7 @@
         \advance\@tempdimb by-\beamer@leftsidebar%
         \advance\@tempdimb by-\beamer@rightsidebar\relax%
       \fi%
-      \@tempdimc={#6}\relax%
+      \@tempdimc=#6\relax%
       \@tempcntb=\@tempdimc%
       \divide\@tempcntb by4096\relax%
       \multiply\@tempdimb by16\relax%
@@ -111,8 +111,8 @@
             \pgfusepath{clip}
             \begingroup
               \pgftransformscale{\beamer@temp}
-              \@tempdima={#4}\relax%
-              \@tempdimb={#5}\relax%
+              \@tempdima=#4\relax%
+              \@tempdimb=#5\relax%
               {\pgftransformshift{\pgfpoint{-\@tempdima}{\@tempdimb}}%
               \pgftext[left,top]{\vbox{\vbox{}\nointerlineskip\unvbox\beamer@framebox}}}
             \endgroup

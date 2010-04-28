@@ -20,7 +20,7 @@
 \newcount\beamerseminar@overlay
 
 \def\overlay#1{%
-  \beamerseminar@overlay={#1}\relax%
+  \beamerseminar@overlay=#1\relax%
   \advance\beamerseminar@overlay by1\relax%
   \ifbeamerseminar@accumulated%
     \expandafter\onslide\expandafter<\the\beamerseminar@overlay->%

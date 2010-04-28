@@ -58,13 +58,13 @@
   \fi%
 }
 \def\beamer@nextpage#1{%
-  \beamer@tempcount={#1}%
+  \beamer@tempcount=#1%
   \advance\beamer@tempcount by1\relax%
   \ifnum\beamer@tempcount>\beamer@endpageofdocument%
   \beamer@tempcount=\beamer@endpageofdocument%
   \fi}
 \def\beamer@prevpage#1{%
-  \beamer@tempcount={#1}\relax%
+  \beamer@tempcount=#1\relax%
   \ifnum\beamer@tempcount>1%
   \advance\beamer@tempcount by-1%
   \fi%
@@ -528,7 +528,7 @@
     \def\insertpartheadnumber{#5}%
     {%
       \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
-      \ifnum\c@section={#1}%
+      \ifnum\c@section=#1%
         \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot}}}%
       \else%
         \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot shaded}}}%
@@ -554,7 +554,7 @@
       \hbox{{%
         \usebeamerfont{section in sidebar}\usebeamercolor[fg]{section in sidebar}%
           \hyperlink{Navigation##3}{%
-          \ifnum\c@section={##1}%
+          \ifnum\c@section=##1%
             \ifnum\c@subsection=0\relax%
               {\usebeamertemplate{section in sidebar}}%
             \else%
@@ -575,12 +575,12 @@
       \def\insertsectionheadnumber{##2}%
       \def\insertsubsectionheadnumber{##3}%
       \def\insertsubsectionhead{##5}%
-       \beamer@tocifnothide{\ifnum\c@section={##2}\ifnum\c@subsection={##3}\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
+       \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
       {\hbox{{%
         \usebeamerfont{subsection in sidebar}\usebeamercolor[fg]{subsection in sidebar}%
           \hyperlink{Navigation##4}{%
-          \ifnum\c@section={##2}%
-            \ifnum\c@subsection={##3}%
+          \ifnum\c@section=##2%
+            \ifnum\c@subsection=##3%
               \ifnum\c@subsubsection=0\relax%
                 {\usebeamertemplate{subsection in sidebar}}%
               \else%
@@ -601,13 +601,13 @@
       \def\insertsubsectionheadnumber{##3}%
       \def\insertsubsubsectionheadnumber{##3}%
       \def\insertsubsubsectionhead{##6}%
-      \beamer@tocifnothide{\ifnum\c@section={##2}\ifnum\c@subsection={##3}\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
+      \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
       {\hbox{{%
         \usebeamerfont{subsubsection in sidebar}\usebeamercolor[fg]{subsubsection in sidebar}%
           \hyperlink{Navigation##5}{%
-          \ifnum\c@section={##2}%
-            \ifnum\c@subsection={##3}%
-              \ifnum\c@subsubsection={##4}%
+          \ifnum\c@section=##2%
+            \ifnum\c@subsection=##3%
+              \ifnum\c@subsubsection=##4%
                 {\usebeamertemplate{subsubsection in sidebar}}%
               \else
                 {\usebeamertemplate{subsubsection in sidebar shaded}}%
@@ -631,8 +631,8 @@
     \ifbeamer@compress%
       \advance\beamer@xpos by1\relax%
     \else%
-      \beamer@xpos={#3}\relax%
-      \beamer@ypos={#2}\relax%
+      \beamer@xpos=#3\relax%
+      \beamer@ypos=#2\relax%
     \fi%
   \hbox to 0pt{%
     \beamer@tempdim=-\beamer@vboxoffset%
@@ -646,10 +646,10 @@
       \advance\beamer@tempdim by 1pt%
       \kern\beamer@tempdim\hbox{\beamer@link(#4){%
           \usebeamerfont{mini frame}%
-          \ifnum\c@section={#1}%
-            \ifnum\c@subsection={#2}%
+          \ifnum\c@section=#1%
+            \ifnum\c@subsection=#2%
               \usebeamercolor[fg]{mini frame}%
-              \ifnum\c@subsectionslide={#3}%
+              \ifnum\c@subsectionslide=#3%
                 \usebeamertemplate{mini frame}%\beamer@minislidehilight%
               \else%
                 \usebeamertemplate{mini frame in current subsection}%\beamer@minisliderowhilight%
@@ -675,8 +675,8 @@
   \ifbeamer@compress%
   \advance\beamer@xpos by1\relax%
   \else%
-  \beamer@xpos={#3}\relax%
-  \beamer@ypos={#2}\relax%
+  \beamer@xpos=#3\relax%
+  \beamer@ypos=#2\relax%
   \fi%
   \hbox to 0pt{\beamer@tempdim=-\beamer@vboxoffset%
     \advance\beamer@tempdim by -\beamer@boxsize%
@@ -694,8 +694,8 @@
   \fi\fi%
   \expandafter\hyperlink\beamer@goto}
 
-\define@key{beamer@margin}{mini frame size}{\beamer@boxsize={#1}}
-\define@key{beamer@margin}{mini frame offset}{\beamer@vboxoffset={#1}}
+\define@key{beamer@margin}{mini frame size}{\beamer@boxsize=#1}
+\define@key{beamer@margin}{mini frame offset}{\beamer@vboxoffset=#1}
 
 \def\insertsectionnavigation#1{%
   \hbox to #1{%
@@ -710,7 +710,7 @@
        \setbox\beamer@tempbox=\hbox{%
          \hyperlink{Navigation##3}{\hbox to #1{%
              \hskip0.3cm%
-             \ifnum\c@section={##1}%
+             \ifnum\c@section=##1%
                {\usebeamertemplate{section in head/foot}}%
              \else%
                {\usebeamertemplate{section in head/foot shaded}}%
@@ -740,14 +740,14 @@
       \def\sectionentry##1##2##3##4##5{}%
       \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
         \ifnum##2>\beamer@currentsubsection%
-        \beamer@currentsubsection={##2}%
+        \beamer@currentsubsection=##2%
         \def\insertsubsectionhead{##5}%
         \def\insertsectionheadnumber{##1}%
         \def\insertsubsectionheadnumber{##2}%
         \def\insertpartheadnumber{##6}%
         \setbox\beamer@tempbox=\hbox{\beamer@link(##4){%
             \hbox to #1{\hskip0.3cm%
-              \ifnum\c@subsection={##2}%
+              \ifnum\c@subsection=##2%
                 {\usebeamertemplate{subsection in head/foot}}%
               \else%
                 {\usebeamertemplate{subsection in head/foot shaded}}%
@@ -763,14 +763,14 @@
     \def\sectionentry##1##2##3##4##5{}%
     \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
       \ifnum##2>\beamer@currentsubsection%
-      \beamer@currentsubsection={##2}%
+      \beamer@currentsubsection=##2%
       \box\beamer@sectionbox\hskip1.875ex plus1fill%
       \setbox\beamer@sectionbox=
       \hbox{\def\insertsubsectionhead{##5}%
          \def\insertsectionheadnumber{##1}%
          \def\insertsubsectionheadnumber{##2}%
          \def\insertpartheadnumber{##6}%
-         \ifnum\c@subsection={##2}%
+         \ifnum\c@subsection=##2%
         \beamer@link(##4){{\usebeamertemplate{subsection in head/foot}}}\else%
         \beamer@link(##4){{\usebeamertemplate{subsection in head/foot shaded}}}\fi}%
       \ht\beamer@sectionbox=1.875ex%
