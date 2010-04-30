@@ -83,12 +83,12 @@ with the outer theme |sidebar|.
     that the numbers range between 0 and 255. For example,
     |RGB={128,0,0}|  yields a dark red.
   \item
-    \declare{|cmyk=|\marg{cymk tuple}} sets the |structure| foreground
+    \declare{|cmyk=|\marg{cmyk tuple}} sets the |structure| foreground
     to the specified cyan-magenta-yellow-black tuple. The numbers are
-    given as decimals between 0 and 1. For example, |cymk={0,1,1,0.5}|
+    given as decimals between 0 and 1. For example, |cmyk={0,1,1,0.5}|
     yields a dark red.
   \item
-    \declare{|cmy=|\marg{cym tuple}} is similar to |cmyk|, except that
+    \declare{|cmy=|\marg{cmy tuple}} is similar to |cmyk|, except that
     the black component is not specified.
   \item
     \declare{|hsb=|\marg{hsb tuple}}  sets the |structure| foreground
@@ -106,7 +106,7 @@ with the outer theme |sidebar|.
 
 \begin{colorthemeexample}{sidebartab}
   This theme changes the colors in a sidebar such that the current
-  entry in a table of contents shown there gets hilighted by showing a
+  entry in a table of contents shown there gets highlighted by showing a
   different background behind it.
 \end{colorthemeexample}
 
@@ -160,7 +160,7 @@ Complete color themes happen to have names of flying animals.
 
 
 \begin{colorthemeexample}{beetle}
-  The main ``theme behing this theme'' is to use white and black text
+  The main ``theme behind this theme'' is to use white and black text
   on gray background. The white text is used for special emphasis, the
   black text for normal text. The ``outer stuff'' like the headline
   and the footline use, however, a bluish color. To change this color,
@@ -176,8 +176,8 @@ Complete color themes happen to have names of flying animals.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{crane}
-  This theme uses the colors of the Lufthansa, whose logo is a
-  crane. It is \emph{not} an official theme by that company, however.
+  This theme uses the colors of Lufthansa, whose logo is a crane.
+  It is \emph{not} an official theme by that company, however.
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{dove}
@@ -258,7 +258,7 @@ An outer color theme changes the palette colors, on which the colors
 used in the headline, footline, and sidebar
 are based by default. Outer color themes normally do not change the
 color of inner elements, except possibly for |titlelike|. They have
-happen to sea-animal names.
+happen to be sea-animal names.
 
 \begin{colorthemeexample}{whale}
   Installs a white-on-dark palette for the headline, footline, and
@@ -315,7 +315,7 @@ idea. First of all, we sometimes  want colors of elements to change
 during a presentation, like the color of the item indicators when they
 become alerted or inside an example block. Second, some elements
 naturally have two colors, namely a foreground and a background, but
-not always. Third, sometimes element somehow should not have any
+not always. Third, sometimes elements somehow should not have any
 special color but should simply ``run along'' with the color of their
 surrounding. Finally, giving a special color to every element makes it
 very hard to globally change colors (like changing all the different
@@ -596,7 +596,7 @@ By default, mathematical text does not have any special color---it
 just inherits the ``surrounding'' color. Some people prefer
 mathematical text to have some special color. Though I do not
 recommend this (I think mathematical text should \emph{not} stand out
-admit the normal text), \beamer\ makes it (reasonably) easy to change
+amid the normal text), \beamer\ makes it (reasonably) easy to change
 the color of mathematical text. Simply change the following colors:
 
 \begin{element}{math text}\no\yes\no
@@ -652,7 +652,7 @@ colors}. Color themes typically only change these palette colors. For
 example, a color theme might make the \beamer-color |palette primary|
 blue, make |palette secondary| a dark blue, and make |palette tertiary|
 black. Outer themes can now setup things such that whatever they show
-at the top of the headline inherits from |palette tertiary|, what comes
+at the top of the headline inherits from |palette primary|, what comes
 below inherits from |palette secondary|, and whatever is at the bottom
 inherits from |palette tertiary|. This way, color themes can change the
 way even complicated outer themes look and they can do so
@@ -696,7 +696,7 @@ In detail, the following palette colors are used by outer themes.
 
 \begin{element}{palette sidebar primary}\no\yes\no
   Similar to |palette primary|, only outer themes (should) base the
-  colors of elements in the sidebar of the four sidebar palette
+  colors of elements in the sidebar on the four sidebar palette
   colors.
 \end{element}
 
@@ -792,7 +792,7 @@ In this section some ``basic'' colors are listed that do not
 
 By default, \emph{covered} items are not shown during a
 presentation. Thus if you write |\uncover<2>{Text.}|, the text
-is not shown on any but the second slide. On the other slide, the text
+is not shown on any but the second slide. On the other slides, the text
 is not simply printed using the background color -- it is not shown at
 all. This effect is most useful if your background does not have a
 uniform color.
@@ -831,7 +831,7 @@ workaround, see the documentation of the \pgfname\ package.
   In detail, the following \meta{options} may be given:
   \begin{itemize}
   \item \declare{|invisible|} is the default and causes covered text
-    to ``completely disappear.
+    to ``completely disappear''.
   \item \declare{|transparent|}\opt{|=|\meta{opaqueness}} causes
     covered text to be typset in a ``transparent'' way. By default,
     this means that 85\% of the background color is mixed into all

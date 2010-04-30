@@ -24,7 +24,7 @@ simple.
 None of the emulation layers is a perfect substitute for the original
 (emulations seldom are) and it is not intended that they ever will
 be. If you want/need/prefer the features of another class, use that
-class for preparing your presentations. The intension of these layers
+class for preparing your presentations. The intention of these layers
 is just to help speed up creating \beamer\ presentations that use
 parts of old presentations. You can simply copy these parts in
 verbatim, without having to worry about the subtle differences in
@@ -75,7 +75,7 @@ code is the following:
   When copying slides containing the command |\includegraphics|, you
   will almost surely have to adjust its usage. If you use pdf\LaTeX\
   to typeset the presentation, than you cannot include PostScript
-  file. You should convert them to |.pdf| or to |.png| and adjust any
+  files. You should convert them to |.pdf| or to |.png| and adjust any
   usage of |\includegraphics| accordingly.
 \item
   When starting to change things, you can use all of \beamer's
@@ -190,7 +190,7 @@ My notes for these slides.
   class |article| and including the package |beamerarticle|.
 \end{package}
 
-In the following, the effect of \prosper\ commands in \beamer\ are
+In the following, the effects of \prosper\ commands in \beamer\ are
 listed.
 
 \begin{command}{\email\marg{text}}
@@ -379,7 +379,7 @@ listed.
   This command is mapped to a |columns| environment. The \meta{left
     column} text is shown in the left column, the \meta{right column}
   text is shown in the right column. The options \meta{x}, \meta{y},
-  and \meta{z} are ignored. Also, all \emph{options} are ignored,
+  and \meta{z} are ignored. Also, all \meta{options} are ignored,
   except for \declare{|lcolwidth=|} and \declare{|rcolwidth=|}. These
   set the width of the left or right column, respectively.
 \end{command}
@@ -461,7 +461,7 @@ The workflow for the migration is the following:
 \item
   Possibly add commands to install themes and templates.
 \item
-  The should be not commands in the preamble having to do with
+  There should not be commands in the preamble having to do with
   page and slide styles. They do not apply to |beamer|.
 \item
   If a |\newslide| command is used in a |slide| (or similarly
@@ -571,7 +571,7 @@ article version.
   including the package |beamerarticle|.
 \end{package}
 
-In the following, the effect of \seminar\ commands in \beamer\ are
+In the following, the effects of \seminar\ commands in \beamer\ are
 listed.
 
 \begin{command}{\overlay\marg{number}}
@@ -766,7 +766,7 @@ This is on the second frame.
 \end{package}
 
 
-In the following, the effect of \foils\ commands in \beamer\ are
+In the following, the effects of \foils\ commands in \beamer\ are
 listed.
 
 \begin{command}{\MyLogo\marg{logo text}}
@@ -829,7 +829,7 @@ The following additional theorem-like environments are predefined:
 \end{itemize}
 For example, the first is defined using |\newtheorem*{Theorem*}{Theorem}|.
 
-The following commands are parsed by \beamer, but have not effect:
+The following commands are parsed by \beamer, but have no effect:
 \begin{itemize}
 \item |\leftheader|,
 \item |\rightheader|,
@@ -848,7 +848,7 @@ The package |beamertexpower| maps a subset of the commands of the
 \texpower\ package, due to Stephan Lehmke, to \beamer. This subset is
 currently rather small, so a lot of adaptions may be necessary. Note
 that \texpower\ is not a full class by itself, but a package that
-needs another class, like |seminar| or |prosper| to do the actually
+needs another class, like |seminar| or |prosper| to do the actual
 typesetting. It may thus be necessary to additionally load an
 emulation layer for these also. Indeed, it \emph{might} be possible to
 directly use \texpower\ inside \beamer, but I have not tried
@@ -884,7 +884,7 @@ A note on the |\pause| command: Both \beamer\ and \texpower\ implement
 this command and they have the same semantics; so there is no need to
 map this command to anything different in |beamertexpower|. However, a
 difference is that |\pause| can be used almost anywhere in \beamer,
-whereas is may only be used in non-nested situations in \texpower. Since
+whereas it may only be used in non-nested situations in \texpower. Since
 \beamer\ is only more flexible than \texpower\ here, this will not
 cause problems when porting.
 
@@ -892,7 +892,7 @@ In the following, the effect of \texpower\ commands in \beamer\ are
 listed.
 
 \begin{command}{\stepwise\marg{text}}
-  As in \TeX Power, this initiates text in which commands like |\step|
+  As in \texpower, this initiates text in which commands like |\step|
   or |\switch| may be given. Text contained in a |\step| command will
   be enclosed in an |\only| command with the overlay specification
   |<+(1)->|. This means that the text of the first |\step| is inserted
@@ -907,7 +907,7 @@ listed.
 
 \begin{command}{\liststepwise\marg{text}}
   Same as |\stepwise|, only an invisible horizontal line is inserted
-  before the \meta{text}. This is presumable useful for solving some
+  before the \meta{text}. This is presumably useful for solving some
   problems related to vertical spacing in \texpower.
 \end{command}
 

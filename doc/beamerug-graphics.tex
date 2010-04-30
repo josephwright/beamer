@@ -25,7 +25,7 @@ really special to \beamer, but applies to any other document class as well.
 There are two principal ways of creating \TeX-documents that include
 graphics: Either the graphic resides in an external file that is
 \emph{included} or the graphic is \emph{inlined}, which means that
-\TeX-file contains a bunch commands like ``draw a red line from
+\TeX-file contains a bunch of commands like ``draw a red line from
 here to there.'' In the following, the advantages and disadvantages of
 these two approaches are discussed.
 
@@ -148,7 +148,7 @@ if the program that produced the |.eps| supports this.
 The four formats |.pdf|, |.jpg|, |.jpeg|, and |.png| can only be
 included by |pdflatex|. As before, do not add these extension when
 using |pgf|, but do add them when using |graphics|. If your graphic
-file has any of these formats and you wish/must you |latex| and
+file has any of these formats and you wish/must use |latex| and
 |dvips|, you  have to convert your graphic to |.eps| first.
 
 
@@ -189,7 +189,7 @@ package, not with |pgf|.
 
 \subsection{Including Graphic Files Ending \texttt{.mmp}}
 
-The format |.mmp| (Multi-MetaPost) is actually not format that can be
+The format |.mmp| (Multi-MetaPost) is actually not a format that can be
 included directly in a \TeX-file. Rather, like a |.mp| file, it first
 has to be converted using the MetaPost program. The crucial difference
 between |.mp| and |.mmp| is that in the latter multiple graphics
@@ -197,7 +197,7 @@ can reside in a single |.mmp| file (actually, multiple graphics can
 also reside in a |.mp| file, but by convention such a file is called
 |.mmp|). When running MetaPost on a |.mmp| file, it will create not a
 single encapsulated PostScript file, but several, ending |.0|, |.1|,
-|.2|, and so on. The idea is that |.0| might contain a main graphics
+|.2|, and so on. The idea is that |.0| might contain a main graphic
 and the following pictures contain overlay material that should be
 incrementally added to this graphic.
 

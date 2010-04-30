@@ -87,7 +87,7 @@ unable to display the movie itself.
   4:3 or 16:9.
 
   Despite the name, a movie may consist only of sound with no
-  images. In this case, the \meta{posert text} might be a symbol
+  images. In this case, the \meta{poster text} might be a symbol
   representing the sound. There is also a different, dedicated
   command for including sounds in a \pdf\ file, see the |\sound|
   command in Section~\ref{section-sound}.
@@ -114,11 +114,11 @@ unable to display the movie itself.
   some external application is, you must use the |externalviewer|
   option. This will ask the viewer application to launch an
   application for showing the movie instead of displaying it
-  itself. Since this application is started in a new window, this not
-  nearly as nice as having the movie be displayed directly by the
+  itself. Since this application is started in a new window, this is not
+  nearly as nice as having the movie displayed directly by the
   viewer (unless you use evil trickery to suppress the frame of the
   viewer application). Which application is chosen is left to the
-  discreetion of the viewer application, which tries to make its
+  discretion of the viewer application, which tries to make its
   choice according to the extension of the \meta{movie filename} and
   according to some mapping table for mapping extensions
   to viewer applications. How this mapping table can be modified
@@ -130,7 +130,7 @@ unable to display the movie itself.
   \item
     \declare{|autostart|}. Causes the movie to start playing immediately
     when the page is shown. At most one movie can be started in this
-    way. The viewer application will typically be able to show only at
+    way. The viewer application will typically be able to show at
     most one movie at the same time anyway. When the page is no longer
     shown, the movie immediately stops. This can be a problem if you
     use the |\movie| command to include a sound that should be played
@@ -298,7 +298,7 @@ following commands can be used: |\animate| and |\animatevalue|.
 
 \begin{command}{\animate\ssarg{overlay specification}}
   The slides specified by \meta{overlay specification} will be shown
-  only as shortly as  possible.
+  as quickly as  possible.
 \example
 \begin{verbatim}
 \begin{frame}
@@ -513,7 +513,7 @@ specification to be given. The effect of this is explained below.
 
 Note that, if you do not use the |format=| option, the
 |\includegraphics| command will be somewhat at a loss in which format
-your graphic file actually is. After all, it end with the cryptic
+your graphic file actually is. After all, it ends with the cryptic
 ``format suffix'' |.0| or |.1|. You can tell |\includegraphics| that
 any file having a suffix it knows nothing about is actually in format,
 say, |.mps|, using the following command:
@@ -553,7 +553,7 @@ treated quite differently from movie objects. You can create a sound
 object using the command |\sound|, which is somewhat similar to
 |\movie|. There also exists a |\hyperlinksound| command, which is
 similar to |\hyperlinkmovie|. While it is conceptually better to use
-|\sound| for sounds, there are a number of this to consider before
+|\sound| for sounds, there are a number of things to consider before
 using it:
 \begin{itemize}
 \item
@@ -659,7 +659,7 @@ using it:
     \declare{|mixsound=|}\meta{true or false}. If set to |true|, the
     sound is played in addition to any sound that is already
     playing. If set to |false| all other sounds (though not sound from
-    movies) are stopped before the the sound is played. The default is
+    movies) are stopped before the sound is played. The default is
     |false|.
   \item
     \declare{|samplingrate=|}\meta{number}. Specifies the number of
@@ -696,7 +696,7 @@ sound hyperlinks.
     \declare{|mixsound=|}\meta{true or false}. If set to |true|, the
     sound is played in addition to any sound that is already
     playing. If set to |false| all other sounds (though not sound from
-    movies) is stopped before the the sound is played. The default is
+    movies) are stopped before the sound is played. The default is
     |false|.
   \end{itemize}
 \end{command}
@@ -776,12 +776,12 @@ All of these commands are ignored in |article| mode.
 You must insert these commands using \TeX-mode.
 
 \begin{command}{\transblindshorizontal\sarg{overlay specification}\oarg{options}}
-  Show the slide as if horizontal blinds where pulled away.
+  Show the slide as if horizontal blinds were pulled away.
   \example|\transblindshorizontal|
 \end{command}
 
 \begin{command}{\transblindsvertical\sarg{overlay specification}\oarg{options}}
-  Show the slide as if vertical blinds where pulled away.
+  Show the slide as if vertical blinds were pulled away.
   \example|\transblindsvertical<2,3>|
 \end{command}
 
@@ -839,7 +839,7 @@ using the following overlay-specification-aware command:
 
 \begin{command}{\transduration\sarg{overlay specification}\marg{number of seconds}}
   In full screen mode, show the slide for \meta{number of seconds}.
-  In zero is specified, the slide is shown as short as possible. This
+  If zero is specified, the slide is shown as short as possible. This
   can be used to create interesting pseudo-animations.
   \example|\transduration<2>{1}|
 \end{command}

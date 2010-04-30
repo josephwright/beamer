@@ -111,7 +111,7 @@ theme, all of the large rectangular areas are transparent.
   otherwise. Because of this, you can load another inner theme first
   and then load this theme afterwards.
 
-  This theme is a ``dirty'' an inner theme since it messes with things
+  This theme is a ``dirty'' inner theme since it messes with things
   that an inner theme should not mess with. In particular, it changes
   the width of the left sidebar to a large value. However, you can
   still use it together with most outer themes.
@@ -195,7 +195,7 @@ color theme.
 
   The following \meta{options} can be given:
   \begin{itemize}
-  \item \declare{|footline=empty|} suppressed the footline (default).
+  \item \declare{|footline=empty|} suppresses the footline (default).
   \item \declare{|footline=authorinstitute|} shows the author's name
     and the institute in the footline.
   \item \declare{|footline=authortitle|} shows the author's name
@@ -229,7 +229,7 @@ color theme.
 
 \begin{outerthemeexample}[\oarg{options}]{sidebar}
   In this layout, a sidebar is shown that contains a small table of
-  contents with the current section, subsection, or subsection hilighted. The
+  contents with the current section, subsection, or subsection highlighted. The
   frame title is vertically centered in a rectangular area at the top
   that always occupies the same amount of space in all
   frames. Finally, the logo is shown in the ``corner'' resulting from
@@ -403,7 +403,7 @@ We can take this example a step further. It would be nicer if we did
 not have to ``hardwire'' the color of the frametitle, but if this
 color could be specified independently of the code for the
 template. This way, a color theme could change this color. Since this
-a problem that is common to most templates, \beamer\ will
+is a problem that is common to most templates, \beamer\ will
 automatically setup the \beamer-color |frametitle| when the template
 |frametitle| is used. Thus, we can remove the |\color{red}| command if
 we set the \beamer-color |frametitle| to red at some point.
@@ -559,13 +559,13 @@ Your answer is \usebeamertemplate*{answer}.
 
   If you specify a \meta{predefined option}, this command behaves
   slightly differently. In this case, someone has used the command
-  |\defbeamertemplate| to predefined a template for you. By giving the
+  |\defbeamertemplate| to predefine a template for you. By giving the
   name of this predefined template as the optional parameter
   \meta{predefined option}, you cause the template \meta{element name}
   to be set to this template.
 
   \example |\setbeamertemplate{bibliography item}[book]| causes the
-  bibliography items to become little book icons. This command cause a
+  bibliography items to become little book icons. This command causes a
   subsequent call of |\usebeamertemplate{bibliography item}| to insert
   the predefined code for inserting a book.
 

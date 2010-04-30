@@ -31,7 +31,7 @@ of a presentation.
 \beamer\ comes with a set of font themes. When you use such a theme,
 certain fonts are changed as described below. You can use several font
 themes in concert. For historical reasons, you cannot change all
-aspects of the fonts used using font themes---in same cases special
+aspects of the fonts used using font themes---in some cases special
 commands and options are needed, which are described in the next
 subsection.
 
@@ -46,7 +46,7 @@ explained in the next subsection.
   The default font theme installs a sans serif font for all text of
   the presentation. The default theme installs different font sizes
   for things like titles or head- and footlines, but does not use
-  boldface or italics for ``hilighting.'' To change some or all text
+  boldface or italics for ``highlighting.'' To change some or all text
   to a serif font, use the |serif| theme.
 
   Note: The command |\mathrm| will always produce upright (not
@@ -97,7 +97,7 @@ explained in the next subsection.
     causes mathematical text still to be typeset using sans
     serif. This option only makes sense if you also use the
     |stillsansseriftext| option since sans serif math inside serif
-    text look silly.
+    text looks silly.
   \item
     \declare{|stillsansserifsmall|}
     will cause ``small'' text to be still typeset using sans
@@ -120,7 +120,7 @@ explained in the next subsection.
     ``terrible typographic effect'' if you choose the wrong fonts
     combinations or sizes. You'll need some typographic experience to
     judge this correctly. If in doubt, try asking someone who should
-    now.
+    know.
   \item
     \declare{|onlymath|}
     is a short-cut for selecting all of the above options except for
@@ -207,7 +207,7 @@ As pointed out in Section~\ref{section-sizes}, measuring the default
 font size in points is not really a good idea for
 presentations. Nevertheless, \beamer\ does just that, setting the
 default font size to 11pt as usual. This may seem ridiculously small, but
-the actual size of each frame is just 128mm times 96mm and the viewer
+the actual size of each frame is just 128mm by 96mm and the viewer
 application enlarges the font. By specifying a default font size
 smaller than 11pt you can put more onto each slide, by specifying a
 larger font size you can fit on less.
@@ -225,7 +225,7 @@ To specify the font size, you can use the following class options:
 \end{classoption}
 
 \begin{classoption}{10pt}
-  If you really need to fit much onto each frame, use this
+  If you really need to fit more onto each frame, use this
   option. Works without |extsize|.
 \end{classoption}
 
@@ -384,7 +384,7 @@ seldomly have to use this command.
   name}, but unspecified attributes remain unchanged. For example, if
   the font specifies that the font should be ``bold,'' but specifies
   nothing else, and if the current font is large, then
-  |\usebeamerfont| causes the the current font to become large and
+  |\usebeamerfont| causes the current font to become large and
   bold.
 
   In the starred version of this command, the font is first reset
@@ -432,7 +432,7 @@ changing \beamer-fonts.
     been warned.
 
     Note that there is a different between
-    specifying and empty command and specifying |\normalsize|: Making
+    specifying an empty command and specifying |\normalsize|: Making
     the size attribute ``empty'' means that the font size should not
     be changed when this font is used, while specifying |\normalsize|
     means that the size should be set to the normal size whenever this
@@ -443,18 +443,18 @@ changing \beamer-fonts.
     what  kind of font you use, not  all font sizes may be
     available. Also,  certain font sizes are much less desirable than
     other ones; the standard commands take care of choosing
-    appropriate sizes for you. Do not use this options unless you have
+    appropriate sizes for you. Do not use this option unless you have
     a good reason. This command has the same effect as
     |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.
   \item \declare{|shape=|\meta{shape command}} sets the shape
-    attribute of the font. The command should be command like
+    attribute of the font. The command should be a command like
     |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
   \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets
     the shape attribute of the font using the \LaTeX's abbreviations
     for attributes. This command has the same effect as
     |shape={\fontshape|\marg{shape attributes abbreviation}|}|.
   \item \declare{|series=|\meta{series command}} sets the ``series''
-    attribute of the font. The command should be command like
+    attribute of the font. The command should be a command like
     |\bfseries|.
   \item \declare{|series*=|\marg{series attribute abbreviation}} has
     the same effect as |series={\fontseries|\marg{series attributes
@@ -468,7 +468,7 @@ changing \beamer-fonts.
     \meta{family name} is, normally, a somewhat cryptic abbreviation
     of a font family name that installed somewhere on the system. For
     example, the \meta{family name} for Times happens to be
-    |ptm|. No one can remember these names, so its perfectly normal if
+    |ptm|. No one can remember these names, so it's perfectly normal if
     you have to look them up laboriously.
   \item \declare{|parent=|\marg{parent list}} specifies a list of
     parent fonts. When the \beamer-font is used, the parents are used

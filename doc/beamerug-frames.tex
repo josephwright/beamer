@@ -36,7 +36,7 @@ otherwise it contains only one slide.
   to be shown. If left out, the number is calculated automatically.
   The \meta{environment contents} can be normal \LaTeX\ text, but may not contain
   |\verb| commands or |verbatim| environments or any environment that
-  changes the character codes, unless the |fragile| options
+  changes the character codes, unless the |fragile| option
   is given.
 
   The optional \meta{title} is detected by an opening brace, that is,
@@ -266,7 +266,7 @@ otherwise it contains only one slide.
     To determine the end of the frame, the following rule is used: The
     first occurence of a single line containing exactly
     |\end{|\meta{frame environment name}|}| ends the frame. The
-    \meta{environment name} normally |frame|, but it can be changed
+    \meta{environment name} is normally |frame|, but it can be changed
     using the |environment| option. This special  rule is needed since
     the frame contents is, after all, not interpreted when it is
     gathered.
@@ -597,11 +597,11 @@ following templates:
 
     \iteminsert{\insertsectionnavigation}\marg{width}
     Inserts a vertical navigation bar containing all sections, with the
-    current section hilighted.
+    current section highlighted.
 
     \iteminsert{\insertsectionnavigationhorizontal}\marg{width}\marg{left insert}\marg{right insert}
     Inserts a horizontal navigation bar containing all sections, with
-    the current section hilighted. The \meta{left insert} will be
+    the current section highlighted. The \meta{left insert} will be
     inserted to the left of the sections, the \marg{right insert} to the
     right. By inserting a triple fill (a
     |filll|) you can flush the bar to the left or right.
@@ -659,7 +659,7 @@ following templates:
 
     \iteminsert{\insertsubsectionnavigation}\marg{width}
     Inserts a vertical navigation bar containing all subsections of the
-    current section, with the current subsection hilighted.
+    current section, with the current subsection highlighted.
 
     \iteminsert{\insertsubsectionnavigationhorizontal}\marg{width}\marg{left
       insert}\marg{right insert}
@@ -788,7 +788,7 @@ table of contents, but they could also be added for purely aesthetic
 reasons.
 
 When you install a sidebar template, you must explicitly specify the
-horizontal size of the sidebar using the command |\setbeamesize| with
+horizontal size of the sidebar using the command |\setbeamersize| with
 the option |sidebar left width| or |sidebar right width|. The vertical
 size is determined automatically. Each sidebar has its own background
 canvas, which can be setup using the sidebar canvas templates.
@@ -848,7 +848,7 @@ next to the left sidebar, you might write
     the sidebar, protruding to the left into the text.
     \itemoption{sidebar theme}{}
     This option is available, if the outer theme |sidebar| is loaded
-    with the |left| option. In this case, this options is selected
+    with the |right| option. In this case, this option is selected % FIXME: unsure
     automatically. It shows a mini table of contents in the sidebar.
   \end{templateoptions}
 \end{element}
@@ -861,7 +861,7 @@ next to the left sidebar, you might write
   \beamer-color |sidebar left| will have been installed.
 
   \begin{templateoptions}
-  \item{default}{}
+    \itemoption{default}{}
     uses a large rectangle colored with |sidebar.bg| as the sidebar
     canvas. However, if the background of |sidebar| is empty, nothing
     is drawn and the canvas is ``transparent.''
@@ -1035,12 +1035,12 @@ from where you ``come.''
 \begin{element}{mini frame in current subsection}\yes\no\no
   This template is used to render the mini frame of frames in the
   current subsection that are not the current frame. The
-  \beamer-color/-font |mini frame| is installed prior to the usage of
+  \beamer-color/-font |mini frame| installed prior to the usage of
   this template is invoked.
 \end{element}
 
 \begin{element}{mini frame in other subsection}\yes\no\no
-  This template is used to render mini frames of frame from
+  This template is used to render mini frames of frames from
   subsections other than the current one.
   \begin{templateoptions}
     \itemoption{default}{\oarg{percentage}}
@@ -1274,7 +1274,7 @@ by default. The following symbols are shown:
 
 Clicking on the left arrow next to an icon always jumps to (the
 last slide of) the previous slide, frame, subsection, or
-section. Clicking on the right arrow next to an icon always jump to
+section. Clicking on the right arrow next to an icon always jumps to
 (the first slide of) the next slide, frame, subsection, or section.
 
 Clicking \emph{on} any of these icons has different effects:
@@ -1322,7 +1322,7 @@ adjusting the |navigation symbols| template.
   shown. ``Three-star-mode'' means that the command
   |\usebeamertemplate***| is used.
 
-  Note that, although it may \emph{look} like that the symbols are part of
+  Note that, although it may \emph{look} like the symbols are part of
   the footline, they are more often part of an invisible right
   sidebar.
 
@@ -1379,7 +1379,7 @@ To install a logo, use the following command:
 \begin{command}{\logo\marg{logo text}}
   The \meta{logo text} is usually a command for including a graphic,
   but it can be any text. The position where the logo is inserted is
-  determined by the current theme, you cannot (currently) specify this
+  determined by the current theme; you cannot (currently) specify this
   position directly.
 
   \example
@@ -1421,7 +1421,7 @@ be specified with the following command:
   frame title}\marg{frame title text}}
   You should end the \meta{frame title text} with a period, if the title is a
   proper sentence. Otherwise, there should not be a period. The
-  \meta{short frame title} is normally not shown, but its available
+  \meta{short frame title} is normally not shown, but it's available
   via the |\insertshortframetitle| command. The \meta{overlay
   specification} is mostly useful for suppressing the frame title in
   |article| mode.
@@ -1453,7 +1453,7 @@ be specified with the following command:
   \articlenote
   By default, this command creates a new paragraph in |article| mode,
   entitled \meta{frame title text}. Using the \meta{overlay
-    specification} makes it easy to suppress the a frame title once in
+    specification} makes it easy to suppress a frame title once in
   a while. If you generally wish to suppress \emph{all} frame
   titles in |article| mode, say |\setbeamertemplate<article>{frametitle}{}|.
 
@@ -1496,7 +1496,7 @@ be specified with the following command:
       \itemoption{sidebar theme}{}
       This option is available if the outer theme |sidebar| is loaded
       and if the headline height is not set to 0pt (which can be done
-      using and option of the |sidebar| theme). With this option, the
+      using an option of the |sidebar| theme). With this option, the
       frame title is put inside a rectangular area that is part of the
       headline (some ``negative space'' is used to raise the frame title
       into this area). The background of the color |frametitle| is not
@@ -1504,7 +1504,7 @@ be specified with the following command:
 
       \itemoption{smoothbars theme}{}
       This option is available if the outer theme |smoothbars| is
-      loaded. It typesets the frametitle on a colored bar with the
+      loaded. It typesets the frame title on a colored bar with the
       background color of |frametitle|. The top and bottom of the bar
       smoothly blend over to backgrounds above and below.
 
@@ -1669,7 +1669,7 @@ or whatever.
 
 \subsection{Margin Sizes}
 
-The ``paper size'' of a \beamer\ presentation is fixed to 128mm times
+The ``paper size'' of a \beamer\ presentation is fixed to 128mm by
 96mm. The aspect ratio of this size is 4:3, which is exactly what most
 beamers offer these days. It is the job of the
 presentation program (like |acroread| or |xpdf|) to display the slides
@@ -1736,7 +1736,7 @@ introduced (despite the fact that a specification like |<4->|
 might suggest that more than four slides would be possible).
 
 You can also specify the number of slides in the frame ``by hand.'' To
-do so, you pass an overlay specification the |\frame| command. The
+do so, you pass an overlay specification to the |\frame| command. The
 frame will contain only the slides specified in this
 argument. Consider the following example.
 
@@ -1752,7 +1752,7 @@ slide number~2,'' the third ``This is slide number~4,'' and the fourth
 ``This is slide number~5.''
 
 A useful specification is just |<0>|, which causes the frame to
-have to no slides at all. For example, |\begin{frame}<handout:0>| causes
+have no slides at all. For example, |\begin{frame}<handout:0>| causes
 the frame to be suppressed in the handout version, but to be shown
 normally in all other versions. Another useful specification is
 |<beamer>|, which causes the frame to be shown normally in |beamer|

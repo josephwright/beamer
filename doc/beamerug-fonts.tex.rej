@@ -1,0 +1,51 @@
+--- beamerug-fonts.tex
++++ beamerug-fonts.tex
+@@ -93,7 +93,7 @@
+     causes mathematical text still to be typeset using sans
+     serif. This option only makes sense if you also use the
+     |stillsansseriftext| option since sans serif math inside serif
+-    text look silly. 
++    text looks silly. 
+   \item
+     \declare{|stillsansserifsmall|}
+     will cause ``small'' text to be still typeset using sans
+@@ -116,7 +116,7 @@
+     ``terrible typographic effect'' if you choose the wrong fonts
+     combinations or sizes. You'll need some typographic experience to
+     judge this correctly. If in doubt, try asking someone who should
+-    now. 
++    know. 
+   \item
+     \declare{|onlymath|}
+     is a short-cut for selecting all of the above options except for
+@@ -203,7 +203,7 @@
+ font size in points is not really a good idea for
+ presentations. Nevertheless, \beamer\ does just that, setting the
+ default font size to 11pt as usual. This may seem ridiculously small, but 
+-the actual size of each frame is just 128mm times 96mm and the viewer
++the actual size of each frame is just 128mm by 96mm and the viewer
+ application enlarges the font. By specifying a default font size
+ smaller than 11pt you can put more onto each slide, by specifying a
+ larger font size you can fit on less.
+@@ -439,18 +439,18 @@
+     what  kind of font you use, not  all font sizes may be
+     available. Also,  certain font sizes are much less desirable than
+     other ones; the standard commands take care of choosing
+-    appropriate sizes for you. Do not use this options unless you have
++    appropriate sizes for you. Do not use this option unless you have
+     a good reason. This command has the same effect as
+     |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.  
+   \item \declare{|shape=|\meta{shape command}} sets the shape
+-    attribute of the font. The command should be command like
++    attribute of the font. The command should be a command like
+     |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
+   \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets
+     the shape attribute of the font using the \LaTeX's abbreviations
+     for attributes. This command has the same effect as
+     |shape={\fontshape|\marg{shape attributes abbreviation}|}|.  
+   \item \declare{|series=|\meta{series command}} sets the ``series''
+-    attribute of the font. The command should be command like
++    attribute of the font. The command should be a command like
+     |\bfseries|.
+   \item \declare{|series*=|\marg{series attribute abbreviation}} has
+     the same effect as |series={\fontseries|\marg{series attributes

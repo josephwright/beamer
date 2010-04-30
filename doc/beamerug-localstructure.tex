@@ -153,7 +153,7 @@ or come last as in |\item[Cat]<1>|.
   \begin{element}{itemize subitem}\yes\yes\yes
     \colorfontparents{subitem}
     Like |itemize item|, only for second-level items. An
-    item of an itemize inside an enumerate counts a second-level item.
+    item of an itemize inside an enumerate counts as a second-level item.
   \end{element}
 
   \begin{element}{itemize subsubitem}\yes\yes\yes
@@ -315,7 +315,7 @@ an |enumerate| is typeset.
   |itemize| or |enumerate| environment.
 \end{element}
 There exist corresponding templates like
-|itemize/enumerate subbody being| from second- and third-level itemize
+|itemize/enumerate subbody begin| for second- and third-level itemize
 or enumerates.
 
 \begin{element}{items}\semiyes\no\no
@@ -402,7 +402,7 @@ or enumerates.
 
 
 In order to simplify changing the color or font of items, the
-different kinds of items inherit form or just use the following
+different kinds of items inherit from or just use the following
 ``general'' \beamer-color and fonts:
 
 \begin{element}{item}\no\yes\yes
@@ -421,7 +421,7 @@ different kinds of items inherit form or just use the following
 
   This is a special ``version'' of the |item| color and font that
   should be used by templates that render items with text (as in an
-  enumeration) and which to ``project'' this text onto something like
+  enumeration) and which ``project'' this text onto something like
   a ball or a square or whatever. While the normal |item| color
   typically has a transparent background, the |item projected|
   typically has a colored background and, say, a white foreground.
@@ -493,18 +493,18 @@ appearance of a document by changing the theme.
 
   \begin{element}{local structure}\no\yes\no
     This color should be used to typeset structural elements that change
-    their color according to the ``local environment.'' For example, the
-    color of an item ``button'' in an |itemize| environment changes its
+    their color according to the ``local environment.'' For example, 
+    an item ``button'' in an |itemize| environment changes its
     color according to circumstances. If it is used inside an example
     block, it should have the |example text| color; if it is currently
     ``alerted'' it should have the |alerted text| color. This color
-    will setup by certain environments to have the color that should be
+    is setup by certain environments to have the color that should be
     used to typset things like item buttons. Since the color used for
     items, |item|, inherits from this color by default, items
     automatically change their color according to the current
     situation.
 
-    If you write your own environment in which the item buttons are
+    If you write your own environment in which the item buttons and
     similar structural elements should have a different color, you
     should change the color |local structure| inside these
     environments.
@@ -542,13 +542,13 @@ appearance of a document by changing the theme.
 \end{environment}
 
 
-\begin{command}{\alert\sarg{overlay specification}\marg{hilighted text}}
-  The given text is hilighted, typically by coloring the text red. If
+\begin{command}{\alert\sarg{overlay specification}\marg{highlighted text}}
+  The given text is highlighted, typically by coloring the text red. If
   the \meta{overlay specification} is present, the command only has an
   effect on the specified slides.
   \example |This is \alert{important}.|
 
-  Internally, this command just puts the \emph{hilighted text} inside
+  Internally, this command just puts the \emph{highlighted text} inside
   an |alertenv|.
 
   \articlenote

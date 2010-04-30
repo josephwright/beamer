@@ -1,0 +1,32 @@
+--- beamerug-tutorial.tex
++++ beamerug-tutorial.tex
+@@ -199,10 +199,10 @@
+ not quite true: each |\subsection| command seems to insert a frame
+ containing a table of contents into the presentation. Doubling back he
+ finds the command that causes this: The |\AtBeginSubsection| inserts a
+-frame with only the current subsection hilighted at the beginning of
++frame with only the current subsection highlighted at the beginning of
+ each section. If Euclid does not like this, he can just delete the
+ whole |\AtBeginSubsection| stuff and the table of contents at the
+-beginning of each subsection disappear. 
++beginning of each subsection disappears. 
+ 
+ The |\section| and |\subsection| commands take optional short
+ arguments. These short arguments are used whenever a short form of the
+@@ -477,13 +477,13 @@
+ fortunately already finds in the solution file. Having the
+ bibliography in the appendix does not quite suit Euclid, so he removes
+ the |\appendix| command. He also notices |<presentation>| overlay
+-specification and finds them a bit strange, but they do seem to hurt
++specifications and finds them a bit strange, but they don't seem to hurt
+ either. Hopefully they do something useful. His bibliography looks
+ like this:
+ \begin{verbatim}
+   \begin{thebibliography}{10}
+-  \bibitem{Goldback1742}[Goldbach, 1742]
+-    Christian Goldback.
++  \bibitem{Goldbach1742}[Goldbach, 1742]
++    Christian Goldbach.
+     \newblock A problem we should try to solve before the ISPN '43 deadline, 
+     \newblock \emph{Letter to Leonhard Euler}, 1742.
+   \end{thebibliography}
