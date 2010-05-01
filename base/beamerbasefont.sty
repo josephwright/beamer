@@ -11,6 +11,11 @@
 \ProvidesPackageRCS $Header$
 
 
+%
+% Use lmodern instead of computer modern if available.
+%
+\IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
+
 \RequirePackage{amssymb}
 % For \blacktriangleright; not explicitly required by article, but can cause
 % weird situations if users find that symbols works in presentation, but not
@@ -66,13 +71,8 @@
 
 
 %
-% Use lmodern if available
-%
-\IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
-
-%
-% CMR font size stuff - redefinition for oversized fonts. Not used if
-% other packages like lmodern kick in.
+% computer modern font size stuff - redefinition for oversized fonts.
+% Not used if other packages like lmodern kick in.
 %
 \def\EC@family#1#2#3#4#5{%
   \DeclareFontShape{#1}{#2}{#3}{#4}%
