@@ -16,7 +16,8 @@
 % weird situations if users find that symbols works in presentation, but not
 % in article mode.
 
-\mode<presentation>
+\mode
+<presentation>
 
 %
 % Font theme stuff
@@ -68,6 +69,7 @@
 %
 % Font size stuff - redefinition for oversized fonts. Not used if
 % other packages like lmodern kick in.
+% TODO: use lmodern by default if available
 %
 \def\EC@family#1#2#3#4#5{%
   \DeclareFontShape{#1}{#2}{#3}{#4}%
@@ -312,5 +314,3 @@
 
 \mode
 <all>
-
-

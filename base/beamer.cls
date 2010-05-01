@@ -365,5 +365,3 @@
 
 % Compatibility stuff
 \csname beamer@loadlater\endcsname
-
-
