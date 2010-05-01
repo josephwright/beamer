@@ -264,6 +264,12 @@
   \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
   \def\beamer@initfirstlineunskip{}%
 }
+
+\newif\ifbeamer@noframenumbering
+\beamer@noframenumberingfalse
+
+\define@key{beamerframe}{noframenumbering}[true]{\beamer@noframenumberingtrue}
+
 \define@key{beamerframe}{environment}{\def\beamer@frameenvironmentsubst{#1}}
 
 \define@key{beamerframe}{typeset second}[true]{\csname beamer@dosecondmode#1\endcsname}
@@ -425,7 +431,11 @@
   \setkeys{beamerframe}{environment=frame}%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
-  \refstepcounter{framenumber}%
+  \ifbeamer@noframenumbering%
+    \beamer@noframenumberingfalse%
+  \else%
+    \refstepcounter{framenumber}%
+  \fi%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\beamer@framestartpage{}%
   \gdef\beamer@whichframes{#1}%
