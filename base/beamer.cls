@@ -287,8 +287,12 @@
     }
   \fi
 }
-\DeclareOptionBeamer{utf8}{\ExecuteOptionsBeamer{ucs}%
-  \g@addto@macro\beamer@loaducs{\RequirePackage[utf8]{inputenc}}%
+\DeclareOptionBeamer{utf8x}{\ExecuteOptionsBeamer{ucs}%
+  \g@addto@macro\beamer@loaducs{\RequirePackage[utf8x]{inputenc}}%
+}
+\DeclareOptionBeamer{utf8}{
+  \ClassWarning{beamer}{This option works no longer loads ucs.}
+  \RequirePackage[utf8]{inputenc}
 }
 
 %
