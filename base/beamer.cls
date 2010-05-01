@@ -297,21 +297,32 @@
 }
 
 %
-% Geometry
+% Geometry: allows 16:10, 16:9, 14:9, 5:4 and 4:3 (default 4:3).
+% Default value is set right after declaring width and height
+% because it doesn't work otherwise.
 %
-\newlength\beamer@paperwidth
-\beamer@paperwidth 12.80cm
-\newlength\beamer@paperheight
-\beamer@paperheight 9.60cm
+\newlength\beamer@paperwidth%
+\beamer@paperwidth 12.80cm%
+\newlength\beamer@paperheight%
+\beamer@paperheight 9.60cm%
 
-\DeclareOptionBeamer{169layout}{%
-  \beamer@paperwidth 16.00cm
-  \beamer@paperheight 9.00cm
-}
-
-\DeclareOptionBeamer{1610layout}{%
-  \beamer@paperwidth 16.00cm
-  \beamer@paperheight 10.00cm
+\DeclareOptionBeamer{screenratio}[43]{%
+  \ifnum#1=1610%
+    \beamer@paperwidth 16.00cm%
+    \beamer@paperheight 10.00cm%
+  \else\ifnum#1=169%
+    \beamer@paperwidth 16.00cm%
+    \beamer@paperheight 9.00cm%
+  \else\ifnum#1=149%
+    \beamer@paperwidth 14.00cm%
+    \beamer@paperheight 9.00cm%
+  \else\ifnum#1=54%
+    \beamer@paperwidth 12.50cm%
+    \beamer@paperheight 10.00cm%
+  \else\ifnum#1=43%
+    \beamer@paperwidth 12.80cm%
+    \beamer@paperheight 9.60cm%
+  \fi\fi\fi\fi\fi%
 }
 
 \RequirePackage[%
