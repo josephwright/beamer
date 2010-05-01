@@ -187,7 +187,7 @@
     \def\insertsection{\expandafter\hyperlink\sectionlink}%
     \def\insertsubsection{}%
     \def\insertsubsubsection{}%
-    \def\insertsectionhead{#1}%
+    \def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
     \def\insertsubsectionhead{}%
     \def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
@@ -261,7 +261,7 @@
     \edef\subsectionlink{{Navigation\the\c@page}{\noexpand\subsecname}}%
     \def\insertsubsection{\expandafter\hyperlink\subsectionlink}%
     \def\insertsubsubsection{}%
-    \def\insertsubsectionhead{#1}%
+    \def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
     \def\insertsubsubsectionhead{}%
     \Hy@writebookmark{\the\c@subsection}{#2}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
     \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
