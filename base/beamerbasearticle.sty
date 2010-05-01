@@ -11,17 +11,21 @@
 \ProvidesPackageRCS $Header$
 
 
-\newif\ifbeamer@articlexcolor
-\beamer@articlexcolortrue
+\newif\ifbeamer@articleutf
+\beamer@articleutffalse
 
 \newif\ifbeamer@articlehyperref
-\beamer@articlehyperreftrue
+\beamer@articlehyperreffalse
+
+\newif\ifbeamer@articlexcolor
+\beamer@articlexcolortrue
 
 \newif\ifbeamer@articleactive
 \beamer@articleactivefalse
 
+\DeclareOption{utf8}{\beamer@articleutftrue}
+\DeclareOption{hyperref}{\beamer@articlehyperreftrue}
 \DeclareOption{noxcolor}{\beamer@articlexcolorfalse}
-\DeclareOption{nohyperref}{\beamer@articlehyperreffalse}
 \DeclareOption{nodefaultblocks}{\beamer@blocksfalse}% obsolete. use notheorems
 \DeclareOption{notheorems}{\beamer@blocksfalse}
 \DeclareOption{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}
@@ -33,11 +37,18 @@
 \RequirePackage{beamerbaseoptions}
 % For option management
 
+\ifbeamer@articleutf
+  \RequirePackage[utf8]{inputenc}
+\fi
+
 \ifbeamer@articlehyperref
   \RequirePackage{hyperref}
   % For hyperlinks
 
   \hypersetup{pdfcreator={LaTeX with beamer class version \beamer@version\space (article mode)}}
+  \ifbeamer@articleutf
+    \hypersetup{unicode=true}
+  \fi
 \fi
 
 \ifbeamer@articlexcolor

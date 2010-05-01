@@ -15,8 +15,10 @@
 \RequirePackage{beamerbasemodes}
 % Setup modes and check for article option
 
+
+\DeclareOption{utf8}{\PassOptionsToPackage{utf8}{beamerbasearticle}}
+\DeclareOption{hyperref}{\PassOptionsToPackage{hyperref}{beamerbasearticle}}
 \DeclareOption{noxcolor}{\PassOptionsToPackage{noxcolor}{beamerbasearticle}}
-\DeclareOption{nohyperref}{\PassOptionsToPackage{nohyperref}{beamerbasearticle}}
 \DeclareOption{notheorems}{\PassOptionsToPackage{notheorems}{beamerbasearticle}}
 \DeclareOption{noamsthm}{\PassOptionsToPackage{noamsthm}{beamerbasearticle}}
 \DeclareOption{envcountsect}{\PassOptionsToPackage{envcountsect}{beamerbasearticle}}

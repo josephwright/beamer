@@ -293,6 +293,7 @@
 \DeclareOptionBeamer{utf8}{
   \ClassWarning{beamer}{This option works no longer loads ucs.}
   \RequirePackage[utf8]{inputenc}
+  \PassOptionsToPackage{unicode}{hyperref}
 }
 
 %
