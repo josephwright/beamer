@@ -126,16 +126,14 @@
 % Colored boxes
 %
 
-\def\beamer@colbox@ls{0pt}
-\def\beamer@colbox@rs{0pt}
 \define@key{beamercolbox}{wd}{\def\beamer@colbox@wd{#1}}
 \define@key{beamercolbox}{ht}{\def\beamer@colbox@ht{#1}}
 \define@key{beamercolbox}{dp}{\def\beamer@colbox@dp{#1}}
 \define@key{beamercolbox}{leftskip}{\def\beamer@colbox@ls{#1}}
 \define@key{beamercolbox}{rightskip}{\def\beamer@colbox@rs{#1}}
-\define@key{beamercolbox}{left}[]{\g@addto@macro\beamer@colbox@rs{plus1fill}}
-\define@key{beamercolbox}{center}[]{\g@addto@macro\beamer@colbox@ls{plus1fill}\g@addto@macro\beamer@colbox@rs{plus1fill}}
-\define@key{beamercolbox}{right}[]{\g@addto@macro\beamer@colbox@ls{plus1fill}}
+\define@key{beamercolbox}{left}[]{\def\beamer@colbox@ls{0pt}\def\beamer@colbox@rs{0pt plus1fill}}
+\define@key{beamercolbox}{center}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt plus1fill}}
+\define@key{beamercolbox}{right}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt}}
 \define@key{beamercolbox}{sep}{\def\beamer@colbox@sep{#1}}
 \define@key{beamercolbox}{colsep}{\def\beamer@colbox@colsep{#1}}
 \define@key{beamercolbox}{colsep*}{\def\beamer@colbox@colseps{#1}}
