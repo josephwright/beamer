@@ -172,7 +172,7 @@
     \refstepcounter{section}%
     \beamer@ifempty{#2}%
     {\long\def\secname{#1}}%
-    {\advance\beamer@tocsectionnumber by 1\relax%
+    {\global\advance\beamer@tocsectionnumber by 1\relax%
       \long\def\secname{#2}\addtocontents{toc}{\protect\beamer@sectionintoc{\the\c@section}{#2}{\the\c@page}{\the\c@part}%
         {\the\beamer@tocsectionnumber}}}%
     {\let\\=\relax\xdef\sectionlink{{Navigation\the\c@page}{\noexpand\secname}}}%
