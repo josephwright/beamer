@@ -635,6 +635,9 @@
   \beamer@animwd=#2\relax%
   \setbox\beamer@areabox=\vbox to#2\bgroup%
   \strut\begin{minipage}[t]{#1}%
+  % Make the minipage behave like the main part of the slide
+  \normalfont
+  \raggedright
   }
   {%
   \end{minipage}\vfil%
