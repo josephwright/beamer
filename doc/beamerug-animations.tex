@@ -18,41 +18,17 @@
 
 \label{section-multimedia}
 
-If you have created an animation using some external
-program (like a renderer), you can use the capabilities of the
-presentation program (like the Acrobat Reader) to show the
-animation. Unfortunately, currently there is no portable way of doing
-this and even the Acrobat Reader does not support this feature on all
-platforms.
+If you have created an animation using some external program (like a renderer), you can use the capabilities of the presentation program (like the Acrobat Reader) to show the animation. Unfortunately, currently there is no portable way of doing this and even the Acrobat Reader does not support this feature on all platforms.
 
-To include an animation in a presentation, you can use, for example,
-the package |multimedia.sty| which is part of the \beamer\
-package. You have to include this package explicitly. Despite being
-distributed as part of the \beamer\ distribution, this package is
-perfectly self-sufficient and can be used independently of \beamer.
+To include an animation in a presentation, you can use, for example, the package |multimedia.sty| which is part of the \beamer\ package. You have to include this package explicitly. Despite being distributed as part of the \beamer\ distribution, this package is perfectly self-sufficient and can be used independently of \beamer.
 
 \begin{package}{{multimedia}}
-  A stand-alone package that implements several commands for including
-  external animation and sound files in a \pdf\ document. The package
-  can be used together with both |dvips| plus |ps2pdf| and |pdflatex|,
-  though the special sound support is available only in |pdflatex|.
+  A stand-alone package that implements several commands for including external animation and sound files in a \pdf\ document. The package can be used together with both |dvips| plus |ps2pdf| and |pdflatex|, though the special sound support is available only in |pdflatex|.
 
-  When including this package, you must also include the |hyperref|
-  package. Since you will typically want to include |hyperref| only at
-  the very end of the preamble, |multimedia| will not include
-  |hyperref| itself. However, |multimedia| can be included both before
-  and after |hyperref|. Since \beamer\ includes |hyperref|
-  automatically, you need not worry about this when creating a
-  presentation using \beamer.
+  When including this package, you must also include the |hyperref| package. Since you will typically want to include |hyperref| only at the very end of the preamble, |multimedia| will not include |hyperref| itself. However, |multimedia| can be included both before and after |hyperref|. Since \beamer\ includes |hyperref| automatically, you need not worry about this when creating a presentation using \beamer.
 \end{package}
 
-For including an animation in a \pdf\ file, you can use the command
-|\movie|, which is explained below. Depending on the used options,
-this command will either setup the \pdf\ file such that the viewer
-application (like the Acrobat Reader) itself will try to play the
-movie or that an external program will be called. The latter approach,
-though much less flexible, must be taken if the viewer application is
-unable to display the movie itself.
+For including an animation in a \pdf\ file, you can use the command |\movie|, which is explained below. Depending on the used options, this command will either setup the \pdf\ file such that the viewer application (like the Acrobat Reader) itself will try to play the movie or that an external program will be called. The latter approach, though much less flexible, must be taken if the viewer application is unable to display the movie itself.
 
 \begin{command}{\movie\oarg{options}\marg{poster text}\marg{movie
   filename}}

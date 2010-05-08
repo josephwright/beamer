@@ -12,89 +12,57 @@
 
 \subsection{Compatibility with Other Packages and Classes}
 
-When using certain packages or classes together with the |beamer|
-class, extra options or precautions may be necessary.
+When using certain packages or classes together with the |beamer| class, extra options or precautions may be necessary.
 
 \begin{package}{{AlDraTex}}
-  Graphics created using AlDraTex must be treated like verbatim
-  text. The reason is that DraTex fiddles with catcodes and spaces
-  much like verbatim does. So, in order to insert a picture, either
-  add the |fragile| option to the frame or use the
-  |\defverbatim| command to create a box containing the picture.
+  Graphics created using AlDraTex must be treated like verbatim text. The reason is that DraTex fiddles with catcodes and spaces much like verbatim does. So, in order to insert a picture, either add the |fragile| option to the frame or use the |\defverbatim| command to create a box containing the picture.
 \end{package}
 
 \begin{package}{{alltt}}
-  Text in an |alltt| environment must be treated like verbatim
-  text. So add the |fragile| option to frames containing this
-  environment or use |\defverbatim|.
+  Text in an |alltt| environment must be treated like verbatim text. So add the |fragile| option to frames containing this environment or use |\defverbatim|.
 \end{package}
 
 \begin{package}{{amsthm}}
-  This package is automatically loaded since \beamer\ uses it for
-  typesetting theorems. If you do not wish it to be loaded, which can
-  be necessary especially in |article| mode if the package is
-  incompatible with the document class, you can use the class option
-  |noamsthm| to suppress its loading. See
-  Section~\ref{section-theorems} for more details.
+  This package is automatically loaded since \beamer\ uses it for typesetting theorems. If you do not wish it to be loaded, which can be necessary especially in |article| mode if the package is incompatible with the document class, you can use the class option |noamsthm| to suppress its loading. See Section~\ref{section-theorems} for more details.
 \end{package}
 
 \begin{package}{{babel}|[|\declare{|french|}|]|}
-  When using the |french| style, certain features that clash with the
-  functionality of the \beamer\ class will be turned off. For example,
-  enumerations are still produced the way the theme dictates, not the
-  way the |french| style does.
+  When using the |french| style, certain features that clash with the functionality of the \beamer\ class will be turned off. For example, enumerations are still produced the way the theme dictates, not the way the |french| style does.
 \end{package}
 
 \begin{package}{{babel}|[|\declare{|spanish|}|]|}
   \beamernote
-  When using the |spanish| style, certain features that clash with the
-  functionality of the \beamer\ class will be turned off. In particular,
-  the special behaviour of the pointed brackets |<| and |>| is
-  deactivated.
+  When using the |spanish| style, certain features that clash with the functionality of the \beamer\ class will be turned off. In particular, the special behaviour of the pointed brackets |<| and |>| is deactivated.
 
   \articlenote
-  To make the characters |<| and |>| active in |article| mode, pass
-  the option |activeospeccharacters| to the package
-  |beamerbasearticle|. This will lead to
-  problems with overlay specifications.
+  To make the characters |<| and |>| active in |article| mode, pass the option |activeospeccharacters| to the package |beamerbasearticle|. This will lead to problems with overlay specifications.
 \end{package}
 
 \begin{package}{{color}}
   \beamernote
-  The |color| package is automatically loaded by |beamer.cls|. This
-  makes it impossible to pass options to |color| in the preamble of
-  your document in the normal manner. To pass a \meta{list of options}
-  to |color|, you can use the following class option:
+  The |color| package is automatically loaded by |beamer.cls|. This makes it impossible to pass options to |color| in the preamble of your document in the normal manner. To pass a \meta{list of options} to |color|, you can use the following class option:
 
   \begin{classoption}{color={\normalfont\meta{list of options}}}
-    Causes the \meta{list of options} to be passed on to the |color|
-    package. If the \meta{list of options} contains more than one
-    option you must enclose it in curly brackets.
+  Causes the \meta{list of options} to be passed on to the |color| package. If the \meta{list of options} contains more than one option you must enclose it in curly brackets.
   \end{classoption}
 
   \articlenote
-  The |color| package is not loaded automatically if
-  |beamerarticle| is loaded with the |noxcolor| option.
+  The |color| package is not loaded automatically if |beamerarticle| is loaded with the |noxcolor| option.
 \end{package}
 
 \begin{package}{{colortbl}}
   \beamernote
-  With newer versions of |xcolor.sty|, you need to pass the option
-  |table| to |xcolor.sty| if you wish to use |colortbl|. See the notes
-  on |xcolor| below, on how to do this.
+  With newer versions of |xcolor.sty|, you need to pass the option |table| to |xcolor.sty| if you wish to use |colortbl|. See the notes on |xcolor| below, on how to do this.
 \end{package}
 
 \begin{package}{{CJK}}
   \beamernote
-  When using the |CJK| package for using Asian fonts, you must use the
-  class option \declare{|CJK|}. See |beamerexample4.tex| for an
-  example.
+  When using the |CJK| package for using Asian fonts, you must use the class option \declare{|CJK|}. See |beamerexample4.tex| for an example.
 \end{package}
 
 \begin{package}{{deluxetable}}
   \beamernote
-  The caption generation facilities of |deluxetable| are
-  deactivated. Instead, the caption template is used.
+  The caption generation facilities of |deluxetable| are deactivated. Instead, the caption template is used.
 \end{package}
 
 \begin{package}{{DraTex}}
@@ -103,53 +71,31 @@ class, extra options or precautions may be necessary.
 
 \begin{package}{{enumerate}}
   \articlenote
-  This package is loaded automatically in the |presentation| modes, but not
-  in the |article| mode. If you use its features, you have to load the
-  package ``by hand'' in the |article| mode.
+  This package is loaded automatically in the |presentation| modes, but not in the |article| mode. If you use its features, you have to load the package ``by hand'' in the |article| mode.
 \end{package}
 
 \begin{class}{{foils}}
-  If you wish to emulate the |foils| class using \beamer, please see
-  Section~\ref{section-foiltex}.
+  If you wish to emulate the |foils| class using \beamer, please see Section~\ref{section-foiltex}.
 \end{class}
 
 \begin{package}{{fontenc}|[|\declare{|T1|}|]|}
-  Use this option only with fonts that have outline fonts available in
-  the T1 encoding like Times or the |lmodern| fonts. In a standard
-  installation the standard Computer Modern fonts (the fonts Donald
-  Knuth originally designed and which are used by default) are
-  \emph{not} available in the T1 encoding. Using this  option with
-  them will result in very poor rendering of your presentation when
-  viewed with \pdf\ viewer applications like Acrobat or |xpdf|. To use
-  the Computer Modern fonts with the T1 encoding, use the package
-  |lmodern|.  See also Section~\ref{section-font-encoding}.
+  Use this option only with fonts that have outline fonts available in the T1 encoding like Times or the |lmodern| fonts. In a standard installation the standard Computer Modern fonts (the fonts Donald Knuth originally designed and which are used by default) are \emph{not} available in the T1 encoding. Using this option with them will result in very poor rendering of your presentation when viewed with \pdf\ viewer applications like Acrobat or |xpdf|. To use the Computer Modern fonts with the T1 encoding, use the package |lmodern|. See also Section~\ref{section-font-encoding}.
 \end{package}
 
 \begin{package}{{fourier}}
-  The package switches to a T1~encoding, but it does not redefine all
-  fonts such that outline fonts (non-bitmapped fonts) are used by
-  default. For example, the sans-serif text and the typewriter text
-  are not replaced. To use outline fonts for these, write
-  |\usepackage{lmodern}| \emph{before} including the |fourier|
-  package.
+  The package switches to a T1~encoding, but it does not redefine all fonts such that outline fonts (non-bitmapped fonts) are used by default. For example, the sans-serif text and the typewriter text are not replaced. To use outline fonts for these, write |\usepackage{lmodern}| \emph{before} including the |fourier| package.
 \end{package}
 
 \begin{package}{{HA-prosper}}
-  You cannot use this package with \beamer. However, you might try to
-  use the package |beamerprosper| instead, see
-  Section~\ref{section-prosper}.
+  You cannot use this package with \beamer. However, you might try to use the package |beamerprosper| instead, see Section~\ref{section-prosper}.
 \end{package}
 
 \begin{package}{{hyperref}}
   \beamernote
-  The |hyperref| package is automatically loaded by |beamer.cls| and
-  certain options are set up. In order to pass additional options to
-  |hyperref| or to override options, you can use the following class
-  option:
+  The |hyperref| package is automatically loaded by |beamer.cls| and certain options are set up. In order to pass additional options to |hyperref| or to override options, you can use the following class option:
 
   \begin{classoption}{hyperref={\normalfont\meta{list of options}}}
-    Causes the \meta{list of options} to be passed on to the |hyperref|
-    package.
+    Causes the \meta{list of options} to be passed on to the |hyperref| package.
 
     \example |\documentclass[hyperref={bookmarks=false}]{beamer}|
   \end{classoption}
@@ -157,69 +103,52 @@ class, extra options or precautions may be necessary.
   Alternatively, you can also use the |\hypersetup| command.
 
   \articlenote
-  In the |article| version, you must include |hyperref| manually if
-  you want to use it. It is not included automatically.
+  In the |article| version, you must include |hyperref| manually if you want to use it. You can do so by passing option |hyperref| to |beamerarticle|. It is not included automatically.
 \end{package}
 
-\begin{package}{{inputenc}|[|\declare{|utf8|}|]|}
+\begin{package}{{inputenc}|[|\declare{|utf8,utf8x|}|]|}
   \beamernote
-  When using Unicode, you may wish to use one of the following class
-  options:
+  When using Unicode, you may wish to use one of the following class options:
   \begin{classoption}{ucs}
-    Loads the package |ucs| and passes the correct Unicode options to
-    |hyperref|. Also, it preloads the Unicode code pages zero and
-    one.
+    Loads the package |ucs| and passes the correct Unicode options to |hyperref|. Also, it preloads the Unicode code pages zero and one.
   \end{classoption}
+
+  \begin{classoption}{utf8x}
+    Same as the option |ucs|, but also sets the input encoding to |utf8x|. You could also use the option |ucs| and say |\usepackage[utf8x]{inputenc}| in the preamble. This also automatically loads |ucs| package in most \TeX\ systems.
+  \end{classoption}
+
+  If you use a Unicode character outside the first two code pages (which includes the Latin alphabet and the extended Latin alphabet) in a section or subsection heading, you have to use the command |\PreloadUnicodePage{|\meta{code  page}|}| to give |ucs| a chance to preload these code pages. You will know that a character has not been preloaded, if you get a message like ``Please insert into preamble.'' The code page of a character is given by the unicode number of the character divided by 256.
 
   \begin{classoption}{utf8}
-    Same as the option |ucs|, but also sets the input encoding to
-    |utf8|. You could also use the option |ucs| and say
-    |\usepackage[utf8]{inputenc}| in the preamble.
+    This option sets the input encoding to |utf8|. It's designed to be used \emph{without} |ucs|. It's the same as saying |\usepackage[utf8]{inputenc}| in the preamble.
   \end{classoption}
 
-  If you use a Unicode character outside the first two code pages
-  (which includes the Latin alphabet and the extended Latin alphabet)
-  in a section or subsection heading, you have to use the command
-  |\PreloadUnicodePage{|\meta{code  page}|}| to give |ucs| a chance to
-  preload these code pages. You will know that a character has not
-  been preloaded, if you get a message like ``Please insert into
-  preamble.'' The code page of a character is given by the unicode
-  number of the character divided by 256.
+  \articlenote
+  Passing option |utf8| to |beamerarticle| has the same effect as saying |\usepackage[utf8]{inputenc}| in the preamble.
 \end{package}
 
 \begin{package}{{listings}}
   \beamernote
-  Note that you must treat |lstlisting| environments exactly the same
-  way as you would treat |verbatim| environments. When using
-  |\defverbatim| that contains a colored |lstlisting|, use the
-  |colored| option of |\defverbatim|.
+  Note that you must treat |lstlisting| environments exactly the same way as you would treat |verbatim| environments. When using |\defverbatim| that contains a colored |lstlisting|, use the |colored| option of |\defverbatim|.
 \end{package}
 
 \begin{package}{{msc}}
   \beamernote
-  Since this packages uses |pstricks| internally, everything that
-  applies to pstricks also applies to |msc|.
+  Since this packages uses |pstricks| internally, everything that applies to pstricks also applies to |msc|.
 \end{package}
 
 \begin{package}{{musixtex}}
-  When using  MusiX\TeX\ to typeset musical scores, your document must
-  be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or
-  |latex|.
+  When using  MusiX\TeX\ to typeset musical scores, your document must be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or |latex|.
 
-  Inside  a |music| environment, the |\pause| is redefined to match
-  MusiX\TeX's definition (a rest during one quarter of a whole). You can
-  use the |\beamerpause| command  to create overlays in this
-  environment.
+  Inside a |music| environment, the |\pause| is redefined to match MusiX\TeX's definition (a rest during one quarter of a whole). You can use the |\beamerpause| command  to create overlays in this environment.
 \end{package}
 
 \begin{package}{{pdfpages}}
-  Commands like |\includepdf| only work \emph{outside} frames as they
-  produce pages ``by themselves.'' You may also wish to say
+  Commands like |\includepdf| only work \emph{outside} frames as they produce pages ``by themselves.'' You may also wish to say
 \begin{verbatim}
 \setbeamercolor{background canvas}{bg=}
 \end{verbatim}
-  when you use such a command since the background (even a white
-  background) will otherwise be printed over the image you try to include.
+  when you use such a command since the background (even a white background) will otherwise be printed over the image you try to include.
 
   \example
 \begin{verbatim}
@@ -242,68 +171,45 @@ class, extra options or precautions may be necessary.
 
 \begin{package}{{\normalfont\meta{professional font package}}}
   \beamernote
-  If you use a professional font package, \beamer's internal
-  redefinition of how variables are typeset may interfere with the
-  font package's superior way of typesetting them. In this case, you
-  should use the class option |professionalfont| to suppress any font
-  substitution. See Section~\ref{section-substition} for details.
+  If you use a professional font package, \beamer's internal redefinition of how variables are typeset may interfere with the font package's superior way of typesetting them. In this case, you should use the class option |professionalfont| to suppress any font substitution. See Section~\ref{section-substition} for details.
 \end{package}
 
 \begin{class}{{prosper}}
-  If you wish to (partly) emulate the |prosper| class using \beamer,
-  please see Section~\ref{section-prosper}.
+  If you wish to (partly) emulate the |prosper| class using \beamer, please see Section~\ref{section-prosper}.
 \end{class}
 
 \begin{package}{{pstricks}}
-  You should add the option |xcolor=pst| to make |xcolor| aware of the
-  fact that you are using |pstricks|.
+  You should add the option |xcolor=pst| to make |xcolor| aware of the fact that you are using |pstricks|.
 \end{package}
 
 \begin{class}{{seminar}}
-  If you wish to emulate the |seminar| class using \beamer, please see
-  Section~\ref{section-seminar}.
+  If you wish to emulate the |seminar| class using \beamer, please see Section~\ref{section-seminar}.
 \end{class}
 
 \begin{package}{{texpower}}
-  You cannot use this package with \beamer. However, you might try to
-  use the package |beamertexpower| instead, see
-  Section~\ref{section-texpower}.
+  You cannot use this package with \beamer. However, you might try to use the package |beamertexpower| instead, see Section~\ref{section-texpower}.
 \end{package}
 
 \begin{package}{{textpos}}
   \beamernote
-  \beamer\ automatically installs a white background behind
-  everything, unless you install a different background
-  template. Because of this, you must use the |overlay| option when
-  using |textpos|, so that it will place boxes \emph{in front of}
-  everything. Alternatively, you can install an empty background
-  template, but this may result in an incorrect display in certain
-  situtations with older versions of the Acrobat Reader.
+  \beamer\ automatically installs a white background behind everything, unless you install a different background template. Because of this, you must use the |overlay| option when using |textpos|, so that it will place boxes \emph{in front of} everything. Alternatively, you can install an empty background template, but this may result in an incorrect display in certain situtations with older versions of the Acrobat Reader.
 \end{package}
 
 \begin{package}{{ucs}}
-  See |\usepackage[utf8]{inputenc}|.
+  See |\usepackage[utf8,utf8x]{inputenc}|.
 \end{package}
 
 
 \begin{package}{{xcolor}}
   \beamernote
-  The |xcolor| package is automatically loaded by |beamer.cls|. The
-  same applies as to |color|.
+  The |xcolor| package is automatically loaded by |beamer.cls|. The same applies as to |color|.
 
   \begin{classoption}{xcolor={\normalfont\meta{list of options}}}
-    Causes the \meta{list of options} to be passed on to the |xcolor|
-    package.
+    Causes the \meta{list of options} to be passed on to the |xcolor| package.
   \end{classoption}
 
-  When using \beamer\ together with the |pstricks| package, be sure to
-  pass the |xcolor=pst| option to \beamer\ (and hence to |xcolor|).
+  When using \beamer\ together with the |pstricks| package, be sure to pass the |xcolor=pst| option to \beamer\ (and hence to |xcolor|).
 
   \articlenote
-  The |color| package is not loaded automatically if
-  |beamerarticle| is loaded with the |noxcolor| option.
+  The |color| package is not loaded automatically if |beamerarticle| is loaded with the |noxcolor| option.
 \end{package}
-
-
-
-
