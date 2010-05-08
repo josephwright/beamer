@@ -43,19 +43,19 @@ The following font themes only change certain font attributes, they do not choos
 
   The following \meta{options} may be given:
   \begin{itemize}
-  \item
+    \item
     \declare{|stillsansserifmath|}
     causes mathematical text still to be typeset using sans serif. This option only makes sense if you also use the |stillsansseriftext| option since sans serif math inside serif text looks silly.
-  \item
+    \item
     \declare{|stillsansserifsmall|}
-    will cause ``small'' text to be still typeset using sans serif. This refers to the text in the headline, footline, and sidebars.  Using this options is often advisable since small text is often easier to read in sans serif.
-  \item
+    will cause ``small'' text to be still typeset using sans serif. This refers to the text in the headline, footline, and sidebars. Using this options is often advisable since small text is often easier to read in sans serif.
+    \item
     \declare{|stillsansseriflarge|}
     will cause ``large'' text like the presentation title or the frame title to be still typeset using sans serif. Sans serif titles with serif text are a popular combination in typography.
-  \item
+    \item
     \declare{|stillsansseriftext|}
     will cause normal text (none of the above three) to be still typeset using sans serif. If you use this option, you should most likely also use the first two. However, by not using |stillsansseriflarge|, you get a serif (possibly italic) title over a sans serif text. This can be an interesting visual effect. Naturally, ``interesting typographic effect'' can mean ``terrible typographic effect'' if you choose the wrong fonts combinations or sizes. You'll need some typographic experience to judge this correctly. If in doubt, try asking someone who should know.
-  \item
+    \item
     \declare{|onlymath|}
     is a short-cut for selecting all of the above options except for the first. Thus, using this option causes only mathematical text to by typeset using a serif font. Recall that, by default, mathematical formulas are also typeset using sans-serif letters. In most cases, this is visually the most pleasing and easily readable way of typesetting mathematical formulas if the surrounding text is typeset using sans serif. However, in mathematical texts the font used to render, say, a variable is sometimes used to differentiate between different meanings of this variable. In such case, it may be necessary to typeset mathematical text using serif letters. Also, if you have a lot of mathematical text, the audience may be quicker to ``parse'' it if it is typeset the way people usually read mathematical text: in a serif font.
   \end{itemize}
@@ -66,10 +66,10 @@ The following font themes only change certain font attributes, they do not choos
 
   The following \meta{options} may be given:
   \begin{itemize}
-  \item
+    \item
     \declare{|onlysmall|}
     will cause only ``small'' text to be typeset in bold. More precisely, only the text in the headline, footline, and sidebars is changed to be typeset in bold. Large titles are not affected.
-  \item
+    \item
     \declare{|onlylarge|}
     will cause only ``large'' text to be typeset in bold. These are the main title, frame titles, and section entries in the table of contents.
   \end{itemize}
@@ -217,17 +217,17 @@ changing \beamer-fonts.
 
   The following \meta{attributes} may be given:
   \begin{itemize}
-  \item \declare{|size=|\meta{size command}} sets the size attribute of the \beamer font. The \meta{size command} should be a normal \LaTeX-command used for setting the font size or it should be empty. Useful commands include |\tiny|, |\scriptsize|, |\footnotesize|, |\small|, |\normalsize|, |\large|, |\Large|, |\huge|, and |\Huge|. \beamer\ also introduces the two font sizes |\Tiny| and |\TINY| for \emph{really} small text. But you should know \emph{exactly} what you are doing if you use them. You have been warned.
+    \item \declare{|size=|\meta{size command}} sets the size attribute of the \beamer font. The \meta{size command} should be a normal \LaTeX-command used for setting the font size or it should be empty. Useful commands include |\tiny|, |\scriptsize|, |\footnotesize|, |\small|, |\normalsize|, |\large|, |\Large|, |\huge|, and |\Huge|. \beamer\ also introduces the two font sizes |\Tiny| and |\TINY| for \emph{really} small text. But you should know \emph{exactly} what you are doing if you use them. You have been warned.
 
     Note that there is a different between specifying an empty command and specifying |\normalsize|: Making the size attribute ``empty'' means that the font size should not be changed when this font is used, while specifying |\normalsize| means that the size should be set to the normal size whenever this font is used.
-  \item \declare{|size*=|\marg{size in pt}\marg{baselineskip}} sets the size attribute of the font to the given \meta{size in pt} and the baseline skip to the given value. Note that, depending on what kind of font you use, not all font sizes may be available. Also, certain font sizes are much less desirable than other ones; the standard commands take care of choosing appropriate sizes for you. Do not use this option unless you have a good reason. This command has the same effect as |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.
-  \item \declare{|shape=|\meta{shape command}} sets the shape attribute of the font. The command should be a command like |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
-  \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets the shape attribute of the font using the \LaTeX's abbreviations for attributes. This command has the same effect as |shape={\fontshape|\marg{shape attributes abbreviation}|}|.
-  \item \declare{|series=|\meta{series command}} sets the ``series'' attribute of the font. The command should be a command like |\bfseries|.
-  \item \declare{|series*=|\marg{series attribute abbreviation}} has the same effect as |series={\fontseries|\marg{series attributes abbreviation}|}|.
-  \item \declare{|family=|\meta{family command}} sets the font family attribute. The command should be a \LaTeX-font command like |\rmfamily| or |\sffamily|.
-  \item \declare{|family*=|\marg{family name}} sets the font family attribute to the given \meta{family name}. The command has the same effect as |family={\fontfamily|\marg{family name}|}|. The \meta{family name} is, normally, a somewhat cryptic abbreviation of a font family name that installed somewhere on the system. For example, the \meta{family name} for Times happens to be |ptm|. No one can remember these names, so it's perfectly normal if you have to look them up laboriously.
-  \item \declare{|parent=|\marg{parent list}} specifies a list of parent fonts. When the \beamer-font is used, the parents are used first. Thus, any font attributes set by one of the parents is inherited by the \beamer-font, except if this attribute is overwritten by the font.
+    \item \declare{|size*=|\marg{size in pt}\marg{baselineskip}} sets the size attribute of the font to the given \meta{size in pt} and the baseline skip to the given value. Note that, depending on what kind of font you use, not all font sizes may be available. Also, certain font sizes are much less desirable than other ones; the standard commands take care of choosing appropriate sizes for you. Do not use this option unless you have a good reason. This command has the same effect as |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.
+    \item \declare{|shape=|\meta{shape command}} sets the shape attribute of the font. The command should be a command like |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
+    \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets the shape attribute of the font using the \LaTeX's abbreviations for attributes. This command has the same effect as |shape={\fontshape|\marg{shape attributes abbreviation}|}|.
+    \item \declare{|series=|\meta{series command}} sets the ``series'' attribute of the font. The command should be a command like |\bfseries|.
+    \item \declare{|series*=|\marg{series attribute abbreviation}} has the same effect as |series={\fontseries|\marg{series attributes abbreviation}|}|.
+    \item \declare{|family=|\meta{family command}} sets the font family attribute. The command should be a \LaTeX-font command like |\rmfamily| or |\sffamily|.
+    \item \declare{|family*=|\marg{family name}} sets the font family attribute to the given \meta{family name}. The command has the same effect as |family={\fontfamily|\marg{family name}|}|. The \meta{family name} is, normally, a somewhat cryptic abbreviation of a font family name that installed somewhere on the system. For example, the \meta{family name} for Times happens to be |ptm|. No one can remember these names, so it's perfectly normal if you have to look them up laboriously.
+    \item \declare{|parent=|\marg{parent list}} specifies a list of parent fonts. When the \beamer-font is used, the parents are used first. Thus, any font attributes set by one of the parents is inherited by the \beamer-font, except if this attribute is overwritten by the font.
   \end{itemize}
 
   \example

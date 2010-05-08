@@ -117,7 +117,7 @@ When using certain packages or classes together with the |beamer| class, extra o
     Same as the option |ucs|, but also sets the input encoding to |utf8x|. You could also use the option |ucs| and say |\usepackage[utf8x]{inputenc}| in the preamble. This also automatically loads |ucs| package in most \TeX\ systems.
   \end{classoption}
 
-  If you use a Unicode character outside the first two code pages (which includes the Latin alphabet and the extended Latin alphabet) in a section or subsection heading, you have to use the command |\PreloadUnicodePage{|\meta{code  page}|}| to give |ucs| a chance to preload these code pages. You will know that a character has not been preloaded, if you get a message like ``Please insert into preamble.'' The code page of a character is given by the unicode number of the character divided by 256.
+  If you use a Unicode character outside the first two code pages (which includes the Latin alphabet and the extended Latin alphabet) in a section or subsection heading, you have to use the command |\PreloadUnicodePage{|\meta{code page}|}| to give |ucs| a chance to preload these code pages. You will know that a character has not been preloaded, if you get a message like ``Please insert into preamble.'' The code page of a character is given by the unicode number of the character divided by 256.
 
   \begin{classoption}{utf8}
     This option sets the input encoding to |utf8|. It's designed to be used \emph{without} |ucs|. It's the same as saying |\usepackage[utf8]{inputenc}| in the preamble.
@@ -138,9 +138,9 @@ When using certain packages or classes together with the |beamer| class, extra o
 \end{package}
 
 \begin{package}{{musixtex}}
-  When using  MusiX\TeX\ to typeset musical scores, your document must be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or |latex|.
+  When using MusiX\TeX\ to typeset musical scores, your document must be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or |latex|.
 
-  Inside a |music| environment, the |\pause| is redefined to match MusiX\TeX's definition (a rest during one quarter of a whole). You can use the |\beamerpause| command  to create overlays in this environment.
+  Inside a |music| environment, the |\pause| is redefined to match MusiX\TeX's definition (a rest during one quarter of a whole). You can use the |\beamerpause| command to create overlays in this environment.
 \end{package}
 
 \begin{package}{{pdfpages}}
@@ -198,7 +198,6 @@ When using certain packages or classes together with the |beamer| class, extra o
 \begin{package}{{ucs}}
   See |\usepackage[utf8,utf8x]{inputenc}|.
 \end{package}
-
 
 \begin{package}{{xcolor}}
   \beamernote
