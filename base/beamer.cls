@@ -306,7 +306,7 @@
 \newlength\beamer@paperheight%
 \beamer@paperheight 9.60cm%
 
-\DeclareOptionBeamer{screenratio}[43]{%
+\DeclareOptionBeamer{aspectratio}[43]{%
   \ifnum#1=1610%
     \beamer@paperwidth 16.00cm%
     \beamer@paperheight 10.00cm%
@@ -322,7 +322,10 @@
   \else\ifnum#1=43%
     \beamer@paperwidth 12.80cm%
     \beamer@paperheight 9.60cm%
-  \fi\fi\fi\fi\fi%
+  \else\ifnum#1=32%
+    \beamer@paperwidth 15.00cm%
+    \beamer@paperheight 10.00cm%
+  \fi\fi\fi\fi\fi\fi%
 }
 
 \RequirePackage[%
