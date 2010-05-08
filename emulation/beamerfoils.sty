@@ -1,0 +1,60 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\let\leftheader=\@gobble
+\let\rightheader=\@gobble
+\let\leftfooter=\@gobble
+\let\rightfooter=\@gobble
+\let\Restriction=\@gobble
+\let\marginpar=\@gobble
+
+\newcommand\LogoOff{\expandafter\global\logo{}}
+\newcommand\LogoOn{\expandafter\global\logo{\beamerfoils@logo}}
+\def\MyLogo#1{\gdef\beamerfoils@logo{#1}\LogoOn}
+\def\beamerfoils@logo{}
+
+\newtheorem*{Theorem*}{Theorem}
+\newtheorem*{Lemma*}{Lemma}
+\newtheorem*{Corollary*}{Corollary}
+\newtheorem*{Proposition*}{Proposition}
+\newtheorem*{Definition*}{Definition}
+
+\def\beamerfoils@closer{}%
+\newcommand\foilhead[2][]{%
+  \beamerfoils@closer%
+  \ifbeamer@inframe
+    \gdef\beamerfoils@closer{}%
+    \let\beamerfoils@next=\relax%
+  \else
+    \gdef\beamerfoils@closer{\egroup}%
+    \let\beamerfoils@next=\beamerfoils@openframe%
+  \fi
+  \beamerfoils@next%
+  \frametitle{#2}%
+  }
+\let\rotatefoilhead=\foilhead
+
+\def\beamerfoils@openframe{\beamerfoils@origframe[allowframebreaks]\bgroup}%
+
+\let\beamerfoils@origframe=\frame
+\def\frame{\endfoil\beamerfoils@origframe}
+
+\def\endfoil{\beamerfoils@closer\gdef\beamerfoils@closer{}}
+
+\beamertemplatecontinuationtext
+
+\newenvironment{boldequation}{\boldmath\begin{equation}}{\end{equation}}
+\newenvironment{boldequation*}{\boldmath\begin{equation*}}{\end{equation*}}
+
+\DeclareRobustCommand\FoilTeX{{\normalfont{\sffamily Foil}\kern-.03em{\rmfamily\TeX}}}
+\def\bm#1{\mathpalette\bmstyle{#1}}
+\def\bmstyle#1#2{\mbox{\boldmath$#1#2$}}

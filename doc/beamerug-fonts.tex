@@ -1,0 +1,252 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\section{Fonts}
+
+\label{section-fonts}
+
+The first subsection introduces the predefined font themes that come with \beamer\ and which make it easy to change the fonts used in a presentation. The next subsection describes further special commands for changing some basic attributes of the fonts used in a presentation. The last subsection explains how you can get a much more fine-grained control over the fonts used for every individual element of a presentation.
+
+
+\subsection{Font Themes}
+
+\beamer\ comes with a set of font themes. When you use such a theme, certain fonts are changed as described below. You can use several font themes in concert. For historical reasons, you cannot change all aspects of the fonts used using font themes---in some cases special commands and options are needed, which are described in the next subsection.
+
+The following font themes only change certain font attributes, they do not choose special font families (although that would also be possible and themes doing just that might be added in the future). Currently, to change the font family, you need to load special packages as explained in the next subsection.
+
+
+\begin{fontthemeexample}{default}
+  The default font theme installs a sans serif font for all text of the presentation. The default theme installs different font sizes for things like titles or head- and footlines, but does not use boldface or italics for ``highlighting.'' To change some or all text to a serif font, use the |serif| theme.
+
+  Note: The command |\mathrm| will always produce upright (not slanted), serif text and the command |\mathsf| will always produce upright, sans-serif text. The command |\mathbf| will produce upright, bold-face, sans-serif or serif text, depending on whether |mathsans| or |mathserif| is used.
+
+  To produce an upright, sans-serif or serif text, depending on whether |mathsans| or |mathserif| is used, you can use for instance the command |\operatorname| from the |amsmath| package. Using this command instead of |\mathrm| or |\mathsf| directly will automatically adjust upright mathematical text if you switch from sans-serif to serif or back.
+\end{fontthemeexample}
+
+\begin{fontthemeexample*}{professionalfonts}
+  This font theme does not really change any fonts. Rather, it \emph{suppresses} certain internal replacements performed by \beamer. If you use ``professional fonts'' (fonts that you buy and that come with a complete set of every symbol in all modes), you do not want \beamer\ to meddle with the fonts you use. \beamer\ normally replaces certain character glyphs in mathematical text by more appropriate versions. For example, \beamer\ will normally replace glyphs such that the italic characters from the main font are used for variables in mathematical text. If your professional font package takes care of this already, \beamer's meddling should be switched off. Note that \beamer's substitution is automatically turned off if one of the following packages is loaded: |mathtime|, |mathpmnt|, |lucidabr|, |mtpro|, and |hvmath|. If your favorite professional font package is not among these, use the |professionalfont| option (and write me an email, so that the package can be added).
+\end{fontthemeexample*}
+
+
+
+\begin{fontthemeexample}[\oarg{options}]{serif}
+  This theme causes all text to be typeset using the default serif font (except if you specify certain \meta{options}). You might wish to consult Section~\ref{section-guidelines-serif} on whether you should use serif fonts.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+    \item
+    \declare{|stillsansserifmath|}
+    causes mathematical text still to be typeset using sans serif. This option only makes sense if you also use the |stillsansseriftext| option since sans serif math inside serif text looks silly.
+    \item
+    \declare{|stillsansserifsmall|}
+    will cause ``small'' text to be still typeset using sans serif. This refers to the text in the headline, footline, and sidebars. Using this options is often advisable since small text is often easier to read in sans serif.
+    \item
+    \declare{|stillsansseriflarge|}
+    will cause ``large'' text like the presentation title or the frame title to be still typeset using sans serif. Sans serif titles with serif text are a popular combination in typography.
+    \item
+    \declare{|stillsansseriftext|}
+    will cause normal text (none of the above three) to be still typeset using sans serif. If you use this option, you should most likely also use the first two. However, by not using |stillsansseriflarge|, you get a serif (possibly italic) title over a sans serif text. This can be an interesting visual effect. Naturally, ``interesting typographic effect'' can mean ``terrible typographic effect'' if you choose the wrong fonts combinations or sizes. You'll need some typographic experience to judge this correctly. If in doubt, try asking someone who should know.
+    \item
+    \declare{|onlymath|}
+    is a short-cut for selecting all of the above options except for the first. Thus, using this option causes only mathematical text to by typeset using a serif font. Recall that, by default, mathematical formulas are also typeset using sans-serif letters. In most cases, this is visually the most pleasing and easily readable way of typesetting mathematical formulas if the surrounding text is typeset using sans serif. However, in mathematical texts the font used to render, say, a variable is sometimes used to differentiate between different meanings of this variable. In such case, it may be necessary to typeset mathematical text using serif letters. Also, if you have a lot of mathematical text, the audience may be quicker to ``parse'' it if it is typeset the way people usually read mathematical text: in a serif font.
+  \end{itemize}
+\end{fontthemeexample}
+
+\begin{fontthemeexample}[\oarg{options}]{structurebold}
+  This font theme will cause titles and text in the headlines, footlines, and sidebars to be typeset in a bold font.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+    \item
+    \declare{|onlysmall|}
+    will cause only ``small'' text to be typeset in bold. More precisely, only the text in the headline, footline, and sidebars is changed to be typeset in bold. Large titles are not affected.
+    \item
+    \declare{|onlylarge|}
+    will cause only ``large'' text to be typeset in bold. These are the main title, frame titles, and section entries in the table of contents.
+  \end{itemize}
+
+  As pointed out in Section~\ref{section-sizes}, you should use this theme (possibly with the |onlysmall| option) if your font is not scaled down properly or for light-on-dark text.
+
+  The normal themes do not install this theme by default, while the old compatibility themes do. Since you can reload the theme once it has been loaded, you cannot use this theme with the old compatibility themes to set also titles to a bold font.
+\end{fontthemeexample}
+
+\begin{fontthemeexample}[\oarg{options}]{structureitalicserif}
+  This theme is similarly as the |structurebold| font theme, but where |structurebold| makes text bold, this theme typesets it in italics and in the standard serif font. The same \meta{options} as for the |structurebold| theme are supported. See Section~\ref{section-italics} for the pros and cons of using italics.
+\end{fontthemeexample}
+
+\begin{fontthemeexample}[\oarg{options}]{structuresmallcapsserif}
+  Again, this theme does exactly the same as the |structurebold| font theme, only this time text is set using small caps and a serif font. The same \meta{options} as for the |structurebold| theme are supported. See Section~\ref{section-smallcaps} for the pros and cons of using small caps.
+\end{fontthemeexample}
+
+
+\subsection{Font Changes Made Without Using Font Themes}
+
+While most font decisions can be made using font themes, for historical reasons some changes can only be made using class options or by loading special packages. These options are explained in the following. Possibly, these options will be replaced by themes in the future.
+
+\subsubsection{Choosing a Font Size for Normal Text}
+
+As pointed out in Section~\ref{section-sizes}, measuring the default font size in points is not really a good idea for presentations. Nevertheless, \beamer\ does just that, setting the default font size to 11pt as usual. This may seem ridiculously small, but the actual size of each frame size is by default just 128mm by 96mm and the viewer application enlarges the font. By specifying a default font size smaller than 11pt you can put more onto each slide, by specifying a larger font size you can fit on less.
+
+To specify the font size, you can use the following class options:
+
+\begin{classoption}{8pt}
+  This is way too small. Requires that the package |extsize| is installed.
+\end{classoption}
+
+\begin{classoption}{9pt}
+  This is also too small. Requires that the package |extsize| is installed.
+\end{classoption}
+
+\begin{classoption}{10pt}
+  If you really need to fit more onto each frame, use this option. Works without |extsize|.
+\end{classoption}
+
+\begin{classoption}{smaller}
+  Same as the |10pt| option. \end{classoption}
+
+\begin{classoption}{11pt}
+  The default font size. You need not specify this option.
+\end{classoption}
+
+\begin{classoption}{12pt}
+  Makes all fonts a little bigger, which makes the text more readable. The downside is that less fits onto each frame.
+\end{classoption}
+
+\begin{classoption}{bigger}
+  Same as the |12pt| option.
+\end{classoption}
+
+\begin{classoption}{14pt}
+  Makes all fonts somewhat bigger. Requires |extsize| to be installed.
+\end{classoption}
+
+\begin{classoption}{17pt}
+  This is about the default size of PowerPoint and OpenOffice.org Impress. Requires |extsize| to be installed.
+\end{classoption}
+
+\begin{classoption}{20pt}
+  This is really huge. Requires |extsize| to be installed.
+\end{classoption}
+
+\subsubsection{Choosing a Font Family}
+
+\label{section-substition}
+
+By default, \beamer\ uses the Computer Modern fonts. To change this, you can use one of the prepared packages of \LaTeX's font mechanism. For example, to change to Times/Helvetica, simply add
+\begin{verbatim}
+\usepackage{mathptmx}
+\usepackage{helvet}
+\end{verbatim}
+in your preamble. Note that if you do not use the |serif| font theme, Helvetica (not Times) will be selected as the text font.
+
+There may be many other fonts available on your installation. Typically, at least some of the following packages should be available: |avant|, |bookman|, |chancery|, |charter|, |euler|, |helvet|, |lmodern|, |mathtime|, |mathptm|, |mathptmx|, |newcent|, |palatino|, |pifont|, |utopia|.
+
+\subsubsection{Choosing a Font Encodings}
+\label{section-font-encoding}
+
+The same font can come in different encodings, which are (very roughly spoken) the ways the characters of a text are mapped to glyphs (the actual shape of a particular character in a particular font at a particular size). In \TeX\ two encodings are often used with Latin characters: the T1~encoding and the OT1~encoding (old T1~encoding).
+
+Conceptually, the newer T1~encoding is preferable over the old OT1~encoding. For example, hyphenation of words containing umlauts (like the famous German word Fr\"aulein) will work only if you use the T1~encoding. Unfortunately, the EC fonts, that is, the T1-encoded Computer Modern fonts, are distributed on small installations just as MetaFont sources and only have bitmap renditions of each glyph. For this reason, using the T1-encoded EC fonts on such small installations will produce \pdf\ files that render poorly.
+
+\TeX\ Live (cross-platform; replaced older \texttt{teTeX} for \textsc{unix}\slash Linux) and MiK\TeX\ (for Windows platforms) can be installed with different levels of completeness. Concerning the Computer Modern fonts, the following packages can be installed: |cm-super| fonts, |lmodern| (Latin Modern) fonts, and |lgc| fonts, the latter containing the Latin, Greek, and Cyrillic alphabets. Concerning other fonts, the |txfonts| and |pxfonts| are two extended sets of the Times and the Palatino PostScript fonts, both packages containing extended sets of mathematical glyphs. Most other standard PostScript fonts are also available in T1~encoding.
+
+Among the packages that make available the Computer Modern fonts in the T1~encoding, the package |lmodern| may be suggested. If you use |lmodern|, several extra fonts become available (like a sans-serif boldface math) and extra symbols (like proper guillemots).
+
+To select the T1 encoding, use \verb|\usepackage[T1]{fontenc}|. Thus, if you have the LM~fonts installed, you could write
+\begin{verbatim}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\end{verbatim}
+to get beautiful outline fonts and correct hyphenation. Note, however, that certain older versions of the LM~bundle did not include correct glyphs for ligatures like ``fi,'' which may cause trouble. Double check that all ligatures are displayed correctly and, if not, update.
+
+
+\subsection{Changing the Fonts Used for Different Elements of a Presentation}
+
+This section explains how \beamer's font management works.
+
+\subsubsection{Overview of Beamer's Font Management}
+
+\beamer's font mechanism is somewhat similar to \beamer's color mechanism, but not quite the same. As for colors, every \beamer\ element, like the frame titles, the document title, the footnotes, and so on has a certain \beamer-font. As for colors, on the one hand you can specify the font of each element individually; on the other hand fonts also use inheritance, thereby making it easy to globally change the fonts used for, say, ``titlelike things'' or for ``itemizelike things.''
+
+While a \beamer-color has a certain foreground and a certain background, either of which may be empty, a \beamer-font has a size, a shape, a series, and a family, each of which may be empty. The inheritance relation among \beamer-fonts is not necessarily the same as between \beamer-colors, though I have tried to match them whenever possible.
+
+Multiple inheritance plays a more important rule for fonts than it does for colors. A font might inherit the attributes of two different fonts. If one of them specifies that the font should be, say, boldface and the other specifies that the font should be, say, large, then the child font will be both large and bold.
+
+As for fonts, the description of the font used for an element is given after the description of the element.
+
+
+\subsubsection{Using Beamer's Fonts}
+
+To use a \beamer-font, you can use the command |\usebeamerfont|. Inside the templates for elements, this command will (typically) have already been called for you, so you will only seldomly have to use this command.
+
+\begin{command}{\usebeamerfont\opt{|*|}\marg{beamer-font name}}
+  This command changes the current font to the font specified by the \meta{beamer-font name}. The \meta{beamer-font name} can be a not-too-fancyful text and may contain spaces. Typical examples are |frametitle| or |section in toc| or |My Font 1|. \beamer-fonts can have (and should) have the same name as \beamer-templates and \beamer-colors.
+
+  \example |\usebeamerfont{frametitle}|
+  In the unstarred version of this command, the font is changed according to the attributes specified in the \meta{beamer-font name}, but unspecified attributes remain unchanged. For example, if the font specifies that the font should be ``bold,'' but specifies nothing else, and if the current font is large, then |\usebeamerfont| causes the current font to become large and bold.
+
+  In the starred version of this command, the font is first reset before the font's attributes are applied. Thus, in the above example of a \beamer-font having only the attribute ``boldface'' set, saying |\usebeamerfont*| will \emph{always} cause the current font to become a normal-size, normal-shape, bold, default-family font.
+\end{command}
+
+
+\subsubsection{Setting Beamer's Fonts}
+
+As for \beamer-colors, there exists a central command for setting and
+changing \beamer-fonts.
+
+\begin{command}{\setbeamerfont\opt{|*|}\marg{beamer-font name}\marg{attributes}}
+  This command sets or resets certain attributes of the \beamer-font \meta{beamer-font name}. In the unstarred version, this command just adds those attributes that have not been mentioned in a previous call and overwrites those that have been mentioned. Thus, the following two command blocks have the same effect:
+
+  \example
+\begin{verbatim}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{frametitle}{series=\bfseries}
+
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\end{verbatim}
+  In the starred version, the font attributes are first completely reset, that is, set to be empty.
+
+  The following \meta{attributes} may be given:
+  \begin{itemize}
+    \item \declare{|size=|\meta{size command}} sets the size attribute of the \beamer font. The \meta{size command} should be a normal \LaTeX-command used for setting the font size or it should be empty. Useful commands include |\tiny|, |\scriptsize|, |\footnotesize|, |\small|, |\normalsize|, |\large|, |\Large|, |\huge|, and |\Huge|. \beamer\ also introduces the two font sizes |\Tiny| and |\TINY| for \emph{really} small text. But you should know \emph{exactly} what you are doing if you use them. You have been warned.
+
+    Note that there is a different between specifying an empty command and specifying |\normalsize|: Making the size attribute ``empty'' means that the font size should not be changed when this font is used, while specifying |\normalsize| means that the size should be set to the normal size whenever this font is used.
+    \item \declare{|size*=|\marg{size in pt}\marg{baselineskip}} sets the size attribute of the font to the given \meta{size in pt} and the baseline skip to the given value. Note that, depending on what kind of font you use, not all font sizes may be available. Also, certain font sizes are much less desirable than other ones; the standard commands take care of choosing appropriate sizes for you. Do not use this option unless you have a good reason. This command has the same effect as |size={\fontsize|\marg{size in pt}\marg{baselineskip}|}|.
+    \item \declare{|shape=|\meta{shape command}} sets the shape attribute of the font. The command should be a command like |\itshape|, |\slshape|, |\scshape|, or |\upshape|.
+    \item \declare{|shape*=|\marg{shape attribute abbreviation}} sets the shape attribute of the font using the \LaTeX's abbreviations for attributes. This command has the same effect as |shape={\fontshape|\marg{shape attributes abbreviation}|}|.
+    \item \declare{|series=|\meta{series command}} sets the ``series'' attribute of the font. The command should be a command like |\bfseries|.
+    \item \declare{|series*=|\marg{series attribute abbreviation}} has the same effect as |series={\fontseries|\marg{series attributes abbreviation}|}|.
+    \item \declare{|family=|\meta{family command}} sets the font family attribute. The command should be a \LaTeX-font command like |\rmfamily| or |\sffamily|.
+    \item \declare{|family*=|\marg{family name}} sets the font family attribute to the given \meta{family name}. The command has the same effect as |family={\fontfamily|\marg{family name}|}|. The \meta{family name} is, normally, a somewhat cryptic abbreviation of a font family name that installed somewhere on the system. For example, the \meta{family name} for Times happens to be |ptm|. No one can remember these names, so it's perfectly normal if you have to look them up laboriously.
+    \item \declare{|parent=|\marg{parent list}} specifies a list of parent fonts. When the \beamer-font is used, the parents are used first. Thus, any font attributes set by one of the parents is inherited by the \beamer-font, except if this attribute is overwritten by the font.
+  \end{itemize}
+
+  \example
+\begin{verbatim}
+\setbeamerfont{parent A}{size=\large}
+\setbeamerfont{parent B}{series=\bfseries}
+\setbeamerfont{child}{parent={parent A, parent B},size=\small}
+
+\normalfont
+This text is in a normal font.
+\usebeamerfont{parent A}
+This text is large.
+\usebeamerfont{parent B}
+This text is large and bold.
+\usebeamerfont{parent B}
+This text is still large and bold.
+\usebeamerfont*{parent B}
+This text is only bold, but not large.
+\usebeamerfont{child}
+This text is small and bold.
+\end{verbatim}
+\end{command}

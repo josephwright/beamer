@@ -1,0 +1,724 @@
+2007-07-04 Till Tantau <tantau@users.sourceforge.net>
+
+	- Fixed missing guards in optional arguments. (like \item[{hi[]}])
+
+2007-03-20 Till Tantau <tantau@users.sourceforge.net>
+
+	- Fixed superfluous entry in FILES
+	- Added "open" option in multimedia.sty.
+	- Fixed sound player problem.
+	- Fixed manifest files.
+	- Added handling of professional fonts mtpro2 and lucimatx.
+
+2007-03-11 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 3.07:
+	- LyX layout removed since it is now part of the LyX
+	  development tree.
+	- Cleaned up documentation.
+	- Cleaned up license chaos and removed all possibly
+	  copyrighted material. 
+	- Fixed incorrect subsubsections in vertical navigation bars. 
+	- Fixed problem with overlay specifications in amsmath
+	  environments.
+	- Fixed superfluous \show in beamerthemeshadow.sty
+	- Fixed color problem in beamer boxes with rounded corners.
+	- Fixed problem with frametitle syntax in fragile frames.
+	- Fixed missing frame subtitles in article mode.
+	- Added french solution translations (due to Philippe De Sousa).
+	
+2005-06-16 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 3.06:
+	- Fixed bug in drawing of buttons.
+	- Version for use with pgf version 1.00.
+
+2005-06-12 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 3.05:
+	- Added color theme wolverine and presentation theme AnnArbor,
+	  submitted by Madhusudan Singh <madhusudan.singh@gmail.com>.
+	- Added two screen options.
+	- Added subsubsections (evil!).
+	- Added \begin{frame}{Title}{Subtitle} syntax.
+	- Switched to pgf version 0.95
+
+	Changes:
+	- \setbeamercovered is now scoped.
+
+	Bugfixes:
+	- Fixed location of navigation symbols on plain frames.
+	- Fixed wrong frame number in conjunction with fragile option.
+	- Fixed compatibility definitions like \beamertemplateballtoc.
+	- Fixed compatibility definitions for \beamersetleftmargin.
+	- Fixed wobbling height of frametitle in default theme.
+	- Fixed problem with serif theme and "onlymath" option.
+	- Fixed problem with >127 characters and fragile option.
+	- Fixed problem with activation of Chinese characters
+	- Fixed problem with spaces in semiverbatim.
+
+2004-10-11 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 3.01:
+
+	Added:
+	- Option "fragile" that allows the use of
+	  overlays together with verbatims. *Extremely* useful.
+	- Added option "T" to columns command/environment for alignment of
+	  top of first lines instead of baselines of first lines.
+	- Added a color theme (dolphin) and a presentation theme
+	  (Boadilla) due to Manuel Carro.
+	
+	Bugfixes:
+	- Fixed "fotoline" in beamerbasecompatibility.sty and
+	  beamerthemeboxes.sty.	
+	- Fixed vertical spacing problem having to do with the use of
+	  \trivlist.  
+	- Fixed problem with wrong short forms of section/subsection in
+    	  certain outer themes in headline.
+	- Fixed bug causing "unknown command \insertblockname" in article
+	  mode. 
+	- Changed definition of \normalcolor so that it works inside color
+	  mixins.
+	- Fixed problems with autoframebreak and unwanted breaks.
+	- Fixed problem with problem with vertical mode after \item.
+	- "Smoothed" the rendering of the right side of boxes with
+	  shadows.
+	- Fixed "descriptionwidth" to "description width".
+	- Fixed problem with labels outside frames creating empty frames.
+	- Applied lot's of spelling patches to user guide.
+	- Fixed \thanks.
+	- Navigation symbols are no longer shown in handout and trans
+	  modes, by default (write
+	  \setbeamertemplate{navigation symbols}[default] to get them
+	  back). 
+	
+2004-09-27 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 3.00:
+
+	Added:
+	- Added inmargin and Bergen themes.
+	- Added beamerbasercs.sty.
+
+	Bugfixes:
+	- Fixed problem with displayed math formulas are message "improper
+	  halign..."
+	- Fixed wrong positioning of mini frames on notes pages.
+	- Fixed bugs in outer theme miniframes.
+	- Fixed foreground coloring problem in beamerboxesrounded.
+	- Fixed \alert in article mode problem.
+	- Fixed \temporal problem.
+	- Fixed vertical mode after \item problem.
+	- Applied patch with typo fixed submitted by Ohura Makoto.
+	- Fixed warnings concerning it/sl substitution for cmss.
+	- Renamed "ternary" to "tertiary" and "fourth" to
+	  "quaternary".
+	- Changed parent of color "frametitle" to "titlelike".
+	- Fixed problem with \note in lectures that are excluded.
+	
+2004-09-23 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.99
+
+	Release notes:
+	- This is a pretest version. Version 3.00 will be the next "real"
+	  release. The present version should not be distributed as
+	  bundles or suchlike.
+	- You need pgf 0.63 and xcolor 2.00 for this version.
+	- Quite a lot has changed. However, old presentations should
+	  compile just fine, except if really wicked things have been
+	  done. If a reasonably normal old presentation no longer
+	  compiles, please drop me a line.
+	- Some small color and spacing changes in the old themes may
+	  occur. 
+
+	
+	Themes:
+	- Completely new theme management.
+	- Lot's of new variations of themes.
+	- Font/element/layout/color themes are orthogonal and can be
+	  freely combined. 
+	- Old themes obsolete, but supported for compatibility.
+	- Original default theme is now in
+	  "beamerthemecompatibility.sty". New default is more minimalistic.
+
+	+ Presentation themes:
+	- There are now 24 ready-to-use presentation themes. 
+	- Manuel Carro has send me a theme that I slightly adapted and
+	  added as the Madrid theme.
+
+	+ Layout and element Themes:
+	- There are 9 different layouts themes, including three new ones
+	  that were not available in the previous version.
+	- There are 4 different element themes (which dictate things like
+	  how items are typeset).
+
+	+ Color themes:
+	- There are 10 color themes, including a yellow-on-blue theme.
+	- The seahorse and rose theme allow you to change the colors of
+	  headlines and footlines easily to much less "aggressive"
+	  versions.  
+	- You can now dictate the color of every minute detail of a
+	  presentation individually, (including math!).
+
+	+ Font themes:
+	- 6 font themes. Change the fonts of titles to, say, small caps
+	  just by using the smallcaps theme; no need to meddle with
+	  templates. 
+	- Just like colors, you can individually change all fonts in
+	  minute detail without touching any templates.
+
+	
+	Documentation:
+	- Split documentation into multiple files.
+	- Reorganized and reworked large parts of the documention.
+	- Added a small tutorial to help new users.
+	- Extracted all "guidelines" and "recommendations" and put them in
+	  a "guidelines" section. Also added lots of guidelines on fonts.
+	- Added an index (though it's pretty poor, still).
+
+	
+	Solutions:
+	- Added a solutions directory.
+	  It contains ready-to-use solutions for common problems (like
+	  a template for a conference talk).
+	- Help appreciated (see the documentation).
+
+	
+	Added:
+	- Added frame environment (finally!).
+	- Added the dot notation to overlay specifications. If a dot is
+	  used instead of a plus, the beamerpauses counter is not
+	  incremented. 
+	- Added xmpmulti.sty. Very useful for including Multi Metapost
+	  graphics. 
+	- Added some functionality to \onslide to get it more in sync with
+	  ha-prosper. 
+	- Made \beamerdefaultoverlayspecification work also outside
+	  frames. 
+	- Added new version of beamer.el by Thomas Baumann.
+	- \footnote now takes an overlay specification.
+	- Added beamercolorbox environment.
+	- Characters like : may now be active (nice for french
+	  style). Only exceptions are < and >.
+	- Added a note on how to use msc.sty with beamer.
+	- TOCs in sidebar will now do line breaking (finally!).
+	- Powerful object-oriented new font management.
+	- Powerful object-oriented new color management.
+	- \tableofcontents now has more options for showing/not showing
+	  entries.
+	- Same is true for the toc in sidebars.
+	- Added \keywords command (like \subject).
+	- Added a patch to make beamer work together with musixtex. \pause
+	  will be redeclared inside music environments.
+	- Added \insert's for inserting the start and end pages of the
+	  current frame, subsection, section, part, presentation, appendix.
+
+	Changed:
+	- Reordered directories.
+	- beamerboxesrounded now works differently. color schemes no
+	  longer needed.
+	- Option class=xxxx onsolete. Use document class xxxx directly
+	  instead and load new style beamerarticle.
+	- Cleaned up lot's of internals.
+	- Slight changes to vertical spacing.
+	- slidestop is now called "t" and slidescentered is called "c".
+	- \beamersetleftmargin and \beamersetrightmargin obsolete. Use
+	  \setbeamersize instead.
+	- Old themes are now mapped to new internal mechanisms. Slight
+	  color and vertical spacing changes may occur.
+	
+	Bugfixes:
+	- Fixed incompatibility with czech.sty.
+	- Fixed some spacing problems with \label.
+	- Fixed bug that could cause endless loop if more than two pages
+	  resulted from an allowframebreaks.
+	- Fixed bug that caused incorrect counter resets in conjunction
+	  with allowframebreaks.
+	- Fixed bug that caused footnotes of suppressed frames to spill
+	  over to the next frame.
+	- Fixed bug with \AtBeginSection + \lecture + \mode*
+	- Fixed \label bug in article mode in conjunction with amstex
+	- Fixed spacing problems when \pause is used in equations
+	- Fixed spacing problem with slides that start with an itemize.
+	- Fixed color problem in itemize in conjunction with evil use of
+	  \everymath. 
+	- Fixed failure of action environment in handout and trans modes.
+	- Fixed bug with shrink + t options.
+	- Fixed lot's of other small things.
+	
+2004-07-06 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.21
+	- Switched to xcolor 2.00.
+
+2004-04-19 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.20
+
+	Added:
+	- Added style "Separator" in LyX.
+	- Added multimedia.sty for movie and sound inclusion.
+	- Added evil allowframebreaks option to frames for automatic frame breaking.
+	- Added evil shrink option for automatic frame text shrinking.
+	- Added squeeze option to frames for squeezing more on a frame.
+	- Added \framesubtitle command.
+	- Added \subtitle command.
+	- Added \subject command.
+	- Added option usepdftitle=false to suppress automatic generation of
+	  author and title entries in pdf document info.
+	- Added \framezoom command.
+	- Added new version of beamer.el, due to Thomas Baumann.
+
+	Changes:
+	- FoilTeX emulation will now do automatic page breaking.
+	- Empty lines in "Standard" lyx style will no longer be kept, use
+	  an empty Separator line instead. 
+	- Changed the qed symbol to an open rectangle.
+	- The way frame titles are typeset is completely different now,
+	  internally. Under normal circumstance you should not notice any
+	  differences, but if you do wicked things with the frame titles,
+	  problems might arise.
+
+	Bugfixes:
+	- Fixed definition of overlayarea to give better spacing.
+	- Fixed problem with persisting background color and dvips.
+	- Fixed zillions of typos in the user's guide spotted by 
+	  Xavier Noria and Uwe Stoer. 
+	- Fixed unrobust definition of \\.
+
+2004-04-07 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.11
+	- Added t, b, c options to \frame.
+	- Fixed esoteric bug in beamerbaseoptions.
+	- Fixed problem with \againframe and counters.
+	- Added (small part of) texpower emulation and foils emulation.
+	- Changed the examples for emulation of prosper. 
+	- Now works with xcolor 1.10 (and only 1.10).
+	- Fixed a PostScript related problems in bibliographies.
+	- Fixed lyx default template.
+	- Fixed bug that caused option CJK to be broken (though cjk
+	worked).
+	- Added inserts for section numbers for navigation bars.
+	- Fixed problem with spacing inside itemize after equations.
+
+2004-03-10 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.10
+	- Fixed some spacing problems in uncover and invisible, itemize
+	  and pause.
+	- Moved head/footline calculation after beginning of document.
+	  This fixes all sorts of problems.
+	- Added utf8 encoding support.
+	- Added a (HA-)Prosper emulation layer. 
+	- Added a seminar emulation layer.
+	- Added third level of itemize/enumerate nesting (I don't like it,
+	  but some people do).
+	- Added the \onslide command for use outside overprint
+	  environments. It generalises \pause in a simple, easy-to-use
+	  way.
+	- Added incremental overlay specifications (very useful).
+	- Added beamer.el emacs plug-in, contributed by Thomas Baumann.
+	- Fixed problem that caused empty columns to disappear.
+	- \ref will now create hyperjumps.
+	- Switched to amsthm for theorems. Theorems now accept
+	  optional arguments (amsthm like).
+	- Added \newtheorem support.
+
+2004-02-23 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.01
+	- Fixed bug with class options containing braces
+	- Fixed bug in beamerbasecolor.sty
+	- Fixed bug that caused footnotes not to be shown.
+	- Fixed bug that caused \normalcolor to ignore mixins. 
+	- Fixed bug with french and spanish babel in article mode.
+	- Fixed bugs in \cite and \bibitem commands. Will now correctly
+	  handle spaces in conjunction with babel.
+	- Fixed bugs in beamerpresentation.lyx.
+	- Fixed bug with \@centercr in article mode.
+	- \cite now hyperlinks
+	- \beamertemplateballitems will now also project mini templates on
+	  balls. Write
+	  \useenumerateitemminitemplate{\color{beamercolor}\insertenumlabel}
+	  to get the old behaviour.
+	- \footnote now takes an extra optional argument.
+
+2004-02-18 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 2.00
+
+	Added:
+	- Added placement options to columns and column commands.
+	- Added \column command.
+	- Added label option to frames.
+	- Added \againframe command for showing a frame again later on
+	  (very useful!). 
+	- Added \includeonlyframe command for typesetting only specific
+	  frames. 
+	- Added \AtBeginSection, \AtBeginSubsection, and \AtBeginPart
+	  commands (very useful!).
+	- Added \visible command (opposite of \invisible).
+	- Added verse, quotation, and quote environments.
+	- Added abstract environment (not very useful in my opinion).
+	- Added colored option to \defverbatim for use with lstlisting.
+	- Added grid density option to grid background.
+	- Added professionalfont option.
+	- Added automatic support of serif math minion fonts.
+	- Added option to \pause command to pause only from a specific
+	  slide on. 
+	- Added \unpause to stop the last \pause.
+	- Includes enumerate.sty by default and allows one to use its
+	  functionality in beamer.
+	- Added dark and tab options to beamerthemesidebar. Other sidebar
+	  themes no longer needed.
+	- Made \note work also inside frames.
+	- Added templates for notes.
+	- Added notes=onlyframeswithnotes option for generating only
+	  frames that contain a note.
+	- Added options to all \insertshortxxx commands.
+	- Added option for passing arguments to color, xcolor, pgf, and
+	  hyperref.
+	- Added \action and actionenv environments.
+	- Added the concept of actions to overlay specifications. For example,
+	  \item<alert@2> will alert the item on the second slide and
+	  \item<2-| alert@2> will furthermore have the item covered before
+	  that.  
+	- Added <> option to \newcommand and \newenvironment to make the
+	  defined commands overlay-specification aware.
+	- \only and \alt will now also accept an overlay specification
+	  "at the end".
+	- Block environments now accept overlay specification also before
+	  the argument.
+	- Added \mode command
+	- Added beamerbasearticle.sty -> makes nearly all beamer commands
+	  available in article mode in a sensible way.
+	- Added mode specifications to \section and \subsection commands
+	  (useful for the article version).
+	- Started adding some templates for rendering frames in article mode.
+	- Added \lecture command and \includeonlylecture (useful for
+	  lecture notes).  
+	- Added a containsverbatim option to the \frame command. Should be
+	  used instead of the old \frame<all:1> (which is, however, still
+	  supported). 
+	- Made \includegraphics, \pgfimage, and \pgfuseimage
+	  overlay-specification-aware. (useful for pseudo-animations)
+	
+	Changed:
+	- Every frame is now put into a box internally. Slides will never
+	  be split over two pages.
+	- \pause commands now transcends blocks (very useful, but not
+	  compatible!) 
+	- Balls are now also used for enumerations, not just for itemize
+	  in shadow theme. Use \beamertemplateenumeratealpha to get old
+	  behaviour. 
+	- Changed syntax of alert and structure templates.
+	- Reworked internals of overlay management. Should produce
+	  slightly shorter files.
+	- Changed file names of .jpg and .png images to start with "beamer-"
+	  to avoid name clashes.
+	- Renamed \original to \beameroriginal because of clash with
+	  lucidia font styles.
+	- "Streamlined" themes to use the same basic templates.
+	- \noteitems replaced by \note[enumerate].
+	- \nameslide command is now obsolete. Use the label= option
+	  instead.
+	- Removed notesonly option. Use notes=only.
+	- Themes beamerthemesidebartab, beamerthemesidebardark, and
+	  beamerthemesidebardarktab are now obsolete. Use
+	  beamerthesesidebar will appropriate options instead.
+	- Theme beamerthemetreebars obsolete. Use beamerthemetree with
+          option bars instead.
+	- Removed compressnotes option. Use \beamertemplatenotecompress
+	  instead. 
+	
+	Removed:
+	- Removed pauses environment (no longer needed).
+	- Improved pgf makes \pgfonly superfluous. Use \only instead.
+	- Removed reproducable .pdf example files from repository for
+	  faster cvs checkout/checkin.
+	- Removed \invisibleon command (was superfluous anyway).
+	- Removed \mixinon command (was not very useful and clashes with
+	  new \pause command; use \opaqueness instead).
+	- Removed \newoverlaycommand and \renewoverlaycommand. Can be
+	  better implemented using \newcommand<>.
+	- Removed \article, \presentation, and \common commands (still
+	  quietly tolerated). Should be replaced by \mode<article>,
+	  \mode<presentation>, and \mode<all>. 
+	- Removed beamer/lyx/doc. Documentation is now incorporated in
+	  the main user's guide.
+	
+	LyX:
+	- Added a big example file beamerlyxexample1.lyx.
+	- Changed \tableofcontents command so that options can be
+	  given in LyX. 
+	- Changed \frame command in LyX so that options can be given. 
+	- Added overprint and overlayarea environments.
+	- Added \againframe command.
+	- Changed beamer.layout to use new command \column. Old environment
+ 	  no longer supported in lyx.
+	- A new frame and a section or subsection will automatically close
+	  the previous frame. EndFrame is only needed before the end of
+	  the document, before the appendix, and before "out-of-frame"
+	  material. 
+	- Added TitleGraphic command.
+	- Documented the LyX interface in beameruserguide.pdf.
+	
+	Bugfixes:
+	- Fixed bugs with "jumping" blocks in overlays.
+	- Fixed bug with tabbing in beamerbaseboxes.
+	- Added work-around for problem with black background in older
+	  versions of acroread.
+	- Fixed problems with linebreak in short title and short author
+	  in sidebar themes. 
+
+2004-01-19 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.21
+	- Fixed bug in \insertverticalnavigation that made sidebar themes
+	  unusable. 
+	
+2004-01-16 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.20
+	- Reorganzed directory structure: new directories base and themes
+	- Added some explanations in user guide on font encodings and
+	  graphic file formats.
+	- T1 encoding is fully supported now. 
+	- lmodern and fourier fonts are supported now.
+	- \mathrm will always produce roman text now.
+	- \mathbf will produced boldface serif or sans-serif text,
+	  depending on the math font selection.
+	- Added options to include only certain sections in the table of
+	  contents. 
+	- Added option to hilight only the current subsection in the table
+  	  of contents.
+	- Added inserts for numbering sections in the table of contents.
+	- Added predefined templates for more fancyful table of contents.
+	- Shadow theme now uses a numbered table of contents by
+	  default. Use \beamertemplateplaintoc to get the old behaviour.
+	- Changed the syntax of \frame. Overlay specification must now be
+	  given in pointed brackets. (Old syntax is quietly tolerated.)
+	- Command \plainframe has been replaced by \frame[plain]. (Old
+	  syntax is quietly tolerated.) 
+	- Renamed beamerboxes to beamerbaseboxes and beamertemplates to
+	  beamerbasetemplate. They are included automatically, so simply
+	  delete an inclusion of the old packages).
+	- Fixed bug in beamerbaseboxes.
+	- Uncover now also works for whole lines or passages in tables and
+	  alignments, both for completely invisible covered and
+	  transparent covered text.
+	- Item balls/icons now change color inside beamerboxes according
+	  to the color scheme.
+	- Added versioning system for head and toc entries. Will no longer
+	  do weird things when left over files from an old version are
+	  encountered. (Makes updating a lot easier.)
+	- Slightly changed LyX stuff to work together with the syntax
+	  changes. Still no real documentation.
+	- Uses version 1.06 of xcolor now.
+	- Uses pgf 0.50 now.
+	- Mechanism for alternate selection of images and shading is
+	  slightly changed and incompatible with the old one. 
+	- pgf's cvs is now also on SourceForge next to the beamer class.
+
+2003-12-09 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.10:
+	- Started implementing a LyX interface, see the lyx directory
+	  (not yet documented very well).
+	- Fixed bug with navigation symbols and dvips, ps2pdf.
+	- Fixed bug with navigation symbols and missing \logo.
+	- Added more size options.
+	- Fixed bug in parts with superfluous frame symbols in navigation 
+	  bars.
+
+2003-11-25 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.04:
+	- Fixed problem with Spanish style.
+	- Fixed problem with compress in beamerthemesplit.
+	- Fixed bug that made beamerthemeclassic useless.
+	- Fixed incompatibility with deluxetabular.
+	- Fixed bug with "gray" option. Renamed to "blackandwhite".
+	- Fixed bug that caused columns in slidetop mode to be centered.
+	
+2003-11-20 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.03:
+	- Documented beamerboxes.sty
+	- Added animation example.
+
+2003-11-20 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.02:
+	- Added missing shadow theme file.
+	- Documented changes of syntax of \transxxxx commands.
+	
+2003-11-15 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.01:
+	- Added shadow theme.
+	- Added masked versions of images.
+	- Added shadow blocks.
+	- Added another example.
+
+2003-11-12 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 1.00:
+	- Added part managment and documented it.
+	- Changed \appendix to use \part internally. Appendix can now
+	  contain numerous sections.
+	- Added \nameslide commands for inserting slides into the article
+	  version. 
+	- Added draft option.
+	- Fixed bug with \pause and notesonly.
+	- Added CJK option for Chinese fonts in navigation bars.
+	- Added \includeslide command.
+	- Needs pgf 0.40 now.
+	- Added \beamertemplateroundedblocks (quite cute).
+	- Added three examples.
+	- Added compressnotes option.
+
+2003-11-04 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 0.93:
+	- Added \article, \common, \presentation macros for creating an
+	  article version of a presentation from the same file.
+	- Corrected several examples in the user guide.	
+	- Added additional hyperlink commands.
+	- Added button management.
+	- Reworked the formatting of the user's guide.
+	- Added new navigation symbols.
+	- Replaced inrow option and theme splitcondensed by compress
+	  option. 
+
+2003-10-28 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 0.92:
+	- Added figure and table environments.
+	- Color management switch over to xxcolor.
+	- Implemented transparency effects for covered items.
+	- Fixed problem with \label.
+	- Made \bibitem overlay-specification-aware.
+	- Added \transduration command.	
+	- Added animation commands.
+	- Added pauses environment.
+	- Added pausing options to \tableofcontents.
+	- Moved hidesubsections and shadedsubsections options to
+	  parameters of \tableofcontents.
+
+2003-10-23 Till Tantau <tantau@users.sourceforge.net>
+
+	Version 0.91:
+	- Documented side bar templates.
+	- Fixed bug that did not suppress head and foot lines for notes.
+	- Fixed bug that disabled transition effects.
+
+2003-10-16 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.90:
+	- Improved the installation procedure documentation.
+	- Added a \plainframe command for creating frames that are
+	  completely filled with a picture. Navigation bars are
+	  suppressed. 
+	- Clicking on the current frame icon will advance to last slide of
+	  the frame.
+	- Added nicer icons for the bibliography. These are now vector
+	  graphics that work nicely together with a background shading and
+	  can be zoomed arbitrarily.
+	- Fixed bug in overwritten \document.
+	- Added \appendix command.
+	- Fixed bug when using color options like "red".
+	- Added theme beamerthemesplitcondensed, adapted from a submission
+	  by Paul Gomme
+	- Added command \insertframenumber
+	- Added several new themes
+	- Fixed behaviour of split theme: optional arguments of \section
+	  and \subsection are now shown in navigation bars.
+	- Added side bar management.
+
+2003-10-13 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.82:
+	- Short versions of title, authors, institute can now be specified
+	  as optional parameters.
+	- Fixed problem with the usage of commands (like \LaTeX) in
+	  \section and \subsection commands.
+
+2003-10-09 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.81:
+	- Fixed problems with french babel styles.
+	- Fixed problems with pdfmark.def
+	- Fixed bugs in user guide
+	- Fixed problem with using commands inside overlay specifications
+ 	  (you can now write \uncover<\value{xxx}>{something})
+	- Changed version numbering to become compatible with debian
+	  package manager
+
+2003-10-01 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.80:
+	- Renamed \line to \beamerline to avoid clash with LaTeX standard
+	  \line 
+	- Added transition effects.
+	- Expanded documentation.
+
+2003-09-30 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.71:
+	- Added bibliography environment and appropriate templates.
+	- Added \temporal command.
+	
+2003-09-26 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.70:
+	- Added per-frame resets for counters. Fixed a problem with wrong
+	  numbers in equations in overlays.
+	- Fonts can now easily be changed.
+
+2003-09-23 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.62:
+	- Added a description environment.
+
+2003-09-22 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.61:
+	- Bugfix to make the class work with both old and new versions of 
+	  geometry.sty.
+
+2003-09-19 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.60:
+	- Bugfix for overlays and environments that internally use
+	  trivlists.
+	- Bugfix for overlays and lists - no more whobbling.
+	- Added overprint environment and overlayarea environment.
+	
+2003-09-18 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.52:
+	- Left and right margins can now be changed.
+	- In \section commands, you can now use formulas and line breaks.
+	- More documentation, especially on how to put several slides on
+	  one page.
+	- Workflow documentation.
+	- Two new themes. One of them needs version 0.11 of pgfshade.sty
+	  to work.
+
+2003-08-31 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.50:
+	- Added options handout and trans.
+	- Moved predefined templates to new file beamertemplates.sty	
+	- \titlepage must be put into a frame now
+	- Added notes management.
+
+2003-08-21 Till Tantau <tantau@cs.tu-berlin.de>
+
+	Version 0.40:
+	- Created Change log.
+	- New overlay management.

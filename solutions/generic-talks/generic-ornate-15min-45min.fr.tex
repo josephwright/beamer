@@ -1,0 +1,221 @@
+% /solutions/conference-talks/conference-ornate-20min.fr.tex, 22/02/2006 De Sousa
+
+\documentclass{beamer}
+
+% Ce fichier est un exemple-type pour :
+
+% - donner un exposé sur un certain sujet
+% - une durée variant de 15 à 45 minutes
+% - un style ornemental.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% Traduction de Philippe De Sousa <philippejjg@free.fr>
+%
+% En principe, ce fichier peut être redistribué et/ou modifié conformément
+% aux termes de la GNU Public License, version 2.
+%
+% Cependant, ce fichier est supposé comme étant un "exemple-type" qui
+% peut être modifié selon vos propres besoins. Pour cette raison, si
+% vous utilisez ce fichier en tant qu' "exemple-type" et non
+% spécifiquement pour le distribuer en tant que partie d'un package ou
+% programme, je vous donne la permission exceptionnelle de copier
+% librement et de modifier ce fichier et même d'effacer ce message de
+% copyright. 
+
+
+
+\mode<presentation> {
+  \usetheme{Warsaw}
+  % ou autre ...
+
+  \setbeamercovered{transparent}
+  % ou autre chose (il est également possible de supprimer cette ligne)
+}
+
+
+\usepackage[french]{babel}
+% or autre comme par exemple \usepackage[english]{babel}
+
+\usepackage[latin1]{inputenc}
+% or autre
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or autre. Notez que le codage et la fonte doivent être assortis. Si T1
+% ne paraît pas très esthétique, essayer d'effacer la ligne contenant fontenc.
+
+
+\title[Titre court] % (facultatif, à utiliser uniquement si le titre de l'article est trop long)
+{Très long titre qui prend de la place}
+
+\subtitle {Sous-titre de la présentation}
+
+\author[Auteur, Lautre] % (facultatif, à utiliser seulement avec plusieurs auteurs)
+{F.~Auteur\inst{1} \and S.~Lautre\inst{2}}
+% - Composez les noms dans l'ordre dans lequel ils apparaîtrons dans l'article
+% - Utilisez la commande \inst{?} uniquement si les auteurs ont des affiliations
+%   différentes.
+
+\institute[Universités de Quelque Part et d'Ailleurs] % (facultatif mais généralement nécessaire)
+{
+  \inst{1}%
+  Département  d'Informatique\\
+  Université de Quelque Part
+  \and
+  \inst{2}%
+  Département de Philosophie Théorique\\
+  Université d'Ailleurs}
+% - Utilisez la commande \inst uniquement s'il y a plusieurs affectations
+% - Faîtes quelque chose de simple, personne ne s'intéresse à votre adresse.
+
+\date[Version courte] % (facultatif)
+{Date / Occasion}
+
+\subject{Exposé}
+% Inséré uniquement dans la page d'information du fichier PDF. Peut être
+% supprimé.
+
+
+
+% Si vous avez un fichier nommé "université-logo-nomfichier.xxx", où xxx
+% est un format graphique accepté par latex ou pdflatex (comme par exemple .png),
+% alors vous pouvez insérer votre logo ainsi :
+
+% \pgfdeclareimage[height=0.5cm]{le-logo}{université-logo-nomfichier}
+% \logo{\pgfuseimage{le-logo}}
+
+
+
+% À supprimer si vous ne voulez pas que la table des matières apparaisse
+% au début de chaque sous-section :
+
+\AtBeginSubsection[] {
+  \begin{frame}<beamer>{Lignes directrices}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+% Si vous souhaitez recouvrir vos transparents un à un,
+% utilisez la commande suivante (pour plus d'info, voir la page 74 du manuel
+% d'utilisation de Beamer (version 3.06) par Till Tantau) :
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Lignes directrices}
+  \tableofcontents
+  % Vous pouvez, si vous le souhaiter ajouter l'option [pausesections]
+\end{frame}
+
+
+% Puisqu'il s'agit d'un exemple-type pour un exposé d'ordre général, peu de choses
+% peuvent être dites concernant sa structure. Cependant, la durée varie de 15 minutes
+% à 45 minutes et le thème vous suggère de suivre les règles suivantes :
+
+% - Avoir exactement deux ou trois sections (autre que la table des matières).
+% - Tout au plus trois sous-sections par section
+% - Parlez approximativement entre 30 secondes et 2 minutes par transparent. Il
+%   devrait donc y avoir entre 15 et 30 transparents, tous ayant été commentés.
+
+\section{Introduction}
+
+\subsection[Court titre s-section]{Un très long titre de sous-section.}
+
+\begin{frame}{Faîtes des titres qui informent.}{Les sous-titres sont facultatifs.}
+  % - Le titre doit résumer le transparent dans un langage compréhensible
+  %   par tous ceux qui ne suivront rien de ce qu'il y a sur ce transparent.
+
+  \begin{itemize}
+  \item Utilisez \texttt{itemize} à volonté.
+  \item Utilisez des phrases très courtes et de courtes expressions.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Faîtes des titres qui informent}
+
+  Vous pouvez créer des recouvrements\dots
+  \begin{itemize}
+  \item en utilisant la commande \texttt{pause} :
+    \begin{itemize}
+    \item
+      Premier item.
+      \pause
+    \item
+      Second item.
+    \end{itemize}
+  \item
+    en utilisant les spécifications des recouvrements
+    \begin{itemize}
+    \item<3->
+      Premier item.
+    \item<4->
+      Second item.
+    \end{itemize}
+  \item
+    en utilisant en général la commande \texttt{uncover} :
+    \begin{itemize}
+      \uncover<5->{\item
+        Premier item.}
+      \uncover<6->{\item
+        Second item.}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Deuxième sous-section}
+
+\begin{frame}{Faîtes des titres qui informent.}
+
+  {\scshape Beamer}, c'est vraiment super !
+\end{frame}
+
+\begin{frame}{Faîtes des titres qui informent.}
+
+  {\scshape Beamer}, c'est vraiment génial !
+\end{frame}
+
+
+
+\section*{Résumé}
+
+\begin{frame}{Résumé}
+
+  % Faîtes un résumé *très court*.
+  \begin{itemize}
+  \item
+    Le \alert{premier message principal} de l'exposé en une ligne ou
+    deux.
+  \item
+    Le \alert{deuxième message principal} de l'exposé en une ligne ou
+    deux.
+  \item
+    Peut-être un \alert{troisième message}, mais pas plus que ça.
+  \end{itemize}
+
+  % Les perspectives suivantes sont facultatives.
+  \vskip0pt plus.5fill
+  \begin{itemize}
+  \item
+    Perspectives
+    \begin{itemize}
+    \item
+      Problème non résolu.
+    \item
+      Autre problème non résolu.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\end{document}

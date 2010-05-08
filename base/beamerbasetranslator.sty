@@ -1,0 +1,28 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+%
+% Check for translator and load all dictionaries
+%
+\IfFileExists{translator.sty}{
+  \RequirePackage{translator}
+  \usedictionary{translator-basic-dictionary}
+  \usedictionary{translator-bibliography-dictionary}
+  \usedictionary{translator-environment-dictionary}
+  \usedictionary{translator-months-dictionary}
+  \usedictionary{translator-numbers-dictionary}
+  \usedictionary{translator-theorem-dictionary}
+}{\providecommand\translate[2][]{#2}}
+
+
+\mode
+<all>
