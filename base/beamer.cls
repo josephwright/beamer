@@ -323,8 +323,8 @@
     \beamer@paperwidth 12.80cm%
     \beamer@paperheight 9.60cm%
   \else\ifnum#1=32%
-    \beamer@paperwidth 15.00cm%
-    \beamer@paperheight 10.00cm%
+    \beamer@paperwidth 13.50cm%
+    \beamer@paperheight 9.00cm%
   \fi\fi\fi\fi\fi\fi%
 }
 
