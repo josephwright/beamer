@@ -11,39 +11,22 @@
 % $Header$
 
 \section{Structuring a Presentation: The Interactive Global Structure}
-
 \label{section-nonlinear}
 
 \subsection{Adding Hyperlinks and Buttons}
 
-To create anticipated nonlinear jumps in your talk structure, you
-can add hyperlinks to your presentation. A hyperlink is a text
-(usually rendered as a button) that, when you click on it, jumps the
-presentation to some other slide. Creating such a button is a
-three-step process:
+To create anticipated nonlinear jumps in your talk structure, you can add hyperlinks to your presentation. A hyperlink is a text (usually rendered as a button) that, when you click on it, jumps the presentation to some other slide. Creating such a button is a three-step process:
 \begin{enumerate}
-\item
-  You specify a target using the command |\hypertarget| or (easier)
-  the command |\label|. In some cases, see below, this step may be
-  skipped.
-\item
-  You render the button using |\beamerbutton| or a similar
-  command. This will \emph{render} the button, but clicking it will
-  not yet have any effect.
-\item
-  You put the button inside a |\hyperlink| command. Now clicking it
-  will jump to the target of the link.
+  \item
+  You specify a target using the command |\hypertarget| or (easier) the command |\label|. In some cases, see below, this step may be skipped.
+  \item
+  You render the button using |\beamerbutton| or a similar command. This will \emph{render} the button, but clicking it will not yet have any effect.
+  \item
+  You put the button inside a |\hyperlink| command. Now clicking it will jump to the target of the link.
 \end{enumerate}
 
-\begin{command}{\hypertarget\sarg{overlay specification}%
-    \marg{target name}\marg{text}}
-  If the \meta{overlay specification} is present, the \meta{text} is
-  the target for hyper jumps to \meta{target name} only on the
-  specified slide. On all other slides, the text is shown
-  normally. Note that you \emph{must} add an overlay specification to
-  the |\hypertarget| command whenever you use it on frames that have
-  multiple slides (otherwise |pdflatex| rightfully complains
-  that you have defined the same target on different slides).
+\begin{command}{\hypertarget\sarg{overlay specification}\marg{target name}\marg{text}}
+  If the \meta{overlay specification} is present, the \meta{text} is the target for hyper jumps to \meta{target name} only on the specified slide. On all other slides, the text is shown normally. Note that you \emph{must} add an overlay specification to the |\hypertarget| command whenever you use it on frames that have multiple slides (otherwise |pdflatex| rightfully complains that you have defined the same target on different slides).
   \example
 \begin{verbatim}
 \begin{frame}
@@ -59,15 +42,10 @@ three-step process:
 \end{verbatim}
 
   \articlenote
-  You must say |\usepackage{hyperref}| in your preamble to use this
-  command in |article| mode.
+  You must say |\usepackage[hyperref]{beamerarticle}| or |\usepackage{hyperref}| in your preamble to use this command in |article| mode.
 \end{command}
 
-The |\label| command creates a hypertarget as a side-effect and the
-|label=|\meta{name} option of the |\frame| command creates a label
-named \meta{name}|<|\meta{slide number}|>| for each slide of the frame
-as a side-effect. Thus the above example could be written more easily
-as:
+The |\label| command creates a hypertarget as a side-effect and the |label=|\meta{name} option of the |\frame| command creates a label named \meta{name}|<|\meta{slide number}|>| for each slide of the frame as a side-effect. Thus the above example could be written more easily as:
 \begin{verbatim}
 \begin{frame}[label=threeitems]
   \begin{itemize}
@@ -79,72 +57,50 @@ as:
   \hyperlink{threeitems<2>}{\beamergotobutton{Jump to second slide}}
 \end{frame}
 \end{verbatim}
-
-
-
-The following commands can be used to specify in an abstract way what
-a button will be used for.
+The following commands can be used to specify in an abstract way what a button will be used for.
 
 \begin{command}{\beamerbutton\marg{button text}}
   Draws a button with the given \meta{button text}.
-  \example |\hyperlink{somewhere}{\beamerbutton{Go somewhere}}|
+  \example
+  |\hyperlink{somewhere}{\beamerbutton{Go somewhere}}|
 
   \articlenote
-  This command (and the following) just insert their argument in
-  |article| mode.
+  This command (and the following) just insert their argument in |article| mode.
 
   \begin{element}{button}\yes\yes\yes
-    When the |\beamerbutton| command is called, this template is used
-    to render the button. Inside the template you can use the command
-    |\insertbuttontext| to insert the argument that was passed to
-    |\beamerbutton|.
+    When the |\beamerbutton| command is called, this template is used to render the button. Inside the template you can use the command |\insertbuttontext| to insert the argument that was passed to |\beamerbutton|.
     \begin{templateoptions}
       \itemoption{default}{}
-      Typesets the button with rounded corners. The fore- and
-      background of the \beamer-color |button| are used and also the
-      \beamer-font |button|. The border of the button gets the
-      foreground of the \beamer-color |button border|.
+      Typesets the button with rounded corners. The fore- and background of the \beamer-color |button| are used and also the \beamer-font |button|. The border of the button gets the foreground of the \beamer-color |button border|.
     \end{templateoptions}
     The following inserts are useful for this element:
     \begin{itemize}
-      \iteminsert{\insertbuttontext} inserts the text of the current
-      button. Inside ``Goto-Buttons'' (see below) this text is
-      prefixed by the insert |\insertgotosymbol| and similarly for
-      skip and return buttons.
+      \iteminsert{\insertbuttontext} inserts the text of the current button. Inside ``Goto-Buttons'' (see below) this text is prefixed by the insert |\insertgotosymbol| and similarly for skip and return buttons.
 
-      \iteminsert{\insertgotosymbol} This text is inserted at the
-      beginning of goto buttons. Redefine this command to change the
-      symbol.
+      \iteminsert{\insertgotosymbol} This text is inserted at the beginning of goto buttons. Redefine this command to change the symbol.
       \example
       |\renewcommand{\insertgotosymbol}{\somearrowcommand}|
 
-      \iteminsert{\insertskipsymbol} This text is inserted at the
-      beginning of skip buttons.
+      \iteminsert{\insertskipsymbol} This text is inserted at the beginning of skip buttons.
 
-      \iteminsert{\insertreturnsymbol} This text is inserted at the
-      beginning of return buttons.
+      \iteminsert{\insertreturnsymbol} This text is inserted at the beginning of return buttons.
     \end{itemize}
   \end{element}
 
   \begin{element}{button border}\no\yes\no
-    The foreground of this color is used to render the border of
-    buttons.
+    The foreground of this color is used to render the border of buttons.
   \end{element}
 \end{command}
 
 \begin{command}{\beamergotobutton\marg{button text}}
-  Draws a button with the given \meta{button text}. Before the text, a
-  small symbol (usually a right-pointing arrow) is inserted that
-  indicates that pressing this button will jump to another ``area'' of
-  the presentation.
+  Draws a button with the given \meta{button text}. Before the text, a small symbol (usually a right-pointing arrow) is inserted that indicates that pressing this button will jump to another ``area'' of the presentation.
 
-  \example |\hyperlink{detour}{\beamergotobutton{Go to detour}}|
+  \example
+  |\hyperlink{detour}{\beamergotobutton{Go to detour}}|
 \end{command}
 
 \begin{command}{\beamerskipbutton\marg{button text}}
-  The symbol drawn for this button is usually a double right
-  arrow. Use this button if pressing it will skip over a
-  well-defined part of your talk.
+  The symbol drawn for this button is usually a double right arrow. Use this button if pressing it will skip over a well-defined part of your talk.
 
   \example
 \begin{verbatim}
@@ -166,8 +122,7 @@ a button will be used for.
 \end{command}
 
 \begin{command}{\beamerreturnbutton\marg{button text}}
-  The symbol drawn for this button is usually a left-pointing
-  arrow. Use this button if pressing it will return from a detour.
+  The symbol drawn for this button is usually a left-pointing arrow. Use this button if pressing it will return from a detour.
 
   \example
 \begin{verbatim}
@@ -192,26 +147,13 @@ a button will be used for.
 \end{verbatim}
 \end{command}
 
-To make a button ``clickable'' you must place it in a command like
-|\hyperlink|. The command |\hyperlink| is a standard command of the
-|hyperref| package. The \beamer\ class defines a whole bunch of other
-hyperlink commands that you can also use.
+To make a button ``clickable'' you must place it in a command like |\hyperlink|. The command |\hyperlink| is a standard command of the |hyperref| package. The \beamer\ class defines a whole bunch of other hyperlink commands that you can also use.
 
-\begin{command}{\hyperlink\sarg{overlay specification}\marg{target
-      name}\marg{link text}\sarg{overlay specification}}
-  Only one \meta{overlay specification} may be given.
-  The \meta{link text} is typeset in the usual way. If you click
-  anywhere on this text, you will jump to the slide on which the
-  |\hypertarget| command was used with the parameter \meta{target
-    name}. If an \meta{overlay specification} is present, the
-    hyperlink (including the \meta{link text}) is completely
-    suppressed on the non-specified slides.
+\begin{command}{\hyperlink\sarg{overlay specification}\marg{target name}\marg{link text}\sarg{overlay specification}}
+  Only one \meta{overlay specification} may be given. The \meta{link text} is typeset in the usual way. If you click anywhere on this text, you will jump to the slide on which the |\hypertarget| command was used with the parameter \meta{target name}. If an \meta{overlay specification} is present, the hyperlink (including the \meta{link text}) is completely suppressed on the non-specified slides.
 \end{command}
 
-The following commands have a predefined target; otherwise they behave
-exactly like |\hyperlink|. In particular, they all also accept an
-overlay specification and they also accept it at the end, rather than
-at the beginning.
+The following commands have a predefined target; otherwise they behave exactly like |\hyperlink|. In particular, they all also accept an overlay specification and they also accept it at the end, rather than at the beginning.
 
 \begin{command}{\hyperlinkslideprev\sarg{overlay specification}\marg{link text}}
   Clicking the text jumps one slide back.
@@ -237,22 +179,18 @@ at the beginning.
   Clicking the text jumps to the last slide of the previous frame.
 \end{command}
 
-The previous four command exist also with ``|frame|'' replaced by
-``|subsection|'' everywhere, and also again with  ``|frame|'' replaced
-by ``|section|''.
+The previous four command exist also with ``|frame|'' replaced by ``|subsection|'' everywhere, and also again with  ``|frame|'' replaced by ``|section|''.
 
 \begin{command}{\hyperlinkpresentationstart\sarg{overlay specification}\marg{link text}}
   Clicking the text jumps to the first slide of the presentation.
 \end{command}
 
 \begin{command}{\hyperlinkpresentationend\sarg{overlay specification}\marg{link text}}
-  Clicking the text jumps to the last slide of the presentation. This
-  \emph{excludes} the appendix.
+  Clicking the text jumps to the last slide of the presentation. This \emph{excludes} the appendix.
 \end{command}
 
 \begin{command}{\hyperlinkappendixstart\sarg{overlay specification}\marg{link text}}
-  Clicking the text jumps to the first slide of the appendix. If there
-  is no appendix, this will jump to the last slide of the document.
+  Clicking the text jumps to the first slide of the appendix. If there is no appendix, this will jump to the last slide of the document.
 \end{command}
 
 \begin{command}{\hyperlinkappendixend\sarg{overlay specification}\marg{link text}}
@@ -264,32 +202,17 @@ by ``|section|''.
 \end{command}
 
 \begin{command}{\hyperlinkdocumentend\sarg{overlay specification}\marg{link text}}
-  Clicking the text jumps to the last slide of the presentation or, if
-  an appendix is present, to the last slide of the appendix.
+  Clicking the text jumps to the last slide of the presentation or, if an appendix is present, to the last slide of the appendix.
 \end{command}
-
-
 
 
 \subsection{Repeating a Frame at a Later Point}
 
-Sometimes you may wish some slides of a frame to be shown in your main
-talk, but wish some ``supplementary'' slides of the frame to be shown
-only in the the appendix. In this case, the |\againframe| command is
-useful.
+Sometimes you may wish some slides of a frame to be shown in your main talk, but wish some ``supplementary'' slides of the frame to be shown only in the the appendix. In this case, the |\againframe| command is useful.
 
-
-\begin{command}{\againframe\sarg{overlay
-      specification}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\marg{name}}
+\begin{command}{\againframe\sarg{overlay specification}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\marg{name}}
   \beamernote
-  Resumes a frame that was previously created using |\frame|
-  with the option |label=|\meta{name}. You must have used this option,
-  just placing a label inside a frame ``by hand'' is not enough. You
-  can use this command to ``continue'' a frame that has been
-  interrupted by another frame. The effect of this command is to call
-  the |\frame| command with the given \meta{overlay specification},
-  \meta{default overlay specification} (if present), and
-  \meta{options} (if present) and with the original frame's contents.
+  Resumes a frame that was previously created using |\frame| with the option |label=|\meta{name}. You must have used this option, just placing a label inside a frame ``by hand'' is not enough. You can use this command to ``continue'' a frame that has been interrupted by another frame. The effect of this command is to call the |\frame| command with the given \meta{overlay specification}, \meta{default overlay specification} (if present), and \meta{options} (if present) and with the original frame's contents.
 
   \example
 \begin{verbatim}
@@ -309,11 +232,7 @@ useful.
 
 \againframe<3>{myframe}
 \end{verbatim}
-  The effect of the above code is to create four slides. In the first
-  two, the items 1 and~2 are highlighted. The third slide contains the
-  text ``Some stuff explaining more on the second matter.'' The fourth
-  slide is identical to the first two slides, except that the third
-  point is now highlighted.
+  The effect of the above code is to create four slides. In the first two, the items 1 and~2 are highlighted. The third slide contains the text ``Some stuff explaining more on the second matter.'' The fourth slide is identical to the first two slides, except that the third point is now highlighted.
 
   \example
 \begin{verbatim}
@@ -344,105 +263,44 @@ useful.
 
 \againframe<2>{Cantor}
 \end{verbatim}
-  In this example, the proof details are deferred to a slide in the
-  appendix. Hyperlinks are setup, so that one can jump to the proof
-  and go back.
+  In this example, the proof details are deferred to a slide in the appendix. Hyperlinks are setup, so that one can jump to the proof and go back.
 
   \articlenote
   This command is ignored in |article| mode.
 
   \lyxnote
-  Use the style ``AgainFrame'' to insert an |\againframe| command. The
-  \meta{label name} is the text on following the style name
-  and is \emph{not} put in \TeX-mode. However, an overlay specification
-  must be given in \TeX-mode and it must precede the label name.
+  Use the style ``AgainFrame'' to insert an |\againframe| command. The \meta{label name} is the text on following the style name and is \emph{not} put in \TeX-mode. However, an overlay specification must be given in \TeX-mode and it must precede the label name.
 \end{command}
 
 
-
 \subsection{Adding Anticipated Zooming}
-
 \label{section-zooming}
 
+Anticipated zooming is necessary when you have a very complicated graphic that you are not willing to simplify since, indeed, all the complex details merit an explanation. In this case, use the command |\framezoom|. It allows you to specify that clicking on a certain area of a frame should zoom out this area. You can then explain the details. Clicking on the zoomed out picture will take you back to the original one.
 
-Anticipated zooming is necessary when you have a very complicated
-graphic that you are not willing to simplify since, indeed, all the
-complex details merit an explanation. In this case, use the command
-|\framezoom|. It allows you to specify that clicking on a certain area
-of a frame should zoom out this area. You can then explain the
-details. Clicking on the zoomed out picture will take you back to the
-original one.
+\begin{command}{\framezoom\ssarg{button overlay specification}\ssarg{zoomed overlay specification}\oarg{options}\\|(|\meta{upper left x}|,|\meta{upper left y}|)(|\meta{zoom area width}|,|\meta{zoom area depth}|)|}
+  This command should be given somewhere at the beginning of a frame. When given, two different things will happen, depending on whether the \meta{button overlay specification} applies to the current slide of the frame or whether the \meta{zoomed overlay specification} applies. These overlay specifications should not overlap.
 
-\begin{command}{\framezoom\ssarg{button overlay
-      specification}\ssarg{zoomed overlay
-      specification}\oarg{options}\\|(|\meta{upper left x}|,|\meta{upper
-      left y}|)(|\meta{zoom area width}|,|\meta{zoom area depth}|)|}
-  This command should be given somewhere at the beginning of a
-  frame. When given, two different things will happen, depending on
-  whether the \meta{button overlay specification} applies to the
-  current slide of the frame or whether the \meta{zoomed overlay
-    specification} applies. These overlay specifications should not
-  overlap.
+  If the \meta{button overlay specification} applies, a clickable area is created inside the frame. The size of this area is given by \meta{zoom area width} and \meta{zoom area depth}, which are two normal \TeX\ dimensions (like |1cm| or |20pt|). The upper left corner of this area is given by \meta{upper left x} and \meta{upper left y}, which are also \TeX\ dimensions. They are measures \emph{relative to the place where the first normal text of a frame would go}. Thus, the location |(0pt,0pt)| is at the beginning of the normal text (which excludes the headline and also the frame title).
 
-  If the \meta{button overlay specification} applies, a clickable area
-  is created inside the frame. The size of this area is given by
-  \meta{zoom area width} and \meta{zoom area depth}, which are two
-  normal \TeX\ dimensions (like |1cm| or |20pt|). The upper left
-  corner of this area is given by \meta{upper left x} and \meta{upper
-  left y}, which are also \TeX\ dimensions. They are measures
-  \emph{relative to the place where the first normal text of a
-    frame would go}. Thus, the location |(0pt,0pt)| is at the
-  beginning of the normal text (which excludes the headline and also
-  the frame title).
-
-  By default, the button is clickable, but it will not be indicated in
-  any special way. You can draw a border around the button by using
-  the following \meta{option}:
+  By default, the button is clickable, but it will not be indicated in any special way. You can draw a border around the button by using the following \meta{option}:
   \begin{itemize}
-  \item \declare{|border|}\opt{|=|\meta{width in pixels}} will draw
-    a border around the specified button area. The default width is 1
-    pixel. The color of this  button is the |linkbordercolor| of
-    |hyperref|. \beamer\ sets this color to a 50\% gray by default. To
-    change this, you can use the command
-    |\hypersetup{linkbordercolor={|\meta{red}| |\meta{green}| |\meta{blue}|}}|,
-    where \meta{red}, \meta{green}, and \meta{blue} are values between
-    0 and 1.
+    \item
+    \declare{|border|}\opt{|=|\meta{width in pixels}} will draw a border around the specified button area. The default width is 1 pixel. The color of this  button is the |linkbordercolor| of |hyperref|. \beamer\ sets this color to a 50\% gray by default. To change this, you can use the command |\hypersetup{linkbordercolor={|\meta{red}| |\meta{green}| |\meta{blue}|}}|, where \meta{red}, \meta{green}, and \meta{blue} are values between 0 and 1.
   \end{itemize}
 
-  When you press the button created in this way, the viewer
-  application will hyperjump to the first of the frames specified by
-  the \meta{zoomed overlay specification}. For the slides to which
-  this overlay specification applies, the following happens:
+  When you press the button created in this way, the viewer application will hyperjump to the first of the frames specified by the \meta{zoomed overlay specification}. For the slides to which this overlay specification applies, the following happens:
 
-  The exact same area as the one specified before is ``zoomed out'' to
-  fill the whole normal text area of the frame. Everything else,
-  including the sidebars, the headlines and footlines, and even the
-  frame title retain their normal size. The zooming is performed in
-  such a way that the whole specified area is completely shown. The
-  aspect ratio is kept correct and the zoomed area will possibly show
-  more than just the specified area if the aspect ratio of this area
-  and the aspect ratio of the available text area do not agree.
+  The exact same area as the one specified before is ``zoomed out'' to fill the whole normal text area of the frame. Everything else, including the sidebars, the headlines and footlines, and even the frame title retain their normal size. The zooming is performed in such a way that the whole specified area is completely shown. The aspect ratio is kept correct and the zoomed area will possibly show more than just the specified area if the aspect ratio of this area and the aspect ratio of the available text area do not agree.
 
-  Behind the whole text area (which contains the zoomed area) a big
-  invisible ``Back'' button is put. Thus clicking anywhere on the text
-  area will jump back to the original (unzoomed) picture.
+  Behind the whole text area (which contains the zoomed area) a big invisible ``Back'' button is put. Thus clicking anywhere on the text area will jump back to the original (unzoomed) picture.
 
-  You can specify several zoom areas for a single frame. In this case,
-  you should specify different \meta{zoomed overlay specification},
-  but you can specify the same \meta{button overlay
-  specification}. You cannot nest zoomings in the sense that you
-  cannot have a zoom button on a slide that is in some \meta{zoomed
-  overlay specification}. However, you can have overlapping and even
-  nested \meta{button overlay specification}. When clicking on an area
-  that belongs to several buttons, the one given last will ``win'' (it
-  should hence be the smallest one).
+  You can specify several zoom areas for a single frame. In this case, you should specify different \meta{zoomed overlay specification}, but you can specify the same \meta{button overlay specification}. You cannot nest zoomings in the sense that you cannot have a zoom button on a slide that is in some \meta{zoomed overlay specification}. However, you can have overlapping and even nested \meta{button overlay specification}. When clicking on an area that belongs to several buttons, the one given last will ``win'' (it should hence be the smallest one).
 
-  If you do not wish to have the frame title shown on a zoomed slide,
-  you can add an overlay specification to the |\frametitle| command
-  that simply suppresses the title for the slide. Also, by using the
-  |plain| option, you can have the zoomed slide fill the whole page.
+  If you do not wish to have the frame title shown on a zoomed slide, you can add an overlay specification to the |\frametitle| command that simply suppresses the title for the slide. Also, by using the |plain| option, you can have the zoomed slide fill the whole page.
 
-  \example A simple case
+  \example
+  A simple case
 \begin{verbatim}
 \begin{frame}
   \frametitle{A Complicated Picture}
@@ -455,8 +313,8 @@ original one.
 \end{frame}
 \end{verbatim}
 
-  \example A more complicate case in which the zoomed parts completely
-  fill the frames.
+  \example
+  A more complicate case in which the zoomed parts completely fill the frames.
 \begin{verbatim}
 \begin{frame}<1>[label=zooms]
   \frametitle<1>{A Complicated Picture}

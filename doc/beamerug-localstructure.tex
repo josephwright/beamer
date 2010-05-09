@@ -12,29 +12,15 @@
 
 \section{Structuring a Presentation: The Local Structure}
 
-\LaTeX\ provides different commands for structuring text ``locally,''
-for example, via the |itemize| environment. These environments
-are also available in the \beamer\ class, although their appearance has
-been slightly changed. Furthermore, the \beamer\ class also defines
-some new commands and environments, see below, that may help you to
-structure your text.
+\LaTeX\ provides different commands for structuring text ``locally,'' for example, via the |itemize| environment. These environments are also available in the \beamer\ class, although their appearance has been slightly changed. Furthermore, the \beamer\ class also defines some new commands and environments, see below, that may help you to structure your text.
+
 
 \subsection{Itemizations, Enumerations, and Descriptions}
-
 \label{section-enumerate}
 
-There are three predefined environments for creating lists, namely
-|enumerate|, |itemize|, and |description|. The first
-two can be nested to depth three, but nesting them to this depth
-creates totally unreadable slides.
+There are three predefined environments for creating lists, namely |enumerate|, |itemize|, and |description|. The first two can be nested to depth three, but nesting them to this depth creates totally unreadable slides.
 
-The |\item| command is overlay-specification-aware. If an overlay
-specification is provided, the item will only be shown on the
-specified slides, see the following example. If the |\item|
-command is to take an optional argument and an overlay specification,
-the overlay specification can either come first as in |\item<1>[Cat]|
-or come last as in |\item[Cat]<1>|.
-
+The |\item| command is overlay-specification-aware. If an overlay specification is provided, the item will only be shown on the specified slides, see the following example. If the |\item| command is to take an optional argument and an overlay specification, the overlay specification can either come first as in |\item<1>[Cat]| or come last as in |\item[Cat]<1>|.
 \begin{verbatim}
 \begin{frame}
   There are three important points:
@@ -50,22 +36,10 @@ or come last as in |\item[Cat]<1>|.
   \end{enumerate}
 \end{frame}
 \end{verbatim}
-
-
 \begin{environment}{{itemize}\opt{|[<|\meta{default overlay specification}|>]|}}
-  Used to display a list of items that do not have a special
-  ordering. Inside the environment, use an |\item| command for
-  each topic.
+  Used to display a list of items that do not have a special ordering. Inside the environment, use an |\item| command for each topic.
 
-  If the optional parameter \meta{default overlay specification} is
-  given, in every occurrence of an |\item| command that does not have
-  an overlay specification attached to it, the \meta{default overlay
-    specification} is used. By setting this specification to be an
-  incremental overlay specification, see
-  Section~\ref{section-incremental}, you can implement, for example, a
-  step-wise uncovering of the items. The \meta{default overlay
-    specification} is inherited by subenvironments. Naturally, in a
-  subenvironment you can reset it locally by setting it to |<1->|.
+  If the optional parameter \meta{default overlay specification} is given, in every occurrence of an |\item| command that does not have an overlay specification attached to it, the \meta{default overlay specification} is used. By setting this specification to be an incremental overlay specification, see Section~\ref{section-incremental}, you can implement, for example, a step-wise uncovering of the items. The \meta{default overlay specification} is inherited by subenvironments. Naturally, in a subenvironment you can reset it locally by setting it to |<1->|.
   \example
 \begin{verbatim}
 \begin{itemize}
@@ -100,28 +74,15 @@ or come last as in |\item[Cat]<1>|.
 \end{verbatim}
 
   \lyxnote
-  Unfortunately, currently you cannot specify optional arguments with
-  the |itemize| environment. You can, however, use the command
-  |\beamerdefaultoverlayspecification| before the environment to get
-  the desired effect.
+  Unfortunately, currently you cannot specify optional arguments with the |itemize| environment. You can, however, use the command |\beamerdefaultoverlayspecification| before the environment to get the desired effect.
 
-  The appearance of an |itemize| list is governed by several
-  templates. The first template concerns the way the little marker
-  introducing each item is typeset:
+  The appearance of an |itemize| list is governed by several templates. The first template concerns the way the little marker introducing each item is typeset:
   \begin{element}{itemize items}\semiyes\no\no
-    This template is a parent template, whose children are
-    |itemize item|, |itemize subitem|, and |itemize subsubitem|. This
-    means that if you use the |\setbeamertemplate| command on this
-    template, the command is instead called for all of these children
-    (with the same arguments).
+    This template is a parent template, whose children are |itemize item|, |itemize subitem|, and |itemize subsubitem|. This means that if you use the |\setbeamertemplate| command on this template, the command is instead called for all of these children (with the same arguments).
 
     \begin{templateoptions}
       \itemoption{default}{}
-      The default item marker is a small triangle colored with the
-      foreground of the \beamer-color |itemize item| (or, for
-      subitems, |itemize subitem| etc.). Note that these colors will
-      automatically change under certain circumstances such as inside
-      an example block or inside an |alertenv| environment.
+      The default item marker is a small triangle colored with the foreground of the \beamer-color |itemize item| (or, for subitems, |itemize subitem| etc.). Note that these colors will automatically change under certain circumstances such as inside an example block or inside an |alertenv| environment.
       \itemoption{triangle}{}
       Alias for the default.
       \itemoption{circle}{}
@@ -135,25 +96,16 @@ or come last as in |\item[Cat]<1>|.
 
   \begin{element}{itemize item}\yes\yes\yes
     \colorfontparents{item}
-    This template (with |item| instead of |items|) governs how the
-    marker in front of a first-level item is typeset. ``First-level''
-    refers to the level of nesting. See the |itemize items| template
-    for the \meta{options} that may be given.
+    This template (with |item| instead of |items|) governs how the marker in front of a first-level item is typeset. ``First-level'' refers to the level of nesting. See the |itemize items| template for the \meta{options} that may be given.
 
-    When the template is inserted, the \beamer-font and -color
-    |itemize item| is installed. Typically, the font is ignored by the
-    template as some special symbol is drawn anyway, by the font may
-    be important if an optional argument is given to the
-    |\item| command as in |\item[First]|.
+    When the template is inserted, the \beamer-font and -color |itemize item| is installed. Typically, the font is ignored by the template as some special symbol is drawn anyway, by the font may be important if an optional argument is given to the |\item| command as in |\item[First]|.
 
-    The font and color inherit from the |item| font and color, which
-    are explained at the end of this section.
+    The font and color inherit from the |item| font and color, which are explained at the end of this section.
   \end{element}
 
   \begin{element}{itemize subitem}\yes\yes\yes
     \colorfontparents{subitem}
-    Like |itemize item|, only for second-level items. An
-    item of an itemize inside an enumerate counts as a second-level item.
+    Like |itemize item|, only for second-level items. An item of an itemize inside an enumerate counts as a second-level item.
   \end{element}
 
   \begin{element}{itemize subsubitem}\yes\yes\yes
@@ -162,39 +114,12 @@ or come last as in |\item[Cat]<1>|.
   \end{element}
 \end{environment}
 
-
-
-
 \begin{environment}{{enumerate}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{mini template}}
-  Used to display a list of items that are ordered.  Inside the
-  environment, use an |\item| command for each topic. By default,
-  before each item increasing Arabic numbers  followed by a dot are
-  printed (as in ``1.'' and ``2.''). This can be changed by specifying
-  a different template,  see below.
+  Used to display a list of items that are ordered. Inside the environment, use an |\item| command for each topic. By default, before each item increasing Arabic numbers followed by a dot are printed (as in ``1.'' and ``2.''). This can be changed by specifying a different template, see below.
 
-  The first optional argument \meta{default overlay specification} has
-  exactly the same effect as for the |itemize| environment. It is
-  ``detected'' by the opening |<|-sign in the \meta{default overlay
-    specification}. Thus, if there is only one optional argument and
-  if this argument does not start with |<|, then it is considered to
-  be a \meta{mini template}.
+  The first optional argument \meta{default overlay specification} has exactly the same effect as for the |itemize| environment. It is ``detected'' by the opening |<|-sign in the \meta{default overlay specification}. Thus, if there is only one optional argument and if this argument does not start with |<|, then it is considered to be a \meta{mini template}.
 
-  The syntax of the \meta{mini template} is the same as
-  the syntax of mini templates in the |enumerate| package (you do not
-  need to include the
-  |enumerate| package, this is done automatically). Roughly spoken,
-  the text of the \meta{mini template} is printed before each item,
-  but any occurrence of a |1| in the mini template is replaced by the
-  current item number, an occurrence of the letter |A| is replaced by
-  the $i$th letter of the alphabet (in uppercase) for the $i$th item,
-  and the letters |a|, |i|, and |I| are replaced by the corresponding
-  lowercase letters, lowercase Roman letters, and uppercase Roman
-  letters, respectively. So the mini template |(i)| would yield the
-  items (i), (ii), (iii), (iv), and so on. The mini template |A.)|
-  would yield the items A.), B.), C.), D.) and so on. For more details
-  on the possible mini templates, see the documentation of the
-  |enumerate| package. Note that there is also a template that governs
-  the appearance of the mini template.
+  The syntax of the \meta{mini template} is the same as the syntax of mini templates in the |enumerate| package (you do not need to include the |enumerate| package, this is done automatically). Roughly spoken, the text of the \meta{mini template} is printed before each item, but any occurrence of a |1| in the mini template is replaced by the current item number, an occurrence of the letter |A| is replaced by the $i$-th letter of the alphabet (in uppercase) for the $i$-th item, and the letters |a|, |i|, and |I| are replaced by the corresponding lowercase letters, lowercase Roman letters, and uppercase Roman letters, respectively. So the mini template |(i)| would yield the items (i), (ii), (iii), (iv), and so on. The mini template |A.)| would yield the items A.), B.), C.), D.) and so on. For more details on the possible mini templates, see the documentation of the |enumerate| package. Note that there is also a template that governs the appearance of the mini template.
 
   \example
 \begin{verbatim}
@@ -215,28 +140,19 @@ or come last as in |\item[Cat]<1>|.
 \end{verbatim}
 
   \articlenote
-  To use the \meta{mini template}, you have to include the package
-  |enumerate|.
+  To use the \meta{mini template}, you have to include the package |enumerate|.
 
   \lyxnote
   The same constraints as for |itemize| apply.
 
   \begin{element}{enumerate items}\semiyes\no\no
-    Similar to |itemize items|, this template is a parent template,
-    whose children are |enumerate item|, |enumerate subitem|,
-    |enumerate subsubitem|, and |enumerate mini template|. These
-    templates govern how the text (the number) of an enumeration is
-    typeset.
+    Similar to |itemize items|, this template is a parent template, whose children are |enumerate item|, |enumerate subitem|, |enumerate subsubitem|, and |enumerate mini template|. These templates govern how the text (the number) of an enumeration is typeset.
 
     \begin{templateoptions}
       \itemoption{default}{}
-      The default enumeration marker uses the scheme 1., 2., 3.\ for
-      the first level, 1.1, 1.2, 1.3 for the second level and 1.1.1,
-      1.1.2, 1.1.3 for the third level.
+      The default enumeration marker uses the scheme 1., 2., 3.\ for the first level, 1.1, 1.2, 1.3 for the second level and 1.1.1, 1.1.2, 1.1.3 for the third level.
       \itemoption{circle}{}
-      Places the numbers inside little circles. The colors are taken
-      from |item projected| or |subitem projected| or
-      |subsubitem projected|.
+      Places the numbers inside little circles. The colors are taken from |item projected| or |subitem projected| or |subsubitem projected|.
       \itemoption{square}{}
       Places the numbers on little squares.
       \itemoption{ball}{}
@@ -245,21 +161,14 @@ or come last as in |\item[Cat]<1>|.
   \end{element}
 
   \begin{element}{enumerate item}\yes\yes\yes
-    This template governs how the number in front of a first-level
-    item is typeset. The level here refers to the level of enumeration
-    nesting only. Thus an enumerate inside an itemize is a first-level
-    enumerate (but it uses the second-level
-    |itemize/enumerate body|).
+    This template governs how the number in front of a first-level item is typeset. The level here refers to the level of enumeration nesting only. Thus an enumerate inside an itemize is a first-level enumerate (but it uses the second-level |itemize/enumerate body|).
 
-    When the template is inserted, the \beamer-font and -color
-    |enumerate item| are installed.
+    When the template is inserted, the \beamer-font and -color |enumerate item| are installed.
 
     The following command is useful for this template:
     \begin{templateinserts}
       \iteminsert{\insertenumlabel}
-      inserts the current number of the top-level enumeration (as an
-      Arabic number). This insert is also available in the next two
-      templates.
+      inserts the current number of the top-level enumeration (as an Arabic number). This insert is also available in the next two templates.
     \end{templateinserts}
   \end{element}
 
@@ -268,8 +177,7 @@ or come last as in |\item[Cat]<1>|.
 
     \begin{templateinserts}
       \iteminsert{\insertsubenumlabel}
-      inserts the current number of the second-level enumeration (as an
-      Arabic number).
+      inserts the current number of the second-level enumeration (as an Arabic number).
     \end{templateinserts}
 
     \example
@@ -283,63 +191,41 @@ or come last as in |\item[Cat]<1>|.
 
     \begin{templateinserts}
       \iteminsert{\insertsubsubenumlabel}
-      inserts the current number of the second-level enumeration (as an
-      Arabic number).
+      inserts the current number of the second-level enumeration (as an Arabic number).
     \end{templateinserts}
   \end{element}
 
   \begin{element}{enumerate mini template}\yes\yes\yes
-    This template is used to typeset the number that arises from a
-    mini template.
+    This template is used to typeset the number that arises from a mini template.
 
     \begin{templateinserts}
       \iteminsert{\insertenumlabel}
-      inserts the current number rendered by this mini template. For
-      example, if the \meta{mini template} is |(i)| and this command
-      is used in the fourth item, |\insertenumlabel| would yield
-      |(iv)|.
+      inserts the current number rendered by this mini template. For example, if the \meta{mini template} is |(i)| and this command is used in the fourth item, |\insertenumlabel| would yield |(iv)|.
     \end{templateinserts}
   \end{element}
 \end{environment}
 
-The following templates govern how the \emph{body} of an |itemize| or
-an |enumerate| is typeset.
+The following templates govern how the \emph{body} of an |itemize| or an |enumerate| is typeset.
 \begin{element}{itemize/enumerate body begin}\yes\no\no
-  This template is inserted at the beginning of a first-level
-  |itemize| or |enumerate| environment. Furthermore, before this
-  template is inserted, the \beamer-font and -color
-  |itemize/enumerate body| is used.
+  This template is inserted at the beginning of a first-level |itemize| or |enumerate| environment. Furthermore, before this template is inserted, the \beamer-font and -color |itemize/enumerate body| is used.
 \end{element}
 \begin{element}{itemize/enumerate body end}\yes\no\no
-  This template is inserted at the end of a first-level
-  |itemize| or |enumerate| environment.
+  This template is inserted at the end of a first-level |itemize| or |enumerate| environment.
 \end{element}
-There exist corresponding templates like
-|itemize/enumerate subbody begin| for second- and third-level itemize
-or enumerates.
+There exist corresponding templates like |itemize/enumerate subbody begin| for second- and third-level itemize or enumerates.
 
 \begin{element}{items}\semiyes\no\no
-  This template is a parent template of |itemize items| and
-  |enumerate items|.
-  \example |\setbeamertemplate{items}[circle]| will cause all items in
-  |itemize| or |enumerate| environments to become circles (of the
-  appropriate size, color, and font).
+  This template is a parent template of |itemize items| and |enumerate items|.
+  \example
+  |\setbeamertemplate{items}[circle]| will cause all items in |itemize| or |enumerate| environments to become circles (of the appropriate size, color, and font).
 \end{element}
-
 
 \label{section-descriptions}
 
 \begin{environment}{{description}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{long text}}
-  Like |itemize|, but used to display a list that explains or defines
-  labels. The width of \meta{long text} is used to set the
-  indentation. Normally, you choose the widest label in the
-  description and copy it here. If you do not give this argument, the
-  default width is used, which can be changed using |\setbeamersize|
-  with the argument |description width=|\meta{width}.
+  Like |itemize|, but used to display a list that explains or defines labels. The width of \meta{long text} is used to set the indentation. Normally, you choose the widest label in the description and copy it here. If you do not give this argument, the default width is used, which can be changed using |\setbeamersize| with the argument |description width=|\meta{width}.
 
-  As for |enumerate|, the \meta{default overlay specification} is
-  detected by an opening~|<|. The effect is the same as for
-  |enumerate| and |itemize|.
+  As for |enumerate|, the \meta{default overlay specification} is detected by an opening~|<|. The effect is the same as for |enumerate| and |itemize|.
   \example
 \begin{verbatim}
 \begin{description}
@@ -364,9 +250,7 @@ or enumerates.
 \end{verbatim}
 
   \lyxnote
-  Since you cannot specify the optional argument in \LyX, if you wish
-  to specify the width, you may wish to use the following command
-  shortly before the environment:
+  Since you cannot specify the optional argument in \LyX, if you wish to specify the width, you may wish to use the following command shortly before the environment:
 
   |\setbeamersize{description width of={|\marg{text}|}}|
 
@@ -381,62 +265,43 @@ or enumerates.
 \end{verbatim}
 
   \begin{element}{description item}\yes\yes\yes
-    This template is used to typeset the description items. When this
-    template is called, the \beamer-font and -color |description item|
-    are installed.
+    This template is used to typeset the description items. When this template is called, the \beamer-font and -color |description item| are installed.
 
     \begin{templateoptions}
       \itemoption{default}{}
-      By default, the description item text is just inserted without
-      any modification.
+      By default, the description item text is just inserted without any modification.
     \end{templateoptions}
 
     The main insert that is useful inside this template is:
     \begin{templateinserts}
-      \iteminsert{\insertdescriptionitem} inserts the text of the
-      current description item.
+      \iteminsert{\insertdescriptionitem} inserts the text of the current description item.
     \end{templateinserts}
   \end{element}
 \end{environment}
 
-
-
-In order to simplify changing the color or font of items, the
-different kinds of items inherit from or just use the following
-``general'' \beamer-color and fonts:
+In order to simplify changing the color or font of items, the different kinds of items inherit from or just use the following ``general'' \beamer-color and fonts:
 
 \begin{element}{item}\no\yes\yes
   \colorparents{local structure}
   \fontparents{structure}
 
-  This color/font serves as a parent for the individual items of
-  |itemize| and |enumerate| environments, but also for items in the
-  table of contents. Since its color parent is the |local structure|,
-  a change of that color causes the color of items to change
-  accordingly.
+  This color/font serves as a parent for the individual items of |itemize| and |enumerate| environments, but also for items in the table of contents. Since its color parent is the |local structure|, a change of that color causes the color of items to change accordingly.
 \end{element}
 
 \begin{element}{item projected}\no\yes\yes
   \colorfontparents{item}
 
-  This is a special ``version'' of the |item| color and font that
-  should be used by templates that render items with text (as in an
-  enumeration) and which ``project'' this text onto something like
-  a ball or a square or whatever. While the normal |item| color
-  typically has a transparent background, the |item projected|
-  typically has a colored background and, say, a white foreground.
+  This is a special ``version'' of the |item| color and font that should be used by templates that render items with text (as in an enumeration) and which ``project'' this text onto something like a ball or a square or whatever. While the normal |item| color typically has a transparent background, the |item projected| typically has a colored background and, say, a white foreground.
 \end{element}
 
 \begin{element}{subitem}\no\yes\yes
   \colorfontparents{item}
-  Same as |item| for subitems, that is, for items on the second level of
-  indentation.
+  Same as |item| for subitems, that is, for items on the second level of indentation.
 \end{element}
 
 \begin{element}{subitem projected}\no\yes\yes
   \colorfontparents{item projected}
-  Same as |item projected| for subitems, that is, for items on the
-  second level of indentation.
+  Same as |item projected| for subitems, that is, for items on the second level of indentation.
 \end{element}
 
 \begin{element}{subsubitem}\no\yes\yes
@@ -448,76 +313,37 @@ different kinds of items inherit from or just use the following
 \end{element}
 
 
-
-
 \subsection{Highlighting}
 
-The \beamer\ class predefines commands and environments for
-highlighting text. Using these commands makes is easy to change the
-appearance of a document by changing the theme.
-
+The \beamer\ class predefines commands and environments for highlighting text. Using these commands makes is easy to change the appearance of a document by changing the theme.
 
 \begin{command}{\structure\sarg{overlay specification}\marg{text}}
-  The given text is marked as part of the structure, that is, it is
-  supposed to help the audience see the structure of your
-  presentation. If the \meta{overlay specification} is present, the
-  command only has an effect on the specified slides.
-  \example|\structure{Paragraph Heading.}|
+  The given text is marked as part of the structure, that is, it is supposed to help the audience see the structure of your presentation. If the \meta{overlay specification} is present, the command only has an effect on the specified slides.
+  \example
+  |\structure{Paragraph Heading.}|
 
-  Internally, this command just puts the \emph{text} inside a
-  |structureenv| environment.
+  Internally, this command just puts the \emph{text} inside a |structureenv| environment.
 
   \articlenote
-  Structure text is typeset as bold text. This can be changed by
-  modifying the templates.
+  Structure text is typeset as bold text. This can be changed by modifying the templates.
 
   \lyxnote
   You need to use \TeX-mode to insert this command.
 
   \begin{element}{structure}\no\yes\yes
-    This color/font is used when structured text is typeset, but it is
-    also widely used as a base for many other colors including the
-    headings of blocks, item buttons, and titles. In most color
-    themes, the colors for navigational elements in the headline or
-    the footline are derived from the foreground color of
-    |structure|. By changing the structure color you can easily change
-    the ``basic color'' of your presentation, other than the color of
-    normal text. See also the related color |local structure| and the
-    related font |tiny structure|.
+    This color/font is used when structured text is typeset, but it is also widely used as a base for many other colors including the headings of blocks, item buttons, and titles. In most color themes, the colors for navigational elements in the headline or the footline are derived from the foreground color of |structure|. By changing the structure color you can easily change the ``basic color'' of your presentation, other than the color of normal text. See also the related color |local structure| and the related font |tiny structure|.
 
-    Inside the |\structure| command, the background of the color is
-    ignored, but this is not necessarily true for elements that
-    inherit their color from |structure|. There is no template
-    |structure|, use |structure begin| and |structure end| instead.
+    Inside the |\structure| command, the background of the color is ignored, but this is not necessarily true for elements that inherit their color from |structure|. There is no template |structure|, use |structure begin| and |structure end| instead.
   \end{element}
 
   \begin{element}{local structure}\no\yes\no
-    This color should be used to typeset structural elements that change
-    their color according to the ``local environment.'' For example, 
-    an item ``button'' in an |itemize| environment changes its
-    color according to circumstances. If it is used inside an example
-    block, it should have the |example text| color; if it is currently
-    ``alerted'' it should have the |alerted text| color. This color
-    is setup by certain environments to have the color that should be
-    used to typset things like item buttons. Since the color used for
-    items, |item|, inherits from this color by default, items
-    automatically change their color according to the current
-    situation.
+    This color should be used to typeset structural elements that change their color according to the ``local environment.'' For example, an item ``button'' in an |itemize| environment changes its color according to circumstances. If it is used inside an example block, it should have the |example text| color; if it is currently ``alerted'' it should have the |alerted text| color. This color is setup by certain environments to have the color that should be used to typset things like item buttons. Since the color used for items, |item|, inherits from this color by default, items automatically change their color according to the current situation.
 
-    If you write your own environment in which the item buttons and
-    similar structural elements should have a different color, you
-    should change the color |local structure| inside these
-    environments.
+    If you write your own environment in which the item buttons and similar structural elements should have a different color, you should change the color |local structure| inside these environments.
   \end{element}
 
   \begin{element}{tiny structure}\no\no\yes
-    This special font is used for ``tiny'' structural text. Basically,
-    this font should be used whenever a structural element uses a tiny
-    font. The idea is that the tiny versions of the |structure| font
-    often are not suitable. For example, it is often necessary to use a
-    boldface version for them. Also, one might wish to have serif smallcaps
-    structural text, but still retain normal sans-serif tiny structural
-    text.
+    This special font is used for ``tiny'' structural text. Basically, this font should be used whenever a structural element uses a tiny font. The idea is that the tiny versions of the |structure| font often are not suitable. For example, it is often necessary to use a boldface version for them. Also, one might wish to have serif smallcaps structural text, but still retain normal sans-serif tiny structural text.
   \end{element}
 \end{command}
 
@@ -525,8 +351,7 @@ appearance of a document by changing the theme.
   Environment version of the |\structure| command.
 
   \begin{element}{structure begin}\yes\no\no
-    This text is inserted at the beginning of a |structureenv|
-    environment.
+    This text is inserted at the beginning of a |structureenv| environment.
 
     \begin{templateoptions}
       \itemoption{default}{}
@@ -543,28 +368,20 @@ appearance of a document by changing the theme.
 
 
 \begin{command}{\alert\sarg{overlay specification}\marg{highlighted text}}
-  The given text is highlighted, typically by coloring the text red. If
-  the \meta{overlay specification} is present, the command only has an
-  effect on the specified slides.
-  \example |This is \alert{important}.|
+  The given text is highlighted, typically by coloring the text red. If the \meta{overlay specification} is present, the command only has an effect on the specified slides.
+  \example
+  |This is \alert{important}.|
 
-  Internally, this command just puts the \emph{highlighted text} inside
-  an |alertenv|.
+  Internally, this command just puts the \emph{highlighted text} inside an |alertenv|.
 
   \articlenote
-  Alerted text is typeset as emphasized text. This can be changed by
-  modifying the templates, see below.
+  Alerted text is typeset as emphasized text. This can be changed by modifying the templates, see below.
 
   \lyxnote
-  You need to use \TeX-mode to insert this command (which is not very
-  convenient).
+  You need to use \TeX-mode to insert this command (which is not very convenient).
 
   \begin{element}{alerted text}\no\yes\yes
-    This color/font is used when alerted text is typeset. The
-    background is currently ignored. There is no template
-    |alerted text|, rather there are templates |alerted text begin|
-    and |alerted text end| that are inserted before and after alerted
-    text.
+    This color/font is used when alerted text is typeset. The background is currently ignored. There is no template |alerted text|, rather there are templates |alerted text begin| and |alerted text end| that are inserted before and after alerted text.
   \end{element}
 \end{command}
 
@@ -572,17 +389,13 @@ appearance of a document by changing the theme.
   Environment version of the |\alert| command.
 
   \begin{element}{alerted text begin}\yes\no\no
-    This text is inserted at the beginning of a an |alertenv|
-    environment.
+    This text is inserted at the beginning of a an |alertenv| environment.
 
     \begin{templateoptions}
       \itemoption{default}{}
 
       \beamernote
-      This changes the color |local structure| to |alerted text|. This
-      causes things like buttons or items to be colored in the same
-      color as the alerted text, which is often visually pleasing. See
-      also the |\structure| command.
+      This changes the color |local structure| to |alerted text|. This causes things like buttons or items to be colored in the same color as the alerted text, which is often visually pleasing. See also the |\structure| command.
 
       \articlenote
       The text is emphasized.
@@ -595,46 +408,30 @@ appearance of a document by changing the theme.
 \end{environment}
 
 
-
-
 \subsection{Block Environments}
 \label{predefined}
 
-The \beamer\ class predefines an environment for typesetting a
-``block'' of text that has a heading. The appearance of blocks can
-easily be changed using the following template:
+The \beamer\ class predefines an environment for typesetting a ``block'' of text that has a heading. The appearance of blocks can easily be changed using the following template:
 
 \begin{element}{blocks}\semiyes\no\no
-  Changining this parent template changes the templates of normal
-  blocks, alerted blocks, and example blocks.
+  Changining this parent template changes the templates of normal blocks, alerted blocks, and example blocks.
 
-  \example |\setbeamertemplate{blocks}[default]|
-  \example |\setbeamertemplate{blocks}[rounded][shadow=true]|
+  \example
+  |\setbeamertemplate{blocks}[default]|
+  \example
+  |\setbeamertemplate{blocks}[rounded][shadow=true]|
 
   \begin{templateoptions}
     \itemoption{default}{}
-    The default setting typesets the block title on its own line. If a
-    background is specified either for the |block title| or for the
-    |block body|, this background color is used as background of the
-    title or body, respectively. For alerted and example blocks, the
-    corresponding \beamer-colors and -fonts are used, instead.
+    The default setting typesets the block title on its own line. If a background is specified either for the |block title| or for the |block body|, this background color is used as background of the title or body, respectively. For alerted and example blocks, the corresponding \beamer-colors and -fonts are used, instead.
     \itemoption{rounded}{\oarg{shadow=true}}
-    Makes the blocks ``rounded.'' This means that the corners of the
-    backgrounds of the blocks are ``rounded off.'' If the
-    |shadow=true| option is given, a ``shadow'' is drawn behind the
-    block.
+    Makes the blocks ``rounded.'' This means that the corners of the backgrounds of the blocks are ``rounded off.'' If the |shadow=true| option is given, a ``shadow'' is drawn behind the block.
   \end{templateoptions}
 \end{element}
 
 
-\begin{environment}{{block}\sarg{action specification}\marg{block
-      title}\sarg{action specification}}
-  Only one \meta{action specification} may be given.
-  Inserts a block, like a definition or a theorem, with the title
-  \meta{block title}. If the \meta{action specification} is present,
-  the given actions are taken on the specified slides, see
-  Section~\ref{section-action-specifications}. In the example, the
-  definition is shown only from slide 3 onward.
+\begin{environment}{{block}\sarg{action specification}\marg{block title}\sarg{action specification}}
+  Only one \meta{action specification} may be given. Inserts a block, like a definition or a theorem, with the title \meta{block title}. If the \meta{action specification} is present, the given actions are taken on the specified slides, see Section~\ref{section-action-specifications}. In the example, the definition is shown only from slide 3 onward.
   \example
 \begin{verbatim}
   \begin{block}<3->{Definition}
@@ -646,25 +443,16 @@ easily be changed using the following template:
   The block name is typeset in bold.
 
   \lyxnote
-  The argument of the block must (currently) be given in
-  \TeX-mode. More precisely, there must be an opening brace in
-  \TeX-mode and a closing brace in \TeX-mode around it. The text
-  in between can also be typeset using \LyX. I hope to get rid of this
-  some day.
+  The argument of the block must (currently) be given in \TeX-mode. More precisely, there must be an opening brace in \TeX-mode and a closing brace in \TeX-mode around it. The text in between can also be typeset using \LyX. I hope to get rid of this some day.
 
   \begin{element}{block begin}\yes\no\no
-    This template is inserted at the beginning of a block before the
-    \meta{environment contents}. Inside this
-    template, the block title can be accessed via the following
-    insert:
+    This template is inserted at the beginning of a block before the \meta{environment contents}. Inside this template, the block title can be accessed via the following insert:
     \begin{itemize}
       \iteminsert{\insertblocktitle}
       Inserts the \meta{block title} into the template.
     \end{itemize}
 
-    When the template starts, no special color or font is installed
-    (for somewhat complicated reasons). Thus, this template should
-    install the correct colors and fonts for the title and the body itself.
+    When the template starts, no special color or font is installed (for somewhat complicated reasons). Thus, this template should install the correct colors and fonts for the title and the body itself.
   \end{element}
 
   \begin{element}{block end}\yes\no\no
@@ -672,27 +460,19 @@ easily be changed using the following template:
   \end{element}
 
   \begin{element}{block title}\no\yes\yes
-    This \beamer-color/-font should be used to typeset the title of
-    the block. Since neither the color nor the font are setup
-    automatically, the template |block begin| must do so itself.
+    This \beamer-color/-font should be used to typeset the title of the block. Since neither the color nor the font are setup automatically, the template |block begin| must do so itself.
 
-    The default block template and also the |rounded| version honor
-    the background of this color.
+    The default block template and also the |rounded| version honor the background of this color.
   \end{element}
 
   \begin{element}{block body}\no\yes\yes
-    This \beamer-color/-font should be used to typeset the body of the
-    block, that is, the \meta{environment contents}. As for
-    |block title|, the color and font must be setup by the template
-    |block begin|.
+    This \beamer-color/-font should be used to typeset the body of the block, that is, the \meta{environment contents}. As for |block title|, the color and font must be setup by the template |block begin|.
   \end{element}
 \end{environment}
 
-
 \begin{environment}{{alertblock}\sarg{action specification}\marg{block
 title}\sarg{action specification}}
-  Inserts a block whose title is highlighting. Behaves like the |block|
-  environment otherwise.
+  Inserts a block whose title is highlighting. Behaves like the |block| environment otherwise.
   \example
 \begin{verbatim}
   \begin{alertblock}{Wrong Theorem}
@@ -723,13 +503,11 @@ title}\sarg{action specification}}
   \end{element}
 \end{environment}
 
-\begin{environment}{{exampleblock}\sarg{action
-specification}\marg{block title}\sarg{overlay specification}}
-  Inserts a block that is supposed to be an example. Behaves like the
-  |block| environment otherwise.
+\begin{environment}{{exampleblock}\sarg{action specification}\marg{block title}\sarg{overlay specification}}
+  Inserts a block that is supposed to be an example. Behaves like the |block| environment otherwise.
 
-  \example In the following example, the block is completely
-  suppressed on the first slide (it does not even occupy any space).
+  \example
+  In the following example, the block is completely suppressed on the first slide (it does not even occupy any space).
 \begin{verbatim}
   \begin{exampleblock}{Example}<only@2->
     The set $\{1,2,3,5\}$ has four elements.
@@ -760,22 +538,13 @@ specification}\marg{block title}\sarg{overlay specification}}
 \end{environment}
 
 \lyxnote
-Overlay specifications must be given right at the beginning of the
-environments and in \TeX-mode.
-
+Overlay specifications must be given right at the beginning of the environments and in \TeX-mode.
 
 
 \subsection{Theorem Environments}
 \label{section-theorems}
 
-The \beamer\ class predefines several environments, like |theorem| or
-|definition| or |proof|, that you can use to typeset things like,
-well, theorems, definitions, or proofs. The complete list is the
-following:  |theorem|, |corollary|, |definition|,
-|definitions|, |fact|, |example|, and |examples|. The following German
-block environments are also predefined: |Problem|, |Loesung|,
-|Definition|, |Satz|, |Beweis|, |Folgerung|, |Lemma|, |Fakt|,
-|Beispiel|, and |Beispiele|.
+The \beamer\ class predefines several environments, like |theorem| or |definition| or |proof|, that you can use to typeset things like, well, theorems, definitions, or proofs. The complete list is the following:  |theorem|, |corollary|, |definition|, |definitions|, |fact|, |example|, and |examples|. The following German block environments are also predefined: |Problem|, |Loesung|, |Definition|, |Satz|, |Beweis|, |Folgerung|, |Lemma|, |Fakt|, |Beispiel|, and |Beispiele|.
 
 Here is a typical example on how to use them:
 
@@ -797,33 +566,16 @@ Here is a typical example on how to use them:
 \end{frame}
 \end{verbatim}
 
-In the following, only the English versions are discussed. The German
-ones behave  analogously.
+In the following, only the English versions are discussed. The German ones behave analogously.
 
-\begin{environment}{{theorem}\sarg{action
-  specification}\oarg{additional text}\sarg{action specification}}
-  Inserts a theorem. Only one \meta{action specification} may be
-  given. If present, the \meta{additional text} is shown behind the
-  word ``Theorem'' in rounded brackets (although this can be changed by
-  the template).
+\begin{environment}{{theorem}\sarg{action specification}\oarg{additional text}\sarg{action specification}}
+  Inserts a theorem. Only one \meta{action specification} may be given. If present, the \meta{additional text} is shown behind the word ``Theorem'' in rounded brackets (although this can be changed by the template).
 
-  The appearance of the theorem is governed by the templates
-  |theorem begin| and |theorem end|, see their description later on
-  for details on how to change these. Every theorem is put into a
-  |block| environment, thus the templates for blocks also apply.
+  The appearance of the theorem is governed by the templates |theorem begin| and |theorem end|, see their description later on for details on how to change these. Every theorem is put into a |block| environment, thus the templates for blocks also apply.
 
-  The theorem style (a concept from |amsthm|) used for this
-  environment is |plain|. In this style, the body of a theorem should
-  be typeset in italics. The head of the theorem should be typeset in
-  a bold font, but this is usually overruled by the templates.
+  The theorem style (a concept from |amsthm|) used for this environment is |plain|. In this style, the body of a theorem should be typeset in italics. The head of the theorem should be typeset in a bold font, but this is usually overruled by the templates.
 
-  If the option |envcountsect| is given either as class option in one
-  of the |presentation| modes or as an option to the package
-  |beamerarticle| in |article| mode, then the numbering of the
-  theorems is local to each section with the section number prefixing
-  the theorem number; otherwise they are numbered consecutively
-  throughout the presentation or article. I recommend using this
-  option in |article| mode.
+  If the option |envcountsect| is given either as class option in one of the |presentation| modes or as an option to the package |beamerarticle| in |article| mode, then the numbering of the theorems is local to each section with the section number prefixing the theorem number; otherwise they are numbered consecutively throughout the presentation or article. I recommend using this option in |article| mode.
 
   By default, no theorem numbers are shown in the |presentation| modes.
 
@@ -839,68 +591,41 @@ ones behave  analogously.
 \end{verbatim}
 
   \lyxnote
-  If present, the optional argument and the action specification must
-  be given in \TeX-mode at the beginning of the environment.
+  If present, the optional argument and the action specification must be given in \TeX-mode at the beginning of the environment.
 \end{environment}
 
-The environments \declare{|corollary|}, \declare{|fact|}, and
-\declare{|lemma|} behave exactly the same way.
+The environments \declare{|corollary|}, \declare{|fact|}, and \declare{|lemma|} behave exactly the same way.
 
 \begin{classoption}{envcountsect}
-  Causes theorems, definitions, and so on to be numbered locally to
-  each section. Thus, the first theorem of the second section would be
-  Theorem~2.1 (assuming that there are no definitions, lemmas, or
-  corollaries earlier in the section).
+  Causes theorems, definitions, and so on to be numbered locally to each section. Thus, the first theorem of the second section would be Theorem~2.1 (assuming that there are no definitions, lemmas, or corollaries earlier in the section).
 \end{classoption}
 
-\begin{environment}{{definition}\sarg{action
-      specification}\oarg{additional text}\sarg{action specification}}
-  Behaves like the |theorem| environment, except that the theorem
-  style |definition| is used. In this style, the body of a theorem is
-  typeset in an upright font.
+\begin{environment}{{definition}\sarg{action specification}\oarg{additional text}\sarg{action specification}}
+  Behaves like the |theorem| environment, except that the theorem style |definition| is used. In this style, the body of a theorem is typeset in an upright font.
 \end{environment}
 
 The environment \declare{|definitions|} behaves exactly the same way.
 
-\begin{environment}{{example}\sarg{action
-      specification}\oarg{additional text}\sarg{action specification}}
-  Behaves like the |theorem| environment, except that the theorem
-  style |example| is used. A side-effect of using this theorem style
-  is that the \meta{environment contents} is put in an |exampleblock|
-  instead of a |block|.
+\begin{environment}{{example}\sarg{action specification}\oarg{additional text}\sarg{action specification}}
+  Behaves like the |theorem| environment, except that the theorem style |example| is used. A side-effect of using this theorem style is that the \meta{environment contents} is put in an |exampleblock| instead of a |block|.
 \end{environment}
 
 The environment \declare{|examples|} behaves exactly the same way.
 
 \beamernote
-The default template for typesetting theorems suppresses the theorem
-number, even if this number is ``available'' for typesetting (which it
-is by default in all predefined environments; but if you define your
-own environment using |\newtheorem*| no number will be available).
+The default template for typesetting theorems suppresses the theorem number, even if this number is ``available'' for typesetting (which it is by default in all predefined environments; but if you define your own environment using |\newtheorem*| no number will be available).
 
 \articlenote
-In |article| mode, theorems are automatically numbered. By specifying
-the class option |envcountsect|, theorems will be numbered locally to each
-section, which is usually a good idea, except for very short
-articles.
+In |article| mode, theorems are automatically numbered. By specifying the class option |envcountsect|, theorems will be numbered locally to each section, which is usually a good idea, except for very short articles.
 
-\begin{environment}{{proof}\sarg{action specification}\oarg{proof
-name}\sarg{action specification}}
-  Typesets a proof. If the optional \meta{proof name} is given, it
-  completely replaces the word ``Proof.'' This is different from
-  normal theorems, where the optional argument is shown in brackets.
+\begin{environment}{{proof}\sarg{action specification}\oarg{proof name}\sarg{action specification}}
+  Typesets a proof. If the optional \meta{proof name} is given, it completely replaces the word ``Proof.'' This is different from normal theorems, where the optional argument is shown in brackets.
 
-  At the end of the theorem, a |\qed| symbol is shown, except if you
-  say |\qedhere| earlier in the proof (this is exactly as in
-  |amsthm|). The default |\qed| symbol is an open rectangle. To
-  completely suppress the symbol, write |\def\qedsymbol{}| in
-  your preamble. To get an closed rectangle, say
+  At the end of the theorem, a |\qed| symbol is shown, except if you say |\qedhere| earlier in the proof (this is exactly as in |amsthm|). The default |\qed| symbol is an open rectangle. To completely suppress the symbol, write |\def\qedsymbol{}| in your preamble. To get an closed rectangle, say
 \begin{verbatim}
 \setbeamertemplate{qed symbol}{\vrule width1.5ex height1.5ex depth0pt}
 \end{verbatim}
-
-  If you use |babel| and a different language, the text ``Proof'' is
-  replaced by whatever is appropriate in the selected language.
+  If you use |babel| and a different language, the text ``Proof'' is replaced by whatever is appropriate in the selected language.
 
   \example
 \begin{verbatim}
@@ -916,97 +641,61 @@ name}\sarg{action specification}}
 
 You can define new environments using the following command:
 
-\begin{command}{\newtheorem\opt{|*|}\marg{environment name}\oarg{numbered same
-      as}\marg{head text}\oarg{number within}}
-  This command is used exactly the same way as in the |amsthm| package
-  (as a matter of fact, it is the command from that package), see its
-  documentation. The only difference is that environments declared using
-  this command are overlay-specification-aware in \beamer\ and that,
-  when typeset, are typeset according to \beamer's templates.
+\begin{command}{\newtheorem\opt{|*|}\marg{environment name}\oarg{numbered same as}\marg{head text}\oarg{number within}}
+  This command is used exactly the same way as in the |amsthm| package (as a matter of fact, it is the command from that package), see its documentation. The only difference is that environments declared using this command are overlay-specification-aware in \beamer\ and that, when typeset, are typeset according to \beamer's templates.
 
   \articlenote
-  Environments declared using this command are also
-  overlay-specification-aware in |article| mode.
+  Environments declared using this command are also overlay-specification-aware in |article| mode.
 
-  \example |\newtheorem{observation}[theorem]{Observation}|
+  \example
+  |\newtheorem{observation}[theorem]{Observation}|
 \end{command}
 
-You can also use |amsthm|'s command |\newtheoremstyle| to define new
-theorem styles. Note that the default template for theorems will
-ignore any head font setting, but will honor the body font setting.
+You can also use |amsthm|'s command |\newtheoremstyle| to define new theorem styles. Note that the default template for theorems will ignore any head font setting, but will honor the body font setting.
 
-If you wish to define the environments like |theorem| differently (for
-example, have it numbered within each subsection), you can use the
-following class option to disable the definition of the predefined
-environments:
+If you wish to define the environments like |theorem| differently (for example, have it numbered within each subsection), you can use the following class option to disable the definition of the predefined environments:
 
 \begin{classoption}{notheorems}
-  Switches off the definition of default blocks like |theorem|, but
-  still loads |amsthm| and makes theorems
-  overlay-specificiation-aware.
+  Switches off the definition of default blocks like |theorem|, but still loads |amsthm| and makes theorems overlay-specificiation-aware.
 \end{classoption}
 
-The option is also available as a package option for
-|beamerarticle| and has the same effect.
+The option is also available as a package option for |beamerarticle| and has the same effect.
 
 \articlenote
-In the |article| version, the package |amsthm| sometimes clashes with
-the document class. In this case you can use the following option,
-which is once more available as a class option for \beamer\ and as a
-package option for |beamerarticle|, to switch off the loading of
-|amsthm| altogether.
+In the |article| version, the package |amsthm| sometimes clashes with the document class. In this case you can use the following option, which is once more available as a class option for \beamer\ and as a package option for |beamerarticle|, to switch off the loading of |amsthm| altogether.
 
 \begin{classoption}{noamsthm}
-  Does not load |amsthm| and also not |amsmath|. Environments like
-  |theorem| or |proof| will not be available.
+  Does not load |amsthm| and also not |amsmath|. Environments like |theorem| or |proof| will not be available.
 \end{classoption}
 
-
-
 \begin{element}{theorems}\semiyes\no\no
-  This template is a parent of |theorem begin| and |theorem end|, see
-  the first for a detailed discussion of how the theorem templates are
-  set.
+  This template is a parent of |theorem begin| and |theorem end|, see the first for a detailed discussion of how the theorem templates are set.
 
-  \example |\setbeamertemplate{theorems}[numbered]|
+  \example
+  |\setbeamertemplate{theorems}[numbered]|
 
   \begin{templateoptions}
     \itemoption{default}{}
-    By default, theorems are typeset as follows: The font specification for
-    the body is honored, the font specification for the head is
-    ignored. No theorem number is printed.
+    By default, theorems are typeset as follows: The font specification for the body is honored, the font specification for the head is ignored. No theorem number is printed.
     \itemoption{normal font}{}
-    Like the default, except all font specifications for the body are
-    ignored. Thus, the fonts are used that are normally used for
-    blocks.
+    Like the default, except all font specifications for the body are ignored. Thus, the fonts are used that are normally used for blocks.
     \itemoption{numbered}{}
-    This option is like the default, except that the theorem
-    number is printed for environments that are numbered.
+    This option is like the default, except that the theorem number is printed for environments that are numbered.
     \itemoption{ams style}{}
-    This causes theorems to be put in a |block| or |exampleblock|, but
-    to be otherwise typeset as is normally done in |amsthm|. Thus the
-    head font and body font depend on the setting for the theorem to be
-    typeset and theorems are numbered.
+    This causes theorems to be put in a |block| or |exampleblock|, but to be otherwise typeset as is normally done in |amsthm|. Thus the head font and body font depend on the setting for the theorem to be typeset and theorems are numbered.
   \end{templateoptions}
 \end{element}
 
 
 \begin{element}{theorem begin}\yes\no\no
-  Whenever an environment declared using the command |\newtheorem| is
-  to be typeset, this template is inserted at the beginning and the
-  template |theorem end| at the end. If there is an overlay
-  specification when an environment like |theorem| is
-  used, this overlay specification will directly follow the
-  \meta{block beginning template} upon invocation. This is even true
-  if there was an optional argument to the |theorem| environment. This
-  optional argument is available via the insert |\inserttheoremaddition|.
+  Whenever an environment declared using the command |\newtheorem| is to be typeset, this template is inserted at the beginning and the template |theorem end| at the end. If there is an overlay specification when an environment like |theorem| is used, this overlay specification will directly follow the \meta{block beginning template} upon invocation. This is even true if there was an optional argument to the |theorem| environment. This optional argument is available via the insert |\inserttheoremaddition|.
 
   Numerous inserts are available in this template, see below.
 
-  Before the template starts, the font is set to the body font
-  prescribed by the environment to be typeset.
+  Before the template starts, the font is set to the body font prescribed by the environment to be typeset.
 
-  \example The following typesets theorems like |amsthm|:
+  \example
+  The following typesets theorems like |amsthm|:
 \begin{verbatim}
 \setbeamertemplate{theorem begin}
 {%
@@ -1022,9 +711,8 @@ package option for |beamerarticle|, to switch off the loading of
 \setbeamertemplate{theorem end}{\end{\inserttheoremblockenv}}
 \end{verbatim}
 
-  \example In the following example, all font ``suggestions'' for the
-  environment are suppressed or ignored; and the theorem number is
-  suppressed.
+  \example
+  In the following example, all font ``suggestions'' for the environment are suppressed or ignored; and the theorem number is suppressed.
 \begin{verbatim}
 \setbeamertemplate{theorem begin}
 {%
@@ -1041,31 +729,22 @@ package option for |beamerarticle|, to switch off the loading of
   The following inserts are available inside this template:
   \begin{itemize}
     \iteminsert{\inserttheoremblockenv}
-    This will normally expand to |block|, but if a theorem that has
-    theorem style |example| is typeset, it will expand to
-    |exampleblock|. Thus you can use this insert to decide which
-    environment should be used when typesetting the theorem.
+    This will normally expand to |block|, but if a theorem that has theorem style |example| is typeset, it will expand to |exampleblock|. Thus you can use this insert to decide which environment should be used when typesetting the theorem.
 
     \iteminsert{\inserttheoremheadfont}
-    This will expand to a font changing command that switches to the
-    font to be used in the head of the theorem. By not inserting it, you
-    can ignore the head font.
+    This will expand to a font changing command that switches to the font to be used in the head of the theorem. By not inserting it, you can ignore the head font.
 
     \iteminsert{\inserttheoremname}
-    This will expand to the name of the environment to be typeset (like
-    ``Theorem'' or ``Corollary'').
+    This will expand to the name of the environment to be typeset (like ``Theorem'' or ``Corollary'').
 
     \iteminsert{\inserttheoremnumber}
-    This will expand to the number of the current theorem preceeded by a
-    space or to nothing, if the current theorem does not have a number.
+    This will expand to the number of the current theorem preceeded by a space or to nothing, if the current theorem does not have a number.
 
     \iteminsert{\inserttheoremaddition}
-    This will expand to the optional argument given to the environment
-    or will be empty, if there was no optional argument.
+    This will expand to the optional argument given to the environment or will be empty, if there was no optional argument.
 
     \iteminsert{\inserttheorempunctuation}
-    This will expand to the punctuation character for the current
-    environment. This is usually a period.
+    This will expand to the punctuation character for the current environment. This is usually a period.
   \end{itemize}
 \end{element}
 
@@ -1074,24 +753,14 @@ package option for |beamerarticle|, to switch off the loading of
 \end{element}
 
 
-
 \subsection{Framed and Boxed Text}
 
-In order to draw a frame (a rectangle) around some text, you can use
-\LaTeX s standard command |\fbox| and also |\frame| (inside a \beamer\
-frame, the |\frame| command changes its meaning to the normal \LaTeX\
-|\frame| command). More frame types are offered by the
-package |fancybox|, which defines the following commands:
-|\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult
-the \LaTeX\ Companion for details on how to use these commands.
+In order to draw a frame (a rectangle) around some text, you can use \LaTeX s standard command |\fbox| and also |\frame| (inside a \beamer\ frame, the |\frame| command changes its meaning to the normal \LaTeX\ |\frame| command). More frame types are offered by the package |fancybox|, which defines the following commands: |\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult the \LaTeX\ Companion for details on how to use these commands.
 
-The \beamer\ class also defines two environments for creating coloured
-boxes.
+The \beamer\ class also defines two environments for creating coloured boxes.
 
 \begin{environment}{{beamercolorbox}\oarg{options}\marg{beamer color}}
-  This environment can be used to conveniently typeset some text using
-  some \beamer-color. Basically, the following two command blocks do
-  the same:
+  This environment can be used to conveniently typeset some text using some \beamer-color. Basically, the following two command blocks do the same:
 \begin{verbatim}
 \begin{beamercolorbox}{beamer color}
   Text
@@ -1105,26 +774,14 @@ boxes.
   }
 }
 \end{verbatim}
-  In other words, the environment installs the \meta{beamer color} and
-  uses the background for the background of the box and the foreground
-  for the text inside the box. However, in reality, numerous
-  \meta{options} can be given to specify in much greater detail how
-  the box is rendered.
+  In other words, the environment installs the \meta{beamer color} and uses the background for the background of the box and the foreground for the text inside the box. However, in reality, numerous \meta{options} can be given to specify in much greater detail how the box is rendered.
 
-  If the background color of \meta{beamer color} is empty, no
-  background is drawn behind the text, that is, the background is
-  ``transparent.''
+  If the background color of \meta{beamer color} is empty, no background is drawn behind the text, that is, the background is ``transparent.''
 
-  This command is used extensively by the default inner and outer
-  themes for typesetting the headlines and footlines. It is not really
-  intended to be used in normal frames (for example, it is not
-  available inside |article| mode). You should prefer using
-  structuring elements like blocks or theorems that automatically
-  insert colored boxes as needed.
+  This command is used extensively by the default inner and outer themes for typesetting the headlines and footlines. It is not really intended to be used in normal frames (for example, it is not available inside |article| mode). You should prefer using structuring elements like blocks or theorems that automatically insert colored boxes as needed.
 
-  \example The following example could be used to typeset a headline
-  with two lines, the first showing the document title, the second
-  showing the author's name:
+  \example
+  The following example could be used to typeset a headline with two lines, the first showing the document title, the second showing the author's name:
 \begin{verbatim}
 \begin{beamercolorbox}[ht=2.5ex,dp=1ex,center]{title in head/foot}
   \usebeamerfont{title in head/foot}
@@ -1136,7 +793,8 @@ boxes.
 \end{beamercolorbox}
 \end{verbatim}
 
-  \example Typesetting a postit:
+  \example
+  Typesetting a postit:
 \begin{verbatim}
 \setbeamercolor{postit}{fg=black,bg=yellow}
 \begin{beamercolorbox}[sep=1em,wd=5cm]{postit}
@@ -1144,129 +802,58 @@ boxes.
 \end{beamercolorbox}
 \end{verbatim}
 
-
   The following \meta{options} can be given:
   \begin{itemize}
-  \item \declare{|wd=|\marg{width}} sets the width of the box. This
-    command has two effects: First, \TeX's |\hsize| is set to
-    \meta{width}. Second, after the box has been typeset, its width is
-    set to \meta{width} (no matter what it actually turned out to
-    be). Since setting the |\hsize| does not automatically change some
-    of \LaTeX's linewidth dimensions, you should consider using a
-    minipage inside this environment if you fool around with the
-    width.
+    \item
+    \declare{|wd=|\marg{width}} sets the width of the box. This command has two effects: First, \TeX's |\hsize| is set to \meta{width}. Second, after the box has been typeset, its width is set to \meta{width} (no matter what it actually turned out to be). Since setting the |\hsize| does not automatically change some of \LaTeX's linewidth dimensions, you should consider using a minipage inside this environment if you fool around with the width.
 
-    If the width is larger than the normal text width, as specified by
-    the value of |\textwidth|, the width of the resulting box is reset
-    to the width |\textwidth|, but intelligent negative skips are
-    inserted at the left and right end of the box. The net effect of
-    this is that you can use a width larger than the text width for a
-    box and can insert the resulting box directly into normal text
-    without getting annoying warnings and having the box positioned
-    sensibly.
-  \item \declare{|dp=|\marg{depth}} sets the depth of the box,
-    overriding the real depth of the box. The box is first typeset
-    normally, then the depth is changed afterwards. This option is
-    useful for creating boxes that have guaranteed size.
+    If the width is larger than the normal text width, as specified by the value of |\textwidth|, the width of the resulting box is reset to the width |\textwidth|, but intelligent negative skips are inserted at the left and right end of the box. The net effect of this is that you can use a width larger than the text width for a box and can insert the resulting box directly into normal text without getting annoying warnings and having the box positioned sensibly.
+    \item
+    \declare{|dp=|\marg{depth}} sets the depth of the box, overriding the real depth of the box. The box is first typeset normally, then the depth is changed afterwards. This option is useful for creating boxes that have guaranteed size.
 
-    If the option is not given, the box has its ``natural'' depth,
-    which results from the typesetting. For example, a box containing
-    only the letter ``a'' will have a different depth from a box
-    containing only the letter ``g.''
-  \item \declare{|ht=|\meta{height}} sets the height of the box,
-    overriding the real height. Note that the ``height'' does not
-    include the depth (see, for example, the \TeX-book for
-    details). If you want a one-line box that always has the same
-    size, setting the height to 2.25ex and the depth to 1ex is usually
-    a good option.
-  \item \declare{|left|} causes the text inside the box to be typeset
-    left-aligned and with a (radically) ragged right border. This is
-    the default. To get a better ragged right border, use the
-    |rightskip| option.
-  \item \declare{|right|} causes the text to be right-aligned with a
-    (radically) ragged left border.
-  \item \declare{|center|} centers the text inside the box.
-  \item \declare{|leftskip=|\meta{left skip}} installs the \meta{left
-      skip} inside the box as the left skip. \TeX's left skip is a
-    glue that is inserted at the left end of every line. See the
-    \TeX-book for details.
-  \item \declare{|rightskip=|\meta{right skip}} install the
-    \meta{right skip}. To get a good ragged right border, try, say,
-    |\rightskip=0pt plus 4em|.
-  \item \declare{|sep=|\meta{dimension}} sets the size of extra
-    space around the text. This space is added ``inside the box,''
-    which means that if you specify a |sep| of 1cm and insert the box
-    normally into the vertical list, then the left border of the box
-    will be aligned with the left border of the slide text, while the
-    left border of the text inside the box will be 1cm to the right of
-    this left border. Likewise, the text inside the box will stop 1cm
-    before the right border of the normal text.
-  \item \declare{|colsep=|\meta{dimension}} sets the extra ``color
-    separation space'' around the text. This space behaves the
-    same way as the space added by |sep|, only this space is only
-    inserted if the box has a colored background, that is, if the
-    background of the \meta{beamer color} is not empty. This command
-    can be used together with |sep|, the effects accumulate.
-  \item \declare{|colsep*=|\meta{dimension}} sets an extra color
-    separation space around the text that is \emph{horizontally
-    outside the box}. This means that if the box has a background,
-    this background will protrude by \meta{dimension} to the left and
-    right of the text, but this protruding background will not be
-    taken intro consideration by \TeX\ for typesetting purposes.
+    If the option is not given, the box has its ``natural'' depth, which results from the typesetting. For example, a box containing only the letter ``a'' will have a different depth from a box containing only the letter ``g.''
+    \item
+    \declare{|ht=|\meta{height}} sets the height of the box, overriding the real height. Note that the ``height'' does not include the depth (see, for example, the \TeX-book for details). If you want a one-line box that always has the same size, setting the height to 2.25ex and the depth to 1ex is usually a good option.
+    \item
+    \declare{|left|} causes the text inside the box to be typeset left-aligned and with a (radically) ragged right border. This is the default. To get a better ragged right border, use the |rightskip| option.
+    \item
+    \declare{|right|} causes the text to be right-aligned with a (radically) ragged left border.
+    \item
+    \declare{|center|} centers the text inside the box.
+    \item
+    \declare{|leftskip=|\meta{left skip}} installs the \meta{left skip} inside the box as the left skip. \TeX's left skip is a glue that is inserted at the left end of every line. See the \TeX-book for details.
+    \item
+    \declare{|rightskip=|\meta{right skip}} install the \meta{right skip}. To get a good ragged right border, try, say, |\rightskip=0pt plus 4em|.
+    \item
+    \declare{|sep=|\meta{dimension}} sets the size of extra space around the text. This space is added ``inside the box,'' which means that if you specify a |sep| of 1cm and insert the box normally into the vertical list, then the left border of the box will be aligned with the left border of the slide text, while the left border of the text inside the box will be 1cm to the right of this left border. Likewise, the text inside the box will stop 1cm before the right border of the normal text.
+    \item
+    \declare{|colsep=|\meta{dimension}} sets the extra ``color separation space'' around the text. This space behaves the same way as the space added by |sep|, only this space is only inserted if the box has a colored background, that is, if the background of the \meta{beamer color} is not empty. This command can be used together with |sep|, the effects accumulate.
+    \item
+    \declare{|colsep*=|\meta{dimension}} sets an extra color separation space around the text that is \emph{horizontally outside the box}. This means that if the box has a background, this background will protrude by \meta{dimension} to the left and right of the text, but this protruding background will not be taken intro consideration by \TeX\ for typesetting purposes.
 
-    A typical example usage of this option arises when you insert a
-    box with a coloured background in the middle of normal text. In
-    this case, if the background color is set, you would like a
-    background to be drawn behind the text \emph{and} you would like a
-    certain extra space around this text (the background should not
-    stop immediately at the borders of the text, this looks silly)
-    \emph{and} you would like the normal text always to be at the same
-    horizontal position, independently of whether a background is
-    present or not. In this case, using |colsep*=4pt| is a good
-    option.
-  \item \declare{|shadow|}\opt{|=|\meta{true or false}} draws a shadow
-    behind the box. Currently, this option only has an effect if
-    used together with the |rounded| option, but that may change.
-  \item \declare{|rounded|}\opt{|=|\meta{true or false}} causes the
-    borders of the box to be rounded off if there is a background
-    installed. This command internally calls |beamerboxesrounded|.
-  \item \declare{|ignorebg|} causes the background color of the
-    \meta{beamer color} to be ignored, that is, to be treated as if it
-    were set to ``transparent'' or ``empty.''
-  \item \declare{vmode} causes \TeX\ to be in vertical mode when the
-    box starts. Normally, \TeX\ will be in horizontal mode at the
-    start of the box (a |\leavevmode| is inserted automatically at the
-    beginning of the box unless this option is given). Only
-    \TeX perts need this option, so, if you use it, you will
-    probably know what you are doing anyway.
+    A typical example usage of this option arises when you insert a box with a coloured background in the middle of normal text. In this case, if the background color is set, you would like a background to be drawn behind the text \emph{and} you would like a certain extra space around this text (the background should not stop immediately at the borders of the text, this looks silly) \emph{and} you would like the normal text always to be at the same horizontal position, independently of whether a background is present or not. In this case, using |colsep*=4pt| is a good option.
+    \item
+    \declare{|shadow|}\opt{|=|\meta{true or false}} draws a shadow behind the box. Currently, this option only has an effect if used together with the |rounded| option, but that may change.
+    \item
+    \declare{|rounded|}\opt{|=|\meta{true or false}} causes the borders of the box to be rounded off if there is a background installed. This command internally calls |beamerboxesrounded|.
+    \item
+    \declare{|ignorebg|} causes the background color of the \meta{beamer color} to be ignored, that is, to be treated as if it were set to ``transparent'' or ``empty.''
+    \item
+    \declare{vmode} causes \TeX\ to be in vertical mode when the box starts. Normally, \TeX\ will be in horizontal mode at the start of the box (a |\leavevmode| is inserted automatically at the beginning of the box unless this option is given). Only \TeX perts need this option, so, if you use it, you will probably know what you are doing anyway.
   \end{itemize}
 \end{environment}
 
-
 \begin{environment}{{beamerboxesrounded}\oarg{options}\marg{head}}
-  The text inside the environment is framed by a rectangular area with
-  rounded corners. For the large rectangular area, the \beamer-color
-  specified with the |lower| option  is used. Its background is used
-  for the background, its foreground for the foreground. If the
-  \meta{head} is not empty, \meta{head} is drawn in the
-  upper part of the box using the \beamer-color specified with the
-  |upper| option for the fore- and background. The following options
-  can be given:
+  The text inside the environment is framed by a rectangular area with rounded corners. For the large rectangular area, the \beamer-color specified with the |lower| option  is used. Its background is used for the background, its foreground for the foreground. If the \meta{head} is not empty, \meta{head} is drawn in the upper part of the box using the \beamer-color specified with the |upper| option for the fore- and background. The following options can be given:
   \begin{itemize}
-  \item \declare{|lower=|\meta{beamer color}} sets the \beamer-color
-    to be used for the lower (main) part of the box. Its background is
-    used for the background, its foreground for the foreground of the
-    main part of the box. If either is empty, the current background
-    or foreground is used. The box will never be transparent.
-  \item \declare{|upper=|\meta{beamer color}} sets the \beamer-color
-    used for the upper (head) part of the box. It is only used if the
-    \meta{head} is not empty.
-  \item \declare{|width=|\meta{dimension}} causes the width of the
-    text inside the box to be the specified \meta{dimension}. By
-    default, the |\textwidth| is used. Note that the box will protrude
-    4pt to the left and right.
-  \item \declare{|shadow=|\meta{true or false}}. If set to |true|, a
-    shadow will be drawn.
+    \item
+    \declare{|lower=|\meta{beamer color}} sets the \beamer-color to be used for the lower (main) part of the box. Its background is used for the background, its foreground for the foreground of the main part of the box. If either is empty, the current background or foreground is used. The box will never be transparent.
+    \item
+    \declare{|upper=|\meta{beamer color}} sets the \beamer-color used for the upper (head) part of the box. It is only used if the \meta{head} is not empty.
+    \item
+    \declare{|width=|\meta{dimension}} causes the width of the text inside the box to be the specified \meta{dimension}. By default, the |\textwidth| is used. Note that the box will protrude 4pt to the left and right.
+    \item
+    \declare{|shadow=|\meta{true or false}}. If set to |true|, a shadow will be drawn.
   \end{itemize}
   If no \meta{head} is given, the head part is completely suppressed.
   \example
@@ -1281,17 +868,9 @@ boxes.
 \end{environment}
 
 
-
-
-
 \subsection{Figures and Tables}
 
-You can use the standard \LaTeX\ environments |figure| and
-|table| much the same way you would normally use them. However,
-any placement specification will be ignored. Figures and tables are
-immediately inserted where the environments start. If there are too
-many of them to fit on the frame, you must manually split them among
-additional frames or use the |allowframebreaks| option.
+You can use the standard \LaTeX\ environments |figure| and |table| much the same way you would normally use them. However, any placement specification will be ignored. Figures and tables are immediately inserted where the environments start. If there are too many of them to fit on the frame, you must manually split them among additional frames or use the |allowframebreaks| option.
 
 \example
 \begin{verbatim}
@@ -1312,18 +891,11 @@ additional frames or use the |allowframebreaks| option.
   This template is used to render the caption.
   \begin{templateoptions}
     \itemoption{default}{}
-    typesets the caption name (a word like ``Figure'' or ``Abbildung''
-    or ``Table,'' depending on whether a table or figure is typeset
-    and depending on the currently installed language) before the
-    caption text. No number is printed, since these make little sense
-    in a normal presentation.
+    typesets the caption name (a word like ``Figure'' or ``Abbildung'' or ``Table,'' depending on whether a table or figure is typeset and depending on the currently installed language) before the caption text. No number is printed, since these make little sense in a normal presentation.
     \itemoption{numbered}{}
-    adds the figure or table number to the caption. Use this option
-    only if your audience has a printed handout or printed lecture
-    notes that follow the same numbering.
+    adds the figure or table number to the caption. Use this option only if your audience has a printed handout or printed lecture notes that follow the same numbering.
     \itemoption{caption name own line}{}
-    As the name suggests, this options puts the caption name (like
-    ``Figure'') on its own line.
+    As the name suggests, this options puts the caption name (like ``Figure'') on its own line.
   \end{templateoptions}
 
   Inside the template, you can use the following inserts:
@@ -1332,9 +904,7 @@ additional frames or use the |allowframebreaks| option.
     Inserts the text of the current caption.
 
     \iteminsert{\insertcaptionname}
-    Inserts the name of the current caption. This word
-    is either ``Table'' or ``Figure'' or, if the |babel| package is
-    used, some translation thereof.
+    Inserts the name of the current caption. This word is either ``Table'' or ``Figure'' or, if the |babel| package is used, some translation thereof.
 
     \iteminsert{\insertcaptionnumber}
     Inserts the number of the current figure or table.
@@ -1342,56 +912,31 @@ additional frames or use the |allowframebreaks| option.
 \end{element}
 
 \begin{element}{caption name}\no\yes\yes
-  These \beamer-color and -font are used to typeset the caption name
-  (a word like ``Figure''). The |caption| template must directly
-  ``use'' them, they are not installed automatically by the
-  |\insertcaptionname| command.
+  These \beamer-color and -font are used to typeset the caption name (a word like ``Figure''). The |caption| template must directly ``use'' them, they are not installed automatically by the |\insertcaptionname| command.
 \end{element}
-
-
-
 
 
 \subsection{Splitting a Frame into Multiple Columns}
 
-The \beamer\ class offers several commands and environments for
-splitting (perhaps only part of) a frame into multiple columns. These
-commands have nothing to do with \LaTeX's commands for creating
-columns. Columns are especially useful for placing a graphic next to a
-description/explanation.
+The \beamer\ class offers several commands and environments for splitting (perhaps only part of) a frame into multiple columns. These commands have nothing to do with \LaTeX's commands for creating columns. Columns are especially useful for placing a graphic next to a description/explanation.
 
-The main environment for creating columns is called |columns|. Inside
-this environment, you can either place several |column| environments,
-each of which creates a new column, or use the |\column| command to
-create new columns.
+The main environment for creating columns is called |columns|. Inside this environment, you can either place several |column| environments, each of which creates a new column, or use the |\column| command to create new columns.
 
 \begin{environment}{{columns}\oarg{options}}
-  A multi-column area. Inside the environment you should place only
-  |column| environments or |\column| commands (see below). The
-  following \meta{options} may be given:
+  A multi-column area. Inside the environment you should place only |column| environments or |\column| commands (see below). The following \meta{options} may be given:
   \begin{itemize}
-  \item
-    \declare{|b|} will cause the bottom lines of the columns to be
-    vertically aligned.
-  \item
-    \declare{|c|} will cause the columns to be centered vertically
-    relative to each other. Default, unless the global option
-    |t| is used.
-  \item
+    \item
+    \declare{|b|} will cause the bottom lines of the columns to be vertically aligned.
+    \item
+    \declare{|c|} will cause the columns to be centered vertically relative to each other. Default, unless the global option |t| is used.
+    \item
     \declare{|onlytextwidth|} is the same as |totalwidth=\textwidth|.
-  \item
-    \declare{|t|} will cause the first lines of the columns to be
-    aligned. Default if global option |t| is used.
-  \item
-    \declare{|T|} is similar to the |t| option, but |T| aligns the
-    tops of the first lines while |t| aligns the so-called baselines
-    of the first lines. If strange things seem to happen in
-    conjunction with the |t| option (for example if a graphic suddenly
-    ``drops down'' with the |t| option instead of ``going up,''), try
-    using this option instead.
-  \item
-    \declare{|totalwidth=|\meta{width}} will cause the columns to occupy
-    not the whole page width, but only \meta{width}, all told.
+    \item
+    \declare{|t|} will cause the first lines of the columns to be aligned. Default if global option |t| is used.
+    \item
+    \declare{|T|} is similar to the |t| option, but |T| aligns the tops of the first lines while |t| aligns the so-called baselines of the first lines. If strange things seem to happen in conjunction with the |t| option (for example if a graphic suddenly ``drops down'' with the |t| option instead of ``going up,''), try using this option instead.
+    \item
+    \declare{|totalwidth=|\meta{width}} will cause the columns to occupy not the whole page width, but only \meta{width}, all told.
   \end{itemize}
 
   \example
@@ -1421,21 +966,16 @@ create new columns.
   This environment is ignored in |article| mode.
 
   \lyxnote
-  Use ``Columns'' or ``ColumnsTopAligned'' to create a |columns|
-  environment. To pass options, insert them in \TeX-mode right at the
-  beginning of the environment in square brackets.
+  Use ``Columns'' or ``ColumnsTopAligned'' to create a |columns| environment. To pass options, insert them in \TeX-mode right at the beginning of the environment in square brackets.
 \end{environment}
 
-To create a column, you can either use the |column| environment or the
-|\column| command.
+To create a column, you can either use the |column| environment or the |\column| command.
 
 \begin{environment}{{column}\oarg{placement}\marg{column width}}
-  Creates a single column of width \meta{column width}. The vertical
-  placement of the enclosing |columns| environment can be overruled by
-  specifying a specific \meta{placement} (|t| and |T| for the two top
-  modes, |c| for centered, and |b| for bottom).
+  Creates a single column of width \meta{column width}. The vertical placement of the enclosing |columns| environment can be overruled by specifying a specific \meta{placement} (|t| and |T| for the two top modes, |c| for centered, and |b| for bottom).
 
-  \example The following code has the same effect as the above examples:
+  \example
+  The following code has the same effect as the above examples:
 \begin{verbatim}
 \begin{columns}
   \begin{column}[t]{5cm}
@@ -1454,10 +994,7 @@ To create a column, you can either use the |column| environment or the
 \end{environment}
 
 \begin{command}{{\column}\oarg{placement}\marg{column width}}
-  Starts a single column. The parameters and options are the same as
-  for the |column| environment. The column automatically ends with the
-  next occurrence of |\column| or of a |column| environment or of the
-  end of the current |columns| environment.
+  Starts a single column. The parameters and options are the same as for the |column| environment. The column automatically ends with the next occurrence of |\column| or of a |column| environment or of the end of the current |columns| environment.
 
   \example
 \begin{verbatim}
@@ -1472,62 +1009,31 @@ To create a column, you can either use the |column| environment or the
   This command is ignored in |article| mode.
 
   \lyxnote
-  In a ``Column'' style, the width of the column must be given as
-  normal text, not in \TeX-mode.
+  In a ``Column'' style, the width of the column must be given as normal text, not in \TeX-mode.
 \end{command}
-
 
 
 \subsection{Positioning Text and Graphics Absolutely}
 
-Normally, \beamer\ uses \TeX's normal typesetting mechanism to
-position text and graphics on the page. In certain situation you may
-instead wish a certain text or graphic to appear at a
-page position that is specified \emph{absolutely}. This means that the
-position is specified relative to the upper left corner of the slide.
+Normally, \beamer\ uses \TeX's normal typesetting mechanism to position text and graphics on the page. In certain situation you may instead wish a certain text or graphic to appear at a page position that is specified \emph{absolutely}. This means that the position is specified relative to the upper left corner of the slide.
 
-The package |textpos| provides several commands for positioning text
-absolutely and it works together with \beamer. When using this
-package, you will typically have to specify the options |overlay| and
-perhaps |absolute|. For details on how to use the package, please see
-its documentation.
-
+The package |textpos| provides several commands for positioning text absolutely and it works together with \beamer. When using this package, you will typically have to specify the options |overlay| and perhaps |absolute|. For details on how to use the package, please see its documentation.
 
 
 \subsection{Verbatim and Fragile Text}
 
-If you wish to use a |{verbatim}| environment in a frame, you have to
-add the option |[fragile]| to the |{frame}| environment. In this case,
-you really have to use the |{frame}| environment (not the |\frame|
-command) and the |\end{frame}| must be alone on a single line. Using
-this option will cause the frame contents to be written to an external
-file and the read back. See the description of the |{frame}|
-environment for more details.
+If you wish to use a |{verbatim}| environment in a frame, you have to add the option |[fragile]| to the |{frame}| environment. In this case, you really have to use the |{frame}| environment (not the |\frame| command) and the |\end{frame}| must be alone on a single line. Using this option will cause the frame contents to be written to an external file and the read back. See the description of the |{frame}| environment for more details.
 
-You must also use the |[fragile]| option for frames that include any
-``fragile'' text, which is any text that is not ``interpreted the way
-text is usually interpreted by \TeX.'' For example, if you use a
-package that (locally) redefined the meaning of, say, the character
-|&|, you must use this option.
+You must also use the |[fragile]| option for frames that include any ``fragile'' text, which is any text that is not ``interpreted the way text is usually interpreted by \TeX.'' For example, if you use a package that (locally) redefined the meaning of, say, the character |&|, you must use this option.
 
-Inside |{verbatim}| environments you obviously cannot use commands
-like |\alert<2>| to highlight part of code since the text is written
-in, well, verbatim. There are several good packages like |alltt| or
-|listings| that allow you to circumvent this problem. For simple
-cases, the following environment can be used, which is defined by
-\beamer:
+Inside |{verbatim}| environments you obviously cannot use commands like |\alert<2>| to highlight part of code since the text is written in, well, verbatim. There are several good packages like |alltt| or |listings| that allow you to circumvent this problem. For simple cases, the following environment can be used, which is defined by \beamer:
 
 \begin{environment}{{semiverbatim}}
-  The text inside this environment is typeset like verbatim
-  text. However, the characters |\|, |{|, and |}| retain their
-  meaning. Thus, you can say things like
+  The text inside this environment is typeset like verbatim text. However, the characters |\|, |{|, and |}| retain their meaning. Thus, you can say things like
 \begin{verbatim}
 \alert<1->{std::cout << "AT&T likes 100% performance";}
 \end{verbatim}
-  To typeset the three characters |\|, |{|, and |}| you can use the
-  commands |\\| (which is redefined inside this environment---you do
-  not need it anyway), |\{|, and |\}|. Thus in order to get typeset
-  ``|\alert<1>{X}|'' you can write |\\alert<1>\{X\}|.
+  To typeset the three characters |\|, |{|, and |}| you can use the commands |\\| (which is redefined inside this environment---you do not need it anyway), |\{|, and |\}|. Thus in order to get typeset ``|\alert<1>{X}|'' you can write |\\alert<1>\{X\}|.
 \end{environment}
 
 
@@ -1535,63 +1041,39 @@ cases, the following environment can be used, which is defined by
 
 The |abstract| environment is overlay-specificiation-aware in \beamer:
 
-
 \begin{environment}{{abstract}\sarg{action specification}}
   You can use this environment to typeset an abstract.
 
   \begin{element}{abstract}\no\yes\yes
-    These \beamer-color and -font are used to typeset the abstract. If
-    a background color is set, this background color is used as
-    background for the whole abstract by default.
+    These \beamer-color and -font are used to typeset the abstract. If a background color is set, this background color is used as background for the whole abstract by default.
   \end{element}
 
   \begin{element}{abstract title}\yes\yes\yes
     \colorparents{titlelike}
-    This template is used for the title. By default, this inserts
-    the word |\abstractname|, centered. The background color is ignored.
+    This template is used for the title. By default, this inserts the word |\abstractname|, centered. The background color is ignored.
   \end{element}
 
   \begin{element}{abstract begin}\yes\no\no
-    This template is inserted at the very beginning of the abstract,
-    before the abstract title and the \meta{environment
-    contents} is inserted.
+    This template is inserted at the very beginning of the abstract, before the abstract title and the \meta{environment contents} is inserted.
   \end{element}
 
   \begin{element}{abstract end}\yes\no\no
-    This template is inserted at the end of the abstract, after the
-    \meta{environment contents}.
+    This template is inserted at the end of the abstract, after the \meta{environment contents}.
   \end{element}
 \end{environment}
 
 
-
-
 \subsection{Verse, Quotations, Quotes}
 
-\LaTeX\ defines three environments for typesetting quotations and
-verses: |verse|, |quotation|, and |quote|. These environments are also
-available in the \beamer\ class, where they are
-overlay-specification-aware. If an overlay specification is given, the
-verse or quotation is shown only on the specified slides and is
-covered otherwise. The difference between a |quotation| and a |quote|
-is that the first has paragraph indentation, whereas the second does
-not.
+\LaTeX\ defines three environments for typesetting quotations and verses: |verse|, |quotation|, and |quote|. These environments are also available in the \beamer\ class, where they are overlay-specification-aware. If an overlay specification is given, the verse or quotation is shown only on the specified slides and is covered otherwise. The difference between a |quotation| and a |quote| is that the first has paragraph indentation, whereas the second does not.
 
-You can change the font and color used for these by changing the
-\beamer-colors and -fonts listed below. Unlike the standard \LaTeX\
-environments, the default font theme typesets a verse in an italic
-serif font, quotations and quotes are typeset using an italic font
-(whether serif or sans-serif depends on the standard document font).
-
+You can change the font and color used for these by changing the \beamer-colors and -fonts listed below. Unlike the standard \LaTeX\ environments, the default font theme typesets a verse in an italic serif font, quotations and quotes are typeset using an italic font (whether serif or sans-serif depends on the standard document font).
 
 \begin{environment}{{verse}\sarg{action specification}}
   You can use this environment to typeset a verse.
 
   \begin{element}{verse}\no\yes\yes
-    These \beamer-color and -font are used to typeset the verse. If
-    a background color is set, this background color is used as
-    background for the whole abstract. The default font is italic
-    serif.
+    These \beamer-color and -font are used to typeset the verse. If a background color is set, this background color is used as background for the whole abstract. The default font is italic serif.
   \end{element}
 
   \begin{element}{verse begin}\yes\no\no
@@ -1605,8 +1087,7 @@ serif font, quotations and quotes are typeset using an italic font
 
 
 \begin{environment}{{quotation}\sarg{action specification}}
-  Use this environment to typeset multi-paragraph quotations. Think
-  again, before presenting multi-paragraph quotations.
+  Use this environment to typeset multi-paragraph quotations. Think again, before presenting multi-paragraph quotations.
 
   \begin{element}{quotation}\no\yes\yes
     These \beamer-color and -font are used to typeset the quotation.
@@ -1641,50 +1122,37 @@ serif font, quotations and quotes are typeset using an italic font
 
 \subsection{Footnotes}
 
-First a word of warning: Using footnotes is usually not a good
-idea. They disrupt the flow of reading.
+First a word of warning: Using footnotes is usually not a good idea. They disrupt the flow of reading.
 
-You can use the usual |\footnote| command. It has been augmented to
-take an additional option, for placing footnotes at the frame
-bottom instead of at the bottom of the current minipage.
+You can use the usual |\footnote| command. It has been augmented to take an additional option, for placing footnotes at the frame bottom instead of at the bottom of the current minipage.
 
-\begin{command}{\footnote\sarg{overlay
-      specification}\oarg{options}\marg{text}}
-  Inserts a footnote into the current frame. Footnotes will always be
-  shown at the bottom of the current frame; they will never be
-  ``moved'' to other frames. As usual, one can give a number as
-  \meta{options}, which will cause the footnote to use that
-  number. The \beamer\ class adds one additional option:
+\begin{command}{\footnote\sarg{overlay specification}\oarg{options}\marg{text}}
+  Inserts a footnote into the current frame. Footnotes will always be shown at the bottom of the current frame; they will never be ``moved'' to other frames. As usual, one can give a number as \meta{options}, which will cause the footnote to use that number. The \beamer\ class adds one additional option:
   \begin{itemize}
-  \item \declare{|frame|} causes the footnote to be shown at the
-    bottom of the frame. This is normally the default behavior anyway,
-    but in minipages and certain blocks it makes a difference. In a
-    minipage, the footnote is usually shown as part of the minipage
-    rather than as part of the frame.
+    \item
+    \declare{|frame|} causes the footnote to be shown at the bottom of the frame. This is normally the default behavior anyway, but in minipages and certain blocks it makes a difference. In a minipage, the footnote is usually shown as part of the minipage rather than as part of the frame.
   \end{itemize}
 
-  If an \meta{overlay specification} is given, this causes the
-  footnote \meta{text} to be shown only on the specified slides. The
-  footnote symbol in the text is shown on all slides.
+  If an \meta{overlay specification} is given, this causes the footnote \meta{text} to be shown only on the specified slides. The footnote symbol in the text is shown on all slides.
 
-  \example |\footnote{On a fast machine.}|
-  \example |\footnote[frame,2]{Not proved.}|
-  \example |\footnote<.->{Der Spiegel, 4/04, S.\ 90.}|
+  \example
+  |\footnote{On a fast machine.}|
+  \example
+  |\footnote[frame,2]{Not proved.}|
+  \example
+  |\footnote<.->{Der Spiegel, 4/04, S.\ 90.}|
 
   \begin{element}{footnote}\yes\yes\yes
-    This template will be used to render the footnote. Inside this
-    template, the following two inserts can be used:
+    This template will be used to render the footnote. Inside this template, the following two inserts can be used:
     \begin{itemize}
-    \iteminsert{\insertfootnotetext}
+      \iteminsert{\insertfootnotetext}
       Inserts the current footnote text.
-    \iteminsert{\insertfootnotemark}
-      Inserts the current footnote mark (like a raised number). This mark
-      is computed automatically.
+      \iteminsert{\insertfootnotemark}
+      Inserts the current footnote mark (like a raised number). This mark is computed automatically.
     \end{itemize}
   \end{element}
 
   \begin{element}{footnote mark}\no\yes\yes
-    This \beamer-color/-font is used when rendering the footnote mark,
-    both in the text and at the beginning of the footnote itself.
+    This \beamer-color/-font is used when rendering the footnote mark, both in the text and at the beginning of the footnote itself.
   \end{element}
 \end{command}

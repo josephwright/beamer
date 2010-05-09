@@ -14,24 +14,14 @@
 
 \label{section-graphics}
 
-In the following, the advantages and disadvantages of different
-possible ways of creating graphics for \beamer\ presentations are
-discussed. Much of the information presented in the following is not
-really special to \beamer, but applies to any other document class as well.
+In the following, the advantages and disadvantages of different possible ways of creating graphics for \beamer\ presentations are discussed. Much of the information presented in the following is not really special to \beamer, but applies to any other document class as well.
 
 
 \subsection{Including External Graphic Files Versus Inlines Graphics}
 
-There are two principal ways of creating \TeX-documents that include
-graphics: Either the graphic resides in an external file that is
-\emph{included} or the graphic is \emph{inlined}, which means that
-\TeX-file contains a bunch of commands like ``draw a red line from
-here to there.'' In the following, the advantages and disadvantages of
-these two approaches are discussed.
+There are two principal ways of creating \TeX-documents that include graphics: Either the graphic resides in an external file that is \emph{included} or the graphic is \emph{inlined}, which means that \TeX-file contains a bunch of commands like ``draw a red line from here to there.'' In the following, the advantages and disadvantages of these two approaches are discussed.
 
-You can use an external program, like |xfig| or the Gimp, to create a
-graphic. These programs have an option to \emph{export} graphic files
-in a format that can then be inserted into the presentation.
+You can use an external program, like |xfig|, GIMP or Inkscape, to create a graphic. These programs have an option to \emph{export} graphic files in a format that can then be inserted into the presentation.
 
 The main advantage is:
 \begin{itemize}
@@ -42,43 +32,23 @@ The main advantage is:
 The main disadvantages are:
 \begin{itemize}
 \item
-  You  have to worry about many files. Typically there are at least
-  two for each presentation, namely the program's graphic data file and the
-  exported graphic file in a format that can be read by \TeX.
+  You  have to worry about many files. Typically there are at least two for each presentation, namely the program's graphic data file and the exported graphic file in a format that can be read by \TeX.
 \item
-  Changing the graphic using the program does not automatically change
-  the graphic in the presentation. Rather, you must reexport the
-  graphic and rerun \LaTeX.
+  Changing the graphic using the program does not automatically change the graphic in the presentation. Rather, you must reexport the graphic and rerun \LaTeX.
 \item
-  It may be difficult to get the line width, fonts, and font sizes
-  right.
+  It may be difficult to get the line width, fonts, and font sizes right.
 \item
-  Creating formulas as part of graphics is often difficult or
-  impossible.
+  Creating formulas as part of graphics is often difficult or impossible.
 \end{itemize}
 
-You can use all the standard \LaTeX\ commands for inserting graphics,
-like |\includegraphics| (be sure to include the package
-|graphics| or |graphicx|). Also, the |pgf| package offers commands for
-including graphics. Either will work fine in most situations, so
-choose whichever you like. Like |\pgfdeclareimage|,
-|\includegraphics| also includes an image only once in a |.pdf| file,
-even if it used several times (as a matter of fact, the |graphics|
-package is even a bit smarter about this than |pgf|). However,
-currently only |pgf| offers the ability to include images that are
-partly transparent.
+You can use all the standard \LaTeX\ commands for inserting graphics, like |\includegraphics| (be sure to include the package |graphics| or |graphicx|). Also, the |pgf| package offers commands for including graphics. Either will work fine in most situations, so choose whichever you like. Like |\pgfdeclareimage|, |\includegraphics| also includes an image only once in a |.pdf| file, even if it used several times (as a matter of fact, the |graphics| package is even a bit smarter about this than |pgf|). However, currently only |pgf| offers the ability to include images that are partly transparent.
 
-At the end of this section you will find notes on how to include
-specific graphic formats like |.eps| or |.jpg|.
+At the end of this section you will find notes on how to include specific graphic formats like |.eps| or |.jpg|.
 
 \lyxnote
 You can use the usual ``Insert Graphic'' command to insert a graphic.
 
-The commands |\includegraphics|, |\pgfuseimage|, and |\pgfimage| are
-overlay-specification-aware in \beamer. If the overlay specification
-does not apply, the command has no effect. This is useful for creating
-a simple animation where each picture of the animation resides in a
-different file:
+The commands |\includegraphics|, |\pgfuseimage|, and |\pgfimage| are overlay-specification-aware in \beamer. If the overlay specification does not apply, the command has no effect. This is useful for creating a simple animation where each picture of the animation resides in a different file:
 
 \begin{verbatim}
 \begin{frame}
@@ -88,119 +58,53 @@ different file:
 \end{frame}
 \end{verbatim}
 
-
-A different way of creating graphics is to insert
-graphic drawing commands directly into your \LaTeX\ file. There are numerous
-packages that help you do this. They have various degrees of
-sophistication. Inlining graphics suffers from none of the
-disadvantages mentioned above for including external graphic files,
-but the main disadvantage is that it is often hard to use
-these packages. In some sense, you ``program'' your graphics, which
-requires a bit of practice.
+A different way of creating graphics is to insert graphic drawing commands directly into your \LaTeX\ file. There are numerous packages that help you do this. They have various degrees of sophistication. Inlining graphics suffers from none of the disadvantages mentioned above for including external graphic files, but the main disadvantage is that it is often hard to use these packages. In some sense, you ``program'' your graphics, which requires a bit of practice.
 
 When choosing a graphic package, there are a few things to keep in
 mind:
 \begin{itemize}
 \item
-  Many packages produce poor quality graphics. This is especially true
-  of the standard |picture| environment of \LaTeX.
+  Many packages produce poor quality graphics. This is especially true of the standard |picture| environment of \LaTeX.
 \item
-  Powerful packages that produce high-quality graphics often do not
-  work together with |pdflatex|.
+  Powerful packages that produce high-quality graphics often do not work together with |pdflatex|.
 \item
-  The most powerful and easiest-to-use package around, namely
-  |pstricks|, does not work together with |pdflatex| and
-  this is a fundamental problem. Due to the fundamental differences
-  between \pdf\ and PostScript, it is not possible to write a
-  ``|pdflatex| back-end for |pstricks|.''
+  The most powerful and easiest-to-use package around, namely |pstricks|, does not work together with |pdflatex| and this is a fundamental problem. Due to the fundamental differences between \pdf\ and PostScript, it is not possible to write a ``|pdflatex| back-end for |pstricks|.'' Regardless, \textsc{pst-pdf} and \textsc{pdftricks} package can help here and simplify things from user's perspective.
 \end{itemize}
 
-A solution to the above problem (though not necessarily the best) is
-to use the \textsc{pgf} package. It produces high-quality graphics and
-works together with |pdflatex|, but also with normal
-|latex|. It is not as powerful as |pstricks| (as pointed
-out above, this is because of rather fundamental reasons) and not as
-easy to use, but it should be sufficient in most cases.
+A solution to the above problem (though not necessarily the best) is to use the \textsc{pgf} package. It produces high-quality graphics and works together with |pdflatex|, but also with normal |latex|. It is not as powerful as |pstricks| (as pointed out above, this is because of rather fundamental reasons) and not as easy to use, but it should be sufficient in most cases.
 
 \lyxnote
-Inlined graphics must currently by inserted in a large \TeX-mode
-box. This is not very convenient.
+Inlined graphics must currently be inserted in a large \TeX-mode box. This is not very convenient.
 
 
 \subsection{Including Graphic Files Ending \texttt{.eps} or \texttt{.ps}}
 
-External graphic files ending with the extension |.eps| (Encapsulated
-PostScript) or |.ps| (PostScript) can be included if you use |latex|
-and |dvips|, but \emph{not} when using |pdflatex|. This is true
-both for the normal |graphics| package and for |pgf|. When using
-|pgf|, do \emph{not} add the extension |.eps|. When using
-|graphics|, do add the extension.
+External graphic files ending with the extension |.eps| (Encapsulated PostScript) or |.ps| (PostScript) can be included if you use |latex| and |dvips|, but \emph{not} when using |pdflatex|. This is true both for the normal |graphics| package and for |pgf|. When using |pgf|, do \emph{not} add the extension |.eps|. When using |graphics|, do add the extension.
 
-If you have a |.eps| graphic and wish to use |pdflatex|, you can use
-the program |ps2pdf| to convert the graphic to a |.pdf| file. Note,
-however, that it is often a better idea to directly generate a |.pdf|
-if the program that produced the |.eps| supports this.
+If you have a |.eps| graphic and wish to use |pdflatex|, you can use the program |ps2pdf| to convert the graphic to a |.pdf| file. Note, however, that it is often a better idea to directly generate a |.pdf| if the program that produced the |.eps| supports this.
 
 
-\subsection{Including Graphic Files Ending \texttt{.pdf},
-  \texttt{.jpg}, \texttt{.jpeg} or \texttt{.png}}
+\subsection{Including Graphic Files Ending \texttt{.pdf}, \texttt{.jpg}, \texttt{.jpeg} or \texttt{.png}}
 
-The four formats |.pdf|, |.jpg|, |.jpeg|, and |.png| can only be
-included by |pdflatex|. As before, do not add these extension when
-using |pgf|, but do add them when using |graphics|. If your graphic
-file has any of these formats and you wish/must use |latex| and
-|dvips|, you  have to convert your graphic to |.eps| first.
+The four formats |.pdf|, |.jpg|, |.jpeg|, and |.png| can only be included by |pdflatex|. As before, do not add these extension when using |pgf|, but do add them when using |graphics|. If your graphic file has any of these formats and you wish/must use |latex| and |dvips|, you  have to convert your graphic to |.eps| first.
 
 
 \subsection{Including Graphic Files Ending \texttt{.mps}}
 
-A graphic file ending |.mps| (MetaPost PostScript) is a special kind
-of Encapsulated PostScript file. Files in this format are produced by
-the MetaPost program. As you know, \TeX\ is a program that converts
-simple plain text into beautifully typeset documents. The MetaPost
-program is similar, only it converts simple plain text into beautiful
-graphics.
+A graphic file ending |.mps| (MetaPost PostScript) is a special kind of Encapsulated PostScript file. Files in this format are produced by the MetaPost program. As you know, \TeX\ is a program that converts simple plain text into beautifully typeset documents. The MetaPost program is similar, only it converts simple plain text into beautiful graphics.
 
-The MetaPost program converts a plain text file ending |.mp|
-into an |.mps| file (although for some unfathomable reason the
-extension is not added). The |.mp| file
-must contain text written in the MetaFont programming language. Since
-|.mps| files are actually also |.eps| files, you can use the normal
-|\includegraphics| command to include them.
+The MetaPost program converts a plain text file ending |.mp| into an |.mps| file (although for some unfathomable reason the extension is not added). The |.mp| file must contain text written in the MetaFont programming language. Since |.mps| files are actually also |.eps| files, you can use the normal |\includegraphics| command to include them.
 
-However, as a special bonus, you can \emph{also}
-include such a file when using |pdflatex|. Normally, |pdflatex| cannot
-handle |.eps| files, but the |.mps| files produced by MetaPost have
-such a simple and special structure that this is possible. The |graphics|
-package implements some filters to convert such PostScript output to
-\pdf\ on-the-fly. For this to work, the file should end |.mps| instead
-of |.eps|. The following command can be used to make the |graphics|
-package just \emph{assume} the extension |.mps| for any file it knows
-nothing about (like files ending with |.1|, which is what MetaPost
-loves to produce):
+However, as a special bonus, you can \emph{also} include such a file when using |pdflatex|. Normally, |pdflatex| cannot handle |.eps| files, but the |.mps| files produced by MetaPost have such a simple and special structure that this is possible. The |graphics| package implements some filters to convert such PostScript output to \pdf\ on-the-fly. For this to work, the file should end |.mps| instead of |.eps|. The following command can be used to make the |graphics| package just \emph{assume} the extension |.mps| for any file it knows nothing about (like files ending with |.1|, which is what MetaPost loves to produce):
 \begin{verbatim}
 \DeclareGraphicsRule{*}{mps}{*}{}
 \end{verbatim}
 
-This special feature currently  only works with the |graphics|
-package, not with |pgf|.
-
+This special feature currently only works with the |graphics| package, not with |pgf|.
 
 
 \subsection{Including Graphic Files Ending \texttt{.mmp}}
 
-The format |.mmp| (Multi-MetaPost) is actually not a format that can be
-included directly in a \TeX-file. Rather, like a |.mp| file, it first
-has to be converted using the MetaPost program. The crucial difference
-between |.mp| and |.mmp| is that in the latter multiple graphics
-can reside in a single |.mmp| file (actually, multiple graphics can
-also reside in a |.mp| file, but by convention such a file is called
-|.mmp|). When running MetaPost on a |.mmp| file, it will create not a
-single encapsulated PostScript file, but several, ending |.0|, |.1|,
-|.2|, and so on. The idea is that |.0| might contain a main graphic
-and the following pictures contain overlay material that should be
-incrementally added to this graphic.
+The format |.mmp| (Multi-MetaPost) is actually not a format that can be included directly in a \TeX-file. Rather, like a |.mp| file, it first has to be converted using the MetaPost program. The crucial difference between |.mp| and |.mmp| is that in the latter multiple graphics can reside in a single |.mmp| file (actually, multiple graphics can also reside in a |.mp| file, but by convention such a file is called |.mmp|). When running MetaPost on a |.mmp| file, it will create not a single encapsulated PostScript file, but several, ending |.0|, |.1|, |.2|, and so on. The idea is that |.0| might contain a main graphic and the following pictures contain overlay material that should be incrementally added to this graphic.
 
-To include the series of resulting files, you can use the command
-|\multiinclude| from the |mpmulti| or from the |xmpmulti| package. How
-this program works is explained in Section~\ref{section-mpmulti}.
+To include the series of resulting files, you can use the command |\multiinclude| from the |mpmulti| or from the |xmpmulti| package. How this program works is explained in Section~\ref{section-mpmulti}.
