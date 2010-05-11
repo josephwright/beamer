@@ -26,6 +26,7 @@ When the presentation program displays the specially prepared superwide \beamer-
 \documentclass{beamer}
 \usepackage{pgfpages}
 \end{verbatim}
+
 The next step is to choose an appropriate option for showing something special on the second screen. These options are discussed in the following sections.
 
 One of the things these options do is to setup a certain |pgfpages|-layout that is appropriate for two-screen presentations. However, you can still change hte |pgfpages|-layout arbitrarily, afterwards. For example, you might wish to enlarge the virtual pages. For details, see the documentation of |pgfpages|.
@@ -74,7 +75,8 @@ To specify what is shown on the second screen, you can use a special \beamer-mod
 \end{document}
 \end{verbatim}
 
-  \example The following example shows how translations can be added in a comfortable way.
+  \example
+  The following example shows how translations can be added in a comfortable way.
 \begin{verbatim}
 \documentclass{beamer}
 \usepackage{pgfpages}
@@ -102,6 +104,7 @@ To specify what is shown on the second screen, you can use a special \beamer-mod
 \end{beameroption}
 
 In the last of the above example, it is a bit bothersome that the option |typeset second| has to be added to each frame. The following option globally sets this option:
+
 \begin{beameroption}{always typeset second mode}{|=|\meta{true or false}}
   When this option is set to true, every following frame will have the option |typeset second| set to true.
 \end{beameroption}

@@ -96,9 +96,9 @@ Before you invoke the title page command, you must specify all elements you wish
   If more than one institute is given, they should be separated using the command |\and| and they should be prefixed by the command |\inst| with different parameters.
   \example
 \begin{verbatim}
-\institute[Universities of Rochester and Berlin]{
-  \inst{1}Department of Computer Science\\
-  University of Rochester
+\institute[Universities of Rijeka and Berlin]{
+  \inst{1}Department of Informatics\\
+  University of Rijeka
   \and
   \inst{2}Fakult\"at f\"ur Elektrotechnik und Informatik\\
   Technical University of Berlin}
@@ -471,30 +471,31 @@ You can create a table of contents using the command |\tableofcontents|. Unlike 
 
   The following options can be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|currentsection|} causes all sections but the current to be shown in a semi-transparent way. Also, all subsections but those in the current section are shown in the semi-transparent way. This command is a shorthand for specifying the following options:
+
 \begin{verbatim}
 sectionstyle=show/shaded,subsectionstyle=show/show/shaded
 \end{verbatim}
-    \item
+  \item
     \declare{|currentsubsection|} causes all subsections but the current subsection in the current section to be shown in a semi-transparent way. This command is a shorthand for specifying the option |subsectionstyle=show/shaded|.
-    \item
+  \item
     \declare{|firstsection=|\meta{section number}} specifies which section should be numbered as section~``1.''  This is useful if you have a first section (like an overview section) that should not receive a number. Section numbers are not shown by default. To show them, you must install a different table of contents templates.
-    \item
+  \item
     \declare{|hideallsubsections|} causes all subsections to be hidden. This command is a shorthand for specifying the option |subsectionstyle=hide|.
-    \item
+  \item
     \declare{|hideothersubsections|} causes the subsections of sections other than the current one to be hidden. This command is a shorthand for specifying the option |subsectionstyle=show/show/hide|.
-    \item
+  \item
     \declare{|part=|\meta{part number}} causes the table of contents of part \meta{part number} to be shown, instead of the table of contents of the current part (which is the default). This option can be combined with the other options, although combining it with the |current| option obviously makes no sense.
-    \item
+  \item
     \declare{|pausesections|} causes a |\pause| command to be issued before each section. This is useful if you wish to show the table of contents in an incremental way.
-    \item
+  \item
     \declare{|pausesubsections|} causes a |\pause| command to be issued before each subsection.
-    \item
+  \item
     \declare{|sections=|\marg{overlay specification}} causes only the sections mentioned in the \meta{overlay specification} to be shown. For example, \verb/sections={<2-4| handout:0>}/ causes only the second, third, and fourth section to be shown in the normal version, nothing to be shown in the handout version, and everything to be shown in all other versions. For convenience, if you omit the pointed brackets, the specification is assumed to apply to all versions. Thus |sections={2-4}| causes sections two, three, and four to be shown in all versions.
-    \item
+  \item
     \declare{|sectionstyle=|\meta{style for current section}|/|\meta{style for other sections}} specifies how sections should be displayed. Allowed \meta{styles} are |show|, |shaded|, and |hide|. The first will show the section title normally, the second will show it in a semi-transparent way, and the third will completely suppress it. You can also omit the second style, in which case the first is used for all sections (this is not really useful).
-    \item
+  \item
     \declare{|subsectionstyle=|\meta{style for current subsection}|/|\meta{style for other subsections in current section}|/|\\\meta{style for subsections in other sections}} specifies how subsections should be displayed. The same styles as for the |sectionstyle| option may be given. You can omit the last style, in which case the second also applies to the last, and you can omit the last two, in which case the first applies to all.
     \example
     |subsectionstyle=shaded| causes all subsections to be shaded.
@@ -507,6 +508,7 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
     \example
     |subsectionstyle=show/shaded/hide| causes all subsections outside the current section to be suppressed and only the current subsection in the current section to be highlighted.
   \end{itemize}
+
   The last examples are useful if you do not wish to show too many details when presenting the talk outline.
 
   \articlenote

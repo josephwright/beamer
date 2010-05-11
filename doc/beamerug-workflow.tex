@@ -73,6 +73,7 @@ Put |\section| and |\subsection| commands into the (more or less empty) main fil
 
 \end{document}
 \end{verbatim}
+
 The empty frame at the end (which should be deleted later) ensures that the sections and subsections are actually part of the table of contents. This frame is necessary since a |\section| or |\subsection| command following the last page of a document has no effect.
 
 
@@ -80,6 +81,7 @@ The empty frame at the end (which should be deleted later) ensures that the sect
 
 \beamernote
 Once a first version of the structure is finished, you should try to create a first PDF or PostScript file of your (still empty) talk to ensure that everything is working properly. This file will only contain the title page and the table of contents.
+
 \lyxnote
 Use ``View'' to check whether the presentation compiles fine. Note that you must put the table of contents inside a frame, but that the title page is created automatically.
 
@@ -93,8 +95,8 @@ To create a |PDF| version of this file, run the program |pdflatex| on |main.tex|
 > pdflatex main.tex
     ... lots of output ...
 \end{verbatim}
-You can next use a program like the Acrobat Reader or |xpdf|
-to view the resulting presentation.
+
+You can next use a program like the Acrobat Reader or |xpdf| to view the resulting presentation.
 \begin{verbatim}
 > acroread main.pdf
 \end{verbatim}
@@ -116,6 +118,7 @@ You can then run |latex| twice, followed by |dvips|.
     ... lots of output ...
 > dvips -P pdf main.dvi
 \end{verbatim}
+
 The option (|-P pdf|) tells |dvips| to use Type~1 outline fonts instead of the usual Type~3 bitmap fonts. You may wish to omit this option if there is a problem with it.
 
 You can convert a PostScript file to a pdf file using
@@ -193,7 +196,6 @@ The easiest way to print a presentation is to user the Acrobat Reader with the o
 For the PostScript version and for printing multiple slides on a single page this simple approach does not work. In such cases you can use the |pgfpages| package, which works directly both with |pdflatex| and |latex| plus |dvips|. Note however \emph{that this package destroys hyperlinks}. This is due to fundamental flaws in the \pdf-specification and not likely to change.
 
 The |pgfpages| can do all sorts of tricks with pages. The most important one for printing \beamer\ slides is the following command:
-
 \begin{verbatim}
 \usepackage{pgfpages}
 \pgfpagesuselayout{resize}[a4paper,border shrink=5mm,landscape]
@@ -202,7 +204,6 @@ The |pgfpages| can do all sorts of tricks with pages. The most important one for
 This says ``Resize all pages to landscape A4 pages, no what their original size was, but shrink the pages by 5mm, so that there is a bit of a border around everything.'' Naturally, instead of |a4paper| you can also use |letterpaper| or any of the other standard paper sizes. For further options and details see the documentation of |pgfpages|.
 
 The second thing you might wish to do is to put several slides on a single page. This can be done as follows:
-
 \begin{verbatim}
 \usepackage{pgfpages}
 \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
@@ -213,7 +214,6 @@ This says ``Put two pages on one page and then resize everything so that it fits
 Instead of |2 on 1| you can also use |4 on 1|, but then with |landscape| once more, and also |8 on 1| and even |16 on 1| to get a grand (though unreadable) overview.
 
 If you put several slides on one page and if these slides normally have a white background, it may be useful to write the following in your preamble:
-
 \begin{verbatim}
 \mode<handout>{\setbeamercolor{background canvas}{bg=black!5}}
 \end{verbatim}

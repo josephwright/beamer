@@ -12,6 +12,7 @@
 
 \section{Animations, Sounds, and Slide Transitions}
 
+
 \subsection{Animations}
 
 \subsubsection{Including External Animation Files}
@@ -50,47 +51,50 @@ For including an animation in a \pdf\ file, you can use the command |\movie|, wh
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|autostart|}. Causes the movie to start playing immediately when the page is shown. At most one movie can be started in this way. The viewer application will typically be able to show at most one movie at the same time anyway. When the page is no longer shown, the movie immediately stops. This can be a problem if you use the |\movie| command to include a sound that should be played on after the page has been closed. In this case, the |\sound| command must be used.
-    \item
+  \item
     \declare{|borderwidth=|}\meta{\TeX\ dimension}. Causes a border of thickness \meta{\TeX\ dimension} to be drawn around the movie. Some versions of the Acrobat Reader seem to have a bug and do not display this border if is smaller than 0.5bp (about 0.51pt).
-    \item
+  \item
     \declare{|depth=|}\meta{\TeX\ dimension}. Overrides the depth of the \meta{poster text} box and sets it to the given dimension.
-    \item
+  \item
     \declare{|duration=|}\meta{time}|s|. Specifies in seconds how long the movie should be shown. The \meta{time} may be a fractional value and must be followed by the letter |s|. For example, |duration=1.5s| will show the movie for one and a half seconds. In conjunction with the |start| option, you can ``cut out'' a part of a movie for display.
-    \item
+  \item
     \declare{|externalviewer|}. As explained above, this causes an external application to be launched for displaying the movie in a separate window. Most options, like |duration| or |loop|, have no effect since they are not passed along to the viewer application.
-    \item
+  \item
     \declare{|height=|}\meta{\TeX\ dimension}. Overrides the height of the \meta{poster text} box and sets it to the given dimension.
-    \item
+  \item
     \declare{|label=|}\meta{movie label}. Assigns a label to the movie such that it can later be referenced by the command |\hyperlinkmovie|, which can be used to stop the movie or to show a different part of it. The \meta{movie label} is not a normal label. It should not be too fancy, since it is inserted literally into the \pdf\ code. In particular, it should not contain closing parentheses.
-    \item
+  \item
     \declare{|loop|}. Causes the movie to start again when the end has been reached. Normally, the movie just stops at the end.
-    \item
+  \item
     \declare{|once|}. Causes the movie to just stop at the end. This is the default.
-    \item
+  \item
     \declare{|open|}. Causes the player to stay open when the movie has finished.
-    \item
+  \item
     \declare{|palindrome|}. Causes the movie to start playing backwards when the end has been reached, and to start playing forward once more when the beginning is reached, and so on.
-    \item
+  \item
     \declare{|poster|}. Asks the viewer application to show the first image of the movie when the movie is not playing. Normally, nothing is shown when the movie is not playing (and thus the box containing the \meta{poster text} is shown). For a movie that does not have any images (but sound) or for movies with an uninformative first image this option is not so useful.
-    \item
+  \item
     \declare{|repeat|} is the same as |loop|.
-    \item
+  \item
     \declare{|showcontrols=|}\meta{true or false}. Causes a control bar to be displayed below the movie while it is playing. Instead of |showcontrols=true| you can also just say |showcontrols|. By default, no control bar is shown.
-    \item
+  \item
     \declare{|start=|}\meta{time}|s|. Causes the first \meta{time} seconds of the movie to be skipped. For example, |start=10s,duration=5s| will show seconds 10 to 15 of the movie, when you play the movie.
-    \item
+  \item
     \declare{|width=|}\meta{\TeX dimension} works like the |height| option, only for the width of the poster box.
   \end{itemize}
 
   \example
   The following example creates a ``background sound'' for the slide.
+
 \begin{verbatim}
 \movie[autostart]{}{test.wav}
 \end{verbatim}
+
   \example
   A movie with two extra buttons for showing different parts of the movie.
+
 \begin{verbatim}
 \movie[label=cells,width=4cm,height=3cm,poster,showcontrols,duration=5s]{}{cells.avi}
 
@@ -107,25 +111,25 @@ A movie can serve as the destination of a special kind of hyperlink, namely a hy
 
   The following \meta{options} may be given, many of which are the same as for the |\movie| command; if a different option is given for the link than for the movie itself, the option for the link takes precedence:
   \begin{itemize}
-    \item
+  \item
     \declare{|duration=|}\meta{time}|s|. As for |\movie|, this causes the movie to be played only for the given number of seconds.
-    \item
+  \item
     \declare{|loop|} and \declare{|repeat|}.  As for |\movie|, this causes the movie to loop.
-    \item
+  \item
     \declare{|once|}.  As for |\movie|, this causes the movie to played only once.
-    \item
+  \item
     \declare{|palindrome|}.  As for |\movie|, this causes the movie to be played forth and back.
-    \item
+  \item
     \declare{|pause|}. Causes the playback of the movie to be paused, if the movie was currently playing. If not, nothing happens.
-    \item
+  \item
     \declare{|play|}. Causes the movie to be played from whatever start position is specified. If the movie is already playing, it will be stopped and restarted at the starting position. This is the default.
-    \item
+  \item
     \declare{|resume|}. Resumes playback of the movie, if it has previously been paused. If has not been paused, but not started or is already playing, nothing happens.
-    \item
+  \item
     \declare{|showcontrols=|}\meta{true or false}. As for |\movie|, this causes a control bar to be shown or not shown during playback.
-    \item
+  \item
     \declare{|start=|}\meta{time}|s|. As for |\movie|, this causes the given number of seconds to be skipped at the beginning of the movie if |play| is used to start the movie.
-    \item
+  \item
     \declare{|stop|}. Causes the playback of the movie to be stopped.
   \end{itemize}
 \end{command}
@@ -140,6 +144,7 @@ To facilitate the creation of animations using this feature, the following comma
 
 \begin{command}{\animate\ssarg{overlay specification}}
   The slides specified by \meta{overlay specification} will be shown as quickly as possible.
+
   \example
 \begin{verbatim}
 \begin{frame}
@@ -161,6 +166,7 @@ To facilitate the creation of animations using this feature, the following comma
 
 \begin{command}{\animatevalue|<|\meta{start slide}|-|\meta{end slide}|>| \marg{name}\marg{start value}\marg{end value}}
   The \meta{name} must be the name of a counter or a dimension. It will be varied between two values. For the slides in the specified range, the counter or dimension is set to an interpolated value that depends on the current slide number. On slides before the \meta{start slide}, the counter or dimension is set to \meta{start value}; on the slides after the \meta{end slide} it is set to \meta{end value}.
+
   \example
 \begin{verbatim}
 \newcount\opaqueness
@@ -212,6 +218,7 @@ To facilitate the creation of animations using this feature, the following comma
 \end{command}
 
 If your animation ``graphics'' reside in individual external graphic files, you might also consider using the |\multiinclude| command, which is explained in Section~\ref{section-mpmulti}, together with |\animate|. For example, you might create an animation like this, assuming you have created graphic files named |animation.1| through to |animation.10|:
+
 \begin{verbatim}
 \begin{frame}
   \animate<2-9>
@@ -240,11 +247,13 @@ You might also consider using the style |xmpmulti.sty| that comes with \beamer. 
 
   \example
   Assume that MetaPost has created files called |gra.0|, |gra.1|, and |gra.2|. You can then create frame consisting of three slides that incrementally show the graphic as follows:
+
 \begin{verbatim}
 \begin{frame}
   \multiinclude{gra}
 \end{frame}
 \end{verbatim}
+
   The effect of providing a \meta{default overlay specification} is the following: First, no |\pause| command is inserted between graphics. Instead, each graphic is surrounded by an |actionenv| environment with the overlay specification set to \meta{default overlay specification}.
 
   \example
@@ -252,9 +261,11 @@ You might also consider using the style |xmpmulti.sty| that comes with \beamer. 
 
   \example
   For a more interesting usage of the \meta{default overlay specification}, consider the following usage:
+
 \begin{verbatim}
 \multiinclude[<alert@+| +->]{gra}
 \end{verbatim}
+
   This will always paint the most recently added part of the graphic in red (assuming you do not use special colors in the graphic itself).
 
   \example
@@ -278,9 +289,11 @@ You might also consider using the style |xmpmulti.sty| that comes with \beamer. 
 \end{command}
 
 Note that, if you do not use the |format=| option, the |\includegraphics| command will be somewhat at a loss in which format your graphic file actually is. After all, it ends with the cryptic ``format suffix'' |.0| or |.1|. You can tell |\includegraphics| that any file having a suffix it knows nothing about is actually in format, say, |.mps|, using the following command:
+
 \begin{verbatim}
 \DeclareGraphicsRule{*}{mps}{*}{}
 \end{verbatim}
+
 
 \subsection{Sounds}
 \label{section-sound}
@@ -289,27 +302,27 @@ You can include sounds in a presentation. Such sound can be played when you open
 
 As was already pointed out in Section~\ref{section-multimedia}, a sound can be included in a \pdf\ presentation by treating it as a movie and using the |\movie| command. While this is perfectly sufficient in most cases, there are two cases where this approach is not satisfactory:
 \begin{enumerate}
-  \item
+\item
   When a page is closed, any playing movie is immediately stopped. Thus, you cannot use the |\movie| command to create sounds that persist for a longer time.
-  \item
+\item
   You cannot play two movies at the same time.
 \end{enumerate}
 
 The \pdf\ specification introduces special sound objects, which are treated quite differently from movie objects. You can create a sound object using the command |\sound|, which is somewhat similar to |\movie|. There also exists a |\hyperlinksound| command, which is similar to |\hyperlinkmovie|. While it is conceptually better to use |\sound| for sounds, there are a number of things to consider before using it:
 \begin{itemize}
-  \item
+\item
   Several sounds \emph{can} be played at the same time. In particular, it is possible to play a general sound in parallel to a (hopefully silent) movie.
-  \item
+\item
   A sound playback \emph{can} persist after the current page is closed (though it need not).
-  \item
+\item
   The data of a sound file \emph{can} be completely embedded in a \pdf\ file, obliberating the need to ``carry around'' other files.
-  \item
+\item
   The sound objects do \emph{not} work together with |dvips| and |ps2pdf|. They only work with |pdflatex|.
-  \item
+\item
   There is much less control over what part of a sound should be played. In particular, no control bar is shown and you can specify neither the start time nor the duration.
-  \item
+\item
   A bug in some versions of the Acrobat Reader makes it necessary to provide very exact details on the encoding of the sound file. You have to provide the sampling rate, the number of channels (mono or stereo), the number of bits per sample, and the sample encoding method (raw, signed, Alaw or $\mu$law). If you do not know this data or provide it incorrectly, the sound will be played incorrectly.
-  \item
+\item
   It seems  that you can only include uncompressed sound data, which can easily become huge. This is not required by the specification, but I have been unable to make the Acrobat Reader play any compressed data. Data formats that \emph{do} work are |.aif| and |.au|.
 \end{itemize}
 
@@ -327,36 +340,37 @@ The \pdf\ specification introduces special sound objects, which are treated quit
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|autostart|}. Causes the sound to start playing immediately when the page is shown.
-    \item
+  \item
     \declare{|automute|}. Causes all sounds to be muted when the current page is left.
-    \item
+  \item
     \declare{|bitspersample=|}\meta{8 or 16}. Specifies the number of bits per sample in the sound file. If this number is 16, this option need not be specified.
-    \item
+  \item
     \declare{|channels=|}\meta{1 or 2}. Specifies whether the sound is mono or stereo. If the sound is mono, this option need not be specified.
-    \item
+  \item
     \declare{|depth=|}\meta{\TeX\ dimension}. Overrides the depth of the \meta{sound poster text} box and sets it to the given dimension.
-    \item
+  \item
     \declare{|encoding=|}\meta{method}. Specifies the encoding method, which may be |Raw|, |Signed|, |muLaw|, or |ALaw|. If the method is |muLaw|, this option need not be specified.
-    \item
+  \item
     \declare{|height=|}\meta{\TeX\ dimension}. Overrides the height of the \meta{sound poster text} box and sets it to the given dimension.
-    \item
+  \item
     \declare{|inlinesound|} causes the sound data to be stored directly in the \pdf-file.
-    \item
+  \item
     \declare{|label=|}\meta{sound label}. Assigns a label to the sound such that it can later be referenced by the command |\hyperlinksound|, which can be used to start a sound. The \meta{sound label} is not a normal label.
-    \item
+  \item
     \declare{|loop|} or \declare{|repeat|}. Causes the sound to start again when the end has been reached.
-    \item
+  \item
     \declare{|mixsound=|}\meta{true or false}. If set to |true|, the sound is played in addition to any sound that is already playing. If set to |false| all other sounds (though not sound from movies) are stopped before the sound is played. The default is |false|.
-    \item
+  \item
     \declare{|samplingrate=|}\meta{number}. Specifies the number of samples per second in the sound file. If this number is 44100, this option need not be specified.
-    \item
+  \item
     \declare{|width=|}\meta{\TeX\ dimension} works like the |height| option, only for the width of the poster box.
   \end{itemize}
 
   \example
   The following example creates a ``background sound'' for the slide, assuming that |applause.au| is encoded correctly (44100 samples per second, mono, $\mu$law encoded, 16 bits per sample).
+
 \begin{verbatim}
 \sound[autostart]{}{applause.au}
 \end{verbatim}
@@ -369,9 +383,9 @@ Just like movies, sounds can also serve as  destinations of special sound hyperl
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|loop|} or \declare{|repeat|}. Causes the sound to start again when the end has been reached.
-    \item
+  \item
     \declare{|mixsound=|}\meta{true or false}. If set to |true|, the sound is played in addition to any sound that is already playing. If set to |false| all other sounds (though not sound from movies) are stopped before the sound is played. The default is |false|.
   \end{itemize}
 \end{command}
@@ -388,6 +402,7 @@ Since there is no direct way of stopping the playback of a sound, the following 
 \pdf\ in general, and the Acrobat Reader in particular, offer a standardized way of defining \emph{slide transitions}. Such a transition is a visual effect that is used to show the slide. For example, instead of just showing the slide immediately, whatever was shown before might slowly ``dissolve'' and be replaced by the slide's content.
 
 There are a number of commands that can be used to specify what effect should be used when the current slide is presented. Consider the following example:
+
 \begin{verbatim}
 \frame{\pgfuseimage{youngboy}}
 \frame{
@@ -395,9 +410,11 @@ There are a number of commands that can be used to specify what effect should be
   \pgfuseimage{man}
 }
 \end{verbatim}
+
 The command |\transdissolve| causes the slide of the second frame to be shown in a ``dissolved way.'' Note that the dissolving is a property of the second frame, not of the first one. We could have placed the command anywhere on the frame.
 
 The transition commands are overlay-specification-aware. We could collapse the two frames into one frame like this:
+
 \begin{verbatim}
 \begin{frame}
   \only<1>{\pgfuseimage{youngboy}}
@@ -405,14 +422,15 @@ The transition commands are overlay-specification-aware. We could collapse the t
   \transdissolve<2>
 \end{frame}
 \end{verbatim}
+
 This states that on the first slide the young boy should be shown, on the second slide the old man should be shown, and when the second slide is shown, it should be shown in a ``dissolved way.''
 
 In the following, the different commands for creating transitional effects are listed. All of them take an optional argument that may contain a list of \meta{key}|=|\meta{value} pairs. The following options are possible:
 
 \begin{itemize}
-  \item
+\item
   |duration=|\meta{seconds}. Specifies the number of \meta{seconds} the transition effect needs. Default is one second, but often a shorter one (like 0.2 seconds) is more appropriate. Viewer applications, especially Acrobat, may interpret this option in slightly strange ways.
-  \item
+\item
   |direction=|\meta{degree}. For ``directed'' effects, this option specifies the effect's direction. Allowed values are |0|, |90|, |180|, |270|, and for the glitter effect also |315|.
 \end{itemize}
 

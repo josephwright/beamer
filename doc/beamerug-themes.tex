@@ -72,12 +72,15 @@ If a theme has not been developped by me (that is, if someone else is to blame),
     Each time this command is invoked, a new box is added to the head line, with the first added box being shown on the left. All boxes will have the same size.
 
     The \meta{beamer color} will be used to setup the foreground and background colors of the box.
+
     \example
 \begin{verbatim}
 \addheadbox{section in head/foot}{\tiny\quad 1. Box}
 \addheadbox{structure}{\tiny\quad 2. Box}
 \end{verbatim}
+
     A similar effect as the above commands can be achieved by directly installing a head template that contains two |beamercolorbox|es:
+
 \begin{verbatim}
 \setbeamertemplate{headline}
 {\leavevmode
@@ -89,6 +92,7 @@ If a theme has not been developped by me (that is, if someone else is to blame),
 \end{beamercolorbox}
 }
 \end{verbatim}
+
     While being more complicated, the above commands offer more flexibility.
   \end{command}
 
@@ -182,6 +186,7 @@ If a theme has not been developped by me (that is, if someone else is to blame),
 \begin{verbatim}
 \usecolorhteme{sidebartab}
 \end{verbatim}
+
   This color theme works with all themes that show a table of contents in the sidebar.
 
   This theme is useful for long talks like lectures that require a table of contents to be visible all the time.
@@ -289,7 +294,6 @@ If a theme has not been developped by me (that is, if someone else is to blame),
   Copenhagen is the capital of Denmark. It is connected to Malm\"o by the \O resund bridge.
 \end{themeexample}
 
-
 \begin{themeexample}{Luebeck}
   A variation on the |Copenhagen| theme.
 
@@ -301,7 +305,6 @@ If a theme has not been developped by me (that is, if someone else is to blame),
 
   Malm\"o is a town in southern Sweden. It hosted \textsc{fct} 2001.
 \end{themeexample}
-
 
 \begin{themeexample}{Warsaw}
   A dominant variation of the |Copenhagen| theme.

@@ -11,7 +11,6 @@
 % $Header$
 
 \section{Installation}
-
 \label{section-installation}
 
 There are different ways of installing the \beamer\ class, depending on your installation and needs. When installing the class, you may have to install some other packages as well as described below. Before installing, you may wish to review the licenses under which the class is distributed, see Section~\ref{section-license}.
@@ -45,7 +44,7 @@ We do not create or manage pre-bundled packages of \beamer, but, fortunately, ot
 
 \subsubsection{\TeX\ Live and Mac\TeX}
 
-In \TeX\ Live, use the |tlmgr| tool to install the packages called |beamer|, |pgf|, and |xcolor|. If you have a fairly recent version of \TeX\ Live, and you have done full installation, beamer is included.
+In \TeX\ Live, use the |tlmgr| tool to install the packages called |beamer|, |pgf|, and |xcolor|. If you have a fairly recent version of \TeX\ Live, and you have done full installation, \beamer is included.
 
 \subsubsection{MiK\TeX and pro\TeX t}
 
@@ -59,17 +58,19 @@ http://packages.debian.org/latex-beamer
 http://packages.debian.org/pgf
 http://packages.debian.org/latex-xcolor
 \end{verbatim}
+
 Debian 5.0 ``lenny'' includes \TeX\ Live 2007, and version 6.0 ``squeeze'' will include \TeX\ Live 2009. This also allows you to manually install newer versions of \beamer (into your local directory, see below) without having to update any other \LaTeX\ packages.
 
 Ubuntu 8.04, 9.04 and 9.10 include \TeX\ Live 2007, and version 10.04 includes \TeX\ Live 2009.
 
 \subsubsection{Fedora}
 
-Fedora 12 and 13 include \TeX\ Live 2007, which includes \beamer. It can be installed by running the command ``|aptitude install texlive-texmf-latex|''. Jindrich Novy provides |rpm| packages for newer versions of \TeX\ Live for Fedora 12 and 13, at
+Fedora 12 and 13 include \TeX\ Live 2007, which includes \beamer. It can be installed by running the command ``|yum install texlive-texmf-latex|''. Jindrich Novy provides |rpm| packages for newer versions of \TeX\ Live for Fedora 12 and 13, at
 \begin{verbatim}
 http://fedoraproject.org/wiki/Features/TeXLive
 \end{verbatim}
-and it's very likely that these packages will be a part of Fedora 14 once it's released.
+
+and it's also very likely that these packages will be a part of Fedora 14 once it's released.
 
 
 \subsection{Installation in a texmf Tree}
@@ -80,6 +81,7 @@ Obtain the latest source version (ending |.tar.gz| or |.zip|) of the \beamer\ pa
 \begin{verbatim}
 http://bitbucket.org/rivanvx/beamer
 \end{verbatim}
+
 (most likely, you have already done this). Next, you also need the \textsc{pgf} package and the \textsc{xcolor} packages, which you need to install separately (see their installation instructions).
 
 The package contains a bunch of files; |beamer.cls| is one of these files and happens to be the most important one. You now need to put these files in an appropriate |texmf| tree.
@@ -100,12 +102,13 @@ Inside whatever |texmf| directory you have chosen, create the sub-sub-sub-direct
 \begin{verbatim}
 texmf/tex/latex/beamer
 \end{verbatim}
+
 and place all files of the package in this directory.
 
 Finally, you need to rebuild \TeX's filename database. This is done by running the command |texhash| or |mktexlsr| (they are the same). In MiK\TeX package manager and \TeX\ Live |tlmgr|, there is a menu option to do this.
 
 \lyxnote
-For usage of the \beamer\ class with \LyX, you have to do all of the above. You also have to make \LyX\ aware of the file |beamer.layout|. This file is \emph{not part of the beamer package} since it is updated and managed by the \LyX\ development team. This means that in reasonably up-to-date \LyX\ versions this file will already be installed and nothing needs to be done.
+For usage of the \beamer\ class with \LyX, you have to do all of the above. You also have to make \LyX\ aware of the file |beamer.layout|. This file is \emph{not part of the \beamer package} since it is updated and managed by the \LyX\ development team. This means that in reasonably up-to-date \LyX\ versions this file will already be installed and nothing needs to be done.
 
 \vskip1em
 For a more detailed explanation of the standard installation process of packages, you might wish to consult \href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}. However, note that the \beamer\ package does not come with a |.ins| file (simply skip that part).
@@ -117,6 +120,7 @@ To update your installation from a previous version, simply replace everything i
 \begin{verbatim}
 texmf/tex/latex/beamer
 \end{verbatim}
+
 with the files of the new version. The easiest way to do this is to first delete the old version and then to proceed as described above.
 
 Note that if you have two versions installed, one in |texmf| and other in |texmf-local| directory, \TeX\ distribution will prefer one in |texmf-local| directory. This generally allows you to update packages manually without administrator privileges.
@@ -128,6 +132,7 @@ To test your installation, copy the file |generic-ornate-15min-45min.en.tex| fro
 \begin{verbatim}
 beamer/solutions/generic-talks
 \end{verbatim}
+
 to some place where you usually create presentations. Then run the command |pdflatex| several times on the file and check whether the resulting \pdf\ file looks correct. If so, you are all set.
 
 \lyxnote

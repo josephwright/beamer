@@ -26,17 +26,17 @@ The package |beamerprosper| maps the commands of the \prosper\ package, develope
 
 The workflow for creating a \beamer\ presentation that uses \prosper\ code is the following:
 \begin{enumerate}
-  \item
+\item
   Use the document class |beamer|, not |prosper|. Most options passed to |prosper| do not apply to |beamer| and should be omitted.
-  \item
+\item
   Add a |\usepackage{beamerprosper}| to start the emulation.
-  \item
+\item
   If you add slides relying on \textsc{ha}-\prosper, you may wish to add the option |framesassubsections| to |beamerprosper|, though I do not recommend it (use the normal |\subsection| command instead; it gives you more fine-grained control).
-  \item
+\item
   If you also copy the title commands, it may be necessary to adjust the content of commands like |\title| or |\author|. Note that in \prosper\ the |\email| command is given outside the |\author| command, whereas in \beamer\ and also in \textsc{ha}-\prosper\ it is given inside.
-  \item
+\item
   When copying slides containing the command |\includegraphics|, you will almost surely have to adjust its usage. If you use pdf\LaTeX\ to typeset the presentation, than you cannot include PostScript files. You should convert them to |.pdf| or to |.png| and adjust any usage of |\includegraphics| accordingly.
-  \item
+\item
   When starting to change things, you can use all of \beamer's commands and even mix them with \prosper\ commands.
 \end{enumerate}
 
@@ -44,13 +44,13 @@ An example can be found in the file |beamerexample-prosper.tex|.
 
 There are, unfortunately, quite a few places where you may run into problems:
 \begin{itemize}
-  \item
+\item
   In \beamer, the command |\PDForPS| will do exactly what the name suggests: insert the first argument when run by |pdflatex|, insert the second argument when run by |latex|. However, in \prosper, the code inserted for the \pdf\ case is actually PostScript code, which is only later converted to \pdf\ by some external program. You will need to adjust this PostScript code such that it works with |pdflatex| (which is not always possible).
-  \item
+\item
   If you used fine-grained spacing commands, like adding a little horizontal skip   here and a big negative vertical skip there, the typesetting of the text may be poor. It may be a good idea to just remove these spacing commands.
-  \item
+\item
   If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned.
-  \item
+\item
   If the file cannot be compiled because some \prosper\ command is not implemented, you will have to delete this command and try to mimick its behaviour using some \beamer\ command.
 \end{itemize}
 
@@ -59,7 +59,7 @@ There are, unfortunately, quite a few places where you may run into problems:
 
   This package takes the following options:
   \begin{itemize}
-    \item
+  \item
     \declare{|framesassubsections|} causes each frame to create its own subsection with the frame title as subsection name. This behaviour mimicks \textsc{ha}-\textsc{prosper}'s behaviour. In a long talk this will create way too many subsections.
   \end{itemize}
 
@@ -116,6 +116,7 @@ My notes for these slides.
 \end{notes}
 \end{document}
 \end{verbatim}
+
   You can run, for example, pdf\LaTeX\ on the file to get a \beamer\ presentation with overlays. Adding the |notes| option will also show the note. Certain commands, like |\LeftFoot|, are ignored. You can change the theme using the usual commands. You can also use all normal \beamer\ commands and concepts, like overlay-specifications, in the file. You can also create an |article| version by using the class |article| and including the package |beamerarticle|.
 \end{package}
 
@@ -138,17 +139,19 @@ In the following, the effects of \prosper\ commands in \beamer\ are listed.
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|trans=|\meta{prosper transition}} installs the specified \meta{prosper transition} as the transition effect when showing the slide.
-    \item
+  \item
     \declare{\meta{prosper transition}} has the same effect as |trans=|\meta{prosper transition}.
-    \item
+  \item
     \declare{|toc=|\meta{entry}} overrides the subsection table of contents entry created by this slide by \meta{entry}. Note that a subsection entry is created for a slide only if the |framesassubsections| options is specified.
-    \item
+  \item
     \declare{|template|=\meta{text}} is ignored.
   \end{itemize}
 
-  \example The following two texts have the same effect:
+  \example
+  The following two texts have the same effect:
+
 \begin{verbatim}
 \begin{slide}[trans=Glitter,toc=short]{A Title}
   Hi!
@@ -170,6 +173,7 @@ In the following, the effects of \prosper\ commands in \beamer\ are listed.
 
   \example
   The following code fragments have the same effect:
+
 \begin{verbatim}
 \overlays{2}{
 \begin{slide}{A Title}
@@ -320,25 +324,25 @@ The package |beamerseminar| maps a subset of the commands of the \seminar\ packa
 
 The workflow for the migration is the following:
 \begin{enumerate}
-  \item
+\item
   Use the document class |beamer|, not |seminar|. Most options passed to |seminar| do not apply to |beamer| and should be omitted.
-  \item
+\item
   If you copy parts of a presentation that is mixed with normal text, add the |ignorenonframetext| option and place \emph{every} |slide| environment inside a |frame| since \beamer\ will not recognize the |\begin{slide}| as the beginning of a frame.
-  \item
+\item
   Add a |\usepackage{beamerseminar}| to start the emulation. Add the option |accumulate| if you wish to create a presentation to be held with a video projector.
-  \item
+\item
   Possibly add commands to install themes and templates.
-  \item
+\item
   There should not be commands in the preamble having to do with page and slide styles. They do not apply to |beamer|.
-  \item
+\item
   If a |\newslide| command is used in a |slide| (or similarly |slide*|) environment that contains an overlay, you must replace it by a closing |\end{slide}| and an opening |\begin{slide}|.
-  \item
+\item
   Next, for each |slide| or |slide*| environment that contains an overlay, you must place a |frame| environment around it. You can remove the |slide| environment (and hence effectively replace it by |frame|), unless you use the |accumulate| option.
-  \item
+\item
   If you use |\section| or |\subsection| commands inside slides, you will have to move them \emph{outside} the frames. It may then be necessary to add a |\frametitle| command to the slide.
-  \item
+\item
   If you use pdf\LaTeX\ to typeset the presentation, you cannot include PostScript files. You should convert them to |.pdf| or to |.png| and adjust any usage of |\includegraphics| accordingly.
-  \item
+\item
   When starting to change things, you can use all of \beamer's commands and even mix them with \seminar\ commands.
 \end{enumerate}
 
@@ -346,11 +350,11 @@ An example can be found in the file |beamerexample-seminar.tex|.
 
 There are, unfortunately, numerous places where you may run into problems:
 \begin{itemize}
-  \item
+\item
   The whole |note| management of |seminar| is so different from |beamer|'s, that you will have to edit notes ``by hand.'' In particular, commands like |\ifslidesonly| and |\ifslide| may not do exactly what you expect.
-  \item
+\item
   If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned.
-  \item
+\item
   If the file cannot be compiled because some \seminar\ command is not implemented, you will have to delete this command and try to mimick its behaviour using some \beamer\ command.
 \end{itemize}
 
@@ -359,12 +363,13 @@ There are, unfortunately, numerous places where you may run into problems:
 
   This package takes the following options:
   \begin{itemize}
-    \item
+  \item
     \declare{|accumulate|} causes overlays to be accumulated. The original behaviour of the \seminar\ package is that in each overlay only the really ``new'' part of the overlay is shown. This makes sense, if you really print out the overlays on transparencies and then really stack overlays on top of each other. For a presentation with a video projector, you rather want to present an ``accumulated'' version of the overlays. This is what this option does: When the new material of the $i$-th overlay is shown, the material of all previous overlays is also shown.
   \end{itemize}
 
   \example
   The following example is an extract of |beamerexample-seminar.tex|:
+
 \begin{verbatim}
 \documentclass[ignorenonframetext]{beamer}
 \usepackage[accumulated]{beamerseminar}
@@ -400,6 +405,7 @@ article version.
 \end{frame}
 \end{document}
 \end{verbatim}
+
   You can use all normal \beamer\ commands and concepts, like overlay-specifications, in the file. You can also create an |article| version by using the class |article| and including the package |beamerarticle|.
 \end{package}
 
@@ -476,7 +482,7 @@ In the following, the effects of \seminar\ commands in \beamer\ are listed.
 
 The following commands are parsed by \beamer, but have no effect:
 \begin{itemize}\itemsep=0pt\parskip=0pt
-  \item |\ptsize|.
+\item |\ptsize|.
 \end{itemize}
 
 
@@ -489,19 +495,19 @@ A copyright notice: The Foil\TeX\ package has a restricted license. For this rea
 
 The workflow for the migration is the following:
 \begin{enumerate}
-  \item
+\item
   Use the document class |beamer|, not |foils|.
-  \item
+\item
   Add a |\usepackage{beamerfoils}| to start the emulation.
-  \item
+\item
   Possibly add commands to install themes and templates.
-  \item
+\item
   If the command |\foilhead| is used inside a |\frame| command or |frame| environment, it behaves like |\frametitle|. If it used outside a frame, it will start a new frame (with the |allowframebreaks| option, thus no overlays are allowed). This frame will persist till the next occurrence of |\foilhead| or of the new command |\endfoil|. Note that a |\frame| command will \emph{not} end a frame started using |\foilhead|.
-  \item
+\item
   If you rely on automatic frame creation based on |\foilhead|, you will need to insert an |\endfoil| before the end of the document to end the last frame.
-  \item
+\item
   If you use pdf\LaTeX\ to typeset the presentation, than you cannot include PostScript files. You should convert them to |.pdf| or to |.png| and adjust any usage of |\includegraphics| accordingly.
-  \item
+\item
   Sizes of objects are different in \beamer, since the scaling is done by the viewer, not by the class. Thus a framebox of size 6 inches will be way too big in a \beamer\ presentation. You will have to manually adjust explicit dimension occurring in a foil\TeX\ presentation.
 \end{enumerate}
 
@@ -510,6 +516,7 @@ The workflow for the migration is the following:
 
   \example
   In the following example, frames are automatically created. The |\endfoil| at the end is needed to close the last frame.
+
 \begin{verbatim}
 \documentclass{beamer}
 \usepackage{beamerfoils}
@@ -534,6 +541,7 @@ This is on the third frame.
 
   \example
   In this example, frames are manually inserted. No |\endfoil| is needed.
+
 \begin{verbatim}
 \documentclass{beamer}
 \usepackage{beamerfoils}
@@ -599,22 +607,22 @@ In the following, the effects of \foils\ commands in \beamer\ are listed.
 
 The following additional theorem-like environments are predefined:
 \begin{itemize}
-  \item |Theorem*|,
-  \item |Lemma*|,
-  \item |Corollary*|,
-  \item |Proposition*|, and
-  \item |Definition*|.
+\item |Theorem*|,
+\item |Lemma*|,
+\item |Corollary*|,
+\item |Proposition*|, and
+\item |Definition*|.
 \end{itemize}
 For example, the first is defined using |\newtheorem*{Theorem*}{Theorem}|.
 
 The following commands are parsed by \beamer, but have no effect:
 \begin{itemize}
-  \item |\leftheader|,
-  \item |\rightheader|,
-  \item |\leftfooter|,
-  \item |\rightfooter|,
-  \item |\Restriction|, and
-  \item |\marginpar|.
+\item |\leftheader|,
+\item |\rightheader|,
+\item |\leftfooter|,
+\item |\rightfooter|,
+\item |\Restriction|, and
+\item |\marginpar|.
 \end{itemize}
 
 
@@ -627,14 +635,13 @@ Currently, the package |beamertexpower| mostly just maps the |\stepwise| and rel
 
 The workflow for the migration is the following:
 \begin{enumerate}
-  \item
+\item
   Replace the document class by |beamer|. If the document class is |seminar| or |prosper|, you can use the above emulation layers, that is, you can include the files |beamerseminar| or |beamerprosper| to emulate the class.
 
   All notes on what to do for the emulation of \seminar\ or \prosper\ also apply here.
-  \item
+\item
   Additionally, add |\usepackage{beamertexpower}| to start the emulation.
 \end{enumerate}
-
 
 \begin{package}{{beamertexpower}}
   Include this package in a |beamer| presentation to get access to the \texpower\ commands having to do with the |\stepwise| command.

@@ -30,13 +30,13 @@ In order to also show the effect of the different color themes on the sidebar, i
 
   The main colors set in the |default| color theme are the following:
   \begin{itemize}
-    \item
+  \item
     |normal text| is black on white.
-    \item
+  \item
     |alerted text| is red.
-    \item
+  \item
     |example text| is a dark green (green with 50\% black).
-    \item
+  \item
     |structure| is set to a light version of MidnightBlue (more precisely, 20\% red, 20\% green, and 70\% blue).
   \end{itemize}
   Use this theme for a no-nonsense presentation. Since this theme is loaded by default, you cannot ``reload'' it after having loaded another color theme.
@@ -49,17 +49,17 @@ In order to also show the effect of the different color themes on the sidebar, i
 
   The theme offers several \meta{options}, which can be used to specify the color to be used for structural elements:
   \begin{itemize}
-    \item
+  \item
     \declare{|rgb=|\marg{rgb tuple}} sets the |structure| foreground to the specified red-green-blue tuple. The numbers are given as decimals between 0 and 1. For example, |rgb={0.5,0,0}| yields a dark red.
-    \item
+  \item
     \declare{|RGB=|\marg{rgb tuple}} does the same as |rgb|, except that the numbers range between 0 and 255. For example, |RGB={128,0,0}|  yields a dark red.
-    \item
+  \item
     \declare{|cmyk=|\marg{cmyk tuple}} sets the |structure| foreground to the specified cyan-magenta-yellow-black tuple. The numbers are given as decimals between 0 and 1. For example, |cmyk={0,1,1,0.5}| yields a dark red.
-    \item
+  \item
     \declare{|cmy=|\marg{cmy tuple}} is similar to |cmyk|, except that the black component is not specified.
-    \item
+  \item
     \declare{|hsb=|\marg{hsb tuple}}  sets the |structure| foreground to the specified hue-saturation-brightness tuple. The numbers are given as decimals between 0 and 1. For example, |hsb={0,1,.5}| yields a dark red.
-    \item
+  \item
     \declare{|named=|\marg{color name}} sets the |structure| foreground to a named color. This color must previously have been defined using the |\DefineNamedColor| command. Adding the class option |xcolor=dvipsnames| or |xcolor=svgnames| will install a long list of standard |dvips| or SVG color names (respectively). See the file |dvipsnam.def| for the list.
   \end{itemize}
 \end{colorthemeexample}
@@ -77,11 +77,11 @@ A ``complete'' color theme is a color theme that completely specifies all colors
 
   When using a light-on-dark theme like this one, be aware that there are certain disadvantages:
   \begin{itemize}
-    \item
+  \item
     If the room in which the talk is given has been ``darkened,'' using such a theme makes it more difficult for the audience to take or read notes.
-    \item
+  \item
     Since the room becomes darker, the pupil becomes larger, thus making it harder for the eye to focus. This \emph{can} make text harder to read.
-    \item
+  \item
     Printing such slides is difficult at best.
   \end{itemize}
 
@@ -89,7 +89,7 @@ A ``complete'' color theme is a color theme that completely specifies all colors
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|overlystylish|} installs a background canvas that is, in my opinion, way too stylish. But then, I do not want to press my taste on other people. When using this option, it is probably a very good idea to also use the |lily| color theme.
   \end{itemize}
 
@@ -202,6 +202,7 @@ Inside templates, this command will typically have already been called for you w
   This command (possibly) changes the two colors |fg| and |bg| to the foreground and background color of the \meta{beamer-color name}. If the \beamer-color does not specify a foreground, |fg| is left unchanged; if does not specify a background, |bg| is left unchanged.
 
   You will often wish to directly use the color |fg| or |bg| after using this command. For this common situation, the optional argument \meta{fg or bg} is useful, which may be either |fg| or |bg|. Giving this option will cause the foreground |fg| or the background |bg| to be immediately installed after they have been setup. Thus, the following command
+  
 \begin{verbatim}
 \usebeamercolor[fg]{normal text}
 \end{verbatim}
@@ -210,6 +211,7 @@ Inside templates, this command will typically have already been called for you w
 \usebeamercolor{normal text}
 \color{fg}
 \end{verbatim}
+
   If you use the starred version of this command, the \beamer-color |normal text| is used before the command is invoked. This ensures that, barring evil trickery, the colors |fg| and |bg| will be setup independently of whatever colors happened to be in use when the command is invoked.
 
   This command has special side-effects. First, the (normal) color |parent.bg| is set to the value of |bg| prior to this call. Thus you can access the color that was in use prior to the call of this command via the color |parent.bg|.
@@ -263,6 +265,7 @@ To set or to change a \beamer-color, you can use the command |\setbeamercolor|.
   \example |\setbeamercolor{alerted text}{fg=red!80!black}|
 
   The effect of this command is accumulative, thus the following two commands
+
 \begin{verbatim}
 \setbeamercolor{section in toc}{fg=blue}
 \setbeamercolor{section in toc}{bg=white}
@@ -271,19 +274,20 @@ To set or to change a \beamer-color, you can use the command |\setbeamercolor|.
 \begin{verbatim}
 \setbeamercolor{section in toc}{fg=blue,bg=white}
 \end{verbatim}
+
   Naturally, a second call with the same kind of \meta{option} set to a different value overrides a previous call.
 
   The starred version first resets everything, thereby ``switching off'' the accumulative effect. Use this starred version to completely reset the definition of some \beamer-color.
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|fg=|\meta{color}} sets the foreground color of \meta{beamer-color name} to the given (normal)   \meta{color}. The \meta{color} may also be a color expression like |red!50!black|, see the manual of the \textsc{xcolor} package. If \meta{color} is empty, the \meta{beamer-color name} ``has no special foreground'' and when the color is used, the foreground currently in force should not be changed.
 
     Specifying a foreground this way will override any inherited foreground color.
-    \item
+  \item
     \declare{|bg=|\meta{color}} does the same as the |fg| option, but for the background.
-    \item
+  \item
     \declare{|parent=|\meta{parent beamer-color(s)}} specifies that \meta{beamer-color name} should inherit from the specified \meta{parent beamer-color(s)}. Any foreground and/or background color set by the parents will also be used when \meta{beamer-color name} is used. If multiple parents specify a foreground, the last one ``wins''; and likewise for the backgrounds.
 
     \example
@@ -300,23 +304,29 @@ To set or to change a \beamer-color, you can use the command |\setbeamercolor|.
   Now terrible blue on green text, since parent was changed.
 \end{beamercolorbox}
 \end{verbatim}
+
     Note that a change of the foreground or background of a parent changes the corresponding foreground or background of the child (unless it is overruled).
 
     A \beamer-color cannot only have parents, but also grandparents and so on.
-    \item
+  \item
     \declare{|use=|\meta{another beamer-color}} is used to make sure that another \beamer-color is setup correctly before the foreground or background color specification are evaluated.
 
     Suppose you wish the foreground of items to be a mixture of 50\% of the foreground of structural elements and 50\% of the normal foreground color. You could try
+
 \begin{verbatim}
 \setbeamercolor{item}{fg=structure.fg!50!normal text.fg}
 \end{verbatim}
+
     However, this will not necessarily give the desired result: If the \beamer-color |structure| changes, the (normal) color |structure.fg| is not immediately updated. In order to ensure that the normal color |structure.fg| is correct, use the following:
+
 \begin{verbatim}
 \setbeamercolor{item}{use={structure,normal text},fg=structure.fg!50!normal text.fg}
 \end{verbatim}
+
     This will guarantee that the colors |structure.fg| and |normal text.fg| are setup correctly when the foreground of |item| is computed.
 
     To show the difference, consider the following example:
+
 \begin{verbatim}
 \setbeamercolor{grandfather}{fg=red}
 \setbeamercolor{grandmother}{bg=white}
@@ -474,9 +484,11 @@ By default, \emph{covered} items are not shown during a presentation. Thus if yo
 Sometimes however, you might prefer that covered items are not completely covered. Rather, you would like them to be shown already in a very dim or shaded way. This allows your audience to get a feeling for what is yet to come, without getting distracted by it. Also, you might wish text that is covered ``once more'' still to be visible to some degree.
 
 Ideally, there would be an option to make covered text ``transparent.'' This would mean that when covered text is shown, it would instead be mixed with the background behind it. Unfortunately, |pgf| does not support real transparency yet. Instead, transparency is created by mixing the color of the object you want to show with the current background color (the color |bg|, which has hopefully been setup such that it is the average color of the background on which the object should be placed). To install this effect, you can use:
+
 \begin{verbatim}
 \setbeamercovered{transparent}
 \end{verbatim}
+
 This command allows you to specify in a quite general way how a covered item should be rendered. You can even specify different ways of rendering the item depending on how long it will take before this item is shown or for how long it has already been covered once more. The transparency effect will automatically apply to all colors, \emph{except} for the colors in images. For images there is a workaround, see the documentation of the \pgfname\ package.
 
 \begin{command}{\setbeamercovered\marg{options}}
@@ -484,17 +496,17 @@ This command allows you to specify in a quite general way how a covered item sho
 
   In detail, the following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|invisible|} is the default and causes covered text to ``completely disappear''.
-    \item
+  \item
     \declare{|transparent|}\opt{|=|\meta{opaqueness}} causes covered text to be typset in a ``transparent'' way. By default, this means that 85\% of the background color is mixed into all colors or that the \meta{opaqueness} of the text is 15\%. You can specify a different \meta{percentage}, where |0| means ``totally transparent'' and |100| means ``totally opaque.''
 
     Unfortunately, this value is kind of ``specific'' to every projector. What looks good on your screen need not look good during a presentation.
-    \item
+  \item
     \declare{|dynamic|} Makes all covered text quite transparent, but in a dynamic way. The longer it will take till the text is uncovered, the stronger the transparency.
-    \item
+  \item
     \declare{|highly dynamic|} Has the same effect as |dynamic|, but the effect is stronger.
-    \item
+  \item
     \declare{|still covered=|\meta{not yet list}} specifies how to render covered items that have not yet been uncovered. The \meta{not yet list} should be a list of |\opaqueness| commands, see the description of that command, below.
     \example
 \begin{verbatim}
@@ -502,7 +514,8 @@ This command allows you to specify in a quite general way how a covered item sho
   still covered={\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}},
   again covered={\opaqueness<1->{15}}}
 \end{verbatim}
-    \item
+
+  \item
     \declare{|again covered=|\meta{once more list}} specifies how to render covered items that have once more been covered, that is, that had been shown before but are now covered again.
   \end{itemize}
 \end{command}
@@ -519,5 +532,6 @@ This command allows you to specify in a quite general way how a covered item sho
 \pgfdeclareimage{book}{book}
 \pgfdeclareimage{book.!15opaque}{filenameforbooknearlytransparent}
 \end{verbatim}
+
   Makes everything that is uncovered in two slides only 15 percent opaque.
 \end{command}

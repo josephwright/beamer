@@ -13,6 +13,7 @@
 \section{Creating Frames}
 \label{section-frames}
 
+
 \subsection{The Frame Environment}
 
 A presentation consists of a series of frames. Each frame consists of a series of slides. You create a frame using the command |\frame| or the environment |frame|, which do the same. The command takes one parameter, namely the contents of the frame. All of the text that is not tagged by overlay specifications is shown on all slides of the frame. (Overlay specifications are explained in more detail in later sections. For the moment, let's just say that an overlay specification is a list of numbers or number ranges in pointed brackets that is put after certain commands as in |\uncover<1,2>{Text}|.) If a frame contains commands that have an overlay specification, the frame will contain multiple slides; otherwise it contains only one slide.
@@ -42,6 +43,7 @@ A presentation consists of a series of frames. Each frame consists of a series o
   \tabelofcontent[current]
 \end{frame}
 \end{verbatim}
+
   Normally, the complete \meta{environment contents} is put on a slide. If the text does not fit on a slide, being too high, it will be squeezed as much as possible, a warning will be issued, and the text just extends unpleasantly over the bottom. You can use the option |allowframebreaks| to cause the \meta{frame text} to be split among several slides, though you cannot use overlays then. See the explanation of the |allowframebreaks| option for details.
 
   The \meta{default overlay specification} is an optional argument that is ``detected'' according to the following rule: If the first optional argument in square brackets starts with a |<|, then this argument is a \meta{default overlay specification}, otherwise it is a normal \meta{options} argument. Thus |\begin{frame}[<+->][plain]| would be legal, but also |\begin{frame}[plain]|.
@@ -50,6 +52,7 @@ A presentation consists of a series of frames. Each frame consists of a series o
 
   \example
   In this frame, the theorem is shown from the first slide on, the proof from the second slide on, with the first two itemize points shown one after the other; the last itemize point is shown together with the first one. In total, this frame will contain four slides.
+
 \begin{verbatim}
 \begin{frame}[<+->]
   \begin{theorem}
@@ -67,18 +70,18 @@ A presentation consists of a series of frames. Each frame consists of a series o
 
   The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|allowdisplaybreaks|}\opt{|=|\meta{break desirability}} causes the AMS\TeX\ command |\allowdisplaybreaks|\penalty0|[|\meta{break desirability}|]| to be issued for the current frame. The \meta{break desirability} can be a value between 0 (meaning formulas may never be broken) and 4 (the default, meaning that formulas can be broken anywhere without any penalty). The option is just a convenience and makes sense only together with the |allowsframebreaks| option.
-    \item
+  \item
     \declare{|allowframebreaks|}\opt{|=|\meta{fraction}}. When this option is given, the frame will be automatically broken up into several frames if the text does not fit on a single slide. In detail, when this option is given, the following things happen:
     \begin{enumerate}
-      \item
+    \item
       Overlays are not supported.
-      \item
+    \item
       Any notes for the frame created using the |\note| command will be inserted after the first page of the frame.
-      \item
+    \item
       Any footnotes for the frame will be inserted on the last page of the frame.
-      \item
+    \item
       If there is a frame title, each of the pages will have this frame title, with a special note added indicating which page of the frame that page is. By default, this special note is a Roman number. However, this can be changed using the following template.
       \begin{element}{frametitle continuation}\yes\yes\yes
         The text of this template is inserted at the end of every title of a frame with the |allowframebreaks| option set.
@@ -103,6 +106,7 @@ A presentation consists of a series of frames. Each frame consists of a series o
         \end{templateinserts}
       \end{element}
     \end{enumerate}
+
     If a frame needs to be broken into several pages, the material on all but the last page fills only 95\% of each page by default. Thus, there will be some space left at the top and/or bottom, depending on the vertical placement option for the frame. This yields a better visual result than a 100\% filling, which typically looks crowded. However, you can change this percentage using the optional argument \meta{fraction}, where 1 means 100\% and 0.5 means 50\%. This percentage includes the frame title. Thus, in order to split a frame ``roughly in half,'' you should give 0.6 as \meta{fraction}.
 
     Most of the fine details of normal \TeX\ page breaking also apply to this option. For example, when you wish equations to be broken automatically, be sure to use the |\allowdisplaybreaks| command. You can insert |\break|, |\nobreak|, and |\penalty| commands to control where breaks should occur. The commands |\pagebreak| and |\nopagebreak| also work, including their options. Since you typically do not want page breaks for the frame to apply also to the |article| mode, you can add a mode specification like |<presentation>| to make these commands apply only to the presentation modes. The command \declare{|\string\framebreak|} is a shorthand for |\pagebreak<presentation>| and \declare{|\string\noframebreak|} is a shorthand for |\nopagebreak<presentation>|.
@@ -121,6 +125,7 @@ A presentation consists of a series of frames. Each frame consists of a series o
   \end{thebibliography}
 \end{frame}
 \end{verbatim}
+
     \example
 \begin{verbatim}
 \begin{frame}[allowframebreaks,allowdisplaybreaks]{A Long Equation}
@@ -132,9 +137,10 @@ A presentation consists of a series of frames. Each frame consists of a series o
   \end{align}
 \end{frame}
 \end{verbatim}
-    \item
+
+  \item
     \declare{|b|}, \declare{|c|}, \declare{|t|} will cause the frame to be vertically aligned at the bottom/center/top. This overrides the global placement policy, which is governed by the class options |t| and |c|.
-    \item
+  \item
     \declare{|fragile|\opt{|=singleslide|}} tells \beamer\ that the frame contents is ``fragile.'' This means that the frame contains text that is not ``interpreted as usual.'' For example, this applies to verbatim text, which is, obviously, interpreted somewhat differently from normal text.
 
     If a frame contains fragile text, different internal mechanisms are used to typeset the frame to ensure that inside the frame the character codes can be reset. The price of switching to another internal mechanism is that either you cannot use overlays or an external file needs to be written and read back (which is not always desirable).
@@ -144,7 +150,7 @@ A presentation consists of a series of frames. Each frame consists of a series o
     To determine the end of the frame, the following rule is used: The first occurence of a single line containing exactly |\end{|\meta{frame environment name}|}| ends the frame. The \meta{environment name} is normally |frame|, but it can be changed using the |environment| option. This special rule is needed since the frame contents is, after all, not interpreted when it is gathered.
 
     You can also add the optional information |=singleslide|. This tells \beamer\ that the frame contains only a single slide. In this case, the frame contents is \emph{not} written to a special file, but interpreted directly, which is ``faster and cleaner.''
-    \item
+  \item
     \declare{|environment=|\meta{frame environment name}}. This option is useful only in conjuction with the |fragile| option (but it is not used for |fragile=singleslide|, only for the plain |fragile|). The \meta{frame environment name} is used to determine the end of the scanning when gathering the frame contents. Normally, the frame ends when a line reading |\end{frame}| is reached. However, if you use |\begin{frame}| inside another environment, you need to use this option:
 
     \example
@@ -158,16 +164,18 @@ A presentation consists of a series of frames. Each frame consists of a series o
   Text.
 \end{slide}
 \end{verbatim}
+
     If you did not specify the option |environment=slide| in the above example, \TeX\ would ``miss'' the end of the slide since it does not interpret text while gathering the frame contents.
-    \item
+  \item
     \declare{|label=|\meta{name}} causes the frame's contents to be stored under the name \meta{name} for later resumption using the command |\againframe|. Furthermore, on each slide of the frame a label with the name \meta{name}|<|\meta{slide number}|>| is created. On the \emph{first} slide, furthermore, a label with the name \meta{name} is created (so the labels \meta{name} and \meta{name}|<1>| point to the same slide). Note that labels in general, and these labels in particular, can be used as targets for hyperlinks.
 
     You can use this option together with |fragile|.
-    \item
+  \item
     \declare{|plain|} causes the headlines, footlines, and sidebars to be suppressed. This is useful for creating single frames with different head- and footlines or for creating frames showing big pictures that completely fill the frame.
 
     \example
     A frame with a picture completely filling the frame:
+
 \begin{verbatim}
 \begin{frame}[plain]
   \begin{centering}%
@@ -179,6 +187,7 @@ A presentation consists of a series of frames. Each frame consists of a series o
 
     \example
     A title page, in which the head- and footlines are replaced by two graphics.
+
 \begin{verbatim}
 \setbeamertemplate{title page}
 {
@@ -198,7 +207,8 @@ A presentation consists of a series of frames. Each frame consists of a series o
   \titlepage
 \end{frame}
 \end{verbatim}
-    \item
+
+  \item
     \declare{|shrink|}\opt{|=|\meta{minimum shrink percentage}}. This option will cause the text of the frame to be shrunk if it is too large to fit on the frame. \beamer\ will first normally typeset the whole frame. Then it has a look at vertical size of the frame text (excluding the frame title). If this vertical size is larger than the text height minus the frame title height, \beamer\ computes a shrink factor and scales down the frame text by this factor such that the frame text then fills the frame completely. Using this option will automatically cause the |squeeze| option to be used, also.
 
     Since the shrinking takes place only after everything has been typeset, shrunk frame text will not fill the frame completely horizontally. For this reason, you can specify a \meta{minimum shrink percentage} like |20|. If this percentage is specified, the frame will be shrunk \emph{at least} by this percentage. Since \beamer\ knows this, it can increase the horizontal width proportionally such that the shrunk text once more fills the entire frame. If, however, the percentage is not enough, the text will be shrunk as needed and you will be punished with a warning message.
@@ -213,7 +223,8 @@ A presentation consists of a series of frames. Each frame consists of a series o
   Some evil endless slide that is 5\% too large.
 \end{frame}
 \end{verbatim}
-    \item
+
+  \item
     \declare{|squeeze|} causes all vertical spaces in the text to be squeezed together as much as possible. Currently, this just causes the vertical space in enumerations or itemizations to be reduced to zero.
 
     Using this option is not good, but also not evil.
@@ -244,16 +255,21 @@ A presentation consists of a series of frames. Each frame consists of a series o
 \end{environment}
 
 You \emph{can} use the |frame| environment inside other environments like this
+
 \begin{verbatim}
 \newenvironment{slide}{\begin{frame}}{\end{frame}}
 \end{verbatim}
+
 or like this
+
 \begin{verbatim}
 \newenvironment{myframe}[1]
   {\begin{frame}[fragile,environment=myframe]\frametitle{#1}}
   {\end{frame}}
 \end{verbatim}
+
 However, the actual mechanics are somewhat sensitive since the ``collecting'' of the frame contents is not easy, so do not attempt anything too fancy. As a rule, the beginning of the environment can be pretty arbitrary, but the ending must end with |\end{frame}| and should not contain any |\end{xxx}|. Anything really complex is likely to fail. If you need some |\end{xxx}| there, define a new command that contains this stuff as in the following example:
+
 \begin{verbatim}
 \newenvironment{itemizeframe}
   {\begin{frame}\startitemizeframe}
@@ -272,14 +288,14 @@ However, the actual mechanics are somewhat sensitive since the ``collecting'' of
 
 Each frame consists of several components:
 \begin{enumerate}\itemsep=0pt\parskip=0pt
-  \item a headline and a footline,
-  \item a left and a right sidebar,
-  \item navigation bars,
-  \item navigation symbols,
-  \item a logo,
-  \item a frame title,
-  \item a background, and
-  \item some frame contents.
+\item a headline and a footline,
+\item a left and a right sidebar,
+\item navigation bars,
+\item navigation symbols,
+\item a logo,
+\item a frame title,
+\item a background, and
+\item some frame contents.
 \end{enumerate}
 
 A frame need not have all of these components. Usually, the first three components are automatically setup by the theme you are using.
@@ -310,6 +326,7 @@ The appearance of the headline and footline is determined by the following templ
   \end{beamercolorbox}%
 }
 \end{verbatim}
+
   \begin{templateoptions}
     \itemoption{default}{}
     The default is just an empty headline. To get the default headline of earlier versions of the \beamer\ class, use the |compatibility| theme.
@@ -351,6 +368,7 @@ The appearance of the headline and footline is determined by the following templ
 \begin{verbatim}
 \insertsectionnavigationhorizontal{.5\textwidth}{\hskip0pt plus1filll}{}
 \end{verbatim}
+
     \iteminsert{\insertshortauthor}\oarg{options}
     Inserts the short version of the author into a template. The text will be printed in one long line, line breaks introduced using the |\\| command are suppressed. The following \meta{options} may be given:
     \begin{itemize}
@@ -488,9 +506,11 @@ Internally, the sidebars are typeset by showing them as part of the headline. Th
 \begin{element}{sidebar left}\yes\yes\yes
   \colorfontparents{sidebar}
   The template is used to typeset the left sidebar. As mentioned above, the size of the left sidebar is set using the command
+
 \begin{verbatim}
 \setbeamersize{sidebar width left=2cm}
 \end{verbatim}
+
   \beamer\ will not clip sidebars automatically if they are too large.
 
   When the sidebar is typeset, it is put inside a |\vbox|. You should currently setup things like the |\hsize| or the |\parskip| yourself.
@@ -525,13 +545,13 @@ Internally, the sidebars are typeset by showing them as part of the headline. Th
     \itemoption{vertical shading}{\oarg{color options}}
     installs a vertically shaded background. The following \meta{color options} may be given:
     \begin{itemize}
-      \item
+    \item
       \declare{|top=|\meta{color}} specifies the color at the top of the sidebar. By default, 25\% of the foreground of the \beamer-color |palette primary| is used.
-      \item
+    \item
       \declare{|bottom=|\meta{color}} specifies the color at the bottom of the sidebar (more precisely, at a distance of the page height below the top of the sidebar). By default, the background of |normal text| at the moment of invocation of this command is used.
-      \item
+    \item
       \declare{|middle=|\meta{color}} specifies the color for the middle of the sidebar. Thus, if this option is given, the shading changes from the bottom color to this color and then to the top color.
-      \item
+    \item
       \declare{|midpoint=|\meta{factor}} specifies at which point of the page the middle color is used. A factor of |0| is the bottom of the page, a factor of |1| is the top. The default, which is |0.5|, is in the middle.
     \end{itemize}
     Note that you must give ``real'' \LaTeX\ colors here. This often makes it necessary to invoke the command |\usebeamercolor| before this command can be used.
@@ -540,6 +560,7 @@ Internally, the sidebars are typeset by showing them as part of the headline. Th
 
     \example
     A stylish, but not very useful shading:
+
 \begin{verbatim}
 {\usebeamercolor{palette primary}}
 \setbeamertemplate{sidebar canvas}[vertical shading]
@@ -561,6 +582,7 @@ Internally, the sidebars are typeset by showing them as part of the headline. Th
 
     \example
     Adds two ``pillars''
+
 \begin{verbatim}
 \setbeamersize{sidebar width left=0.5cm,sidebar width right=0.5cm}
 
@@ -582,11 +604,10 @@ Internally, the sidebars are typeset by showing them as part of the headline. Th
 \label{section-navigation-bars}
 
 Many themes install a headline or a sidebar that shows a \emph{navigation bar}. Although these navigation bars take up quite a bit of space, they are often useful for two reasons:
-
 \begin{itemize}
-  \item
+\item
   They provide the audience with a visual feedback of how much of your talk you have covered and what is yet to come. Without such feedback, an audience will often puzzle whether something you are currently introducing will be explained in more detail later on or not.
-  \item
+\item
   You can click on all parts of the navigation bar. This will directly ``jump'' you to the part you have clicked on. This is particularly useful to skip certain parts of your talk and during a ``question session,'' when you wish to jump back to a particular frame someone has asked about.
 \end{itemize}
 
@@ -598,20 +619,21 @@ Some navigation bars can be ``compressed'' using the following option:
 
 Some themes use the |\insertnavigation| to insert a navigation bar into the headline. Inside this bar, small icons are shown (called ``mini frames'') that represent the frames of a presentation. When you click on such an icon, the following happens:
 \begin{itemize}
-  \item
+\item
   If you click on (the icon of) any frame other than the current frame, the presentation will jump to the first slide of the frame you clicked on.
-  \item
+\item
   If you click on the current frame and you are not on the last slide of this frame, you will jump to the last slide of the frame.
-  \item
+\item
   If you click on the current frame and you are on the last slide, you will jump to the first slide of the frame.
 \end{itemize}
+
 By the above rules you can:
 \begin{itemize}
-  \item
+\item
   Jump to the beginning of a frame from somewhere else by clicking on it once.
-  \item
+\item
   Jump to the end of a frame from somewhere else by clicking on it twice.
-  \item
+\item
   Skip the rest of the current frame by clicking on it once.
 \end{itemize}
 
@@ -651,6 +673,7 @@ I also tried making a jump to an already-visited frame jump automatically to the
 
     \example
     To get an extremely ``shaded'' rendering of the frames outside the current subsection you can use the following:
+
 \begin{verbatim}
 \setbeamertemplate{mini frame in other subsection}[default][20]
 \end{verbatim}
@@ -692,6 +715,7 @@ Some themes show sections and/or subsections in the navigation bars. By clicking
 
     \example
     You can use the following command to make the shaded entries very ``light'':
+
 \begin{verbatim}
 \setbeamertemplate{section in head/foot shaded}[default][20]
 \end{verbatim}
@@ -789,21 +813,21 @@ By clicking on the document title in a navigation bar (not all themes show it), 
 
 Navigation symbols are small icons that are shown on every slide by default. The following symbols are shown:
 \begin{enumerate}
-  \item
+\item
   A slide icon, which is depicted as a single rectangle. To the left and right of this symbol, a left and right arrow are shown.
-  \item
+\item
   A frame icon, which is depicted as three slide icons ``stacked on top of each other''. This symbol is framed by arrows.
-  \item
+\item
   A subsection icon, which is depicted as a highlighted subsection entry in a table of contents. This symbols is framed by arrows.
-  \item
+\item
   A section icon, which is depicted as a highlighted section entry (together with all subsections) in a table of contents. This symbol is framed by arrows.
-  \item
+\item
   A presentation icon, which is depicted as a completely highlighted table of contents.
-  \item
+\item
   An appendix icon, which is depicted as a completely highlighted table of contents consisting of only one section. (This icon is only shown if there is an appendix.)
-  \item
+\item
   Back and forward icons, depicted as circular arrows.
-  \item
+\item
   A ``search'' or ``find'' icon, depicted as a detective's magnifying glass.
 \end{enumerate}
 
@@ -811,21 +835,21 @@ Clicking on the left arrow next to an icon always jumps to (the last slide of) t
 
 Clicking \emph{on} any of these icons has different effects:
 \begin{enumerate}
-  \item
+\item
   If supported by the viewer application, clicking on a slide icon pops up a window that allows you to enter a slide number to which you wish to jump.
-  \item
+\item
   Clicking on the left side of a frame icon will jump to the first slide of the frame, clicking on the right side will jump to the last slide of the frame (this can be useful for skipping overlays).
-  \item
+\item
   Clicking on the left side of a subsection icon will jump to the first slide of the subsection, clicking on the right side will jump to the last slide of the subsection.
-  \item
+\item
   Clicking on the left side of a section icon will jump to the first slide of the section, clicking on the right side will jump to the last slide of the section.
-  \item
+\item
   Clicking on the left side of the presentation icon will jump to the first slide, clicking on the right side will jump to the last slide of the presentation. However, this does \emph{not} include the appendix.
-  \item
+\item
   Clicking on the left side of the appendix icon will jump to the first slide of the appendix, clicking on the right side will jump to the last slide of the appendix.
-  \item
+\item
   If supported by the viewer application, clicking on the back and forward symbols jumps to the previously visited slides.
-  \item
+\item
   If supported by the viewer application, clicking on the search icon pops up a window that allows you to enter a search string. If found, the viewer application will jump to this string.
 \end{enumerate}
 
@@ -1101,21 +1125,21 @@ Aside from using these options, you should refrain from changing the ``paper siz
 \begin{command}{\setbeamersize\marg{options}}
   The following \meta{options} can be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|text margin left=|\meta{\TeX\ dimension}} sets a new left margin. This excludes the left sidebar. Thus, it is the distance between the right edge of the left sidebar and the left edge of the text.
-    \item
+  \item
     \declare{|text margin right=|\meta{\TeX\ dimension}} sets a new right margin.
-    \item
+  \item
     \declare{|sidebar width left=|\meta{\TeX\ dimension}} sets the size of the left sidebar. Currently, this command should be given \emph{before} a shading is installed for the sidebar canvas.
-    \item
+  \item
     \declare{|sidebar width right=|\meta{\TeX\ dimension}} sets the size of the right sidebar.
-    \item
+  \item
     \declare{|description width=|\meta{\TeX\ dimension}} sets the default width of description labels, see Section~\ref{section-descriptions}.
-    \item
+  \item
     \declare{|description width of=|\meta{text}} sets the default width of description labels to the width of the \meta{text}, see Section~\ref{section-descriptions}.
-    \item
+  \item
     \declare{|mini frame size=|\meta{\TeX\ dimension}} sets the size of mini frames in a navigation bar. When two mini frame icons are shown alongside each other, their left end points are \meta{\TeX\ dimension} far apart.
-    \item
+  \item
     \declare{|mini frame offset=|\meta{\TeX\ dimension}} set an additional vertical offset that is added to the mini frame size when arranging mini frames vertically.
   \end{itemize}
 
@@ -1130,12 +1154,14 @@ Aside from using these options, you should refrain from changing the ``paper siz
 The number of slides in a frame is automatically calculated. If the largest number mentioned in any overlay specification inside the frame is 4, four slides are introduced (despite the fact that a specification like |<4->| might suggest that more than four slides would be possible).
 
 You can also specify the number of slides in the frame ``by hand.'' To do so, you pass an overlay specification to the |\frame| command. The frame will contain only the slides specified in this argument. Consider the following example.
+
 \begin{verbatim}
 \begin{frame}<1-2,4->
   This is slide number \only<1>{1}\only<2>{2}\only<3>{3}%
   \only<4>{4}\only<5>{5}.
 \end{frame}
 \end{verbatim}
+
 This command will create a frame containing four slides. The first will contain the text ``This is slide number~1,'' the second ``This is slide number~2,'' the third ``This is slide number~4,'' and the fourth ``This is slide number~5.''
 
 A useful specification is just |<0>|, which causes the frame to have no slides at all. For example, |\begin{frame}<handout:0>| causes the frame to be suppressed in the handout version, but to be shown normally in all other versions. Another useful specification is |<beamer>|, which causes the frame to be shown normally in |beamer| mode, but to be suppressed in all other versions.

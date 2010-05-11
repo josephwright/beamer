@@ -17,16 +17,17 @@
 
 To create anticipated nonlinear jumps in your talk structure, you can add hyperlinks to your presentation. A hyperlink is a text (usually rendered as a button) that, when you click on it, jumps the presentation to some other slide. Creating such a button is a three-step process:
 \begin{enumerate}
-  \item
+\item
   You specify a target using the command |\hypertarget| or (easier) the command |\label|. In some cases, see below, this step may be skipped.
-  \item
+\item
   You render the button using |\beamerbutton| or a similar command. This will \emph{render} the button, but clicking it will not yet have any effect.
-  \item
+\item
   You put the button inside a |\hyperlink| command. Now clicking it will jump to the target of the link.
 \end{enumerate}
 
 \begin{command}{\hypertarget\sarg{overlay specification}\marg{target name}\marg{text}}
   If the \meta{overlay specification} is present, the \meta{text} is the target for hyper jumps to \meta{target name} only on the specified slide. On all other slides, the text is shown normally. Note that you \emph{must} add an overlay specification to the |\hypertarget| command whenever you use it on frames that have multiple slides (otherwise |pdflatex| rightfully complains that you have defined the same target on different slides).
+
   \example
 \begin{verbatim}
 \begin{frame}
@@ -57,10 +58,12 @@ The |\label| command creates a hypertarget as a side-effect and the |label=|\met
   \hyperlink{threeitems<2>}{\beamergotobutton{Jump to second slide}}
 \end{frame}
 \end{verbatim}
+
 The following commands can be used to specify in an abstract way what a button will be used for.
 
 \begin{command}{\beamerbutton\marg{button text}}
   Draws a button with the given \meta{button text}.
+
   \example
   |\hyperlink{somewhere}{\beamerbutton{Go somewhere}}|
 
@@ -232,6 +235,7 @@ Sometimes you may wish some slides of a frame to be shown in your main talk, but
 
 \againframe<3>{myframe}
 \end{verbatim}
+
   The effect of the above code is to create four slides. In the first two, the items 1 and~2 are highlighted. The third slide contains the text ``Some stuff explaining more on the second matter.'' The fourth slide is identical to the first two slides, except that the third point is now highlighted.
 
   \example
@@ -263,6 +267,7 @@ Sometimes you may wish some slides of a frame to be shown in your main talk, but
 
 \againframe<2>{Cantor}
 \end{verbatim}
+
   In this example, the proof details are deferred to a slide in the appendix. Hyperlinks are setup, so that one can jump to the proof and go back.
 
   \articlenote
@@ -285,7 +290,7 @@ Anticipated zooming is necessary when you have a very complicated graphic that y
 
   By default, the button is clickable, but it will not be indicated in any special way. You can draw a border around the button by using the following \meta{option}:
   \begin{itemize}
-    \item
+  \item
     \declare{|border|}\opt{|=|\meta{width in pixels}} will draw a border around the specified button area. The default width is 1 pixel. The color of this  button is the |linkbordercolor| of |hyperref|. \beamer\ sets this color to a 50\% gray by default. To change this, you can use the command |\hypersetup{linkbordercolor={|\meta{red}| |\meta{green}| |\meta{blue}|}}|, where \meta{red}, \meta{green}, and \meta{blue} are values between 0 and 1.
   \end{itemize}
 

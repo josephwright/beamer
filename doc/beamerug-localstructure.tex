@@ -36,6 +36,7 @@ The |\item| command is overlay-specification-aware. If an overlay specification 
   \end{enumerate}
 \end{frame}
 \end{verbatim}
+
 \begin{environment}{{itemize}\opt{|[<|\meta{default overlay specification}|>]|}}
   Used to display a list of items that do not have a special ordering. Inside the environment, use an |\item| command for each topic.
 
@@ -240,7 +241,8 @@ There exist corresponding templates like |itemize/enumerate subbody begin| for s
 \end{description}
 \end{verbatim}
 
-  \example The following has the same effect as the previous example:
+  \example
+  The following has the same effect as the previous example:
 \begin{verbatim}
 \begin{description}[<+->][longest label]
 \item[short] Some text.
@@ -547,7 +549,6 @@ Overlay specifications must be given right at the beginning of the environments 
 The \beamer\ class predefines several environments, like |theorem| or |definition| or |proof|, that you can use to typeset things like, well, theorems, definitions, or proofs. The complete list is the following:  |theorem|, |corollary|, |definition|, |definitions|, |fact|, |example|, and |examples|. The following German block environments are also predefined: |Problem|, |Loesung|, |Definition|, |Satz|, |Beweis|, |Folgerung|, |Lemma|, |Fakt|, |Beispiel|, and |Beispiele|.
 
 Here is a typical example on how to use them:
-
 \begin{verbatim}
 \begin{frame}
   \frametitle{A Theorem on Infinite Sets}
@@ -625,6 +626,7 @@ In |article| mode, theorems are automatically numbered. By specifying the class 
 \begin{verbatim}
 \setbeamertemplate{qed symbol}{\vrule width1.5ex height1.5ex depth0pt}
 \end{verbatim}
+
   If you use |babel| and a different language, the text ``Proof'' is replaced by whatever is appropriate in the selected language.
 
   \example
@@ -774,6 +776,7 @@ The \beamer\ class also defines two environments for creating coloured boxes.
   }
 }
 \end{verbatim}
+
   In other words, the environment installs the \meta{beamer color} and uses the background for the background of the box and the foreground for the text inside the box. However, in reality, numerous \meta{options} can be given to specify in much greater detail how the box is rendered.
 
   If the background color of \meta{beamer color} is empty, no background is drawn behind the text, that is, the background is ``transparent.''
@@ -804,41 +807,41 @@ The \beamer\ class also defines two environments for creating coloured boxes.
 
   The following \meta{options} can be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|wd=|\marg{width}} sets the width of the box. This command has two effects: First, \TeX's |\hsize| is set to \meta{width}. Second, after the box has been typeset, its width is set to \meta{width} (no matter what it actually turned out to be). Since setting the |\hsize| does not automatically change some of \LaTeX's linewidth dimensions, you should consider using a minipage inside this environment if you fool around with the width.
 
     If the width is larger than the normal text width, as specified by the value of |\textwidth|, the width of the resulting box is reset to the width |\textwidth|, but intelligent negative skips are inserted at the left and right end of the box. The net effect of this is that you can use a width larger than the text width for a box and can insert the resulting box directly into normal text without getting annoying warnings and having the box positioned sensibly.
-    \item
+  \item
     \declare{|dp=|\marg{depth}} sets the depth of the box, overriding the real depth of the box. The box is first typeset normally, then the depth is changed afterwards. This option is useful for creating boxes that have guaranteed size.
 
     If the option is not given, the box has its ``natural'' depth, which results from the typesetting. For example, a box containing only the letter ``a'' will have a different depth from a box containing only the letter ``g.''
-    \item
+  \item
     \declare{|ht=|\meta{height}} sets the height of the box, overriding the real height. Note that the ``height'' does not include the depth (see, for example, the \TeX-book for details). If you want a one-line box that always has the same size, setting the height to 2.25ex and the depth to 1ex is usually a good option.
-    \item
+  \item
     \declare{|left|} causes the text inside the box to be typeset left-aligned and with a (radically) ragged right border. This is the default. To get a better ragged right border, use the |rightskip| option.
-    \item
+  \item
     \declare{|right|} causes the text to be right-aligned with a (radically) ragged left border.
-    \item
+  \item
     \declare{|center|} centers the text inside the box.
-    \item
+  \item
     \declare{|leftskip=|\meta{left skip}} installs the \meta{left skip} inside the box as the left skip. \TeX's left skip is a glue that is inserted at the left end of every line. See the \TeX-book for details.
-    \item
+  \item
     \declare{|rightskip=|\meta{right skip}} install the \meta{right skip}. To get a good ragged right border, try, say, |\rightskip=0pt plus 4em|.
-    \item
+  \item
     \declare{|sep=|\meta{dimension}} sets the size of extra space around the text. This space is added ``inside the box,'' which means that if you specify a |sep| of 1cm and insert the box normally into the vertical list, then the left border of the box will be aligned with the left border of the slide text, while the left border of the text inside the box will be 1cm to the right of this left border. Likewise, the text inside the box will stop 1cm before the right border of the normal text.
-    \item
+  \item
     \declare{|colsep=|\meta{dimension}} sets the extra ``color separation space'' around the text. This space behaves the same way as the space added by |sep|, only this space is only inserted if the box has a colored background, that is, if the background of the \meta{beamer color} is not empty. This command can be used together with |sep|, the effects accumulate.
-    \item
+  \item
     \declare{|colsep*=|\meta{dimension}} sets an extra color separation space around the text that is \emph{horizontally outside the box}. This means that if the box has a background, this background will protrude by \meta{dimension} to the left and right of the text, but this protruding background will not be taken intro consideration by \TeX\ for typesetting purposes.
 
     A typical example usage of this option arises when you insert a box with a coloured background in the middle of normal text. In this case, if the background color is set, you would like a background to be drawn behind the text \emph{and} you would like a certain extra space around this text (the background should not stop immediately at the borders of the text, this looks silly) \emph{and} you would like the normal text always to be at the same horizontal position, independently of whether a background is present or not. In this case, using |colsep*=4pt| is a good option.
-    \item
+  \item
     \declare{|shadow|}\opt{|=|\meta{true or false}} draws a shadow behind the box. Currently, this option only has an effect if used together with the |rounded| option, but that may change.
-    \item
+  \item
     \declare{|rounded|}\opt{|=|\meta{true or false}} causes the borders of the box to be rounded off if there is a background installed. This command internally calls |beamerboxesrounded|.
-    \item
+  \item
     \declare{|ignorebg|} causes the background color of the \meta{beamer color} to be ignored, that is, to be treated as if it were set to ``transparent'' or ``empty.''
-    \item
+  \item
     \declare{vmode} causes \TeX\ to be in vertical mode when the box starts. Normally, \TeX\ will be in horizontal mode at the start of the box (a |\leavevmode| is inserted automatically at the beginning of the box unless this option is given). Only \TeX perts need this option, so, if you use it, you will probably know what you are doing anyway.
   \end{itemize}
 \end{environment}
@@ -846,13 +849,13 @@ The \beamer\ class also defines two environments for creating coloured boxes.
 \begin{environment}{{beamerboxesrounded}\oarg{options}\marg{head}}
   The text inside the environment is framed by a rectangular area with rounded corners. For the large rectangular area, the \beamer-color specified with the |lower| option  is used. Its background is used for the background, its foreground for the foreground. If the \meta{head} is not empty, \meta{head} is drawn in the upper part of the box using the \beamer-color specified with the |upper| option for the fore- and background. The following options can be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|lower=|\meta{beamer color}} sets the \beamer-color to be used for the lower (main) part of the box. Its background is used for the background, its foreground for the foreground of the main part of the box. If either is empty, the current background or foreground is used. The box will never be transparent.
-    \item
+  \item
     \declare{|upper=|\meta{beamer color}} sets the \beamer-color used for the upper (head) part of the box. It is only used if the \meta{head} is not empty.
-    \item
+  \item
     \declare{|width=|\meta{dimension}} causes the width of the text inside the box to be the specified \meta{dimension}. By default, the |\textwidth| is used. Note that the box will protrude 4pt to the left and right.
-    \item
+  \item
     \declare{|shadow=|\meta{true or false}}. If set to |true|, a shadow will be drawn.
   \end{itemize}
   If no \meta{head} is given, the head part is completely suppressed.
@@ -925,17 +928,17 @@ The main environment for creating columns is called |columns|. Inside this envir
 \begin{environment}{{columns}\oarg{options}}
   A multi-column area. Inside the environment you should place only |column| environments or |\column| commands (see below). The following \meta{options} may be given:
   \begin{itemize}
-    \item
+  \item
     \declare{|b|} will cause the bottom lines of the columns to be vertically aligned.
-    \item
+  \item
     \declare{|c|} will cause the columns to be centered vertically relative to each other. Default, unless the global option |t| is used.
-    \item
+  \item
     \declare{|onlytextwidth|} is the same as |totalwidth=\textwidth|.
-    \item
+  \item
     \declare{|t|} will cause the first lines of the columns to be aligned. Default if global option |t| is used.
-    \item
+  \item
     \declare{|T|} is similar to the |t| option, but |T| aligns the tops of the first lines while |t| aligns the so-called baselines of the first lines. If strange things seem to happen in conjunction with the |t| option (for example if a graphic suddenly ``drops down'' with the |t| option instead of ``going up,''), try using this option instead.
-    \item
+  \item
     \declare{|totalwidth=|\meta{width}} will cause the columns to occupy not the whole page width, but only \meta{width}, all told.
   \end{itemize}
 
@@ -986,6 +989,7 @@ To create a column, you can either use the |column| environment or the |\column|
   \end{column}
 \end{columns}
 \end{verbatim}
+
   \articlenote
   This command is ignored in |article| mode.
 
@@ -1005,6 +1009,7 @@ To create a column, you can either use the |column| environment or the |\column|
     One line (but aligned).
 \end{columns}
 \end{verbatim}
+
   \articlenote
   This command is ignored in |article| mode.
 
@@ -1033,6 +1038,7 @@ Inside |{verbatim}| environments you obviously cannot use commands like |\alert<
 \begin{verbatim}
 \alert<1->{std::cout << "AT&T likes 100% performance";}
 \end{verbatim}
+
   To typeset the three characters |\|, |{|, and |}| you can use the commands |\\| (which is redefined inside this environment---you do not need it anyway), |\{|, and |\}|. Thus in order to get typeset ``|\alert<1>{X}|'' you can write |\\alert<1>\{X\}|.
 \end{environment}
 
@@ -1085,7 +1091,6 @@ You can change the font and color used for these by changing the \beamer-colors 
   \end{element}
 \end{environment}
 
-
 \begin{environment}{{quotation}\sarg{action specification}}
   Use this environment to typeset multi-paragraph quotations. Think again, before presenting multi-paragraph quotations.
 
@@ -1101,7 +1106,6 @@ You can change the font and color used for these by changing the \beamer-colors 
     This template is inserted at the end of the quotation.
   \end{element}
 \end{environment}
-
 
 \begin{environment}{{quote}\sarg{action specification}}
   Use this environment to typeset a single-paragraph quotation.
@@ -1129,7 +1133,7 @@ You can use the usual |\footnote| command. It has been augmented to take an addi
 \begin{command}{\footnote\sarg{overlay specification}\oarg{options}\marg{text}}
   Inserts a footnote into the current frame. Footnotes will always be shown at the bottom of the current frame; they will never be ``moved'' to other frames. As usual, one can give a number as \meta{options}, which will cause the footnote to use that number. The \beamer\ class adds one additional option:
   \begin{itemize}
-    \item
+  \item
     \declare{|frame|} causes the footnote to be shown at the bottom of the frame. This is normally the default behavior anyway, but in minipages and certain blocks it makes a difference. In a minipage, the footnote is usually shown as part of the minipage rather than as part of the frame.
   \end{itemize}
 
