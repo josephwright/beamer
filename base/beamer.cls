@@ -337,15 +337,15 @@
   foot=0.5cm% might be changed later
   ]{geometry}
 
-% Load corresponding size file
-\expandafter\input\beamer@size
-
 %
 % Process Options
 %
 
 \ExecuteOptionsBeamer{c}
 \ProcessOptionsBeamer
+
+% Load corresponding size file
+\expandafter\input\beamer@size
 
 % Filter class option list
 \beamer@filterclassoptions
