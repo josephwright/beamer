@@ -73,7 +73,7 @@ In order to also show the effect of the different color themes on the sidebar, i
 A ``complete'' color theme is a color theme that completely specifies all colors for all parts of a frame. It installs specific colors and does not derive the colors from, say, the |structure| \beamer-color. Complete color themes happen to have names of flying animals.
 
 \begin{colorthemeexample}{albatross}
-  The color theme is a ``dark'' or ``inverted'' theme using yellow on blue as the main colors. The color theme also installs a slightly darker background color for blocks, which is necessary for presentation themes that use shadows, but which (in my opinion) is undesirable for all other presentation themes. By using the |lily| color theme together with this theme, the backgrounds for blocks can be removed.
+  The color theme is a ``dark'' or ``inverted'' theme using yellow on blue as the main colors. The color theme also installs a slightly darker background color for blocks, which is necessary for presentation themes that use shadows, but which (in Till's opinion) is undesirable for all other presentation themes. By using the |lily| color theme together with this theme, the backgrounds for blocks can be removed.
 
   When using a light-on-dark theme like this one, be aware that there are certain disadvantages:
   \begin{itemize}
@@ -90,7 +90,7 @@ A ``complete'' color theme is a color theme that completely specifies all colors
   The following \meta{options} may be given:
   \begin{itemize}
   \item
-    \declare{|overlystylish|} installs a background canvas that is, in my opinion, way too stylish. But then, I do not want to press my taste on other people. When using this option, it is probably a very good idea to also use the |lily| color theme.
+    \declare{|overlystylish|} installs a background canvas that is, in Till's opinion, way too stylish. But then, it is not his intention to press his taste on other people. When using this option, it is probably a very good idea to also use the |lily| color theme.
   \end{itemize}
 
   \example
@@ -166,7 +166,7 @@ An outer color theme changes the palette colors, on which the colors used in the
 \begin{colorthemeexample}{seahorse}
   Installs a near-transparent backgrounds for the headline, footline, and sidebar. Using this theme will cause navigational elements to be much less ``dominant'' than when using the |whale| theme (see the discussion on contrast there, though).
 
-  It goes well with the |rose| or the |lily| color theme. Pairing it with the |orchid| overemphasizes blocks (in my opinion).
+  It goes well with the |rose| or the |lily| color theme. Pairing it with the |orchid| overemphasizes blocks (in Till's opinion).
 \end{colorthemeexample}
 
 \begin{colorthemeexample}{dolphin}
@@ -182,7 +182,7 @@ This section explains how \beamer's color management works.
 
 In \beamer's philosophy, every element of a presentation can have a different color. Unfortunately, it turned out that simply assigning a single color to every element of a presentation is not such a good idea. First of all, we sometimes want colors of elements to change during a presentation, like the color of the item indicators when they become alerted or inside an example block. Second, some elements naturally have two colors, namely a foreground and a background, but not always. Third, sometimes elements somehow should not have any special color but should simply ``run along'' with the color of their surrounding. Finally, giving a special color to every element makes it very hard to globally change colors (like changing all the different kind-of-blue things into kind-of-red things) and it makes later extensions even harder.
 
-For all these reasons, the color of an element in \beamer\ is a structured object, which I call a \emph{\beamer-color}. Every \beamer-color has two parts: a foreground and a background. Either of these may be ``empty,'' which means that whatever foreground or background was active before should remain active when the color is used.
+For all these reasons, the color of an element in \beamer\ is a structured object, which we call a \emph{\beamer-color}. Every \beamer-color has two parts: a foreground and a background. Either of these may be ``empty,'' which means that whatever foreground or background was active before should remain active when the color is used.
 
 \beamer-colors can \emph{inherit} from other \beamer-colors and the default themes make extensive use of this feature. For example, there is a \beamer-color called |structure| and all sorts of elements inherit from this color. Thus, if someone changes |structure|, the color of all these elements automatically change accordingly. When a color inherits from another color, it can nevertheless still override only the foreground or the background.
 
@@ -353,7 +353,7 @@ To set or to change a \beamer-color, you can use the command |\setbeamercolor|.
 
 \subsection{The Color of Mathematical Text}
 
-By default, mathematical text does not have any special color---it just inherits the ``surrounding'' color. Some people prefer mathematical text to have some special color. Though I do not recommend this (I think mathematical text should \emph{not} stand out amid the normal text), \beamer\ makes it (reasonably) easy to change the color of mathematical text. Simply change the following colors:
+By default, mathematical text does not have any special color---it just inherits the ``surrounding'' color. Some people prefer mathematical text to have some special color. Though we do not recommend this (we believe mathematical text should \emph{not} stand out amid the normal text), \beamer\ makes it (reasonably) easy to change the color of mathematical text. Simply change the following colors:
 
 \begin{element}{math text}\no\yes\no
   This color is the parent of |math text inlined| and |math text displayed|. It is empty by default. See those colors for details.

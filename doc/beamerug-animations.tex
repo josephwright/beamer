@@ -323,7 +323,7 @@ The \pdf\ specification introduces special sound objects, which are treated quit
 \item
   A bug in some versions of the Acrobat Reader makes it necessary to provide very exact details on the encoding of the sound file. You have to provide the sampling rate, the number of channels (mono or stereo), the number of bits per sample, and the sample encoding method (raw, signed, Alaw or $\mu$law). If you do not know this data or provide it incorrectly, the sound will be played incorrectly.
 \item
-  It seems  that you can only include uncompressed sound data, which can easily become huge. This is not required by the specification, but I have been unable to make the Acrobat Reader play any compressed data. Data formats that \emph{do} work are |.aif| and |.au|.
+  It seems that you can only include uncompressed sound data, which can easily become huge. This is not required by the specification, but some versions of Acrobat Reader are unable to play any compressed data. Data formats that \emph{do} work are |.aif| and |.au|.
 \end{itemize}
 
 \begin{command}{\sound\oarg{options}\marg{sound poster text}\marg{sound filename}}
@@ -331,7 +331,7 @@ The \pdf\ specification introduces special sound objects, which are treated quit
 
   Also as for a movie, the \meta{sound poster text} will be be put in a box that, when clicked on, will start playing the movie. However, you might also leave this box empty and only use the |autostart| option. Once playback of a sound has started, it can only be stopped by starting the playback of a different sound or by use of the |\hyperlinkmute| command.
 
-  The supported sound formats depend on the viewer application. My version of the Acrobat Reader supports |.aif| and |.au|. I also need to specify information like the sampling rate, even though this information could be extracted from the sound file and even though the \pdf\ standard specifies that the viewer application should do so. In this regard, my version of the Acrobat Reader seems to be non-standard-conforming.
+  The supported sound formats depend on the viewer application. Some versions of Acrobat Reader support |.aif| and |.au|. Sometimes you also need to specify information like the sampling rate, even though this information could be extracted from the sound file and even though the \pdf\ standard specifies that the viewer application should do so. In this regard, some versions of Acrobat Reader seems to be non-standard-conforming.
 
   This command only works together with |pdflatex|. If you use |dvips|, the poster is still shown, but clicking it has no effect and no sound is embedded in any way.
 
