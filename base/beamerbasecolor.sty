@@ -209,7 +209,7 @@
         \box\beamer@tempbox%
       \fi%
     \else%
-      \if@tempswa\setbox\beamer@tempbox=\vbox{%
+      \if@tempswa\setbox\beamer@tempbox=\hbox{\vbox{%
         \usebeamercolor{\beamer@colbox@color}%
         \advance\hsize by \beamer@colbox@colseps\relax%
         \advance\hsize by \beamer@colbox@colseps\relax%
@@ -220,7 +220,7 @@
           \hskip\beamer@colbox@colseps%
         }%
         \hskip-\beamer@colbox@colseps%
-      }\fi%
+      }}\fi%
       \ifdim\@tempdima>\textwidth%
         \setbox\beamer@tempbox=\hbox to\textwidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@rightmargin\relax}%
       \fi%
