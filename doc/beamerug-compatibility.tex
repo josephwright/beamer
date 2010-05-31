@@ -130,6 +130,22 @@ When using certain packages or classes together with the |beamer| class, extra o
 \begin{package}{{listings}}
   \beamernote
   Note that you must treat |lstlisting| environments exactly the same way as you would treat |verbatim| environments. When using |\defverbatim| that contains a colored |lstlisting|, use the |colored| option of |\defverbatim|.
+  \example
+\begin{verbatim}
+\usepackage{lstlisting}
+
+\begin{document}
+\defverbatim[colored]\mycode{%
+  \begin{lstlisting}[frame=single, emph={cout}, emphstyle={\color{blue}}]
+    cout << "Hello world!";
+  \end{lstlisting}
+  }
+
+\begin{frame}
+  \mycode
+\end{frame}
+\end{document}
+\end{verbatim}
 \end{package}
 
 \begin{package}{{msc}}
