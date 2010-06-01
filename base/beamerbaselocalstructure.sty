@@ -212,7 +212,7 @@
 {
   \AtBeginDocument{
     \let\beamer@origenumerate=\enumerate
-    \renewcommand{\enumerate}[1][]{\beamer@origenumerate}
+    \renewcommand*\enumerate{\beamer@origenumerate}
   }
 }
 
@@ -258,7 +258,7 @@
 {
   \AtBeginDocument{
     \let\beamer@origitemize=\itemize
-    \renewcommand{\itemize}[1][]{\beamer@origitemize}
+    \renewcommand*\itemize{\beamer@origitemize}
   }
 }
 
