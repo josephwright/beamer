@@ -27,7 +27,6 @@ The first thing Euclid should do is to look for a solution template for his pres
 \begin{verbatim}
 beamer/solutions/conference-talks/conference-ornate-20min.en.tex
 \end{verbatim}
-
 might be appropriate. He creates a subdirectory |presentation| in the directory that contains the actual paper and copies the solution template to this subdirectory, renaming to |main.tex|.
 
 \lyxnote
@@ -35,17 +34,14 @@ If Euclid uses \LyX, he would choose ``New from template'' and pick the template
 \begin{verbatim}
 beamer/solutions/conference-talks/conference-ornate-20min.en.lyx
 \end{verbatim}
-
 He opens the file in his favorite editor. It starts
 \begin{verbatim}
 \documentclass{beamer}
 \end{verbatim}
-
 which Euclid finds hardly surprising. Next comes a line reading
 \begin{verbatim}
 \mode<presentation>
 \end{verbatim}
-
 which Euclid does not understand. Since he finds more stuff in the file that he does not understand, he decides to ignore all of that for time being, hoping that it all serves some good purpose.
 
 
@@ -55,7 +51,6 @@ The next thing that seems logical is the place where the |\title| command is use
 \begin{verbatim}
 \title{There Is No Largest Prime Number}
 \end{verbatim}
-
 since this was the title of the paper. He sees that the command |\title| also takes an optional ``short'' argument in square brackets, which is shown in places where there is little space, but he decides that the title is short enough by itself.
 
 Euclid next adjusts the |\author| and |\date| fields as follows:
@@ -63,12 +58,10 @@ Euclid next adjusts the |\author| and |\date| fields as follows:
 %\author{Euclid of Alexandria}
 %\date[ISPN '80]{27th International Symposium of Prime Numbers}
 \end{verbatim}
-
 For the date, he felt that the name was a little long, so a short version is given (|ISPN '80|). On second thought, Euclid decides to add his email address and replaces the |\author| field as follows:
 \begin{verbatim}
 %\author[Euclid]{Euclid of Alexandria \\ \texttt{euclid@alexandria.edu}}
 \end{verbatim}
-
 Somehow Euclid does not like the fact that there is no ``|\email|'' command in \beamer. He decides to write an email to \beamer's author, asking him to fix this, but postpones this for later when the presentation is finished.
 
 There are two fields that Euclid does not know, but whose meaning he can guess: |\subtitle| and |\institute|. He adjusts them. (Euclid does not need to use the |\and| command, which is used to separate several authors, nor the |\inst| command, which just makes its argument a superscript).
@@ -85,7 +78,6 @@ The next thing in the file that seems interesting is where the first ``frame'' i
   \titlepage
 \end{frame}
 \end{verbatim}
-
 In \beamer, a presentation consists of a series of frames. Each frame in turn may consist of several slides (if there is more than one, they are called overlays). Normally, everything between |\begin{frame}| and |\end{frame}| is put on a single slide. No page breaking is performed. So Euclid infers that the first frame is ``filled'' by the title page, which seems quite logical.
 
 \lyxnote
@@ -111,7 +103,6 @@ The next frame contains a table of contents:
   \tableofcontents
 \end{frame}
 \end{verbatim}
-
 Furthermore, this frame has an individual title (Outline). A comment in the frame says that Euclid might wish to try to add the |[pausesections]| option. He tries this, changing the frame to:
 \begin{verbatim}
 \begin{frame}
@@ -130,7 +121,6 @@ The next commands Euclid finds are
 \section{Motivation}
 \subsection{The Basic Problem That We Studied}
 \end{verbatim}
-
 These commands are given \emph{outside} of frames. So Euclid assumes that at the point of invocation they have no direct effect, they only create entries in the table of contents. Having a ``Motivation'' section seems reasonable to Euclid, but he changes the |\subsection| title.
 
 As he looks at the presentation, he notices that his assumption was not quite true: each |\subsection| command seems to insert a frame containing a table of contents into the presentation. Doubling back he finds the command that causes this: The |\AtBeginSubsection| inserts a frame with only the current subsection highlighted at the beginning of each section. If Euclid does not like this, he can just delete the whole |\AtBeginSubsection| stuff and the table of contents at the beginning of each subsection disappears.
@@ -147,7 +137,6 @@ Euclid then modifies the next frame, which is the first ``real'' frame of the pr
   A prime number is a number that has exactly two divisors.
 \end{frame}
 \end{verbatim}
-
 This yields the desired result. It might be a good idea to put some emphasis on the object being defined (prime numbers). Euclid tries |\emph| but finds that too mild an emphasis. \beamer\ offers the command |\alert|, which is used like |\emph| and, by default, typesets its argument in bright red.
 
 \lyxnote
@@ -246,7 +235,6 @@ On non-specified slides the |\only| command simply ``throws its argument away'' 
   ...
 \end{frame}
 \end{verbatim}
-
 Vice versa, if the |t| class option is given, a frame can be vertically centered using the |[c]| option for the frame.
 
 It turns out that certain environments, including the |theorem| and |proof| environments above, also take overlay specifications. If such a specification is given, the whole theorem or proof is only shown on the specified slides.
@@ -272,7 +260,6 @@ He could also have defined his own theorem-like environment by putting the follo
 %\newtheorem{answeredquestions}[theorem]{Answered Questions}
 %\newtheorem{openquestions}[theorem]{Open Questions}
 \end{verbatim}
-
 The optional argument |[theorem]| ensures that these environments are numbered the same way as everything else. Since these numbers are not shown anyway, it does not really matter whether they are given, but it's a good practice and, perhaps, Euclid might need these numbers some other time.
 
 An alternative would be nested |itemize|:
@@ -390,7 +377,6 @@ On second thought, Euclid would prefer to uncover part of the algorithm stepwise
   \visible<4->{Note the use of \alert{\texttt{std::}}.}
 \end{frame}
 \end{verbatim}
-
 The |\visible| command does nearly the same as |\uncover|. A difference occurs if the command |\setbeamercovered{transparent}| has been used to make covered text ``transparent'' instead, |\visible| still makes the text completely ``invisible'' on non-specified slides. Euclid has the feeling that the naming convention is a bit strange, but cannot quite pinpoint the problem.
 
 
@@ -408,14 +394,12 @@ He settles on the |Frankfurt| theme but decides that the light-dark contrast is 
 \usecolortheme{seahorse}
 \usecolortheme{rose}
 \end{verbatim}
-
 The result seems some more subdued to him.
 
 Euclid decides that the font used for the titles is not quite classical enough (classical fonts are the latest chic in Alexandria). So, he adds
 \begin{verbatim}
 \usefonttheme[onlylarge]{structuresmallcapsserif}
 \end{verbatim}
-
 Euclid notices that the small fonts in the navigation bars are a bit hard to read as they are so thin. Adding the following helps:
 \begin{verbatim}
 \usefonttheme[onlysmall]{structurebold}
@@ -435,7 +419,6 @@ Euclid decides that he would also like to change the color of the title to a das
 \begin{verbatim}
 \setbeamercolor{title}{fg=red!80!black}
 \end{verbatim}
-
 Trying the following command, Euclid is delighted to find that specifying a background color also has an effect:
 \begin{verbatim}
 \setbeamercolor{title}{fg=red!80!black,bg=red!20!white}
