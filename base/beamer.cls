@@ -156,6 +156,7 @@
 \DeclareOptionBeamer{20pt}{\def\beamer@size{{size20.clo}}}
 
 \DeclareOptionBeamer{draft}{\beamer@draftmodetrue}
+\pagenumbering{arabic}
 \def\insertpagenumber{\thepage}
 
 \def\beamer@activecjk{}
