@@ -56,7 +56,6 @@ The commands |\includegraphics|, |\pgfuseimage|, and |\pgfimage| are overlay-spe
   \includegraphics<3>[height=2cm]{step3.pdf}%
 \end{frame}
 \end{verbatim}
-
 A different way of creating graphics is to insert graphic drawing commands directly into your \LaTeX\ file. There are numerous packages that help you do this. They have various degrees of sophistication. Inlining graphics suffers from none of the disadvantages mentioned above for including external graphic files, but the main disadvantage is that it is often hard to use these packages. In some sense, you ``program'' your graphics, which requires a bit of practice.
 
 When choosing a graphic package, there are a few things to keep in
@@ -65,12 +64,20 @@ mind:
 \item
   Many packages produce poor quality graphics. This is especially true of the standard |picture| environment of \LaTeX.
 \item
-  Powerful packages that produce high-quality graphics often do not work together with |pdflatex|.
+  Powerful packages that produce high-quality graphics often do not work together with |pdflatex|, |lualatex| or |xelatex|.
 \item
-  The most powerful and easiest-to-use package around, namely |pstricks|, does not work together with |pdflatex| and this is a fundamental problem. Due to the fundamental differences between \pdf\ and PostScript, it is not possible to write a ``|pdflatex| back-end for |pstricks|.'' Regardless, \textsc{pst-pdf} and \textsc{pdftricks} package can help here and simplify things from user's perspective.
+  The most powerful and easiest-to-use package around, namely |pstricks|, does not work together with |pdflatex|, |lualatex| or |xelatex| and this is a fundamental problem. Due to the fundamental differences between \pdf\ and PostScript, it is not possible to write a ``|pdflatex| back-end for |pstricks|.'' (Situation with |lualatex| and |xelatex| is very similar.) Regardless, \textsc{pst-pdf}, \textsc{xetex-pstricks} and \textsc{pdftricks} package can help here and simplify things from user's perspective.
 \end{itemize}
 
-A solution to the above problem (though not necessarily the best) is to use the \textsc{pgf} package. It produces high-quality graphics and works together with |pdflatex|, but also with normal |latex|. It is not as powerful as |pstricks| (as pointed out above, this is because of rather fundamental reasons) and not as easy to use, but it should be sufficient in most cases.
+There are three possible solutions to the above problem, each with it's own advantages and disadvantages.
+\begin{itemize}
+\item
+  Use the \textsc{pgf} package. It produces high-quality graphics and works together with |pdflatex|, |lualatex|, |xelatex| and also with normal |latex|. It is not as powerful as |pstricks| (as pointed out above, this is because of rather fundamental reasons) and not as easy to use, but it should be sufficient in most cases.
+\item
+  Use \textsc{luamplib} package and |lualatex|. It provides you with an environment using which you can type MetaPost code directly in your document.
+\item 
+  Use |pstricks| and stick to |latex| and |dvips| or use some of the workarounds mentioned above.
+\end{itemize}
 
 \lyxnote
 Inlined graphics must currently be inserted in a large \TeX-mode box. This is not very convenient.
@@ -80,7 +87,7 @@ Inlined graphics must currently be inserted in a large \TeX-mode box. This is no
 
 External graphic files ending with the extension |.eps| (Encapsulated PostScript) or |.ps| (PostScript) can be included if you use |latex| and |dvips|, but \emph{not} when using |pdflatex|. This is true both for the normal |graphics| package and for |pgf|. When using |pgf|, do \emph{not} add the extension |.eps|. When using |graphics|, do add the extension.
 
-If you have a |.eps| graphic and wish to use |pdflatex|, you can use the program |ps2pdf| to convert the graphic to a |.pdf| file. Note, however, that it is often a better idea to directly generate a |.pdf| if the program that produced the |.eps| supports this.
+If you have a |.eps| graphic and wish to use |pdflatex|, you can use the program |ps2pdf| to convert the graphic to a |.pdf| file. Some modern distributions enable |write18| which allows |pdflatex| to do that automatically. Note, however, that it is often a better idea to directly generate a |.pdf| if the program that produced the |.eps| supports this.
 
 
 \subsection{Including Graphic Files Ending \texttt{.pdf}, \texttt{.jpg}, \texttt{.jpeg} or \texttt{.png}}
@@ -98,7 +105,6 @@ However, as a special bonus, you can \emph{also} include such a file when using 
 \begin{verbatim}
 \DeclareGraphicsRule{*}{mps}{*}{}
 \end{verbatim}
-
 This special feature currently only works with the |graphics| package, not with |pgf|.
 
 

@@ -73,7 +73,6 @@ Put |\section| and |\subsection| commands into the (more or less empty) main fil
 
 \end{document}
 \end{verbatim}
-
 The empty frame at the end (which should be deleted later) ensures that the sections and subsections are actually part of the table of contents. This frame is necessary since a |\section| or |\subsection| command following the last page of a document has no effect.
 
 
@@ -95,8 +94,9 @@ To create a |PDF| version of this file, run the program |pdflatex| on |main.tex|
 > pdflatex main.tex
     ... lots of output ...
 \end{verbatim}
+Alternatively, you can use |lualatex| or |xelatex| instead of |pdflatex| in above commands.
 
-You can next use a program like the Acrobat Reader or |xpdf| to view the resulting presentation.
+You can next use a program like the Acrobat Reader, |xpdf|, |evince| or |okular| to view the resulting presentation.
 \begin{verbatim}
 > acroread main.pdf
 \end{verbatim}
@@ -193,14 +193,13 @@ Creating an article version is not really possible in \LyX. You can \emph{try}, 
 
 The easiest way to print a presentation is to user the Acrobat Reader with the option ``expand small pages to paper size'' form the printer dialog enabled. This is necessary, because slides are by default only 128mm by 96mm large.
 
-For the PostScript version and for printing multiple slides on a single page this simple approach does not work. In such cases you can use the |pgfpages| package, which works directly both with |pdflatex| and |latex| plus |dvips|. Note however \emph{that this package destroys hyperlinks}. This is due to fundamental flaws in the \pdf-specification and not likely to change.
+For the PostScript version and for printing multiple slides on a single page this simple approach does not work. In such cases you can use the |pgfpages| package, which works directly with |pdflatex|, |lualatex|, |xelatex| and |latex| plus |dvips|. Note however \emph{that this package destroys hyperlinks}. This is due to fundamental flaws in the \pdf-specification and it is not likely to change.
 
 The |pgfpages| can do all sorts of tricks with pages. The most important one for printing \beamer\ slides is the following command:
 \begin{verbatim}
 \usepackage{pgfpages}
 \pgfpagesuselayout{resize}[a4paper,border shrink=5mm,landscape]
 \end{verbatim}
-
 This says ``Resize all pages to landscape A4 pages, no what their original size was, but shrink the pages by 5mm, so that there is a bit of a border around everything.'' Naturally, instead of |a4paper| you can also use |letterpaper| or any of the other standard paper sizes. For further options and details see the documentation of |pgfpages|.
 
 The second thing you might wish to do is to put several slides on a single page. This can be done as follows:
@@ -208,7 +207,6 @@ The second thing you might wish to do is to put several slides on a single page.
 \usepackage{pgfpages}
 \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
 \end{verbatim}
-
 This says ``Put two pages on one page and then resize everything so that it fits on A4 paper.'' Note that this time we do not need landscape as the resulting page is, after all, not in landscape mode.
 
 Instead of |2 on 1| you can also use |4 on 1|, but then with |landscape| once more, and also |8 on 1| and even |16 on 1| to get a grand (though unreadable) overview.
@@ -217,7 +215,6 @@ If you put several slides on one page and if these slides normally have a white 
 \begin{verbatim}
 \mode<handout>{\setbeamercolor{background canvas}{bg=black!5}}
 \end{verbatim}
-
 This will cause the slides of the handout version to have a very light gray background. This makes it easy to discern the slides' border if several slides are put on one page.
 
 %% If you wish each slide to completely fill a letter-sized page, use the

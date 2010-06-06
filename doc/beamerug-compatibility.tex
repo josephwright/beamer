@@ -78,8 +78,10 @@ When using certain packages or classes together with the |beamer| class, extra o
   If you wish to emulate the |foils| class using \beamer, please see Section~\ref{section-foiltex}.
 \end{class}
 
-\begin{package}{{fontenc}|[|\declare{|T1|}|]|}
-  Use this option only with fonts that have outline fonts available in the T1 encoding like Times or the |lmodern| fonts. In a standard installation the standard Computer Modern fonts (the fonts Donald Knuth originally designed and which are used by default) are \emph{not} available in the T1 encoding. Using this option with them will result in very poor rendering of your presentation when viewed with \pdf\ viewer applications like Acrobat or |xpdf|. To use the Computer Modern fonts with the T1 encoding, use the package |lmodern|. See also Section~\ref{section-font-encoding}.
+\begin{package}{{fontenc}|[|\declare{|T1,EU1,EU2|}|]|}
+  Use the |T1| option \emph{only} with fonts that have outline fonts available in the T1 encoding like |times| or the |lmodern| fonts. In a standard installation standard Computer Modern fonts (the fonts Donald Knuth originally designed and which are used by default) are \emph{not} available in the T1 encoding. Using this option with them will result in very poor rendering of your presentation when viewed with \pdf\ viewer applications like Acrobat, |xpdf|, |evince| or |okular|. To use the Computer Modern fonts with the T1 encoding, use the package |lmodern|. See also Section~\ref{section-font-encoding}. This applies both to |latex|+|dvips| and |pdflatex|
+
+  Use the |EU1| option with |xelatex|, and |EU2| option with |lualatex|. Note that |xelatex| and |luatex| support OpenType fonts, and font encodings work very different compared to |pdflatex|. Again, see Section~\ref{section-font-encoding} for more information.
 \end{package}
 
 \begin{package}{{fourier}}
@@ -108,7 +110,7 @@ When using certain packages or classes together with the |beamer| class, extra o
 
 \begin{package}{{inputenc}|[|\declare{|utf8,utf8x|}|]|}
   \beamernote
-  When using Unicode, you may wish to use one of the following class options:
+  When using Unicode, you may wish to use \emph{some} of the following class options:
   \begin{classoption}{ucs}
     Loads the package |ucs| and passes the correct Unicode options to |hyperref|. Also, it preloads the Unicode code pages zero and one.
   \end{classoption}
@@ -123,8 +125,12 @@ When using certain packages or classes together with the |beamer| class, extra o
     This option sets the input encoding to |utf8|. It's designed to be used \emph{without} |ucs|. It's the same as saying |\usepackage[utf8]{inputenc}| in the preamble.
   \end{classoption}
 
+  Note that \emph{none} of these options apply to |lualatex| and |xelatex|, since both support Unicode natively without any extra packages. Most of the time using these options actually harms output quality, so be careful about what you use. If you want to have a document that allows compiling with multiple drivers, take a look at |iftex|, |ifxetex| and |ifluatex| packages.
+
   \articlenote
   Passing option |utf8| to |beamerarticle| has the same effect as saying |\usepackage[utf8]{inputenc}| in the preamble.
+
+  Again, take care if you use |lualatex| or |xelatex|.
 \end{package}
 
 \begin{package}{{listings}}
@@ -154,18 +160,16 @@ When using certain packages or classes together with the |beamer| class, extra o
 \end{package}
 
 \begin{package}{{musixtex}}
-  When using MusiX\TeX\ to typeset musical scores, your document must be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or |latex|.
+  When using MusiX\TeX\ to typeset musical scores, you have to have $\varepsilon$-\TeX extensions enabled. Most modern distributions enable that by default both in |pdflatex| and |latex|. However, if you have an older distribution, the document must be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or |latex|.
 
   Inside a |music| environment, the |\pause| is redefined to match MusiX\TeX's definition (a rest during one quarter of a whole). You can use the |\beamerpause| command to create overlays in this environment.
 \end{package}
 
 \begin{package}{{pdfpages}}
   Commands like |\includepdf| only work \emph{outside} frames as they produce pages ``by themselves.'' You may also wish to say
-
 \begin{verbatim}
 \setbeamercolor{background canvas}{bg=}
 \end{verbatim}
-
   when you use such a command since the background (even a white background) will otherwise be printed over the image you try to include.
 
   \example
