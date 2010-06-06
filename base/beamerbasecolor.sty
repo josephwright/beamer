@@ -131,9 +131,9 @@
 \define@key{beamercolbox}{dp}{\def\beamer@colbox@dp{#1}}
 \define@key{beamercolbox}{leftskip}{\def\beamer@colbox@ls{#1}}
 \define@key{beamercolbox}{rightskip}{\def\beamer@colbox@rs{#1}}
-\define@key{beamercolbox}{left}[]{\def\beamer@colbox@ls{0pt}\def\beamer@colbox@rs{0pt plus1fill}}
-\define@key{beamercolbox}{center}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt plus1fill}}
-\define@key{beamercolbox}{right}[]{\def\beamer@colbox@ls{0pt plus1fill}\def\beamer@colbox@rs{0pt}}
+\define@key{beamercolbox}{left}[0pt]{\def\beamer@colbox@ls{0pt}\def\beamer@colbox@rs{#1 plus1fill}}
+\define@key{beamercolbox}{center}[0pt]{\def\beamer@colbox@ls{#1 plus1fill}\def\beamer@colbox@rs{#1 plus1fill}}
+\define@key{beamercolbox}{right}[0pt]{\def\beamer@colbox@ls{#1 plus1fill}\def\beamer@colbox@rs{0pt}}
 \define@key{beamercolbox}{sep}{\def\beamer@colbox@sep{#1}}
 \define@key{beamercolbox}{colsep}{\def\beamer@colbox@colsep{#1}}
 \define@key{beamercolbox}{colsep*}{\def\beamer@colbox@colseps{#1}}
