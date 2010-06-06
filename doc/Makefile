@@ -61,4 +61,4 @@ beamerugoutertheme%.pdf: beamerouterthemeexample.tex beamerthemeexamplebase.tex 
 	mv beamerouterthemeexample.pdf $@
 
 clean:
-	rm -f *.aux *.log *.bbl *.blg *.ps *.dvi *.pdf *.toc *.out *.snm
+	rm -f *.aux *.bbl *-blx.bib *.bcf *.blg *.fdb_latexmk *.idx *.ilg *.ind *.log *mpgraph.mp *.nav *.out *.snm *.synctex.gz *.tmp *.toc *.tui *.tuc *.tuo *.vrb *~ beamerug*.pdf
