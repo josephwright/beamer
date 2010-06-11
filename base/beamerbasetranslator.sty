@@ -11,17 +11,15 @@
 \ProvidesPackageRCS $Header$
 
 %
-% Check for translator and load all dictionaries
+% Load translator and it's dictionaries
 %
-\IfFileExists{translator.sty}{
-  \RequirePackage{translator}
-  \usedictionary{translator-basic-dictionary}
-  \usedictionary{translator-bibliography-dictionary}
-  \usedictionary{translator-environment-dictionary}
-  \usedictionary{translator-months-dictionary}
-  \usedictionary{translator-numbers-dictionary}
-  \usedictionary{translator-theorem-dictionary}
-}{\providecommand\translate[2][]{#2}}
+\RequirePackage{translator}
+\usedictionary{translator-basic-dictionary}
+\usedictionary{translator-bibliography-dictionary}
+\usedictionary{translator-environment-dictionary}
+\usedictionary{translator-months-dictionary}
+\usedictionary{translator-numbers-dictionary}
+\usedictionary{translator-theorem-dictionary}
 
 
 \mode
