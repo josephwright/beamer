@@ -316,7 +316,7 @@
     {%
       \long\def\subsubsecname{#2}%
       \addtocontents{toc}{\protect\beamer@subsubsectionintoc%
-        {\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{\the\c@page}{\the\beamer@tocsectionnumber}{#2}}%
+        {\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{#2}{\the\c@page}{\the\c@part}{\the\beamer@tocsectionnumber}}%
     }%
     \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsubsectionentry%
         {\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{\the\c@page}{\subsubsecname}}}%

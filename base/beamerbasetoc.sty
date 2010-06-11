@@ -170,23 +170,23 @@
 \def\subsubsectionintoc{}
 \long\def\beamer@subsubsectionintoc#1#2#3#4#5#6#7{%
   \ifnum\c@tocdepth>2%
-  \ifnum#1=\beamer@showpartnumber%
+  \ifnum#6=\beamer@showpartnumber%
   {
     \beamer@saveanother%
     \gdef\beamer@todo{}%
     \beamer@slideinframe=#2\relax%
     \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
       \ifbeamer@pausesubsections\pause\fi%
-      \beamer@tempcount=#6%
+      \beamer@tempcount=#7%
       \advance\beamer@tempcount by\beamer@sectionadjust%
       \edef\inserttocsectionnumber{\the\beamer@tempcount}%
-      \def\inserttocsubsectionnumber{#3}%
-      \def\inserttocsubsubsectionnumber{#4}%
-      \def\inserttocsubsubsection{\hyperlink{Navigation#5}{#7}}%
-      \beamer@tocifnothide{\ifnum\c@section=#2\beamer@toc@oss\else\beamer@toc@ooss\fi}%
+      \def\inserttocsubsectionnumber{#2}%
+      \def\inserttocsubsubsectionnumber{#3}%
+      \def\inserttocsubsubsection{\hyperlink{Navigation#5}{#4}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@oss\else\beamer@toc@ooss\fi}%
       {%
         \def\beamer@breakhere{\\}%
-        \beamer@tocact{\ifnum\c@section=#2\ifnum\c@subsection=#3\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi\else\beamer@toc@oosss\fi\else\beamer@toc@ooosss\fi}
+        \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsubsection=#3\beamer@toc@csss\else\beamer@toc@osss\fi\else\beamer@toc@oosss\fi\else\beamer@toc@ooosss\fi}
         {subsubsection in toc}%
       }%
     }}%
