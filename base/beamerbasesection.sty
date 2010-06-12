@@ -229,6 +229,7 @@
 %
 % Subsection Definitions
 %
+\def\subsectionname{\translate{Subsection}}
 \newcounter{subsection}[section]
 \renewcommand\thesubsection{\@arabic\c@subsection}
 
@@ -269,6 +270,8 @@
   \fi%
   \beamer@resumemode}
 \def\insertsubsection{}
+
+\def\insertsubsectionnumber{\@arabic\c@subsection}
 
 \def\beamer@untitledsubsection{%
   \refstepcounter{subsection}%

@@ -70,7 +70,7 @@
   \begin{centering}
     {\usebeamerfont{part name}\usebeamercolor[fg]{part name}\partname~\insertromanpartnumber}
     \vskip1em\par
-    \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
+    \begin{beamercolorbox}[sep=16pt,center,#1]{part title}
       \usebeamerfont{part title}\insertpart\par
     \end{beamercolorbox}
   \end{centering}
@@ -82,10 +82,23 @@
 \defbeamertemplate*{section page}{default}[1][]
 {
   \begin{centering}
-    {\usebeamerfont{part name}\usebeamercolor[fg]{part name}\sectionname~\insertsectionnumber}
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}\sectionname~\insertsectionnumber}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center,#1]{part title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+
+% Subection page: default
+
+\defbeamertemplate*{subsection page}{default}[1][]
+{
+  \begin{centering}
+    {\usebeamerfont{subsection name}\usebeamercolor[fg]{subsection name}\subsectionname~\insertsubsectionnumber}
     \vskip1em\par
     \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
-      \usebeamerfont{part title}\insertsection\par
+      \usebeamerfont{subsection title}\insertsubsection\par
     \end{beamercolorbox}
   \end{centering}
 }
