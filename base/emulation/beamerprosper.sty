@@ -61,7 +61,7 @@
 \newenvironment{slide}[2][]{%
   \def\beamerprosper@toc{#2}
   \def\beamerprosper@trans{}%
-  \setkeys{beamerprosper}{#1}%    
+  \setkeys{beamerprosper}{#1}%
   \expandafter\beamerprosper@entry\expandafter{\beamerprosper@toc}%
   \edef\@temp{\noexpand\begin{frame}\beamerprosper@options}%
   \@temp\PDFtransition{\beamerprosper@trans}\frametitle{#2}}{\end{frame}}

@@ -110,7 +110,7 @@
           Annotations=<< \mm@start\space \mm@duration\space \mm@playmode\space \mm@controls\space>>,%
           T=(\mm@label),
           Border={0 0 \mm@bw}}%
-       }{%  
+       }{%
         \pdfannot width \@tempdima height \@tempdimb depth \@tempdimc
         {
           /Subtype /Movie
@@ -126,7 +126,7 @@
       {%
         \pdfmark{pdfmark=/PUT,%
            Raw={{ThisPage} << /AA << /O << /S /Movie
-         /T (\mm@label) /Operation /Play >> >> >>}%      
+         /T (\mm@label) /Operation /Play >> >> >>}%
       }}%
       {%
         \pdfobj {<< /S /Movie /T (\mm@label) /Operation /Play >>}%
@@ -135,7 +135,7 @@
       }%
       \fi%
     \fi%
-  }%  
+  }%
 }
 
 
@@ -209,17 +209,17 @@
     \ifmm@external%
       \href{run:#3}{\box\@tempboxa}%
     \else%
-      \ifmm@inline%  
-        \pdfobj stream 
+      \ifmm@inline%
+        \pdfobj stream
         attr {/Type /Sound \mm@r\space \mm@c\space \mm@b\space}
         file {#3}%
         \pdfrefobj \pdflastobj%
       \else
-        \pdfobj stream 
+        \pdfobj stream
         attr {\mm@r\space \mm@c\space \mm@b\space \mm@e\space /F (#3)}
         {}%
         \pdfrefobj \pdflastobj%
-      \fi%        
+      \fi%
       \expandafter\xdef\csname mms@\mm@label\endcsname{\the\pdflastobj}%
       \def\@temp{#2}\ifx\@temp\@empty\else\hyperlinksound[#1]{\mm@label}{\box\@tempboxa}\fi%
       \ifmm@autostart%
@@ -245,7 +245,7 @@
 }
 
 \newcommand\hyperlinkmute[1]{\mm@psorpdf{#1}{\hyperlinksound{mute}{#1}}}
- 
+
 \newcommand\hyperlinksound[3][]{%
   \mm@psorpdf{\hyperlinkmovie[#1]{#2}{#3}}%
   {%

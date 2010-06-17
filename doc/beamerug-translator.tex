@@ -14,7 +14,7 @@
 
 \subsubsection{Overview of the Package}
 
-The \translatorname\ package is a \LaTeX\ package that provides a flexible mechanism for translating individual words into different languages. For example, it can be used to translate a word like ``figure'' into, say, the German word ``Abbildung''. Such a translation mechanism is useful when the author of some package would like to localize the package such that texts are correctly translated into the language preferred by the user. The \translatorname\ package is \emph{not} intended to be used to automatically translate more than a few words. 
+The \translatorname\ package is a \LaTeX\ package that provides a flexible mechanism for translating individual words into different languages. For example, it can be used to translate a word like ``figure'' into, say, the German word ``Abbildung''. Such a translation mechanism is useful when the author of some package would like to localize the package such that texts are correctly translated into the language preferred by the user. The \translatorname\ package is \emph{not} intended to be used to automatically translate more than a few words.
 
 You may wonder whether the \translatorname\ package is really necessary since there is the (very nice) |babel| package available for \LaTeX. This package already provides translations for words like ``figure''. Unfortunately, the architecture of the babel package was designed in such a way that there is no way of adding translations of new words to the (very short) list of translations directly built into babel.
 
@@ -39,7 +39,7 @@ In order to submit dictionaries, please do the following:
 
   For example, translations for keys like |figure| should be send to the \translatorname\ project. Translations for keys that are part of a special package should be send to the author of the package.
   \item If you are sure that the translations should go to the \translatorname\ package, create a dictionary of the correct name (see this documentation once more).
-  \item Finally, submit the dictionary using the correct forum on the development site. 
+  \item Finally, submit the dictionary using the correct forum on the development site.
 \end{enumerate}
 
 \subsubsection{Installation}
@@ -82,7 +82,7 @@ When you request a translation for a key, the \translatorname\ package will try 
 
 When the \translatorname\ looks up the translation for the given key in the current language, it may fail to find a translation. In this case, the \translatorname\ will try a fallback strategy: It keeps track of a \emph{language path} and successively tries to find translations for each language on this path.
 
-Language paths are not only useful for fallbacks. They are also used for situations where a language is a variant of another language. For example, when the \translatorname\ looks for the translation for a key in Austrian, the language path starts with Austrian, followed by German. Then, a dictionary for Austrian only needs to provide translations for those keys where Austrian differs from German. 
+Language paths are not only useful for fallbacks. They are also used for situations where a language is a variant of another language. For example, when the \translatorname\ looks for the translation for a key in Austrian, the language path starts with Austrian, followed by German. Then, a dictionary for Austrian only needs to provide translations for those keys where Austrian differs from German.
 
 \subsubsection{Dictionaries}
 
@@ -121,11 +121,11 @@ You provide a translation using one of the following commands:
   This command defines the translation of \meta{key} to be \meta{translation} in the language specified by the \meta{options}.
 
   You can only use this command if the translation is really ``new'' in the sense that no translation for the keys has yet been given for the language. If there is already a translation, an error message will be printed.
-  
+
   The following \meta{options} may be given:
   \begin{itemize}
-    \itemoption{to}{}|=|\meta{language} This options tells the \translatorname, that the translation \meta{translation} of \meta{keys} applies to the language \meta{language}. 
-  
+    \itemoption{to}{}|=|\meta{language} This options tells the \translatorname, that the translation \meta{translation} of \meta{keys} applies to the language \meta{language}.
+
     Inside a dictionary file (see Section~\ref{section-dictionaries}), this option is set automatically to the language of the dictionary.
   \end{itemize}
 
@@ -199,7 +199,7 @@ Its contents is the following:
 \providetranslation{November}{November}
 \providetranslation{December}{Dezember}
 \end{verbatim}
-Note that the |\providetranslation| command does not need the option |[to=German]|. Inside a dictionary file \textsc{translator} will always set the default translation language to the language provided by the dictionary. However, you can still specify the language, if you prefer. 
+Note that the |\providetranslation| command does not need the option |[to=German]|. Inside a dictionary file \textsc{translator} will always set the default translation language to the language provided by the dictionary. However, you can still specify the language, if you prefer.
 
 The |\ProvidesDictionary| command currently only prints a message in the log-files.
 
@@ -328,7 +328,7 @@ Once the dictionaries and languages have been setup, you can translate keys usin
 \label{section-language-path}
 
 \begin{command}{\languagepath\marg{language path}}
-  This command sets the language path that is searched when \textsc{translator} looks for a key. 
+  This command sets the language path that is searched when \textsc{translator} looks for a key.
 
   The default value of the language path is |\languagename,English|. The |\languagename| is the standard \TeX\ macro that expands to the current language. Typically, this is exactly what you want and there is no real need to change this default language path.
 \end{command}
@@ -364,5 +364,5 @@ The \translatorname\ package is loaded ``in stages'':
 The first thing that needs to be done is to load the package. Typically, this is done automatically by some other package, but you may wish to include it directly:
 
 \begin{package}{{translator}}
-  When you load the package, you can specify (multiple) babel languages as \meta{options}. The effect of giving such an option is the following: It causes the \translatorname\ package to call |\uselanguage| for the appropriate translation of the babel language names to \translatorname's language names. It also causes |\languagealias| to be called for the languages. 
+  When you load the package, you can specify (multiple) babel languages as \meta{options}. The effect of giving such an option is the following: It causes the \translatorname\ package to call |\uselanguage| for the appropriate translation of the babel language names to \translatorname's language names. It also causes |\languagealias| to be called for the languages.
 \end{package}
