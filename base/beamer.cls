@@ -352,8 +352,8 @@
 \beamer@filterclassoptions
 
 
-\RequirePackage{pgfcore,pgfbaseimage}
-% We need only the core and some image stuff for icons.
+\RequirePackage{pgfcore}
+% We need only the core stuff.
 
 \RequirePackage{xxcolor}
 % For color management (comes with pgf).
