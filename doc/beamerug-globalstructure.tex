@@ -1,4 +1,4 @@
-% Copyright 2003--2007 by Till Tantau
+p% Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
@@ -302,6 +302,19 @@ Often, you may want a certain type of frame to be shown directly after a section
 \begin{command}{\AtBeginSubsubsection\oarg{special star text}\marg{text}}
   Like |\AtBeginSubsection|, only for subsubsections.
 \end{command}
+
+\beamer\ also provides |\sectionpage| and |\subsectionpage| commands, which are used to fill a frame with section or subsection number and title in a stylish way. They are very similar to |\partpage| command described below.
+
+  \example
+\begin{verbatim}
+\section{A section}
+
+  \frame{\sectionpage}
+
+  \frame{Some text.}
+\end{verbatim}
+
+If you enable \translatorname\ as described in Section \ref{section-translator-basic-usage}, you will also get translated strings for ``Section'', ``Subsection'' and others.
 
 
 \subsection{Adding Parts}
