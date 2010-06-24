@@ -1,10 +1,10 @@
 rerun = "(There were undefined references|Rerun to get (cross-references|the bars) right)"
 doc   = beameruserguide
 
-themes = AnnArbor Antibes Berkeley Berlin Bergen Boadilla  Copenhagen Darmstadt \
-  Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
-  Luebeck Malmoe Madrid Marburg Montpellier PaloAlto \
-  Pittsburgh Rochester Singapore Szeged Warsaw \
+themes = AnnArbor Antibes Berkeley Berlin Bergen Boadilla Copenhagen \
+  Darmstadt Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
+  Luebeck Malmoe Madrid Marburg Montpellier PaloAlto Pittsburgh \
+  Rochester Singapore Szeged Warsaw \
   CambridgeUS \
   default boxes
 
@@ -36,27 +36,27 @@ beameruserguide.pdf: $(doc).tex $(doc).ind \
 	pdflatex $(doc).tex
 	(egrep -q $(rerun) $(doc).log && pdflatex $(doc).tex) || true
 
-beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../themes/theme/beamertheme%.sty
+beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../base/themes/theme/beamertheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugtheme%.pdf=%)}\\input beamerthemeexample.tex;
 	mv beamerthemeexample.pdf $@
 
-beamerugfonttheme%.pdf: beamerfontthemeexample.tex beamerthemeexamplebase.tex ../themes/font/beamerfonttheme%.sty
+beamerugfonttheme%.pdf: beamerfontthemeexample.tex beamerthemeexamplebase.tex ../base/themes/font/beamerfonttheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugfonttheme%.pdf=%)}\\input beamerfontthemeexample.tex;
 	mv beamerfontthemeexample.pdf $@
 
-beamerugcolorthemealbatrossstylish.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../themes/color/beamercolorthemealbatross.sty
+beamerugcolorthemealbatrossstylish.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../base/themes/color/beamercolorthemealbatross.sty
 	pdflatex \\def\\themename{albatrossstylish}\\input beamercolorthemeexample.tex;
 	mv beamercolorthemeexample.pdf $@
 
-beamerugcolortheme%.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../themes/color/beamercolortheme%.sty
+beamerugcolortheme%.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../base/themes/color/beamercolortheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugcolortheme%.pdf=%)}\\input beamercolorthemeexample.tex;
 	mv beamercolorthemeexample.pdf $@
 
-beameruginnertheme%.pdf: beamerinnerthemeexample.tex beamerthemeexamplebase.tex ../themes/inner/beamerinnertheme%.sty
+beameruginnertheme%.pdf: beamerinnerthemeexample.tex beamerthemeexamplebase.tex ../base/themes/inner/beamerinnertheme%.sty
 	pdflatex \\def\\themename{$(@:beameruginnertheme%.pdf=%)}\\input beamerinnerthemeexample.tex;
 	mv beamerinnerthemeexample.pdf $@
 
-beamerugoutertheme%.pdf: beamerouterthemeexample.tex beamerthemeexamplebase.tex ../themes/outer/beameroutertheme%.sty
+beamerugoutertheme%.pdf: beamerouterthemeexample.tex beamerthemeexamplebase.tex ../base/themes/outer/beameroutertheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugoutertheme%.pdf=%)}\\input beamerouterthemeexample.tex;
 	mv beamerouterthemeexample.pdf $@
 
