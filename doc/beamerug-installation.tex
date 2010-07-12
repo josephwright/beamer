@@ -46,9 +46,11 @@ We do not create or manage pre-bundled packages of \beamer, but, fortunately, ot
 
 In \TeX\ Live, use the |tlmgr| tool to install the packages called |beamer|, |pgf|, and |xcolor|. If you have a fairly recent version of \TeX\ Live, and you have done full installation, \beamer\ is included.
 
-\subsubsection{MiK\TeX and pro\TeX t}
+
+\subsubsection{MiK\TeX\ and pro\TeX t}
 
 For MiK\TeX\ and pro\TeX t, use the update wizard or package manager to install the (latest versions of the) packages called |beamer|, |pgf|, and |xcolor|.
+
 
 \subsubsection{Debian and Ubuntu}
 
@@ -63,13 +65,16 @@ Debian 5.0 ``lenny'' includes \TeX\ Live 2007, and version 6.0 ``squeeze'' will 
 
 Ubuntu 8.04, 9.04 and 9.10 include \TeX\ Live 2007, and version 10.04 includes \TeX\ Live 2009.
 
+
 \subsubsection{Fedora}
 
-Fedora 12 and 13 include \TeX\ Live 2007, which includes \beamer. It can be installed by running the command ``|yum install texlive-texmf-latex|''. Jindrich Novy provides |rpm| packages for newer versions of \TeX\ Live for Fedora 12 and 13, at
+Fedora 9, 10, 11, 12 and 13 include \TeX\ Live 2007, which includes \beamer. It can be installed by running the command ``|yum install texlive-texmf-latex|''. As with Debian, this allows you to manually install newer versions of \beamer\ into your local directory (explained below).
+
+Jindrich Novy provides \TeX\ Live 2010 |rpm| packages for Fedora 12 and 13, at
 \begin{verbatim}
 http://fedoraproject.org/wiki/Features/TeXLive
 \end{verbatim}
-and it's also very likely that these packages will be a part of Fedora 14 once it's released.
+Fedora 14 will contain \TeX\ Live 2010 once it's released.
 
 
 \subsection{Installation in a texmf Tree}
@@ -102,7 +107,7 @@ texmf/tex/latex/beamer
 \end{verbatim}
 and place all files of the package in this directory.
 
-Finally, you need to rebuild \TeX's filename database. This is done by running the command |texhash| or |mktexlsr| (they are the same). In MiK\TeX package manager and \TeX\ Live |tlmgr|, there is a menu option to do this.
+Finally, you need to rebuild \TeX's filename database. This is done by running the command |texhash| or |mktexlsr| (they are the same). In MiK\TeX\ package manager and \TeX\ Live |tlmgr|, there is a menu option to do this.
 
 \lyxnote
 For usage of the \beamer\ class with \LyX, you have to do all of the above. You also have to make \LyX\ aware of the file |beamer.layout|. This file is \emph{not part of the \beamer\ package} since it is updated and managed by the \LyX\ development team. This means that in reasonably up-to-date \LyX\ versions this file will already be installed and nothing needs to be done.

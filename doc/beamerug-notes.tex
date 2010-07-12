@@ -41,7 +41,7 @@ The following example will produce one note page that follows the second slide a
 
 Outside frames, the command |\note| creates a single note page. It is ``independent'' of any usage of the |\note| commands inside the previous frame. If you say |\note| inside a frame and |\note| right after it, \emph{two} note pages are created.
 
-In the following, the syntax and effects of the |\note| command \emph{inside} frames is described:
+In the following, the syntax and effects of the |\note| command \emph{inside} frames are described:
 
 \begin{command}{\note\sarg{overlay specification}\oarg{options}\marg{note text}}
   Effects \emph{inside} frames:
@@ -92,7 +92,7 @@ Next, the syntax and effects of the |\note| command \emph{outside} frames are de
   Notes are ignored in |article| mode.
 \end{command}
 
-The following element dictates who the note pages are rendered:
+The following element dictates how the note pages are rendered:
 
 \begin{element}{note page}\yes\yes\yes
   This template is used to typeset a note page.  The template should contain a mentioning of the insert |\insertnote|, which will contain the note text. To squeeze more onto note pages you might consider changing the size of the \beamer-font |note page| to something small. The default is |\small|.
@@ -154,11 +154,11 @@ Sometimes you wish some text to be shown on every note or at least on every note
 
 Since you normally do not wish the notes to be part of your presentation, you must explicitly say so in the preamble if notes should be included in your presentation. You can use the following \beamer\ options for this:
 
-\begin{beameroption}{hide notes}
+\begin{beameroption}{hide notes}{}
   Notes are not shown. This is the default in a presentation.
 \end{beameroption}
 
-\begin{beameroption}{show notes}
+\begin{beameroption}{show notes}{}
   Include notes in the output file. Normal slides are also included and the note pages are interleaved with them.
 \end{beameroption}
 
@@ -215,6 +215,6 @@ Since you normally do not wish the notes to be part of your presentation, you mu
 \end{beameroption}
 
 
-\begin{beameroption}{show only notes}
+\begin{beameroption}{show only notes}{}
   Include only the notes in the output file and suppresses all frames. This options is useful for printing them. If you specify this command, the |.aux| and |.toc| files are \emph{not} updated. So, if you add a section and re\TeX\ your presentation, this will not be reflected in the navigation bars (which you do not see anyway since only notes are output).
 \end{beameroption}

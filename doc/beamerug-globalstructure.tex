@@ -257,11 +257,11 @@ In order to create a line break in the table of contents (usually not a good ide
   \end{element}
 \end{command}
 
-\begin{command}{\subsection\sarg{mode specification}\declare{|*|}\marg{subsubsection name}}
-  Starts a subsection without an entry in the table of contents. No heading is created, but the \meta{subsubsection name} is shown in a possible sidebar.
+\begin{command}{\subsubsection\sarg{mode specification}\declare{|*|}\marg{subsubsection name}}
+  Starts a subsubsection without an entry in the table of contents. No heading is created, but the \meta{subsubsection name} is shown in a possible sidebar.
 \end{command}
 
-Often, you may want a certain type of frame to be shown directly after a section or subsection starts. For example, you may wish every subsection to start with a frame showing the table of contents with the current subsection hilighted. To facilitate this, you can use the following commands.
+Often, you may want a certain type of frame to be shown directly after a section or subsection starts. For example, you may wish every subsection to start with a frame showing the table of contents with the current subsection highlighted. To facilitate this, you can use the following commands.
 
 \begin{command}{\AtBeginSection\oarg{special star text}\marg{text}}
   The given text will be inserted at the beginning of every section. If the \meta{special star text} parameter is specified, this text will be used for starred sections instead. Different calls of this command will not ``add up'' the given texts (like the |\AtBeginDocument| command does), but will overwrite any previous text.

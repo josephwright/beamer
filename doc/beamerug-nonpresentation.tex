@@ -46,7 +46,7 @@ Instead of |2 on 1| you can use |4 on 1| (but then you have to add |landscape| t
 
 In the following, the ``article version'' of your presentation refers to a normal \TeX\ text typeset using, for example, the document class |article| or perhaps |llncs| or a similar document class. This version of the presentation will typically follow different typesetting rules and may even have a different structure. Nevertheless, you may wish to have this version coexist with your presentation in one file and you may wish to share some part of it (like a figure or a formula) with your presentation.
 
-In general, the article version of a talk is better suited as a handout thann a handout created using the simple |handout| mode since it is more economic and can include more in-depth information.
+In general, the article version of a talk is better suited as a handout than a handout created using the simple |handout| mode since it is more economic and can include more in-depth information.
 
 \subsubsection{Starting the Article Mode}
 
@@ -60,7 +60,7 @@ The package |beamerarticle| defines virtually all of \beamer's commands in a way
   The following \meta{options} may be given:
   \begin{itemize}
   \item
-    \declare{|activeospeccharacters|} will leave the character code of the pointed brackets as specified by other packages. Normally, \beamer\ will turn off the special behaviour of the two characters |<| and |>|. Using this option, you can reinstall the original behaviour at the price of possible problems when using overlay specifications in the |article| mode.
+    \declare{|activeospeccharacters|} will leave the character code of the pointed brackets as specified by other packages. Normally, \beamer\ will turn off the special behavior of the two characters |<| and |>|. Using this option, you can reinstall the original behavior at the price of possible problems when using overlay specifications in the |article| mode.
   \item
     \declare{|noamsthm|} will suppress the loading of the |amsthm| package. No theorems will be defined.
   \item
@@ -87,7 +87,7 @@ The package |beamerarticle| defines virtually all of \beamer's commands in a way
 \end{verbatim}
 \end{package}
 
-There is one remaining problem: While the |article| version can easily \TeX\ the whole file, even in the presence of commands like |\frame<2>|, we do not want the special article text to be inserted into our original \beamer\ presentation. That means, we would like all text \emph{between} frames to be suppressed. More precisely, we want all text except for commands like |\section| and so on to be suppressed. This behaviour can be enforced by specifying the option |ignorenonframetext| in the presentation version. The option will insert a |\mode*| at the beginning of your presentation.
+There is one remaining problem: While the |article| version can easily \TeX\ the whole file, even in the presence of commands like |\frame<2>|, we do not want the special article text to be inserted into our original \beamer\ presentation. That means, we would like all text \emph{between} frames to be suppressed. More precisely, we want all text except for commands like |\section| and so on to be suppressed. This behavior can be enforced by specifying the option |ignorenonframetext| in the presentation version. The option will insert a |\mode*| at the beginning of your presentation.
 
 The following example shows a simple usage of the |article| mode:
 
@@ -146,7 +146,7 @@ With some more text.
 \end{document}
 \end{verbatim}
 
-There is one command whose behaviour is a bit special in |article| mode: The line break command |\\|. Inside frames, this command has no effect in |article| mode, except if an overlay specification is present. Then it has the normal effect dictated by the specification. The reason for this behaviour is that you will typically inserts lots of |\\| commands in a presentation in order to get control over all line breaks. These line breaks are mostly superfluous in |article| mode. If you really want a line break to apply in all versions, say |\\<all>|. Note that the command |\\| is often redefined by certain environments, so it may not always be overlay-specification-aware. In such a case you have to write something like |\only<presentation>{\\}|.
+There is one command whose behavior is a bit special in |article| mode: The line break command |\\|. Inside frames, this command has no effect in |article| mode, except if an overlay specification is present. Then it has the normal effect dictated by the specification. The reason for this behavior is that you will typically inserts lots of |\\| commands in a presentation in order to get control over all line breaks. These line breaks are mostly superfluous in |article| mode. If you really want a line break to apply in all versions, say |\\<all>|. Note that the command |\\| is often redefined by certain environments, so it may not always be overlay-specification-aware. In such a case you have to write something like |\only<presentation>{\\}|.
 
 \subsubsection{Workflow}
 \label{section-article-version-workflow}
@@ -327,7 +327,7 @@ This text is only inserted in presentation mode.
 The last flavor of the mode command behaves quite differently.
 
 \begin{command}{\mode\declare{|*|}}
-  The effect of this mode is to ignore all text outside frames in the |presentation| modes. In article mode it has no effect.
+  The effect of this mode is to ignore all text outside frames in the |presentation| modes. In |article| mode it has no effect.
 
   This mode should only be entered outside of frames. Once entered, if the current mode is a |presentation| mode, \TeX\ will enter a gobbling state similar to the gobbling state of the second ``flavor'' of the |\mode| command. The difference is that the text is now read token-wise, not line-wise. The text is gobbled token by token until one of the following tokens is found: |\mode|, |\frame|, |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|, |\note|, |\begin{frame}|, and |\end{document}| (the last two are really tokens, but they are recognized anyway).
 

@@ -20,7 +20,7 @@
 
 There are three predefined environments for creating lists, namely |enumerate|, |itemize|, and |description|. The first two can be nested to depth three, but nesting them to this depth creates totally unreadable slides.
 
-The |\item| command is overlay-specification-aware. If an overlay specification is provided, the item will only be shown on the specified slides, see the following example. If the |\item| command is to take an optional argument and an overlay specification, the overlay specification can either come first as in |\item<1>[Cat]| or come last as in |\item[Cat]<1>|.
+The |\item| command is overlay specification-aware. If an overlay specification is provided, the item will only be shown on the specified slides, see the following example. If the |\item| command is to take an optional argument and an overlay specification, the overlay specification can either come first as in |\item<1>[Cat]| or come last as in |\item[Cat]<1>|.
 \begin{verbatim}
 \begin{frame}
   There are three important points:
@@ -308,10 +308,12 @@ In order to simplify changing the color or font of items, the different kinds of
 
 \begin{element}{subsubitem}\no\yes\yes
   \colorfontparents{subitem}
+  Same as |subitem| for subsubitems, that is, for items on the third level of indentation.
 \end{element}
 
 \begin{element}{subsubitem projected}\no\yes\yes
   \colorfontparents{subitem projected}
+  Same as |subitem projected| for subsubitems, that is, for items on the third level of indentation.
 \end{element}
 
 
@@ -416,7 +418,7 @@ The \beamer\ class predefines commands and environments for highlighting text. U
 The \beamer\ class predefines an environment for typesetting a ``block'' of text that has a heading. The appearance of blocks can easily be changed using the following template:
 
 \begin{element}{blocks}\semiyes\no\no
-  Changining this parent template changes the templates of normal blocks, alerted blocks, and example blocks.
+  Changing this parent template changes the templates of normal blocks, alerted blocks, and example blocks.
 
   \example
   |\setbeamertemplate{blocks}[default]|
@@ -644,10 +646,10 @@ In |article| mode, theorems are automatically numbered. By specifying the class 
 You can define new environments using the following command:
 
 \begin{command}{\newtheorem\opt{|*|}\marg{environment name}\oarg{numbered same as}\marg{head text}\oarg{number within}}
-  This command is used exactly the same way as in the |amsthm| package (as a matter of fact, it is the command from that package), see its documentation. The only difference is that environments declared using this command are overlay-specification-aware in \beamer\ and that, when typeset, are typeset according to \beamer's templates.
+  This command is used exactly the same way as in the |amsthm| package (as a matter of fact, it is the command from that package), see its documentation. The only difference is that environments declared using this command are overlay specification-aware in \beamer\ and that, when typeset, are typeset according to \beamer's templates.
 
   \articlenote
-  Environments declared using this command are also overlay-specification-aware in |article| mode.
+  Environments declared using this command are also overlay specification-aware in |article| mode.
 
   \example
   |\newtheorem{observation}[theorem]{Observation}|
@@ -658,7 +660,7 @@ You can also use |amsthm|'s command |\newtheoremstyle| to define new theorem sty
 If you wish to define the environments like |theorem| differently (for example, have it numbered within each subsection), you can use the following class option to disable the definition of the predefined environments:
 
 \begin{classoption}{notheorems}
-  Switches off the definition of default blocks like |theorem|, but still loads |amsthm| and makes theorems overlay-specificiation-aware.
+  Switches off the definition of default blocks like |theorem|, but still loads |amsthm| and makes theorems overlay specification-aware.
 \end{classoption}
 
 The option is also available as a package option for |beamerarticle| and has the same effect.
@@ -759,7 +761,7 @@ In the |article| version, the package |amsthm| sometimes clashes with the docume
 
 In order to draw a frame (a rectangle) around some text, you can use \LaTeX s standard command |\fbox| and also |\frame| (inside a \beamer\ frame, the |\frame| command changes its meaning to the normal \LaTeX\ |\frame| command). More frame types are offered by the package |fancybox|, which defines the following commands: |\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult the \LaTeX\ Companion for details on how to use these commands.
 
-The \beamer\ class also defines two environments for creating coloured boxes.
+The \beamer\ class also defines two environments for creating colored boxes.
 
 \begin{environment}{{beamercolorbox}\oarg{options}\marg{beamer color}}
   This environment can be used to conveniently typeset some text using some \beamer-color. Basically, the following two command blocks do the same:
@@ -834,7 +836,7 @@ The \beamer\ class also defines two environments for creating coloured boxes.
   \item
     \declare{|colsep*=|\meta{dimension}} sets an extra color separation space around the text that is \emph{horizontally outside the box}. This means that if the box has a background, this background will protrude by \meta{dimension} to the left and right of the text, but this protruding background will not be taken intro consideration by \TeX\ for typesetting purposes.
 
-    A typical example usage of this option arises when you insert a box with a coloured background in the middle of normal text. In this case, if the background color is set, you would like a background to be drawn behind the text \emph{and} you would like a certain extra space around this text (the background should not stop immediately at the borders of the text, this looks silly) \emph{and} you would like the normal text always to be at the same horizontal position, independently of whether a background is present or not. In this case, using |colsep*=4pt| is a good option.
+    A typical example usage of this option arises when you insert a box with a colored background in the middle of normal text. In this case, if the background color is set, you would like a background to be drawn behind the text \emph{and} you would like a certain extra space around this text (the background should not stop immediately at the borders of the text, this looks silly) \emph{and} you would like the normal text always to be at the same horizontal position, independently of whether a background is present or not. In this case, using |colsep*=4pt| is a good option.
   \item
     \declare{|shadow|}\opt{|=|\meta{true or false}} draws a shadow behind the box. Currently, this option only has an effect if used together with the |rounded| option, but that may change.
   \item
@@ -842,7 +844,7 @@ The \beamer\ class also defines two environments for creating coloured boxes.
   \item
     \declare{|ignorebg|} causes the background color of the \meta{beamer color} to be ignored, that is, to be treated as if it were set to ``transparent'' or ``empty.''
   \item
-    \declare{vmode} causes \TeX\ to be in vertical mode when the box starts. Normally, \TeX\ will be in horizontal mode at the start of the box (a |\leavevmode| is inserted automatically at the beginning of the box unless this option is given). Only \TeX perts need this option, so, if you use it, you will probably know what you are doing anyway.
+    \declare{|vmode|} causes \TeX\ to be in vertical mode when the box starts. Normally, \TeX\ will be in horizontal mode at the start of the box (a |\leavevmode| is inserted automatically at the beginning of the box unless this option is given). Only \TeX perts need this option, so, if you use it, you will probably know what you are doing anyway.
   \end{itemize}
 \end{environment}
 
@@ -1045,7 +1047,7 @@ Inside |{verbatim}| environments you obviously cannot use commands like |\alert<
 
 \subsection{Abstract}
 
-The |abstract| environment is overlay-specificiation-aware in \beamer:
+The |{abstract}| environment is overlay specificiation-aware in \beamer:
 
 \begin{environment}{{abstract}\sarg{action specification}}
   You can use this environment to typeset an abstract.
@@ -1071,7 +1073,7 @@ The |abstract| environment is overlay-specificiation-aware in \beamer:
 
 \subsection{Verse, Quotations, Quotes}
 
-\LaTeX\ defines three environments for typesetting quotations and verses: |verse|, |quotation|, and |quote|. These environments are also available in the \beamer\ class, where they are overlay-specification-aware. If an overlay specification is given, the verse or quotation is shown only on the specified slides and is covered otherwise. The difference between a |quotation| and a |quote| is that the first has paragraph indentation, whereas the second does not.
+\LaTeX\ defines three environments for typesetting quotations and verses: |verse|, |quotation|, and |quote|. These environments are also available in the \beamer\ class, where they are overlay specification-aware. If an overlay specification is given, the verse or quotation is shown only on the specified slides and is covered otherwise. The difference between a |quotation| and a |quote| is that the first has paragraph indentation, whereas the second hasn't.
 
 You can change the font and color used for these by changing the \beamer-colors and -fonts listed below. Unlike the standard \LaTeX\ environments, the default font theme typesets a verse in an italic serif font, quotations and quotes are typeset using an italic font (whether serif or sans-serif depends on the standard document font).
 
@@ -1144,7 +1146,7 @@ You can use the usual |\footnote| command. It has been augmented to take an addi
   \example
   |\footnote[frame,2]{Not proved.}|
   \example
-  |\footnote<.->{Der Spiegel, 4/04, S.\ 90.}|
+  |\footnote<.->{Der Spiegel, 4/04, S.~90.}|
 
   \begin{element}{footnote}\yes\yes\yes
     This template will be used to render the footnote. Inside this template, the following two inserts can be used:

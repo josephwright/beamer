@@ -51,7 +51,7 @@ There are, unfortunately, quite a few places where you may run into problems:
 \item
   If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned. You can read more about that in Section~\ref{section-graphics} that talks about graphics.
 \item
-  If the file cannot be compiled because some \prosper\ command is not implemented, you will have to delete this command and try to mimick its behaviour using some \beamer\ command.
+  If the file cannot be compiled because some \prosper\ command is not implemented, you will have to delete this command and try to mimick its behavior using some \beamer\ command.
 \end{itemize}
 
 \begin{package}{{beamerprosper}}
@@ -60,7 +60,7 @@ There are, unfortunately, quite a few places where you may run into problems:
   This package takes the following options:
   \begin{itemize}
   \item
-    \declare{|framesassubsections|} causes each frame to create its own subsection with the frame title as subsection name. This behaviour mimicks \textsc{ha}-\textsc{prosper}'s behaviour. In a long talk this will create way too many subsections.
+    \declare{|framesassubsections|} causes each frame to create its own subsection with the frame title as subsection name. This behavior mimicks \textsc{ha}-\textsc{prosper}'s behavior. In a long talk this will create way too many subsections.
   \end{itemize}
 
   \articlenote
@@ -116,7 +116,7 @@ My notes for these slides.
 \end{notes}
 \end{document}
 \end{verbatim}
-  You can run, for example, pdf\LaTeX\ on the file to get a \beamer\ presentation with overlays. Adding the |notes| option will also show the note. Certain commands, like |\LeftFoot|, are ignored. You can change the theme using the usual commands. You can also use all normal \beamer\ commands and concepts, like overlay-specifications, in the file. You can also create an |article| version by using the class |article| and including the package |beamerarticle|.
+  You can run, for example, pdf\LaTeX\ on the file to get a \beamer\ presentation with overlays. Adding the |notes| option will also show the notes. Certain commands, like |\LeftFoot|, are ignored. You can change the theme using the usual commands. You can also use all normal \beamer\ commands and concepts, like overlay-specifications, in the file. You can also create an |article| version by using the class |article| and including the package |beamerarticle|.
 \end{package}
 
 In the following, the effects of \prosper\ commands in \beamer\ are listed.
@@ -354,7 +354,7 @@ There are, unfortunately, numerous places where you may run into problems:
 \item
   If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned.
 \item
-  If the file cannot be compiled because some \seminar\ command is not implemented, you will have to delete this command and try to mimick its behaviour using some \beamer\ command.
+  If the file cannot be compiled because some \seminar\ command is not implemented, you will have to delete this command and try to mimick its behavior using some \beamer\ command.
 \end{itemize}
 
 \begin{package}{{beamerseminar}}
@@ -363,7 +363,7 @@ There are, unfortunately, numerous places where you may run into problems:
   This package takes the following options:
   \begin{itemize}
   \item
-    \declare{|accumulate|} causes overlays to be accumulated. The original behaviour of the \seminar\ package is that in each overlay only the really ``new'' part of the overlay is shown. This makes sense, if you really print out the overlays on transparencies and then really stack overlays on top of each other. For a presentation with a video projector, you rather want to present an ``accumulated'' version of the overlays. This is what this option does: When the new material of the $i$-th overlay is shown, the material of all previous overlays is also shown.
+    \declare{|accumulate|} causes overlays to be accumulated. The original behavior of the \seminar\ package is that in each overlay only the really ``new'' part of the overlay is shown. This makes sense, if you really print out the overlays on transparencies and then really stack overlays on top of each other. For a presentation with a video projector, you rather want to present an ``accumulated'' version of the overlays. This is what this option does: When the new material of the $i$-th overlay is shown, the material of all previous overlays is also shown.
   \end{itemize}
 
   \example
@@ -686,7 +686,7 @@ In the following, the effect of \texpower\ commands in \beamer\ are listed.
 \end{command}
 
 \begin{command}{\restep\marg{text}}
-  Same as |\step|, but the \meta{text} is shown one the same slide as the previous |\step| command. This is implemented by first decreasing the countern  |beamerpauses| by one before calling |\step|.
+  Same as |\step|, but the \meta{text} is shown one the same slide as the previous |\step| command. This is implemented by first decreasing the counter |beamerpauses| by one before calling |\step|.
 \end{command}
 
 \begin{command}{\reswitch\marg{alternate text}\meta{text}}

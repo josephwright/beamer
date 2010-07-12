@@ -243,7 +243,7 @@ You might also consider using the style |xmpmulti.sty| that comes with \beamer. 
 \begin{command}{\multiinclude\opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\marg{base file name}}
   Except for the possibility of specifying a \meta{default overlay specification}, this command is identical to the |\multiinclude| command from the ppower4 package.
 
-  If no overlay specification is given, the command will search for files called \meta{base file name}|.|\meta{number} for increasing numbers \meta{number}, starting with zero. As long as it finds these files, it issues an |\includegraphics| command on them. The files following the first one are put ``on top'' of the first one. Between any two invocations of |\includegraphics|, a |\pause| command is inserted. You can modify this behaviour is different ways by given suitable \meta{options}, see below.
+  If no overlay specification is given, the command will search for files called \meta{base file name}|.|\meta{number} for increasing numbers \meta{number}, starting with zero. As long as it finds these files, it issues an |\includegraphics| command on them. The files following the first one are put ``on top'' of the first one. Between any two invocations of |\includegraphics|, a |\pause| command is inserted. You can modify this behavior in different ways by given suitable \meta{options}, see below.
 
   \example
   Assume that MetaPost has created files called |gra.0|, |gra.1|, and |gra.2|. You can then create frame consisting of three slides that incrementally show the graphic as follows:
@@ -331,7 +331,7 @@ The \pdf\ specification introduces special sound objects, which are treated quit
 
   Also as for a movie, the \meta{sound poster text} will be be put in a box that, when clicked on, will start playing the movie. However, you might also leave this box empty and only use the |autostart| option. Once playback of a sound has started, it can only be stopped by starting the playback of a different sound or by use of the |\hyperlinkmute| command.
 
-  The supported sound formats depend on the viewer application. Some versions of Acrobat Reader support |.aif| and |.au|. Sometimes you also need to specify information like the sampling rate, even though this information could be extracted from the sound file and even though the \pdf\ standard specifies that the viewer application should do so. In this regard, some versions of Acrobat Reader seems to be non-standard-conforming.
+  The supported sound formats depend on the viewer application. Some versions of Acrobat Reader support |.aif| and |.au|. Sometimes you also need to specify information like the sampling rate, even though this information could be extracted from the sound file and even though the \pdf\ standard specifies that the viewer application should do so. In this regard, some versions of Acrobat Reader seem to be non-standard-conforming.
 
   This command only works together with |pdflatex|. If you use |dvips|, the poster is still shown, but clicking it has no effect and no sound is embedded in any way.
 
