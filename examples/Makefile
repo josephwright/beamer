@@ -1,18 +1,13 @@
 examples = \
-  beamerexample1 \
-  beamerexample2.article \
-  beamerexample2.beamer \
-  beamerexample3 \
-  beamerexample5 \
-  beamerexample6
+  a-conference-talk/beamerexample-conference-talk \
+  a-lecture/beamerexample-lecture-beamer-version \
+  a-lecture/beamerexample-lecture-print-version
 
 all: $(examples:%=%.pdf)
-
-beamerexample2.article.pdf: beamerexample2.article.tex \
-  beamerexample2.beamer.pdf 
-	pdflatex $(@:%.pdf=%.tex)
-	pdflatex $(@:%.pdf=%.tex)
 
 %.pdf: %.tex
 	pdflatex $(@:%.pdf=%.tex)
 	pdflatex $(@:%.pdf=%.tex)
+
+clean:
+	rm -f *.aux *.log *.nav *.out *.snm *.toc *.vrb
