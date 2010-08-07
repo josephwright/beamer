@@ -1,0 +1,909 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% or ...
+
+\setbeamercovered{transparent}
+% or whatever (possibly just delete it)
+\end_preamble
+\language english
+\inputencoding auto
+\fontscheme times
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 1
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+This file is a solution template for:
+\layout Standard
+
+- Talk at a conference/colloquium.
+ 
+\layout Standard
+
+- Talk length is about 20min.
+ 
+\layout Standard
+
+- Style is ornate.
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed true
+
+\layout Standard
+
+Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+ 
+\layout Standard
+
+In principle, this file can be redistributed and/or modified under the terms
+ of the GNU Public License, version 2.
+ However, this file is supposed to be a template to be modified for your
+ own needs.
+ For this reason, if you use this file as a template and not specifically
+ distribute it as part of a another package/program, the author grants the
+ extra permission to freely copy and modify this file as you see fit and
+ even to delete this copyright notice.
+ 
+\end_inset 
+
+
+\layout Title
+
+Title As It Is In the Proceedings
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Short Paper Title 
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, use only with long paper titles
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Subtitle
+
+Include Only If Paper Has a Subtitle
+\layout Author
+
+F.\SpecialChar ~
+Author
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{1}
+\end_inset 
+
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+and
+\end_inset 
+
+ S.\SpecialChar ~
+Another
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{2}
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Give the names in the same order as the appear in the paper.
+ 
+\layout Standard
+
+- Use the 
+\backslash 
+inst{?} command only if the authors have different affiliations.
+\end_inset 
+
+
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Author, Another
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- optional, use only with lots of authors
+\layout Standard
+
+- if there are reallylots of authors, use 
+\begin_inset Quotes eld
+\end_inset 
+
+Author et al.
+\begin_inset Quotes erd
+\end_inset 
+
+
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Date
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{1}
+\end_inset 
+
+Department of Computer Science
+\layout Date
+
+University of Somewhere
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+and
+\end_inset 
+
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{2}
+\end_inset 
+
+Department of Theoretical Philosophy
+\layout Date
+
+University of Elsewhere
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Use the 
+\backslash 
+inst command only if there are several affiliations.
+\layout Standard
+
+- Keep it simple, no one is interested in your street address.
+\end_inset 
+
+
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Universities of Somewhere and Elsewhere
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, but mostly needed
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Date
+
+Conference on Fabulous Presentations, 2003
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Either use conference name or its abbreviation.
+ 
+\layout Standard
+
+- Not really informative to the audience, more for people (including yourself)
+ who are reading the slides online
+\end_inset 
+
+
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+CFP 2003
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, should be abbreviation of conference name
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+If you have a file called "institution-logo-filename.xxx", where xxx is a
+ graphic format that can be processed by latex or pdflatex, resp., then you
+ can add a logo by uncommenting the following:
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+%
+\backslash 
+pgfdeclareimage[height=0.5cm]{institution-logo}{institution-logo-filename}
+\layout Standard
+%
+\backslash 
+logo{
+\backslash 
+pgfuseimage{institution-logo}}
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+The following causes the table of contents to be shown at the beginning
+ of every subsection.
+ Delete this, if you do not want it.
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+
+\backslash 
+AtBeginSubsection[]{
+\layout Standard
+  
+\backslash 
+frame<beamer>{ 
+\layout Standard
+    
+\backslash 
+frametitle{Outline}   
+\layout Standard
+    
+\backslash 
+tableofcontents[currentsection,currentsubsection] 
+\layout Standard
+  }
+\layout Standard
+}
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+If you wish to uncover everything in a step-wise fashion, uncomment the
+ following command:
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+%
+\backslash 
+beamerdefaultoverlayspecification{<+->}
+\end_inset 
+
+
+\layout BeginFrame
+
+Outline
+\layout Standard
+
+
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Structuring a talk is a difficult task and the following structure may not
+ be suitable.
+ Here are some rules that apply for this solution: 
+\layout Standard
+
+- Exactly two or three sections (other than the summary).
+ 
+\layout Standard
+
+- At *most* three subsections per section.
+ 
+\layout Standard
+
+- Talk about 30s to 2min per frame.
+ So there should be between about 15 and 30 frames, all told.
+\layout Standard
+
+- A conference audience is likely to know very little of what you are going
+ to talk about.
+ So *simplify*! 
+\layout Standard
+
+- In a 20min talk, getting the main ideas across is hard enough.
+ Leave out details, even if it means being less precise than you think necessary.
+ 
+\layout Standard
+
+- If you omit details that are vital to the proof/implementation, just say
+ so once.
+ Everybody will be happy with that.
+ 
+\end_inset 
+
+
+\layout Section
+
+Motivation
+\layout Subsection
+
+The Basic Problem That We Studied
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Basic Problem
+\end_inset 
+
+
+\layout BeginFrame
+
+Make Titles Informative.
+ Use Uppercase Letters.
+\layout FrameSubtitle
+
+Frame subtitles are optional.
+ Use upper- or lowercase letters.
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- A title should summarize the slide in an understandable fashion for anyone
+ how does not follow everything on the slide itself.
+ 
+\end_inset 
+
+
+\layout Itemize
+
+Use Itemize a lot.
+\begin_deeper 
+\layout Pause
+
+\end_deeper 
+\layout Itemize
+
+Use very short sentences or short phrases.
+\begin_deeper 
+\layout Pause
+
+\end_deeper 
+\layout Itemize
+
+These overlays are created using the Pause style.
+\layout BeginFrame
+
+Make Titles Informative.
+ 
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+You can also use overlay specifications to create overlays.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<3->
+\end_inset 
+
+This allows you to present things in any order.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+This is shown second.
+\layout BeginFrame
+
+Make Titles Informative.
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+Untitled block.
+\layout Itemize
+
+Shown on all slides.
+\end_deeper 
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+Some Example Block Title
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $e^{i\pi}=-1$
+\end_inset 
+
+.
+\layout Itemize
+
+
+\begin_inset Formula $e^{i\pi/2}=i$
+\end_inset 
+
+.
+\end_deeper 
+\layout Subsection
+
+Previous Work
+\layout BeginFrame
+
+Make Titles Informative.
+ 
+\layout Example
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+On first slide.
+ 
+\layout Separator
+
+\layout Example
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+On second slide.
+\layout Section
+
+Our Results/Contribution
+\layout Subsection
+
+Main Results
+\layout BeginFrame
+
+Make Titles Informative.
+ 
+\layout Theorem
+
+On first slide.
+\layout Pause
+
+\layout Corollary
+
+On second slide.
+\layout BeginFrame
+
+Make Titles Informative.
+ 
+\layout ColumnsTopAligned
+
+\begin_deeper 
+\layout Column
+
+5cm
+\layout Theorem
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+In left column.
+\layout Column
+
+5cm
+\layout Corollary
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+In right column.
+\newline 
+New line
+\end_deeper 
+\layout Subsection
+
+Basic Ideas for Proofs/Implementations
+\layout Section*
+
+Summary
+\layout BeginFrame
+
+Summary
+\layout Itemize
+
+The 
+\color red
+first main message
+\color default
+ of your talk in one or two lines.
+\layout Itemize
+
+The 
+\color red
+second main message
+\color default
+ of your talk in one or two lines.
+\layout Itemize
+
+Perhaps a 
+\color red
+third message
+\color default
+, but not more than that.
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+An outlook is always optional.
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+vskip0pt plus.5fill
+\end_inset 
+
+
+\layout Itemize
+
+Outlook
+\begin_deeper 
+\layout Itemize
+
+What we have not done yet.
+\layout Itemize
+
+Even more stuff.
+\end_deeper 
+\layout EndFrame
+
+\layout Section*
+\start_of_appendix 
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+All of the following is optional and typically not needed.
+\end_inset 
+
+Appendix
+\layout Subsection*
+
+For Further Reading
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+[allowframebreaks]
+\end_inset 
+
+For Further Reading
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+beamertemplatebookbibitems
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Start with overview books.
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Author1990}
+
+A.
+ Author.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+
+\emph on 
+Handbook of Everything
+\emph default 
+.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ Some Press, 1990.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+beamertemplatearticlebibitems
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Followed by interesting articles.
+ Keep the list short.
+ 
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Someone2002}
+
+S.
+ Someone.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ On this and that
+\emph on 
+.
+ 
+\emph default 
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+
+\emph on 
+Journal on This and That
+\emph default 
+.
+ 2(1):50--100, 2000.
+\layout EndFrame
+
+\the_end

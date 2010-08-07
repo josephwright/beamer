@@ -1,0 +1,40 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\RequirePackage{beamerbasercs}
+\ProvidesPackageRCS $Header$
+
+
+\RequirePackage{beamerbasemodes}
+% Setup modes and check for article option
+
+
+\DeclareOption{utf8}{\PassOptionsToPackage{utf8}{beamerbasearticle}}
+\DeclareOption{hyperref}{\PassOptionsToPackage{hyperref}{beamerbasearticle}}
+\DeclareOption{noxcolor}{\PassOptionsToPackage{noxcolor}{beamerbasearticle}}
+\DeclareOption{notheorems}{\PassOptionsToPackage{notheorems}{beamerbasearticle}}
+\DeclareOption{noamsthm}{\PassOptionsToPackage{noamsthm}{beamerbasearticle}}
+\DeclareOption{envcountsect}{\PassOptionsToPackage{envcountsect}{beamerbasearticle}}
+\DeclareOption{activeospeccharacters}{\PassOptionsToPackage{activeospeccharacters}{beamerbasearticle}}
+
+\ProcessOptions
+
+
+\def\beamer@slide#1#2{\expandafter\gdef\csname beamer@slide#1\endcsname{#2}}
+\beamer@inpresentationfalse
+
+\ifx\beamer@currentmode\@undefined
+  \def\beamer@currentmode{article}
+\fi
+
+\mode
+<all>
+
+\RequirePackage{beamerbasearticle}

@@ -1,0 +1,131 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+%
+% Template Installation Commands
+%
+
+\def\usebeamertemplate{\@ifstar{\beamer@usebeamertemplates}{\beamer@usebeamertemplatedo}}
+\def\beamer@usebeamertemplates{\@ifstar{\beamer@usebeamertemplatess}{\beamer@usebeamertemplatedos}}
+\def\beamer@usebeamertemplatess{\@ifstar{\beamer@usebeamertemplatedosss}{\beamer@usebeamertemplatedoss}}
+\def\beamer@usebeamertemplatedo#1{\csname beamer@@tmpl@#1\endcsname}
+\def\beamer@usebeamertemplatedos#1{{{\usebeamerfont{#1}\usebeamercolor[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
+\def\beamer@usebeamertemplatedoss#1{{{\usebeamerfont*{#1}\usebeamercolor[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
+\def\beamer@usebeamertemplatedosss#1{{{\usebeamerfont*{#1}\usebeamercolor*[fg]{#1}\csname beamer@@tmpl@#1\endcsname}}}
+
+\long\def\beamer@@empty{}
+\def\expandbeamertemplate#1{\csname beamer@@tmpl@#1\endcsname}
+\def\ifbeamertemplateempty#1#2#3{%
+  \def\beamer@ifdo{#3}%
+  \expandafter\ifx\csname beamer@@tmpl@#1\endcsname\relax\def\beamer@ifdo{#2}\fi%
+  \expandafter\ifx\csname beamer@@tmpl@#1\endcsname\beamer@@empty\def\beamer@ifdo{#2}\fi%
+  \beamer@ifdo}
+
+
+\mode
+<article>
+{
+  % the following do the same in article mode:
+  \let\beamer@usebeamertemplatedosss=\beamer@usebeamertemplatedo
+  \let\beamer@usebeamertemplatedoss=\beamer@usebeamertemplatedo
+  \let\beamer@usebeamertemplatedos=\beamer@usebeamertemplatedo
+}
+
+
+\newif\ifbeamer@sbt
+\newtoks\beamer@sbttoks
+
+\newcommand<>\defbeamertemplate{
+  \beamer@ifempty{#1}
+  {\def\beamer@@oar{<presentation>}}
+  {\def\beamer@@oar{#1}}\beamer@defbeamertemplate}
+\def\beamer@defbeamertemplate{\@ifstar{\beamer@sbttrue\beamer@sbtoo}{\beamer@sbtfalse\beamer@sbtoo}}
+\def\beamer@sbtoo#1#2{\@ifnextchar[{\beamer@sbto{#1}{#2}}{\beamer@sbto{#1}{#2}[0]}}
+\def\beamer@sbto#1#2[#3]{\@ifnextchar[{\beamer@@sbto{#1}{#2}[{#3}]}{\def\beamer@sbtotemp{}\beamer@@@sbto{#1}{#2}[{#3}]}}
+\long\def\beamer@@sbto#1#2[#3][#4]{\long\def\beamer@sbtotemp{[{#4}]}\beamer@@@sbto{#1}{#2}[{#3}]}
+\long\def\beamer@@@sbto#1#2[#3]#4{%
+  \beamer@sbttoks={\beamer@@@@sbto{#1}{#2}[{#3}]{#4}}%
+  \@ifnextchar[{\the\beamer@sbttoks}{\the\beamer@sbttoks[action]{}}%
+}
+\long\def\beamer@@@@sbto#1#2[#3]#4[#5]#6{%
+  \edef\beamer@@sbtoarg{\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[{#3}]}%
+  \expandafter\expandafter\expandafter\newcommand\expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
+    \expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname{#4}#6}%
+  \let\beamer@@next=\beamer@resetsbtoarg%
+  \expandafter\mode\beamer@@oar{\let\beamer@@next=\relax}%
+  \beamer@@next%
+  \ifbeamer@sbt\setbeamertemplate{#1}[{#2}]\relax\relax\relax\relax\relax\relax\relax\relax\relax\fi%
+}
+\def\beamer@resetsbtoarg{%
+  \expandafter\expandafter\expandafter\renewcommand\expandafter\beamer@@sbtoarg\beamer@sbtotemp{}
+}
+
+\def\defbeamertemplatealias#1#2#3{%
+  \edef\beamer@@temp{\def\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname{\expandafter\noexpand\csname beamer@@tmpop@#1@#3\endcsname}}%
+  \beamer@@temp}
+
+
+\def\defbeamertemplateparent#1{\@ifnextchar[{\beamer@sbtoparo{#1}}{\beamer@sbtoparo{#1}[*]}}
+\def\beamer@sbtoparo#1[#2]#3{\@ifnextchar[{\beamer@sbtopar{#1}[{#2}]{#3}}{\beamer@sbtopar{#1}[{#2}]{#3}[0]}}
+\def\beamer@sbtopar#1[#2]#3[#4]{\@ifnextchar[
+  {\beamer@@sbtopar{#1}[{#2}]{#3}[{#4}]}
+  {\def\beamer@sbtotemp{}\beamer@@@sbtopar{#1}[{#2}]{#3}[{#4}]}}
+\long\def\beamer@@sbtopar#1[#2]#3[#4][#5]{\long\def\beamer@sbtotemp{[{#5}]}\beamer@@@sbtopar{#1}[{#2}]{#3}[{#4}]}
+\long\def\beamer@@@sbtopar#1[#2]#3[#4]#5{%
+  \expandafter\def\csname beamer@@tmpgrp@#1\endcsname{#3}%
+  \edef\beamer@@sbtoarg{\noexpand\newcommand\expandafter\noexpand\csname beamer@@tmpop@#1@#2\endcsname[{#4}]}%
+  \expandafter\beamer@@sbtoarg\beamer@sbtotemp{%
+    \def\beamer@sbtlist{#3}%
+    \@for\beamer@templ:=\beamer@sbtlist\do
+    {\expandafter\expandafter\expandafter\setbeamertemplate
+      \expandafter\expandafter\expandafter{\expandafter\beamer@templ\expandafter}\expandafter[\beamer@@sbt@option]#5}}}
+
+
+\def\setbeamertemplate#1{%
+  \@ifnextchar[{\beamer@sbtchoose{#1}}{\beamer@sbtexec{#1}}}
+\long\def\beamer@sbtexec#1#2{%
+  \expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname{#2}%
+  \expandafter\ifx\csname beamer@@tmpgrp@#1\endcsname\relax%
+  \else%
+    \expandafter\expandafter\expandafter\def
+    \expandafter\expandafter\expandafter\beamer@sbt@group
+    \expandafter\expandafter\expandafter{\csname beamer@@tmpgrp@#1\endcsname}%
+    \@for\beamer@templ:=\beamer@sbt@group\do{\expandafter\setbeamertemplate\expandafter{\beamer@templ}{#2}}%
+  \fi%
+}
+\long\def\beamer@sbtchoose#1[#2]{\def\beamer@@sbt@option{#2}%
+  \expandafter\ifx\csname beamer@@tmpop@#1@#2\endcsname\relax%
+    \expandafter\let\expandafter\beamer@@next\csname beamer@@tmpop@#1@*\endcsname%
+  \else%
+    \expandafter\let\expandafter\beamer@@next\csname beamer@@tmpop@#1@#2\endcsname%
+  \fi%
+  \beamer@@next%
+}
+
+\newcommand\addtobeamertemplate[3]{%
+  \long\def\beamer@temp{#2}%
+  \expandafter\def\expandafter\beamer@@temp\expandafter{\expandafter\long\expandafter\def\csname beamer@@tmpl@#1\endcsname}%
+  \expandafter\expandafter\expandafter\long%
+  \expandafter\expandafter\expandafter\def%
+  \expandafter\expandafter\expandafter\beamer@@addtemplate%
+  \expandafter\expandafter\expandafter{\csname beamer@@tmpl@#1\endcsname}%
+  \expandafter\expandafter\expandafter\beamer@@temp%
+  \expandafter\expandafter\expandafter{\expandafter\beamer@temp\beamer@@addtemplate#3}%
+}
+
+
+
+\RequirePackage{beamerbaseauxtemplates}
+
+
+\mode
+<all>
