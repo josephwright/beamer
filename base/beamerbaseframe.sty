@@ -60,7 +60,8 @@
   }{\clearpage\beamer@notesactions}% cleanup from previous slide
   \hypersetup{pdfpagetransition=R}%
   \hypersetup{pdfpageduration=}%
-  \thispdfpagelabel{\insertframenumber}
+  \@ifundefined{thispdfpagelabel}{}{%
+  \thispdfpagelabel{\insertframenumber}}%
   \xdef\beamer@frameendpage{\the\c@page}% every time
   \beamer@setuplinks%
   \beamer@displaybreak%
