@@ -458,8 +458,18 @@
         \usebeamerfont{bibliography entry note}%
         \usebeamertemplate{bibliography entry note}}}}%
   \leavevmode\setbox\beamer@tempbox=\hbox{}\ht\beamer@tempbox=1.5em\box\beamer@tempbox}
-
-
+ 	
+\AtBeginDocument{
+  \@ifpackageloaded{biblatex}
+    {
+      \apptocmd\blx@env@bibliography{\let\makelabel\beamer@biblabeltemplate}{}{}
+      \pretocmd{\abx@macro@author}{\usebeamercolor[fg]{bibliography entry author}}{}{}
+      \pretocmd{\abx@macro@editor}{\usebeamercolor[fg]{bibliography entry author}}{}{}
+      \pretocmd{\abx@macro@title}{\blx@unitpunct\blx@postpunct\newblock\usebeamercolor[fg]{bibliography entry title}}{}{}
+      \apptocmd{\abx@macro@title}{\blx@unitpunct\blx@postpunct\newblock\usebeamercolor[fg]{bibliography entry note}}{}{}
+    }
+    {}
+}
 
 \mode
 <article>
