@@ -11,10 +11,12 @@
 \ProvidesPackageRCS $Header$
 
 \mode
-<presentation>
+<all>
 
 \RequirePackage{enumerate}
 
+\mode
+<presentation>
 
 %
 %
@@ -210,9 +212,20 @@
 \mode
 <article>
 {
-  \AtBeginDocument{
-    \let\beamer@origenumerate=\enumerate
-    \renewcommand*\enumerate{\beamer@origenumerate}
+  \AtBeginDocument{ % Remove any overlay specification
+    \let\beamer@@@enum@\@@enum@
+    \def\@@enum@[{%
+      \@ifnextchar<%
+        {\beamer@@@num@@}
+        {\beamer@@@enum@[}%
+    }
+    \def\beamer@@@num@@<#1>]{%
+      \@ifnextchar[%
+        {\beamer@@@enum@}
+        {\@enum@}%
+    }
+    %\let\beamer@origenumerate=\enumerate
+    %\renewcommand*\enumerate{\beamer@origenumerate}
   }
 }
 
@@ -258,7 +271,13 @@
 {
   \AtBeginDocument{
     \let\beamer@origitemize=\itemize
-    \renewcommand*\itemize{\beamer@origitemize}
+    \def\itemize{%
+      \@ifnextchar[{\beamer@itemize@}{\beamer@origitemize}%
+    }
+    \def\beamer@itemize@[{%
+      \@ifnextchar<{\beamer@itemize@@}{\beamer@origitemize[}%
+    }
+    \def\beamer@itemize@@<#1>]{\beamer@origitemize}
   }
 }
 
@@ -440,17 +459,7 @@
         \usebeamertemplate{bibliography entry note}}}}%
   \leavevmode\setbox\beamer@tempbox=\hbox{}\ht\beamer@tempbox=1.5em\box\beamer@tempbox}
 
-\AtBeginDocument{
-  \@ifpackageloaded{biblatex}
-    {
-      \apptocmd\blx@env@bibliography{\let\makelabel\beamer@biblabeltemplate}{}{}
-      \pretocmd{\abx@macro@author}{\usebeamercolor[fg]{bibliography entry author}}{}{}
-      \pretocmd{\abx@macro@editor}{\usebeamercolor[fg]{bibliography entry author}}{}{}
-      \pretocmd{\abx@macro@title}{\blx@unitpunct\blx@postpunct\newblock\usebeamercolor[fg]{bibliography entry title}}{}{}
-      \apptocmd{\abx@macro@title}{\blx@unitpunct\blx@postpunct\newblock\usebeamercolor[fg]{bibliography entry note}}{}{}
-    }
-    {}
-}
+
 
 \mode
 <article>
