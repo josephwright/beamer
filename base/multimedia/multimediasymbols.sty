@@ -1,0 +1,40 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackage{multimediasymbols}[2004/04/10 ver 0.01]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+\RequirePackage{keyval}
+\RequirePackage{pgf}
+
+\define@key{multimediasym}{fill}[]{\def\mm@action{\pgfusepath{fill,stroke}}}
+
+\newcommand\speakersymbol[1][]{%
+  \def\mm@action{}%
+  \setkeys{multimediasym}{#1}%
+  \begin{pgfpicture}{-.1ex}{0pt}{2.1ex}{1.5ex}
+    \pgfsetroundjoin
+    \pgfsetroundcap
+    \pgfpathmoveto{\pgfpoint{0cm}{.5ex}}
+    \pgfpathlineto{\pgfpoint{.5ex}{.5ex}}
+    \pgfpathlineto{\pgfpoint{ex}{0pt}}
+    \pgfpathlineto{\pgfpoint{ex}{1.5ex}}
+    \pgfpathlineto{\pgfpoint{.5ex}{ex}}
+    \pgfpathlineto{\pgfpoint{0pt}{ex}}
+    \pgfpathclose
+    \mm@action
+    \pgfpathmoveto{\pgfpoint{1.25ex}{.5ex}}
+    \pgfpathcurveto{\pgfpoint{1.4ex}{.6ex}}{\pgfpoint{1.4ex}{.9ex}}{\pgfpoint{1.25ex}{1ex}}
+    \pgfpathmoveto{\pgfpoint{1.5ex}{.25ex}}
+    \pgfpathcurveto{\pgfpoint{1.7ex}{.5ex}}{\pgfpoint{1.7ex}{1ex}}{\pgfpoint{1.5ex}{1.25ex}}
+    \pgfpathmoveto{\pgfpoint{1.75ex}{0pt}}
+    \pgfpathcurveto{\pgfpoint{2ex}{.25ex}}{\pgfpoint{2ex}{1.25ex}}{\pgfpoint{1.75ex}{1.5ex}}
+    \pgfusepath{stroke}
+  \end{pgfpicture}}

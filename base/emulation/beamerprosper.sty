@@ -1,0 +1,174 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\let\beamerprosper@entry=\@gobble
+
+\DeclareOption{framesassubsections}{\mode<presentation>
+  {\def\beamerprosper@entry#1{\beamer@ifempty{#1}{}{\subsection{#1}}}}}
+
+\ProcessOptions
+
+% Redefine \institution inside \author
+\mode<presentation>
+{
+\def\author{\@dblarg\beamer@author}
+\def\beamer@author[#1]#2{%
+  \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}%
+    \let\institution=\beamer@institution#2}%
+  \def\beamer@shortauthor{\let\institution=\beamer@shortinstitution#1}%
+}
+\def\beamer@institution#1{\footnotesize #1}
+\def\beamer@shortinstitution#1{\ }
+
+\def\institution{\institute}
+}
+
+\mode<article>
+{
+  \def\institution#1{#1}
+}
+
+
+\newcommand\email[1]{\texttt{#1}}
+
+\define@key{beamerprosper}{toc}{\def\beamerprosper@toc{#1}}
+\define@key{beamerprosper}{template}{}
+\define@key{beamerprosper}{trans}{\def\beamerprosper@trans{#1}}
+\define@key{beamerprosper}{Glitter}[true]{\def\beamerprosper@trans{Glitter}}
+\define@key{beamerprosper}{R}[true]{\def\beamerprosper@trans{R}}
+\define@key{beamerprosper}{Replace}[true]{\def\beamerprosper@trans{Replace}}
+\define@key{beamerprosper}{Split}[true]{\def\beamerprosper@trans{Split}}
+\define@key{beamerprosper}{Blinds}[true]{\def\beamerprosper@trans{Blinds}}
+\define@key{beamerprosper}{Box}[true]{\def\beamerprosper@trans{Box}}
+\define@key{beamerprosper}{Wipe}[true]{\def\beamerprosper@trans{Wipe}}
+\define@key{beamerprosper}{Dissolve}[true]{\def\beamerprosper@trans{Dissolve}}
+\define@key{beamerprosper}{Glitter}[true]{\def\beamerprosper@trans{Glitter}}
+
+
+\newcommand{\PDForPS}[2]{\ifx\pdfoutput\@undefined#2\else#1\fi}
+\newcommand{\onlyInPDF}[1]{\ifx\pdfoutput\@undefined\else#1\fi}
+\newcommand{\onlyInPS}[1]{\ifx\pdfoutput#1\@undefined\fi}
+
+\newenvironment{slide}[2][]{%
+  \def\beamerprosper@toc{#2}
+  \def\beamerprosper@trans{}%
+  \setkeys{beamerprosper}{#1}%
+  \expandafter\beamerprosper@entry\expandafter{\beamerprosper@toc}%
+  \edef\@temp{\noexpand\begin{frame}\beamerprosper@options}%
+  \@temp\PDFtransition{\beamerprosper@trans}\frametitle{#2}}{\end{frame}}
+
+\def\beamerprosper@options{[containsverbatim]}
+\long\def\overlays#1#2{{\def\beamerprosper@options{}#2}}
+
+\def\fromSlide{\@ifstar{\beamer@sfromSlide}{\beamer@fromSlide}}
+\newcommand{\beamer@fromSlide}[2]{\uncover<#1->{#2}}
+\newcommand{\beamer@sfromSlide}[2]{\only<#1->{#2}}
+
+\def\onlySlide{\@ifstar{\beamer@sonlySlide}{\beamer@onlySlide}}
+\newcommand{\beamer@onlySlide}[2]{\uncover<#1>{#2}}
+\newcommand{\beamer@sonlySlide}[2]{\only<#1>{#2}}
+
+\def\untilSlide{\@ifstar{\beamer@suntilSlide}{\beamer@untilSlide}}
+\newcommand{\beamer@untilSlide}[2]{\uncover<-#1>{#2}}
+\newcommand{\beamer@suntilSlide}[2]{\only<-#1>{#2}}
+
+\newcommand\FromSlide[1]{\onslide<#1->}
+\newcommand\OnlySlide[1]{\onslide<#1>}
+\newcommand\UntilSlide[1]{\onslide<-#1>}
+
+\newcommand\slideCaption[1]{\date{#1}}
+\def\Logo{\@ifnextchar(\beamer@Logo\logo}
+\def\beamer@Logo(#1,#2){\logo}
+
+\let\DefaultTransition=\@gobble
+\let\NoFrenchBabelItemize=\relax
+\let\TitleSlideNav=\@gobble
+\let\NormalSlideNav=\@gobble
+\let\LeftFoot=\@gobble
+\let\RightFoot=\@gobble
+
+\AtBeginDocument{\let\beamer@steporigitem=\item}
+
+\newenvironment{Itemize}{\begin{itemize}}{\end{itemize}}
+\newenvironment{itemstep}[1][]{\begin{itemize}[<+->]}{\end{itemize}}
+\newenvironment{enumstep}[1][]{\begin{enumerate}[<+->]}{\end{enumerate}}
+\newcommand\prosperpart[2][]{\begin{slide}[#1]{}\begin{centering}\Large\structure{#2}\par\end{centering}\end{slide}}
+\newcommand{\hiddenitem}{\addtocounter{beamerpauses}{1}}
+
+
+\newcommand{\FontTitle}[2]{}
+\newcommand{\FontText}[2]{}
+\newcommand{\fontTitle}[1]{#1}
+\newcommand{\fontText}[1]{#1}
+\newcommand{\ColorFoot}[1]{}
+\newcommand{\PDFtransition}[1]{\csname beamer@trans#1\endcsname}
+\def\beamer@trans{}
+\def\beamer@transR{}
+\def\beamer@transReplace{}
+\def\beamer@transSplit{\transsplithorizontalout}
+\def\beamer@transBlinds{\transblindshorizontal}
+\def\beamer@transBox{\transboxout}
+\def\beamer@transWipe{\transwipe}
+\def\beamer@transDissolve{\transdissolve}
+\def\beamer@transGlitter{\transglitter}
+
+\newcommand{\myitem}[2]{}
+
+\def\tsection{\@ifstar\section\section}
+
+\def\tsectionandpart{\@ifstar\beamerprosper@tsp\beamerprosper@tsp}
+
+\newcommand\beamerprosper@tsp[2][]{%
+  \def\beamerprosper@toc{#2}%
+  \def\beamerprosper@trans{}%
+  \setkeys{beamerprosper}{#1}%
+  \expandafter\section\expandafter{\beamerprosper@toc}
+  \mode<presentation>{\expandafter\prosperpart\expandafter[\beamerprosper@trans]{#2}}}
+
+\newbox\beamerprosper@notebox
+
+\newenvironment{notes}[1]{%
+  \begingroup%
+  \textwidth=10.8cm\hsize=\textwidth\setbox\beamerprosper@notebox=\vbox\bgroup
+  \begin{small}\textbf{#1}\par\medskip}
+{\par\end{small}\egroup\note{\box\beamerprosper@notebox}
+  \endgroup}
+
+\let\wideslide=\slide
+\let\endwideslide=\endslide
+\let\HAPsetup=\@gobble
+
+\newdimen\beamerprosper@leftwidth
+\newdimen\beamerprosper@rightwidth
+
+\define@key{beamerprosper}{lcolwidth}{\beamerprosper@leftwidth=#1\relax}
+\define@key{beamerprosper}{rcolwidth}{\beamerprosper@rightwidth=#1\relax}
+\define@key{beamerprosper}{lfrheight}{}
+\define@key{beamerprosper}{rfrheight}{}
+\define@key{beamerprosper}{frsep}{}
+\define@key{beamerprosper}{colsep}{}
+\define@key{beamerprosper}{topsep}{}
+\define@key{beamerprosper}{bottomsep}{}
+\define@key{beamerprosper}{indent}{}
+
+\def\dualslide{\@ifnextchar[{\beamerprosper@gobble}{\beamerprosper@dual}}
+\long\def\beamerprosper@gobble[#1]{\dualslide}
+\long\def\beamerprosper@dual#1#2#3{%
+  \beamerprosper@leftwidth=0.47\linewidth%
+  \beamerprosper@rightwidth=0.47\linewidth%
+  \setkeys{beamerprosper}{#1}%
+  \begin{columns}[t,onlytextwidth]%
+    \column{\beamerprosper@leftwidth}%
+    #2%
+    \column{\beamerprosper@rightwidth}%
+    #3%
+  \end{columns}\bigskip}
