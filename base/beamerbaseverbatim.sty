@@ -37,14 +37,18 @@
 }
 
 {\catcode`\^^M=12\endlinechar=-1%
-  \long\gdef\beamer@processframefirstline#1^^M{%
-    \def\beamer@test{#1}%
+  \long\gdef\beamer@processframefirstline#1#2^^M{%
+    \def\beamer@test{#1#2}%
     \ifx\beamer@test\beamer@stopframefirst%
       \let\next=\beamer@framewritten%
     \else
-      \@temptokena={#1}%
-      \immediate\write\beamer@verbatimfileout{\the\@temptokena}%
-      \let\next=\beamer@processframeline%
+      \def\beamer@test{#1}%
+      \@onelevel@sanitize\beamer@test
+      \edef\beamer@test{\beamer@test\space}%
+      \edef\beamer@test{\expandafter\zap@space\beamer@test\@empty}%
+      \@temptokena{#2}%
+      \immediate\write\beamer@verbatimfileout{\beamer@test\the\@temptokena}%
+       \let\next=\beamer@processframeline%
     \fi%
     \next%
   }

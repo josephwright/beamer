@@ -542,7 +542,16 @@
   \immediate\openout\beamer@verbatimfileout=\beamer@verbfilename%
   \expandafter\beamer@checktitleverbatim\@gobble}
 \def\beamer@checktitleverbatim{\@ifnextchar\bgroup{\beamer@verbatim@frametitle}{\beamer@verbatimreadframe}}
-\def\beamer@verbatim@frametitle#1{\@ifnextchar\bgroup{\beamer@verbatim@framesubtitle{#1}}{\beamer@verbatimreadframe\frametitle{#1}}}
+\def\beamer@verbatim@frametitle#1{%
+  \@ifnextchar\bgroup{\beamer@verbatim@framesubtitle{#1}}
+  {%
+    \@temptokena{#1}%
+    \edef\@tempa{\string\frametitle\string{\the\@temptokena\string}}%
+    \@temptokena\expandafter{\@tempa}%
+    \immediate\write\beamer@verbatimfileout{\the\@temptokena}%
+    \beamer@verbatimreadframe
+  }%
+}
 \def\beamer@verbatim@framesubtitle#1#2{\beamer@verbatimreadframe\frametitle{#1}\framesubtitle{#2}}
 % will return to following command with frame contents written to \beamer@verbfilename
 \def\beamer@afterexternalframe{%
