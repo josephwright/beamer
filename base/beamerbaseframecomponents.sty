@@ -291,7 +291,15 @@
   \def\insertfootnotetext{#1}%
   \def\insertfootnotemark{\@makefnmark}%
   \usebeamertemplate***{footnote}}
-
+  
+% Sort out babel
+\AtBeginDocument{
+  \begingroup
+    \@ifundefined{ifFBFrenchFootnotes}
+      {}
+      {\aftergroup\FBFrenchFootnotesfalse}%
+   \endgroup   
+}
 
 \newbox\beamer@footins
 
