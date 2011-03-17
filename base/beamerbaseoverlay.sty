@@ -200,6 +200,7 @@
 \def\beamer@renewcom<>#1{%
   \expandafter\def\expandafter\beamer@name\expandafter{\csname @orig\string#1\endcsname}%
   \expandafter\let\beamer@name=#1\relax%
+  \expandafter\let\csname beamerx@\string#1\endcsname\@undefined
   \newcommand<>#1}
 
 
