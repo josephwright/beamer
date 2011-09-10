@@ -219,10 +219,12 @@
       \ifvoid\beamer@splitbox%
         \ifvoid\beamer@footins%
         \else%
-          \usebeamercolor*[fg]{footnote}%
-          \footnoterule%
-          \unvbox \beamer@footins%
-          \global\setbox\beamer@footins=\box\voidb@x%
+          \begingroup
+            \usebeamercolor*[fg]{footnote}%
+            \footnoterule%
+            \unvbox \beamer@footins%
+            \global\setbox\beamer@footins=\box\voidb@x%
+          \endgroup  
         \fi%
       \fi%
       \beamer@exitcode%
@@ -232,10 +234,12 @@
       \vskip\beamer@framebottomskip%
       \ifvoid\beamer@footins%
       \else%
-        \usebeamercolor*[fg]{footnote}%
-        \footnoterule%
-        \unvbox \beamer@footins%
-        \global\setbox\beamer@footins=\box\voidb@x%
+        \begingroup
+          \usebeamercolor*[fg]{footnote}%
+          \footnoterule%
+          \unvbox \beamer@footins%
+          \global\setbox\beamer@footins=\box\voidb@x%
+        \endgroup 
       \fi%
       \beamer@exitcode}%
     \global\setbox\beamer@footins=\box\voidb@x%
