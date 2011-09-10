@@ -55,7 +55,7 @@
   \fi%
   \global\c@beamerpauses=1\relax%
   \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
-    \refstepcounter{subsectionslide}%
+    \stepcounter{subsectionslide}%
     \xdef\beamer@framestartpage{\the\c@page}% only first time
   }{\clearpage\beamer@notesactions}% cleanup from previous slide
   \hypersetup{pdfpagetransition=R}%
