@@ -27,6 +27,9 @@
   \beamer@inframefalse
 }
 
+\def\refcounter#1{\protected@edef\@currentlabel%
+       {\csname p@#1\endcsname\csname the#1\endcsname}}%
+
 
 %
 % Slide Definitions
@@ -80,6 +83,7 @@
     \beamer@inframetrue%
     \let\frame=\framelatex% inside frames, use LaTeX's \frame command
     \begin{beamer@framepauses}%
+      \refcounter{framenumber}%use frame number for  \label
       \ifbeamer@shrink%
         \hsize=\beamer@shrinkfactorinv\hsize%
         \textwidth=\beamer@shrinkfactorinv\textwidth%
@@ -436,7 +440,7 @@
   \ifbeamer@noframenumbering%
     \beamer@noframenumberingfalse%
   \else%
-    \refstepcounter{framenumber}%
+    \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
   \fi%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\beamer@framestartpage{}%
