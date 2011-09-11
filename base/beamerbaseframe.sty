@@ -485,6 +485,9 @@
     \ifbeamer@isfragile%
       \let\beamer@howtotreatframe\beamer@doexternalframe%
     \fi%
+    \ifbeamer@containsverbatim
+      \let\beamer@howtotreatframe\beamer@dosingleframe
+    \fi
   \fi%
   \beamer@howtotreatframe}
 \long\def\beamer@donoframe{%
