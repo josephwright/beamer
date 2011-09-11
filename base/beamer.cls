@@ -18,11 +18,7 @@
 
 \beamer@transferifnecessary
 
-%
-% Ensure that \pdfoutput is defined. Might be removed at some point.
-%
-\ifx\pdfoutput\@undefined \newcount\pdfoutput \fi
-\ifx\pdfoutput\relax \newcount\pdfoutput \fi
+\RequirePackage{ifpdf}
 
 %
 %
@@ -273,16 +269,16 @@
 \def\beamer@loaducs{}
 
 \DeclareOptionBeamer{ucs}{%
-  \ifcase\pdfoutput
-    \def\beamer@loaducs{
-      \RequirePackage{ucs}%
-      \AtBeginDocument{\PreloadUnicodePage{0}}%
-      \AtBeginDocument{\PreloadUnicodePage{1}}%
-    }
-  \or
+  \ifpdf
     \PassOptionsToPackage{pdftex,unicode}{hyperref}
     \def\beamer@loaducs{
       \RequirePackage[hyperref]{ucs}%
+      \AtBeginDocument{\PreloadUnicodePage{0}}%
+      \AtBeginDocument{\PreloadUnicodePage{1}}%
+    }
+  \else    
+    \def\beamer@loaducs{
+      \RequirePackage{ucs}%
       \AtBeginDocument{\PreloadUnicodePage{0}}%
       \AtBeginDocument{\PreloadUnicodePage{1}}%
     }

@@ -54,9 +54,9 @@
 \define@key{beamerprosper}{Glitter}[true]{\def\beamerprosper@trans{Glitter}}
 
 
-\newcommand{\PDForPS}[2]{\ifx\pdfoutput\@undefined#2\else#1\fi}
-\newcommand{\onlyInPDF}[1]{\ifx\pdfoutput\@undefined\else#1\fi}
-\newcommand{\onlyInPS}[1]{\ifx\pdfoutput#1\@undefined\fi}
+\newcommand{\PDForPS}[2]{\ifpdf#1\else#2\fi}
+\newcommand{\onlyInPDF}[1]{\ifpdf#1\fi}
+\newcommand{\onlyInPS}[1]{\ifpdf\else#1\fi}
 
 \newenvironment{slide}[2][]{%
   \def\beamerprosper@toc{#2}
