@@ -20,13 +20,13 @@
 \RequirePackage{ifpdf}
 
 \ifpdf
+  \let\mm@psorpdf\@secondoftwo
+\else
   \let\mm@psorpdf\@firstoftwo
   \PassOptionsToPackage{pdfmark}{hyperref}
   \define@key{PDF}{Movie}{\pdf@addtoks{#1}{Movie}}
   \define@key{PDF}{T}{\pdf@addtoks{#1}{T}}
   \define@key{PDF}{Annotations}{\pdf@addtoks{#1}{A}}
-\else
-  \let\mm@psorpdf\@secondoftwo
 \fi
 
 \define@key{multimedia}{automute}[true]{\csname mm@autostop#1\endcsname}
