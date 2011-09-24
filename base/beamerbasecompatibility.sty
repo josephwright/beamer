@@ -127,8 +127,9 @@
   \long\def\@LongEmpty{}
   \newcommand*{\org@beamer@section}{}
   \let\org@beamer@section\beamer@section{}%
+  \let\org@writebookmark\Hy@writebookmark{}%
   \long\def\beamer@section[#1]#2{%
-    \let\org@writebookmark\Hy@writebookmark{}%
+    \let\Hy@writebookmark\org@writebookmark
     \long\def\@secname{#1}%
     \ifx\@secname\@LongEmpty{}%
       \def\Hy@writebookmark##1##2##3##4##5{}%
@@ -138,12 +139,11 @@
       \def\Hy@writebookmark##1##2##3##4##5{}%
     \fi
     \org@beamer@section[{#1}]{#2}%
-    \let\Hy@writebookmark\org@writebookmark{}%
   }
   \newcommand*{\org@beamer@subsection}{}
   \let\org@beamer@subsection\beamer@subsection{}%
   \long\def\beamer@subsection[#1]#2{%
-    \let\org@writebookmark\Hy@writebookmark{}%
+    \let\Hy@writebookmark\org@writebookmark
     \long\def\@secname{#1}%
     \ifx\@secname\@LongEmpty{}%
       \def\Hy@writebookmark##1##2##3##4##5{}%
@@ -153,7 +153,6 @@
       \def\Hy@writebookmark##1##2##3##4##5{}%
     \fi
     \org@beamer@subsection[{#1}]{#2}%
-    \let\Hy@writebookmark\org@writebookmark{}%
   }
 }
 
