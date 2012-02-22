@@ -320,14 +320,15 @@
   \mode<all>%
   \ifbeamer@inlecture%
     \refstepcounter{subsubsection}%
-    \beamer@ifempty{#2}{\long\def\subsubsecname{#1}}
+    \beamer@ifempty{#2}{\long\def\subsubsecname{#1}\long\def\lastsubsubsection{#1}}
     {%
       \long\def\subsubsecname{#2}%
+      \long\def\lastsubsubsection{#1}%
       \addtocontents{toc}{\protect\beamer@subsubsectionintoc%
         {\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{#2}{\the\c@page}{\the\c@part}{\the\beamer@tocsectionnumber}}%
     }%
     \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsubsectionentry%
-        {\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{\the\c@page}{\subsubsecname}}}%
+        {\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{\the\c@page}{\lastsubsubsection}}}%
     \edef\subsubsectionlink{{Navigation\the\c@page}{\noexpand\subsubsecname}}%
     \def\insertsubsubsection{\expandafter\hyperlink\subsubsectionlink}%
     \def\insertsubsubsectionhead{#1}%
