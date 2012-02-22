@@ -71,9 +71,6 @@ ctan:
 	cp ./doc/Makefile $(BUILDDIR)/doc/
 	pushd $(BUILDDIR)/doc ; \
 	make all ; \
-	mv beameruserguide.pdf beameruserguide.pdf.xxx ; \
-	make clean ; \
-	mv beameruserguide.pdf.xxx beameruserguide.pdf ; \
 	popd
 	pushd $(TMPDIR) ; \
 	zip -ll -q -r -X beamer.zip . ; \

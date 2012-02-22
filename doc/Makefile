@@ -1,3 +1,5 @@
+AUXFILES = *.aux *.bbl *-blx.bib *.bcf *.blg *.fdb_latexmk *.idx *.ilg *.ind *.log *mpgraph.mp *.nav *.out *.snm *.synctex.gz *.tmp *.toc *.tui *.tuc *.tuo *.vrb *~
+
 rerun = "(There were undefined references|Rerun to get (cross-references|the bars) right)"
 doc   = beameruserguide
 
@@ -33,8 +35,17 @@ beameruserguide.pdf: $(doc).tex $(doc).ind \
  beamerugcolorthemealbatrossstylish.pdf \
  $(innerthemes:%=beameruginnertheme%.pdf) \
  $(outerthemes:%=beamerugoutertheme%.pdf) 
-	pdflatex $(doc).tex
-	(egrep -q $(rerun) $(doc).log && pdflatex $(doc).tex) || true
+	pdflatex $(doc) ; \
+	if [ $$? = 0 ] ; then  \
+	  makeindex $(doc) ; \
+	  pdflatex $(doc) ; \
+	  makeindex $(doc) ; \
+	  pdflatex $(doc) ; \
+	else \
+	  echo "  Compilation failed" ; \
+	fi ; \
+	rm -f $(AUXFILES)
+
 
 beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../base/themes/theme/beamertheme%.sty
 	pdflatex \\def\\themename{$(@:beamerugtheme%.pdf=%)}\\input beamerthemeexample.tex;
@@ -61,4 +72,4 @@ beamerugoutertheme%.pdf: beamerouterthemeexample.tex beamerthemeexamplebase.tex 
 	mv beamerouterthemeexample.pdf $@
 
 clean:
-	rm -f *.aux *.bbl *-blx.bib *.bcf *.blg *.fdb_latexmk *.idx *.ilg *.ind *.log *mpgraph.mp *.nav *.out *.snm *.synctex.gz *.tmp *.toc *.tui *.tuc *.tuo *.vrb *~ beamerug*.pdf
+	rm -f $(AUXFILES) beamerug*.pdf
