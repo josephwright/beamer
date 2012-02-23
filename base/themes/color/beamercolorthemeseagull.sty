@@ -17,7 +17,20 @@
 \setbeamercolor*{example text}{fg=black}
 \setbeamercolor*{structure}{fg=black}
 
-\setbeamerfont{alerted text}{series=\bfseries}
+\providecommand*{\beamer@bftext@only}{%
+  \relax
+  \ifmmode
+    \expandafter\beamer@bftext@warning
+  \else
+    \expandafter\bfseries
+  \fi
+}
+\providecommand*{\beamer@bftext@warning}{%
+  \ClassWarning{beamer}
+    {Cannot use bold for alerted text in math mode}%
+}
+
+\setbeamerfont{alerted text}{series=\beamer@bftext@only}
 
 \setbeamercolor*{palette primary}{fg=black,bg=black!20}
 \setbeamercolor*{palette secondary}{fg=black,bg=black!25}
