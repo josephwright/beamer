@@ -820,15 +820,15 @@ The \beamer\ class also defines two environments for creating colored boxes.
   \item
     \declare{|ht=|\meta{height}} sets the height of the box, overriding the real height. Note that the ``height'' does not include the depth (see, for example, the \TeX-book for details). If you want a one-line box that always has the same size, setting the height to 2.25ex and the depth to 1ex is usually a good option.
   \item
-    \declare{|left|} causes the text inside the box to be typeset left-aligned and with a (radically) ragged right border. This is the default. To get a better ragged right border, use the |rightskip| option.
+    \declare{|left|} causes the text inside the box to be typeset left-aligned and with a (radically) ragged right border. This is the default. To get a better ragged right border, use the |rightskip| option. Note that this will override any |leftskip| or |rightskip| setting.
   \item
-    \declare{|right|} causes the text to be right-aligned with a (radically) ragged left border.
+    \declare{|right|} causes the text to be right-aligned with a (radically) ragged left border. Note that this will override any |leftskip| or |rightskip| setting.
   \item
-    \declare{|center|} centers the text inside the box.
+    \declare{|center|} centers the text inside the box. Note that this will override any |leftskip| or |rightskip| setting.
   \item
-    \declare{|leftskip=|\meta{left skip}} installs the \meta{left skip} inside the box as the left skip. \TeX's left skip is a glue that is inserted at the left end of every line. See the \TeX-book for details.
+    \declare{|leftskip=|\meta{left skip}} installs the \meta{left skip} inside the box as the left skip. \TeX's left skip is a glue that is inserted at the left end of every line. See the \TeX-book for details. Note that this will override any |left|, |center| or |right| setting.
   \item
-    \declare{|rightskip=|\meta{right skip}} install the \meta{right skip}. To get a good ragged right border, try, say, |\rightskip=0pt plus 4em|.
+    \declare{|rightskip=|\meta{right skip}} install the \meta{right skip}. To get a good ragged right border, try, say, |\rightskip=0pt plus 4em|. Note that this will override any |left|, |center| or |right| setting.
   \item
     \declare{|sep=|\meta{dimension}} sets the size of extra space around the text. This space is added ``inside the box,'' which means that if you specify a |sep| of 1cm and insert the box normally into the vertical list, then the left border of the box will be aligned with the left border of the slide text, while the left border of the text inside the box will be 1cm to the right of this left border. Likewise, the text inside the box will stop 1cm before the right border of the normal text.
   \item
