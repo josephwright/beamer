@@ -222,30 +222,3 @@
 }
 
 
-\AtBeginDocument{
-  % The following code was send to me by Rolf Niepraschk
-   \@ifundefined{Gin@driver}{}%
-   {%
-     \ifx\Gin@driver\@empty\else%
-       \filename@parse{\Gin@driver}\@tempswafalse%
-       \def\reserved@a{dvips}%
-       \ifx\filename@base\reserved@a\@tempswatrue\fi%
-       \def\reserved@a{dvipdfm}%
-       \ifx\filename@base\reserved@a\@tempswatrue\fi%
-       \if@tempswa%
-         \AtBeginDvi{%
-           \special{papersize=\the\paperwidth,\the\paperheight}}%
-       \fi%
-       \def\reserved@a{pdftex}%
-       \ifx\filename@base\reserved@a
-         \pdfpagewidth\paperwidth\pdfpageheight\paperheight%
-       \fi%
-       \def\reserved@a{vtex}%
-       \ifx\filename@base\reserved@a
-         \mediawidth\paperwidth\mediaheight\paperheight%
-       \fi%
-     \fi
-   }
- }
-
-
