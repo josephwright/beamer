@@ -212,6 +212,13 @@
   \ifx\includegraphics\@undefined
   \else
     \renewcommand<>\includegraphics[2][]{\only#3{\beameroriginal\includegraphics[{#1}]{#2}}\ignorespaces}
+    % Deal with star case (unique for overlay-aware commands)
+    \let\beamer@includegraphics@maybe@star\includegraphics
+    \DeclareRobustCommand\includegraphics{%
+      \@ifstar
+        {\Gin@cliptrue \beamer@includegraphics@maybe@star}
+        {\Gin@clipfalse \beamer@includegraphics@maybe@star}%
+    }
   \fi
 
   \ifx\pgfuseimage\@undefined
