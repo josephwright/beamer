@@ -48,8 +48,11 @@ TRANSLATOR = \
 all: ctan
 
 clean:
-	rm -r $(TMPDIR)
+	rm -rf $(TMPDIR)
 	pushd ./doc/ ;\
+	make clean ; \
+	popd
+	pushd ./examples/ ;\
 	make clean ; \
 	popd
 
@@ -70,6 +73,10 @@ ctan:
 	cp ./doc/licenses/LICENSE $(BUILDDIR)/doc/licenses/
 	cp ./doc/Makefile $(BUILDDIR)/doc/
 	pushd $(BUILDDIR)/doc ; \
+	make all ; \
+	popd
+	cp ./examples/Makefile $(BUILDDIR)/examples/
+	pushd $(BUILDDIR)/examples ; \
 	make all ; \
 	popd
 	pushd $(TMPDIR) ; \
