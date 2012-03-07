@@ -4,7 +4,7 @@ rerun = "(There were undefined references|Rerun to get (cross-references|the bar
 doc   = beameruserguide
 
 themes = AnnArbor Antibes Berkeley Berlin Bergen Boadilla Copenhagen \
-  Darmstadt Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
+  Darmstadt Dresden EastLansing Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
   Luebeck Malmoe Madrid Marburg Montpellier PaloAlto Pittsburgh \
   Rochester Singapore Szeged Warsaw \
   CambridgeUS \
@@ -13,7 +13,7 @@ themes = AnnArbor Antibes Berkeley Berlin Bergen Boadilla Copenhagen \
 fontthemes = default serif structurebold structureitalicserif structuresmallcapsserif 
 
 colorthemes = default crane albatross seahorse whale dolphin \
-  rose orchid sidebartab lily structure dove seagull beetle fly wolverine \
+  rose orchid sidebartab lily structure dove seagull beetle fly wolverine spruce \
   beaver 
 
 outerthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
