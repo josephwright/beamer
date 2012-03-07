@@ -292,15 +292,6 @@
   \def\insertfootnotetext{#1}%
   \def\insertfootnotemark{\@makefnmark}%
   \usebeamertemplate***{footnote}}
-  
-% Sort out babel
-\AtBeginDocument{
-  \begingroup
-    \@ifundefined{ifFBFrenchFootnotes}
-      {}
-      {\aftergroup\FBFrenchFootnotesfalse}%
-   \endgroup   
-}
 
 \newbox\beamer@footins
 
@@ -308,7 +299,6 @@
   \global\setbox\beamer@footins\vbox{%
     \unvbox\beamer@footins
     \reset@font\footnotesize
-    \hsize0.85\paperwidth
     \@parboxrestore
     \protected@edef\@currentlabel
          {\csname p@footnote\endcsname\@thefnmark}%
