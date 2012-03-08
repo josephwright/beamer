@@ -506,6 +506,16 @@
 % Inserting navigation bars
 %
 
+\newdimen\beamer@section@min@dim
+\newcommand*{\beamer@section@set@min@width}{%
+  \ifdim\wd\beamer@sectionbox>\beamer@section@min@dim
+  \else
+    \setbox\beamer@sectionbox=\hbox to \beamer@section@min@dim
+      {\box\beamer@sectionbox\hfil}%
+    \global\beamer@section@min@dim\z@
+  \fi
+}
+
 \def\insertnavigation#1{%
   \vbox{{%
     \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
@@ -514,12 +524,16 @@
     \hbox to #1{\hskip.3cm\setbox\beamer@sectionbox=\hbox{\kern1sp}%
       \ht\beamer@sectionbox=1.875ex%
       \dp\beamer@sectionbox=0.75ex%
-        \hskip-1.875ex plus-1fill\dohead%
+        \hskip-1.875ex plus-1fill%
+        \global\beamer@section@min@dim\z@
+        \dohead%
+        \beamer@section@set@min@width
       \box\beamer@sectionbox\hfil\hskip.3cm}%
   }}}
 
 \def\sectionentry#1#2#3#4#5{% section number, section title, page
   \ifnum#5=\c@part%
+  \beamer@section@set@min@width
   \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
@@ -645,7 +659,9 @@
       \multiply\beamer@tempdim by\beamer@xpos%
       \advance\beamer@tempdim by -\beamer@boxsize%
       \advance\beamer@tempdim by 1pt%
-      \kern\beamer@tempdim\hbox{\beamer@link(#4){%
+      \kern\beamer@tempdim
+      \global\beamer@section@min@dim\beamer@tempdim
+      \hbox{\beamer@link(#4){%
           \usebeamerfont{mini frame}%
           \ifnum\c@section=#1%
             \ifnum\c@subsection=#2%
