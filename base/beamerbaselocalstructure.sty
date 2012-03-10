@@ -466,8 +466,8 @@
       \apptocmd\blx@env@bibliography{\let\makelabel\beamer@biblabeltemplate}{}{}
       \pretocmd{\abx@macro@author}{\usebeamercolor[fg]{bibliography entry author}}{}{}
       \pretocmd{\abx@macro@editor}{\usebeamercolor[fg]{bibliography entry author}}{}{}
-      \pretocmd{\abx@macro@title}{\blx@unitpunct\blx@postpunct\newblock\usebeamercolor[fg]{bibliography entry title}}{}{}
-      \apptocmd{\abx@macro@title}{\blx@unitpunct\blx@postpunct\newblock\usebeamercolor[fg]{bibliography entry note}}{}{}
+      \pretocmd{\abx@macro@title}{\newblock\usebeamercolor[fg]{bibliography entry title}}{}{}
+      \apptocmd{\abx@macro@title}{\newblock\usebeamercolor[fg]{bibliography entry note}}{}{}
     }
     {}
 }
