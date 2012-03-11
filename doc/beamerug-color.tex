@@ -1,0 +1,543 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\section{Colors}
+
+\label{section-colors}
+
+\beamer's color management allows you to specify the color of every element (like, say, the color of the section entries in a table of contents or, say, the color of the subsection entries in a mini table of contents in a sidebar). While the system is quite powerful, it is not trivial to use. To simplify the usage of the color system, you should consider using a predefined color theme, which takes care of everything for you.
+
+In the following, color themes are explained first. The rest of the section consists of explanations of how the color management works internally. You will need to read these sections only if you wish to write your own color themes; or if you are quite happy with the predefined themes but you absolutely insist that displayed mathematical text simply has to be typeset in a lovely pink.
+
+
+\subsection{Color Themes}
+
+In order to also show the effect of the different color themes on the sidebar, in the following examples the color themes are used together with the outer theme |sidebar|.
+
+\subsubsection{Default and Special-Purpose Color Themes}
+
+\begin{colorthemeexample}{default}
+  The |default| color theme is very sober. It installs little special colors and even less backgrounds. The default color theme sets up the default parent relations between the different \beamer-colors.
+
+  The main colors set in the |default| color theme are the following:
+  \begin{itemize}
+  \item
+    |normal text| is black on white.
+  \item
+    |alerted text| is red.
+  \item
+    |example text| is a dark green (green with 50\% black).
+  \item
+    |structure| is set to a light version of MidnightBlue (more precisely, 20\% red, 20\% green, and 70\% blue).
+  \end{itemize}
+  Use this theme for a no-nonsense presentation. Since this theme is loaded by default, you cannot ``reload'' it after having loaded another color theme.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}[\oarg{options}]{structure}
+  The example was created using |\usecolortheme[named=SeaGreen]{structure}|.
+
+  This theme offers a convenient way of changing the color used for structural elements. More precisely, it just changes the foreground of the \beamer-color |structure|. You can also achieve this by directly invoking the function |\setbeamercolor|, but this color theme makes things a bit easier.
+
+  The theme offers several \meta{options}, which can be used to specify the color to be used for structural elements:
+  \begin{itemize}
+  \item
+    \declare{|rgb=|\marg{rgb tuple}} sets the |structure| foreground to the specified red-green-blue tuple. The numbers are given as decimals between 0 and 1. For example, |rgb={0.5,0,0}| yields a dark red.
+  \item
+    \declare{|RGB=|\marg{rgb tuple}} does the same as |rgb|, except that the numbers range between 0 and 255. For example, |RGB={128,0,0}|  yields a dark red.
+  \item
+    \declare{|cmyk=|\marg{cmyk tuple}} sets the |structure| foreground to the specified cyan-magenta-yellow-black tuple. The numbers are given as decimals between 0 and 1. For example, |cmyk={0,1,1,0.5}| yields a dark red.
+  \item
+    \declare{|cmy=|\marg{cmy tuple}} is similar to |cmyk|, except that the black component is not specified.
+  \item
+    \declare{|hsb=|\marg{hsb tuple}}  sets the |structure| foreground to the specified hue-saturation-brightness tuple. The numbers are given as decimals between 0 and 1. For example, |hsb={0,1,.5}| yields a dark red.
+  \item
+    \declare{|named=|\marg{color name}} sets the |structure| foreground to a named color. This color must previously have been defined using the |\DefineNamedColor| command. Adding the class option |xcolor=dvipsnames| or |xcolor=svgnames| will install a long list of standard |dvips| or SVG color names (respectively). See the file |dvipsnam.def| for the list.
+  \end{itemize}
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{sidebartab}
+  This theme changes the colors in a sidebar such that the current entry in a table of contents shown there gets highlighted by showing a different background behind it.
+\end{colorthemeexample}
+
+\subsubsection{Complete Color Themes}
+
+A ``complete'' color theme is a color theme that completely specifies all colors for all parts of a frame. It installs specific colors and does not derive the colors from, say, the |structure| \beamer-color. Complete color themes happen to have names of flying animals.
+
+\begin{colorthemeexample}{albatross}
+  The color theme is a ``dark'' or ``inverted'' theme using yellow on blue as the main colors. The color theme also installs a slightly darker background color for blocks, which is necessary for presentation themes that use shadows, but which (in Till's opinion) is undesirable for all other presentation themes. By using the |lily| color theme together with this theme, the backgrounds for blocks can be removed.
+
+  When using a light-on-dark theme like this one, be aware that there are certain disadvantages:
+  \begin{itemize}
+  \item
+    If the room in which the talk is given has been ``darkened,'' using such a theme makes it more difficult for the audience to take or read notes.
+  \item
+    Since the room becomes darker, the pupil becomes larger, thus making it harder for the eye to focus. This \emph{can} make text harder to read.
+  \item
+    Printing such slides is difficult at best.
+  \end{itemize}
+
+  On the other hand, a light-on-dark presentation often appears to be more ``stylish'' than a plain black-on-white one.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|overlystylish|} installs a background canvas that is, in Till's opinion, way too stylish. But then, it is not his intention to press his taste on other people. When using this option, it is probably a very good idea to also use the |lily| color theme.
+  \end{itemize}
+
+  \example
+  The |overlystylish| option together with the |lily| color theme: \genericthemeexample{colorthemealbatrossstylish}
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{beetle}
+  The main ``theme behind this theme'' is to use white and black text on gray background. The white text is used for special emphasis, the black text for normal text. The ``outer stuff'' like the headline and the footline use, however, a bluish color. To change this color, change the background of |palette primary|.
+
+  Great care must be taken with this theme since both the white/gray and the black/gray contrasts are much lower than with other themes. Make sure that the contrast is high enough for the actual presentation.
+
+  You can change the ``grayish'' background by changing the background of |normal text|.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{crane}
+  This theme uses the colors of Lufthansa, whose logo is a crane. It is \emph{not} an official theme by that company, however.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{dove}
+  This theme is nearly a black and white theme and useful for creating presentations that are easy to print on a black-and-white printer. The theme uses grayscale in certain unavoidable cases, but never color. It also changes the font of alerted text to boldface.
+
+  When using this theme, you should consider using the class option |gray|, which ensures that all colors are converted to grayscale. Also consider using the |structurebold| font theme.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{fly}
+  This theme is the ``consequent'' version of |beetle| and uses white/black/gray throughout. It does not go particularly well with themes that use shadows.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{seagull}
+  Like the |dove| color theme, this theme is useful for printing on a black-and-white printer. However, it uses different shades of gray extensively, which may or may not look good on a transparency.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{wolverine}
+  The theme is based on the colors of the University of Michigan's mascot, a wolverine.
+
+  \themeauthor Madhusudan Singh.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{beaver}
+  The theme is based on the colors of MIT's mascot, a beaver.
+
+  \themeauthor Madhusudan Singh.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{spruce}
+  The theme is based on the the colors of Michigan State University.
+  
+  \themeauthor Alan Munn.
+\end{colorthemeexample}
+
+\subsubsection{Inner Color Themes}
+
+Inner color themes only specify the colors of elements used in inner themes. Most noticably, they specify the colors used for blocks. They can be used together with other (color) themes. If they are used to change the inner colors installed by a presentation theme or another color theme, they should obviously be specified \emph{after} the other theme has been loaded. Inner color themes happen to have flower names.
+
+\begin{colorthemeexample}{lily}
+  This theme is mainly used to \emph{uninstall} any block colors setup by another theme, restoring the colors used in the |default| theme. In particular, using this theme will remove all background colors for blocks.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{orchid}
+  This theme installs white-on-dark block titles. The background of the title of a normal block is set to the foreground of the structure color, the foreground is set to white. The background of alerted blocks are set to red and of example blocks to green. The body of blocks get a nearly transparent background.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{rose}
+  This theme installs nearly transparent backgrounds for both block titles and block bodies. This theme is much less ``aggressive'' than the |orchid| theme. The background colors are derived from the foreground of the structure \beamer-color.
+\end{colorthemeexample}
+
+\subsubsection{Outer Color Themes}
+
+An outer color theme changes the palette colors, on which the colors used in the headline, footline, and sidebar are based by default. Outer color themes normally do not change the color of inner elements, except possibly for |titlelike|. They have happen to be sea-animal names.
+
+\begin{colorthemeexample}{whale}
+  Installs a white-on-dark palette for the headline, footline, and sidebar. The backgrounds used there are set to shades between the structure \beamer-color and black. The foreground is set to white.
+
+  While this color theme can appear to be aggressive, you should note that a dark bar at the border of a frame will have a somewhat different appearance during a presentation than it has on paper: During a presentation the projection on the wall is usually surrounded by blackness. Thus, a dark bar will not create a contrast as opposed to the way it does on paper. Indeed, using this theme will cause the main part of the frame to be more at the focus of attention.
+
+  The counterpart to the theme with respect to blocks is the |orchid| theme. However, pairing it with the |rose| color theme is also interesting.
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{seahorse}
+  Installs a near-transparent backgrounds for the headline, footline, and sidebar. Using this theme will cause navigational elements to be much less ``dominant'' than when using the |whale| theme (see the discussion on contrast there, though).
+
+  It goes well with the |rose| or the |lily| color theme. Pairing it with the |orchid| overemphasizes blocks (in Till's opinion).
+\end{colorthemeexample}
+
+\begin{colorthemeexample}{dolphin}
+  A color theme somewhere in the middle between the whale and the seahorse. It was graciously donated by Manuel Carro. Like the seahorse, it goes well with the |rose| and the |lily| color theme.
+\end{colorthemeexample}
+
+
+\subsection{Changing the Colors Used for Different Elements of a Presentation}
+
+This section explains how \beamer's color management works.
+
+\subsubsection{Overview of Beamer's Color Management}
+
+In \beamer's philosophy, every element of a presentation can have a different color. Unfortunately, it turned out that simply assigning a single color to every element of a presentation is not such a good idea. First of all, we sometimes want colors of elements to change during a presentation, like the color of the item indicators when they become alerted or inside an example block. Second, some elements naturally have two colors, namely a foreground and a background, but not always. Third, sometimes elements somehow should not have any special color but should simply ``run along'' with the color of their surrounding. Finally, giving a special color to every element makes it very hard to globally change colors (like changing all the different kind-of-blue things into kind-of-red things) and it makes later extensions even harder.
+
+For all these reasons, the color of an element in \beamer\ is a structured object, which we call a \emph{\beamer-color}. Every \beamer-color has two parts: a foreground and a background. Either of these may be ``empty,'' which means that whatever foreground or background was active before should remain active when the color is used.
+
+\beamer-colors can \emph{inherit} from other \beamer-colors and the default themes make extensive use of this feature. For example, there is a \beamer-color called |structure| and all sorts of elements inherit from this color. Thus, if someone changes |structure|, the color of all these elements automatically change accordingly. When a color inherits from another color, it can nevertheless still override only the foreground or the background.
+
+It is also possible to ``inherit'' from another \beamer-color in a more sophisticated way, which is more like \emph{using} the other \beamer-color in an indirect way. You can specify that, say, the background of the title should be a 90\% of the background of normal text and 10\% of the foreground of |structure|.
+
+Inheritance and using of other \beamer-colors is done dynamically. This means that if one of the parent \beamer-colors changes during the presentation, the derived colors automatically also change.
+
+The default color theme, which is always loaded, installs numerous \beamer-colors and inheritance relations between them. These colors are explained throughout this guide. The color used for, say, frametitles is discussed in the section on frametitles, and so on.
+
+\subsubsection{Using Beamer's Colors}
+
+A \beamer-color is not a normal color as defined by the |color| and |xcolor| packages and, accordingly, cannot be used directly as in commands like |\color| or |\colorlet|. Instead, in order to use a \beamer-color, you should first call the command |\usebeamercolor|, which is explained below. This command will setup two (normal) colors called |fg| (for foreground) and |bg| (for, well, guess what). You can then say |\color{fg}| to install the foreground color and |\color{bg}| to install the background color. You can also use the colors |fg| and |bg| in any context in which you normally use a color like, say, |red|. If a \beamer-color does not have a foreground or a background, the colors |fg| or |bg| (or both) remain unchanged.
+
+Inside templates, this command will typically have already been called for you with the option |[fg]|.
+
+\begin{command}{\usebeamercolor\opt{|*|}\oarg{fg or bg}\marg{beamer-color name}}
+  This command (possibly) changes the two colors |fg| and |bg| to the foreground and background color of the \meta{beamer-color name}. If the \beamer-color does not specify a foreground, |fg| is left unchanged; if does not specify a background, |bg| is left unchanged.
+
+  You will often wish to directly use the color |fg| or |bg| after using this command. For this common situation, the optional argument \meta{fg or bg} is useful, which may be either |fg| or |bg|. Giving this option will cause the foreground |fg| or the background |bg| to be immediately installed after they have been setup. Thus, the following command
+
+\begin{verbatim}
+\usebeamercolor[fg]{normal text}
+\end{verbatim}
+  is a shortcut for
+\begin{verbatim}
+\usebeamercolor{normal text}
+\color{fg}
+\end{verbatim}
+
+  If you use the starred version of this command, the \beamer-color |normal text| is used before the command is invoked. This ensures that, barring evil trickery, the colors |fg| and |bg| will be setup independently of whatever colors happened to be in use when the command is invoked.
+
+  This command has special side-effects. First, the (normal) color |parent.bg| is set to the value of |bg| prior to this call. Thus you can access the color that was in use prior to the call of this command via the color |parent.bg|.
+
+  Second, the special color \meta{beamer-color name}|.fg| is \emph{globally} set to the same value as |fg| and \meta{beamer-color name}|.bg| is globally set to the value of |bg|. This allows you to access the foreground or background of a certain \meta{beamer-color name} after another \beamer-color has been used. However, referring to these special global colors should be kept to the unavoidable minimum and should be done as locally as possible since a change of the \beamer-color will not reflect in a change of the colors \meta{beamer-color name}|.fg| and \meta{beamer-color name}|.bg| until the next invocation of |\usebeamercolor|. Also, if the \meta{beamer-color name} does not specify a foreground or a background color, then the values of the special colors are whatever happened to be the foreground or background at the time of the last invocation of |\usebeamercolor|.
+
+  So, try not to get into the habit of writing |\color{structure.fg}| all the time, at least not without a |\usebeamercolor{structure}| close by.
+
+  \example
+\begin{verbatim}
+  This text is {\usebeamercolor[fg]{alerted text} alerted}. The
+  following box uses the fore- and background of frametitles:
+  {
+    \usebeamercolor[fg]{frametitle}
+    \colorbox{bg}{Frame Title}
+  }
+\end{verbatim}
+
+  \articlenote
+  This command has no effect in |article| mode.
+\end{command}
+
+
+\begin{command}{\ifbeamercolorempty\oarg{fg or bg}\marg{beamer-color name}\marg{if undefined}\marg{if defined}}
+  This command can be used to check whether the foreground or background of some \meta{beamer-color name} is non-empty. If the foreground or background of \meta{beamer-color name} is defined, \meta{if defined} will be executed, otherwise the \meta{if undefined} code.
+
+  \example
+\begin{verbatim}
+\ifbeamercolorempty[bg]{frametitle}
+{ % ``Transparent background''
+  \usebeamercolor[fg]{frametitle}
+  \insertframetitle
+}
+{ % Opaque background
+  \usebeamercolor[fg]{frametitle}
+  \colorbox{bg}{\insertframetitle}
+}
+\end{verbatim}
+\end{command}
+
+\subsubsection{Setting Beamer's Colors}
+
+To set or to change a \beamer-color, you can use the command |\setbeamercolor|.
+
+\begin{command}{\setbeamercolor\opt{|*|}\marg{beamer-color name}\marg{options}}
+  Sets or changes a \beamer-color. The \meta{beamer-color name} should be a reasonably simple text (do not try too much trickery and avoid punctuation symbols), but it may contain spaces. Thus, |normal text| is a valid \meta{beamer-color name} and so is |My Color Number 2|.
+
+  In the most simple case, you just specify a foreground by giving the |fg=| option and, possibly, also a background using the |bg=| option.
+
+  \example |\setbeamercolor{normal text}{fg=black,bg=mylightgrey}|
+  \example |\setbeamercolor{alerted text}{fg=red!80!black}|
+
+  The effect of this command is accumulative, thus the following two commands
+
+\begin{verbatim}
+\setbeamercolor{section in toc}{fg=blue}
+\setbeamercolor{section in toc}{bg=white}
+\end{verbatim}
+  have the same effect as
+\begin{verbatim}
+\setbeamercolor{section in toc}{fg=blue,bg=white}
+\end{verbatim}
+
+  Naturally, a second call with the same kind of \meta{option} set to a different value overrides a previous call.
+
+  The starred version first resets everything, thereby ``switching off'' the accumulative effect. Use this starred version to completely reset the definition of some \beamer-color.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|fg=|\meta{color}} sets the foreground color of \meta{beamer-color name} to the given (normal)   \meta{color}. The \meta{color} may also be a color expression like |red!50!black|, see the manual of the \textsc{xcolor} package. If \meta{color} is empty, the \meta{beamer-color name} ``has no special foreground'' and when the color is used, the foreground currently in force should not be changed.
+
+    Specifying a foreground this way will override any inherited foreground color.
+  \item
+    \declare{|bg=|\meta{color}} does the same as the |fg| option, but for the background.
+  \item
+    \declare{|parent=|\meta{parent beamer-color(s)}} specifies that \meta{beamer-color name} should inherit from the specified \meta{parent beamer-color(s)}. Any foreground and/or background color set by the parents will also be used when \meta{beamer-color name} is used. If multiple parents specify a foreground, the last one ``wins''; and likewise for the backgrounds.
+
+    \example
+\begin{verbatim}
+\setbeamercolor{father}{fg=red}
+\setbeamercolor{mother}{bg=green}
+\setbeamercolor{child}{parent={father,mother}}
+\begin{beamercolorbox}{child}
+  Terrible red on green text.
+\end{beamercolorbox}
+
+\setbeamercolor{father}{fg=blue}
+\begin{beamercolorbox}{child}
+  Now terrible blue on green text, since parent was changed.
+\end{beamercolorbox}
+\end{verbatim}
+
+    Note that a change of the foreground or background of a parent changes the corresponding foreground or background of the child (unless it is overruled).
+
+    A \beamer-color cannot only have parents, but also grandparents and so on.
+  \item
+    \declare{|use=|\meta{another beamer-color}} is used to make sure that another \beamer-color is setup correctly before the foreground or background color specification are evaluated.
+
+    Suppose you wish the foreground of items to be a mixture of 50\% of the foreground of structural elements and 50\% of the normal foreground color. You could try
+
+\begin{verbatim}
+\setbeamercolor{item}{fg=structure.fg!50!normal text.fg}
+\end{verbatim}
+
+    However, this will not necessarily give the desired result: If the \beamer-color |structure| changes, the (normal) color |structure.fg| is not immediately updated. In order to ensure that the normal color |structure.fg| is correct, use the following:
+
+\begin{verbatim}
+\setbeamercolor{item}{use={structure,normal text},fg=structure.fg!50!normal text.fg}
+\end{verbatim}
+
+    This will guarantee that the colors |structure.fg| and |normal text.fg| are setup correctly when the foreground of |item| is computed.
+
+    To show the difference, consider the following example:
+
+\begin{verbatim}
+\setbeamercolor{grandfather}{fg=red}
+\setbeamercolor{grandmother}{bg=white}
+\setbeamercolor{father}{parent={grandfather,grandmother}}
+\setbeamercolor{mother}{fg=black}
+{
+  \usebeamercolor{father}\usebeamercolor{mother}
+  %% Defines father.fg and mother.fg globally
+}
+\setbeamercolor{my color A}{fg=father.fg!50!mother.fg}
+\setbeamercolor{my color B}{use={father,mother},fg=father.fg!50!mother.fg}
+
+{\usebeamercolor[fg]{my color A} dark red text}
+{\usebeamercolor[fg]{my color b} also dark red text}
+
+\setbeamercolor{grandfather}{fg=green}
+
+{\usebeamercolor[fg]{my color A} still dark red text}
+{\usebeamercolor[fg]{my color b} now dark green text}
+\end{verbatim}
+  \end{itemize}
+\end{command}
+
+
+\subsection{The Color of Mathematical Text}
+
+By default, mathematical text does not have any special color---it just inherits the ``surrounding'' color. Some people prefer mathematical text to have some special color. Though we do not recommend this (we believe mathematical text should \emph{not} stand out amid the normal text), \beamer\ makes it (reasonably) easy to change the color of mathematical text. Simply change the following colors:
+
+\begin{element}{math text}\no\yes\no
+  This color is the parent of |math text inlined| and |math text displayed|. It is empty by default. See those colors for details.
+\end{element}
+
+\begin{element}{math text inlined}\no\yes\no
+  \colorparents{math text}
+  If the foreground of this color is set, inlined mathematical text is typeset using this color. This is done via some |\everymath| hackery and may not work in all cases. If not, you'll have to try to find a way around the problem. The background is currently ignored.
+\end{element}
+
+\begin{element}{math text displayed}\no\yes\no
+  \colorparents{math text}
+  Like |math text inlined|, only for so-called ``displayed'' mathematical text. This is mathematical text between |\[| and |\]| or between |$$| and |$$| or inside environments like |equation| or |align|. The setup of this color is somewhat fragile, use at your own risk. The background is currently ignored.
+\end{element}
+
+\begin{element}{normal text in math text}\no\yes\no
+  If the foreground of this color is set, normal text inside mathematical text (which is introduced using the |\text| command) will be typeset using this color. The background is currently ignored.
+\end{element}
+
+
+\subsection{The Color Palettes}
+
+When one designs a color theme, one faces the following problem: Suppose we want the colors in the headline to gradually change from black to, say, blue. Whatever is at the very top of the headline should be black, what comes right below it should be dark blue, and at the bottom of the headline things should just be blue. Unfortunately, different outer themes will put different things at the top. One theme might put the author at the top, another theme might put the document title there. This makes it impossible to directly assign one of the three colors ``black'', ``dark blue,'' and ``blue'' to the different elements that are typically rendered in the headline. No matter how we assign them, things will look wrong for certain outer themes.
+
+To circumvent this problem, \beamer\ uses a layer of \emph{palette colors}. Color themes typically only change these palette colors. For example, a color theme might make the \beamer-color |palette primary| blue, make |palette secondary| a dark blue, and make |palette tertiary| black. Outer themes can now setup things such that whatever they show at the top of the headline inherits from |palette primary|, what comes below inherits from |palette secondary|, and whatever is at the bottom inherits from |palette tertiary|. This way, color themes can change the way even complicated outer themes look and they can do so consistently.
+
+Note that the user can still change the color of every element individually, simply by overriding the color(s) of the elements in the headline. In a sense, the palette colors are just a ``suggestion'' how things should be colored by an outer theme.
+
+In detail, the following palette colors are used by outer themes.
+
+\begin{element}{palette primary}\no\yes\no
+  Outer themes (should) base the color of navigational elements and, possibly, also of other elements, on the four palette colors. The ``primary'' palette should be used for the most important navigational elements, which are usually the ones that change most often and hence require the most attention by the audience. The ``secondary'' and ``tertiary'' are less important, the ``quaternary'' one is least important.
+
+  By default, the palette colors do not have a background and the foreground ranges from |structure.fg| to |black|.
+
+  For the sidebar, there is an extra set of palette colors, see |palette sidebar primary|.
+\end{element}
+
+\begin{element}{palette secondary}\no\yes\no
+  See |palette primary|.
+\end{element}
+
+\begin{element}{palette tertiary}\no\yes\no
+  See |palette primary|.
+\end{element}
+
+\begin{element}{palette quaternary}\no\yes\no
+  See |palette primary|.
+\end{element}
+
+\begin{element}{palette sidebar primary}\no\yes\no
+  Similar to |palette primary|, only outer themes (should) base the colors of elements in the sidebar on the four sidebar palette colors.
+\end{element}
+
+\begin{element}{palette sidebar secondary}\no\yes\no
+  See |palette sidebar primary|.
+\end{element}
+
+\begin{element}{palette sidebar tertiary}\no\yes\no
+  See |palette sidebar primary|.
+\end{element}
+
+\begin{element}{palette sidebar quaternary}\no\yes\no
+  See |palette sidebar primary|.
+\end{element}
+
+
+\subsection{Miscellaneous Colors}
+
+In this section some ``basic'' colors are listed that do not ``belong'' to any special commands.
+
+\begin{element}{normal text}\no\yes\yes
+  The color is used for normal text. At the beginning of the document the foreground color is installed as |\normalcolor|. The background of this color is used by the default background canvas for the background of the presentation, see Section~\ref{section-canvas}. The background is also the default value of the normal color |bg|.
+
+  Since the color is the ``root'' of all other \beamer-colors, both a foreground and a background must be installed. In particular, to get a transparent background canvas, make the background of the \beamer-color |background canvas| empty, not the background of this color.
+
+  The \beamer-font currently is not used. In particular, redefining this font will not have any effect. This is likely to change in the future.
+\end{element}
+
+\begin{element}{example text}\no\yes\yes
+  The color/font is used when text is typeset inside an |example| block.
+\end{element}
+
+\begin{element}{titlelike}\no\yes\yes
+  This color/font is a more specialized form of the |structure| color/font. It is the base for all elements that are ``like titles.'' This includes the frame title and subtitle as well as the document title and subtitle.
+\end{element}
+
+\begin{element}{separation line}\no\yes\no
+  The foreground of this color is used for separating lines. If the foreground is empty, no separation line is drawn.
+\end{element}
+
+\begin{element}{upper separation line head}\no\yes\no
+  \colorparents{separation line}
+  Special case for the uppermost separation line in a headline.
+\end{element}
+
+\begin{element}{middle separation line head}\no\yes\no
+  \colorparents{separation line}
+  Special case for the middle separation line in a headline.
+\end{element}
+
+\begin{element}{lower separation line head}\no\yes\no
+  \colorparents{separation line}
+  Special case for the lower separation line in a headline.
+\end{element}
+
+\begin{element}{upper separation line foot}\no\yes\no
+  \colorparents{separation line}
+  Special case for the uppermost separation line in a footline.
+\end{element}
+
+\begin{element}{middle separation line foot}\no\yes\no
+  \colorparents{separation line}
+  Special case for the middle separation line in a footline.
+\end{element}
+
+\begin{element}{lower separation line foot}\no\yes\no
+  \colorparents{separation line}
+  Special case for the lower separation line in a footline.
+\end{element}
+
+
+\subsection{Transparency Effects}
+\label{section-transparent}
+
+By default, \emph{covered} items are not shown during a presentation. Thus if you write |\uncover<2>{Text.}|, the text is not shown on any but the second slide. On the other slides, the text is not simply printed using the background color -- it is not shown at all. This effect is most useful if your background does not have a uniform color.
+
+Sometimes however, you might prefer that covered items are not completely covered. Rather, you would like them to be shown already in a very dim or shaded way. This allows your audience to get a feeling for what is yet to come, without getting distracted by it. Also, you might wish text that is covered ``once more'' still to be visible to some degree.
+
+Ideally, there would be an option to make covered text ``transparent.'' This would mean that when covered text is shown, it would instead be mixed with the background behind it. Unfortunately, |pgf| does not support real transparency yet. Instead, transparency is created by mixing the color of the object you want to show with the current background color (the color |bg|, which has hopefully been setup such that it is the average color of the background on which the object should be placed). To install this effect, you can use:
+
+\begin{verbatim}
+\setbeamercovered{transparent}
+\end{verbatim}
+
+This command allows you to specify in a quite general way how a covered item should be rendered. You can even specify different ways of rendering the item depending on how long it will take before this item is shown or for how long it has already been covered once more. The transparency effect will automatically apply to all colors, \emph{except} for the colors in images. For images there is a workaround, see the documentation of the \pgfname\ package.
+
+\begin{command}{\setbeamercovered\marg{options}}
+  This command offers several different options, the most important of which is |transparent|. All options are internally mapped to the two options |still covered| and |again covered|.
+
+  In detail, the following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|invisible|} is the default and causes covered text to ``completely disappear''.
+  \item
+    \declare{|transparent|}\opt{|=|\meta{opaqueness}} causes covered text to be typset in a ``transparent'' way. By default, this means that 85\% of the background color is mixed into all colors or that the \meta{opaqueness} of the text is 15\%. You can specify a different \meta{percentage}, where |0| means ``totally transparent'' and |100| means ``totally opaque.''
+
+    Unfortunately, this value is kind of ``specific'' to every projector. What looks good on your screen need not look good during a presentation.
+  \item
+    \declare{|dynamic|} Makes all covered text quite transparent, but in a dynamic way. The longer it will take till the text is uncovered, the stronger the transparency.
+  \item
+    \declare{|highly dynamic|} Has the same effect as |dynamic|, but the effect is stronger.
+  \item
+    \declare{|still covered=|\meta{not yet list}} specifies how to render covered items that have not yet been uncovered. The \meta{not yet list} should be a list of |\opaqueness| commands, see the description of that command, below.
+    \example
+\begin{verbatim}
+\setbeamercovered{%
+  still covered={\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}},
+  again covered={\opaqueness<1->{15}}}
+\end{verbatim}
+
+  \item
+    \declare{|again covered=|\meta{once more list}} specifies how to render covered items that have once more been covered, that is, that had been shown before but are now covered again.
+  \end{itemize}
+\end{command}
+
+\begin{command}{\opaqueness\ssarg{overlay specification}\marg{percentage of opaqueness}}
+  The \meta{overlay specification} specifies on which slides covered text should have which \meta{percentage of opaqueness}. Unlike other overlay specifications, this \meta{overlay specification} is a ``relative'' overlay specification. For example, the specification ``3'' here means ``things that will be uncovered three slides ahead,'' respectively ``things that have once more been covered for three slides.'' More precisely, if an item is uncovered for more than one slide and then covered once more, only the ``first moment of uncovering'' is used for the calculation of how long the item has been covered once more.
+
+  An opaqueness of 100 is fully opaque and 0 is fully transparent. Currently, since real transparency is not yet implemented, this command causes all colors to get a mixing of \meta{percentage of opaqueness} of the current |bg|. At some future point this command might result in real transparency.
+
+  The alternate \pgfname\ extension used inside an opaque area is \meta{percentage of opaqueness}|opaque|. In case of nested calls, only the innermost opaqueness specification is used.
+  \example
+\begin{verbatim}
+\setbeamercovered{still covered={\opaqueness<1->{15}},again covered={\opaqueness<1->{15}}}
+\pgfdeclareimage{book}{book}
+\pgfdeclareimage{book.!15opaque}{filenameforbooknearlytransparent}
+\end{verbatim}
+
+  Makes everything that is uncovered in two slides only 15 percent opaque.
+\end{command}

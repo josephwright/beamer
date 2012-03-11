@@ -1,0 +1,3880 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass beamer
+\begin_preamble
+\beamertemplateshadingbackground{red!5}{structure!5}
+
+\usepackage{beamerthemeshadow}
+\usepackage{pgfnodes,pgfarrows,pgfheaps}
+
+\beamertemplatetransparentcovereddynamicmedium
+
+
+\pgfdeclareimage[width=0.6cm]{icsi-logo}{beamer-icsi-logo}
+\logo{\pgfuseimage{icsi-logo}}
+
+
+
+
+\newcommand{\Class}[1]{\operatorname{\mathchoice
+  {\text{\small #1}}
+  {\text{\small #1}}
+  {\text{#1}}
+  {\text{#1}}}}
+
+\newcommand{\Lang}[1]{\operatorname{\text{\textsc{#1}}}}
+
+\newcommand{\tape}[3]{%
+  \color{structure!30!averagebackgroundcolor}
+  \pgfmoveto{\pgfxy(-0.5,0)}
+  \pgflineto{\pgfxy(-0.6,0.1)}
+  \pgflineto{\pgfxy(-0.4,0.2)}
+  \pgflineto{\pgfxy(-0.6,0.3)}
+  \pgflineto{\pgfxy(-0.4,0.4)}
+  \pgflineto{\pgfxy(-0.5,0.5)}
+  \pgflineto{\pgfxy(4,0.5)}
+  \pgflineto{\pgfxy(4.1,0.4)}
+  \pgflineto{\pgfxy(3.9,0.3)}
+  \pgflineto{\pgfxy(4.1,0.2)}
+  \pgflineto{\pgfxy(3.9,0.1)}
+  \pgflineto{\pgfxy(4,0)}
+  \pgfclosepath
+  \pgffill
+
+  \color{structure}  
+  \pgfputat{\pgfxy(0,0.7)}{\pgfbox[left,base]{#1}}
+  \pgfputat{\pgfxy(0,-0.1)}{\pgfbox[left,top]{#2}}
+
+  \color{black}
+  \pgfputat{\pgfxy(-.1,0.25)}{\pgfbox[left,center]{\texttt{#3}}}%
+}
+
+\newcommand{\shorttape}[3]{%
+  \color{structure!30!averagebackgroundcolor}
+  \pgfmoveto{\pgfxy(-0.5,0)}
+  \pgflineto{\pgfxy(-0.6,0.1)}
+  \pgflineto{\pgfxy(-0.4,0.2)}
+  \pgflineto{\pgfxy(-0.6,0.3)}
+  \pgflineto{\pgfxy(-0.4,0.4)}
+  \pgflineto{\pgfxy(-0.5,0.5)}
+  \pgflineto{\pgfxy(1,0.5)}
+  \pgflineto{\pgfxy(1.1,0.4)}
+  \pgflineto{\pgfxy(0.9,0.3)}
+  \pgflineto{\pgfxy(1.1,0.2)}
+  \pgflineto{\pgfxy(0.9,0.1)}
+  \pgflineto{\pgfxy(1,0)}
+  \pgfclosepath
+  \pgffill
+
+  \color{structure}  
+  \pgfputat{\pgfxy(0.25,0.7)}{\pgfbox[center,base]{#1}}
+  \pgfputat{\pgfxy(0.25,-0.1)}{\pgfbox[center,top]{#2}}
+
+  \color{black}
+  \pgfputat{\pgfxy(-.1,0.25)}{\pgfbox[left,center]{\texttt{#3}}}%
+}
+
+\pgfdeclareverticalshading{heap1}{\the\paperwidth}%
+  {color(0pt)=(black); color(1cm)=(structure!65!white)}
+\pgfdeclareverticalshading{heap2}{\the\paperwidth}%
+  {color(0pt)=(black); color(1cm)=(structure!55!white)}
+\pgfdeclareverticalshading{heap3}{\the\paperwidth}%
+  {color(0pt)=(black); color(1cm)=(structure!45!white)}
+\pgfdeclareverticalshading{heap4}{\the\paperwidth}%
+  {color(0pt)=(black); color(1cm)=(structure!35!white)}
+\pgfdeclareverticalshading{heap5}{\the\paperwidth}%
+  {color(0pt)=(black); color(1cm)=(structure!25!white)}
+\pgfdeclareverticalshading{heap6}{\the\paperwidth}%
+  {color(0pt)=(black); color(1cm)=(red!35!white)}
+
+\newcommand{\heap}[5]{%
+  \begin{pgfscope}
+    \color{#4}
+    \pgfheappath{\pgfxy(0,#1)}{\pgfxy(-#2,0)}{\pgfxy(#2,0)}
+    \pgfclip
+    \begin{pgfmagnify}{1}{#1}
+      \pgfputat{\pgfpoint{-.5\paperwidth}{0pt}}{\pgfbox[left,base]{\pgfuseshading{heap#5}}}
+    \end{pgfmagnify}
+  \end{pgfscope}
+  %\pgffill
+  
+  \color{#4}
+  \pgfheappath{\pgfxy(0,#1)}{\pgfxy(-#2,0)}{\pgfxy(#2,0)}
+  \pgfstroke
+
+  \color{white}
+  \pgfheaplabel{\pgfxy(0,#1)}{#3}%
+}
+
+
+\newcommand{\langat}[2]{%
+  \color{black!30!beamerexample}
+  \pgfsetlinewidth{0.6pt}
+  \pgfsetendarrow{\pgfarrowdot}
+  \pgfline{\pgfxy(-3.5,#1)}{\pgfxy(0.05,#1)}
+  \color{beamerexample}
+  \pgfputat{\pgfxy(-3.6,#1)}{\pgfbox[right,center]{#2}}%
+}
+
+\newcommand{\langatother}[2]{%
+  \color{black!30!beamerexample}
+  \pgfsetlinewidth{0.6pt}
+  \pgfsetendarrow{\pgfarrowdot}
+  \pgfline{\pgfxy(3.5,#1)}{\pgfxy(-0.05,#1)}
+  \color{beamerexample}
+  \pgfputat{\pgfxy(3.6,#1)}{\pgfbox[left,center]{#2}}%
+}
+
+
+\pgfdeclaremask{knight1-mask}{beamer-knight1-mask} \pgfdeclareimage[height=2cm,mask=knight1-mask]{knight1}{beamer-knight1} \pgfdeclaremask{knight2-mask}{beamer-knight2-mask} \pgfdeclareimage[height=2cm,mask=knight2-mask]{knight2}{beamer-knight2} \pgfdeclaremask{knight3-mask}{beamer-knight3-mask} \pgfdeclareimage[height=2cm,mask=knight3-mask,interpolate=true]{knight3}{beamer-knight3} \pgfdeclaremask{knight4-mask}{beamer-knight4-mask} \pgfdeclareimage[height=2cm,mask=knight4-mask,interpolate=true]{knight4}{beamer-knight4}
+
+
+\pgfdeclareradialshading{graphnode}
+  {\pgfpoint{-3pt}{3.6pt}}%
+  {color(0cm)=(beamerexample!15);
+    color(2.63pt)=(beamerexample!75);
+    color(5.26pt)=(beamerexample!70!black);
+    color(7.6pt)=(beamerexample!50!black);
+    color(8pt)=(beamerexample!10!averagebackgroundcolor)}
+
+\newcommand{\graphnode}[2]{
+  \pgfnodecircle{#1}[virtual]{#2}{8pt}
+  \pgfputat{#2}{\pgfbox[center,center]{\pgfuseshading{graphnode}}}
+}
+\end_preamble
+\options notes=show
+\language english
+\inputencoding auto
+\fontscheme times
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 1
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Title
+
+The Complexity of
+\newline 
+Finding Paths in Tournaments
+\layout Author
+
+Till Tantau
+\layout Institute
+
+International Computer Schience Institute
+\newline 
+Berkeley, California
+\begin_inset OptArg
+collapsed true
+
+\layout Standard
+
+ICSI
+\end_inset 
+
+
+\layout Date
+
+January 30th, 2004
+\layout BeginFrame
+
+Outline
+\layout Standard
+
+
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+[pausesections]
+\end_inset 
+
+
+\layout EndFrame
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+% Show the table of contents at the beginning
+\layout Standard
+% of every subsection.
+\layout Standard
+
+\backslash 
+AtBeginSubsection[]{
+\layout Standard
+  
+\backslash 
+frame<handout:0>{ 
+\layout Standard
+    
+\backslash 
+frametitle{Outline}   
+\layout Standard
+    
+\backslash 
+tableofcontents[current,currentsubsection] 
+\layout Standard
+  }
+\layout Standard
+}
+\end_inset 
+
+
+\layout Section
+
+Introduction
+\layout Subsection
+
+What are Tournaments?
+\layout BeginFrame
+
+Tournaments Consist of Jousts Between Knights
+\layout Columns
+
+\begin_deeper 
+\layout Column
+
+5.75cm
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{1.25cm}{-1cm}{7cm}{4cm}      
+\layout Standard
+  
+\backslash 
+pgfnodebox{A}[virtual]{
+\backslash 
+pgfxy(2,1)}{
+\backslash 
+pgfuseimage{knight1}}{2pt}{2pt}
+\layout Standard
+  
+\backslash 
+pgfnodebox{B}[virtual]{
+\backslash 
+pgfxy(6,1)}{
+\backslash 
+pgfuseimage{knight2}}{2pt}{2pt}
+\layout Standard
+  
+\backslash 
+pgfnodebox{C}[virtual]{
+\backslash 
+pgfxy(4,-1)}{
+\backslash 
+pgfuseimage{knight3}}{2pt}{2pt}
+\layout Standard
+  
+\backslash 
+pgfnodebox{D}[virtual]{
+\backslash 
+pgfxy(4,3)}{
+\backslash 
+pgfuseimage{knight4}}{2pt}{2pt}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+only<3->{
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}}
+\layout Standard
+  
+\backslash 
+only<2->{
+\layout Standard
+    
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A}{B}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A}{C}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D}{A}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C}{B}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B}{D}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C}{D}}
+\layout Standard
+
+\backslash 
+end{pgfpicture} 
+\end_inset 
+
+
+\layout Column
+
+6cm
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{What is a Tournament?}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+A group of knights.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+Every pair has a joust.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<3->
+\end_inset 
+
+In every joust one knight wins.
+\end_deeper 
+\end_deeper 
+\layout BeginFrame
+
+Tournaments are Complete Directed Graphs
+\layout Columns
+
+\begin_deeper 
+\layout Column
+
+5cm
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{1.5cm}{-1cm}{6.5cm}{4cm}
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+  
+\backslash 
+graphnode{A}{
+\backslash 
+pgfxy(2.5,1)}
+\layout Standard
+  
+\backslash 
+graphnode{B}{
+\backslash 
+pgfxy(5.5,1)}
+\layout Standard
+  
+\backslash 
+graphnode{C}{
+\backslash 
+pgfxy(4,-0.5)}
+\layout Standard
+  
+\backslash 
+graphnode{D}{
+\backslash 
+pgfxy(4,2.5)}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{white}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{A}}{
+\backslash 
+pgfbox[center,center]{$v_2$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{B}}{
+\backslash 
+pgfbox[center,center]{$v_3$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{C}}{
+\backslash 
+pgfbox[center,center]{$v_4$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{D}}{
+\backslash 
+pgfbox[center,center]{$v_1$}}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepstart{2pt}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepend{4pt}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{A}{B}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{A}{C}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{D}{A}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{C}{B}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{B}{D} 
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{D}{C}
+\layout Standard
+
+\backslash 
+end{pgfpicture} 
+\end_inset 
+
+
+\layout Column
+
+6cm
+\layout Definition
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+A 
+\color red
+tournament
+\color default
+ is a
+\begin_deeper 
+\layout Enumerate
+
+directed graphs,
+\layout Enumerate
+
+with exactly one edge between
+\newline 
+any two different vertices.
+\end_deeper 
+\end_deeper 
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+[<+>]
+\end_inset 
+
+Tournaments Arise Naturally in Different Situations
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Applicatins in Ordering Theory}
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+Elements in a set need to be sorted.
+ 
+\newline 
+The comparison relation may be cyclic, however.
+\end_deeper 
+\layout Separator
+
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Applications in Sociology}
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+Several candidates apply for a position.
+\newline 
+Reviewers decide for any two candidates whom they prefer.
+ 
+\end_deeper 
+\layout Separator
+
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Applications in Structural Complexity Theory}
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+A language 
+\begin_inset Formula $L$
+\end_inset 
+
+ is given and a selector function 
+\begin_inset Formula $f$
+\end_inset 
+
+.
+\newline 
+It chooses from any two words the one more likely to be in 
+\begin_inset Formula $f$
+\end_inset 
+
+.
+\end_deeper 
+\layout Subsection
+
+What Does ``Finding Paths'' Mean?
+\layout BeginFrame
+
+``Finding Paths'' is Ambiguous
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{
+\backslash 
+strut Input for 
+\backslash 
+ignorespaces
+\backslash 
+def
+\backslash 
+par{}% because LyX inserts superfluous paragraphs
+\layout Standard
+
+\backslash 
+only<1>{Path Finding Problems}
+\backslash 
+ignorespaces
+\layout Standard
+
+\backslash 
+only<2-3>{$
+\backslash 
+Lang{reach}$}
+\backslash 
+ignorespaces
+\layout Standard
+
+\backslash 
+only<4-5>{the Construction Problem}
+\backslash 
+ignorespaces
+\layout Standard
+
+\backslash 
+only<6-7>{the Optimization Problem}
+\backslash 
+ignorespaces
+\layout Standard
+
+\backslash 
+only<8-9>{$
+\backslash 
+Lang{distance}$}
+\backslash 
+ignorespaces
+\layout Standard
+
+\backslash 
+only<10->{the Approximation Problem}}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+A 
+\color red
+graph
+\color default
+ 
+\begin_inset Formula $G=(V,E)$
+\end_inset 
+
+, a 
+\color red
+source
+\color default
+ 
+\begin_inset Formula $s\in V$
+\end_inset 
+
+ and a 
+\color red
+target
+\color default
+ 
+\begin_inset Formula $t\in V$
+\end_inset 
+
+.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<only@-9| visible@8->
+\end_inset 
+
+A 
+\color red
+maximum distance
+\color default
+\SpecialChar ~
+
+\begin_inset Formula $d$
+\end_inset 
+
+.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+phantom{p}
+\end_inset 
+
+
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<only@10->
+\end_inset 
+
+An 
+\color red
+approximation ratio
+\color default
+ 
+\begin_inset Formula $r>1$
+\end_inset 
+
+.
+\end_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+nointerlineskip
+\end_inset 
+
+
+\layout Overprint
+
+\begin_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+onslide<1,3,5,7,9,11-12>
+\end_inset 
+
+
+\layout Columns
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+[t,onlytextwidth]
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+alt<1-2>{
+\backslash 
+column{
+\backslash 
+textwidth}}{
+\backslash 
+column{5cm}}
+\end_inset 
+
+
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Example Input}
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{2.5cm}{-0.6cm}{7.5cm}{2.6cm}
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+  
+\backslash 
+graphnode{A}{
+\backslash 
+pgfxy(3,1)}
+\layout Standard
+  
+\backslash 
+graphnode{B}{
+\backslash 
+pgfxy(5,1)}
+\layout Standard
+  
+\backslash 
+graphnode{C}{
+\backslash 
+pgfxy(4,0)}
+\layout Standard
+  
+\backslash 
+graphnode{D}{
+\backslash 
+pgfxy(4,2)}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{white}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{B}}{
+\backslash 
+pgfbox[center,center]{$t$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{D}}{
+\backslash 
+pgfbox[center,center]{$s$}}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepstart{2pt}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepend{4pt}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{A}{B}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{A}{C}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{D}{A}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{C}{B}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{B}{D}
+\layout Standard
+  
+\backslash 
+pgfnodeconnline{D}{C}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+only<9> {
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(5.3,1)}{
+\backslash 
+pgfbox[left,center]{, $d=2$}}}
+\layout Standard
+  
+\backslash 
+only<11>{
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(5.3,1)}{
+\backslash 
+pgfbox[left,center]{, $r=1.5$}}}
+\layout Standard
+  
+\backslash 
+only<12>{
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(5.3,1)}{
+\backslash 
+pgfbox[left,center]{, $r=1.25$}}}
+\layout Standard
+
+\backslash 
+end{pgfpicture}
+\end_inset 
+
+
+\end_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+only<3->{
+\backslash 
+column{5cm}}
+\end_inset 
+
+
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<only@3->{Example Output}
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{2.5cm}{-0.6cm}{7.5cm}{2.6cm}
+\layout Standard
+  
+\backslash 
+only<5-8,10->{
+\layout Standard
+    
+\backslash 
+color{beamerexample}
+\layout Standard
+    
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+    
+\backslash 
+graphnode{A}{
+\backslash 
+pgfxy(3,1)}
+\layout Standard
+    
+\backslash 
+graphnode{B}{
+\backslash 
+pgfxy(5,1)}
+\layout Standard
+    
+\backslash 
+graphnode{C}{
+\backslash 
+pgfxy(4,0)}
+\layout Standard
+    
+\backslash 
+graphnode{D}{
+\backslash 
+pgfxy(4,2)}
+\layout Standard
+
+\layout Standard
+    
+\backslash 
+color{white}
+\layout Standard
+    
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{B}}{
+\backslash 
+pgfbox[center,center]{$t$}}
+\layout Standard
+    
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{D}}{
+\backslash 
+pgfbox[center,center]{$s$}}
+\layout Standard
+
+\layout Standard
+    
+\backslash 
+color{beamerexample}
+\layout Standard
+    
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+    
+\backslash 
+pgfnodesetsepstart{2pt}
+\layout Standard
+    
+\backslash 
+pgfnodesetsepend{4pt}
+\layout Standard
+                      
+\layout Standard
+    
+\backslash 
+alert<7,12>{
+\backslash 
+pgfnodeconnline{A}{B}}
+\layout Standard
+    
+\backslash 
+alert<5,11>{
+\backslash 
+pgfnodeconnline{A}{C}}
+\layout Standard
+    
+\backslash 
+alert<5,7,11-12>{
+\backslash 
+pgfnodeconnline{D}{A}}
+\layout Standard
+    
+\backslash 
+alert<5,11>{
+\backslash 
+pgfnodeconnline{C}{B}}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B}{D}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D}{C}
+\layout Standard
+  }
+\layout Standard
+  
+\backslash 
+only<3,9>{
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(2.75,1)}{
+\backslash 
+pgfbox[left,center]{
+\backslash 
+alert{``Yes''}}}}
+\layout Standard
+
+\backslash 
+end{pgfpicture}
+\end_inset 
+
+
+\end_deeper 
+\end_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+onslide<2,4,6,8,10>
+\end_inset 
+
+
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Variants of Path Finding Problems}
+\end_inset 
+
+
+\begin_deeper 
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+usedescriptionitemofwidthas{Approximation Problem:}
+\end_inset 
+
+
+\layout Description
+
+Reachability\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+Is there a path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+?
+\layout Description
+
+Construction\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<4->
+\end_inset 
+
+Construct a path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+? 
+\layout Description
+
+Optimization\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<6->
+\end_inset 
+
+Construct a shortest path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+.
+\layout Description
+
+Distance\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<8->
+\end_inset 
+
+Is the distance of 
+\begin_inset Formula $s$
+\end_inset 
+
+ and\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+ at most\SpecialChar ~
+
+\begin_inset Formula $d$
+\end_inset 
+
+?
+\layout Description
+
+Approximation\SpecialChar ~
+Problem: 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<10->
+\end_inset 
+
+Construct a path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+ of length
+\newline 
+approximately their distance.
+\end_deeper 
+\end_deeper 
+\layout Section
+
+Review
+\layout Subsection
+
+Standard Complexity Classes
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+pgfdeclaremask{computer-mask}{beamer-g4-mask} 
+\backslash 
+pgfdeclareimage[height=2cm,mask=computer-mask,interpolate=true]{computer}{beamer-g4} 
+\end_inset 
+
+
+\layout BeginFrame
+
+The Classes L and NL are Defined via
+\newline 
+Logspace Turing Machines
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{-0.5cm}{0cm}{8cm}{5cm}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(0,4)}{
+\backslash 
+tape{input tape (read only), $n$ symbols}{}{3401234*3143223=}} 
+\layout Standard
+  
+\backslash 
+uncover<2->{
+\layout Standard
+    
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(0,0.5)}{
+\backslash 
+tape{}{output tape (write only)}{10690836937182}}}
+\layout Standard
+  
+\backslash 
+uncover<3->{
+\layout Standard
+    
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(7,2)}{
+\backslash 
+shorttape{work tape (read/write), $O(
+\backslash 
+log n)$ symbols}{}{42}}
+\layout Standard
+    
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(1.75,2.5)}{
+\backslash 
+pgfbox[center,center]{
+\backslash 
+pgfuseimage{computer}}}
+\layout Standard
+  }
+\layout Standard
+  
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{structure}
+\layout Standard
+  
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+  
+\backslash 
+pgfxycurve(1.75,3.5)(1.75,3.75)(0,3.5)(0,3.85)
+\layout Standard
+  
+\backslash 
+uncover<2->{
+\backslash 
+pgfxycurve(1.75,1.5)(1.75,1)(0,1.5)(0,1.05)}
+\layout Standard
+  
+\backslash 
+uncover<3->{
+\backslash 
+pgfxycurve(2.65,2.5)(3.75,2.5)(7,1)(7,1.9)}
+\layout Standard
+
+\backslash 
+end{pgfpicture}   
+\end_inset 
+
+
+\layout BeginFrame
+
+Logspace Turing Machines Are Quite Powerful
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Deterministic logspace machines can compute}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+addition, multiplication, and even division
+\layout Itemize
+
+reductions used in completeness proofs,
+\layout Itemize
+
+reachability in forests.
+\end_deeper 
+\layout Pause
+
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Non-deterministic logspace machines can compute}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+reachability in graphs,
+\layout Itemize
+
+non-reachability in graphs,
+\layout Itemize
+
+satisfiability with two literals per clause.
+\end_deeper 
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<1>[label=hierarchy]
+\end_inset 
+
+The Complexity Class Hierarchy
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{-5.4cm}{0cm}{5.4cm}{5.5cm}
+\layout Standard
+  
+\backslash 
+pgfsetlinewidth{0.8pt}
+\layout Standard
+  
+\backslash 
+heap{5.5}{3.5}{$
+\backslash 
+Class P$}{black}{1}
+\layout Standard
+  
+\backslash 
+pgfsetdash{{2pt}}{0pt}
+\layout Standard
+  
+\backslash 
+only<2->{
+\backslash 
+heap{4.5}{3}{$
+\backslash 
+Class{NC}^2$}{black!50!structure}{2}}
+\layout Standard
+  
+\backslash 
+heap{3.5}{2.5}{$
+\backslash 
+Class{NL}$}{black!50!structure}{3}
+\layout Standard
+  
+\backslash 
+heap{2.5}{2}{$
+\backslash 
+Class{L}$}{black!50!structure}{4}
+\layout Standard
+  
+\backslash 
+only<2->{
+\backslash 
+heap{1.75}{1.5}{$
+\backslash 
+vphantom{A}
+\backslash 
+smash{
+\backslash 
+Class{NC}^1}$}{black!50!structure}{5}}
+\layout Standard
+  
+\backslash 
+pgfsetdash{}{0pt}
+\layout Standard
+  
+\backslash 
+only<2->{
+\backslash 
+heap{1.1}{1}{$
+\backslash 
+vphantom{A}
+\backslash 
+smash{
+\backslash 
+Class{AC}^0}$}{black}{6}}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+pgfsetlinewidth{1.0pt}
+\layout Standard
+  
+\backslash 
+color{black}
+\layout Standard
+  
+\backslash 
+pgfxyline(-5,0)(5,0)
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+only<1-2>{
+\backslash 
+langat{3.375}{$
+\backslash 
+Lang{reach}$}}
+\layout Standard
+  
+\backslash 
+only<1-2>{
+\backslash 
+langat{2.375}{$
+\backslash 
+Lang{reach}_{
+\backslash 
+operatorname{forest}}$}}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+only<2>{
+\backslash 
+langat{0.975}{$
+\backslash 
+Lang{addition}$}}
+\layout Standard
+  
+\backslash 
+only<2>{
+\backslash 
+langatother{1.6}{
+\backslash 
+vbox{
+\backslash 
+hbox{$
+\backslash 
+Lang{division}$,}
+\backslash 
+hbox{$
+\backslash 
+Lang{parity}$}}}}
+\layout Standard
+  
+\backslash 
+only<3-5>{
+\backslash 
+langat{3.375}{
+\backslash 
+vbox{
+\backslash 
+hbox{$
+\backslash 
+Lang{distance}$,}
+\backslash 
+hbox{$
+\backslash 
+Lang{reach}$}}}}
+\layout Standard
+  
+\backslash 
+only<4->{
+\backslash 
+langatother{2.375}{
+\backslash 
+vbox{
+\backslash 
+ignorespaces
+\layout Standard
+    
+\backslash 
+hbox{$
+\backslash 
+Lang{distance}_{
+\backslash 
+operatorname{forest}}$,}
+\backslash 
+ignorespaces
+\layout Standard
+    
+\backslash 
+hbox{$
+\backslash 
+Lang{reach}_{
+\backslash 
+operatorname{forest}}$,}
+\backslash 
+ignorespaces
+\layout Standard
+    
+\backslash 
+hbox{$
+\backslash 
+Lang{distance}_{
+\backslash 
+operatorname{path}}$,}
+\backslash 
+ignorespaces
+\layout Standard
+    
+\backslash 
+hbox{$
+\backslash 
+Lang{reach}_{
+\backslash 
+operatorname{path}}$}}}}
+\layout Standard
+  
+\backslash 
+only<5->{
+\backslash 
+langat{0.975}{$
+\backslash 
+Lang{reach}_{
+\backslash 
+operatorname{tourn}}$}}
+\layout Standard
+  
+\backslash 
+only<6->{
+\backslash 
+langat{3.375}{
+\backslash 
+vbox{
+\backslash 
+ignorespaces
+\layout Standard
+    
+\backslash 
+hbox{$
+\backslash 
+Lang{distance}_{
+\backslash 
+operatorname{tourn}}$,}
+\backslash 
+ignorespaces
+\layout Standard
+    
+\backslash 
+hbox{$
+\backslash 
+Lang{distance}$,}
+\backslash 
+ignorespaces
+\layout Standard
+    
+\backslash 
+hbox{$
+\backslash 
+Lang{reach}$}}}}
+\layout Standard
+  
+\backslash 
+only<7->{
+\backslash 
+pgfsetdash{{1pt}}{0pt}
+\backslash 
+langat{2.375}{``$
+\backslash 
+Lang{approx}_{
+\backslash 
+operatorname{tourn}}$''}}
+\layout Standard
+
+\backslash 
+end{pgfpicture} 
+\end_inset 
+
+
+\layout BeginFrame
+
+The Circuit Complexity Classes AC
+\begin_inset Formula $^{0}$
+\end_inset 
+
+, NC
+\begin_inset Formula $^{1}$
+\end_inset 
+
+, and NC
+\begin_inset Formula $^{2}$
+\end_inset 
+
+
+\newline 
+Limit the Circuit Depth
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+setlength
+\backslash 
+leftmargini{1em}
+\layout Standard
+
+\backslash 
+nointerlineskip 
+\end_inset 
+
+
+\layout Columns
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+[t]
+\end_inset 
+
+
+\begin_deeper 
+\layout Column
+
+3.6cm
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+Circuit Class 
+\begin_inset Formula $\Class{AC}^{0}$
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $O(1)$
+\end_inset 
+
+ depth
+\layout Itemize
+
+unbounded fan-in
+\end_deeper 
+\layout Examples
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $\Lang{addition}\in\Class{AC}^{0}$
+\end_inset 
+
+.
+\layout Itemize
+
+
+\begin_inset Formula $\Lang{parity}\notin\Class{AC}^{0}$
+\end_inset 
+
+.
+\end_deeper 
+\layout Pause
+
+\layout Column
+
+3.6cm
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+Circuit Class 
+\begin_inset Formula $\Class{NC}^{1}$
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $O(\log n)$
+\end_inset 
+
+ depth
+\layout Itemize
+
+bounded fan-in
+\end_deeper 
+\layout Examples
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $\Lang{parity}\in\Class{NC}^{1}$
+\end_inset 
+
+.
+\layout Itemize
+
+
+\begin_inset Formula $\Lang{mutiply}\in\Class{NC}^{1}$
+\end_inset 
+
+.
+\layout Itemize
+
+
+\begin_inset Formula $\Lang{divide}\in\Class{NC}^{1}$
+\end_inset 
+
+.
+\end_deeper 
+\layout Pause
+
+\layout Column
+
+3.6cm
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+Circuit Class 
+\begin_inset Formula $\Class{NC}^{2}$
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $O(\log^{2}n)$
+\end_inset 
+
+ depth
+\layout Itemize
+
+bounded fan-in
+\end_deeper 
+\layout Examples
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $\Class{NL}\subseteq\Class{NC}^{2}$
+\end_inset 
+
+.
+\end_deeper 
+\end_deeper 
+\layout AgainFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2>
+\end_inset 
+
+hierarchy
+\layout Subsection
+
+Standard Complexity Results on Finding Paths
+\layout BeginFrame
+
+All Variants of Finding Paths in Directed Graphs
+\newline 
+Are Equally Difficult
+\layout Fact
+
+
+\begin_inset Formula $\Lang{reach}$
+\end_inset 
+
+ and 
+\begin_inset Formula $\Lang{distance}$
+\end_inset 
+
+ are 
+\begin_inset Formula $\Class{NL}$
+\end_inset 
+
+-complete.
+ 
+\layout Pause
+
+\layout Corollary
+
+For directed graphs, we can solve
+\begin_deeper 
+\layout Itemize
+
+the reachability problem in logspace iff 
+\begin_inset Formula $\Class{L}=\Class{NL}$
+\end_inset 
+
+.
+\layout Itemize
+
+the construction problem in logspace iff 
+\begin_inset Formula $\Class{L}=\Class{NL}$
+\end_inset 
+
+.
+\layout Itemize
+
+the optimization problem in logspace iff 
+\begin_inset Formula $\Class{L}=\Class{NL}$
+\end_inset 
+
+.
+\layout Itemize
+
+the approximation problem in logspace iff 
+\begin_inset Formula $\Class{L}=\Class{NL}$
+\end_inset 
+
+.
+\end_deeper 
+\layout AgainFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<3>
+\end_inset 
+
+hierarchy
+\layout BeginFrame
+
+FindingPaths in Forests and Directed Paths is Easy,
+\newline 
+But Not Trivial
+\layout Fact
+
+
+\begin_inset Formula $\Lang{reach}_{\operatorname{forest}}$
+\end_inset 
+
+ and 
+\begin_inset Formula $\Lang{distance}_{\operatorname{forest}}$
+\end_inset 
+
+ are 
+\begin_inset Formula $\Class{L}$
+\end_inset 
+
+-complete.
+\layout Separator
+
+\layout Fact
+
+
+\begin_inset Formula $\Lang{reach}_{\operatorname{path}}$
+\end_inset 
+
+ and 
+\begin_inset Formula $\Lang{distance}_{\operatorname{path}}$
+\end_inset 
+
+ are 
+\begin_inset Formula $\Class{L}$
+\end_inset 
+
+-complete.
+\layout AgainFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<4>
+\end_inset 
+
+hierarchy
+\layout Section
+
+Finding Paths in Tournaments
+\layout Subsection
+
+Complexity of: Does a Path Exist?
+\layout BeginFrame
+
+Definition of the Tournament Reachability Problem
+\layout Definition
+
+Let 
+\color red
+
+\begin_inset Formula $\Lang{reach}_{\operatorname{tourn}}$
+\end_inset 
+
+
+\color default
+ contain all triples 
+\begin_inset Formula $(T,s,t)$
+\end_inset 
+
+ such that
+\begin_deeper 
+\layout Enumerate
+
+
+\begin_inset Formula $T=(V,E)$
+\end_inset 
+
+ is a tournament and
+\layout Enumerate
+
+there exists a path from\SpecialChar ~
+
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+.
+\end_deeper 
+\layout BeginFrame
+
+The Tournament Reachability Problem is Very Easy
+\layout Theorem
+
+
+\begin_inset Formula $\Lang{reach}_{\operatorname{tourn}}\in\Class{AC}^{0}$
+\end_inset 
+
+.
+\layout Pause
+
+\layout AlertBlock
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Implications}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+The problem is 
+\begin_inset Quotes eld
+\end_inset 
+
+easier
+\begin_inset Quotes erd
+\end_inset 
+
+ than 
+\begin_inset Formula $\Lang{reach}$
+\end_inset 
+
+ and even 
+\begin_inset Formula $\Lang{reach}_{\operatorname{path}}$
+\end_inset 
+
+.
+\layout Itemize
+
+
+\begin_inset Formula $\Lang{reach}\not\le_{\operatorname{m}}^{\Class{AC}^{0}}\Lang{reach}_{\operatorname{tourn}}$
+\end_inset 
+
+.
+\end_deeper 
+\layout AgainFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<5>
+\end_inset 
+
+hierarchy
+\layout Subsection
+
+Complexity of: Construct a Shortest Path
+\layout BeginFrame
+
+Finding a Shortest Path Is as Difficult as
+\newline 
+the Distance Problem
+\layout Definition
+
+Let 
+\color red
+
+\begin_inset Formula $\Lang{distance}_{\operatorname{tourn}}$
+\end_inset 
+
+ 
+\color default
+contain all tuples 
+\begin_inset Formula $(T,s,t,d)$
+\end_inset 
+
+ such that 
+\begin_deeper 
+\layout Enumerate
+
+
+\begin_inset Formula $T=(V,E)$
+\end_inset 
+
+ is a tournament in which
+\layout Enumerate
+
+the distance of 
+\begin_inset Formula $s$
+\end_inset 
+
+ and\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+ is at most\SpecialChar ~
+
+\begin_inset Formula $d$
+\end_inset 
+
+.
+\end_deeper 
+\layout BeginFrame
+
+The Tournament Distance Problem is Hard
+\layout Theorem
+
+
+\begin_inset Formula $\Lang{distance}_{\operatorname{tourn}}$
+\end_inset 
+
+ is 
+\begin_inset Formula $\Class{NL}$
+\end_inset 
+
+-complete.
+\layout Standard
+
+
+\hfill 
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+hyperlink{hierarchy<6>}{
+\backslash 
+beamerskipbutton{Skip Proof}} 
+\end_inset 
+
+
+\layout Pause
+
+\layout Corollary
+
+Shortest path in tournaments can be constructed
+\newline 
+in logarithmic space, iff 
+\begin_inset Formula $\Class{L}=\Class{NL}$
+\end_inset 
+
+.
+\layout Pause
+
+\layout Corollary
+
+
+\begin_inset Formula $\Lang{distance}\le_{\operatorname{m}}^{\Class{AC}^{0}}\Lang{distance}_{\operatorname{tourn}}$
+\end_inset 
+
+.
+\layout BeginFrame
+
+Proof That 
+\begin_inset Formula $\Lang{distance}_{\operatorname{tourn}}$
+\end_inset 
+
+ is NL-complete
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+nointerlineskip
+\end_inset 
+
+
+\layout Columns
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+[t,onlytextwidth]
+\end_inset 
+
+
+\begin_deeper 
+\layout Column
+
+5.7cm
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+setlength
+\backslash 
+leftmargini{1.5em}
+\end_inset 
+
+
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+Reduce 
+\begin_inset Formula $\Lang{reach}$
+\end_inset 
+
+ to 
+\begin_inset Formula $\Lang{distance}_{\operatorname{tourn}}$
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Enumerate
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<alert@1>
+\end_inset 
+
+Is input 
+\begin_inset Formula $(G,s,t)$
+\end_inset 
+
+ in 
+\begin_inset Formula $\Lang{reach}$
+\end_inset 
+
+?
+\layout Enumerate
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<2-| alert@2-8>
+\end_inset 
+
+Map 
+\begin_inset Formula $G$
+\end_inset 
+
+ to 
+\begin_inset Formula $G'$
+\end_inset 
+
+.
+\layout Enumerate
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<9-| alert@9>
+\end_inset 
+
+Query:
+\newline 
+
+\begin_inset Formula $(G',s',t',3)\in\Lang{distance}_{\operatorname{tourn}}$
+\end_inset 
+
+?
+\end_deeper 
+\layout Separator
+
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+Correctness
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<10->
+\end_inset 
+
+
+\begin_deeper 
+\layout Enumerate
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<10-| alert@10-11>
+\end_inset 
+
+A path in\SpecialChar ~
+
+\begin_inset Formula $G$
+\end_inset 
+
+ induces
+\newline 
+a length-3 path in\SpecialChar ~
+
+\begin_inset Formula $G'$
+\end_inset 
+
+.
+\layout Enumerate
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<12-| alert@12-13>
+\end_inset 
+
+A length-3 path in\SpecialChar ~
+
+\begin_inset Formula $G'$
+\end_inset 
+
+ induces
+\newline 
+a path in\SpecialChar ~
+
+\begin_inset Formula $G'$
+\end_inset 
+
+.
+\end_deeper 
+\layout Column
+
+4.5cm
+\layout Example
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+begin{pgfpicture}{0cm}{-1.25cm}{4.5cm}{3.75cm}
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+  
+\backslash 
+graphnode{A}{
+\backslash 
+pgfxy(1,3.3)}
+\layout Standard
+  
+\backslash 
+graphnode{B}{
+\backslash 
+pgfxy(2,3.3)}
+\layout Standard
+  
+\backslash 
+graphnode{C}{
+\backslash 
+pgfxy(3,3.3)}
+\layout Standard
+  
+\backslash 
+graphnode{D}{
+\backslash 
+pgfxy(4,3.3)}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{white}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{A}}{
+\backslash 
+pgfbox[center,center]{$s$}}
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{D}}{
+\backslash 
+pgfbox[center,center]{$t$}}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+color{beamerexample}
+\layout Standard
+  
+\backslash 
+pgfsetendarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepstart{2pt}
+\layout Standard
+  
+\backslash 
+pgfnodesetsepend{2pt}
+\layout Standard
+  
+\backslash 
+alert<3>{
+\backslash 
+pgfnodeconnline{B}{A}}
+\layout Standard
+  
+\backslash 
+alert<4>{
+\backslash 
+pgfnodeconnline{B}{C}}
+\layout Standard
+  
+\backslash 
+alert<5,10-11,13>{
+\backslash 
+pgfnodeconnline{C}{D}}
+\layout Standard
+  
+\backslash 
+alert<6,10-11,13>{
+\backslash 
+pgfnodeconncurve{A}{C}{45}{135}{15pt}{15pt}}
+\layout Standard
+   
+\layout Standard
+  
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(0,3.3)}{
+\backslash 
+pgfbox[left,center]{$G
+\backslash 
+colon$}}
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+only<2->{
+\layout Standard
+    
+\backslash 
+pgfputat{
+\backslash 
+pgfxy(0,2.25)}{
+\backslash 
+pgfbox[left,center]{$G'
+\backslash 
+colon$}}
+\layout Standard
+    
+\backslash 
+graphnode{A1}{
+\backslash 
+pgfxy(1,2.25)}
+\layout Standard
+    
+\backslash 
+graphnode{B1}{
+\backslash 
+pgfxy(2,2.25)}
+\layout Standard
+    
+\backslash 
+graphnode{C1}{
+\backslash 
+pgfxy(3,2.25)}
+\layout Standard
+    
+\backslash 
+graphnode{D1}{
+\backslash 
+pgfxy(4,2.25)}
+\layout Standard
+
+\layout Standard
+    
+\backslash 
+graphnode{A2}{
+\backslash 
+pgfxy(1,1.25)}
+\layout Standard
+    
+\backslash 
+graphnode{B2}{
+\backslash 
+pgfxy(2,1.25)}
+\layout Standard
+    
+\backslash 
+graphnode{C2}{
+\backslash 
+pgfxy(3,1.25)}
+\layout Standard
+    
+\backslash 
+graphnode{D2}{
+\backslash 
+pgfxy(4,1.25)}
+\layout Standard
+    
+\backslash 
+graphnode{A3}{
+\backslash 
+pgfxy(1,0.25)}
+\layout Standard
+    
+\backslash 
+graphnode{B3}{
+\backslash 
+pgfxy(2,0.25)}
+\layout Standard
+    
+\backslash 
+graphnode{C3}{
+\backslash 
+pgfxy(3,0.25)}
+\layout Standard
+    
+\backslash 
+graphnode{D3}{
+\backslash 
+pgfxy(4,0.25)}
+\layout Standard
+    
+\backslash 
+graphnode{A4}{
+\backslash 
+pgfxy(1,-.75)}
+\layout Standard
+    
+\backslash 
+graphnode{B4}{
+\backslash 
+pgfxy(2,-.75)}
+\layout Standard
+    
+\backslash 
+graphnode{C4}{
+\backslash 
+pgfxy(3,-.75)}
+\layout Standard
+    
+\backslash 
+graphnode{D4}{
+\backslash 
+pgfxy(4,-.75)}
+\layout Standard
+     {
+\backslash 
+color{white}
+\layout Standard
+      
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{A1}}{
+\backslash 
+pgfbox[center,center]{$s'$}}
+\layout Standard
+      
+\backslash 
+pgfputat{
+\backslash 
+pgfnodecenter{D4}}{
+\backslash 
+pgfbox[center,center]{$t'$}}
+\layout Standard
+  }}
+\layout Standard
+   
+\layout Standard
+  
+\backslash 
+only<8->{
+\layout Standard
+    
+\backslash 
+pgfsetlinewidth{0.4pt}
+\layout Standard
+    
+\backslash 
+color{beamerexample!25!averagebackgroundcolor}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A2}{C1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A2}{D1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B2}{A1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B2}{C1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B2}{D1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C2}{D1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D2}{A1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D2}{B1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A3}{C2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A3}{D2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B3}{A2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B3}{C2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B3}{D2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C3}{D2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D3}{A2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D3}{B2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A4}{C3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A4}{D3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B4}{A3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B4}{C3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B4}{D3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C4}{D3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D4}{A3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D4}{B3}
+\layout Standard
+
+\layout Standard
+    
+\backslash 
+pgfsetstartarrow{
+\backslash 
+pgfarrowto}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A1}{B1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B1}{C1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C1}{D1}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A2}{B2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B2}{C2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C2}{D2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A3}{B3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B3}{C3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C3}{D3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A4}{B4}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B4}{C4}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C4}{D4}
+\layout Standard
+
+\layout Standard
+    
+\backslash 
+pgfclearstartarrow
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{A3}{A1}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{A4}{A2}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{A4}{A1}{135}{-135}{15pt}{15pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{B3}{B1}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{B4}{B2}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{B4}{B1}{135}{-135}{15pt}{15pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{C3}{C1}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{C4}{C2}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{C4}{C1}{135}{-135}{15pt}{15pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{D3}{D1}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{D4}{D2}{135}{-135}{10pt}{10pt}
+\layout Standard
+    
+\backslash 
+pgfnodeconncurve{D4}{D1}{135}{-135}{15pt}{15pt}
+\layout Standard
+    
+\backslash 
+color{beamerexample}
+\layout Standard
+    
+\backslash 
+pgfsetlinewidth{0.6pt}
+\layout Standard
+  }
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+only<3->{
+\layout Standard
+    
+\backslash 
+color<3>{red}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B1}{A2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B2}{A3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B3}{A4}
+\layout Standard
+  }
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+only<4->{
+\layout Standard
+    
+\backslash 
+color<4>{red}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B1}{C2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B2}{C3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B3}{C4}
+\layout Standard
+  }
+\layout Standard
+  
+\layout Standard
+  
+\backslash 
+only<5->{
+\layout Standard
+    
+\backslash 
+color<5>{red}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C1}{D2} 
+\layout Standard
+    
+\backslash 
+alert<11>{
+\backslash 
+pgfnodeconnline{C2}{D3}}
+\layout Standard
+    
+\backslash 
+alert<12-13>{
+\backslash 
+pgfnodeconnline{C3}{D4}}
+\layout Standard
+  }
+\layout Standard
+ 
+\layout Standard
+  
+\backslash 
+only<6->{
+\layout Standard
+    
+\backslash 
+color<6>{red}
+\layout Standard
+    
+\backslash 
+alert<11>{
+\backslash 
+pgfnodeconnline{A1}{C2}}
+\layout Standard
+    
+\backslash 
+alert<12-13>{
+\backslash 
+pgfnodeconnline{A2}{C3}}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A3}{C4}
+\layout Standard
+  } 
+\layout Standard
+
+\layout Standard
+  
+\backslash 
+only<7->{
+\layout Standard
+    
+\backslash 
+color<7>{red}
+\layout Standard
+    
+\backslash 
+alert<12-13>{
+\backslash 
+pgfnodeconnline{A1}{A2}}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A2}{A3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{A3}{A4}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B1}{B2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B2}{B3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{B3}{B4}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C1}{C2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C2}{C3}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{C3}{C4}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D1}{D2}
+\layout Standard
+    
+\backslash 
+pgfnodeconnline{D2}{D3}
+\layout Standard
+    
+\backslash 
+alert<11>{
+\backslash 
+pgfnodeconnline{D3}{D4}}
+\layout Standard
+  }
+\layout Standard
+
+\backslash 
+end{pgfpicture} 
+\end_inset 
+
+
+\end_deeper 
+\layout AgainFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<6>
+\end_inset 
+
+hierarchy
+\layout Subsection
+
+Complexity of: Approximating the Shortest Path
+\layout BeginFrame
+
+Approximators Compute Paths that Are Nearly As Short As a Shortest Path
+\layout Definition
+
+An 
+\color red
+approximation scheme for 
+\begin_inset Formula $\Lang{tournament-shortest-path}$
+\end_inset 
+
+
+\color default
+ gets as input
+\begin_deeper 
+\layout Enumerate
+
+a tuple 
+\begin_inset Formula $(T,s,t)\in\Lang{reach}_{\operatorname{tourn}}$
+\end_inset 
+
+ and
+\layout Enumerate
+
+a number 
+\begin_inset Formula $r>1$
+\end_inset 
+
+.
+\layout Standard
+
+It outputs
+\layout Itemize
+
+a path from 
+\begin_inset Formula $s$
+\end_inset 
+
+ to\SpecialChar ~
+
+\begin_inset Formula $t$
+\end_inset 
+
+ of length at most 
+\begin_inset Formula $r\operatorname{d_{T}}(s,t)$
+\end_inset 
+
+.
+\end_deeper 
+\layout BeginFrame
+
+There Exists a Logspace Approximation Scheme for
+\newline 
+the Tournament Shortest Path Problem
+\layout Theorem
+
+There exists an approximation scheme for 
+\begin_inset Formula $\Lang{tournament-shortest-path}$
+\end_inset 
+
+ that for 
+\begin_inset Formula $1<r<2$
+\end_inset 
+
+ needs space
+\begin_inset Formula \[
+O\left(\log|V|\log\frac{1}{r-1}\right).\]
+
+\end_inset 
+
+
+\layout Pause
+
+\layout Corollary
+
+In tournaments, paths can be constructed in logarithmic space.
+\layout Standard
+
+
+\hfill 
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+hyperlink{optimality}{
+\backslash 
+beamergotobutton{More Details}}
+\end_inset 
+
+
+\layout AgainFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<7>
+\end_inset 
+
+hierarchy
+\layout Section*
+
+Summary
+\layout Subsection*
+
+Summary
+\layout BeginFrame
+
+Summary
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Summary}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+Tournament 
+\color red
+reachability
+\color default
+ is in
+\color red
+ 
+\begin_inset Formula $\Class{AC}^{0}$
+\end_inset 
+
+
+\color default
+.
+ 
+\layout Itemize
+
+There exists a 
+\color red
+logspace approximation scheme
+\color default
+ for 
+\color red
+approximating
+\color default
+ shortest paths in tournaments.
+\layout Itemize
+
+Finding 
+\color red
+shortest paths
+\color default
+ in tournaments is
+\color red
+ 
+\begin_inset Formula $\Class{NL}$
+\end_inset 
+
+-complete
+\color default
+.
+\end_deeper 
+\layout Separator
+
+\layout Block
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+{Outlook}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+The same results apply to graphs with
+\newline 
+bounded independence number.
+\hfill 
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+hyperlink{independence}{
+\backslash 
+beamergotobutton{More Details}}
+\end_inset 
+
+
+\layout Itemize
+
+The complexity of finding paths in undirected graphs
+\newline 
+is partly open.
+\hfill 
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+hyperlink{undirected}{
+\backslash 
+beamergotobutton{More Details}}
+\end_inset 
+
+
+\end_deeper 
+\layout Subsection*
+
+For Further Reading
+\layout BeginFrame
+
+For Further Reading
+\layout Standard
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+beamertemplatebookbibitems
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Moon1968}
+
+\SpecialChar ~
+John Moon.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ 
+\emph on 
+Topics on Tournaments.
+
+\emph default 
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ Holt, Rinehart, and Winston, 1968.
+ 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+beamertemplatearticlebibitems
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {NickelsenT2002}
+
+\SpecialChar ~
+Arfst Nickelsen and Till Tantau.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ On reachability in graphs with bounded independence number.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ In 
+\emph on 
+Proc.
+ of COCOON 2002
+\emph default 
+, Springer-Verlag, 2002.
+\layout Bibliography
+\bibitem {Tantau2004b}
+
+\SpecialChar ~
+Till Tantau 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ A logspace approximation scheme for the shortest path problem for graphs
+ with bounded independence number.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ In 
+\emph on 
+Proc.
+ of STACS 2004
+\emph default 
+, Springer-Verlag, 2004.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ In press.
+\layout EndFrame
+
+\layout Standard
+\start_of_appendix 
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+AtBeginSubsection[]{} 
+\end_inset 
+
+
+\layout Section
+
+Appendix
+\layout Subsection
+
+Graphs With Bounded Independence Number
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+[label=independence]
+\end_inset 
+
+Definition of Independence Number of a Graph
+\layout Definition
+
+The 
+\color red
+independence number
+\color default
+ 
+\begin_inset Formula $\alpha(G)$
+\end_inset 
+
+ of a directed graph
+\newline 
+is the maximum number of vertices we can pick,
+\newline 
+such that there is no edge between them.
+\layout Example
+
+Tournaments have independence number 1.
+ 
+\layout BeginFrame
+
+The Results for Tournaments also Apply to
+\newline 
+Graphs With Bounded Independence Number
+\layout Theorem
+
+For each\SpecialChar ~
+
+\begin_inset Formula $k$
+\end_inset 
+
+, 
+\color red
+reachability
+\color default
+ in graphs with independence number
+\newline 
+at most\SpecialChar ~
+
+\begin_inset Formula $k$
+\end_inset 
+
+ is in 
+\begin_inset Formula $\Class{AC}^{0}$
+\end_inset 
+
+.
+\layout Separator
+
+\layout Theorem
+
+For each\SpecialChar ~
+
+\begin_inset Formula $k$
+\end_inset 
+
+, there exists a 
+\color red
+logspace approximation scheme
+\color default
+ for approximating the shortest path in graphs with independence number
+ at most\SpecialChar ~
+
+\begin_inset Formula $k$
+\end_inset 
+
+
+\layout Separator
+
+\layout Theorem
+
+For each\SpecialChar ~
+
+\begin_inset Formula $k$
+\end_inset 
+
+, finding the 
+\color red
+shortest path
+\color default
+ in graphs with independence number at most\SpecialChar ~
+
+\begin_inset Formula $k$
+\end_inset 
+
+ is 
+\color red
+
+\begin_inset Formula $\Class{NL}$
+\end_inset 
+
+-complete
+\color default
+.
+\layout Subsection
+
+Finding Paths in Undirected Graphs
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+<1-2>[label=undirected]
+\end_inset 
+
+The Complexity of Finding Paths in Undirected Graphs
+\newline 
+Is Party Unknown.
+\layout Fact
+
+
+\begin_inset Formula $\Lang{reach}_{\operatorname{undirected}}$
+\end_inset 
+
+ is 
+\begin_inset Formula $\Class{SL}$
+\end_inset 
+
+-complete.
+\layout Corollary
+
+For undirected graphs, we can solve
+\begin_deeper 
+\layout Itemize
+
+the reachability problem in logspace iff 
+\begin_inset Formula $\Class L=\Class{SL}$
+\end_inset 
+
+,
+\layout Itemize
+
+the construction problem in logspace iff 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+alt<1>{?}{
+\backslash 
+alert{$
+\backslash 
+Class L = 
+\backslash 
+Class{SL}$}}
+\end_inset 
+
+, 
+\layout Itemize
+
+the optimization problem in logspace iff 
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+
+\backslash 
+alt<1>{?}{
+\backslash 
+alert{$
+\backslash 
+Class L = 
+\backslash 
+Class{NL}$}}
+\end_inset 
+
+, 
+\layout Itemize
+
+the approximation problem in logspace iff ?.
+ 
+\end_deeper 
+\layout Subsection
+
+The Approximation Scheme is Optimal
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Inlined
+
+\layout Standard
+[label=optimality]
+\end_inset 
+
+The Approximation Scheme is Optimal
+\layout Theorem
+
+Suppose there exists an approximation scheme for 
+\begin_inset Formula $\Lang{tournament-shortest-path}$
+\end_inset 
+
+ that needs space 
+\begin_inset Formula $O\bigl(\log|V|\log^{1-\epsilon}\frac{1}{r-1}\bigr)$
+\end_inset 
+
+.
+ Then 
+\begin_inset Formula $\Class{NL}\subseteq\Class{DSPACE}\bigl[\log^{2-\epsilon}n\bigr]$
+\end_inset 
+
+.
+\layout Proof
+
+\begin_deeper 
+\layout Enumerate
+
+Suppose the approximation scheme exists.
+\newline 
+We show 
+\begin_inset Formula $\Lang{distance}_{\operatorname{tourn}}\in\Class{DSPACE}\bigl[\log^{2-\epsilon}n\bigr]$
+\end_inset 
+
+.
+ 
+\layout Enumerate
+
+Let 
+\begin_inset Formula $(T,s,t)$
+\end_inset 
+
+ be an input.
+ Let 
+\begin_inset Formula $n$
+\end_inset 
+
+ be the number of vertices.
+\layout Enumerate
+
+Run the approximation scheme for 
+\begin_inset Formula $r:=1+\smash{\frac{1}{n+1}}$
+\end_inset 
+
+.
+\newline 
+This needs space 
+\begin_inset Formula $\smash{O(\log^{2-\epsilon}n)}$
+\end_inset 
+
+.
+\layout Enumerate
+
+The resulting path has optimal length.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+qedhere
+\end_inset 
+
+
+\end_deeper 
+\layout EndFrame
+
+\the_end

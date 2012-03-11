@@ -1,0 +1,80 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\documentclass[notes]{beamer}
+
+% You might wish to try this instead of the above line:
+%\documentclass[class=article]{beamer}
+%\usepackage{beamerbasearticle}
+%\usepackage{hyperref}
+
+\usepackage[framesassubsections]{beamerprosper}
+
+\mode<presentation>
+{
+  \definecolor{beamerstructure}{RGB}{43,79,112}
+  \definecolor{sidebackground}{RGB}{230,242,250}
+  \color{beamerstructure}
+  \usetheme{Goettingen}
+  \usepackage{times}
+  \userightsidebarcolortemplate{\color{sidebackground}}
+  \beamertemplateballitem
+}
+
+
+\title{A Beamer Presentation Using (HA-)Prosper Commands}
+\subtitle{Subtitles Are Also Supported}
+\author{Till Tantau}
+\institution{The Institution is Mapped To Institute}
+
+\begin{document}
+
+\maketitle
+
+\tsectionandpart{Introduction}
+
+\overlays{2}{
+\begin{slide}[trans=Glitter]{About this file}
+  \begin{itemstep}
+  \item
+    This is a beamer presentation.
+  \item
+    You can use the prosper and the HA-prosper syntax.
+  \item
+    This is done by mapping prosper and HA-prosper commands to beamer
+    commands.
+  \item
+    The emulation is by no means perfect.
+  \end{itemstep}
+\end{slide}
+}
+
+
+\section{Second Section}
+
+\subsection{A subsection}
+
+\frame
+{
+  \frametitle{A frame created using the \texttt{frame} command.}
+
+  \begin{itemize}[<+->]
+  \item You can still use the original beamer syntax.
+  \item The emulation is intended only to make recycling slides
+    easier, not to install a whole new syntax for beamer.
+  \end{itemize}
+}
+
+\begin{notes}{Notes for these slides}
+My notes for these slides.
+\end{notes}
+
+\end{document}

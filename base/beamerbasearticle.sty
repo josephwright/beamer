@@ -1,0 +1,82 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\newif\ifbeamer@articleutf
+\beamer@articleutffalse
+
+\newif\ifbeamer@articlehyperref
+\beamer@articlehyperreffalse
+
+\newif\ifbeamer@articlexcolor
+\beamer@articlexcolortrue
+
+\newif\ifbeamer@articleactive
+\beamer@articleactivefalse
+
+\DeclareOption{utf8}{\beamer@articleutftrue}
+\DeclareOption{hyperref}{\beamer@articlehyperreftrue}
+\DeclareOption{noxcolor}{\beamer@articlexcolorfalse}
+\DeclareOption{nodefaultblocks}{\beamer@blocksfalse}% obsolete. use notheorems
+\DeclareOption{notheorems}{\beamer@blocksfalse}
+\DeclareOption{noamsthm}{\beamer@blocksfalse\beamer@amsfalse}
+\DeclareOption{envcountsect}{\beamer@countsecttrue}
+\DeclareOption{activeospeccharacters}{\beamer@articleactivetrue}
+
+\ProcessOptions
+
+\RequirePackage{beamerbaseoptions}
+% For option management
+
+\ifbeamer@articleutf
+  \RequirePackage[utf8]{inputenc}
+\fi
+
+\ifbeamer@articlehyperref
+  \RequirePackage[pdfborder={0 0 0},bookmarksnumbered]{hyperref}
+  % For hyperlinks
+
+  \hypersetup{pdfcreator={LaTeX with Beamer class version \beamer@version\space (article mode)}}
+  \ifbeamer@articleutf
+    \hypersetup{unicode=true}
+  \fi
+\fi
+
+\ifbeamer@articlexcolor
+  \RequirePackage[override]{xcolor}
+  % For color support
+\fi
+
+\RequirePackage{beamerbaserequires}
+% Beamer packages required both by presentation and article modes
+
+
+% Default article templates:
+\defbeamertemplate<article>*{frame begin}{default}{}
+\defbeamertemplate<article>*{frame end}{default}{}
+\defbeamertemplate<article>*{frametitle}{default}{\paragraph*{\insertframetitle}\ \par\noindent\emph{\insertframesubtitle}\par}
+\defbeamertemplate<article>*{alerted text begin}{default}{\ifmmode\else\begin{itshape}\fi}
+\defbeamertemplate<article>*{alerted text end}{default}{\ifmmode\else\end{itshape}\fi}
+\defbeamertemplate<article>*{structure begin}{default}{\ifmmode\else\begin{bfseries}\fi}
+\defbeamertemplate<article>*{structure end}{default}{\ifmmode\else\end{bfseries}\fi}
+\defbeamertemplate<article>*{block begin}{default}
+  {\par\vskip\medskipamount{\noindent\textbf{\insertblocktitle}}\par\noindent\ignorespaces}
+\defbeamertemplate<article>*{block end}{default}{\vskip\medskipamount}
+\defbeamertemplate<article>*{block alerted begin}{default}
+  {\par\vskip\medskipamount{\noindent\textbf{\emph{\insertblocktitle}}}\par\noindent\ignorespaces}
+\defbeamertemplate<article>*{block alerted end}{default}{\vskip\medskipamount}
+\defbeamertemplate<article>*{block example begin}{default}
+  {\par\vskip\medskipamount{\noindent\emph{\insertblocktitle}}\par\noindent\ignorespaces}
+\defbeamertemplate<article>*{block example end}{default}{\vskip\medskipamount}
+
+\mode
+<all>

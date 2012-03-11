@@ -1,0 +1,271 @@
+% $Header$
+
+% This file is a demonstration on how a seminar file should be
+% changed to make it work with beamer.
+
+
+% Copyright notice:
+
+% Except for the changes indicated by CHANGED, this file is the original
+% file texpower-0.0.9d/doc/seminardemo.tex, which is part of the
+% examples of the texpower package. 
+
+
+
+% seminardemo.tex,v 1.2 2002/11/14 20:46:00 hansfn Exp
+%  
+% TeXPower bundle - dynamic online presentations with LaTeX
+% Copyright (C) 1999-2002 Stephan Lehmke
+% 
+% This program is free software; you can redistribute it and/or
+% modify it under the terms of the GNU General Public License
+% as published by the Free Software Foundation; either version 2
+% of the License, or (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+%-----------------------------------------------------------------------------------------------------------------
+% File: seminardemo.tex
+%
+% Simple examples the for combining the seminar class with the dynamic features provided by the package texpower.sty. 
+% 
+%-----------------------------------------------------------------------------------------------------------------
+% Autor: Stephan Lehmke <Stephan.Lehmke@cs.uni-dortmund.de>
+%
+% v0.0.1 Jun 02, 2000: First version for the pre-alpha release of TeXPower.
+%
+
+
+% CHANGED: commented
+%\documentclass{seminar}
+%
+%% We need fixseminar for setting the page size correctly.
+%
+%\usepackage{fixseminar}
+%
+%
+%%-----------------------------------------------------------------------------------------------------------------
+%% The texpower package is loaded. 
+%% We give the display option so dynamic features are enabled.
+%%
+%\usepackage[display]{texpower}
+
+% CHANGED: Added
+\documentclass[slidestop,usepdftitle=false]{beamer}
+\usepackage[accumulated]{beamerseminar}
+\usepackage{beamertexpower}
+\usepackage{beamerthemeshadow}
+
+
+% CHANGED: Moved \title and \author outside of slide
+\title{The \code{texpower} Package\\ {\normalfont \texttt{seminar} Demo}}
+\author[Stephan Lehmke]{Stephan Lehmke\\\code{mailto:Stephan.Lehmke@cs.uni-dortmund.de}}
+
+\begin{document}
+\begin{slide}
+
+\maketitle
+
+\newslide
+
+\tableofcontents
+\end{slide}
+
+% CHANGED: Added \frame, moved \section out, added \frametitle
+\section{A list environment}
+\frame{
+\begin{slide}
+\centerslidesfalse
+\frametitle{A list environment}
+
+% The \pause command `splits' the current page at the place it appears, producing two pages, one with everything which
+% came before the \pause command, one containing this and additionally the stuff coming after \pause. When these pages
+% are presented with acrobar reader in full screen mode (or any other viewer with this capability), the presentation
+% will appear to `stop' at the point the \pause command was issued and `resume' in the moment the presenter switches to
+% the next page.
+
+\pause
+
+% As \pause forces a paragraph break, it can not be used to separate a description label from the associated text. For
+% this, we use the (very flexible) \stepwise command. Inside the argument of \stepwise, an arbitrary number of \step
+% commands may occur. \stepwise will produce as many pages as there are \step commands, making the arguments of the
+% \step commands appear ``one by one''.
+
+\stepwise
+{%
+  \begin{description}
+  \item[foo.] \step{bar.}
+  \step{\item[baz.]} \step{qux.}
+  \end{description}
+  }
+
+
+
+\end{slide}
+}
+
+% CHANGED: Added \frame, moved \section out
+\section{An aligned equation}
+\frame{
+\begin{slide}
+\centerslidesfalse
+\frametitle{An aligned equation}
+
+\pause
+
+% Normally for \stepwise, if a \step is not yet active, its argument is ignored completely. This would disturb
+% alignments, because the width changes with every new activated \step.
+% \parstepwise is a variant of \stepwise where the argument of an inactive \step is put into a \phantom, leaving the
+% proper amount of white space.
+
+\parstepwise
+{%
+  % Using eqnarray with equation numbers here means all equation numbers will be visible from the outset, because only
+  % the contents of the lines are `filled in'. See the full demo for an example of aligned equations where equation
+  % numbers `appear'.
+  \begin{eqnarray}
+    %
+    % When the argument of \step is put into a box (as it happens with \parstepwise), tabulators can not go in there. As
+    % we want the equals sign to appear at the same time as the right side of the equation, we use \restep for the
+    % latter. \restep is like \step, but it appears at the same time as the previous \step command.
+    % 
+    \sum_{i=1}^{n} i & \step{=} & \restep{1 + 2 + \cdots + (n-1) + n}\\
+    %
+                     & \step{=} & \restep{1 + n + 2 + (n-1) + \cdots}\\
+    %
+                     & \step{=} & \restep
+                                  {% We can nest \step commands inside each other. The order of execution is just the
+                                   % order of appearance, independent of nesting.
+                                   % \switch is a variant of \step which takes two arguments and toggles between them on
+                                   % activation. This way, we can make the \underbrace `appear'.
+                                   % We insert a \vphantom in the first argument so that the equation numbers will be
+                                   % placed correctly whether or not the underbrace is didplayed.
+                                    \switch
+                                    {%
+                                      \vphantom{\underbrace{(1 + n) + \cdots + (1 + n)}_{\times\frac{n}{2}}}%
+                                      (1 + n) + \cdots + (1 + n)%
+                                      }
+                                    {\underbrace{(1 + n) + \cdots + (1 + n)}_{\times\frac{n}{2}}}%
+                                    }
+                                  \\
+    %
+    % This is another nested application of \step. Note that the spacing of \cdot has to be corrected manually by
+    % inserting {} left of it, because otherwise it would behave like a prefix operator.
+    %
+                     & \step{=} & \restep{\frac{(1 + n)\step{{}\cdot n}}{\restep{2}}}
+  \end{eqnarray}
+}
+
+
+
+
+\end{slide}
+}
+
+% CHANGED: Added \frame, moved \section out
+\section{An array}
+\frame{
+\begin{slide}
+  \centerslidesfalse
+  \frametitle{An array}
+
+\stepwise
+{% With arrays, beware of problems with automatic calculation of cell widths.
+ % 
+ % If you want all widths to be calculated automatically, you need to use \parstepwise, with the consequence that
+ %   a) tabulators or newlines can not go into the argument of \step,
+ %   b) the array `structure' (rules) will be completely visible right from the beginning.
+ %   
+ % If you want to use \stepwise for being able to build the `structure' (like \hilne's) dynamically (as done in the
+ % following), you have to make sure that the cell widths are correct from the very first line, because otherwise the
+ % array will expand horizontally, destroying the dynamic effect. This can be assured by
+ %   a) using only p cells,
+ %   b) making sure all the cells in the first line are at least as wide as the widest cell which will appear later. If
+ %      you are using the calc package, this is easiest by putting \makebox[\widthof{widest entry}]{first entry} into
+ %      the first cell. Otherwise, you can use \settowidth.
+ %      
+  \begin{displaymath}
+    \begin{array}{rrrrr}
+      \step
+      {%
+            n &        \log n        &        n\log n       & \lefteqn{n^2}\phantom{25} & \lefteqn{2^n}\phantom{32} \\
+        \hline%
+        }%
+      \step{0 &} \step{\textrm{---}  &} \step{\textrm{---}  &} \step{0                  &} \step{1                  \\}%
+      \step{1 &} \step{0\phantom{.6} &} \step{0\phantom{.8} &} \step{1                  &} \step{2                  \\}%
+      \step{2 &} \step{1\phantom{.6} &} \step{2\phantom{.8} &} \step{4                  &} \step{4                  \\}%
+      \step{3 &} \step{1.6           &} \step{4.8           &} \step{9                  &} \step{8                  \\}%
+      \step{4 &} \step{2\phantom{.6} &} \step{8\phantom{.8} &} \step{16                 &} \step{16                 \\}%
+      \step{5 &} \step{2.3           &} \step{11.6          &} \step{25                 &} \step{32                   }%
+    \end{array}
+  \end{displaymath}
+}
+
+
+
+
+\end{slide}
+}
+
+% CHANGED: Added \frame, moved \section out
+\section{A picture}
+\frame{
+\begin{slide}
+\centerslidesfalse
+\frametitle{A picture}
+
+\pause
+
+\begin{center}%
+  \stepwise
+  {%
+    \setlength{\unitlength}{1.5\semcm}%
+    \delimitershortfall-1sp% Just for the nested braces
+    \begin{picture}(14,2)
+      \put(0,1){\vector(1,0){1}}
+      \put(0.5,0.5){\makebox(0,0){\small $x(t)$}}
+      \put(13,1){\vector(1,0){1}}
+      \put(13.5,0.5){\makebox(0,0){\small $y(t)$}}
+      \step
+      {
+        \put(1,1){\line(3,2){1.5}}
+        \put(1,1){\line(3,-2){1.5}}
+        \put(2.5,0){\line(0,1){2}}
+        \put(2,1){\makebox(0,0){\large $\varphi$}}
+        }
+      \step
+      {
+        \put(2.5,1){\vector(1,0){3.5}}
+        \put(4.25,0.5){\makebox(0,0){\small $F_t = \varphi\left(x(t)\right)$}}
+        }
+      \step
+      {
+        \put(6,0){\framebox(2,2){\large $\Phi$}}
+        }
+      \step
+      {
+        \put(8,1){\vector(1,0){3.5}}
+        %
+        % Here, we find another nested use of \step inside \step.
+        % \bstep is a variant of \step which _always_ puts its argument into a box for leaving the correct amount of
+        % white space. We cannot use \parstepwise here because \put can't go into a box. Hence, just using \step for
+        % building the nested formula on the next line would give the wrong size for the nested braces.
+        % 
+        \put(9.75,0.5){\makebox(0,0){\footnotesize $G_t = \Phi\left(\bstep{\varphi\left(\bstep{x(t)}\right)}\right)$}}
+        }
+      \step
+      {
+        \put(13,1){\line(-3,2){1.5}}
+        \put(13,1){\line(-3,-2){1.5}}
+        \put(11.5,0){\line(0,1){2}}
+        \put(12,1){\makebox(0,0){\large $\delta$}}
+        }
+    \end{picture}%
+    }%
+\end{center}%
+\end{slide}
+}
+\end{document}

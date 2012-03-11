@@ -1,0 +1,218 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+\newbox\beamer@frameboxcopy
+\newif\ifbeamer@twoscreensnotes
+
+
+% Notes options
+
+\defbeameroption{hide notes}[]%
+{
+  \beamer@notesfalse
+}
+
+\defbeameroption{show notes}[]%
+{
+  \beamer@notestrue
+}
+
+\defbeameroption{show notes on second screen}[right]%
+{
+  \pgfpagesuselayout{two screens with optional second}[second #1]
+  \beamer@twoscreensnotestrue
+  \beamer@notestrue
+}
+
+\defbeameroption{show only notes}[]%
+{
+  \beamer@notestrue
+  \beamer@notesnormalsfalse
+  \nofiles
+}
+
+
+
+%
+% Notes
+%
+
+\define@key{beamernotes}{enumerate}[true]{%
+  \def\beamer@noteenvstart{\begin{enumerate}\itemsep=0pt\parskip=0pt}%
+  \def\beamer@noteenvend{\end{enumerate}}}
+\define@key{beamernotes}{itemize}[true]{%
+  \def\beamer@noteenvstart{\begin{itemize}\itemsep=0pt\parskip=0pt}%
+  \def\beamer@noteenvend{\end{itemize}}}
+
+\newcommand\beamer@outsideframenote[2][]{%
+  \beamer@savemode%
+  \ifbeamer@inlecture%
+    \def\beamer@noteenvstart{}%
+    \def\beamer@noteenvend{}%
+    \setkeys{beamernotes}{#1}%
+    \ifbeamer@notes
+    \begingroup
+      \setbeamertemplate{itemize item}{\textbullet}
+      \setbeamertemplate{itemize subitem}{--}
+      \setbeamertemplate{enumerate item}{\insertenumlabel.}
+      \setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+      \def\@oddhead{}
+      \def\@oddfoot{}
+      \let\@evenhead\@oddhead
+      \let\@evenfoot\@oddfoot
+      \def\beamer@backgroundtemplate{}%
+      \setbeamercolor{item}{fg=black,bg=white}
+      \color{black}%
+      \nointerlineskip
+      \hbox{\hskip-\Gm@lmargin\hskip1cm\vbox to\textheight{%
+                                  %pretend to have ``standard'' margins
+          \edef\beamer@origlmargin{\Gm@lmargin}%
+          \edef\beamer@origrmargin{\Gm@rmargin}%
+          \def\Gm@lmargin{1cm}%
+          \def\Gm@rmargin{1cm}%
+          \textwidth=10.8cm%
+          \hsize=\textwidth%
+          \vskip-\headheight%
+          \def\insertnote{\vbox{}%
+            \beamer@noteenvstart#2\beamer@noteenvend%
+          }%
+          \usebeamertemplate*{note page}%
+          \vfil%
+          \vskip-4pt% foot separator
+          \vskip-\footheight}\hskip-\Gm@lmargin\hskip1cm}%
+      \ifbeamer@twoscreensnotes%
+        \pgfpagescurrentpagewillbelogicalpage{2}%
+        \advance\c@page by-1\relax%
+      \fi%
+      \clearpage
+      \endgroup
+    \fi%
+  \fi%
+  \beamer@resumemode}
+
+%
+% Notes in frames
+%
+
+\def\beamer@itemtext{item}
+
+\newcommand<>{\beamer@inframenote}[2][]{%
+  \ifbeamer@inlecture%
+    \only#3{%
+      \def\beamer@temp{#1}%
+      \ifx\beamer@temp\beamer@itemtext%
+        \expandafter\gdef\expandafter\beamer@noteitems%
+        \expandafter{\beamer@noteitems\item#2}%
+      \else
+        \expandafter\gdef\expandafter\beamer@notes%
+          \expandafter{\beamer@notes#2}%
+      \fi%
+    }%
+  \fi%
+  }
+
+\def\note{%
+  \ifbeamer@inframe%
+    \let\next=\beamer@inframenote%
+  \else%
+    \let\next=\beamer@outsideframenote%
+  \fi%
+  \next}
+
+\def\beamer@framenotesbegin{% at beginning of slide
+  \gdef\beamer@noteitems{}%
+  \gdef\beamer@notes{}%
+}
+
+\def\beamer@framenotesend
+{% at end of slide
+  \global\setbox\beamer@frameboxcopy=\copy\beamer@framebox%
+  \ifx\beamer@noteitems\@empty%
+    \ifx\beamer@notes\@empty%
+      % possibly suppress this slide
+      \ifbeamer@frameswithnotesonly
+        % suppress frame
+        \global\setbox\beamer@framebox=\box\voidb@x%
+      \fi%
+      \ifbeamer@twoscreensnotes%
+        \beamer@setupnote%
+      \fi%
+    \else%
+      \beamer@setupnote%
+    \fi
+  \else%
+    \beamer@setupnote%
+  \fi
+  \ifbeamer@notesnormals%
+  \else%
+    \global\setbox\beamer@framebox=\box\voidb@x%
+  \fi%
+}
+
+\def\beamer@setupnote{%
+  \gdef\beamer@notesactions{%
+    \beamer@outsideframenote{%
+      \beamer@atbeginnote%
+      \beamer@notes%
+      \ifx\beamer@noteitems\@empty\else
+      \begin{enumerate}\itemsep=0pt\parskip=0pt%
+        \beamer@noteitems%
+      \end{enumerate}%
+      \fi%
+      \beamer@atendnote%
+    }%
+    \gdef\beamer@notesactions{}%
+  }
+}
+
+
+
+\def\beamer@notesactions{}
+
+\newcommand\AtBeginNote[1]{\long\def\beamer@atbeginnote{#1}}
+\newcommand\AtEndNote[1]{\long\def\beamer@atendnote{#1}}
+
+\AtBeginNote{}
+\AtEndNote{}
+
+
+
+%
+% Note frame insert
+%
+
+\newcommand{\insertslideintonotes}[1]{{%
+  \begin{pgfpicture}{0cm}{0cm}{#1\paperwidth}{#1\paperheight}
+    \begin{pgflowlevelscope}{\pgftransformscale{#1}}%
+      \color[gray]{0.8}
+      \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\paperheight}}
+      \pgfusepath{fill}
+      \color{black}
+      {\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
+    \end{pgflowlevelscope}
+  \end{pgfpicture}%
+  }}
+
+
+\mode
+<article>
+{
+  \newcommand<>\note[2][]{}
+}
+
+
+
+\mode
+<all>

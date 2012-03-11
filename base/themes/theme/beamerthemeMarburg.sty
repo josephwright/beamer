@@ -1,0 +1,42 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\PassOptionsToPackage{right}{beamerouterthemesidebar}
+\PassOptionsToPackage{width=2cm}{beamerouterthemesidebar}
+
+\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemesidebar}}
+
+\DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerouterthemesidebar}}
+\ProcessOptionsBeamer
+
+
+
+\mode<presentation>
+
+\usecolortheme{whale}
+
+\setbeamercolor*{titlelike}{use=structure,fg=structure.fg}
+
+\useoutertheme[height=0pt]{sidebar}
+
+\setbeamercolor{sidebar}{parent=palette primary}
+
+{\usebeamercolor{palette quaternary}}
+{\usebeamercolor{palette primary}}
+
+\setbeamertemplate{sidebar canvas \beamer@sidebarside}[vertical shading][top=palette quaternary.bg,bottom=palette primary.bg]
+
+\mode
+<all>
