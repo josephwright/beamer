@@ -463,15 +463,22 @@
 % The following code provided by Audrey http://tex.stackexchange.com/q/47540/2693	
 \AtBeginDocument{%
   \@ifpackageloaded{biblatex}
-    {\apptocmd{\blx@env@bibliography}
-       {\let\makelabel\beamer@biblabeltemplate}{}{}
-     \apptocmd{\abx@macro@begentry}{\usebeamercolor[fg]{bibliography entry author}}{}{}
-     \pretocmd{\abx@macro@title}
-        {\ifcsundef{abx@name@labelname}{}{\blx@unitpunct\blx@postpunct}%
-         \newblock\usebeamercolor[fg]{bibliography entry title}}{}{}
-     \apptocmd{\abx@macro@title}
-        {\ifcsundef{abx@field@title}{}{\blx@unitpunct\blx@postpunct}%
-         \newblock\usebeamercolor[fg]{bibliography entry note}}{}{}}
+    {%
+      \apptocmd{\blx@env@bibliography}
+        {\let\makelabel\beamer@biblabeltemplate}{}{}
+      \apptocmd{\abx@macro@begentry}
+        {\usebeamercolor[fg]{bibliography entry author}}{}{}
+      \pretocmd{\abx@macro@title}
+        {%
+          \ifcsundef{abx@name@labelname}{}{\blx@unitpunct\blx@postpunct}%
+          \newblock\usebeamercolor[fg]{bibliography entry title}%
+        }{}{}
+      \apptocmd{\abx@macro@title}
+        {%
+          \ifcsundef{abx@field@title}{}{\blx@unitpunct\blx@postpunct}%
+          \newblock\usebeamercolor[fg]{bibliography entry note}%
+        }{}{}%
+    }
     {}
 }
 
