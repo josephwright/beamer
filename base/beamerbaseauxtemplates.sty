@@ -624,10 +624,12 @@
   {%
     \usebeamercolor[fg]{caption name}%
     \usebeamerfont*{caption name}%
-    \insertcaptionname~\insertcaptionnumber:%
+    \insertcaptionname~\insertcaptionnumber?
+    \usebeamertemplate{caption label separator}%
   }
   \insertcaption\par
 }
+\defbeamertemplate*{caption label separator}{colon}{ : }
 
 \defbeamertemplate{caption}{caption name own line}
 {%

@@ -335,11 +335,12 @@
   {%
     \usebeamercolor[fg]{caption name}%
     \usebeamerfont*{caption name}%
-    \insertcaptionname:%
-  }
+    \insertcaptionname
+    \usebeamertemplate{caption label separator}%
+  }%
   \insertcaption\par
 }
-
+\defbeamertemplate*{caption label separator}{default}{ : }
 
 % Blocks
 
