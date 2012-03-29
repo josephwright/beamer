@@ -26,8 +26,10 @@ STRUCTURE = \
 	base/themes/inner               \
 	base/themes/outer               \
 	base/themes/theme               \
+	base/themes/theme/compatibility \
 	base/translator                 \
 	doc                             \
+	doc/licenses                    \
 	doc/themeexamples               \
 	emacs                           \
 	examples/a-conference-talk      \
