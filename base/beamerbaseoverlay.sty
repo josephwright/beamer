@@ -824,7 +824,14 @@
 \AtBeginDocument
 {
   \let\beamer@origref=\ref
-  \long\def\ref#1{\hyperlink{#1}{\beamer@origref{#1}}}
+  \def\ref{%
+    \@ifstar
+      {\beamer@origref}
+      {\beamer@ref}%
+  }
+  \long\def\beamer@ref#1{%
+    \hyperlink{#1}{\beamer@origref{#1}}%
+  }
 }
 
 \mode
