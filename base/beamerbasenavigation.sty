@@ -202,6 +202,24 @@
 
 \def\beamer@linkspace#1{\vbox to7.5pt{}\kern#1}
 
+% Due to what could be regarded as a bug in hyperref or DVIPDFm and
+% derivatives, no links are made to empty boxes with XeTeX. This is
+% fixed by drawing some 'real' content, which makes the PDF bigger!
+\begingroup\expandafter\expandafter\expandafter\endgroup
+  \expandafter\ifx\csname XeTeXrevision\endcsname\relax
+  \expandafter\@gobble
+\else
+  \expandafter\@firstofone
+\fi
+  {%
+    \def\beamer@linkspace#1{%
+      \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
+        \pgfsetfillopacity{0}
+        \pgftext[x=0pt,y=-1.5pt]{.}
+        \pgftext[x=#1,y=5.5pt]{.}
+      \end{pgfpicture}}
+  }
+
 \pgfdefobject{beamerslidenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
  {\pgfpathqmoveto{4bp}{0.5bp}
   \pgfpathqlineto{2bp}{2bp}
