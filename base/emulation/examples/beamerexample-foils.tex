@@ -1,0 +1,53 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+% This file is a demonstration on how a foils file should be
+% changed to make it work with beamer.
+
+% Copyright notice:
+
+% Since foiltex has a restricted license, I'm not able to include an
+% original example from foiltex. Instead, I'm providing a simple
+% example that shows the basic usage.
+
+
+\documentclass{beamer}
+\usepackage{beamerfoils}
+\beamertemplatetheoremsnumbered
+
+\title{A Foils-To-Beamer Example}
+
+\author{Till Tantau}
+
+\MyLogo{\tiny-- Typeset by beamer emulation of \FoilTeX\ --}
+
+\leftheader{Till Tantau}
+
+\begin{document}
+
+\frame{
+\maketitle
+}
+
+\foilhead{A first frame}
+
+Some text.
+
+\pagebreak
+
+More text on next slide.
+
+\foilhead{A third frame}
+
+Some text.
+
+\endfoil
+\end{document}

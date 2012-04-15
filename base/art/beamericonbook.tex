@@ -1,0 +1,106 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\documentclass[12pt]{article}
+
+\usepackage{pgf,pgfshade}
+\usepackage{xxcolor}
+
+\usepackage[papersize={14pt,12pt},hmargin=0pt,vmargin=0pt,headsep=0pt,nohead,nofoot]{geometry}
+
+\pagestyle{empty}
+
+\begin{document}%
+\begin{colormixin}{100}%
+  \pgfdeclarehorizontalshading{cover}{20pt}{%
+    rgb(0pt)=(0.84,.5,.5);
+    rgb(1.8pt)=(0.82,.48,.48);
+    rgb(1.9pt)=(0.83,.66,.65);
+    rgb(2.1pt)=(0.83,.66,.65);
+    rgb(3pt)=(0.69,.25,.3);
+    rgb(8pt)=(0.45,0.05,0.05)}%
+                                %
+  \pgfdeclareverticalshading{side}{10pt}{%
+    rgb(0pt)=(0.78,.78,.78);
+    rgb(2.5pt)=(0.60,.60,.60);
+    rgb(5pt)=(0.25,.25,.25)}%
+  \noindent\hbox{%
+    \begin{pgfpicture}{0pt}{1pt}{14pt}{11pt}
+      \pgfsetxvec{\pgfpoint{1pt}{0pt}}
+      \pgfsetyvec{\pgfpoint{0pt}{1pt}}
+      \pgfsetlinewidth{0.4pt}
+      \pgfsetroundjoin
+
+      \pgfsetlinewidth{0.8pt}
+      \color[gray]{0.5}
+      \pgfmoveto{\pgfxy(6.5,11.5)}
+      \pgflineto{\pgfxy(1,10.5)}
+      \pgfcurveto{\pgfxy(0.6,9.75)}{\pgfxy(0.6,8.75)}{\pgfxy(1,8)}
+      \pgflineto{\pgfxy(6.5,2)}
+      \pgflineto{\pgfxy(13,3)}
+      \pgfcurveto{\pgfxy(12,4)}{\pgfxy(12,5)}{\pgfxy(13,6)}
+      \pgfclosepath
+
+      \pgfmoveto{\pgfxy(6.5,2)}
+      \pgfcurveto{\pgfxy(6,3)}{\pgfxy(6,4)}{\pgfxy(6.5,5)}
+      \pgflineto{\pgfxy(13,6)}
+      \pgfstroke
+
+      \begin{pgfscope}
+        \pgfmoveto{\pgfxy(6.5,11.5)}
+        \pgflineto{\pgfxy(1,10.5)}
+        \pgfcurveto{\pgfxy(0.6,9.75)}{\pgfxy(0.6,8.75)}{\pgfxy(1,8)}
+        \pgflineto{\pgfxy(6.5,2)}
+        \pgfcurveto{\pgfxy(6,3)}{\pgfxy(6,4)}{\pgfxy(6.5,5)}
+        \pgflineto{\pgfxy(13,6)}
+        \pgfclosepath
+        \pgfclip
+
+        \pgfputat{\pgfxy(8.5,0)}
+        {%
+          \begin{pgfrotateby}{\pgfdegree{45}}
+            \pgfbox[left,base]{\pgfuseshading{cover}}
+          \end{pgfrotateby}
+        }
+      \end{pgfscope}
+
+      \begin{pgfscope}
+        \pgfmoveto{\pgfxy(6.5,2)}
+        \pgfcurveto{\pgfxy(6,3)}{\pgfxy(6,4)}{\pgfxy(6.5,5)}
+        \pgflineto{\pgfxy(13,6)}
+        \pgfcurveto{\pgfxy(12,5)}{\pgfxy(12,4)}{\pgfxy(13,3)}
+        \pgfclosepath
+        \pgfclip
+
+        \pgfputat{\pgfxy(7.5,0)}
+        {%
+          \begin{pgfrotateby}{\pgfdegree{30}}
+            \pgfbox[left,base]{\pgfuseshading{side}}
+          \end{pgfrotateby}
+        }
+      \end{pgfscope}
+
+      \pgfsetlinewidth{0.4pt}
+      \color[gray]{0.2}
+      \pgfmoveto{\pgfxy(6.5,11.5)}
+      \pgflineto{\pgfxy(1,10.5)}
+      \pgfcurveto{\pgfxy(0.6,9.75)}{\pgfxy(0.6,8.75)}{\pgfxy(1,8)}
+      \pgflineto{\pgfxy(6.5,2)}
+      \pgflineto{\pgfxy(13,3)}
+      \pgfcurveto{\pgfxy(12,4)}{\pgfxy(12,5)}{\pgfxy(13,6)}
+      \pgfclosepath
+
+      \pgfmoveto{\pgfxy(6.5,2)}
+      \pgfcurveto{\pgfxy(6,3)}{\pgfxy(6,4)}{\pgfxy(6.5,5)}
+      \pgflineto{\pgfxy(13,6)}
+      \pgfstroke
+    \end{pgfpicture}%
+  }%
+\end{colormixin}%
+\end{document}

@@ -1,0 +1,135 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+% Copyright 2011 by Vedran Mileti\'c, Joseph Wright
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+
+\newwrite\beamer@verbatimfileout
+
+\def\beamer@verbatimreadframe{%
+  \begingroup%
+  \let\do\beamer@makeinnocent\dospecials%
+  \count@=127%
+  \@whilenum\count@<255 \do{%
+    \advance\count@ by 1%
+    \catcode\count@=11%
+  }%
+  \beamer@makeinnocent\^^L% and whatever other special cases
+  \endlinechar`\^^M \catcode`\^^M=12%
+  \@ifnextchar\bgroup{\afterassignment\beamer@specialprocessframefirstline\let\beamer@temp=}{\beamer@processframefirstline}}%
+
+{
+  \catcode`\{=12%
+  \catcode`\<=1%
+  \gdef\beamer@specialprocessframefirstline<%
+    \beamer@processframefirstline{%
+  }
+}
+
+{\catcode`\^^M=12\endlinechar=-1%
+  \long\gdef\beamer@processframefirstline#1#2^^M{%
+    \def\beamer@test{#1#2}%
+    \ifx\beamer@test\beamer@stopframefirst%
+      \let\next=\beamer@framewritten%
+    \else
+      \def\beamer@test{#1}%
+      \@onelevel@sanitize\beamer@test
+      \edef\beamer@test{\beamer@test\space}%
+      \edef\beamer@test{\expandafter\zap@space\beamer@test\@empty}%
+      \@temptokena{#2}%
+      \immediate\write\beamer@verbatimfileout{\beamer@test\the\@temptokena}%
+       \let\next=\beamer@processframeline%
+    \fi%
+    \next%
+  }
+  \long\gdef\beamer@processframeline#1^^M{%
+    \def\beamer@test{#1}%
+    \ifx\beamer@test\beamer@stopframe%
+      \let\next=\beamer@framewritten%
+    \else
+      \immediate\write\beamer@verbatimfileout{#1}%
+      \let\next=\beamer@processframeline%
+    \fi%
+    \next%
+  }
+}
+
+\def\beamer@setupstoppers#1{%
+  {
+    \escapechar=-1\relax%
+    \xdef\beamer@stopframe{\string\\end\string\{#1\string\}}
+    \xdef\beamer@stopframefirst{\noexpand\end\string\{#1\string\}}
+}
+}
+
+
+\def\beamer@framewritten{\endgroup%
+  \beamer@afterexternalframe%
+}
+
+
+
+
+% The following code is partly adapted from code from the alltt package.
+
+\mode
+<all>
+{
+\begingroup
+\lccode`\~=`\'
+\lowercase{\endgroup
+\newenvironment{semiverbatim}{%
+  \trivlist
+  \item\relax
+    \if@minipage
+    \else
+      \vskip\parskip
+    \fi
+    \leftskip\@totalleftmargin
+    \rightskip\z@skip
+    \parindent\z@
+    \parfillskip\@flushglue
+    \parskip\z@skip
+    \@@par
+    \@tempswafalse
+    \def\par{%
+      \if@tempswa
+        \leavevmode\null\@@par\penalty\interlinepenalty
+    \else
+      \@tempswatrue
+      \ifhmode\@@par\penalty\interlinepenalty\fi
+    \fi}
+    \obeylines
+    \def\verbatim@nolig@list{\do\`\do\,\do\'\do\-}
+    \verbatim@font
+    \let\org@prime~%
+    \everymath\expandafter{\the\everymath
+      \catcode`\'=12 \let~\org@prime}
+    \everydisplay\expandafter{\the\everydisplay
+      \catcode`\'=12 \let~\org@prime}
+    \def\dospecials{\do\ \do\$\do\&%
+     \do\#\do\^\do\_\do\%\do\~\do\`\do\,\do\'\do\-}
+    \let\do\@makeother
+    \dospecials
+    \def\\{\char`\\}
+    \def\{{\char`\{}
+    \def\}{\char`\}}
+    \frenchspacing\@vobeyspaces
+    \everypar \expandafter{\the\everypar \unpenalty}}
+{\endtrivlist}}
+}
+
+
+\mode
+<all>

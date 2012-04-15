@@ -1,0 +1,797 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+% Copyright 2011 by Vedran Mileti\'c, Joseph Wright
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+\newbox\beamer@framebox
+\newbox\beamer@frametitlebox
+\newbox\beamer@zoombox
+\newcount\beamer@zoomcount
+\newcount\beamer@zoomframecount
+\newdimen\beamer@frametextheight
+
+\mode
+<all>
+{
+  \newif\ifbeamer@inframe
+  \beamer@inframefalse
+}
+
+\def\refcounter#1{\protected@edef\@currentlabel%
+       {\csname p@#1\endcsname\csname the#1\endcsname}}%
+
+
+%
+% Slide Definitions
+%
+
+\newcounter{subsectionslide}[subsection]
+\renewcommand\thesubsectionslide{\@arabic\c@subsectionslide}
+\def\beamer@entrycode{}
+\def\beamer@exitcode{}
+
+\def\beamer@setuplinks{%
+  {%
+    \def\sectionentry##1##2##3##4##5{}%
+    \def\slideentry##1##2##3##4##5##6{}%
+    \dohead%
+  }%
+}
+
+\newenvironment{beamer@frameslide}{%
+  \ifbeamer@autobreak\else%
+    \ifx\beamer@againname\@empty%
+      {\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}%
+    \else%
+      {\let\@elt\beamer@labelrestorecounter\beamer@overlaycounterresets}%
+    \fi%
+  \fi%
+  \global\c@beamerpauses=1\relax%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
+    \stepcounter{subsectionslide}%
+    \xdef\beamer@framestartpage{\the\c@page}% only first time
+  }{\clearpage\beamer@notesactions}% cleanup from previous slide
+  \hypersetup{pdfpagetransition=R}%
+  \hypersetup{pdfpageduration=}%
+  \@ifundefined{thispdfpagelabel}{}{%
+  \thispdfpagelabel{\insertframenumber}}%
+  \xdef\beamer@frameendpage{\the\c@page}% every time
+  \beamer@setuplinks%
+  \beamer@displaybreak%
+  \global\setbox\beamer@zoombox=\box\voidb@x%
+  \def\beamer@zoomer{}%
+  \beamer@slidehaszoomfalse%
+  \gdef\insertframetitle{}%
+  \gdef\insertframesubtitle{}%
+  \gdef\beamer@frametitle{}%
+  \gdef\beamer@shortframetitle{}%
+  \gdef\beamer@framesubtitle{}%
+  \let\beamer@startcomment=\beamer@startcommentinframe%
+  % Start slide:
+  \beamer@framenotesbegin%
+    \global\setbox\beamer@framebox=\vbox\bgroup%
+    \beamer@inframetrue%
+    \let\frame=\framelatex% inside frames, use LaTeX's \frame command
+    \begin{beamer@framepauses}%
+      \refcounter{framenumber}%use frame number for  \label
+      \ifbeamer@shrink%
+        \hsize=\beamer@shrinkfactorinv\hsize%
+        \textwidth=\beamer@shrinkfactorinv\textwidth%
+        \linewidth=\beamer@shrinkfactorinv\linewidth%
+      \fi%
+      % Insert labels if necessary:
+      \ifx\beamer@againname\@empty\else%
+        \nointerlineskip\vbox to0pt{\vss%
+        \label<\the\beamer@slideinframe>{\beamer@againname<\the\beamer@slideinframe>}%
+        \ifnum\beamer@slideinframe=1\relax%
+          \label<1>{\beamer@againname}%
+        \fi%
+        }\nointerlineskip%
+      \fi%
+      \ifx\beamer@framehypertargets\@empty\else%
+        \nointerlineskip\vbox to0pt{\vss%
+          \beamer@framehypertargets%
+          \global\let\beamer@framehypertargets\@empty%
+        }\nointerlineskip%
+      \fi%
+      \vskip-\parskip\vbox{}%
+      \beamer@initfirstlineunskip%
+      \ifbeamer@plainframe\nointerlineskip\fi%
+    \beamer@checkframetitle}%
+    {\end{beamer@framepauses}%
+  \egroup%
+  \ifx\beamer@frametitle\@empty%
+    \setbox\beamer@frametitlebox=\box\voidb@x%
+  \else%
+    \setbox\beamer@frametitlebox=\vbox{%
+      \vbox{}%
+      {\parskip0pt\usebeamertemplate***{frametitle}\vskip0.25em}%
+    }%
+  \fi%
+  \ifbeamer@plainframe%
+    \beamer@frametextheight=\paperheight%
+  \else%
+    \beamer@frametextheight=\textheight%
+  \fi%
+  \advance\beamer@frametextheight by-\ht\beamer@frametitlebox%
+  \advance\beamer@frametextheight by-\dp\beamer@frametitlebox%
+  \advance\beamer@frametextheight by-\beamer@frametopskip%
+  \ifbeamer@shrink%
+    \beamer@shrinkframebox%
+  \fi%
+  \ifx\beamer@zoomer\@empty
+    \setbox\beamer@framebox=\vbox{%
+      \nobreak\vbox{}\nobreak\par\nobreak\beamer@entrycode\nobreak%
+      \nointerlineskip\unvbox\beamer@frametitlebox%
+      \nobreak%
+      \ifbeamer@autobreak%
+        \vskip\beamer@frametopskipautobreak%
+      \else%
+        \vskip\beamer@frametopskip%
+      \fi%
+      \nobreak%
+      \nointerlineskip\box\beamer@zoombox\nointerlineskip%
+      \nobreak%
+      \ifbeamer@slidehaszoom\box\beamer@framebox\else\unvbox\beamer@framebox\fi%
+      % bottom skip is added in autobreakframebox
+    }%
+    \beamer@autobreakframebox%
+  \else%
+    \beamer@zoomer%
+  \fi%
+  \beamer@undolabels%
+  \beamer@framenotesend%
+  \box\beamer@framebox}
+
+
+\mode
+<all>
+{
+  \def\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+  \def\beamer@inlineframetitle#1{%
+    \@ifnextchar\bgroup{\frametitle{#1}\framesubtitle}{\frametitle{#1}\relax}%
+  }
+}
+
+
+
+
+
+%
+% Resetting counters
+%
+\def\resetcounteronoverlays#1{%
+  \@cons\beamer@overlaycounterresets{{c@#1}}%
+}
+
+\def\resetcountonoverlays#1{%
+  \@cons\beamer@overlaycounterresets{{#1}}%
+}
+
+\def\beamer@overlaycounterresets{}
+
+\resetcounteronoverlays{equation}
+\resetcounteronoverlays{parentequation}
+\resetcounteronoverlays{footnote}
+\resetcounteronoverlays{mpfootnote}
+\resetcounteronoverlays{figure}
+\resetcounteronoverlays{table}
+\resetcountonoverlays{beamer@zoomframecount}
+\resetcounteronoverlays{ExNo}
+\resetcounteronoverlays{SubExNo}
+\resetcounteronoverlays{SubSubExNo}
+
+\def\beamer@savecounter#1{%
+  \@ifundefined{#1}{}%
+  {\expandafter\xdef\csname saved@#1\endcsname%
+    {\expandafter\the\csname #1\endcsname}}%
+}
+\def\beamer@restorecounter#1{%
+  \@ifundefined{#1}{}%
+  {\edef\temp{\csname saved@#1\endcsname}%
+  \expandafter\global\csname #1\endcsname=\temp}%
+}
+
+\def\beamer@labelsavecounter#1{%
+  \@ifundefined{#1}{}%
+  {\expandafter\xdef\csname saved@\beamer@againname @#1\endcsname%
+    {\expandafter\the\csname #1\endcsname}}%
+}
+\def\beamer@labelrestorecounter#1{%
+  \@ifundefined{#1}{}%
+  {\edef\temp{\csname saved@\beamer@againname @#1\endcsname}%
+  \expandafter\global\csname #1\endcsname=\temp}%
+}
+
+
+
+%
+% Skips
+%
+\newskip\beamer@frametopskip
+\newskip\beamer@framebottomskip
+\newskip\beamer@frametopskipautobreak
+\newskip\beamer@framebottomskipautobreak
+
+
+%
+% Keys
+%
+\define@key{beamerframe}{label}{\def\beamer@againname{#1}%
+  {\let\@elt\beamer@labelsavecounter\beamer@overlaycounterresets}%
+}
+\define@key{beamerframe}{relabel}{\def\beamer@againname{#1}%
+  \def\beamer@undolabels{{\let\@elt\beamer@restorecounter\beamer@overlaycounterresets}}%
+}
+\define@key{beamerframe}{plain}[true]{%
+  \beamer@plainframetrue%
+  \def\beamer@frametemplate{\beamer@frametemplate@plain}}
+\define@key{beamerframe}{containsverbatim}[true]{\csname beamer@containsverbatim#1\endcsname}
+\define@key{beamerframe}{fragile}[true]{%
+  \beamer@containsverbatimfalse%
+  \beamer@isfragilefalse%
+  \csname beamer@fragile#1\endcsname%
+}
+\def\beamer@fragilefalse{}
+\def\beamer@fragiletrue{\beamer@isfragiletrue}
+\def\beamer@fragilesingleslide{\beamer@containsverbatimtrue}
+\define@key{beamerframe}{c}[true]{% centered
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt plus 1.5fill\relax%
+  \beamer@frametopskipautobreak=0pt plus .4\paperheight\relax%
+  \beamer@framebottomskipautobreak=0pt plus .6\paperheight\relax%
+  \def\beamer@initfirstlineunskip{}%
+}
+\define@key{beamerframe}{t}[true]{% top
+  \beamer@frametopskip=.2cm plus .5\paperheight\relax%
+  \beamer@framebottomskip=0pt plus 1fill\relax%
+  \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+  \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+  \def\beamer@initfirstlineunskip{%
+    \def\beamer@firstlineitemizeunskip{%
+      \vskip-\partopsep\vskip-\topsep\vskip-\parskip%
+      \global\let\beamer@firstlineitemizeunskip=\relax}%
+    \everypar{\global\let\beamer@firstlineitemizeunskip=\relax}}
+}
+\define@key{beamerframe}{b}[true]{% bottom
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt\relax%
+  \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+  \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+  \def\beamer@initfirstlineunskip{}%
+}
+
+\newif\ifbeamer@noframenumbering
+\beamer@noframenumberingfalse
+
+\define@key{beamerframe}{noframenumbering}[true]{\beamer@noframenumberingtrue}
+
+\define@key{beamerframe}{environment}{\def\beamer@frameenvironmentsubst{#1}}
+
+\define@key{beamerframe}{typeset second}[true]{\csname beamer@dosecondmode#1\endcsname}
+
+\newif\ifbeamer@containsverbatim
+\newif\ifbeamer@isfragile
+\newif\ifbeamer@autobreak
+\newif\ifbeamer@shrink
+\newif\ifbeamer@plainframe
+\newif\ifbeamer@slidehaszoom
+
+\let\beamer@firstlineitemizeunskip\relax
+
+
+% Save!
+\let\framelatex=\frame
+
+
+
+%
+% The frame environment (a trifle ugly...)
+%
+
+% Copyright notice: the following code is adapted from code from the
+% amsmath package.
+
+\newtoks\beamer@envbody
+\def\beamer@frameenv{%
+  \def\beamer@process@envbody{\endgroup%
+    \expandafter\expandafter\expandafter\beamer@framecommand\expandafter\beamer@frameoptions\expandafter{\the\beamer@envbody}}%
+  \global\beamer@envbody{}\def\beamer@begin@stack{b}%
+  \begingroup
+  \let\frame\beamer@collect@@body
+  \def\beamer@process@envbody{\frame}%
+  \beamer@process@envbody%
+}
+
+% Normally not executed; only in containsverbatim context:
+\def\endframe{\egroup\begingroup\def\@currenvir{frame}}
+
+\long\def\beamer@push@begins#1\begin#2{\ifx\end#2\else b\expandafter\beamer@push@begins\fi}
+\long\def\beamer@collect@@body#1\end#2{%
+  \def\test{#1}%
+  \edef\beamer@begin@stack{\beamer@push@begins#1\begin\end \expandafter\@gobble\beamer@begin@stack}%
+  \ifx\@empty\beamer@begin@stack
+      \global\beamer@envbody\expandafter{\the\beamer@envbody#1}%
+    \def\reserved@a{#2}
+    \ifx\reserved@a\beamer@frametext%
+      \endgroup%
+      \let\@next=\beamer@process@envbody % A little tricky! Note the grouping
+      \@checkend{#2}%
+    \else%
+      % ok, just expand it, presumably it will generate the desired \end{frame}
+      \let\@next=\beamer@process@expander%
+    \fi
+  \else
+    \global\beamer@envbody\expandafter{\the\beamer@envbody#1\end{#2}}%
+    \let\@next=\beamer@process@envbody%
+  \fi
+  \@next
+}
+
+\def\beamer@process@expander{%
+  \def\beamer@begin@stack{b}%
+  \expandafter\expandafter\expandafter\beamer@collect@@body\csname end\reserved@a\endcsname\endgroup}
+
+
+\mode
+<all>
+{\def\beamer@frametext{frame}}
+
+\def\frame{%
+  \ifx\@currenvir\beamer@frametext%
+    \gdef\beamer@frameoptions{}%
+    \let\beamer@next=\beamer@copewithframeenv%
+  \else%
+    \let\beamer@next=\beamer@framecommand%
+  \fi%
+  \beamer@next}
+
+\def\beamer@copewithframeenv{%
+  \@ifnextchar<%
+  {\beamer@@frameenvspec}%
+  {%
+    \@ifnextchar[%
+    {\beamer@@frameenvopt}%
+    {\expandafter\beamer@checkforverbatim\beamer@frameoptions containsverbatim\relax}}%
+}
+\def\beamer@@frameenvspec<#1>{%
+  \expandafter\gdef\expandafter\beamer@frameoptions\expandafter{\beamer@frameoptions<#1>}%
+  \beamer@copewithframeenv}
+\def\beamer@@frameenvopt[#1]{%
+  \expandafter\gdef\expandafter\beamer@frameoptions\expandafter{\beamer@frameoptions[#1]}%
+  \beamer@copewithframeenv}
+
+\def\beamer@checkforverbatim#1containsverbatim#2\relax{%
+  \beamer@ifempty{#2}%
+  {\beamer@checkforfragile#1fragile\relax}
+  {% contains verbatim
+    \endgroup% end environment
+    \expandafter\beamer@framecommand\beamer@frameoptions\bgroup}%
+}
+\def\beamer@checkforfragile#1fragile#2\relax{%
+  \beamer@ifempty{#2}%
+  {\beamer@frameenv}% normal frame
+  {% contains verbatim
+    \endgroup% end environment
+    \expandafter\beamer@framecommand\beamer@frameoptions\bgroup}%
+}
+
+
+% Check for old version:
+
+\def\beamer@framecommand{%
+  \edef\beamer@defaultospec{\beamer@gdefaultospec}%
+  \@ifnextchar<\beamer@frame\beamer@checkoldframe}
+\def\beamer@checkoldframe{\@ifnextchar[\beamer@@checkoldframe{\beamer@frame<*>}}
+\def\beamer@@checkoldframe[{\@ifnextchar<{\beamer@frame<*>[}{\beamer@@@checkoldframe[}}
+\def\beamer@@@checkoldframe[#1#2]{%
+  \let\beamer@next=\beamer@newframesyntax%
+  \ifcat#11% a number-like first letter in argument
+    \let\beamer@next=\beamer@oldframesyntax%
+  \else%
+    \beamer@checkforcolon#2:.%
+  \fi%
+  \beamer@next{#1#2}}
+\def\beamer@checkforcolon#1:#2.{%
+  \beamer@ifempty{#2}{}{\let\beamer@next=\beamer@oldframesyntax}}
+\def\beamer@newframesyntax#1{\beamer@@@frame<*>[#1]}
+\def\beamer@oldframesyntax#1{\beamer@@@frame<#1>[]}
+
+\def\beamer@framedefaultospec<#1>[#2]{%
+  \def\beamer@defaultospec{#2}%
+  \@ifnextchar[{\beamer@@@@frame<#1>}{\beamer@@@@frame<#1>[]}}
+
+\def\beamer@frame<#1>{
+  \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
+\def\beamer@@@frame<#1>[{\@ifnextchar<{\beamer@framedefaultospec<#1>[}{\beamer@@@@frame<#1>[}}
+\def\beamer@@@@frame<#1>[#2]{%
+  \beamer@savemode%
+  \def\beamer@mode{\mode<all>}%
+  \def\beamer@frametemplate{}%
+  \def\beamer@againname{}%
+  \def\beamer@undolabels{}%
+  \def\beamer@cramped{}%
+  \def\beamer@displaybreak{}%
+  \setbox\beamer@footins=\box\voidb@x%
+  \beamer@autobreakcount=0\relax%
+  \beamer@autobreaklastheight=16000pt%
+  \beamer@zoomcount=0\relax%
+  \beamer@containsverbatimfalse%
+  \beamer@isfragilefalse%
+  \beamer@autobreakfalse%
+  \beamer@shrinkfalse%
+  \beamer@plainframefalse%
+  \global\advance\beamer@zoomframecount by1\relax%
+  \csname beamer@dosecondmode\beamer@defaultdosecondmode\endcsname%
+  \ifbeamer@centered\setkeys{beamerframe}{c}\else\setkeys{beamerframe}{t}\fi%
+  \setkeys{beamerframe}{environment=frame}%
+  \setkeys{beamerframe}{#2}%
+  \beamer@frametemplate%
+  \ifbeamer@noframenumbering%
+    \beamer@noframenumberingfalse%
+  \else%
+    \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
+  \fi%
+  {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
+  \gdef\beamer@framestartpage{}%
+  \gdef\beamer@whichframes{#1}%
+  \ifx\beamer@framerestriction\@undefined\else% restriction stuff
+    \expandafter\beamer@checkifinlist\beamer@framerestriction\relax%
+  \fi%
+  \ifbeamer@inlecture%
+  \else%
+    \gdef\beamer@whichframes{all:0}%
+  \fi%
+  \ifx\beamer@againname\@empty%
+    \beamer@slideinframe=0\relax%
+    \beamer@anotherslidefalse%
+    {\beamer@masterdecode{\beamer@whichframes}}%
+    \ifbeamer@anotherslide%
+%%       \beamer@slideinframe=2\relax%
+%%       \def\beamer@doifnotinframe{}%
+%%       \def\beamer@doifinframe{\let\beamer@howtotreatframe\beamer@doseveralframes}%
+%%       \beamer@anotherslidefalse%
+%%       {\beamer@masterdecode{\beamer@whichframes}}%
+%%       \ifbeamer@anotherslide%
+        \let\beamer@howtotreatframe\beamer@doseveralframes%
+%%       \else% single slide in frame
+%%         \let\beamer@howtotreatframe\beamer@dosingleframe%
+%%       \fi%
+%%       \beamer@donow%
+      \ifbeamer@containsverbatim%
+        \let\beamer@howtotreatframe\beamer@dosingleframe%
+      \fi%
+      \ifbeamer@autobreak%
+        \let\beamer@howtotreatframe\beamer@autobreakframe%
+      \fi%
+      \ifbeamer@isfragile%
+        \let\beamer@howtotreatframe\beamer@doexternalframe%
+      \fi%
+    \else% no slides in frame
+      \let\beamer@howtotreatframe\beamer@donoframe%
+    \fi%
+  \else% again mode
+    \let\beamer@howtotreatframe\beamer@doseveralframes%
+    \ifbeamer@isfragile%
+      \let\beamer@howtotreatframe\beamer@doexternalframe%
+    \fi%
+    \ifbeamer@containsverbatim
+      \let\beamer@howtotreatframe\beamer@dosingleframe
+    \fi
+  \fi%
+  \beamer@howtotreatframe}
+\long\def\beamer@donoframe{%
+  \beamer@slideinframe=1\relax%
+  \setbox\beamer@tempbox\vbox\bgroup%
+    \beamer@inframetrue%
+    \leavevmode%
+    \def\pause{}%
+    \def\onslide{}%
+    \afterassignment\beamer@checknoslide\let\beamer@next}
+\def\beamer@checknoslide{%
+  \ifcat\bgroup\noexpand\beamer@next%
+    \let\beamer@do\relax%
+    \aftergroup\beamer@reseteecodes%
+  \else%
+    \let\beamer@do\beamer@noframesingletoken%
+  \fi%
+  \beamer@do}
+\def\beamer@noframesingletoken{\beamer@next\egroup\beamer@reseteecodes}
+
+\long\def\beamer@doseveralframes#1{%
+  \ifx\beamer@againname\@empty\else%
+    % Again stuff
+    \expandafter \gdef\csname beamer@again@\beamer@againname\endcsname{{#1}}%
+  \fi%
+  \beamer@slideinframe=1\relax%
+  \loop%
+  \beamer@anotherslidefalse%
+  \def\beamer@doifnotinframe{}%
+  \def\beamer@doifinframe{\begin{beamer@frameslide}%
+    #1%
+  \end{beamer@frameslide}}%
+  {\beamer@masterdecode{\beamer@whichframes}}%
+  \beamer@donow%
+  \ifbeamer@twoscreenstext%
+    \beamer@dosecondscreennow{#1}% two screen stuff
+  \fi%
+  \ifbeamer@anotherslide
+  \advance\beamer@slideinframe by 1\relax
+  \repeat%
+  \beamer@writeslidentry%
+  \beamer@reseteecodes}
+
+\def\beamer@dosingleframe{%
+  \beamer@slideinframe=1\relax%
+  \begin{beamer@frameslide}\relax%
+    \bgroup\aftergroup\beamer@endslide\afterassignment\beamer@checkslide\let\beamer@next}
+\def\beamer@checkslide{%
+  \ifcat\bgroup\noexpand\beamer@next%
+  \let\beamer@do\beamer@checkframetitle%
+  \else\let\beamer@do\beamer@singletoken\fi%
+  \beamer@do}
+\def\beamer@endslide{\end{beamer@frameslide}\beamer@writeslidentry\beamer@reseteecodes}
+\def\beamer@singletoken{\beamer@next\egroup}
+
+\def\beamer@doexternalframe{%
+  \edef\beamer@verbfilename{\jobname\ifx\beamer@againname\@empty\else.\insertframenumber\fi.vrb}% .vrb for `verbatim'
+  \beamer@setupstoppers{\beamer@frameenvironmentsubst}%
+  \immediate\openout\beamer@verbatimfileout=\beamer@verbfilename%
+  \expandafter\beamer@checktitleverbatim\@gobble}
+\def\beamer@checktitleverbatim{\@ifnextchar\bgroup{\beamer@verbatim@frametitle}{\beamer@verbatimreadframe}}
+\def\beamer@verbatim@frametitle#1{%
+  \@ifnextchar\bgroup{\beamer@verbatim@framesubtitle{#1}}
+  {%
+    \@temptokena{#1}%
+    \edef\@tempa{\string\frametitle\string{\the\@temptokena\string}}%
+    \@temptokena\expandafter{\@tempa}%
+    \immediate\write\beamer@verbatimfileout{\the\@temptokena}%
+    \beamer@verbatimreadframe
+  }%
+}
+\def\beamer@verbatim@framesubtitle#1#2{\beamer@verbatimreadframe\frametitle{#1}\framesubtitle{#2}}
+% will return to following command with frame contents written to \beamer@verbfilename
+\def\beamer@afterexternalframe{%
+  \ifx\beamer@frameenvironmentsubst\beamer@frametext%
+  \else%
+    \immediate\write\beamer@verbatimfileout{\noexpand\beamerclosesubstitutedenvironement{\beamer@frameenvironmentsubst}}%
+  \fi%
+  \immediate\closeout\beamer@verbatimfileout%
+  \expandafter\beamer@doframeinput\beamer@frameoptions\relax}
+
+\def\beamer@doframeinput{\@ifnextchar<{\beamer@frameinput}{\beamer@frameinput<*>}}
+\def\beamer@frameinput<#1>{\@ifnextchar[{\beamer@@frameinput<#1>}{\beamer@@frameinput<#1>[]}}
+\def\beamer@@frameinput<#1>[{\@ifnextchar<{\beamer@@@@frameinput<#1>[}{\beamer@@@frameinput<#1>[<*>][}}
+\def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[{#2}]}{\beamer@@@frameinput<#1>[{#2}][]}}
+\def\beamer@@@frameinput<#1>[#2][#3]{%
+  \global\advance\c@framenumber by-1\relax%
+  \edef\beamer@temp{\noexpand\frame<#1>[#2][{#3,fragile=false}]%
+    {\begingroup\noexpand\input{\beamer@verbfilename}\endgroup}}%
+  \beamer@temp%
+  \ifx\beamer@frameenvironmentsubst\beamer@frametext%
+  \else%
+    \expandafter\endgroup%
+  \fi%
+  \beamer@reseteecodes}
+
+\def\beamerclosesubstitutedenvironement#1{
+  \let\end\beamer@specialend%
+  \let\endframe\relax%
+  \csname end#1\endcsname}
+
+\def\beamer@writeslidentry{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    \addtocontents{nav}%
+      {\protect\headcommand{%
+          \protect\slideentry{\the\c@section}{\the\c@subsection}{\the\c@subsectionslide}%
+          {\beamer@framestartpage/\beamer@frameendpage}{\lastsubsection}{\the\c@part}}}%
+    \addtocontents{nav}%
+      {\protect\headcommand{%
+        \protect\beamer@framepages{\beamer@framestartpage}{\beamer@frameendpage}}}%
+    \clearpage\beamer@notesactions%
+  }
+}
+\def\beamer@reseteecodes{\gdef\beamer@entrycode{}\gdef\beamer@exitcode{}%
+  \beamer@slideinframe=1\relax\beamer@resumemode}
+
+\let\beamer@origend\end
+\def\beamer@specialend#1{%
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\beamer@frametext%
+    \def\beamer@next{}%
+  \else%
+    \def\beamer@next{\expandafter\beamer@origend\expandafter{\beamer@temp}%
+      \let\end\beamer@specialend%
+      \let\endframe\relax%
+    }
+  \fi%
+  \beamer@next}
+
+
+
+%
+% \includeonlyframes
+%
+
+\def\beamer@checkifinlist#1,#2\relax{
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\beamer@againname\else
+    \def\beamer@temp{#2}%
+    \ifx\beamer@temp\@empty
+      \gdef\beamer@whichframes{all:0}%
+    \else%
+      \beamer@checkifinlist#2\relax%
+    \fi%
+  \fi%
+}
+
+\def\includeonlyframes#1{\def\beamer@framerestriction{#1,}}
+
+
+
+%
+% Frames in article mode
+%
+
+\mode
+<article>
+{
+  \def\endframe{\egroup}
+
+  \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<*>}}
+  \def\beamer@frame<#1>{\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
+  \long\def\beamer@@frame<#1>[#2]{%
+    \global\let\insertframetitle=\@empty%
+    \global\let\insertframesubtitle=\@empty%
+    \beamer@slideinframe=1\relax%
+    \refstepcounter{framenumber}%
+    \beamer@slideinframe=0\relax%
+    \beamer@anotherslidefalse%
+    {\beamer@masterdecode{#1}}%
+    \ifbeamer@anotherslide%
+      \let\beamer@howtotreatframe\beamer@dosingleframe%
+    \else% no slides in frame
+      \let\beamer@howtotreatframe\beamer@donoframe%
+    \fi%
+    \beamer@slideinframe=1\relax%
+    \beamer@howtotreatframe}
+
+  \long\def\beamer@donoframe{%
+    \setbox\beamer@tempbox\vbox\bgroup%
+    \beamer@inframetrue%
+    \usebeamertemplate{frame begin}%
+    \bgroup\aftergroup\beamer@endframe%
+    \beamer@article@startframe}%
+  \def\beamer@dosingleframe{%
+    \bgroup%
+    \beamer@inframetrue%
+    \usebeamertemplate{frame begin}%
+    \bgroup\aftergroup\beamer@endframe%
+    \beamer@article@startframe}%
+  \def\beamer@endframe{%
+    \usebeamertemplate{frame end}\egroup}
+
+  \def\beamer@article@startframe{%
+    \ifx\@currenvir\beamer@frametext%
+      \let\beamer@next=\beamer@checkframetitle%
+    \else%
+      \let\beamer@next=\beamer@article@framecmd%
+    \fi%
+    \beamer@next}%
+
+  \def\beamer@article@framecmd{%
+    \afterassignment\beamer@checkframetitle
+    \let\beamer@next=}
+
+  \providecommand\includeonlyframes[1]{}% no effect
+}
+
+
+\mode
+<all>
+{
+  \beamer@slideinframe=1\relax%
+}
+
+
+
+%
+% Frame counter
+%
+\mode
+<all>
+{
+  \newcounter{framenumber}
+  \def\insertframenumber{\@arabic\c@framenumber}
+}
+
+
+%
+% Pagebreak command
+%
+\mode
+<all>
+{
+  \renewcommand<>{\pagebreak}[1][4]{\only#2{\beameroriginal\pagebreak[{#1}]}}
+  \renewcommand<>{\nopagebreak}[1][4]{\only#2{\beameroriginal\nopagebreak[{#1}]}}
+  \def\framebreak{\pagebreak<presentation>}
+  \def\noframebreak{\nopagebreak<presentation>}
+}
+
+
+%
+% Linebreak command
+%
+\renewcommand<>{\\}{\only#1{\beameroriginal\\}}
+\renewcommand<>{\@centercr}{\only#1{\beameroriginal\@centercr}}
+\renewcommand<>{\@normalcr}{\only#1{\beameroriginal\@normalcr}}
+
+\mode
+<article>
+{
+  \expandafter\let\expandafter\beamer@origbreak\expandafter=%
+    \csname\expandafter\@gobble\string\\ \endcsname% evil trickery to add a space to the name
+  \DeclareRobustCommand\\{\beamer@ifnextcharospec{\beamer@breaker}{\beamer@@breaker}}
+  \def\beamer@breaker<#1>{\only<#1>{\beamer@origbreak}}
+  \def\beamer@@breaker{\ifbeamer@inframe\else\expandafter\beamer@origbreak\fi}
+
+  \let\beamer@origbreakcenter=\@centercr
+  \def\@centercr{\beamer@ifnextcharospec{\beamer@breakercenter}{\beamer@@breakercenter}}
+  \def\beamer@breakercenter<#1>{\only<#1>{\beamer@origbreakcenter}}
+  \def\beamer@@breakercenter{\ifbeamer@inframe\else\expandafter\beamer@origbreakcenter\fi}
+}
+
+
+
+%
+% Plain frames
+%
+
+\def\beamer@frametemplate@plain{%
+  \def\beamer@entrycode{\vspace*{-\headheight}}%
+  \def\beamer@exitcode{\vspace*{-\footheight}\thispagestyle{empty}}}
+
+
+%
+% Again frame
+%
+
+\def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<*>}}
+\def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
+\def\beamer@@againframe<#1>[{\@ifnextchar<{\beamer@@@@againframe<#1>[}{\beamer@@@againframe<#1>[<*>][}}
+\def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[{#2}]}{\beamer@@@againframe<#1>[{#2}][]}}
+\def\beamer@@@againframe<#1>[#2][#3]#4{%
+  \@ifundefined{beamer@again@#4}%
+  {\ClassError{beamer}{No frame has been designated to resume under
+      the name "#4"}{}}%
+  {%
+  \def\beamer@temp{\frame<#1>[#2][{#3,relabel=#4}]}%
+  \expandafter\let\expandafter\beamer@templet\csname beamer@again@#4\endcsname%
+  \expandafter\beamer@temp\beamer@templet}%
+}
+
+\mode
+<article>
+{
+  \def\againframe{\@ifnextchar<{\beamer@againframe}{\beamer@againframe<>}}
+  \def\beamer@againframe<#1>{\@ifnextchar[{\beamer@@againframe<#1>}{\beamer@@againframe<#1>[]}}
+  \def\beamer@@againframe<#1>[{\@ifnextchar<{\beamer@@@@againframe<#1>[}{\beamer@@againframe<#1>[<*>][}}
+  \def\beamer@@@@againframe<#1>[#2]{\@ifnextchar[{\beamer@@@againframe<#1>[{#2}]}{\beamer@@@againframe<#1>[{#2}][]}}
+  \def\beamer@@@againframe<#1>[#2][#3]#4{} % do nothing
+}
+
+
+\mode
+<all>

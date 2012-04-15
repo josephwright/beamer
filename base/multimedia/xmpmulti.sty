@@ -1,0 +1,178 @@
+% $Header$
+
+% Copyright 2000 by Klaus Guntermann
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+%
+% Copyright notices: Large parts of this file are identical to the
+% file mpmulti.sty from the ppower4 distribution. Unfortunately, no
+% clear copyright notice is given in the original file nor is even the
+% author indicated. The author appears to be Klaus Guntermann and the
+% license appears to be GPL, at least the whole package is distributed
+% under GPL, so I assume that also applies to the individual
+% files.
+%
+
+%
+% This file does the same as the original mpmulti.sty. The only
+% differences are that a) the package pause is not loaded (it's
+% provided automatically by beamer and it should be loaded ``by hand''
+% when using ppower4) and b) a default overlay specification can be
+% given (as in \multiinclude[<+->][...]{...}), which will be the
+% argument to an actionenv that is put around each image.
+%
+
+
+%% mpmulti.sty                                     09 Sep 2002
+%%------------------------------------------------------------
+%% History:
+%%   Initial version                               14 Apr 2000
+%%   Introduced keyword parameters                 12 Jun 2000
+%%   Introduced new parameters (start,format), changed the
+%%     global code to take several file counting strings (eg
+%%     bla-*.mps, foo-*.jpg, etc.), added compatibility with
+%%     \graphicspath (Jean-Christophe Dubacq)      06 Dec 2001
+%%   Generalized the format option, added the end
+%%   handling and documented extended features in here
+%%                                                 09 Sep 2002
+%%
+%% Purpose:
+%%     include multiple metapost pictures and overlay them,
+%%     inserting a transition effect between them
+%%
+%% Synopsis:
+%%
+%% \multiinclude[defaultoverlayspecification]%
+%%              [pause=transitioncommand,
+%%               graphics={option for includegraphics},
+%%               format=filenameformat,
+%%               start=number,
+%%               end=number]{basefilename}
+%%
+%%     Include all metapost generated graphics found in
+%%     files with the basename "filename", which
+%%     have a number attached or in the extension.
+%%     Insert the transitioncommand between the files (defaults
+%%     to \pause).
+%%     Further options allow to specify additional specifications
+%%     for includegraphics, can change the number to start with
+%%     (default 0) or the number to end with (default 1000000).
+%%     By default the filenames are as created by mpost in the format
+%%     "filename.n", where "n" represents the number.
+%%     The option format with the values like "mps", "png" or "jpg" this
+%%     can be changed to "filename-n.format", e.g. "example-0.mps"
+%%     instead of "example.0".
+%%     Complaints are only written, if the first file is not found.
+%%     Otherwise including will silently stop.
+%%
+%%     If a defaultoverlayspecification is given, each image is
+%%     surrounded by an actionenv environment (defined by the beamer
+%%     class) with this option as argument. An example usage might be
+%%
+%%     \multiinclude[<alert@+| +->][graphics={height=4cm}]{myimage}
+%%
+%% Requires:
+%%     The keyval package for options processing.
+%%
+%%
+%\RequirePackage{pause}
+\RequirePackage{keyval}
+%%
+%% The command should process the optional arguments.
+%%
+\def\multiinclude{%
+  \def\@mpm@pause{\pause}\def\@mpm@ospec{}\def\@mpm@endospec{}%
+  \@ifnextchar [\@mpmulti{\@@@mpmulti[]}}
+%%
+\newif\if@mpm@groptions\@mpm@groptionsfalse
+%% We describe the keys and their default values
+\define@key{mpm}{format}[\@mpm@defaultformat]{%
+  \global\def\@mpm@format##1{##1-\the\@mpm@count.#1}}
+\define@key{mpm}{start}[0]{\global\def\@mpm@start{#1}\relax}
+\define@key{mpm}{end}[1000000]{\global\def\@mpm@end{#1}\relax}
+\define@key{mpm}{pause}[\pause]{\global\def\@mpm@pause{#1}\relax}
+\define@key{mpm}{graphics}{\@mpm@groptionstrue
+  \global\def\@mpm@graphics{\string#1}}
+\def\@mpm@defaultformat#1{#1.\the\@mpm@count}
+\let\@mpm@format=\@mpm@defaultformat
+%%
+%% We need a local counter
+%%
+\newcount\@mpm@count
+%%
+%% Implement the basic functionality.
+%% Try to include the first file unconditionally.
+%% This will produce an error message, if no such file can be found.
+%% Afterwards we are going to check for more files and stop, when we
+%% do not find another file. As long as we find files, these are
+%% overlapped to the previous parts.
+%%
+\def\@mpmulti[{\@ifnextchar<{\@@mpmulti[}{\@@@mpmulti[}}
+\def\@@mpmulti[#1]{%
+  \def\@mpm@pause{\relax}%
+  \def\@mpm@ospec{\begin{actionenv}#1}%
+  \def\@mpm@endospec{\end{actionenv}}%
+  \@ifnextchar[{\@@@mpmulti}{\@@@mpmulti[]}}
+\def\@@@mpmulti[#1]#2{%
+  %% reset the options
+  \global\def\@mpm@graphics{}%
+  \global\def\@mpm@start{0}%
+  \global\def\@mpm@end{1000000}%
+  %% get the arguments
+  \setkeys{mpm}{#1}%
+  %% Insert the first part of the figure
+  %% and make sure we look also in other places according to path.
+  \let\@mpm@oldinp@th\input@path\let\input@path\Ginput@path
+  \@mpm@count=\@mpm@start
+  \@mpm@ospec%
+  \if@mpm@groptions%
+  \edef\@mpm@do@include{\noexpand\includegraphics[\@mpm@graphics]{\@mpm@format{#2}}}%
+  \@mpm@do@include%
+  \else%
+  \includegraphics{\@mpm@format{#2}}%
+  \fi%
+  \@mpm@endospec%
+  \def\@mpmdoit{% Do it by conditional tail recursion.
+  %% Select the next filename and advance counter
+  \edef\@mpmfilename{\@mpm@format{#2}}%
+  %% If the file exists,
+  \IfFileExists{\@mpmfilename}{%
+    %% insert the user defined transition (or the default),
+    \@mpm@pause
+    %% then process the next part and set up to try again.
+    \llap{%
+      \@mpm@ospec%
+      \if@mpm@groptions
+      \edef\@mpm@do@include{\noexpand
+        \includegraphics[\@mpm@graphics]{\@mpmfilename}}%
+      \@mpm@do@include
+      \else
+      \includegraphics{\@mpmfilename}%
+      \fi%
+      \@mpm@endospec%
+      }%
+    \ifnum\@mpm@count<\@mpm@end\relax
+      \advance\@mpm@count by 1\relax
+      \let\@mpmnext\@mpmdoit
+    \else
+      \let\@mpmnext\relax
+    \fi
+  }{%
+    %% If no more files exist, set up to stop.
+    \let\@mpmnext\relax
+  }%
+  %% Whatever we had to do (without nesting all the IfFileExists)
+  \@mpmnext
+  }%
+  %% Finally we must start it once, if there is more than one file
+  %% supposed to be available.
+  \ifnum\@mpm@count<\@mpm@end\relax
+    \advance\@mpm@count by 1\relax   % start counting
+    \@mpmdoit % and run the show
+  \fi
+  %% and reset the input path after all
+  \let\input@path\@mpm@oldinp@th
+}%

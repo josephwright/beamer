@@ -1,0 +1,914 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% oder ...
+
+\setbeamercovered{transparent}
+% oder auch nicht
+\end_preamble
+\language ngerman
+\inputencoding auto
+\fontscheme times
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 1
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\defskip medskip
+\quotes_language danish
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Diese Datei enthält eine Lösungsvorlage für:
+\layout Standard
+
+- Vorträge bei einer (deutschsprachigen) Konferenz/einem Kolloquium.
+ 
+\layout Standard
+
+- Vortragslänge von etwa 20 Minuten.
+ 
+\layout Standard
+
+- Aussehen des Vortrags ist verschnörkelt/dekorativ.
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed true
+
+\layout Standard
+
+Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+ 
+\layout Standard
+
+In principle, this file can be redistributed and/or modified under the terms
+ of the GNU Public License, version 2.
+ However, this file is supposed to be a template to be modified for your
+ own needs.
+ For this reason, if you use this file as a template and not specifically
+ distribute it as part of a another package/program, the author grants the
+ extra permission to freely copy and modify this file as you see fit and
+ even to delete this copyright notice.
+ 
+\end_inset 
+
+
+\layout Title
+
+Titel wie im Tagunsband angegeben 
+\newline 
+(u.U.
+ also englisch)
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Kurzversion des Titels 
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, nur bei langen Titeln nötig
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Subtitle
+
+Untertitel nur angeben, wenn es einen im Tagungsband gibt
+\layout Author
+
+F.\SpecialChar ~
+Autor
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{1}
+\end_inset 
+
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+and
+\end_inset 
+
+ S.\SpecialChar ~
+Anders
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{2}
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Namen müssen in derselben Reihenfolge wie im Papier erscheinen.
+ 
+\layout Standard
+
+- Der 
+\backslash 
+inst{?} Befehl sollte nur verwendet werden, wenn die Autoren unterschiedlichen
+ Instituten angehören.
+\end_inset 
+
+
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Author, Another
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- optional, nur bei vielen Autoren
+\layout Standard
+
+- wenn es wirklich viele Autoren gibt, 
+\begin_inset Quotes ald
+\end_inset 
+
+Autor et al.
+\begin_inset Quotes ard
+\end_inset 
+
+
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Date
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{1}
+\end_inset 
+
+Institut für Informatik
+\newline 
+Universität Hier
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+and
+\end_inset 
+
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+inst{2}
+\end_inset 
+
+Institut für theoretische Philosophie
+\newline 
+Universität Dort
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Der 
+\backslash 
+inst{?} Befehl sollte nur verwendet werden, wenn die Autoren unterschiedlichen
+ Instituten angehören.
+ 
+\layout Standard
+
+- Keep it simple, niemand interessiert sich für die genau Adresse.
+ 
+\end_inset 
+
+
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+Universitäten Hier und Dort
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, aber oft nötig
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Date
+
+Konferenz über Präsentationstechniken, 2004
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Voller oder abgekürzter Name sind möglich.
+ 
+\layout Standard
+
+- Dieser Eintrag ist nicht für das Publikum gedacht (das weiß nämlich, bei
+ welcher Konferenz es ist), sondern für Leute, die die Folien später lesen.
+\end_inset 
+
+
+\begin_inset OptArg
+collapsed false
+
+\layout Standard
+
+KPT 2004
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+optional, should be abbreviation of conference name
+\end_inset 
+
+
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Falls eine Logodatei namens "university-logo-filename.xxx" vorhanden ist,
+ wobei xxx ein von latex bzw.
+ pdflatex lesbares Graphikformat ist, so kann man wie folgt ein Logo einfügen:
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+%
+\backslash 
+pgfdeclareimage[height=0.5cm]{institution-logo}{institution-logo-filename}
+\layout Standard
+%
+\backslash 
+logo{
+\backslash 
+pgfuseimage{institution-logo}}
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Folgendes sollte gelöscht werden, wenn man nicht am Anfang jedes Unterabschnitts
+ die Gliederung nochmal sehen möchte.
+ 
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+
+\backslash 
+AtBeginSubsection[]{
+\layout Standard
+  
+\backslash 
+frame<beamer>{ 
+\layout Standard
+    
+\backslash 
+frametitle{Gliederung}   
+\layout Standard
+    
+\backslash 
+tableofcontents[currentsection,currentsubsection] 
+\layout Standard
+  }
+\layout Standard
+}
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Falls Aufzählungen immer schrittweise gezeigt werden sollen, kann folgendes
+ Kommando benutzt werden:
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Open
+
+\layout Standard
+%
+\backslash 
+beamerdefaultoverlayspecification{<+->}
+\end_inset 
+
+
+\layout BeginFrame
+
+Gliederung
+\layout Standard
+
+
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Einen Vortrag zu strukturieren ist nicht immer einfach.
+ Die nachfolgende Struktur kann unangemessen sein.
+ Hier ein paar Regeln, die für diese Lösungsvorlage gelten:
+\layout Standard
+
+- Es sollte genau zwei oder drei Abschnitte geben (neben der % Zusammenfassung).
+ 
+\layout Standard
+
+- *Höchstens* drei Unterabschnitte pro Abschnitt.
+ 
+\layout Standard
+
+- Pro Rahmen sollte man zwischen 30s und 2min reden.
+ Es sollte also 15 bis 30 Rahmen geben.
+\layout Standard
+
+- Konferenzteilnehmer wissen oft wenig von der Materie des Vortrags.
+ Deshalb: vereinfachen! 
+\layout Standard
+
+- In 20 Minuten ist es schon schwer genug, die Hauptbotschaft zu vermitteln.
+ Deshalb sollten Details ausgelassen werden, selbst wenn dies zu Ungenauigkeiten
+ oder Halbwahrheiten führt.
+ 
+\layout Standard
+
+- Falls man Details weglässt, die eigentlich wichtig für einen Beweis/Implementa
+tion sind, so sagt man dies einmal nüchtern.
+ Alle werden damit glücklich sein.
+ 
+\end_inset 
+
+
+\layout Section
+
+Motivation
+\layout Subsection
+
+Das behandelte Problem
+\layout BeginFrame
+
+Überschriften sollten informativ sein.
+ 
+\newline 
+Korrekte Groß-/Kleinschreibung beachten.
+\layout FrameSubtitle
+
+Untertitel sind optional.
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+- Eine Überschrift fasst einen Rahmen verständlich zusammen.
+ Man muss sie verstehen können, selbst wenn man nicht den Rest des Rahmens
+ versteht.
+ 
+\end_inset 
+
+
+\layout Itemize
+
+Viel Itemize benutzen.
+\begin_deeper 
+\layout Pause
+
+\end_deeper 
+\layout Itemize
+
+Sehr kurze Sätze oder Satzglieder verwenden.
+\begin_deeper 
+\layout Pause
+
+\end_deeper 
+\layout Itemize
+
+Diese Overlays werden mit dem Pause Stil erzeugt.
+\layout BeginFrame
+
+Überschriften müssen informativ sein.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+Man kann auch Overlay-Spezifikationen benutzen, um Overlays zu erzeugen.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<3->
+\end_inset 
+
+Hiermit können, Punkte in beliebiger Reihenfolge präsentiert werden.
+\layout Itemize
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+Dies wird als zweites gezeigt.
+\layout BeginFrame
+
+Überschriften müssen informativ sein.
+\layout Block
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+Block ohne Überschrift.
+\layout Itemize
+
+Wird auf allen Overlays angezeigt.
+\end_deeper 
+\layout ExampleBlock
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+{
+\end_inset 
+
+Ein Beispielblocktitel
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+}
+\end_inset 
+
+
+\begin_deeper 
+\layout Itemize
+
+
+\begin_inset Formula $e^{i\pi}=-1$
+\end_inset 
+
+.
+\layout Itemize
+
+
+\begin_inset Formula $e^{i\pi/2}=i$
+\end_inset 
+
+.
+\end_deeper 
+\layout Subsection
+
+Frühere Arbeiten
+\layout BeginFrame
+
+Überschriften müssen informativ sein.
+\layout Example
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+Auf dem ersten Overlay.
+\layout Separator
+
+\layout Example
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+Auf dem zweiten Overlay.
+\layout Section
+
+Unsere Resultate/Beitrag
+\layout Subsection
+
+Hauptresultate
+\layout BeginFrame
+
+Überschriften müssen informativ sein.
+\layout Theorem
+
+Auf dem ersten Overlay.
+\layout Pause
+
+\layout Corollary
+
+Auf dem zweiten Overlay.
+\layout BeginFrame
+
+Überschriften müssen informativ sein.
+\layout ColumnsTopAligned
+
+\begin_deeper 
+\layout Column
+
+5cm
+\layout Theorem
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<1->
+\end_inset 
+
+In der linken Spalte.
+\layout Column
+
+5cm
+\layout Corollary
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+<2->
+\end_inset 
+
+In der rechten Spalte.
+\newline 
+Neue Zeile.
+\end_deeper 
+\layout Subsection
+
+Beweis-/Implementationsideen
+\layout Section*
+
+Zusammenfassung
+\layout BeginFrame
+
+Zusammenfassung
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Die Zusammenfassung sollte sehr kurz sein.
+\end_inset 
+
+
+\layout Itemize
+
+Die 
+\color red
+erste Hauptbotschaft
+\color default
+ des Vortrags in ein bis zwei Zeilen.
+\layout Itemize
+
+Die 
+\color red
+zweite Hauptbotschaft
+\color default
+ des Vortrags in ein bis zwei Zeilen.
+\layout Itemize
+
+Eventuell noch eine 
+\color red
+dritte Botschaft
+\color default
+, aber nicht noch mehr.
+\layout Standard
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Der folgende Ausblick ist optional.
+\end_inset 
+
+
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+vskip0pt plus.5fill
+\end_inset 
+
+
+\layout Itemize
+
+Ausblick
+\begin_deeper 
+\layout Itemize
+
+Etwas, was wir noch nicht lösen konnten.
+\layout Itemize
+
+Nochwas, das wir noch nicht lösen konnten.
+\end_deeper 
+\layout EndFrame
+
+\layout Section*
+\start_of_appendix 
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Alles nachfolgende ist optional und typischerweise nicht nötig.
+\end_inset 
+
+Anhang
+\layout Subsection*
+
+Weiterführende Literatur
+\layout BeginFrame
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+[allowframebreaks]
+\end_inset 
+
+Weiterführende Literatur
+\layout Standard
+
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+beamertemplatebookbibitems
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Anfangen sollte man mit Übersichtswerken.
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Autor1990}
+
+A.
+ Autor.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+
+\emph on 
+ Einführung in das Präsentationswese
+\emph default 
+.
+ 
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ Klein-Verlag, 1990.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+beamertemplatearticlebibitems
+\end_inset 
+
+
+\begin_inset Note
+collapsed false
+
+\layout Standard
+
+Vertiefende Literatur kommt später.
+ Die Liste sollte kurz sein.
+\end_inset 
+
+
+\layout Bibliography
+\bibitem {Jemand2002}
+
+S.
+ Jemand.
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+ On this and that
+\emph on 
+.
+ 
+\emph default 
+
+\begin_inset ERT
+status Collapsed
+
+\layout Standard
+
+\backslash 
+newblock
+\end_inset 
+
+
+\emph on 
+Journal on This and That
+\emph default 
+.
+ 2(1):50--100, 2000.
+\layout EndFrame
+
+\the_end

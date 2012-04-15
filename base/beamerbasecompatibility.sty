@@ -1,0 +1,532 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+%
+%
+% Hyperlink fix for problem with empty test in pdfmark.def
+%
+%
+\let\beamer@orighyperlink\hyperlink
+\def\hyperlink#1#2{\beamer@orighyperlink{#1}{\relax#2}}
+
+\providecommand\hyper@pagetransition{}
+\providecommand\hyper@pageduration{}
+\providecommand\hyper@pagehidden{}
+
+
+\mode
+<all>
+{
+  % Things to be done at the beginning of the document
+  \def\beamer@lastminutepatches{}
+  \def\beamer@firstminutepatches{}
+}
+
+%
+% Fixes right before the start of the document.
+%
+\let\beamer@origdocument\document
+\def\document{%
+  \beamer@firstminutepatches%
+  \endgroup%
+
+  \AtBeginDocument{% fix spanish.ldf's meddling with < and >
+    %
+    % Fix spanish.ldf's meddling with < and >
+    %
+    \@ifundefined{deactivatequoting}{}{\deactivatequoting}
+
+    % Fix meddline with enumerate items
+    \renewcommand\theenumi{\@arabic\c@enumi}
+    \renewcommand\theenumii{\@arabic\c@enumii}
+    \renewcommand\theenumiii{\@arabic\c@enumiii}
+  }
+
+  \AtBeginDocument{% fix frenchb.ldf's meddling with itemize and :
+    \let\labelitemi\beamer@labelitemi
+    \let\labelitemii\beamer@labelitemii
+    \let\itemize\beamer@itemize
+    \let\list\beamer@list
+    \let\@trivlist\beamer@@trivlist%
+    \catcode`<=12\catcode`>=12}
+
+  \begingroup\beamer@origdocument%
+  \beamer@lastminutepatches%
+  \ifbeamer@ignorenonframe%
+    \expandafter\mode\expandafter*%
+  \fi}
+
+\mode
+<article>
+{
+  \let\beamer@origdocument\document
+  \def\document{%
+    \beamer@origdocument%
+    \beamer@lastminutepatches}
+
+  \g@addto@macro\beamer@lastminutepatches{%
+    \ifbeamer@articleactive
+    \else
+      \catcode`<=12\catcode`>=12
+    \fi
+    }
+}
+
+
+\AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize
+
+
+
+
+%
+% Fix for older versions of geometry
+% We used to test \ifGm@compatii,
+% but as of geometry v5.0, it is no longer provided.
+%
+\ifx\Gm@lmargin\@undefined
+\def\Gm@lmargin{\Geom@lmargin}\def\Gm@rmargin{\Geom@rmargin}
+\else
+\geometry{includeheadfoot}
+\fi
+
+
+
+%
+% Fix deluxetabular floats
+%
+\AtBeginDocument{
+  \def\@plano@float@#1{\begin{table}}
+  \def\end@plano@float@{\end{table}}
+}
+
+%
+% Fix for implict=false for hyperref
+%
+\def\WriteBookmarks{0}
+\expandafter\def\csname Parent-1\endcsname{}
+\expandafter\def\csname Parent0\endcsname{}
+\expandafter\def\csname Parent1\endcsname{}
+\def\phantomsection{}
+
+%
+% Heiko's fix for correct generation of section* and subsection* bookmarks
+%
+\g@addto@macro\beamer@lastminutepatches{%
+  \long\def\@LongEmpty{}
+  \newcommand*{\org@beamer@section}{}
+  \let\org@beamer@section\beamer@section{}%
+  \let\org@writebookmark\Hy@writebookmark{}%
+  \long\def\beamer@section[#1]#2{%
+    \let\Hy@writebookmark\org@writebookmark
+    \long\def\@secname{#1}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \long\def\@secname{#2}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \org@beamer@section[{#1}]{#2}%
+  }
+  \newcommand*{\org@beamer@subsection}{}
+  \let\org@beamer@subsection\beamer@subsection{}%
+  \long\def\beamer@subsection[#1]#2{%
+    \let\Hy@writebookmark\org@writebookmark
+    \long\def\@secname{#1}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \long\def\@secname{#2}%
+    \ifx\@secname\@LongEmpty{}%
+      \def\Hy@writebookmark##1##2##3##4##5{}%
+    \fi
+    \org@beamer@subsection[{#1}]{#2}%
+  }
+}
+
+%
+% Bugfix for old versions of pdfmark
+%
+\begingroup
+  \catcode`P=12
+  \catcode`T=12
+  \lowercase{\endgroup
+  \gdef\rem@ptetc#1.#2PT#3!{#1\ifnum#2>\z@.#2\fi}%
+}
+\def\strip@pt@and@otherjunk#1{\expandafter\rem@ptetc\the#1!}
+
+%
+% Make the effect of pdfpagetransition and duration global, not local
+%
+\define@key{Hyp}{pdfpagetransition}{\gdef\@pdfpagetransition{#1}}
+\define@key{Hyp}{pdfpageduration}{\gdef\@pdfpageduration{#1}}
+
+%
+%
+% Fix for babel
+%
+%
+\providecommand\textlatin{}
+\providecommand\theparagraph{}
+\providecommand\thesubparagraph{}
+\providecommand\listoffigures{}
+\providecommand\listoftables{}
+\providecommand\l@part{}
+\providecommand\l@chapter{}
+
+%
+% Fix for subfig
+%
+\providecommand\ext@table{}
+\providecommand\ext@figure{}
+
+
+
+
+%
+% Obsolete commands from old versions of beamer
+%
+\mode
+<all>
+{
+  \let\beamer@verb@egroup=\verb@egroup
+
+  \def\beamer@setb{\setbox0=\copy}
+  \long\def\defverb#1{%
+    \expandafter\newbox\csname @verb\string#1\endcsname%
+    \def#1{{\expandafter\beamer@setb\csname
+        @verb\string#1\endcsname\unhbox0}}%
+    \def\verb@egroup{\global\let\verb@balance@group\@empty\egroup\egroup\let\verb@egroup=\beamer@verb@egroup}
+    \expandafter\setbox\csname @verb\string#1\endcsname=\hbox\bgroup
+    \verb}
+
+  \define@key{beamerverb}{colored}[true]{\def\beamer@colorsup{}}
+  \define@key{beamerverb}{width}{\def\beamer@verbwidth{#1}}
+
+  \newcommand{\defverbatim}[2][]{%
+    \def\beamer@colorsup{\def\set@color{}\def\reset@color{}}%
+    \setkeys{beamerverb}{width=\textwidth}%
+    \setkeys{beamerverb}{#1}%
+    \expandafter\newbox\csname @verb\string#2\endcsname%
+    \def#2{{\expandafter\beamer@setb\csname @verb\string#2\endcsname%
+        \unvbox0}\color{.}}%
+    \expandafter\setbox\csname @verb\string#2\endcsname=\vbox\bgroup%
+    \beamer@colorsup%
+    \hsize=\beamer@verbwidth\textwidth=\beamer@verbwidth\linewidth=\beamer@verbwidth%
+    \vskip-\baselineskip\strut\bgroup\aftergroup\beamer@verbend%
+    \let\@next=}
+  \def\beamer@verbend{\vskip-\baselineskip\strut\egroup}
+}
+\def\tableofcontentscurrent{\tableofcontents[current]}
+\def\plainframe{\frame[plain]}%obsolete
+\def\pgfonly{\only}%obsolete
+\AtBeginDocument{\newcommand{\nameslide}{\alt{\beamer@nameslide}{\@gobble}}}%obsolete
+\newenvironment{pauses}[1][\c@beamerpauses]{\setcounter{beamerpauses}{#1}}{}%obsolete
+\def\newoverlaycommand#1#2#3{\def#1{\alt{#2}{#3}}}
+\def\newoverlayenvironment#1#2#3#4#5{\newenvironment{#1}{\begin{altenv}{#2}{#3}{#4}{#5}}{\end{altenv}}}
+\newenvironment{columnsonlytextwidth}{\begin{columns}[onlytextwidth]}{\end{columns}}
+\def\untitledsubsection{\subsection*{}}
+\def\noteitems{\note[enumerate]}
+
+
+\define@key{beamertoc}{current}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}}
+\define@key{beamertoc}{hidesubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}}
+\define@key{beamertoc}{shadesubsections}[]{\beamer@toc@subsectionstyle{shaded}}
+
+\mode
+<all>{\def\unpause{\onslide{}}}
+
+\def\beamer@fixedline#1{%
+  {\setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
+  \ht\beamer@linebox=2.125ex%
+  \dp\beamer@linebox=1.125ex%
+  \box\beamer@linebox}}
+\def\beamer@fixedcolouredline#1#2{%
+  \hbox{%
+    \setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
+    \ht\beamer@linebox=2.625ex%
+    \dp\beamer@linebox=0pt%
+    \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
+\long\def\beamer@colouredline#1#2{%
+  \hbox{%
+    \setbox\beamer@linebox=\vbox{\hbox to\textwidth{\hskip-\Gm@lmargin{#2}\hskip-\Gm@rmargin}}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
+\def\tinyline#1{%
+  {\tiny\setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#1}\hskip-\Gm@rmargin\hskip0.3cm}%
+  \ht\beamer@linebox=2.06ex%
+  \dp\beamer@linebox=0pt%
+  \box\beamer@linebox%
+  \vskip1.125ex}}
+\def\tinycolouredline#1#2{%
+  \hbox{\tiny%
+    \setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
+    \ht\beamer@linebox=2.625ex%
+    \dp\beamer@linebox=0pt%
+    \setbox\beamer@linebox=\vbox{\box\beamer@linebox\vskip1.125ex}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
+\def\colouredline#1#2{%
+  \hbox{%
+    \setbox\beamer@linebox=\hbox to\textwidth{\hskip-\Gm@lmargin\hskip0.3cm{#2}\hskip-\Gm@rmargin\hskip0.3cm}%
+    \setbox\beamer@linebox=\vbox{\vskip2pt\box\beamer@linebox\vskip2pt}%
+    {\color{#1}\hskip-\Gm@lmargin\vrule width\paperwidth
+      height\ht\beamer@linebox\hskip-\paperwidth\hskip\Gm@lmargin}%
+    \box\beamer@linebox}%
+  }
+\def\beamerline#1{\hbox{\hskip-\Gm@lmargin#1\hskip-\Gm@rmargin}}
+\def\insertvrule#1#2{\hbox{\color{#2}\hskip-\Gm@lmargin\vrule width \paperwidth height #1\hskip-\Gm@rmargin}}
+
+\def\usetitlepagetemplate{\setbeamertemplate{title page}}
+\def\usepartpagetemplate{\setbeamertemplate{part page}}
+\mode
+<all>{\def\useframetitletemplate{\setbeamertemplate{frametitle}}}
+\def\useitemizeitemtemplate{\setbeamertemplate{itemize item}}
+\def\usesubitemizeitemtemplate{\setbeamertemplate{itemize subitem}}
+\def\usesubsubitemizeitemtemplate{\setbeamertemplate{itemize subsubitem}}
+\def\useenumerateitemtemplate{\setbeamertemplate{enumerate item}}
+\def\usesubenumerateitemtemplate{\setbeamertemplate{enumerate subitem}}
+\def\usesubsubenumerateitemtemplate{\setbeamertemplate{enumerate subsubitem}}
+\def\useitemizetemplate#1#2{% before and after
+  \setbeamertemplate{itemize/enumerate body begin}{#1}%
+  \setbeamertemplate{itemize/enumerate body end}{#2}}
+\def\usesubitemizetemplate#1#2{% before and after
+  \setbeamertemplate{itemize/enumerate subbody begin}{#1}%
+  \setbeamertemplate{itemize/enumerate subbody end}{#2}}
+\def\usesubsubitemizetemplate#1#2{% before and after
+  \setbeamertemplate{itemize/enumerate subsubbody begin}{#1}%
+  \setbeamertemplate{itemize/enumerate subsubbody end}{#2}}
+\def\useenumerateitemminitemplate{\setbeamertemplate{enumerate mini template}}
+\let\useenumeratetemplate=\useitemizetemplate
+\let\usesubenumeratetemplate=\usesubitemizetemplate
+\let\usesubsubenumeratetemplate=\usesubsubitemizetemplate
+\def\useleftsidebartemplate{\usesidebartemplate[left]}
+\def\userightsidebartemplate{\usesidebartemplate[right]}
+\def\useleftsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[left]}
+\def\userightsidebarbackgroundtemplate{\usesidebarbackgroundtemplate[right]}
+\def\useleftsidebarcolortemplate#1{\usesidebarbackgroundtemplate[left]{#1\vrule height\paperheight
+  width\csname beamer@leftsidebar\endcsname}}
+\def\userightsidebarcolortemplate#1{\usesidebarbackgroundtemplate[right]{#1\vrule height\paperheight
+  width\csname beamer@rightsidebar\endcsname}}
+\def\useleftsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[left]}
+\def\userightsidebarverticalshadingtemplate{\beamertemplatesidebarverticalshading[right]}
+\def\useleftsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[left]}
+\def\userightsidebarhorizontalshadingtemplate{\beamertemplatesidebarhorizontalshading[right]}
+\def\usedescriptionitemtemplate#1#2{\setbeamertemplate{description item}{#1}\setbeamersize{description width={#2}}}
+\def\usedescriptionitemofwidthas#1{\setbeamersize{description width of={#1}}}%
+\def\usetemplatetocsection{\@ifnextchar[\@@usetemplatetocsection\@usetemplatetocsection}
+\long\def\@@usetemplatetocsection[#1]#2{
+  \@usetemplatetocsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}
+\long\def\@usetemplatetocsection#1#2{\setbeamertemplate{section in toc}{#1}
+  \setbeamertemplate{section in toc shaded}{#2}}
+\def\usetemplatetocsubsection{\@ifnextchar[\@@usetemplatetocsubsection\@usetemplatetocsubsection}
+\long\def\@@usetemplatetocsubsection[#1]#2{
+  \@usetemplatetocsubsection{#2}{\begin{colormixin}{#1}#2\end{colormixin}\unskip}}
+\long\def\@usetemplatetocsubsection#1#2{\setbeamertemplate{subsection in toc}{#1}%
+  \setbeamertemplate{subsection in toc shaded}{#2}}
+\def\usebibitemtemplate{\setbeamertemplate{bibliography item}}
+\newcommand\usebibliographyblocktemplate[4]{%
+  \setbeamertemplate{bibliography entry author}{#1}%
+  \setbeamertemplate{bibliography entry title}{#2}%
+  \setbeamertemplate{bibliography entry location}{#3}%
+  \setbeamertemplate{bibliography entry note}{#4}}
+\def\usebuttontemplate{\setbeamertemplate{button}}
+\def\usetemplateabstract#1#2{%
+  \setbeamertemplate{abstract title}{}
+  \setbeamertemplate{abstract body begin}{#1}
+  \setbeamertemplate{abstract body end}{#2}}
+\def\usetemplateverse#1#2{\setbeamertemplate{verse begin}{#1}\setbeamertemplate{verse end}{#2}}
+\def\usetemplatenote{\setbeamertemplate{note page}}
+\def\useheadtemplate{\@ifstar{\beamer@useheads}{\beamer@usehead}}
+\def\beamer@usehead{\setbeamertemplate{headline}[text line]}
+\def\beamer@useheads{\setbeamertemplate{headline}}
+\def\addtoheadtemplate{\addtobeamertemplate{headline}}
+\def\addtofoottemplate{\addtobeamertemplate{footline}}
+\def\usefoottemplate{\@ifstar{\beamer@usefoots}{\beamer@usefoot}}
+\def\beamer@usefoot{\setbeamertemplate{footline}[text line]}
+\def\beamer@usefoots{\setbeamertemplate{footline}}
+\def\usecaptiontemplate{\setbeamertemplate{caption}}
+\def\insertblockname{\insertblocktitle}
+\long\def\usesectionheadtemplate#1#2{%
+  \setbeamertemplate{section in head/foot}{#1}%
+  \setbeamertemplate{section in head/foot shaded}{#2}}
+\long\def\usesubsectionheadtemplate#1#2{%
+  \setbeamertemplate{subsection in head/foot}{#1}%
+  \setbeamertemplate{subsection in head/foot shaded}{#2}}
+\long\def\usesectionsidetemplate#1#2{%
+  \setbeamertemplate{section in sidebar}{#1}%
+  \setbeamertemplate{section in sidebar shaded}{#2}}
+\long\def\usesubsectionsidetemplate#1#2{%
+  \setbeamertemplate{subsection in sidebar}{#1}%
+  \setbeamertemplate{subsection in sidebar shaded}{#2}}
+\newcommand\usetheoremtemplate[2]{%
+  \setbeamertemplate{theorem begin}{#1}
+  \setbeamertemplate{theorem end}{#2}}
+\newcommand\useprooftemplate[2]{
+  \setbeamertemplate{proof begin}{#1}
+  \setbeamertemplate{proof end}{#2}}
+\def\useqedsymboltemplate{\setbeamertemplate{qed symbol}}
+\newcommand{\BeispielInline}[1]{{\usebeamercolor[fg]{example text}Beispiel: \ignorespaces#1}}
+\newcommand{\ExampleInline}[1]{{\usebeamercolor[fg]{example text}\translate{Example}: \ignorespaces#1}}
+\def\usenavigationsymbolstemplate{\setbeamertemplate{navigation symbols}}
+\def\insertnavigationsymbols{\usebeamertemplate***{navigation symbols}}
+\def\beamersetaveragebackground#1{\setbeamercolor{normal text}{bg={#1}}}
+\def\useminislidetemplate#1#2#3#4#5{%
+  \setbeamertemplate{mini frame}{#1}%
+  \setbeamertemplate{mini frame in current subsection}{#2}%
+  \setbeamertemplate{mini frame in other subsection}{#3}%
+  \setbeamersize{mini frame size={#4},mini frame offset={#5}}}
+\newcommand\usesidebarbackgroundtemplate[2][left]{\setbeamertemplate{sidebar canvas #1}{#2}}
+\def\usefootnotetemplate{\setbeamertemplate{footnote}}
+
+
+\def\beamertemplatedefaulttoc{\setbeamertemplate{sections/subsections in toc}[default]}
+\def\beamertemplatenumberedsubsectiontoc{\setbeamertemplate{sections/subsections in toc}[subsections numbered]}
+\def\beamertemplatenumberedsectiontoc{\setbeamertemplate{sections/subsections in toc}[sections numbered]}
+\def\beamertemplatenumberedcirclesectiontoc{\setbeamertemplate{sections/subsections in toc}[circle]}
+\def\beamertemplatenumberedsquaresectiontoc{\setbeamertemplate{sections/subsections in toc}[square]}
+\def\beamertemplatenumberedballsectiontoc{\setbeamertemplate{sections/subsections in toc}[ball]}
+\def\beamertemplateballtoc{\setbeamertemplate{sections/subsections in toc}[ball unnumbered]}
+\def\beamertemplatedotitem{\setbeamertemplate{itemize items}[circle]}
+\def\beamertemplatetriangleitem{\setbeamertemplate{itemize items}[default]}
+\def\beamertemplatesquareitem{\setbeamertemplate{itemize items}[square]}
+\def\beamertemplateballitem{\setbeamertemplate{items}[ball]}
+\def\beamertemplateenumeratealpha{\setbeamertemplate{enumerate items}[default]}
+\def\beamertemplateenumeratecircle{\setbeamertemplate{enumerate items}[circle]}
+\def\beamertemplateenumeratesquare{\setbeamertemplate{enumerate items}[square]}
+\def\beamertemplatelargepartpage{\setbeamertemplate{part page}[default]}
+\def\beamertemplateboldpartpage{\setbeamerfont{part}{size=\large}%
+  \setbeamerfont{part name}{series=\bfseries}%
+  \setbeamertemplate{part page}[default]}
+\def\beamertemplatelargetitlepage{\setbeamertemplate{title page}[default]}
+\def\beamertemplateboldtitlepage{\setbeamerfont{title}{size=\large,series=\bfseries}%
+  \setbeamertemplate{title page}[default]}
+\def\beamertemplateboldcenterframetitle{\setbeamerfont{frametitle}{size={},series=\bfseries}
+  \setbeamerfont{framesubtitle}{series=\bfseries}
+  \setbeamertemplate{frametitle}[default][center]}
+\def\beamertemplateboldframetitle{\setbeamerfont{frametitle}{series=\bfseries}
+  \setbeamerfont{framesubtitle}{series=\bfseries}
+  \setbeamertemplate{frametitle}[default]}
+\def\beamertemplatelargeframetitle{\setbeamertemplate{frametitle}[default]}
+\def\beamertemplateboldblocks{\setbeamerfont{block title}{size={},series=\bfseries}\setbeamertemplate{blocks}[default]}
+\def\beamertemplatelargeblocks{\setbeamertemplate{blocks}[default]}
+\def\beamertemplateshadowblocks{\setbeamertemplate{blocks}[rounded][shadow=true]}
+\def\beamertemplateplaintoc{\beamertemplatedefaulttoc}
+\def\beamertemplatecircleminiframeinverted{\beamertemplatecircleminiframe%
+  \usebeamercolor{mini frames}{use=structure,fg=white,bg=structure.bg}}
+\def\beamertemplatesphereminiframe{\beamertemplatecircleminiframe}
+\def\beamertemplatesphereminiframeinverted{\beamertemplatecircleminiframeinverted}
+\def\beamertemplatelightsectionheads{\usesectionheadtemplate{\hfill\insertsectionhead}{\hfill\color{fg!50!bg}\insertsectionhead}
+ \usesubsectionheadtemplate{\insertsubsectionhead}{\color{fg!50!bg}\insertsubsectionhead}}
+\let\beamertemplatedarksectionheads=\beamertemplatedefaultsectionheads
+\def\usecontinuationtemplate{\setbeamertemplate{frametitle continuation}}
+\def\beamertemplatecontinuationroman{\setbeamertemplate{frametitle continuation}[default]}
+\def\beamertemplatecontinuationtext{\setbeamertemplate{frametitle continuation}[from second]}
+\def\beamertemplateroundedbuttons{\setbeamertemplate{button}[default]}
+\def\beamertemplateoutlinebuttons{\setbeamercolor*{button border}{parent=structure,use=structure,fg=structure.fg!50!bg}}
+\def\beamertemplatesolidbuttons{\setbeamercolor*{button}{use=structure,bg=structure.fg!50!bg,fg=white}
+ \setbeamercolor*{button border}{use=structure,fg=structure.fg!50!bg}}
+\def\usetemplatequotation#1#2{
+  \setbeamertemplate{quotation begin}{#1}
+  \setbeamertemplate{quote begin}{#1}
+  \setbeamertemplate{quotation end}{#2}
+  \setbeamertemplate{quote end}{#2}}
+\def\beamertemplateheadempty{\setbeamertemplate{headline}{}}
+\def\beamertemplatefootempty{\setbeamertemplate{footline}{}}
+\def\beamertemplatefootpagenumber{\setbeamertemplate{footline}[page number]}
+\def\beamertemplatecaptionownline{\setbeamertemplate{caption}[caption name own line]}
+\def\beamertemplatecaptionnwithnumber{\setbeamertemplate{caption}[numbered]}
+\def\beamertemplateroundedblocks{\setbeamertemplate{blocks}[rounded]}
+\def\beamertemplatetheoremsunnumbered{\setbeamertemplate{theorems}[default]}
+\def\beamertemplatetheoremsnumbered{\setbeamertemplate{theorems}[numbered]}
+\def\beamertemplatetheoremsamslike{\setbeamertemplate{theorems}[ams style]}
+\def\beamertemplatetheoremssimple{\setbeamertemplate{theorems}[normal font]}
+\def\beamertemplatenavigationsymbolsempty{\setbeamertemplate{navigation symbols}{}}
+\def\beamertemplatenavigationsymbolsframe{\setbeamertemplate{navigation symbols}[only frame symbol]}
+\def\beamertemplatenavigationsymbolsvertical{\setbeamertemplate{navigation symbols}[vertical]}
+\def\beamertemplatenavigationsymbolshorizontal{\setbeamertemplate{navigation symbols}[horizontal]}
+\def\beamertemplatedefaultsectionheads{%
+  \setbeamertemplate{section in head/foot}[default]
+  \setbeamertemplate{subsection in head/foot}[default]
+  \setbeamertemplate{section in head/foot shaded}[default]
+  \setbeamertemplate{subsection in head/foot shaded}[default]
+}
+\def\beamertemplatecircleminiframe{\setbeamertemplate{mini frames}[default]}
+\def\beamertemplateticksminiframe{\setbeamertemplate{mini frames}[tick]}
+\def\beamertemplateboxminiframe{\setbeamertemplate{mini frames}[box]}
+\newcommand\usesidebartemplate[3][left]{%
+  \setbeamersize{sidebar width #1=#2}
+  \setbeamertemplate{sidebar #1}{#3}
+}
+\newcommand\beamertemplatesidebarcolor[2][left]{\setbeamercolor{sidebar #1}{bg={#2}}}
+\def\beamertemplaterightsidebarlogonavigation{\setbeamertemplate{sidebar right}[default]
+  \setbeamersize{sidebar width right=0pt}}
+\newcommand{\beamertemplatesidebarverticalshading}[3][left]{%
+  \setbeamertemplate{sidebar canvas #1}[vertical shading][top={#3},bottom={#2}]}
+\newcommand{\beamertemplatesidebarhorizontalshading}[3][left]{%
+  \setbeamertemplate{sidebar canvas #1}[horizontal shading][right={#3},left={#2}]}
+\define@key{beamer@margin}{descriptionwidth}{%
+  \beamer@descriptionwidth=#1\relax%
+}
+\define@key{beamer@margin}{descriptionwidthof}{%
+  \setbox\beamer@tempbox=\hbox{\def\insertdescriptionitem{#1}\usebeamertemplate**{description item}}%
+  \beamer@descriptionwidth=\wd\beamer@tempbox\relax%
+}
+
+\mode
+<all>
+{
+  \def\beamersetleftmargin#1{\setbeamersize{text margin left=#1}}
+  \def\beamersetrightmargin#1{\setbeamersize{text margin right=#1}}
+  \long\def\useframetemplate#1#2{\setbeamertemplate{frame begin}{#1}\setbeamertemplate{frame end}{#2}}
+  \def\usebackgroundtemplate{\setbeamertemplate{background canvas}}
+  \def\beamertemplatesolidbackgroundcolor#1{\setbeamercolor{normal text}{bg={#1}}}
+  \long\def\useblocktemplate#1#2{%
+    \setbeamertemplate{block begin}{#1}%
+    \setbeamertemplate{block end}{#2}}
+  \long\def\usealertblocktemplate#1#2{%
+    \setbeamertemplate{block alerted begin}{#1}%
+    \setbeamertemplate{block alerted end}{#2}}
+  \long\def\useexampleblocktemplate#1#2{%
+    \setbeamertemplate{block example begin}{#1}%
+    \setbeamertemplate{block example end}{#2}}
+  \newcommand{\beamertemplategridbackground}[1][]{\setbeamertemplate{background}[grid][step={#1}]}
+  \newcommand{\beamertemplateshadingbackground}[2]{\setbeamertemplate{background canvas}[vertical shading][bottom={#1},top={#2}]}
+  \newcommand\usealerttemplate[2]{\setbeamertemplate{alerted text begin}{#1}\setbeamertemplate{alerted text end}{#2}}
+  \newcommand\usestructuretemplate[2]{\setbeamertemplate{structure begin}{#1}\setbeamertemplate{structure end}{#2}}
+  \newcommand{\beamertemplatebookbibitems}{\setbeamertemplate{bibliography item}[book]}
+  \newcommand{\beamertemplatearticlebibitems}{\setbeamertemplate{bibliography item}[article]}
+  \newcommand{\beamertemplatetextbibitems}{\setbeamertemplate{bibliography item}[text]}
+  \newcommand{\beamertemplatearrowbibitems}{\setbeamertemplate{bibliography item}[triangle]}
+
+  \def\beamertemplatetransparentcovereddynamic{\setbeamercovered{highly dynamic}}
+  \def\beamertemplatetransparentcovereddynamicmedium{\setbeamercovered{dynamic}}
+  \def\beamertemplatetransparentcovered{\setbeamercovered{transparent}}
+  \def\beamertemplatetransparentcoveredmedium{\setbeamercovered{transparent=10}}
+  \def\beamertemplatetransparentcoveredhigh{\setbeamercovered{transparent=5}}
+  \def\beamertemplatetransparentcoveredhighest{\setbeamercovered{transparent=2}}
+  \def\beamersetuncovermixins#1#2{\setbeamercovered{still covered={#1},again covered={#2}}}
+}
+
+\mode
+<all>

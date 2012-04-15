@@ -1,0 +1,809 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode<presentation>
+
+
+\RequirePackage{beamerbaseboxes}
+
+
+
+%
+% declare some balls
+%
+
+\normalsize
+\pgfdeclareradialshading[bg,parent.bg]{tocsphere}{\pgfpoint{-0.5ex}{0.6ex}}%
+{%
+  color(0cm)=(bg!35!white);
+  color(0.44ex)=(bg!75!white);
+  color(0.88ex)=(bg!70!black!90!parent.bg);
+  color(1.2ex)=(bg!50!black!90!parent.bg);
+  color(1.3ex)=(parent.bg)}
+
+\pgfdeclareradialshading[bg,parent.bg]{bigsphere}{\pgfpoint{-0.1849315ex}{.2260273ex}}%
+{%
+  color(0cm)=(bg!15);
+  color(0.1643835ex)=(bg!75);
+  color(0.3287671ex)=(bg!70!black);
+  color(0.4520547ex)=(bg!50!black);
+  color(0.53ex)=(parent.bg)}
+
+\pgfdeclareradialshading[bg,parent.bg]{smallsphere}{\pgfpoint{-0.1479452ex}{0.18287671ex}}%
+{%
+  color(0cm)=(bg!15);
+  color(0.1315068ex)=(bg!75);
+  color(0.2630136ex)=(bg!70!black);
+  color(0.36164383ex)=(bg!50!black);
+  color(0.427ex)=(parent.bg)}
+
+\def\beamer@usesphere#1#2{%
+  \hbox{\usebeamercolor{#1}\normalsize\pgfuseshading{#2}}}
+
+
+
+
+
+
+
+
+
+
+
+%
+% Background templates
+%
+
+\define@key{beamer@backgroundgrid}{step}{\def\beamer@bggw{#1}}
+\define@key{beamer@backgroundgrid}{color}{\def\beamer@bggc{\color{#1}}}
+
+\defbeamertemplate{background}{grid}[1][]
+{%
+  \setkeys{beamer@backgroundgrid}{step=0.5cm,color=fg!10!bg}%
+  \setkeys{beamer@backgroundgrid}{#1}%
+  \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
+    \beamer@bggc
+    \pgfpathgrid[stepx=\beamer@bggw,stepy=\beamer@bggw]{\pgfpointorigin}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
+    \pgfusepath{stroke}
+  \end{pgfpicture}%
+}
+
+
+\define@key{beamer@backgroundshade}{top}{\def\beamer@bgst{#1}}
+\define@key{beamer@backgroundshade}{bottom}{\def\beamer@bgsb{#1}}
+\define@key{beamer@backgroundshade}{right}{\def\beamer@bgst{#1}}
+\define@key{beamer@backgroundshade}{left}{\def\beamer@bgsb{#1}}
+\define@key{beamer@backgroundshade}{middle}{\def\beamer@bgsm{#1}}
+\define@key{beamer@backgroundshade}{midpoint}{\def\beamer@bgsmp{#1}}
+
+\def\beamer@calcvertshading#1#2#3{%
+  {\usebeamercolor{palette primary}}
+  \usebeamercolor{normal text}
+  \setkeys{beamer@backgroundshade}{top=palette primary.bg!25!bg,bottom=bg,middle={},midpoint=0.5}%
+  \setkeys{beamer@backgroundshade}{#3}
+  \ifx\beamer@bgsm\@empty
+    \pgfdeclareverticalshading{#1}{#2}%
+      {color(0cm)=(\beamer@bgsb); color(\the\paperheight)=(\beamer@bgst)}
+    \colorlet{beamer@backgroundshadestart}{\beamer@bgsb}%
+    \colorlet{beamer@backgroundshadeend}{\beamer@bgst}%
+    \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
+  \else
+    \pgfdeclareverticalshading{#1}{#2}%
+      {color(0cm)=(\beamer@bgsb); color(\beamer@bgsmp\paperheight)=(\beamer@bgsm); color(\the\paperheight)=(\beamer@bgst)}
+    \colorlet{beamer@average}{\beamer@bgsm}
+  \fi%
+}
+
+\def\beamer@calchorishading#1#2#3{%
+  {\usebeamercolor{palette primary}}
+  \usebeamercolor{normal text}
+  \setkeys{beamer@backgroundshade}{left=palette primary.bg!25!bg,right=bg,middle={},midpoint=0.5}%
+  \setkeys{beamer@backgroundshade}{#3}
+  \ifx\beamer@bgsm\@empty
+    \pgfdeclarehorizontalshading{#1}{\the\paperheight}%
+      {color(0cm)=(\beamer@bgsb); color(#2)=(\beamer@bgst)}
+    \colorlet{beamer@backgroundshadestart}{\beamer@bgsb}%
+    \colorlet{beamer@backgroundshadeend}{\beamer@bgst}%
+    \colorlet{beamer@average}{beamer@backgroundshadestart!50!beamer@backgroundshadeend}%
+  \else
+    \pgfdeclarehorizontalshading{#1}{\the\paperheight}%
+      {color(0cm)=(\beamer@bgsb); color(\beamer@bgsmp#2)=(\beamer@bgsm); color(#2)=(\beamer@bgst)}
+    \colorlet{beamer@average}{\beamer@bgsm}
+  \fi%
+}
+
+
+
+\defbeamertemplate{background canvas}{vertical shading}[1][]
+{%
+  \pgfuseshading{beamer@backgroundshading}%
+}
+[action]
+{
+  \beamer@calcvertshading{beamer@backgroundshading}{\the\paperwidth}{#1}
+  \colorlet{beamer@@average}{beamer@average}
+  \setbeamercolor{normal text}{bg=beamer@@average}
+}
+
+
+
+
+%
+% Side bars
+%
+
+\defbeamertemplate{sidebar canvas left}{vertical shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasleftshading}%
+}
+[action]
+{
+  \beamer@calcvertshading{beamer@sidebarcanvasleftshading}{\the\beamer@leftsidebar}{#1}
+}
+
+\defbeamertemplate{sidebar canvas right}{vertical shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasrightshading}%
+}
+[action]
+{
+  \beamer@calcvertshading{beamer@sidebarcanvasrightshading}{\the\beamer@rightsidebar}{#1}
+}
+
+\defbeamertemplate{sidebar canvas left}{horizontal shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasleftshading}%
+}
+[action]
+{
+  \beamer@calchorishading{beamer@sidebarcanvasleftshading}{\beamer@leftsidebar}{#1}
+}
+
+\defbeamertemplate{sidebar canvas right}{horizontal shading}[1][]
+{%
+  \pgfuseshading{beamer@sidebarcanvasrightshading}%
+}
+[action]
+{
+  \beamer@calchorishading{beamer@sidebarcanvasrightshading}{\beamer@rightsidebar}{#1}
+}
+
+
+
+
+
+
+% (sub-)section in toc: sections numbered
+
+\defbeamertemplate{section in toc}{sections numbered}
+{\leavevmode\inserttocsectionnumber. \inserttocsection\par}
+
+\defbeamertemplate{subsection in toc}{sections numbered}
+{\leavevmode\leftskip=2.5em\inserttocsubsection\par}
+
+\defbeamertemplate{subsubsection in toc}{sections numbered}
+{\leavevmode\normalsize\usebeamerfont{subsection in toc}\leftskip=3.5em\usebeamerfont{subsubsection in toc}%
+  \inserttocsubsubsection\par}
+
+
+
+
+
+% (sub-)section in toc: subsections numbered
+
+\defbeamertemplate{section in toc}{subsections numbered}
+{\leavevmode\leftskip=2em\inserttocsection\par}
+
+\defbeamertemplate{subsection in toc}{subsections numbered}
+{\leavevmode\leftskip=2em\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
+
+\defbeamertemplate{subsubsection in toc}{subsections numbered}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+  \inserttocsubsubsection\par}
+
+
+
+
+
+% (sub-)section in toc: circle
+
+\defbeamertemplate{section in toc}{circle}
+{\leavevmode\leftskip=2ex%
+  \llap{%
+    \usebeamerfont*{section number projected}%
+    \usebeamercolor{section number projected}%
+    \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+      \color{bg}
+      \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
+      \pgfusepath{fill}
+      \pgftext[base]{\color{fg}\inserttocsectionnumber}
+    \end{pgfpicture}\kern1.25ex%
+  }%
+  \inserttocsection\par}
+
+\defbeamertemplate{subsection in toc}{circle}
+{\leavevmode\leftskip=2em\inserttocsubsection\par}
+
+\defbeamertemplate{subsubsection in toc}{circle}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+  \inserttocsubsubsection\par}
+
+
+
+
+% (sub-)section in toc: square
+
+\defbeamertemplate{section in toc}{square}
+{\leavevmode\leftskip=1.75ex%
+  \llap{%
+    \usebeamerfont*{section number projected}%
+    \usebeamercolor[bg]{section number projected}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{\hfil\color{fg}\inserttocsectionnumber\hfil}}%
+  \kern1.25ex\inserttocsection\par}
+
+\defbeamertemplate{subsection in toc}{square}
+{\leavevmode\leftskip=5ex\llap{%
+    \usebeamercolor[bg]{subsection number projected}%
+    \vrule width1ex height1ex\kern1ex}\inserttocsubsection\par}
+
+\defbeamertemplate{subsubsection in toc}{square}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=7ex\usebeamerfont{subsubsection in toc}%
+  \llap{%
+    \usebeamercolor[bg]{subsubsection number projected}%
+    \vrule width0.75ex height0.75ex\kern1ex}\inserttocsubsubsection\par}
+
+
+
+
+% (sub-)section in toc: ball
+
+\defbeamertemplate{section in toc}{ball unnumbered}
+{\leavevmode\raise0.1ex\beamer@usesphere{section number projected}{bigsphere}\kern1.25ex\inserttocsection\par}
+
+\defbeamertemplate{subsection in toc}{ball unnumbered}
+{\leavevmode\leftskip=1.5em\raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}%
+  \kern1ex\inserttocsubsection\par}
+
+\defbeamertemplate{subsubsection in toc}{ball unnumbered}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+  \beamer@usesphere{subsubsection number projected}{smallsphere}%
+  \kern0.75ex\inserttocsubsubsection\par}
+
+
+
+
+% (sub-)section in toc: ball numbered
+
+\defbeamertemplate{section in toc}{ball}
+{\leavevmode\leftskip=2.75ex%
+  \llap{%
+    \normalsize%
+    \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
+      \pgftext{\beamer@usesphere{section number projected}{tocsphere}}
+      \pgftext{%
+        \usebeamerfont*{section number projected}%
+        \usebeamercolor{section number projected}%
+        \color{fg!90!bg}%
+        \inserttocsectionnumber}
+    \end{pgfpicture}%
+    \kern1.25ex}%
+  \inserttocsection\par
+}
+[action]
+{\setbeamerfont{section number projected}{size=\scriptsize}}
+
+\defbeamertemplate{subsection in toc}{ball}
+{\leavevmode\leftskip=5ex%
+  \llap{\raise0.1ex\beamer@usesphere{subsection number projected}{bigsphere}\kern1ex}%
+  \inserttocsubsection\par%
+}
+
+\defbeamertemplate{subsubsection in toc}{ball}
+{\leavevmode\normalsize\usebeamerfont{subsection in
+    toc}\leftskip=7ex\usebeamerfont{subsubsection in toc}%
+  \llap{\beamer@usesphere{subsubsection number projected}{bigsphere}\kern0.75ex}%
+  \inserttocsubsubsection\par%
+}
+
+
+
+% Itemize items, circle
+
+\defbeamertemplatealias{itemize item}{triangle}{default}
+\defbeamertemplatealias{itemize subitem}{triangle}{default}
+\defbeamertemplatealias{itemize subsubitem}{triangle}{default}
+
+
+
+% Itemize items, circle
+
+\defbeamertemplate{itemize item}{circle}{\small\raise0.5pt\hbox{\textbullet}}
+\defbeamertemplate{itemize subitem}{circle}{\footnotesize\raise0.5pt\hbox{\textbullet}}
+\defbeamertemplate{itemize subsubitem}{circle}{\footnotesize\raise0.5pt\hbox{\textbullet}}
+
+
+
+
+% Itemize items, square
+
+\defbeamertemplate{itemize item}{square}{\hbox{\vrule width 1ex height 1ex}}
+\defbeamertemplate{itemize subitem}{square}{\small\hbox{\vrule width 1ex height 1ex}}
+\defbeamertemplate{itemize subsubitem}{square}{\small\hbox{\vrule width 1ex height 1ex}}
+
+
+
+
+% Itemize items, ball
+
+\defbeamertemplate{itemize item}{ball}{\raise0.2pt\beamer@usesphere{item projected}{bigsphere}}
+\defbeamertemplate{itemize subitem}{ball}{\raise0.2pt\beamer@usesphere{subitem projected}{smallsphere}}
+\defbeamertemplate{itemize subsubitem}{ball}{\raise0.2pt\beamer@usesphere{subsubitem projected}{smallsphere}}
+
+
+
+% Enumerate items, ball
+
+\defbeamertemplate{enumerate item}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+    \usebeamercolor[fg]{item projected}
+    {\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    {\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
+      \pgftext{\usebeamerfont*{item projected}\insertenumlabel}}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{enumerate subitem}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+    \usebeamercolor[fg]{subitem projected}
+    {\pgftransformscale{1.4}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    \pgftext{%
+      \usebeamerfont*{subitem projected}%
+      \insertsubenumlabel}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{enumerate subsubitem}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
+    \usebeamercolor[fg]{subsubitem projected}
+    {\pgftransformscale{1.4}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    \pgftext{%
+      \usebeamerfont*{subitem projected}%
+      \insertsubsubenumlabel}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{enumerate mini template}{ball}
+{
+  \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
+    \usebeamercolor[fg]{\beameritemnestingprefix item projected}
+    {\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
+    {\pgftransformshift{\pgfpoint{0pt}{0.5pt}}%
+     \usebeamerfont*{\beameritemnestingprefix item projected}%
+     \pgftext{\insertenumlabel}}
+  \end{pgfpicture}
+}
+
+
+
+% Enumerate items, square
+
+\defbeamertemplate{enumerate item}{square}
+{
+  \hbox{%
+    \usebeamerfont*{item projected}%
+    \usebeamercolor[bg]{item projected}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertenumlabel%
+      \hfil}%
+  }%
+}
+[action]
+{\setbeamerfont{item projected}{size=\scriptsize}}
+
+\defbeamertemplate{enumerate subitem}{square}
+{
+  \hbox{%
+    \usebeamerfont*{subitem projected}%
+    \usebeamercolor[bg]{subitem projected}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertsubenumlabel%
+      \hfil}%
+  }%
+}
+
+\defbeamertemplate{enumerate subsubitem}{square}
+{
+  \hbox{%
+    \usebeamerfont*{subitem projected}%
+    \usebeamercolor[bg]{subsubitem projected}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertsubsubenumlabel%
+      \hfil}%
+  }%
+}
+
+\defbeamertemplate{enumerate mini template}{square}
+{
+  \hbox{%
+    \usebeamerfont*{\beameritemnestingprefix item projected}%
+    \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
+    \vrule width2.25ex height1.85ex depth.4ex%
+    \hskip-2.25ex%
+    \hbox to2.25ex{%
+      \hfil%
+      \color{fg}\insertenumlabel%
+      \hfil}%
+  }%
+}
+
+
+
+
+% Enumerate items, circle
+
+\defbeamertemplate{enumerate item}{circle}
+{
+  \usebeamerfont*{item projected}%
+  \usebeamercolor[bg]{item projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
+    \pgfusepath{fill}
+    \pgftext[base]{\color{fg}\insertenumlabel}
+  \end{pgfpicture}%
+}
+[action]
+{\setbeamerfont{item projected}{size=\scriptsize}}
+
+\defbeamertemplate{enumerate subitem}{circle}
+{
+  \usebeamerfont*{subitem projected}%
+  \usebeamercolor[bg]{subitem projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
+    \pgfusepath{fill}
+    \pgftext[base]{\color{fg}\insertsubenumlabel}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{enumerate subsubitem}{circle}
+{
+  \usebeamerfont*{subsubitem projected}%
+  \usebeamercolor[bg]{subsubitem projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
+    \pgfusepath{fill}
+    \pgftext[base]{\color{fg}\insertsubsubenumlabel}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{enumerate mini template}{circle}
+{
+  \usebeamerfont*{\beameritemnestingprefix item projected}%
+  \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
+  \begin{pgfpicture}{-1ex}{0ex}{1ex}{2ex}
+    \pgfpathcircle{\pgfpoint{0pt}{.75ex}}{1.2ex}
+    \pgfusepath{fill}
+    \pgftext[base]{\color{fg}\insertenumlabel}
+  \end{pgfpicture}%
+}
+
+
+
+%
+% Frame title continutations
+%
+
+\defbeamertemplatealias{frametitle continuation}{roman}{default}
+
+\defbeamertemplate{frametitle continuation}{from second}[1][\insertcontinuationtext]
+{\expandafter\ifnum\insertcontinuationcount>1\relax#1\fi}
+
+
+
+
+
+% Bibliography items
+
+\defbeamertemplatealias{bibliography item}{article}{default}
+
+\defbeamertemplate{bibliography item}{book}
+{\lower2pt\hbox{\pgfuseimage{beamericonbook}}}
+
+\defbeamertemplate{bibliography item}{text}
+{\insertbiblabel}
+
+\defbeamertemplate{bibliography item}{triangle}
+{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+
+
+
+% Headline
+
+\defbeamertemplate{headline}{text line}[1]
+{\hskip\Gm@lmargin\hbox to\@tempdima{\textwidth=\@tempdima\hsize=\textwidth\relax#1\hfil}\hskip\Gm@rmargin}
+
+
+% Footline
+
+\defbeamertemplate{footline}{text line}[1]
+{\hskip\Gm@lmargin\hbox to\@tempdima{\textwidth=\@tempdima\hsize=\textwidth\relax#1\hfil}\hskip\Gm@rmargin}
+
+\defbeamertemplate{footline}{page number}
+{%
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
+}
+
+\defbeamertemplate{footline}{frame number}
+{
+  \hfill%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
+}
+
+
+
+
+% Mini frames
+
+\defbeamertemplate{mini frame}{box}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfusepath{fill,stroke}
+  \end{pgfpicture}%
+}
+[action]
+{
+  \setbeamersize{mini frame size=.1cm,mini frame offset=.05cm}
+}
+
+\defbeamertemplate{mini frame in current subsection}{box}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfusepath{stroke}
+  \end{pgfpicture}%
+}
+
+\defbeamertemplate{mini frame}{tick}
+{%
+  \hskip-0.4pt\vrule height\beamer@boxsize width1.2pt%
+}
+[action]
+{
+  \setbeamersize{mini frame size=.1cm,mini frame offset=.05cm}
+}
+
+\defbeamertemplate{mini frame in current subsection}{tick}
+{%
+  \vrule height\beamer@boxsize width0.4pt%
+}
+
+
+
+
+
+%
+% Captions
+%
+
+\defbeamertemplate{caption}{numbered}
+{%
+  \raggedright
+  {%
+    \usebeamercolor[fg]{caption name}%
+    \usebeamerfont*{caption name}%
+    \insertcaptionname~\insertcaptionnumber
+    \usebeamertemplate{caption label separator}%
+  }
+  \insertcaption\par
+}
+\defbeamertemplate*{caption label separator}{colon}{ : }
+
+\defbeamertemplate{caption}{caption name own line}
+{%
+  \begin{minipage}{\textwidth}
+    \raggedright
+  {%
+    \usebeamercolor[fg]{caption name}%
+    \usebeamerfont*{caption name}%
+    \insertcaptionname%
+    }\\
+      \insertcaption
+    \end{minipage}
+}
+
+
+
+
+
+%
+% Buttons
+%
+
+\newdimen\beamer@blockheadheight%
+
+
+\defbeamertemplate{navigation symbols}{only frame symbol}
+{\insertframenavigationsymbol}
+
+\defbeamertemplate{navigation symbols}{vertical}
+{%
+  \vbox{%
+  \hbox{\insertslidenavigationsymbol}
+  \hbox{\insertframenavigationsymbol}
+  \hbox{\insertsubsectionnavigationsymbol}
+  \hbox{\insertsectionnavigationsymbol}
+  \hbox{\insertdocnavigationsymbol}
+  \hbox{\insertbackfindforwardnavigationsymbol}}%
+}
+
+\defbeamertemplatealias{navigation symbols}{horizontal}{default}
+
+
+
+%
+% Blocks
+%
+
+\defbeamertemplateparent{blocks}[rounded]{block begin,block end,%
+  block alerted begin,block alerted end,%
+  block example begin,block example end}[1][]
+{[#1]}
+
+\defbeamertemplate{block begin}{rounded}[1][shadow=false]
+{
+  \par\vskip\medskipamount%
+  \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
+    {\raggedright\usebeamerfont*{block title}\insertblocktitle}%
+    \raggedright%
+    \usebeamerfont{block body}%
+}
+\defbeamertemplate{block end}{rounded}[1][]
+{\end{beamerboxesrounded}\vskip\smallskipamount}
+
+\defbeamertemplate{block alerted begin}{rounded}[1][shadow=false]
+{
+  \par\vskip\medskipamount%
+  \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
+    {\raggedright\usebeamerfont*{block title alerted}\insertblocktitle}%
+    \raggedright%
+    \usebeamerfont{block body alerted}%
+}%
+\defbeamertemplate{block alerted end}{rounded}[1][]
+{\end{beamerboxesrounded}\vskip\smallskipamount}
+
+\defbeamertemplate{block example begin}{rounded}[1][shadow=false]
+{
+  \par\vskip\medskipamount%
+  \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
+    {\raggedright\usebeamerfont*{block title example}\insertblocktitle}%
+    \raggedright%
+    \usebeamerfont{block body alerted}%
+}%
+\defbeamertemplate{block example end}{rounded}[1][]
+{\end{beamerboxesrounded}\vskip\smallskipamount}
+
+
+
+%
+% Note templates
+%
+
+\defbeamertemplate{note page}{plain}
+{\insertnote}
+
+\defbeamertemplate{note page}{compressed}
+{%
+  {%
+    \tiny
+    \let\\=\relax%
+    \insertvrule{0.125\paperheight}{white!90!black}%
+    \vskip-0.125\paperheight
+    \nointerlineskip
+    \vbox{\hfill\insertslideintonotes{0.125}\hskip-\Gm@rmargin\hskip0pt%
+      \vskip-0.125\paperheight\nointerlineskip}%
+    \nointerlineskip
+    \vbox to .125\paperheight{
+      \setbox\beamer@tempbox=\hbox{\hbox{\insertsection}}%
+      \ht\beamer@tempbox=1em
+      \box\beamer@tempbox
+      \nointerlineskip
+      \setbox\beamer@tempbox=\hbox{\hbox{\quad\insertsubsection}}%
+      \ht\beamer@tempbox=1em
+      \box\beamer@tempbox
+      \nointerlineskip
+      \setbox\beamer@tempbox=\hbox{\hbox{\quad\quad\insertshortframetitle}}%
+      \ht\beamer@tempbox=1em
+      \box\beamer@tempbox
+      \vfil
+    }\vskip0.5em
+  }
+  \nointerlineskip
+  \insertnote
+}
+
+
+
+%
+% Theorem templates
+%
+
+\defbeamertemplate{theorem begin}{ams style}
+{%
+  \begin{\inserttheoremblockenv}
+    {%
+      \inserttheoremheadfont
+      \inserttheoremname
+      \inserttheoremnumber
+      \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+      \inserttheorempunctuation
+    }%
+}
+
+\defbeamertemplate{theorem end}{ams style}
+{\end{\inserttheoremblockenv}}
+
+
+\defbeamertemplate{theorem begin}{numbered}
+{%
+  \begin{\inserttheoremblockenv}
+    {%
+      \inserttheoremname
+      \inserttheoremnumber
+      \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+    }%
+}
+
+\defbeamertemplate{theorem end}{numbered}
+{\end{\inserttheoremblockenv}}
+
+
+\defbeamertemplate{theorem begin}{normal font}
+{
+  \normalfont
+  \begin{\inserttheoremblockenv}
+  {%
+    \inserttheoremname
+    \ifx\inserttheoremaddition\@empty\else\ (\inserttheoremaddition)\fi%
+  }%
+}
+
+\defbeamertemplate{theorem end}{normal font}
+{\end{\inserttheoremblockenv}}
+
+
+
+\mode
+<all>
