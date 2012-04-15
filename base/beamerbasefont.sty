@@ -8,12 +8,16 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
-\ProvidesPackageRCS $Header$
+\ProvidesPackageRCS $Header: /Users/joseph/Documents/LaTeX/beamer/base/beamerbasefont.sty,v f39336aafb3c 2010/10/26 18:09:31 rivanvx $
 
+\ifbeamer@amssymb
 \RequirePackage{amssymb}
 % For \blacktriangleright; not explicitly required by article, but can cause
 % weird situations if users find that symbols works in presentation, but not
 % in article mode.
+% However, some classes or font packages clash with amssymb, so allow to
+% disable auto-loading optionally.
+\fi
 
 \mode
 <presentation>

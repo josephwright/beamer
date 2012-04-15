@@ -62,6 +62,8 @@ The package |beamerarticle| defines virtually all of \beamer's commands in a way
   \item
     \declare{|activeospeccharacters|} will leave the character code of the pointed brackets as specified by other packages. Normally, \beamer\ will turn off the special behavior of the two characters |<| and |>|. Using this option, you can reinstall the original behavior at the price of possible problems when using overlay specifications in the |article| mode.
   \item
+    \declare{|noamssymb|} will suppress the automatic loading of the |amssymb| package. Normally, \beamer\ will load this package since many themes use AMS symbols. This option allows you to opt-out from this behavior in article mode, thus preventing clashes with some classes and font packages that conflict with |amssymb|. Note that, if you use this option, you will have to care for yourself that |amssymb| or an alternative package is loaded if you use respective symbols.
+  \item
     \declare{|noamsthm|} will suppress the loading of the |amsthm| package. No theorems will be defined.
   \item
     \declare{|notheorem|} will suppress the definition of standard environments like |theorem|, but |amsthm| is still loaded and the |\newtheorem| command still makes the defined environments overlay-specification-aware. Using this option allows you to define the standard environments in whatever way you like while retaining the power of the extensions to |amsthm|.
