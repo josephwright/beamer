@@ -1,0 +1,131 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\mode<presentation>
+
+\setbeamercolor*{sidebar}{parent=block title}
+\setbeamercolor{local structure}{parent=sidebar}
+\setbeamercolor{section in toc}{parent=sidebar}
+
+\setbeamercolor{button}{use=structure,bg=structure.fg!50!bg,fg=white}
+
+\setbeamercolor*{title}{parent=structure}
+
+\setbeamercolor{block title alerted}{use=sidebar,fg=sidebar.fg!25!red}
+\setbeamercolor{block title example}{use=sidebar,fg=sidebar.fg!50!green}
+
+\setbeamersize{text margin left=1.5ex}
+\setbeamersize{text margin right=1.5ex}
+\setbeamersize{sidebar width left=.25\paperwidth}
+\setlength\leftmargini{0pt}
+\setlength\leftmarginii{1.5ex}
+\setlength\leftmarginiii{1.5ex}
+
+
+\newcommand\beamer@putleft[2]{%
+  \hbox to 0pt{\hss\vtop{%
+      \normalsize%
+      \@tempdima=.25\paperwidth%
+      \advance\@tempdima by-3ex%
+      \hsize=\@tempdima%
+      \leftskip=0pt plus 1fill%
+      \rightskip=0pt\relax%
+      \leavevmode#1}\kern#2}%
+}
+\newenvironment{beamer@putright}{\vtop\bgroup\leavevmode}{\egroup}
+
+\defbeamertemplate*{section in toc}{inmargin}
+{\beamer@putleft{\inserttocsection\strut}{2.5ex}}
+
+\defbeamertemplate*{subsection in toc}{inmargin}
+{\leavevmode%
+  \inserttocsubsection\par\vskip.5ex}
+
+\defbeamertemplate*{subsubsection in toc}{inmargin}
+{\leavevmode%
+  \inserttocsubsubsection\par\vskip.5ex}
+
+
+\def\inserttitleindicator{}
+\def\insertauthorindicator{Who?}
+\def\insertinstituteindicator{From?}
+\def\insertdateindicator{When?}
+
+\defbeamertemplate*{title page}{inmargin}
+{
+  \begin{block}{\inserttitleindicator}
+    \usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle\par
+    \usebeamercolor[fg]{subtitle}\usebeamerfont{subtitle}\insertsubtitle
+  \end{block}
+  \vfill
+  \ifx\insertauthor\@empty
+  \else
+  \begin{block}{\insertauthorindicator}
+    \usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor\par
+  \end{block}
+  \fi
+  \ifx\insertinstitute\@empty
+  \else
+  \begin{block}{\insertinstituteindicator}
+    \usebeamercolor[fg]{institute}\usebeamerfont{institute}\insertinstitute\par
+  \end{block}
+  \fi
+  \ifx\insertdate\@empty
+  \else
+  \begin{block}{\insertdateindicator}
+    \usebeamercolor[fg]{date}\usebeamerfont{date}\insertdate\par
+  \end{block}
+  \fi
+}
+
+\defbeamertemplate*{block begin}{inmargin}
+{
+  \par\vskip\medskipamount%
+  \leavevmode%
+  \beamer@putleft{\normalfont{\usebeamercolor[fg]{block title}\usebeamerfont*{block title}\insertblocktitle}}{2.5ex}%
+  \beamer@putright\usebeamercolor[fg]{block body}%
+}
+\defbeamertemplate*{block end}{inmargin}
+{\endbeamer@putright\vskip\smallskipamount}
+
+\defbeamertemplate*{block alerted begin}{inmargin}
+{
+  \par\vskip\medskipamount%
+  \leavevmode%
+  \beamer@putleft{\normalfont{\usebeamercolor[fg]{block title alerted}\usebeamerfont*{block title alerted}\insertblocktitle}}{2.5ex}%
+  \beamer@putright\usebeamercolor[fg]{block body alerted}%
+}
+\defbeamertemplate*{block alerted end}{inmargin}
+{\endbeamer@putright\vskip\smallskipamount}
+
+\defbeamertemplate*{block example begin}{inmargin}
+{
+  \par\vskip\medskipamount%
+  \leavevmode%
+  \beamer@putleft{\normalfont{\usebeamercolor[fg]{block title example}\usebeamerfont*{block title example}\insertblocktitle}}{2.5ex}%
+  \beamer@putright\usebeamercolor[fg]{block body example}%
+}
+\defbeamertemplate*{block example end}{inmargin}
+{\endbeamer@putright\vskip\smallskipamount}
+
+\AtBeginDocument
+{
+  \addtobeamertemplate{enumerate item}{\llap\bgroup}{\normalsize\kern1.5ex\egroup}
+  \addtobeamertemplate{enumerate subitem}{\llap\bgroup}{\normalsize\kern1.5ex\kern\leftmarginii\egroup}
+  \addtobeamertemplate{enumerate subsubitem}{\llap\bgroup}{\normalsize\kern1.5ex\kern\leftmarginii\kern\leftmarginiii\egroup}
+  \addtobeamertemplate{itemize item}{\llap\bgroup}{\normalsize\kern1.5ex\egroup}
+  \addtobeamertemplate{itemize subitem}{\llap\bgroup}{\normalsize\kern1.125ex\kern\leftmarginii\egroup}
+  \addtobeamertemplate{itemize subsubitem}{\llap\bgroup}{\small\kern0.75ex\kern\leftmarginii\kern\leftmarginiii\egroup}
+}
+
+\mode
+<all>
