@@ -11,7 +11,7 @@
 
 % $Header$
 
-\ProvidesPackage{multimedia}[2004/04/10 ver 0.01]
+\ProvidesPackage{multimedia}[2012/05/02 ver 0.02]
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
 
@@ -128,9 +128,13 @@
          /T (\mm@label) /Operation /Play >> >> >>}%
       }}%
       {%
-        \pdfobj {<< /S /Movie /T (\mm@label) /Operation /Play >>}%
-        \pdfrefobj\pdflastobj%
-        \xdef\mm@pdfpageadditionalaction{/O \the\pdflastobj\space 0 R }%
+        \immediate\pdfobj {<< /S /Movie /T (\mm@label) /Operation /Play >>}%
+        \pdfannot width 0pt height 0pt depth 0pt {%
+          /Subtype/Widget
+          /FT/Btn/Ff 65537
+          /T (wid@\mm@label)
+          /AA <</PO \the\pdflastobj\space 0 R>>% attention: /O --> /PO for Widget annots
+        }%  
       }%
       \fi%
     \fi%
