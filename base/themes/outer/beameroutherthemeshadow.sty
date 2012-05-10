@@ -1,0 +1,99 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\mode<presentation>
+
+\useoutertheme{split}
+
+\setbeamercolor{frametitle}{parent=subsection in head/foot}
+\setbeamercolor{frametitle right}{parent=section in head/foot}
+
+\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]%
+{beamer@frametitleshade}{\paperheight}
+{%
+  color(0pt)=(frametitle.bg);
+  color(\paperwidth)=(frametitle right.bg)
+}
+\pgfdeclareverticalshading{beamer@topshade}{200cm}
+{%
+  color(0pt)=(pgftransparent!100);
+  color(8pt)=(pgftransparent!0)
+}
+
+\pgfdeclarefading{beamer@topshadowmask}{\pgfuseshading{beamer@topshade}}
+
+\addtobeamertemplate{headline}
+{}
+{%
+  \vskip0pt
+  \begin{pgfpicture}
+    \pgfpathrectangle{\pgfpoint{0pt}{-4pt}}{\pgfpoint{\paperwidth}{4pt}}%
+    \pgfsetfading{beamer@topshadowmask}{}%
+    \pgfusepath{fill}%
+  \end{pgfpicture}
+  \vskip-2pt
+}
+
+\defbeamertemplate*{frametitle}{shadow theme}
+{%
+  \nointerlineskip%
+  \vskip-2pt%
+  \hbox{\leavevmode
+    \advance\beamer@leftmargin by -12bp%
+    \advance\beamer@rightmargin by -12bp%
+    \beamer@tempdim=\textwidth%
+    \advance\beamer@tempdim by \beamer@leftmargin%
+    \advance\beamer@tempdim by \beamer@rightmargin%
+    \hskip-\Gm@lmargin\hbox{%
+      \setbox\beamer@tempbox=\hbox{%
+        \begin{minipage}[b]{\paperwidth}%
+          \vbox{}\vskip-.75ex%
+          \leftskip0.3cm%
+          \rightskip0.3cm plus1fil\leavevmode
+          \insertframetitle%
+          \ifx\insertframesubtitle\@empty%
+            \strut\par%
+          \else
+            \par{%
+              \usebeamerfont*{framesubtitle}{%
+                \usebeamercolor[fg]{framesubtitle}%
+                \insertframesubtitle}%
+              \strut\par%
+            }%
+          \fi%
+          \nointerlineskip
+          \vbox{}%
+        \end{minipage}%
+      }%
+      \beamer@tempdim=\ht\beamer@tempbox%
+      \advance\beamer@tempdim by 2pt%
+      \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{\beamer@tempdim}
+        \begin{pgfscope}
+          \pgfsetfillcolor{black}%
+          \pgfpathrectangle{\pgfpoint{0pt}{-4pt}}{\pgfpoint{\paperwidth}{8pt}}%
+          \pgfsetfading{beamer@topshadowmask}{}%
+          \pgfusepath{fill}%
+        \end{pgfscope}
+        \begin{pgfscope}
+          \usebeamercolor{frametitle right}%
+          \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}%
+          \pgfusepath{clip}%
+          \pgftext[left,base]{\pgfuseshading{beamer@frametitleshade}}%
+        \end{pgfscope}
+      \end{pgfpicture}
+      \hskip-\paperwidth%
+      \box\beamer@tempbox%
+    }%
+    \hskip-\Gm@rmargin%
+  }%
+  \vskip-2pt
+}
+
+\mode
+<all> 
