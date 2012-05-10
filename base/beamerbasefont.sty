@@ -289,6 +289,13 @@
 \fi
 }
 
+% Some font fixes
+\ifbeamer@sansmath
+  \IfFileExists{sansmathaccent.sty}
+    {\RequirePackage{sansmathaccent}}
+    {}
+\fi
+
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
 \DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
@@ -302,7 +309,6 @@
 
 \newcommand\Tiny{\@setfontsize\Tiny{4}{5}}
 \newcommand\TINY{\@setfontsize\Tiny{3}{4}}
-
 
 \mode
 <article>
