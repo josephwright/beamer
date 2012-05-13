@@ -1,0 +1,75 @@
+AUXFILES = *.aux *.bbl *-blx.bib *.bcf *.blg *.fdb_latexmk *.idx *.ilg *.ind *.log *mpgraph.mp *.nav *.out *.snm *.synctex.gz *.tmp *.toc *.tui *.tuc *.tuo *.vrb *~
+
+rerun = "(There were undefined references|Rerun to get (cross-references|the bars) right)"
+doc   = beameruserguide
+
+themes = AnnArbor Antibes Berkeley Berlin Bergen Boadilla Copenhagen \
+  Darmstadt Dresden EastLansing Frankfurt Goettingen Hannover Ilmenau JuanLesPins \
+  Luebeck Malmoe Madrid Marburg Montpellier PaloAlto Pittsburgh \
+  Rochester Singapore Szeged Warsaw \
+  CambridgeUS \
+  default boxes
+
+fontthemes = default serif structurebold structureitalicserif structuresmallcapsserif 
+
+colorthemes = default crane albatross seahorse whale dolphin \
+  rose orchid sidebartab lily structure dove seagull beetle fly wolverine spruce \
+  beaver 
+
+outerthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
+
+innerthemes = default circles rectangles rounded inmargin
+
+all: $(doc).pdf
+
+beameruserguide.idx: 
+	touch beameruserguide.idx
+
+beameruserguide.ind: beameruserguide.idx 
+	makeindex $(doc).idx
+
+beameruserguide.pdf: $(doc).tex $(doc).ind \
+ $(themes:%=beamerugtheme%.pdf) \
+ $(fontthemes:%=beamerugfonttheme%.pdf) \
+ $(colorthemes:%=beamerugcolortheme%.pdf) \
+ beamerugcolorthemealbatrossstylish.pdf \
+ $(innerthemes:%=beameruginnertheme%.pdf) \
+ $(outerthemes:%=beamerugoutertheme%.pdf) 
+	pdflatex $(doc) ; \
+	if [ $$? = 0 ] ; then  \
+	  makeindex $(doc) ; \
+	  pdflatex $(doc) ; \
+	  makeindex $(doc) ; \
+	  pdflatex $(doc) ; \
+	else \
+	  echo "  Compilation failed" ; \
+	fi ; \
+	rm -f $(AUXFILES)
+
+
+beamerugtheme%.pdf: beamerthemeexample.tex beamerthemeexamplebase.tex ../base/themes/theme/beamertheme%.sty
+	pdflatex \\def\\themename{$(@:beamerugtheme%.pdf=%)}\\input beamerthemeexample.tex;
+	mv beamerthemeexample.pdf $@
+
+beamerugfonttheme%.pdf: beamerfontthemeexample.tex beamerthemeexamplebase.tex ../base/themes/font/beamerfonttheme%.sty
+	pdflatex \\def\\themename{$(@:beamerugfonttheme%.pdf=%)}\\input beamerfontthemeexample.tex;
+	mv beamerfontthemeexample.pdf $@
+
+beamerugcolorthemealbatrossstylish.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../base/themes/color/beamercolorthemealbatross.sty
+	pdflatex \\def\\themename{albatrossstylish}\\input beamercolorthemeexample.tex;
+	mv beamercolorthemeexample.pdf $@
+
+beamerugcolortheme%.pdf: beamercolorthemeexample.tex beamerthemeexamplebase.tex ../base/themes/color/beamercolortheme%.sty
+	pdflatex \\def\\themename{$(@:beamerugcolortheme%.pdf=%)}\\input beamercolorthemeexample.tex;
+	mv beamercolorthemeexample.pdf $@
+
+beameruginnertheme%.pdf: beamerinnerthemeexample.tex beamerthemeexamplebase.tex ../base/themes/inner/beamerinnertheme%.sty
+	pdflatex \\def\\themename{$(@:beameruginnertheme%.pdf=%)}\\input beamerinnerthemeexample.tex;
+	mv beamerinnerthemeexample.pdf $@
+
+beamerugoutertheme%.pdf: beamerouterthemeexample.tex beamerthemeexamplebase.tex ../base/themes/outer/beameroutertheme%.sty
+	pdflatex \\def\\themename{$(@:beamerugoutertheme%.pdf=%)}\\input beamerouterthemeexample.tex;
+	mv beamerouterthemeexample.pdf $@
+
+clean:
+	rm -f $(AUXFILES) beamerug*.pdf

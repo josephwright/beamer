@@ -1,0 +1,32 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\def\beamer@ftb@str{
+  \setbeamerfont{structure}{shape=\scshape,family=\rmfamily}
+  \setbeamerfont{section in toc}{size=\large}
+}
+\def\beamer@ftb@tstr{\setbeamerfont{tiny structure}{shape=\scshape,family=\rmfamily}}
+
+\DeclareOptionBeamer{onlysmall}{\let\beamer@ftb@str=\relax}
+\DeclareOptionBeamer{onlylarge}{\let\beamer@ftb@tstr=\relax}
+
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\beamer@ftb@str
+\beamer@ftb@tstr
+
+
+\mode
+<all>
+

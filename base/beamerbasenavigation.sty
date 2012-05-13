@@ -1,0 +1,851 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+%
+% Navigation buttons
+%
+
+% The following commands are called by the .nav file.
+\def\beamer@framepages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofframe{#1}%
+      \gdef\beamer@endpageofframe{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@subsectionpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofsubsection{#1}%
+      \gdef\beamer@endpageofsubsection{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@sectionpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofsection{#1}%
+      \gdef\beamer@endpageofsection{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@partpages#1#2{%
+  \ifnum\c@page<#1%
+  \else%
+    \ifnum\c@page>#2%
+    \else%
+      \gdef\beamer@startpageofpart{#1}%
+      \gdef\beamer@endpageofpart{#2}%
+    \fi%
+  \fi%
+}
+\def\beamer@nextpage#1{%
+  \beamer@tempcount=#1%
+  \advance\beamer@tempcount by1\relax%
+  \ifnum\beamer@tempcount>\beamer@endpageofdocument%
+  \beamer@tempcount=\beamer@endpageofdocument%
+  \fi}
+\def\beamer@prevpage#1{%
+  \beamer@tempcount=#1\relax%
+  \ifnum\beamer@tempcount>1%
+  \advance\beamer@tempcount by-1%
+  \fi%
+}
+
+\def\hyperlinkslideprev{%
+  \beamer@prevpage\c@page%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkslidenext{%
+  \beamer@nextpage\c@page%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkframestart{\hyperlink{Navigation\beamer@startpageofframe}}
+\def\hyperlinkframeend{\hyperlink{Navigation\beamer@endpageofframe}}
+\def\hyperlinkframestartnext{%
+  \beamer@nextpage\beamer@endpageofframe%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkframeendprev{%
+  \beamer@prevpage\beamer@startpageofframe%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinksubsectionstart{\hyperlink{Navigation\beamer@startpageofsubsection}}
+\def\hyperlinksubsectionend{\hyperlink{Navigation\beamer@endpageofsubsection}}
+\def\hyperlinksubsectionstartnext{%
+  \beamer@nextpage\beamer@endpageofsubsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinksubsectionendprev{%
+  \beamer@prevpage\beamer@startpageofsubsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinksectionstart{\hyperlink{Navigation\beamer@startpageofsection}}
+\def\hyperlinksectionend{\hyperlink{Navigation\beamer@endpageofsection}}
+\def\hyperlinksectionstartnext{%
+  \beamer@nextpage\beamer@endpageofsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinksectionendprev{%
+  \beamer@prevpage\beamer@startpageofsection%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinkpartstart{\hyperlink{Navigation\beamer@startpageofpart}}
+\def\hyperlinkpartend{\hyperlink{Navigation\beamer@endpageofpart}}
+\def\hyperlinkpartstartnext{%
+  \beamer@nextpage\beamer@endpageofpart%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkpartendprev{%
+  \beamer@prevpage\beamer@startpageofpart%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+
+\def\hyperlinkpresentationstart{\hyperlink{Navigation1}}
+\def\hyperlinkpresentationend{%
+  \ifx\beamer@startpageofappendix\@empty%
+  \beamer@tempcount=\beamer@endpageofdocument%
+  \else%
+  \beamer@prevpage\beamer@startpageofappendix%
+  \fi%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkappendixstart{%
+  \ifx\beamer@startpageofappendix\@empty%
+  \beamer@tempcount=\beamer@endpageofdocument%
+  \else%
+  \beamer@tempcount=\beamer@startpageofappendix%
+  \fi%
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkappendixend{\hyperlink{Navigation\beamer@endpageofdocument}}
+
+\def\hyperlinkdocumentstart{\hyperlink{Navigation1}}
+\def\hyperlinkdocumentend{\hyperlink{Navigation\beamer@endpageofdocument}}
+
+\mode
+<article>
+{
+  \newcommand<>\hyperlinkslideprev[1]{}
+  \newcommand<>\hyperlinkslidenext[1]{}
+
+  \newcommand<>\hyperlinkframestart[1]{}
+  \newcommand<>\hyperlinkframeend[1]{}
+  \newcommand<>\hyperlinkframestartnext[1]{}
+  \newcommand<>\hyperlinkframeendprev[1]{}
+
+  \newcommand<>\hyperlinksubsectionstart[1]{}
+  \newcommand<>\hyperlinksubsectionend[1]{}
+  \newcommand<>\hyperlinksubsectionstartnext[1]{}
+  \newcommand<>\hyperlinksubsectionendprev[1]{}
+
+  \newcommand<>\hyperlinksectionstart[1]{}
+  \newcommand<>\hyperlinksectionend[1]{}
+  \newcommand<>\hyperlinksectionstartnext[1]{}
+  \newcommand<>\hyperlinksectionendprev[1]{}
+
+  \newcommand<>\hyperlinkpartstart[1]{}
+  \newcommand<>\hyperlinkpartend[1]{}
+  \newcommand<>\hyperlinkpartstartnext[1]{}
+  \newcommand<>\hyperlinkpartendprev[1]{}
+
+  \newcommand<>\hyperlinkpresentationstart[1]{}
+  \newcommand<>\hyperlinkpresentationend[1]{}
+  \newcommand<>\hyperlinkappendixstart[1]{}
+  \newcommand<>\hyperlinkappendixend[1]{}
+
+  \newcommand<>\hyperlinkdocumentstart[1]{}
+  \newcommand<>\hyperlinkdocumentend[1]{}
+}
+
+\newcommand\insertframestartpage{\beamer@startpageofframe}
+\newcommand\insertframeendpage{\beamer@endpageofframe}
+\newcommand\insertsubsectionstartpage{\beamer@startpageofsubsection}
+\newcommand\insertsubsectionendpage{\beamer@endpageofsubsection}
+\newcommand\insertsectionstartpage{\beamer@startpageofsection}
+\newcommand\insertsectionendpage{\beamer@endpageofsection}
+\newcommand\insertpartstartpage{\beamer@startpageofpart}
+\newcommand\insertpartendpage{\beamer@endpageofpart}
+\newcommand\insertpresentationstartpage{1}
+\newcommand\insertpresentationendpage{{%
+  \ifx\beamer@startpageofappendix\@empty%
+    \beamer@tempcount=\beamer@endpageofdocument\relax%
+  \else%
+    \beamer@prevpage\beamer@startpageofappendix\relax%
+  \fi%
+  \the\beamer@tempcount}}
+\newcommand\insertappendixstartpage{{%
+  \ifx\beamer@startpageofappendix\@empty%
+    \beamer@tempcount=\beamer@endpageofdocument\relax%
+  \else%
+    \beamer@tempcount=\beamer@startpageofappendix\relax%
+  \fi%
+  \the\beamer@tempcount}}
+\newcommand\insertappendixendpage{\beamer@endpageofdocument}
+\newcommand\insertdocumentstartpage{1}
+\newcommand\insertdocumentendpage{\beamer@endpageofdocument}
+
+
+%
+% Navigation Button Art
+%
+
+\def\beamer@linkspace#1{\vbox to7.5pt{}\kern#1}
+
+% Due to what could be regarded as a bug in hyperref or DVIPDFm and
+% derivatives, no links are made to empty boxes with XeTeX. This is
+% fixed by drawing some 'real' content, which makes the PDF bigger!
+\begingroup\expandafter\expandafter\expandafter\endgroup
+  \expandafter\ifx\csname XeTeXrevision\endcsname\relax
+  \expandafter\@gobble
+\else
+  \expandafter\@firstofone
+\fi
+  {%
+    \def\beamer@linkspace#1{%
+      \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
+        \pgfsetfillopacity{0}
+        \pgftext[x=0pt,y=-1.5pt]{.}
+        \pgftext[x=#1,y=5.5pt]{.}
+      \end{pgfpicture}}
+  }
+
+\pgfdefobject{beamerslidenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfusepathqfill
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill}
+\pgfdefobject{beamerslidenavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathrectangle{\pgfpoint{8.3pt}{0.8pt}}{\pgfpoint{3.4pt}{2.4pt}}%
+  \pgfusepathqstroke%
+}
+
+\def\insertslidenavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerslidenavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamerslidenavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkslideprev{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoToPage}{\beamer@linkspace{8pt}}%
+  \hyperlinkslidenext{\beamer@linkspace{6pt}}}
+
+\pgfdefobject{beamerframenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill}
+\pgfdefobject{beamerframenavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathrectangle{\pgfpoint{7pt}{0pt}}{\pgfpoint{3.4pt}{2.4pt}}
+  \pgfpathqmoveto{7.8bp}{2.4bp}
+  \pgfpathqlineto{7.8bp}{3.2bp}
+  \pgfpathqlineto{11.2bp}{3.2bp}
+  \pgfpathqlineto{11.2bp}{.8bp}
+  \pgfpathqlineto{10.4bp}{.8bp}
+  \pgfpathqmoveto{8.6bp}{3.2bp}
+  \pgfpathqlineto{8.6bp}{4bp}
+  \pgfpathqlineto{12bp}{4bp}
+  \pgfpathqlineto{12bp}{1.6bp}
+  \pgfpathqlineto{11.2bp}{1.6bp}
+  \pgfusepathqstroke}
+
+\def\insertframenavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerframenavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamerframenavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkframeendprev{\beamer@linkspace{5pt}}%
+  \hyperlinkframestart{\beamer@linkspace{5pt}}%
+  \hyperlinkframeend{\beamer@linkspace{5pt}}%
+  \hyperlinkframestartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamersubsectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{4bp}
+  \pgfpathqlineto{11bp}{4bp}
+  \pgfpathqmoveto{9bp}{2bp}
+  \pgfpathqlineto{12bp}{2bp}
+  \pgfpathqmoveto{8bp}{1bp}
+  \pgfpathqlineto{11bp}{1bp}
+  \pgfpathqmoveto{9bp}{0bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke}
+\pgfdefobject{beamersubsectionnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{9bp}{3bp}
+  \pgfpathqlineto{12bp}{3bp}
+  \pgfusepathqstroke}
+
+\def\insertsubsectionnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamersubsectionnavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamersubsectionnavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinksubsectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamersectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{1bp}
+  \pgfpathqlineto{11bp}{1bp}
+  \pgfpathqmoveto{9bp}{0bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke}
+\pgfdefobject{beamersectionnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{4bp}
+  \pgfpathqlineto{11bp}{4bp}
+  \pgfpathqmoveto{9bp}{3bp}
+  \pgfpathqlineto{12bp}{3bp}
+  \pgfpathqmoveto{9bp}{2bp}
+  \pgfpathqlineto{12bp}{2bp}
+  \pgfusepathqstroke
+}
+
+\def\insertsectionnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamersectionnavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamersectionnavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinksectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamerdocnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathqmoveto{10bp}{-.5bp}
+  \pgfpathqlineto{10bp}{4.5bp}
+  \pgfusepathqstroke
+}
+\pgfdefobject{beamerdocnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{4bp}{4bp}
+  \pgfpathqlineto{7bp}{4bp}
+  \pgfpathqmoveto{5bp}{3bp}
+  \pgfpathqlineto{8bp}{3bp}
+  \pgfpathqmoveto{5bp}{2bp}
+  \pgfpathqlineto{8bp}{2bp}
+  \pgfpathqmoveto{3bp}{1bp}
+  \pgfpathqlineto{7bp}{1bp}
+  \pgfpathqmoveto{5bp}{0bp}
+  \pgfpathqlineto{8bp}{0bp}
+  \pgfpathqmoveto{12bp}{3bp}
+  \pgfpathqlineto{15bp}{3bp}
+  \pgfpathqmoveto{13bp}{2bp}
+  \pgfpathqlineto{16bp}{2bp}
+  \pgfpathqmoveto{13bp}{1bp}
+  \pgfpathqlineto{16bp}{1bp}
+  \pgfusepathqstroke
+}
+
+\pgfdefobject{beamerdocnavstrongsingle}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{4bp}
+  \pgfpathqlineto{11bp}{4bp}
+  \pgfpathqmoveto{9bp}{3bp}
+  \pgfpathqlineto{12bp}{3bp}
+  \pgfpathqmoveto{9bp}{2bp}
+  \pgfpathqlineto{12bp}{2bp}
+  \pgfpathqmoveto{8bp}{1bp}
+  \pgfpathqlineto{11bp}{1bp}
+  \pgfpathqmoveto{9bp}{0bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke%
+}
+
+\def\insertdocnavigationsymbol{%
+  \ifx\beamer@startpageofappendix\@empty%
+    \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+      \pgfuseobject{beamerdocnavstrongsingle}%
+    \end{pgfpicture}\kern-20pt%
+    \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
+    \hyperlinkpresentationend{\beamer@linkspace{11pt}}%
+  \else%
+    \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+      \pgfuseobject{beamerdocnavstrong}%
+      \usebeamercolor[fg]{navigation symbols dimmed}
+      \pgfuseobject{beamerdocnavlight}%
+    \end{pgfpicture}\kern-20pt%
+    \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
+    \hyperlinkpresentationend{\beamer@linkspace{5pt}}%
+    \hyperlinkappendixstart{\beamer@linkspace{3.5pt}}%
+    \hyperlinkappendixend{\beamer@linkspace{6.5pt}}%
+  \fi}
+
+\pgfdefobject{beamerbackfindforwardnav}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{
+  % search symbol
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{10.4bp}{1.6bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke
+  \pgfsetlinewidth{0.4pt}
+  \pgfpathcircle{\pgfpoint{9.5pt}{2.5pt}}{1.2pt}
+  \pgfusepathqstroke
+  % left arrow
+  \pgfsetroundcap
+  \pgfpathqmoveto{4bp}{0bp}
+  \pgfpathqcurveto{5.1pt}{0pt}{6bp}{0.9bp}{6bp}{2bp}
+  \pgfpathqcurveto{6bp}{3.1bp}{5.1bp}{4bp}{4bp}{4bp}
+  \pgfpathqcurveto{2.9bp}{4bp}{2bp}{3.1bp}{2bp}{2bp}
+  \pgfpathqmoveto{3.2bp}{2.6bp}
+  \pgfpathqlineto{2bp}{1.6bp}
+  \pgfpathqlineto{0.8bp}{2.6bp}
+  % right arrow
+  \pgfpathqmoveto{16bp}{0bp}
+  \pgfpathqcurveto{14.9bp}{0bp}{14bp}{0.9bp}{14bp}{2bp}
+  \pgfpathqcurveto{14bp}{3.1bp}{14.9bp}{4bp}{16bp}{4bp}
+  \pgfpathqcurveto{17.1bp}{4bp}{18bp}{3.1bp}{18bp}{2bp}
+  \pgfpathqmoveto{19.2bp}{2.6bp}
+  \pgfpathqlineto{18bp}{1.6bp}
+  \pgfpathqlineto{16.8bp}{2.6bp}
+  \pgfusepathqstroke
+}
+
+\def\insertbackfindforwardnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerbackfindforwardnav}%
+  \end{pgfpicture}\kern-20pt%
+  \Acrobatmenu{GoBack}{\beamer@linkspace{7pt}}%
+  \Acrobatmenu{Find}{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoForward}{\beamer@linkspace{7pt}}}
+
+
+
+%
+% User Buttons
+%
+
+\pgfdefobject{beamergotosymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
+{
+  \pgfpathqmoveto{1.5bp}{0.5bp}
+  \pgfpathqlineto{3.5bp}{2bp}
+  \pgfpathqlineto{1.5bp}{3.5bp}
+  \pgfusepathqfill
+}
+
+\def\insertgotosymbol{%
+  \begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+    \pgfuseobject{beamergotosymbol}%
+  \end{pgfpicture}}
+
+\pgfdefobject{beamerskipsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
+{
+  \pgfpathqmoveto{1.5bp}{0.5bp}
+  \pgfpathqlineto{3.5bp}{2bp}
+  \pgfpathqlineto{1.5bp}{3.5bp}
+  \pgfpathqmoveto{3.5bp}{0.5bp}
+  \pgfpathqlineto{5.5bp}{2bp}
+  \pgfpathqlineto{3.5bp}{3.5bp}
+  \pgfusepathqfill
+}
+
+\def\insertskipsymbol{%
+  \begin{pgfpicture}{1pt}{0pt}{8pt}{5pt}
+    \pgfuseobject{beamerskipsymbol}%
+  \end{pgfpicture}}
+
+
+\pgfdefobject{beamerreturnsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
+{
+  \pgfpathqmoveto{3.5bp}{0.5bp}
+  \pgfpathqlineto{1.5bp}{2bp}
+  \pgfpathqlineto{3.5bp}{3.5bp}
+  \pgfusepathqfill
+}
+
+\def\insertreturnsymbol{%
+  \begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+    \pgfuseobject{beamerreturnsymbol}%
+  \end{pgfpicture}}
+
+
+\def\beamerbutton#1{\def\insertbuttontext{#1}\usebeamertemplate**{button}}
+\def\beamergotobutton#1{\beamerbutton{\insertgotosymbol#1}}
+\def\beamerskipbutton#1{\beamerbutton{\insertskipsymbol#1}}
+\def\beamerreturnbutton#1{\beamerbutton{\insertreturnsymbol#1}}
+
+\mode
+<article>
+{
+  \let\beamerbutton=\@firstofone
+  \let\beamergotobutton=\beamerbutton
+  \let\beamerskipbutton=\beamerbutton
+  \let\beamerreturnbutton=\beamerbutton
+}
+
+
+%
+% Inserting navigation bars
+%
+
+\newdimen\beamer@section@min@dim
+\newcommand*{\beamer@section@set@min@width}{%
+  \ifdim\wd\beamer@sectionbox>\beamer@section@min@dim
+  \else
+    \setbox\beamer@sectionbox=\hbox to \beamer@section@min@dim
+      {\box\beamer@sectionbox\hfil}%
+    \global\beamer@section@min@dim\z@
+  \fi
+}
+
+\def\insertnavigation#1{%
+  \vbox{{%
+    \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+    \beamer@xpos=0\relax%
+    \beamer@ypos=1\relax%
+    \hbox to #1{\hskip.3cm\setbox\beamer@sectionbox=\hbox{\kern1sp}%
+      \ht\beamer@sectionbox=1.875ex%
+      \dp\beamer@sectionbox=0.75ex%
+        \hskip-1.875ex plus-1fill%
+        \global\beamer@section@min@dim\z@
+        \dohead%
+        \beamer@section@set@min@width
+      \box\beamer@sectionbox\hfil\hskip.3cm}%
+  }}}
+
+\def\sectionentry#1#2#3#4#5{% section number, section title, page
+  \ifnum#5=\c@part%
+  \beamer@section@set@min@width
+  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
+  \beamer@xpos=0\relax%
+  \beamer@ypos=1\relax%
+  \setbox\beamer@sectionbox=
+  \hbox{\def\insertsectionhead{#2}%
+    \def\insertsectionheadnumber{#1}%
+    \def\insertpartheadnumber{#5}%
+    {%
+      \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+      \ifnum\c@section=#1%
+        \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot}}}%
+      \else%
+        \hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot shaded}}}%
+      \fi}%
+  }%
+  \ht\beamer@sectionbox=1.875ex%
+  \dp\beamer@sectionbox=0.75ex%
+  \fi\ignorespaces}
+
+\def\beamer@nav@subsectionstyle#1{\beamer@toc@sprocess\beamer@nav@css\beamer@nav@oss\beamer@nav@ooss#1///}
+\beamer@nav@subsectionstyle{show}
+
+\def\beamer@subsectionentry#1#2#3#4#5{}% no effect by default.
+\def\beamer@subsubsectionentry#1#2#3#4#5#6{}% no effect by default.
+
+\def\insertverticalnavigation#1{%
+  \vbox{%
+    \def\sectionentry##1##2##3##4##5{%
+      \ifnum##5=\c@part%
+      \def\insertsectionhead{##2}%
+      \def\insertsectionheadnumber{##1}%
+      \def\insertpartheadnumber{##5}%
+      \hbox{{%
+        \usebeamerfont{section in sidebar}\usebeamercolor[fg]{section in sidebar}%
+          \hyperlink{Navigation##3}{%
+          \ifnum\c@section=##1%
+            \ifnum\c@subsection=0\relax%
+              {\usebeamertemplate{section in sidebar}}%
+            \else%
+              \ifx\beamer@nav@css\beamer@hidetext%
+                {\usebeamertemplate{section in sidebar}}%
+              \else%
+                {\usebeamertemplate{section in sidebar shaded}}%
+              \fi%
+            \fi%
+          \else
+            {\usebeamertemplate{section in sidebar shaded}}%
+          \fi}}}%
+      \beamer@currentsubsection=0\relax\fi}%
+    \def\slideentry##1##2##3##4##5##6{}%
+    \def\beamer@subsectionentry##1##2##3##4##5{%
+      \ifnum##1=\c@part%
+      \def\insertpartheadnumber{##1}%
+      \def\insertsectionheadnumber{##2}%
+      \def\insertsubsectionheadnumber{##3}%
+      \def\insertsubsectionhead{##5}%
+       \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
+      {\hbox{{%
+        \usebeamerfont{subsection in sidebar}\usebeamercolor[fg]{subsection in sidebar}%
+          \hyperlink{Navigation##4}{%
+          \ifnum\c@section=##2%
+            \ifnum\c@subsection=##3%
+              \ifnum\c@subsubsection=0\relax%
+                {\usebeamertemplate{subsection in sidebar}}%
+              \else%
+                {\usebeamertemplate{subsection in sidebar shaded}}%
+              \fi%
+            \else%
+              {\usebeamertemplate{subsection in sidebar shaded}}%
+            \fi%
+          \else%
+            {\usebeamertemplate{subsection in sidebar shaded}}%
+          \fi}}}%
+      }%
+      \fi}%
+    \def\beamer@subsubsectionentry##1##2##3##4##5##6{%
+      \ifnum##1=\c@part%
+      \def\insertpartheadnumber{##1}%
+      \def\insertsectionheadnumber{##2}%
+      \def\insertsubsectionheadnumber{##3}%
+      \def\insertsubsubsectionheadnumber{##3}%
+      \def\insertsubsubsectionhead{##6}%
+      \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
+      {\hbox{{%
+        \usebeamerfont{subsubsection in sidebar}\usebeamercolor[fg]{subsubsection in sidebar}%
+          \hyperlink{Navigation##5}{%
+          \ifnum\c@section=##2%
+            \ifnum\c@subsection=##3%
+              \ifnum\c@subsubsection=##4%
+                {\usebeamertemplate{subsubsection in sidebar}}%
+              \else
+                {\usebeamertemplate{subsubsection in sidebar shaded}}%
+              \fi%
+            \else%
+              {\usebeamertemplate{subsubsection in sidebar shaded}}%
+            \fi%
+          \else%
+            {\usebeamertemplate{subsubsection in sidebar shaded}}%
+          \fi}}}%
+      }%
+      \fi}%
+    %\beamer@currentsubsection=0\relax%
+    \dohead%
+  }%
+}
+
+\def\slideentry#1#2#3#4#5#6{%
+  %section number, subsection number, slide number, first/last frame, page number, part number
+  \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
+    \ifbeamer@compress%
+      \advance\beamer@xpos by1\relax%
+    \else%
+      \beamer@xpos=#3\relax%
+      \beamer@ypos=#2\relax%
+    \fi%
+  \hbox to 0pt{%
+    \beamer@tempdim=-\beamer@vboxoffset%
+    \advance\beamer@tempdim by-\beamer@boxsize%
+    \multiply\beamer@tempdim by\beamer@ypos%
+    \advance\beamer@tempdim by -.05cm%
+    \raise\beamer@tempdim\hbox{%
+      \beamer@tempdim=\beamer@boxsize%
+      \multiply\beamer@tempdim by\beamer@xpos%
+      \advance\beamer@tempdim by -\beamer@boxsize%
+      \advance\beamer@tempdim by 1pt%
+      \kern\beamer@tempdim
+      \global\beamer@section@min@dim\beamer@tempdim
+      \hbox{\beamer@link(#4){%
+          \usebeamerfont{mini frame}%
+          \ifnum\c@section=#1%
+            \ifnum\c@subsection=#2%
+              \usebeamercolor[fg]{mini frame}%
+              \ifnum\c@subsectionslide=#3%
+                \usebeamertemplate{mini frame}%\beamer@minislidehilight%
+              \else%
+                \usebeamertemplate{mini frame in current subsection}%\beamer@minisliderowhilight%
+              \fi%
+            \else%
+              \usebeamercolor{mini frame}%
+              %\color{fg!50!bg}%
+              \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
+            \fi%
+          \else%
+            \usebeamercolor{mini frame}%
+            %\color{fg!50!bg}%
+            \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
+          \fi%
+        }}}\hskip-10cm plus 1fil%
+  }\fi\fi%
+  \else%
+  \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
+  \fi\ignorespaces
+  }
+
+\def\fakeslideentry#1#2#3#4#5#6{%
+  \ifnum#2>0\ifnum#3>0%
+  \ifbeamer@compress%
+  \advance\beamer@xpos by1\relax%
+  \else%
+  \beamer@xpos=#3\relax%
+  \beamer@ypos=#2\relax%
+  \fi%
+  \hbox to 0pt{\beamer@tempdim=-\beamer@vboxoffset%
+    \advance\beamer@tempdim by -\beamer@boxsize%
+    \multiply\beamer@tempdim by\beamer@ypos%
+    \advance\beamer@tempdim by -.05cm%
+    \raise\beamer@tempdim\hbox{}}\fi\fi\ignorespaces}
+
+
+\def\beamer@link(#1/#2){%
+  \def\beamer@goto{{Navigation#1}}% default: first slide of frame
+  \ifnum\c@page<#2%
+  \ifnum\c@page<#1\else% go to last slide of frame, on all slides of
+                                % the frame, except for the last one
+  \def\beamer@goto{{Navigation#2}}% jump to last slide of frame
+  \fi\fi%
+  \expandafter\hyperlink\beamer@goto}
+
+\define@key{beamer@margin}{mini frame size}{\beamer@boxsize=#1}
+\define@key{beamer@margin}{mini frame offset}{\beamer@vboxoffset=#1}
+
+\def\insertsectionnavigation#1{%
+  \hbox to #1{%
+    \vbox{{\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+     \vskip0.5625ex%
+     \def\slideentry##1##2##3##4##5##6{}%
+     \def\sectionentry##1##2##3##4##5{%
+       \ifnum##5=\c@part%
+       \def\insertsectionhead{##2}%
+       \def\insertsectionheadnumber{##1}%
+       \def\insertpartheadnumber{##5}%
+       \setbox\beamer@tempbox=\hbox{%
+         \hyperlink{Navigation##3}{\hbox to #1{%
+             \hskip0.3cm%
+             \ifnum\c@section=##1%
+               {\usebeamertemplate{section in head/foot}}%
+             \else%
+               {\usebeamertemplate{section in head/foot shaded}}%
+             \fi\hskip0.3cm}}}%
+       \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%
+       \box\beamer@tempbox\fi}%
+     \dohead\vskip0.5625ex}}\hfil}}
+
+\def\insertsectionnavigationhorizontal#1#2#3{%
+  \hbox to #1{{%
+     \def\slideentry##1##2##3##4##5##6{}%
+     #2\hskip.3cm%
+     \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+     \setbox\beamer@sectionbox=\hbox{}%
+     \ht\beamer@sectionbox=1.875ex%
+     \dp\beamer@sectionbox=0.75ex%
+     \hskip-1.875ex plus-1fill\dohead%
+     \box\beamer@sectionbox\hfil\hskip.3cm%
+     #3}}}
+
+\def\insertsubsectionnavigation#1{%
+  \hbox to #1{%
+    \vbox{{%
+      \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
+      \vskip0.5625ex%
+      \beamer@currentsubsection=0%
+      \def\sectionentry##1##2##3##4##5{}%
+      \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
+        \ifnum##2>\beamer@currentsubsection%
+        \beamer@currentsubsection=##2%
+        \def\insertsubsectionhead{##5}%
+        \def\insertsectionheadnumber{##1}%
+        \def\insertsubsectionheadnumber{##2}%
+        \def\insertpartheadnumber{##6}%
+        \setbox\beamer@tempbox=\hbox{\beamer@link(##4){%
+            \hbox to #1{\hskip0.3cm%
+              \ifnum\c@subsection=##2%
+                {\usebeamertemplate{subsection in head/foot}}%
+              \else%
+                {\usebeamertemplate{subsection in head/foot shaded}}%
+              \fi\hfil\hskip0.3cm}}}%
+        \ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%
+        \box\beamer@tempbox\fi\fi\fi}%
+      \dohead\vskip0.5625ex}\hfil}}}
+
+\def\insertsubsectionnavigationhorizontal#1#2#3{%
+  \hbox to #1{{%
+    \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
+    \beamer@currentsubsection=0%
+    \def\sectionentry##1##2##3##4##5{}%
+    \def\slideentry##1##2##3##4##5##6{\ifnum##6=\c@part\ifnum##1=\c@section%
+      \ifnum##2>\beamer@currentsubsection%
+      \beamer@currentsubsection=##2%
+      \box\beamer@sectionbox\hskip1.875ex plus1fill%
+      \setbox\beamer@sectionbox=
+      \hbox{\def\insertsubsectionhead{##5}%
+         \def\insertsectionheadnumber{##1}%
+         \def\insertsubsectionheadnumber{##2}%
+         \def\insertpartheadnumber{##6}%
+         \ifnum\c@subsection=##2%
+        \beamer@link(##4){{\usebeamertemplate{subsection in head/foot}}}\else%
+        \beamer@link(##4){{\usebeamertemplate{subsection in head/foot shaded}}}\fi}%
+      \ht\beamer@sectionbox=1.875ex%
+      \dp\beamer@sectionbox=0.75ex%
+      \fi\fi\fi\ignorespaces}%
+    #2\hskip.3cm\setbox\beamer@sectionbox=\hbox{}%
+    \hskip-1.875ex plus-1fill\dohead%
+    \box\beamer@sectionbox\hfil\hskip.3cm%
+    #3}}}
+
+
+
+%
+% Name slides
+%
+
+\def\beamer@inserttarget#1{%
+  \ifbeamer@inframe%
+    \ifvmode%
+      \nointerlineskip\vbox to0pt{#1}%
+    \else%
+      \hbox{#1}%
+    \fi%
+  \else% defer to next frame
+    \expandafter\gdef\expandafter\beamer@framehypertargets\expandafter{\beamer@framehypertargets#1}%
+  \fi%
+}
+
+
+\def\beamer@nameslide#1{%
+  \addtocontents{snm}{\protect\beamer@slide{#1}{\the\c@page}}%
+  \beamer@inserttarget{\hypertarget{#1}{}}}
+\def\beamer@dummynameslide{\beamer@inserttarget{}}
+
+\def\beamer@slide#1#2{\expandafter\def\csname beamer@hyperlink#1\endcsname{%
+  \hyperlink{Navigation#2}}}
+
+\let\beamer@framehypertargets\@empty
+
+
+\mode
+<all>

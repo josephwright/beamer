@@ -1,0 +1,587 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+%
+% DO NOT USE THIS FILE AS A TEMPLATE FOR YOUR OWN TALKS¡!!
+%
+% Use a file in the directory solutions instead.
+% They are much better suited.
+%
+
+
+\lecture[1]{Syntax versus Semantik}{lecture-text}
+
+\subtitle{Text und seine Bedeutung}
+
+\date{27. Oktober 2006}
+
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+
+\section*{Ziele und Inhalt}
+
+\begin{frame}{Die Lernziele der heutigen Vorlesung und der Übungen.} 
+  \begin{enumerate}
+  \item Die Begriffe Syntax und Semantik erklären können
+  \item Syntaktische und semantische Elemente natürlicher Sprachen und
+    von Programmiersprachen benennen können
+  \item Die Begriffe Alphabet und Wort kennen
+  \item Objekte als Worte kodieren können
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}\frametitle<presentation>{Gliederung}
+  \tableofcontents
+\end{frame}
+
+
+\section{Was ist Syntax?}
+
+\begin{frame}{Die zwei Hauptbegriffe der heutigen Vorlesung.}
+  \begin{block}{Grobe Definition (Syntax)}
+    Unter einer \alert{Syntax} verstehen wir \alert{Regeln}, nach denen
+    Texte \alert{strukturiert} werden dürfen. 
+  \end{block}
+  \begin{block}{Grobe Definition (Semantik)}
+    Unter einer \alert{Semantik} verstehen wir die Zuordnung von
+    \alert{Bedeutung} zu Text.
+  \end{block}
+\end{frame}
+
+
+\subsection[Syntax \protect\\ natürlicher Sprachen]{Syntax natürlicher Sprachen}
+
+\begin{frame}{Beobachtungen zu einem ägyptischen Text.}
+  \includegraphicscopyright[width=6cm]{beamerexample-lecture-pic3.jpg}
+  {Copyright by Guillaume Blanchard, GNU Free Documentation License, Low Resultion}
+
+  \begin{block}{Beobachtungen}
+    \begin{itemize}
+    \item Wir haben keine Ahnung, was der Text bedeutet.
+    \item Es gibt aber \alert{Regeln}, die offenbar eingehalten wurden,
+      wie »Hieroglyphen stehen in Zeilen«.
+    \item Solche Regeln sind \alert{syntaktische Regeln} -- man kann sie
+      überprüfen, ohne den Inhalt zu verstehen.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Beobachtungen zu einem kyrillischen Text.}
+
+  \includegraphicscopyright[width=6.75cm]{beamerexample-lecture-pic4.jpg}
+  {Copyright by Cristian Chirita, GNU Free Documentation License, Low Resultion}
+
+  \begin{block}{Beobachtungen}
+    \begin{itemize}
+    \item Wir haben keine Ahnung, was der Text bedeutet.
+    \item Es gibt aber \alert{Regeln}, die offenbar eingehalten wurden.
+    \item Wir kennen mehr Regeln als bei den Hieroglyphen.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Zur Diskussion}
+    Welche syntaktischen Regeln fallen Ihnen ein, die bei dem Text
+    eingehalten wurden?
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}{Beobachtungen zu einem deutschen Text.}
+  \begin{quotation}
+    Informatiker lieben Logiker.
+  \end{quotation}
+
+  \bigskip
+  \begin{block}{Beobachtungen}
+    \begin{itemize}
+    \item Auch hier werden viele syntaktische Regeln eingehalten.
+    \item Es fällt uns aber \alert{schwerer}, diese zu erkennen.
+    \item Der Grund ist, dass wir \alert{sofort über die Bedeutung
+        nachdenken}. 
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Zur Syntax von natürlichen Sprachen.}
+  \begin{itemize}
+  \item 
+    Die \alert{Syntax} einer natürlichen Sprache ist die Menge an
+    \alert{Regeln}, nach denen Sätze gebildet werden dürfen. 
+  \item 
+    Die \alert{Bedeutung} oder der \alert{Sinn} der gebildeten Sätze
+    ist dabei unerheblich.
+  \item
+    Jede Sprache hat ihre eigene Syntax; die Syntax verschiedener
+    Sprachen ähneln sich aber oft.
+  \item
+    Es ist nicht immer klar, ob eine Regel noch zur Syntax gehört
+    oder ob es schon um den Sinn geht.
+
+    \ExampleInline{Substantive werden groß geschrieben.}
+  \end{itemize}
+\end{frame}
+
+\subsection{Syntax von Programmiersprachen}
+
+\begin{frame}[fragile]{Beobachtungen zu einem Programmtext.}
+  
+\begin{verbatim}
+\def\pgfpointadd#1#2{%
+  \pgf@process{#1}%
+  \pgf@xa=\pgf@x%
+  \pgf@ya=\pgf@y%
+  \pgf@process{#2}%
+  \advance\pgf@x by\pgf@xa%
+  \advance\pgf@y by\pgf@ya}
+\end{verbatim}
+  \begin{block}{Beobachtungen}
+    \begin{itemize}
+    \item Der Programmtext sieht sehr kryptisch aus.
+    \item Trotzdem gibt es offenbar wieder Regeln.
+    \item So scheint einem Doppelkreuz eine Ziffer zu folgen und
+      Zeilen muss man offenbar mit Prozentzeichen beenden.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{Beobachtungen zu einem weiteren Programmtext.}
+  
+\begin{verbatim}
+for (int i = 0; i < 100; i++)
+  a[i] = a[i];
+\end{verbatim}
+  \begin{block}{Beobachtungen}
+    \begin{itemize}
+    \item Wieder gibt es Regeln, die eingehalten werden.
+    \item Wieder fällt es uns \alert{schwerer}, diese zu erkennen, da
+      wir \alert{sofort über den Sinn nachdenken}.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Zur Syntax von Programmiersprachen}
+  \begin{itemize}
+  \item Die \alert{Syntax} einer Programmiersprache ist die
+    \alert{Menge von Regeln}, nach der Programmtexte gebildet werden 
+    dürfen.
+  \item Die \alert{Bedeutung} oder der \alert{Sinn} der Programmtexte
+    ist dabei egal.
+  \item
+    Jede Programmiersprache hat ihre eigene Syntax; die Syntax
+    verschiedener Sprachen ähneln sich aber oft.
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}{5-Minuten-Aufgabe}
+  Welche der folgenden Regeln sind Syntax-Regeln?
+  \begin{enumerate}
+  \item Bezeichner dürfen nicht mit einer Ziffer anfangen.
+  \item Programme müssen in endlicher Zeit ein Ergebnis produzieren.
+  \item Öffnende und schließende geschweifte Klammern  müssen
+    »balanciert« sein. 
+  \item Methoden von Null-Objekten dürfen nicht aufgerufen werden.
+  \item Variablen müssen vor ihrer ersten Benutzung deklariert werden.
+  \end{enumerate}  
+\end{frame}
+
+
+\subsection[Syntax\protect\\ logischer Sprachen]{Syntax logischer Sprachen}
+
+\begin{frame}{Beobachtungen zu einer logischen Formel.}
+  \begin{quotation}
+    $p \to q \land \neg q$
+  \end{quotation}
+
+  \bigskip
+  \begin{block}{Beobachtungen}
+    \begin{itemize}
+    \item Auch logische Formeln haben eine syntaktische Struktur.
+    \item So wäre es \alert{syntaktisch falsch}, statt einem Pfeil zwei
+      Pfeile zu benutzen.
+    \item Es wäre aber \alert{syntaktisch richtig}, statt einem
+      Negationszeichen zwei Negationszeichen zu verwenden.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Zur Syntax von logischen Sprachen}
+  \begin{itemize}
+  \item Die \alert{Syntax} einer logischen Sprache ist die
+    \alert{Menge von Regeln}, nach der Formeln gebildet werden 
+    dürfen.
+  \item Die \alert{Bedeutung} oder der \alert{Sinn} der Formeln
+    ist dabei egal.
+  \item
+    Jede logische Sprache hat ihre eigene Syntax; die Syntax
+    verschiedener Sprachen ähneln sich aber oft.
+  \end{itemize}  
+\end{frame}
+
+
+
+\section{Was ist Semantik?}
+
+\subsection[Semantik\protect\\ natürlicher Sprachen]{Semantik natürlicher Sprachen}
+
+\begin{frame}{Was bedeutet ein Satz?}
+
+  \begin{quotation}
+    Der Hörsaal ist groß.
+  \end{quotation}
+
+  \bigskip
+  \begin{itemize}
+  \item Dieser Satz hat eine \alert{Bedeutung}.
+  \item Eine \alert{Semantik} legt solche Bedeutungen fest.
+  \item Syntaktisch falschen Sätzen wird im Allgemeinen keine
+    Bedeutung zugewiesen.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ein Satz, zwei Bedeutungen.}
+  \begin{quotation}
+    Steter Tropfen höhlt den Stein.
+  \end{quotation}
+
+  \bigskip
+  \begin{itemize}
+  \item Ein Satz kann \alert{mehrere Bedeutungen haben}, welche durch
+    \alert{unterschiedliche Semantiken} gegeben sind.
+  \item In der \alert{wortwörtlichen Semantik} sagt der Satz aus, dass
+    Steine ausgehöhlte werden, wenn man jahrelang Wasser auf
+    sie tropft.
+  \item In der \alert{übertragenen Semantik} sagt der Satz aus, dass
+    sich Beharrlichkeit auszahlt.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Die Semantik der Hieroglyphen}
+  \includegraphicscopyright[height=8cm]{beamerexample-lecture-pic5.jpg}
+  {Unknown Author, Public Domain, Low Resolution}
+\end{frame}
+
+
+\subsection{Semantik von Programmiersprachen}
+
+\begin{frame}[fragile]{Was bedeutet ein Programm?}
+\begin{verbatim}
+for (int i = 0; i < 100; i++)
+  a[i] = a[i];
+\end{verbatim}
+  \begin{itemize}
+  \item Auch dieser Programmtext »bedeutet etwas«, wir »meinen etwas«
+    mit diesem Text.
+  \item Die \alert{Semantik der Programmiersprache} legt fest,
+    was mit dem Programmtext gemeint ist.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Ein Programm, zwei Bedeutungen.}
+\begin{verbatim}
+for (int i = 0; i < 100; i++)
+  a[i] = a[i];
+\end{verbatim}
+  \begin{itemize}
+  \item Ein Programmtext kann \alert{mehrere Bedeutungen haben},
+    welche durch \alert{unterschiedliche Semantiken} gegeben sind.
+  \item In der \alert{operationalen Semantik} bedeutet der
+    Programmtext, dass die ersten einhundert Elemente eines Arrays
+    \verb!a! nacheinander ihren eigenen Wert zugewiesen bekommen.
+  \item In der \alert{denotationellen Semantik} bedeutet der
+    Programmtext, dass nichts passiert.
+  \end{itemize}
+\end{frame}
+
+
+\subsection[Semantik\protect\\ logischer Sprachen]{Semantik logischer Sprachen}
+
+
+
+
+\section{Grundlage der Syntax: Text}
+
+\begin{frame}{Eine mathematische Sicht auf Text.}
+  \begin{itemize}
+  \item Viele (aber nicht alle!) syntaktische Systeme bauen auf
+    \alert{Text} auf.
+  \item Auch solche Systeme, die nicht auf Text aufbauen, lassen sich
+    trotzdem durch Text beschreiben. 
+  \item Es ist deshalb nützlich, auf Text \text{Methoden der
+      Mathematik} anwenden zu können.
+  \item Im Folgenden wird deshalb die \alert{mathematische Sicht} auf
+    Text eingeführt, die \alert{in der gesamten Theoretischen
+      Informatik} genutzt wird.
+  \end{itemize}  
+\end{frame}
+
+
+\subsection{Alphabete}
+
+\begin{frame}{Formale Alphabete}
+  \begin{definition}[Alphabet]
+    Ein \alert{Alphabet} ist eine nicht-leere, endliche Menge von
+    \alert{Symbolen} (auch \alert{Buchstaben} genannt). 
+  \end{definition}
+  
+  \begin{itemize}
+  \item Alphabete werden häufig mit griechischen Großbuchstaben
+    bezeichnet, also $\Gamma$ oder~$\Sigma$. Manchmal auch mit
+    lateinischen Großbuchstaben, also $N$ oder~$T$.
+  \item Ein Symbol oder »Buchstabe« kann auch ein komplexes oder
+    komisches »Ding« sein wie ein Pointer oder ein Leerzeichen.
+  \end{itemize}
+
+  \begin{examples}
+    \begin{itemize}
+    \item Die Groß- und Kleinbuchstaben
+    \item Die Menge $\{0,1\}$ (bei Informatikern beliebt)
+    \item Die Menge $\{A,C,G,T\}$ (bei Biologen beliebt)
+    \item Die Zeichenmenge des UNICODE.
+    \end{itemize}
+  \end{examples}
+\end{frame}
+
+
+\subsection{Worte}
+
+
+\begin{frame}{Formale Worte}
+  \begin{definition}[Wort]
+    Ein \alert{Wort} ist eine (endliche) Folge von Symbolen. 
+  \end{definition}
+  \begin{itemize}
+    \item »Worte« sind im Prinzip dasselbe wie
+      Strings. Insbesondere können in Worten Leerzeichen als Symbole
+      auftauchen.
+    \item Die Menge aller Worte über einem Alphabet $\Sigma$ hat einen
+      besonderen Namen: $\Sigma^*$.
+    \item 
+      Deshalb schreibt man oft: »Sei $w \in \Sigma^*$, \dots«
+    \item Es gibt auch ein \alert{leeres Wort}, abgekürzt
+      $\epsilon$ oder $\lambda$, das dem String
+      \texttt{\char`\"\char`\"} entspricht. 
+    \end{itemize}
+   
+  \begin{examples}
+    \begin{itemize}
+    \item \texttt{Hallo}
+    \item \texttt{TATAAAATATTA}
+    \item $\epsilon$
+    \item \texttt{Hallo Welt.}
+    \end{itemize}
+  \end{examples} 
+\end{frame}
+
+
+\begin{frame}{5-Minuten-Aufgabe}
+  Die folgenden Aufgaben sind nach Schwierigkeit sortiert. Lösen Sie
+  \alert{eine} der Aufgaben. 
+  \begin{enumerate}
+  \item
+    Schreiben Sie alle Worte der Länge höchstens $2$ über dem Alphabet
+    $\Sigma = \{0,1,*\}$ auf.
+  \item
+    Wie viele Worte der Länge $n$ über dem Alphabet $\Sigma =
+    \{0,1,*\}$  gibt es?
+  \item
+    Wie viele Worte der Länge höchstens $n$ über einem Alphabet mit
+    $q$ Buchstaben gibt es?
+  \end{enumerate}
+\end{frame}
+
+
+\subsection{Sprachen}
+
+\begin{frame}{Formale Sprachen}{Definition}
+  \begin{itemize}
+  \item Natürlichen Sprachen sind komplexe Dinge, bestehend aus
+    Wörtern, ihrer Ausprache, einer Grammatik, Ausnahmen, Dialekten,
+    und vielem mehr.
+  \item Bei \alert{formalen Sprachen} vereinfacht man radikal.
+  \item Formale Sprachen müssen weder sinnvoll noch interessant sein.      
+  \end{itemize}
+
+  \begin{definition}[Formale Sprache]
+    Eine \alert{formale Sprache} ist eine (oft unendliche!) Menge von
+    Worten für ein festes Alphabet.
+  \end{definition}
+
+  \begin{itemize}
+  \item Statt \frqq formale Sprache\flqq\ sagt man einfach \frqq Sprache\flqq.
+  \item Als Menge von Worten ist eine Sprache eine Teilmenge von
+    $\Sigma^*$.
+  \item 
+    Deshalb schreibt man oft: \frqq Sei $L \subseteq \Sigma^*$,
+    \dots\flqq
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Formale Sprachen}{Einfache Beispiele}
+  \begin{examples}
+    \begin{itemize}
+    \item Die Menge $\{AAA, AAC, AAT\}$ (endliche Sprache).
+    \item Die Menge aller Java-Programmtexte (unendliche Sprache).
+    \item Die Menge aller Basensequenzen, die \texttt{TATA} enthalten
+      (unendliche Sprache).
+    \end{itemize}
+  \end{examples} 
+\end{frame}
+
+\begin{frame}{Formale Sprachen in der Medieninformatik}
+  \begin{itemize}
+  \item Ein Renderer produziert 3D-Bilder.
+  \item Dazu erhält er eine \alert{Szenerie} als Eingabe.
+  \item Diese Szenerie ist als \alert{Text}, also als ein \alert{Wort} gegeben.
+  \item Eine \alert{Syntax} beschreibt die (formale) Sprache, die alle
+    \alert{syntaktisch korrekten Szenerien}  enthält.
+  \item Eine \alert{Semantik} beschreibt, was diese Beschreibungen bedeuten.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Formale Sprachen in der Medieninformatik}{Das
+    »Wort«, das eine Szenerie beschreibt\dots}
+\only<presentation>{\scriptsize}
+\begin{verbatim*}
+global_settings { assumed_gamma 1.0 }
+
+camera {
+  location  <10.0, 10, -10.0>
+  direction 1.5*z
+  right     x*image_width/image_height
+  look_at   <0.0, 0.0,  0.0>
+}
+
+sky_sphere { pigment { color rgb <0.6,0.7,1.0> } }
+
+light_source {
+  <0, 0, 0>            // light's position (translated below)
+  color rgb <1, 1, 1>  // light's color
+  translate <-30, 30, -30>
+  shadowless
+}
+
+#declare i = 0; 
+#declare Steps = 30;
+#declare Kugel = sphere{<0,0,0>,0.5 pigment{color rgb<1,0,0>}};
+
+#while(i<Steps)
+    object{Kugel  translate<3,0,0> rotate <0,i * 360 / Steps, 0> }
+  #declare i = i + 1;
+#end
+\end{verbatim*}
+\end{frame}
+
+
+\begin{frame}{Formale Sprachen in der Medieninformatik}{\dots\ und was es bedeutet.}
+  \includegraphicscopyright[width=9.5cm]{beamerexample-lecture-pic2.jpg}
+  {Copyright Matthias Kabel, GNU Free Documentation License, Low Resolution}
+\end{frame}
+
+\begin{frame}{Formale Sprachen in der Medieninformatik}{Komplexeres Beispielbild, das ein Renderer produziert.}
+  \includegraphicscopyright[width=9.5cm]{beamerexample-lecture-pic1.jpg}
+  {Copyright Giorgio Krenkel and Alex Sandri, GNU Free Documentation License, Low Resolution}
+\end{frame}
+
+
+\begin{frame}{Formale Sprachen in der Bioinformatik}
+  \begin{itemize}
+  \item In der Bioinformatik untersucht man unter anderem Proteine.
+  \item Dazu erhält man \alert{Molekülbeschreibungen} als Eingabe.
+  \item Eine solche ist auch ein \alert{Wort}.
+  \item Eine \alert{Syntax} beschreibt die (formale) Sprache, die alle
+    \alert{syntaktisch korrekten Molkülbeschreibungen}  enthält.
+  \item Eine \alert{Semantik} beschreibt, was diese Beschreibungen bedeuten.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Formale Sprachen in der Bioinformatik}
+  {Das »Wort«, das ein Protein beschreibt\dots}
+\only<presentation>{\tiny}  
+\only<article>{\footnotesize}  
+\begin{verbatim}
+HEADER    HYDROLASE                               25-JUL-03   1UJ1              
+TITLE     CRYSTAL STRUCTURE OF SARS CORONAVIRUS MAIN PROTEINASE                 
+TITLE    2 (3CLPRO)
+COMPND    MOL_ID: 1;                                                            
+COMPND   2 MOLECULE: 3C-LIKE PROTEINASE;                                        
+COMPND   3 CHAIN: A, B;                                                         
+COMPND   4 SYNONYM: MAIN PROTEINASE, 3CLPRO;                                    
+COMPND   5 EC: 3.4.24.-;                                                        
+COMPND   6 ENGINEERED: YES                                                      
+SOURCE    MOL_ID: 1;                                                            
+SOURCE   2 ORGANISM_SCIENTIFIC: SARS CORONAVIRUS;                               
+SOURCE   3 ORGANISM_COMMON: VIRUSES;                                            
+SOURCE   4 STRAIN: SARS;                                                        
+...
+REVDAT   1   18-NOV-03 1UJ1    0                                                
+JRNL        AUTH   H.YANG,M.YANG,Y.DING,Y.LIU,Z.LOU,Z.ZHOU,L.SUN,L.MO,          
+JRNL        AUTH 2 S.YE,H.PANG,G.F.GAO,K.ANAND,M.BARTLAM,R.HILGENFELD,          
+JRNL        AUTH 3 Z.RAO                                                        
+JRNL        TITL   THE CRYSTAL STRUCTURES OF SEVERE ACUTE RESPIRATORY           
+JRNL        TITL 2 SYNDROME VIRUS MAIN PROTEASE AND ITS COMPLEX WITH            
+JRNL        TITL 3 AN INHIBITOR                                                 
+JRNL        REF    PROC.NAT.ACAD.SCI.USA         V. 100 13190 2003              
+JRNL        REFN   ASTM PNASA6  US ISSN 0027-8424                               
+....
+ATOM      1  N   PHE A   3      63.478 -27.806  23.971  1.00 44.82           N  
+ATOM      2  CA  PHE A   3      64.607 -26.997  24.516  1.00 42.13           C  
+ATOM      3  C   PHE A   3      64.674 -25.701  23.723  1.00 41.61           C  
+ATOM      4  O   PHE A   3      65.331 -25.633  22.673  1.00 40.73           O  
+ATOM      5  CB  PHE A   3      65.912 -27.763  24.358  1.00 44.33           C  
+ATOM      6  CG  PHE A   3      67.065 -27.162  25.108  1.00 44.20           C  
+ATOM      7  CD1 PHE A   3      67.083 -27.172  26.496  1.00 43.35           C  
+ATOM      8  CD2 PHE A   3      68.135 -26.595  24.422  1.00 43.49           C  
+ATOM      9  CE1 PHE A   3      68.140 -26.631  27.187  1.00 43.21           C  
+ATOM     10  CE2 PHE A   3      69.210 -26.046  25.108  1.00 42.91           C  
+ATOM     11  CZ  PHE A   3      69.216 -26.062  26.493  1.00 43.22           C  
+ATOM     12  N   ARG A   4      64.007 -24.666  24.228  1.00 34.90           N  
+ATOM     13  CA  ARG A   4      63.951 -23.376  23.543  1.00 37.71           C  
+...
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Formale Sprachen in der Bioinformatik}
+  {\dots\ und das Protein, das beschrieben wird.}
+
+  \includegraphicscopyright[width=9.5cm]{beamerexample-lecture-pic6.jpg}
+  {Copyright Till Tantau, Low Resultion}
+\end{frame}
+
+
+\section<article>{Zusammenfassung}
+\section<presentation>*{Zusammenfassung}
+
+\begin{frame}{Zusammenfassung}
+  \begin{enumerate}
+  \item Ein \alert{Wort} ist eine Folge von Symbolen aus einem
+    \alert{Alphabet}. 
+  \item Eine \alert{Syntax} besteht aus Regeln, nach denen
+    Worte (Texte) gebaut werden dürfen.
+  \item Eine \alert{Semantik} legt fest, was Worte \alert{bedeuten}.
+  \item Eine \alert{formale Sprache} ist eine Menge von Worten
+    über einem Alphabet.
+  \end{enumerate}
+\end{frame}
+
+\end{document}
+
+
+
+
+
