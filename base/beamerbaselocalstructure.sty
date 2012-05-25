@@ -460,27 +460,24 @@
         \usebeamertemplate{bibliography entry note}}}}%
   \leavevmode\setbox\beamer@tempbox=\hbox{}\ht\beamer@tempbox=1.5em\box\beamer@tempbox}
 
-% The following code provided by Audrey http://tex.stackexchange.com/q/47540/2693	
+% The following code provided by Audrey http://tex.stackexchange.com/a/57247
 \AtBeginDocument{%
   \@ifpackageloaded{biblatex}
-    {%
-      \apptocmd{\blx@env@bibliography}
-        {\let\makelabel\beamer@biblabeltemplate}{}{}
-      \apptocmd{\abx@macro@begentry}
-        {\usebeamercolor[fg]{bibliography entry author}}{}{}
-      \pretocmd{\abx@macro@title}
-        {%
-          \ifcsundef{abx@name@labelname}{}{\blx@unitpunct\blx@postpunct}%
-          \newblock\usebeamercolor[fg]{bibliography entry title}%
-        }{}{}
-      \apptocmd{\abx@macro@title}
-        {%
-          \ifcsundef{abx@field@title}{}{\blx@unitpunct\blx@postpunct}%
-          \newblock\usebeamercolor[fg]{bibliography entry note}%
-        }{}{}%
-    }
-    {}
-}
+    {\apptocmd{\blx@env@bibliography}
+       {\let\makelabel\beamer@biblabeltemplate}{}{}
+     \apptocmd{\abx@macro@begentry}
+       {\let\bbx@tempa\@empty%
+        \usebeamercolor[fg]{bibliography entry author}}{}{}
+     \pretocmd{\abx@macro@labeltitle}
+       {\ifboolexpr{ test {\ifcsundef{abx@field@label}}
+          and test {\ifcsundef{abx@field@labeltitle}} }{}{\let\bbx@tempa\labelnamepunct}}{}{}
+     \pretocmd{\abx@macro@title}
+       {\ifcsundef{abx@name@labelname}{}{\let\bbx@tempa\labelnamepunct}%
+        \bbx@tempa\newblock\unspace\usebeamercolor[fg]{bibliography entry title}}{}{}
+     \apptocmd{\abx@macro@title}
+       {\ifcsundef{abx@field@title}{}{\newunitpunct}%
+        \newblock\usebeamercolor[fg]{bibliography entry note}}{}{}}
+    {}}
 
 \mode
 <article>
