@@ -13,8 +13,9 @@
 \mode
 <all>
 {
-  \def\beamer@secgobble{\@ifnextchar*{\beamer@secstargobble}{\beamer@gobbleoptional}}
-  \def\beamer@secstargobble*{\beamer@gobbleoptional}
+  \def\beamer@secgobble{\beamer@savemode\@ifnextchar*{\beamer@secstargobble}{\beamer@sec@gobbleoptional}}
+  \def\beamer@secstargobble*{\beamer@sec@gobbleoptional}
+  \newcommand\beamer@sec@gobbleoptional[2][]{\beamer@resumemode}
   \def\secname{}
   \def\subsecname{}
   \def\subsubsecname{}
