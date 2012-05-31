@@ -26,6 +26,8 @@
 {
   \newif\ifbeamer@inframe
   \beamer@inframefalse
+% Save!
+  \let\framelatex=\frame
 }
 
 \def\refcounter#1{\protected@edef\@currentlabel%
@@ -289,10 +291,6 @@
 \newif\ifbeamer@slidehaszoom
 
 \let\beamer@firstlineitemizeunskip\relax
-
-
-% Save!
-\let\framelatex=\frame
 
 
 
@@ -671,12 +669,14 @@
   \long\def\beamer@donoframe{%
     \setbox\beamer@tempbox\vbox\bgroup%
     \beamer@inframetrue%
+    \let\frame=\framelatex
     \usebeamertemplate{frame begin}%
     \bgroup\aftergroup\beamer@endframe%
     \beamer@article@startframe}%
   \def\beamer@dosingleframe{%
     \bgroup%
     \beamer@inframetrue%
+    \let\frame=\framelatex
     \usebeamertemplate{frame begin}%
     \bgroup\aftergroup\beamer@endframe%
     \beamer@article@startframe}%
