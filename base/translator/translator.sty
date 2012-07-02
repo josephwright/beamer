@@ -74,12 +74,17 @@
   }%
 }
 
-
+\begingroup
+\lccode`\A=`\- %
+\lowercase{%
+  \endgroup
+  \def\trans@marker{-A}%
+}
 
 \newcommand\translatelet[3][]{%
   \edef\trans@to{\trans@languagepath}%
   \setkeys{translator}{#1}%
-  \let\trans@trans\@empty%
+  \let\trans@trans\trans@marker%
   \let\trans@list\@empty%
   \@for\trans@lang:=\trans@to\do%
   {%
@@ -93,14 +98,14 @@
   {%
     \expandafter\ifx\csname tr@@@\trans@lang @#3\endcsname\relax%
     \else%
-      \ifx\trans@trans\@empty%
+      \ifx\trans@trans\trans@marker%
         \expandafter\expandafter\expandafter\def
         \expandafter\expandafter\expandafter\trans@trans
         \expandafter\expandafter\expandafter{\csname tr@@@\trans@lang @#3\endcsname}%
       \fi%
     \fi%
   }%
-  \ifx\trans@trans\@empty%
+  \ifx\trans@trans\trans@marker%
     \def\trans@trans{#3}%
   \fi%
   \let#2=\trans@trans%
