@@ -42,27 +42,32 @@
     \def\beamer@test{#1#2}%
     \ifx\beamer@test\beamer@stopframefirst%
       \let\next=\beamer@framewritten%
-    \else
+    \else%
       \def\beamer@test{#1}%
-      \@onelevel@sanitize\beamer@test
-      \edef\beamer@test{\beamer@test\space}%
-      \edef\beamer@test{\expandafter\zap@space\beamer@test\@empty}%
+      \def\beamer@test@par{\par}%
+      \ifx\beamer@test\beamer@test@par
+        \def\beamer@test{^^J}%
+      \else%
+        \@onelevel@sanitize\beamer@test
+        \edef\beamer@test{\beamer@test\space}%
+        \edef\beamer@test{\expandafter\zap@space\beamer@test\@empty}%
+      \fi
       \@temptokena{#2}%
       \immediate\write\beamer@verbatimfileout{\beamer@test\the\@temptokena}%
        \let\next=\beamer@processframeline%
     \fi%
     \next%
-  }
+  }%
   \long\gdef\beamer@processframeline#1^^M{%
     \def\beamer@test{#1}%
     \ifx\beamer@test\beamer@stopframe%
       \let\next=\beamer@framewritten%
-    \else
+    \else%
       \immediate\write\beamer@verbatimfileout{#1}%
       \let\next=\beamer@processframeline%
     \fi%
     \next%
-  }
+  }%
 }
 
 \def\beamer@setupstoppers#1{%
