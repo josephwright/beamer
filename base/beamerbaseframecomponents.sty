@@ -297,6 +297,9 @@
 
 \newcommand<>\beamer@framefootnotetext[1]{%
   \global\setbox\beamer@footins\vbox{%
+    \hsize\framewidth
+    \textwidth\hsize
+    \columnwidth\hsize
     \unvbox\beamer@footins
     \reset@font\footnotesize
     \@parboxrestore

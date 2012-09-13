@@ -410,10 +410,12 @@
   \def\beamer@defaultospec{#2}%
   \@ifnextchar[{\beamer@@@@frame<#1>}{\beamer@@@@frame<#1>[]}}
 
+\newdimen\framewidth
 \def\beamer@frame<#1>{
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
 \def\beamer@@@frame<#1>[{\@ifnextchar<{\beamer@framedefaultospec<#1>[}{\beamer@@@@frame<#1>[}}
 \def\beamer@@@@frame<#1>[#2]{%
+  \framewidth\textwidth
   \beamer@savemode%
   \def\beamer@mode{\mode<all>}%
   \def\beamer@frametemplate{}%
