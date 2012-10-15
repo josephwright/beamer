@@ -139,6 +139,8 @@
 
 \DeclareOptionBeamer{ignorenonframetext}{\beamer@ignorenonframetrue}
 
+\DeclareOptionBeamer{noamssymb}{\beamer@amssymbfalse}
+
 \def\beamer@size{{size11.clo}}
 \DeclareOptionBeamer{bigger}{\def\beamer@size{{size12.clo}}}
 \DeclareOptionBeamer{smaller}{\def\beamer@size{{size10.clo}}}

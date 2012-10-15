@@ -672,6 +672,11 @@ In the |article| version, the package |amsthm| sometimes clashes with the docume
   Does not load |amsthm| and also not |amsmath|. Environments like |theorem| or |proof| will not be available.
 \end{classoption}
 
+\begin{classoption}{noamssymb}
+  Does not load |amssymb|. This option is mainly intended for users who are loading specialist font packages. Note that |\blacktriangleright| needs to be defined if |itemize| environments are in use.
+\end{classoption}
+
+
 \begin{element}{theorems}\semiyes\no\no
   This template is a parent of |theorem begin| and |theorem end|, see the first for a detailed discussion of how the theorem templates are set.
 
