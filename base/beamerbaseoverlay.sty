@@ -490,7 +490,13 @@
 \long\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[{#1}]}
 
 \def\beamer@parseitem<#1>{%
-  \gdef\beamer@closeitem{\end{actionenv}}%
+  \gdef\beamer@closeitem{%
+    %% Handle empty item as LaTeX would do
+    \if@inlabel\indent\par\fi
+    \end{actionenv}%
+    %% Local change inside actionenv should survive, and should be
+    %% always false
+    \@noparitemfalse}%
 \begin{actionenv}<#1>\beamer@callorigitem}
 
 
