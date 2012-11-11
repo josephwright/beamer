@@ -123,6 +123,10 @@ Overlay specifications can also be given in \LyX. You must give them in \TeX-mod
 \subsection{Commands with Overlay Specifications}
 \label{section-overlay-commands}
 
+\textbf{Important:} Due to the way overlay specifications are implemented, the
+commands documented here are \emph{all} fragile even if the \LaTeXe{} kernel
+versions are not.
+
 For the following commands, adding an overlay specification causes the command to be simply ignored on slides that are not included in the specification: |\textbf|, |\textit|, |\textsl|, |\textrm|, |\textsf|, |\color|, |\alert|, |\structure|. If a command takes several arguments, like |\color|, the specification should directly follow the command as in the following example (but there are exceptions to this rule):
 \begin{verbatim}
 \begin{frame}
