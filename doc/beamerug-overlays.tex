@@ -740,7 +740,31 @@ This will alert the current item when it is uncovered. For example, the first sp
 
 The |\pause| command also updates the counter |beamerpauses|. You can change this counter yourself using the normal \LaTeX\ commands |\setcounter| or |\addtocounter|.
 
-Any occurence of a |+|-sign may be followed by an \emph{offset} in round brackets. This offset will be added to the value of |beamerpauses|. Thus, if |beamerpauses| is 2, then |<+(1)->| expands to |<3->| and |<+(-1)-+>| expands to |<1-2>|.
+Any occurence of a |+|-sign may be followed by an
+\emph{offset} in round brackets. This offset will
+be added to the value of |beamerpauses|. Thus, if
+|beamerpauses| is 2, then |<+(1)->| expands to
+|<3->| and |<+(-1)-+>| expands to |<1-2>|. For example
+\begin{verbatim}
+\begin{frame}
+\frametitle{Method 1}
+\begin{itemize}
+\item<2-> Apple
+\item<3-> Peach
+\item<4-> Plum
+\item<5-> Orange
+\end{itemize}
+\end{verbatim}
+and
+\begin{verbatim}
+\begin{itemize}[<+(1)->]
+\item Apple
+\item Peach
+\item Plum
+\item Orange
+\end{itemize}
+\end{verbatim}
+are equivalent.
 
 There is another special sign you can use in an overlay specification that behaves similarly to the |+|-sign: a dot. When you write |<.->|, a similar thing as in |<+->| happens \emph{except} that the counter |beamerpauses| is \emph{not} incremented and \emph{except} that you get the value of |beamerpauses| decreased by one. Thus a dot, possibly followed by an offset, just expands to the current value of the counter |beamerpauses| minus one, possibly offset. This dot notation can be useful in case like the following:
 \begin{verbatim}
