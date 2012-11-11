@@ -31,6 +31,17 @@
 \newif\ifbeamer@inlecture
 \beamer@inlecturetrue
 
+\newcommand{\beamer@if@in@clist@TF}[2]{%
+  \def\beamer@if@in@clist@aux##1,#2,{}%
+  \expandafter\expandafter\expandafter\ifx
+    \expandafter\expandafter\expandafter\@nil
+    \expandafter\beamer@if@in@clist@aux\expandafter,#1,{}{},#2,\@nil
+    \expandafter\@secondoftwo
+  \else
+    \expandafter\@firstoftwo
+  \fi
+}
+
 \newcounter{lecture}
 \renewcommand\thelecture{\@arabic\c@lecture}
 \let\insertlecturenumber=\thelecture
@@ -44,11 +55,10 @@
   \def\beamer@shortlecturename{#1}
   \ifx\beamer@onlylecture\@empty
   \else
-    \ifx\beamer@currentlecturelabel\beamer@onlylecture
-      \beamer@inlecturetrue
-    \else
-      \beamer@inlecturefalse
-    \fi
+    \expandafter\beamer@if@in@clist@TF\expandafter\beamer@onlylecture
+      \beamer@currentlecturelabel
+      {\beamer@inlecturetrue}
+      {\beamer@inlecturefalse}
   \fi
   \beamer@atbeginlecture
   \beamer@resumemode
