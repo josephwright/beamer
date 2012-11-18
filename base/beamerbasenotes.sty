@@ -138,7 +138,8 @@
 
 \def\beamer@framenotesend
 {% at end of slide
-  \global\setbox\beamer@frameboxcopy=\copy\beamer@framebox%
+  \global\setbox\beamer@frameboxcopy
+    =\hbox{\leaders\copy\beamer@framebox\hskip\wd\beamer@framebox}
   \ifx\beamer@noteitems\@empty%
     \ifx\beamer@notes\@empty%
       % possibly suppress this slide
