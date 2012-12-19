@@ -185,9 +185,12 @@
 {%
   {%
     \scriptsize
-    \insertvrule{.25\paperheight}{white!90!black}
-    \vskip-.25\paperheight
-    \nointerlineskip
+    \usebeamerfont{note title}\usebeamercolor[fg]{note title}%
+    \ifbeamercolorempty[bg]{note title}{}{%
+      \insertvrule{.25\paperheight}{note title.bg}%
+      \vskip-.25\paperheight%
+      \nointerlineskip%
+    }%
     \vbox{
       \hfill\insertslideintonotes{0.25}\hskip-\Gm@rmargin\hskip0pt%
       \vskip-0.25\paperheight%
@@ -195,7 +198,7 @@
       \begin{pgfpicture}{0cm}{0cm}{0cm}{0cm}
         \begin{pgflowlevelscope}{\pgftransformrotate{90}}
           {\pgftransformshift{\pgfpoint{-2cm}{0.2cm}}%
-          \pgftext[base,left]{\footnotesize\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
+          \pgftext[base,left]{\usebeamerfont{note date}\usebeamercolor[fg]{note date}\the\year-\ifnum\month<10\relax0\fi\the\month-\ifnum\day<10\relax0\fi\the\day}}
         \end{pgflowlevelscope}
       \end{pgfpicture}}
     \nointerlineskip
@@ -217,6 +220,11 @@
             height0.4pt}}\hskip1pt\hbox{\insertshortframetitle[width=7cm]}\fi%
       }%
       \vfil}%
+  }%
+  \ifbeamercolorempty[bg]{note page}{}{%
+    \nointerlineskip%
+    \insertvrule{.75\paperheight}{note page.bg}%
+    \vskip-.75\paperheight%
   }%
   \vskip.25em
   \nointerlineskip

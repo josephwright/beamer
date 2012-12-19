@@ -197,10 +197,10 @@
 \newcommand{\insertslideintonotes}[1]{{%
   \begin{pgfpicture}{0cm}{0cm}{#1\paperwidth}{#1\paperheight}
     \begin{pgflowlevelscope}{\pgftransformscale{#1}}%
-      \color[gray]{0.8}
+      \color{normal text.bg}
       \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\paperheight}}
       \pgfusepath{fill}
-      \color{black}
+      \color{normal text.fg}
       {\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgflowlevelscope}
   \end{pgfpicture}%
