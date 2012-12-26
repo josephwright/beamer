@@ -34,10 +34,11 @@
 \newcommand\iftranslationdefined[4][]{%
   \def\trans@to{\trans@defaultto}%
   \setkeys{translator}{#1}%
-  \expandafter\ifx\csname tr@@@\trans@to @#2\endcsname\@undefined%
-    \let\trans@next=\@firstoftwo%
-  \else%
+  \begingroup\expandafter\expandafter\expandafter\endgroup
+  \expandafter\ifx\csname tr@@@\trans@to @#2\endcsname\relax%
     \let\trans@next=\@secondoftwo%
+  \else%
+    \let\trans@next=\@firstoftwo%
   \fi%
   \trans@next{#3}{#4}%
 }
@@ -50,7 +51,7 @@
 
 \newcommand\newtranslation[3][]{%
   \iftranslationdefined[#1]{#2}{%
-    \PackageError{translator}{Translation of ``#2'' already defined.}{}%
+    \PackageError{translator}{Translation of '#2' already defined}{}%
   }%
   {%
     \deftranslation[#1]{#2}{#3}%
@@ -62,7 +63,7 @@
     \deftranslation[#1]{#2}{#3}%
   }%
   {%
-    \PackageError{translator}{Translation of ``#2'' not defined.}{}%
+    \PackageError{translator}{Translation of '#2' not defined}{}%
   }%
 }
 
