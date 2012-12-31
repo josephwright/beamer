@@ -28,10 +28,8 @@ This documentation is part of version \beamerugversion\ of the \beamer\ class. \
   |xcolor.sty| version \beamerugxcolorversion.
 \end{itemize}
 
-If you use |pdflatex| or |lyx|, which are optional, you need
+If you use |pdflatex|, which is optional, you need
 \begin{itemize}
-\item
-  |lyx| version 1.3.3. Other versions might work.
 \item
   |pdflatex| version 0.14 or higher. Earlier versions do not work.
 \end{itemize}
@@ -109,9 +107,6 @@ and place all files of the package in this directory.
 
 Finally, you need to rebuild \TeX's filename database. This is done by running the command |texhash| or |mktexlsr| (they are the same). In MiK\TeX\ package manager and \TeX\ Live |tlmgr|, there is a menu option to do this.
 
-\lyxnote
-For usage of the \beamer\ class with \LyX, you have to do all of the above. You also have to make \LyX\ aware of the file |beamer.layout|. This file is \emph{not part of the \beamer\ package} since it is updated and managed by the \LyX\ development team. This means that in reasonably up-to-date \LyX\ versions this file will already be installed and nothing needs to be done.
-
 \vskip1em
 For a more detailed explanation of the standard installation process of packages, you might wish to consult \href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}. However, note that the \beamer\ package does not come with a |.ins| file (simply skip that part).
 
@@ -134,9 +129,6 @@ To test your installation, copy the file |generic-ornate-15min-45min.en.tex| fro
 beamer/solutions/generic-talks
 \end{verbatim}
 to some place where you usually create presentations. Then run the command |pdflatex| several times on the file and check whether the resulting \pdf\ file looks correct. If so, you are all set.
-
-\lyxnote
-To test the \LyX\ installation, create a new file from the template |generic-ornate-15min-45min.en.lyx|, which is located in the directory |beamer/solutions/generic-talks|.
 
 
 \input{beamerug-compatibility}

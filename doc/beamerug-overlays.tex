@@ -79,8 +79,6 @@ The effect of |\pause| lasts till the next |\pause|, |\onslide|, or the end of t
   \articlenote
   This command is ignored.
 
-  \lyxnote
-  Use the ``Pause'' style with an empty line to insert a pause.
 \end{command}
 
 To ``unpause'' some text, that is, to temporarily suspend pausing, use the command |\onslide|, see below.
@@ -115,9 +113,6 @@ The command |\only|, which is introduced by \beamer, normally simply inserts its
 Overlay specifications can only be written behind certain commands, not every command. Which commands you can use and which effects this will have is explained in the next section. However, it is quite easy to redefine an existing command such that it becomes ``overlay specification aware,'' see also Section~\ref{section-overlay-commands}.
 
 The syntax of (basic) overlay specifications is the following: They are comma-separated lists of slides and ranges. Ranges are specified like this: |2-5|, which means slide two through to five. The start or the end of a range can be omitted. For example, |3-| means ``slides three, four, five, and so on'' and |-5| means the same as |1-5|. A complicated example is |-3,6-8,10,12-15|, which selects the slides 1, 2, 3, 6, 7, 8, 10, 12, 13, 14, and 15.
-
-\lyxnote
-Overlay specifications can also be given in \LyX. You must give them in \TeX-mode (otherwise the pointed brackets may be ``escaped'' by \LyX, though this will not happen in all versions). For example, to add an overlay specification to an item, simply insert a \TeX-mode text like |<3>| as the first thing in that item. Likewise, you can add an overlay specification to environments like |theorem| by giving them in \TeX-mode right at the start of the environment.
 
 
 \subsection{Commands with Overlay Specifications}
@@ -293,8 +288,6 @@ For the following commands, the effect of an overlay specification is special:
   \articlenote
   The \meta{action specification} is currently completely ignored.
 
-  \lyxnote
-  The \meta{action specification} must be given in \TeX-mode and it must be given at the very start of the item.
 \end{command}
 
 The related command |\bibitem| is also overlay specification-aware in the same way as |\item|.
@@ -399,8 +392,6 @@ To solve this problem, you can use two environments: |overlayarea| and |overprin
 \end{overlayarea}
 \end{verbatim}
 
-  \lyxnote
-  Use the style ``OverlayArea'' to insert an overlay area.
 \end{environment}
 
 \begin{environment}{{overprint}\oarg{area width}}
@@ -417,8 +408,6 @@ To solve this problem, you can use two environments: |overlayarea| and |overprin
 \end{overprint}
 \end{verbatim}
 
-  \lyxnote
-  Use the style ``Overprint'' to insert an |overprint| environment. You have to use \TeX-mode to insert the |\onslide| commands.
 \end{environment}
 
 A similar need for dynamical changes arises when you have, say, a series of pictures named |first.pdf|, |second.pdf|, and |third.pdf| that show different stages of some process. To make a frame that shows these pictures on different slides, the following code might be used:

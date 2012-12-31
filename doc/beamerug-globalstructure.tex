@@ -25,9 +25,6 @@ You can use the |\titlepage| command to insert a title page into a frame. By def
   \example
   |\frame[plain]{\titlepage}| for a titlepage that fills the whole frame.
 
-  \lyxnote
-  If you use the ``Title'' style in your presentation, a title page is automatically inserted.
-
   \begin{element}{title page}\yes\yes\yes
     This template is invoked when the |\titlepage| command is used.
 
@@ -280,8 +277,6 @@ Often, you may want a certain type of frame to be shown directly after a section
   \articlenote
   This command has no effect in |article| mode.
 
-  \lyxnote
-  You have to insert this command using a \TeX-mode text.
 \end{command}
 
 \begin{command}{\AtBeginSubsection\oarg{special star text}\marg{text}}
@@ -529,9 +524,6 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
 
   \articlenote
   The options are ignored in |article| mode.
-
-  \lyxnote
-  You can give options to the |\tableofcontents| command by inserting a \TeX-mode text with the options in square brackets directly after the table of contents.
 
   \begin{element}{section/subsection in toc}\semiyes\no\no
     This is a parent template, whose children are |section in toc| and |subsection in toc|. This means that if you use the |\setbeamertemplate| command on this template, the command is instead called for both of these children (with the same arguments).

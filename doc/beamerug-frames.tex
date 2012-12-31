@@ -230,18 +230,6 @@ A presentation consists of a series of frames. Each frame consists of a series o
     Using this option is not good, but also not evil.
   \end{itemize}
 
-  \lyxnote
-  Use the style ``BeginFrame'' to start a frame and the style ``EndFrame'' to end it. A frame is automatically ended by the start of a new frame and by the start of a new section or section (but not by the end of the document!).
-
-  \lyxnote
-  You can pass options and an overlay specification to a frame by giving these in \TeX-mode as the first thing in the frame title. (Some magic is performed to extract them in \LyX-mode from there.)
-
-  \lyxnote
-  The style ``BeginPlainFrame'' is included as a convenience. It passes the |plain| option to the frame. To pass further options to a plain frame, you should use the normal ``BeginFrame'' style and specify all options (including |plain|).
-
-  \lyxnote
-  In \LyX, you can insert verbatim text directly even in overlayed frames. The reason is that \LyX\ uses a different internal mechanism for typesetting verbatim text, that is easier to handle for \beamer.
-
   \articlenote
   In |article| mode, the |frame| environment does not create any visual reference to the original frame (no frame is drawn). Rather, the frame text is inserted into the normal text. To change this, you can modify the templates |frame begin| and |frame end|, see below. To suppress a frame in |article| mode, you can, for example, specify |<presentation>| as overlay specification.
 
@@ -957,9 +945,6 @@ The frame title is shown prominently at the top of the frame and can be specifie
 
   \articlenote
   By default, this command creates a new paragraph in |article| mode, entitled \meta{frame title text}. Using the \meta{overlay specification} makes it easy to suppress a frame title once in a while. If you generally wish to suppress \emph{all} frame titles in |article| mode, say |\setbeamertemplate<article>{frametitle}{}|.
-
-  \lyxnote
-  The frame title is the text that follows on the line of the ``BeginFrame'' style.
 
   \begin{element}{frametitle}\yes\yes\yes
     \colorfontparents{titlelike}

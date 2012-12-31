@@ -26,10 +26,6 @@ To create an initial |main.tex| file for your talk, copy an existing file from t
 
 If you wish your talk to reside in the same file as some different, non-presentation article version of your text, it is advisable to setup a more elaborate file scheme. See Section~\ref{section-article-version-workflow} for details.
 
-\lyxnote
-You can either open a new file and then select |beamer| as the document class or you say ``New from template'' and then use a template from the directory |beamer/solutions|.
-
-
 \subsection{Step Two: Structure Your Presentation}
 
 The next step is to fill the presentation file with |\section| and |\subsection| to create a preliminary outline. You'll find some hints on how to create a good outline in Section~\ref{section-structure-guidelines}.
@@ -82,9 +78,6 @@ The empty frame at the end (which should be deleted later) ensures that the sect
 \beamernote
 Once a first version of the structure is finished, you should try to create a first PDF or PostScript file of your (still empty) talk to ensure that everything is working properly. This file will only contain the title page and the table of contents.
 
-\lyxnote
-Use ``View'' to check whether the presentation compiles fine. Note that you must put the table of contents inside a frame, but that the title page is created automatically.
-
 \subsubsection{Creating PDF}
 
 \beamernote
@@ -102,8 +95,6 @@ You can next use a program like the Acrobat Reader, |xpdf|, |evince| or |okular|
 > acroread main.pdf
 \end{verbatim}
 
-\lyxnote
-Choose ``View pdf'' to view your presentation.
 
 \subsubsection{Creating PostScript}
 \label{section-postscript}
@@ -126,9 +117,6 @@ You can convert a PostScript file to a pdf file using
 \begin{verbatim}
 > ps2pdf main.ps main.pdf
 \end{verbatim}
-
-\lyxnote
-Use ``View Postscript'' to view the PostScript version.
 
 \subsubsection{Ways of Improving Compilation Speed}
 \label{section-speedup}
@@ -167,9 +155,6 @@ Second, you can use the following command:
 
 Once the table of contents looks satisfactory, start creating frames for your presentation by adding |frame| environments. You'll find guidelines on what to put on a frame in Section~\ref{section-frame-guidelines}.
 
-\lyxnote
-To create a frame, use the style ``BeginFrame''. The frame title is given on the line of this style. The frame ends automatically with the start of the next frame, with a section or subsection command, and with an empty line in the style ``EndFrame''. Note that the last frame of your presentation must be ended using ``EndFrame'' and that the last frame before the appendix must be ended this way.
-
 
 \subsection{Step Five: Test Your Presentation}
 
@@ -185,9 +170,6 @@ Do not try to create the ``perfect'' presentation immediately. Rather, test and 
 Once your talk is fixed, you can create a handout, if this seems appropriate. For this, you can use the class option |handout| as explained in Section~\ref{handout}. Typically, you might wish to put several handout slides on one page, see below on how to do this easily.
 
 You may also wish to create an article version of your talk. An ``article version'' of your presentation is a normal \TeX\ text typeset using, for example, the document class |article| or perhaps |llncs| or a similar document class. The \beamer\ class offers facilities to have this version coexist with your presentation version in one file and to share code. Also, you can include slides of your presentation as figures in your article version. Details on how to setup the article version can be found in Section~\ref{section-article}.
-
-\lyxnote
-Creating an article version is not really possible in \LyX. You can \emph{try}, but we would not advise it.
 
 \subsubsection{Printing the Handout}
 \label{section-printing-version}

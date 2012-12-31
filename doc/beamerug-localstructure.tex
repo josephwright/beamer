@@ -74,9 +74,6 @@ The |\item| command is overlay specification-aware. If an overlay specification 
 \newenvironment{mystepwiseitemize}{\begin{itemize}[<+-| alert@+>]}{\end{itemize}}
 \end{verbatim}
 
-  \lyxnote
-  Unfortunately, currently you cannot specify optional arguments with the |itemize| environment. You can, however, use the command |\beamerdefaultoverlayspecification| before the environment to get the desired effect.
-
   The appearance of an |itemize| list is governed by several templates. The first template concerns the way the little marker introducing each item is typeset:
   \begin{element}{itemize items}\semiyes\no\no
     This template is a parent template, whose children are |itemize item|, |itemize subitem|, and |itemize subsubitem|. This means that if you use the |\setbeamertemplate| command on this template, the command is instead called for all of these children (with the same arguments).
@@ -142,9 +139,6 @@ The |\item| command is overlay specification-aware. If an overlay specification 
 
   \articlenote
   To use the \meta{mini template}, you have to include the package |enumerate|.
-
-  \lyxnote
-  The same constraints as for |itemize| apply.
 
   \begin{element}{enumerate items}\semiyes\no\no
     Similar to |itemize items|, this template is a parent template, whose children are |enumerate item|, |enumerate subitem|, |enumerate subsubitem|, and |enumerate mini template|. These templates govern how the text (the number) of an enumeration is typeset.
@@ -251,21 +245,6 @@ There exist corresponding templates like |itemize/enumerate subbody begin| for s
 \end{description}
 \end{verbatim}
 
-  \lyxnote
-  Since you cannot specify the optional argument in \LyX, if you wish to specify the width, you may wish to use the following command shortly before the environment:
-
-  |\setbeamersize{description width of={|\marg{text}|}}|
-
-  \example
-\begin{verbatim}
-\setbeamersize{description width of={longest label}}
-\begin{description}
-\item<1->[short] Some text.
-\item<2->[longest label] Some text.
-\item<3->[long label] Some text.
-\end{description}
-\end{verbatim}
-
   \begin{element}{description item}\yes\yes\yes
     This template is used to typeset the description items. When this template is called, the \beamer-font and -color |description item| are installed.
 
@@ -331,9 +310,6 @@ The \beamer\ class predefines commands and environments for highlighting text. U
   \articlenote
   Structure text is typeset as bold text. This can be changed by modifying the templates.
 
-  \lyxnote
-  You need to use \TeX-mode to insert this command.
-
   \begin{element}{structure}\no\yes\yes
     This color/font is used when structured text is typeset, but it is also widely used as a base for many other colors including the headings of blocks, item buttons, and titles. In most color themes, the colors for navigational elements in the headline or the footline are derived from the foreground color of |structure|. By changing the structure color you can easily change the ``basic color'' of your presentation, other than the color of normal text. See also the related color |local structure| and the related font |tiny structure|.
 
@@ -380,9 +356,6 @@ The \beamer\ class predefines commands and environments for highlighting text. U
 
   \articlenote
   Alerted text is typeset as emphasized text. This can be changed by modifying the templates, see below.
-
-  \lyxnote
-  You need to use \TeX-mode to insert this command (which is not very convenient).
 
   \begin{element}{alerted text}\no\yes\yes
     This color/font is used when alerted text is typeset. The background is currently ignored. There is no template |alerted text|, rather there are templates |alerted text begin| and |alerted text end| that are inserted before and after alerted text.
@@ -446,9 +419,6 @@ The \beamer\ class predefines an environment for typesetting a ``block'' of text
   \articlenote
   The block name is typeset in bold.
 
-  \lyxnote
-  The argument of the block must (currently) be given in \TeX-mode. More precisely, there must be an opening brace in \TeX-mode and a closing brace in \TeX-mode around it. The text in between can also be typeset using \LyX. We hope to get rid of this some day.
-
   \begin{element}{block begin}\yes\no\no
     This template is inserted at the beginning of a block before the \meta{environment contents}. Inside this template, the block title can be accessed via the following insert:
     \begin{itemize}
@@ -487,9 +457,6 @@ title}\sarg{action specification}}
   \articlenote
   The block name is typeset in bold and is emphasized.
 
-  \lyxnote
-  Same applies as for |block|.
-
   \begin{element}{block alerted begin}\yes\no\no
     Same applies as for normal blocks.
   \end{element}
@@ -521,9 +488,6 @@ title}\sarg{action specification}}
   \articlenote
   The block name is typeset in italics.
 
-  \lyxnote
-  Same applies as for |block|.
-
   \begin{element}{block example begin}\yes\no\no
     Same applies as for normal blocks.
   \end{element}
@@ -540,9 +504,6 @@ title}\sarg{action specification}}
     Same applies as for normal blocks.
   \end{element}
 \end{environment}
-
-\lyxnote
-Overlay specifications must be given right at the beginning of the environments and in \TeX-mode.
 
 
 \subsection{Theorem Environments}
@@ -593,8 +554,6 @@ In the following, only the English versions are discussed. The German ones behav
 \end{theorem}
 \end{verbatim}
 
-  \lyxnote
-  If present, the optional argument and the action specification must be given in \TeX-mode at the beginning of the environment.
 \end{environment}
 
 The environments \declare{|corollary|}, \declare{|fact|}, and \declare{|lemma|} behave exactly the same way.
@@ -975,8 +934,6 @@ The main environment for creating columns is called |columns|. Inside this envir
   \articlenote
   This environment is ignored in |article| mode.
 
-  \lyxnote
-  Use ``Columns'' or ``ColumnsTopAligned'' to create a |columns| environment. To pass options, insert them in \TeX-mode right at the beginning of the environment in square brackets.
 \end{environment}
 
 To create a column, you can either use the |column| environment or the |\column| command.
@@ -1000,8 +957,6 @@ To create a column, you can either use the |column| environment or the |\column|
   \articlenote
   This command is ignored in |article| mode.
 
-  \lyxnote
-  The ``Column'' styles insert the command version, see below.
 \end{environment}
 
 \begin{command}{{\column}\oarg{placement}\marg{column width}}
@@ -1020,8 +975,6 @@ To create a column, you can either use the |column| environment or the |\column|
   \articlenote
   This command is ignored in |article| mode.
 
-  \lyxnote
-  In a ``Column'' style, the width of the column must be given as normal text, not in \TeX-mode.
 \end{command}
 
 

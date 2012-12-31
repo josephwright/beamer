@@ -34,7 +34,6 @@ STRUCTURE = \
 	emacs                           \
 	examples/a-conference-talk      \
 	examples/a-lecture              \
-	examples/lyx-based-presentation \
 	solutions/conference-talks      \
 	solutions/generic-talks         \
 	solutions/short-talks

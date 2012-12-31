@@ -30,11 +30,6 @@ beamer/solutions/conference-talks/conference-ornate-20min.en.tex
 \end{verbatim}
 might be appropriate. He creates a subdirectory |presentation| in the directory that contains the actual paper and copies the solution template to this subdirectory, renaming to |main.tex|.
 
-\lyxnote
-If Euclid uses \LyX, he would choose ``New from template'' and pick the template file
-\begin{verbatim}
-beamer/solutions/conference-talks/conference-ornate-20min.en.lyx
-\end{verbatim}
 He opens the file in his favorite editor. It starts
 \begin{verbatim}
 \documentclass{beamer}
@@ -67,9 +62,6 @@ Somehow Euclid does not like the fact that there is no ``|\email|'' command in \
 
 There are two fields that Euclid does not know, but whose meaning he can guess: |\subtitle| and |\institute|. He adjusts them. (Euclid does not need to use the |\and| command, which is used to separate several authors, nor the |\inst| command, which just makes its argument a superscript).
 
-\lyxnote
-In \LyX, Euclid just edits the first lines constisting of fields like Author or Title or Date. He deletes the optional short fields.
-
 
 \subsection{The Title Page Frame}
 
@@ -81,18 +73,12 @@ The next thing in the file that seems interesting is where the first ``frame'' i
 \end{verbatim}
 In \beamer, a presentation consists of a series of frames. Each frame in turn may consist of several slides (if there is more than one, they are called overlays). Normally, everything between |\begin{frame}| and |\end{frame}| is put on a single slide. No page breaking is performed. So Euclid infers that the first frame is ``filled'' by the title page, which seems quite logical.
 
-\lyxnote
-The title page frame is created automatically by \LyX. All other frames start with the style BeginFrame and end either with the style EndFrame or, automatically, with the start of the next frame, subsection, or section.
-
 
 \subsection{Creating the Presentation PDF File}
 
 Eager to find out how the first page will look, he invokes |pdflatex| on his file |main.tex| (twice). He could also use |latex| (twice), followed by |dvips|, and then possibly |ps2pdf|, or |lualatex| (twice), or |xelatex| (twice). Then he uses the Acrobat Reader, |xpdf|, |evince| or |okular| to view the resulting |main.pdf|. Indeed, the first page contains all the information Euclid has provided until now. It even looks quite impressive with the colorful title and the rounded corners and the shadows, but he is doubtful whether he should leave it like that. He decides to address this problem later.
 
 Euclid is delighted to find out that clicking on a section or subsection in the navigation bar at the top hyperjumps there. Also, the small symbols at the bottom seem to be clickable. Toying around with them for a while, he finds that clicking on the arrows left or right of a symbol hyperjumps him backward or forward one slide~/ frame~/ subsection~/ section. He finds the symbols quite small, but decides not to write an email to \beamer's authors since he also thinks that bigger symbols would be distracting.
-
-\lyxnote
-Euclid chooses View $\to$ PDF to view the resulting presentation. On a slow machine, this may take a while. See Section~\ref{section-speedup} for ways of speeding up the compilation.
 
 
 \subsection{The Table of Contents}
@@ -140,9 +126,6 @@ Euclid then modifies the next frame, which is the first ``real'' frame of the pr
 \end{verbatim}
 This yields the desired result. It might be a good idea to put some emphasis on the object being defined (prime numbers). Euclid tries |\emph| but finds that too mild an emphasis. \beamer\ offers the command |\alert|, which is used like |\emph| and, by default, typesets its argument in bright red.
 
-\lyxnote
-The |\alert| command needs to be entered in \TeX-mode, which is awkward. It's easier to just paint the text in red.
-
 Next, Euclid decides to make it even clearer that he is giving a definition by putting a |definition| environment around the definition.
 \begin{verbatim}
 \begin{frame}
@@ -188,9 +171,6 @@ The frame already looks quite nice, though, perhaps a bit colorful. However, Euc
 
 By showing them incrementally, he hopes to focus the audience's attention on the item he is currently talking about. On second thought, he deletes the |\pause| stuff once more since in simple cases like the above the pausing is rather silly. Indeed, Euclids has noticed that good presentations make use of this uncovering mechanism only in special circumstances.
 
-\lyxnote
-You add a pause using the Pause style.
-
 Euclid finds that he can also add a |\pause| between the definition and the example. So, |\pause|s seem to transcede environments, which Euclid finds quite useful. After some experimentation he finds that |\pause| only does not work in |align| environments. He immediately writes an email about this to \beamer's author, but receives a polite answer stating that the implementation of |align| does wicked things and there is no fix for this. Also, Euclid is pointed to the last part of the user's guide, where a workaround is described.
 
 
@@ -219,9 +199,6 @@ The next frame is to show his main argument and is put in a ``Results'' section.
 \end{verbatim}
 
 The overlay specifications are given in pointed brackets. The specification |<1->| means ``from slide 1 on.'' Thus, the first and fourth item are shown on the first slide of the frame, but the other two items are not shown. Rather, the second point is shown only from the second slide onward. \beamer\ automatically computes the number of slides needed for each frame. More generally, overlay specification are lists of numbers or number ranges where the start or ending of a range can be left open. For example |-3,5-6,8-| means ``on all slides, except for slides 4 and~7.''
-
-\lyxnote
-You add overlay specifications to the items by entering \TeX-mode (press on the little \TeX\ icon) and writing |<1->|. This \TeX-text should be placed right at the beginning of the item.
 
 The |\qedhere| is used to put the \textsc{qed} symbol at the end of the line \emph{inside} the enumeration. Normally, the \textsc{qed} symbol is automatically inserted at the end of a proof environment, but that would be on an ugly empty line here.
 
