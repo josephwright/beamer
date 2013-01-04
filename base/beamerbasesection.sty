@@ -56,7 +56,7 @@
   \ifx\beamer@onlylecture\@empty
   \else
     \expandafter\beamer@if@in@clist@TF\expandafter\beamer@onlylecture
-      \beamer@currentlecturelabel
+      \expandafter{\beamer@currentlecturelabel}%
       {\beamer@inlecturetrue}
       {\beamer@inlecturefalse}
   \fi
