@@ -1,0 +1,390 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\section{Creating Handouts and Lecture Notes}
+\label{section-modes}
+
+During a presentation it is very much desirable that the audience has a \emph{handout} or even \emph{lecture notes} available to it. A handout allows everyone in the audience to individually go back to things he or she has not understood.
+
+Always provide handouts \emph{as early as possible}, preferably weeks before the talk. Do \emph{not} retain the handout till the end of the talk.
+
+The \beamer\ package offers two different ways of creating special versions of your talk; they are discussed in the following. The first, easy, way is to create a handout version by adding the |handout| option, which will cause the document to be typeset in |handout| mode. It will ``look like'' a presentation, but it can be printed more easily (the overlays are ``flattened''). The second, more complicated and more powerful way is to create an independent ``article'' version of your presentation. This version coexists in your main file.
+
+
+\subsection{Creating Handouts Using the Handout Mode}
+\label{handout}
+
+The easiest way of creating a handout for your audience (though not the most desirable one) is to use the |handout| option. This option works exactly like the |trans| option. 
+
+\begin{classoption}{handout}
+  Create a version that uses the |handout| overlay specifications.
+
+  You might wish to choose a different color and/or presentation theme for the handout.
+\end{classoption}
+
+When printing a handout created this way, you will typically wish to print at least two and possibly four slides on each page. The easiest way of doing so is presumably to use |pgfpages| as follows:
+
+\begin{verbatim}
+\usepackage{pgfpages}
+\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+\end{verbatim}
+
+Instead of |2 on 1| you can use |4 on 1| (but then you have to add |landscape| to the list of options) and you can use, say, |letterpaper| instead of |a4paper|.
+
+
+\subsection{Creating Handouts Using the Article Mode}
+\label{section-article}
+
+In the following, the ``article version'' of your presentation refers to a normal \TeX\ text typeset using, for example, the document class |article| or perhaps |llncs| or a similar document class. This version of the presentation will typically follow different typesetting rules and may even have a different structure. Nevertheless, you may wish to have this version coexist with your presentation in one file and you may wish to share some part of it (like a figure or a formula) with your presentation.
+
+In general, the article version of a talk is better suited as a handout than a handout created using the simple |handout| mode since it is more economic and can include more in-depth information.
+
+\subsubsection{Starting the Article Mode}
+
+The article mode of a presentation is created by specifying |article| or |book| or some other class as the document class instead of |beamer| and by then loading the package |beamerarticle|.
+
+The package |beamerarticle| defines virtually all of \beamer's commands in a way that is sensible for the |article| mode. Also, overlay specifications can be given to commands like |\textbf| or |\item| once |beamerarticle| has been loaded. Note that, except for |\item|, these overlay specifications also work: by writing |\section<presentation>{Name}| you will suppress this section command in the article version. For the exact effects overlay specifications have in |article| mode, please see the descriptions of the commands to which you wish to apply them.
+
+\begin{package}{{beamerarticle}\opt{|[|\meta{options}|]|}}
+  Makes most \beamer\ commands available for another document class.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|activeospeccharacters|} will leave the character code of the pointed brackets as specified by other packages. Normally, \beamer\ will turn off the special behavior of the two characters |<| and |>|. Using this option, you can reinstall the original behavior at the price of possible problems when using overlay specifications in the |article| mode.
+  \item
+    \declare{|noamssymb|} will suppress the automatic loading of the |amssymb| package. Normally, \beamer\ will load this package since many themes use AMS symbols. This option allows you to opt-out from this behavior in article mode, thus preventing clashes with some classes and font packages that conflict with |amssymb|. Note that, if you use this option, you will have to care for yourself that |amssymb| or an alternative package is loaded if you use respective symbols.
+  \item
+    \declare{|noamsthm|} will suppress the loading of the |amsthm| package. No theorems will be defined.
+  \item
+    \declare{|notheorem|} will suppress the definition of standard environments like |theorem|, but |amsthm| is still loaded and the |\newtheorem| command still makes the defined environments overlay-specification-aware. Using this option allows you to define the standard environments in whatever way you like while retaining the power of the extensions to |amsthm|.
+  \item
+    \declare{|envcountsect|} causes theorem, definitions and the like to be numbered with each section. Thus instead of Theorem~1 you get Theorem~1.1. We recommend using this option.
+  \item
+    \declare{|noxcolor|} will suppress the loading of the |xcolor| package. No colors will be defined.
+  \end{itemize}
+
+  \example
+\begin{verbatim}
+\documentclass{article}
+\usepackage{beamerarticle}
+\begin{document}
+\begin{frame}
+  \frametitle{A frame title}
+  \begin{itemize}
+\item<1-> You can use overlay specifications.
+\item<2-> This is useful.
+  \end{itemize}
+\end{frame}
+\end{document}
+\end{verbatim}
+\end{package}
+
+There is one remaining problem: While the |article| version can easily \TeX\ the whole file, even in the presence of commands like |\frame<2>|, we do not want the special article text to be inserted into our original \beamer\ presentation. That means, we would like all text \emph{between} frames to be suppressed. More precisely, we want all text except for commands like |\section| and so on to be suppressed. This behavior can be enforced by specifying the option |ignorenonframetext| in the presentation version. The option will insert a |\mode*| at the beginning of your presentation.
+
+The following example shows a simple usage of the |article| mode:
+
+\begin{verbatim}
+\documentclass[a4paper]{article}
+\usepackage{beamerarticle}
+%%\documentclass[ignorenonframetext,red]{beamer}
+
+\mode<article>{\usepackage{fullpage}}
+\mode<presentation>{\usetheme{Berlin}}
+
+%% everyone:
+\usepackage[english]{babel}
+\usepackage{pgf}
+
+\pgfdeclareimage[height=1cm]{myimage}{filename}
+
+\begin{document}
+
+\section{Introduction}
+
+This is the introduction text. This text is not shown in the
+presentation, but will be part of the article.
+
+\begin{frame}
+  \begin{figure}
+    % In the article, this is a floating figure,
+    % In the presentation, this figure is shown in the first frame
+    \pgfuseimage{myimage}
+  \end{figure}
+\end{frame}
+
+This text is once more not shown in the presentation.
+
+\section{Main Part}
+
+While this text is not shown in the presentation, the section command
+also applies to the presentation.
+
+We can add a subsection that is only part of the article like this:
+
+\subsection<article>{Article-Only Section}
+
+With some more text.
+
+\begin{frame}
+  This text is part both of the article and of the presentation.
+  \begin{itemize}
+\item This stuff is also shown in both version.
+\item This too.
+  \only<article>{\item This particular item is only part
+      of the article version.}
+\item<presentation:only@0> This text is also only part of the article.
+  \end{itemize}
+\end{frame}
+\end{document}
+\end{verbatim}
+
+There is one command whose behavior is a bit special in |article| mode: The line break command |\\|. Inside frames, this command has no effect in |article| mode, except if an overlay specification is present. Then it has the normal effect dictated by the specification. The reason for this behavior is that you will typically inserts lots of |\\| commands in a presentation in order to get control over all line breaks. These line breaks are mostly superfluous in |article| mode. If you really want a line break to apply in all versions, say |\\<all>|. Note that the command |\\| is often redefined by certain environments, so it may not always be overlay-specification-aware. In such a case you have to write something like |\only<presentation>{\\}|.
+
+\subsubsection{Workflow}
+\label{section-article-version-workflow}
+
+The following workflow steps are optional, but they can simplify the creation of the article version.
+
+\begin{itemize}
+\item
+  In the main file |main.tex|, delete the first line, which sets the document class.
+\item
+  Create a file named, say, |main.beamer.tex| with the following content:
+
+\begin{verbatim}
+\documentclass[ignorenonframetext]{beamer}
+\input{main.tex}
+\end{verbatim}
+
+\item
+  Create an extra file named, say, |main.article.tex| with the following content:
+
+\begin{verbatim}
+\documentclass{article}
+\usepackage{beamerarticle}
+\setjobnamebeamerversion{main.beamer}
+\input{main.tex}
+\end{verbatim}
+
+\item
+  You can now run |pdflatex| or |latex| on the two files |main.beamer.tex| and |main.article.tex|.
+\end{itemize}
+
+The command |\setjobnamebeamerversion| tells the article version where to find the presentation version. This is necessary if you wish to include slides from the presentation version in an article as figures.
+
+\begin{command}{\setjobnamebeamerversion\marg{filename without extension}}
+  Tells the \beamer\ class where to find the presentation version of the current file.
+\end{command}
+
+\subsubsection{Including Slides from the Presentation Version in the Article Version}
+
+If you use the package |beamerarticle|, the |\frame| command becomes available in |article| mode. By adjusting the frame template, you can ``mimic'' the appearance of frames typeset by \beamer\ in your articles. However, sometimes you may wish to insert ``the real thing'' into the |article| version, that is, a precise ``screenshot'' of a slide from the presentation. The commands introduced in the following help you do exactly this.
+
+In order to include a slide from your presentation in your article version, you must do two things: First, you must place a normal \LaTeX\ label on the slide using the |\label| command. Since this command is overlay-specification-aware, you can also select specific slides of a frame. Also, by adding the option |label=|\meta{name} to a frame, a label \meta{name}|<|\meta{slide number}|>| is automatically added to each slide of the frame.
+
+Once you have labeled a slide, you can use the following command in your article version to insert the slide into it:
+
+\begin{command}{\includeslide\oarg{options}\marg{label name}}
+  This command calls |\pgfimage| with the given \meta{options} for the file specified by
+  \begin{quote}
+    |\setjobnamebeamerversion|\meta{filename}
+  \end{quote}
+  Furthermore, the option |page=|\meta{page of label name} is passed to |\pgfimage|, where the \meta{page of label name} is read internally from the file \meta{filename}|.snm|.
+  \example
+
+\begin{verbatim}
+\article
+  \begin{figure}
+    \begin{center}
+      \includeslide[height=5cm]{slide1}
+    \end{center}
+    \caption{The first slide (height 5cm). Note the partly covered second item.}
+  \end{figure}
+  \begin{figure}
+    \begin{center}
+      \includeslide{slide2}
+    \end{center}
+    \caption{The second slide (original size). Now the second item is also shown.}
+  \end{figure}
+\end{verbatim}
+\end{command}
+
+The exact effect of passing the option |page=|\meta{page of label name} to the command |\pgfimage| is explained in the documentation of |pgf|. In essence, the following happens:
+\begin{itemize}
+\item
+  For old versions of |pdflatex| and for any version of |latex| together with |dvips|, the |pgf| package will look for a file named
+  \begin{quote}
+    \meta{filename}|.page|\meta{page of label name}|.|\meta{extension}
+  \end{quote}
+  For each page of your |.pdf| or |.ps| file that is to be included in this way, you must create such a file by hand. For example, if the PostScript file of your presentation version is named |main.beamer.ps| and you wish to include the slides with page numbers 2 and~3, you must create (single page) files |main.beamer.page2.ps| and |main.beamer.page3.ps| ``by hand'' (or using some script). If these files cannot be found, |pgf| will complain.
+\item
+  For new versions of |pdflatex|, |pdflatex| also looks for the files according to the above naming scheme. However, if it fails to find them (because you have not produced them), it uses a special mechanism to directly extract the desired page from the presentation file |main.beamer.pdf|.
+\end{itemize}
+
+
+\subsection{Details on Modes}
+\label{section-mode-details}
+
+This subsection describes how modes work exactly and how you can use the |\mode| command to control what part of your text belongs to which mode.
+
+When \beamer\ typesets your text, it is always in one of the following five modes:
+\begin{itemize}
+\item
+  \declare{|beamer|} is the default mode.
+\item
+  \declare{|second|} is the mode used when a slide for an optional second screen is being typeset.
+\item
+  \declare{|handout|} is the mode for creating handouts.
+\item
+  \declare{|trans|} is the mode for creating transparencies.
+\item
+  \declare{|article|} is the mode when control has been transferred to another class, like |article.cls|. Note that the mode is also |article| if control is transferred to, say, |book.cls|.
+\end{itemize}
+
+In addition to these modes, \beamer\ recognizes the following names for modes sets:
+
+\begin{itemize}
+\item
+  \declare{|all|} refers to all modes.
+\item
+  \declare{|presentation|} refers to the first four modes, that is, to all modes except for the |article| mode.
+\end{itemize}
+
+Depending on the current mode, you may wish to have certain text inserted only in that mode. For example, you might wish a certain frame or a certain table to be left out of your article version. In some situations, you can use the |\only| command for this purpose. However, the command |\mode|, which is described in the following, is much more powerful than |\only|.
+
+The command actually comes in three ``flavors,'' which only slightly differ in syntax. The first, and simplest, is the version that takes one argument. It behaves essentially the same way as |\only|.
+
+\begin{command}{\mode\sarg{mode specification}\marg{text}}
+  Causes the \meta{text} to be inserted only for the specified modes. Recall that a \meta{mode specification} is just an overlay specification in which no slides are mentioned.
+
+  The \meta{text} should not do anything fancy that involves mode switches or including other files. In particular, you should not put an |\include| command inside \meta{text}. Use the argument-free form below, instead.
+
+  \example
+\begin{verbatim}
+\mode<article>{Extra detail mentioned only in the article version.}
+
+\mode
+<beamer| trans>
+{\frame{\tableofcontents[currentsection]}}
+\end{verbatim}
+\end{command}
+
+The second flavor of the |\mode| command takes no argument. ``No argument'' means that it is not followed by an opening brace, but any other symbol.
+
+\begin{command}{\mode\sarg{mode specification}}
+  In the specified mode, this command actually has no effect. The interesting part is the effect in the non-specified modes: In these modes, the command causes \TeX\ to enter a kind of ``gobbling'' state. It will now ignore all following lines until the next line that has a sole occurrence of one of the following commands: |\mode|, |\mode*|, |\begin{document}|, |\end{document}|. Even a comment on this line will make \TeX\ skip it. Note that the line with the special commands that make \TeX\ stop gobbling may not directly follow the line where the gobbling is started. Rather, there must either be one non-empty line before the special command or at least two empty lines.
+
+  When \TeX\ encounters a single |\mode| command, it will execute this command. If the command is |\mode| command of the first flavor, \TeX\ will resume its ``gobbling'' state after having inserted (or not inserted) the argument of the |\mode| command. If the |\mode| command is of the second flavor, it takes over.
+
+  Using this second flavor of |\mode| is less convenient than the first, but there are different reasons why you might need to use it:
+  \begin{itemize}
+  \item
+    The line-wise gobbling is much faster than the gobble of the third flavor, explained below.
+  \item
+    The first flavor reads its argument completely. This means, it cannot contain any verbatim text that contains unbalanced braces.
+  \item
+    The first flavor cannot cope with arguments that contain |\include|.
+  \item
+    If the text mainly belongs to one mode with only small amounts of text from another mode inserted, this second flavor is nice to use.
+  \end{itemize}
+
+  \emph{Note:} When searching line-wise for a |\mode| command to shake it out of its gobbling state, \TeX\ will not recognize a |\mode| command if a mode specification follows on the same line. Thus, such a specification must be given on the next line.
+
+  \emph{Note:} When a \TeX\ file ends, \TeX\ must not be in the gobbling state. Switch this state off using |\mode| on one line and |<all>| on the next.
+
+  \example
+\begin{verbatim}
+\mode<article>
+
+This text is typeset only in |article| mode.
+\verb!verbatim text is ok {!
+
+\mode
+<presentation>
+{ % this text is inserted only in presentation mode
+\frame{\tableofcontents[currentsection]}}
+
+Here we are back to article mode stuff. This text
+is not inserted in presentation mode
+
+\mode
+<presentation>
+
+This text is only inserted in presentation mode.
+\end{verbatim}
+\end{command}
+
+The last flavor of the mode command behaves quite differently.
+
+\begin{command}{\mode\declare{|*|}}
+  The effect of this mode is to ignore all text outside frames in the |presentation| modes. In |article| mode it has no effect.
+
+  This mode should only be entered outside of frames. Once entered, if the current mode is a |presentation| mode, \TeX\ will enter a gobbling state similar to the gobbling state of the second ``flavor'' of the |\mode| command. The difference is that the text is now read token-wise, not line-wise. The text is gobbled token by token until one of the following tokens is found: |\mode|, |\frame|, |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|, |\note|, |\begin{frame}|, and |\end{document}| (the last two are really tokens, but they are recognized anyway).
+
+  Once one of these commands is encountered, the gobbling stops and the command is executed. However, all of these commands restore the mode that was in effect when they started. Thus, once the command is finished, \TeX\ returns to its gobbling.
+
+  Normally, |\mode*| is exactly what you want \TeX\ to do outside of frames: ignore everything except for the above-mentioned commands outside frames in |presentation| mode. However, there are  cases in which you have to use the second flavor of the |\mode| command instead: If you have verbatim text that contains one of the commands, if you have very long text outside frames, or if you wish some text outside a frame (like a definition) to be executed also in |presentation| mode.
+
+  The class option |ignorenonframetext| will switch on |\mode*| at the beginning of the document.
+
+  \example
+\begin{verbatim}
+\begin{document}
+\mode*
+
+This text is not shown in the presentation.
+
+\begin{frame}
+  This text is shown both in article and presentation mode.
+\end{frame}
+
+this text is not shown in the presentation again.
+
+\section{This command also has effect in presentation mode}
+
+Back to article stuff again.
+
+\frame<presentation>
+{ this frame is shown only in the presentation. }
+\end{document}
+\end{verbatim}
+
+  \example The following example shows how you can include other files in a main file. The contents of a |main.tex|:
+
+\begin{verbatim}
+\documentclass[ignorenonframetext]{beamer}
+\begin{document}
+This is star mode stuff.
+
+Let's include files:
+\mode<all>
+\include{a}
+\include{b}
+\mode*
+
+Back to star mode
+\end{document}
+\end{verbatim}
+
+  And |a.tex| (and likewise |b.tex|):
+
+\begin{verbatim}
+\mode*
+\section{First section}
+Extra text in article version.
+\begin{frame}
+  Some text.
+\end{frame}
+\mode<all>
+\end{verbatim}
+\end{command}

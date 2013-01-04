@@ -1,0 +1,23 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\DeclareOptionBeamer{gray}{\definecolor{beamer@structure@color}{gray}{#1}}
+\DeclareOptionBeamer{rgb}{\definecolor{beamer@structure@color}{rgb}{#1}}
+\DeclareOptionBeamer{RGB}{\definecolor{beamer@structure@color}{RGB}{#1}}
+\DeclareOptionBeamer{cmyk}{\definecolor{beamer@structure@color}{cmyk}{#1}}
+\DeclareOptionBeamer{cmy}{\definecolor{beamer@structure@color}{cmy}{#1}}
+\DeclareOptionBeamer{named}{\definecolor{beamer@structure@color}{named}{#1}}
+\DeclareOptionBeamer{hsb}{\definecolor{beamer@structure@color}{hsb}{#1}}
+\ProcessOptionsBeamer
+
+
+\setbeamercolor{structure}{fg=beamer@structure@color}

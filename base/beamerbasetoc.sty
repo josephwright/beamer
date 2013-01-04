@@ -1,0 +1,210 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+%
+% Local counters/ifs/dimensions
+%
+\newif\ifbeamer@pausesections
+\newif\ifbeamer@pausesubsections
+
+%
+%
+% Table of Contents Format
+%
+%
+
+\def\beamer@toc@sectionstyle#1{\beamer@toc@process\beamer@toc@cs\beamer@toc@os#1//}
+\def\beamer@toc@subsectionstyle#1{\beamer@toc@sprocess\beamer@toc@css\beamer@toc@oss\beamer@toc@ooss#1///}
+\def\beamer@toc@subsubsectionstyle#1{\beamer@toc@ssprocess\beamer@toc@csss\beamer@toc@osss\beamer@toc@oosss\beamer@toc@ooosss#1////}
+
+\define@key{beamertoc}{sectionstyle}{\beamer@toc@sectionstyle{#1}}
+\define@key{beamertoc}{subsectionstyle}{\beamer@toc@subsectionstyle{#1}}
+\define@key{beamertoc}{subsubsectionstyle}{\beamer@toc@subsubsectionstyle{#1}}
+\def\beamer@toc@process#1#2#3/#4/{%
+  \beamer@ifempty{#4}{\def#1{#3}\def#2{#3}}{\def#1{#3}\def#2{#4}\@gobble}}
+  
+\def\beamer@toc@sprocess#1#2#3#4/#5/#6/{%
+  \beamer@ifempty{#5}%
+  {\def#1{#4}\def#2{#4}\def#3{#4}}
+  {\beamer@ifempty{#6}
+    {\def#1{#4}\def#2{#5}\def#3{#5}\@gobble}
+    {\def#1{#4}\def#2{#5}\def#3{#6}\@gobbletwo}}}
+
+\def\beamer@toc@ssprocess#1#2#3#4#5/#6/#7/#8/{%
+  \beamer@ifempty{#6}%
+  {\def#1{#5}\def#2{#5}\def#3{#5}\def#4{#5}}
+  {\beamer@ifempty{#7}
+    {\def#1{#5}\def#2{#6}\def#3{#6}\def#4{#6}\@gobble}
+    {\beamer@ifempty{#8}
+      {\def#1{#5}\def#2{#6}\def#3{#7}\def#4{#7}\@gobbletwo}
+      {\def#1{#5}\def#2{#6}\def#3{#7}\def#4{#8}\expandafter\@gobble\@gobbletwo}}}% no gobblethree?
+}
+
+\define@key{beamertoc}{pausesections}[true]{\beamer@pausesectionstrue}
+\define@key{beamertoc}{pausesubsections}[true]{\beamer@pausesubsectionstrue}
+
+\define@key{beamertoc}{currentsection}[]{\beamer@toc@sectionstyle{show/shaded}\beamer@toc@subsectionstyle{show/show/shaded}\beamer@toc@subsubsectionstyle{show/show/shaded}}
+\define@key{beamertoc}{currentsubsection}[]{\beamer@toc@subsectionstyle{show/shaded}\beamer@toc@subsubsectionstyle{show/shaded}}
+\define@key{beamertoc}{hideallsubsections}[]{\beamer@toc@subsectionstyle{hide}\beamer@toc@subsubsectionstyle{hide}}
+\define@key{beamertoc}{hideothersubsections}[]{\beamer@toc@subsectionstyle{show/show/hide}\beamer@toc@subsubsectionstyle{show/shaded/hide}}
+
+\define@key{beamertoc}{part}{\beamer@showpartnumber=#1\relax}
+\define@key{beamertoc}{sections}{\beamer@parsetocsections#1[]}
+\define@key{beamertoc}{firstsection}{\beamer@sectionadjust=-#1\relax\advance\beamer@sectionadjust by 1\relax}
+\def\beamer@parsetocsections{\@ifnextchar<\beamer@@parsetocsections\beamer@@@parsetocsections}
+\def\beamer@@parsetocsections#1[]{\def\beamer@tocsections{#1}}
+\def\beamer@@@parsetocsections#1[]{\def\beamer@tocsections{<all:#1>}}
+
+\def\tableofcontents{\@ifnextchar[{\beamer@tableofcontents}{\beamer@tableofcontents[]}}
+\def\beamer@tableofcontents[#1]{%
+  \def\beamer@toc@cs{show}%
+  \def\beamer@toc@os{show}%
+  \def\beamer@toc@css{show}%
+  \def\beamer@toc@oss{show}%
+  \def\beamer@toc@ooss{show}%
+  \def\beamer@toc@csss{show}%
+  \def\beamer@toc@osss{show}%
+  \def\beamer@toc@oosss{show}%
+  \def\beamer@toc@ooosss{show}%
+  \beamer@showpartnumber=\c@part%
+  \beamer@pausesectionsfalse%
+  \beamer@pausesubsectionsfalse%
+  \def\beamer@tocsections{<*>}%
+  \setkeys{beamertoc}{firstsection=1}%
+  \setkeys{beamertoc}{#1}%
+  \vspace*{-.5em}{\makeatletter%
+    \pause[0]%
+    \@input{\jobname.toc}%
+    \vfill}%
+  }
+
+\renewcommand\addcontentsline[3]{\addtocontents{#1}{\protect\contentsline{#2}{#3}}}
+
+\def\beamer@tocaction@show#1{\usebeamertemplate**{#1}}
+\def\beamer@tocaction@shaded#1{\usebeamertemplate**{#1 shaded}}
+\def\beamer@tocaction@hide#1{}
+
+\def\beamer@tocact#1#2{\csname beamer@tocaction@#1\endcsname{#2}}
+
+\def\beamer@tocifnothide#1{\csname beamer@tocinvcheck@#1\endcsname}
+\let\beamer@tocinvcheck@hide\@gobble
+
+\def\beamer@hidetext{hide}
+
+\def\sectionintoc{}
+\def\beamer@sectionintoc#1#2#3#4#5{%
+  \ifnum\c@tocdepth>0%
+  \ifnum#4=\beamer@showpartnumber%
+  {
+  \beamer@saveanother%
+  \gdef\beamer@todo{}%
+  \beamer@slideinframe=#1\relax%
+  \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+      \beamer@tempcount=#5\relax%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
+      {
+        \ifbeamer@pausesections\pause\fi%
+        \ifx\beamer@toc@ooss\beamer@hidetext
+          \vskip1.5em
+        \else
+          \vfill
+        \fi
+        {%
+          \hbox{\vbox{%
+              \def\beamer@breakhere{\\}%
+              \beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{section in toc}}}%
+         \par%
+        }%
+      }%
+    }
+  }%
+  \beamer@restoreanother%
+  }
+  \beamer@todo%
+  \fi\fi%
+}
+
+\def\subsectionintoc{}
+\long\def\beamer@subsectionintoc#1#2#3#4#5#6{%
+  \ifnum\c@tocdepth>1%
+  \ifnum#5=\beamer@showpartnumber%
+  {
+    \beamer@saveanother%
+    \gdef\beamer@todo{}%
+    \beamer@slideinframe=#1\relax%
+    \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+      \ifbeamer@pausesubsections\pause\fi%
+      \beamer@tempcount=#6%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \def\inserttocsubsectionnumber{#2}%
+      \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@oss\else\beamer@toc@ooss\fi}%
+      {%
+        \def\beamer@breakhere{\\}%
+        \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}
+        {subsection in toc}%
+      }%
+    }}%
+    \beamer@restoreanother%
+  }
+  \beamer@todo%
+  \fi\fi%
+}
+
+\def\subsubsectionintoc{}
+\long\def\beamer@subsubsectionintoc#1#2#3#4#5#6#7{%
+  \ifnum\c@tocdepth>2%
+  \ifnum#6=\beamer@showpartnumber%
+  {
+    \beamer@saveanother%
+    \gdef\beamer@todo{}%
+    \beamer@slideinframe=#2\relax%
+    \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+      \ifbeamer@pausesubsections\pause\fi%
+      \beamer@tempcount=#7%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \def\inserttocsubsectionnumber{#2}%
+      \def\inserttocsubsubsectionnumber{#3}%
+      \def\inserttocsubsubsection{\hyperlink{Navigation#5}{#4}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@oss\else\beamer@toc@ooss\fi}%
+      {%
+        \def\beamer@breakhere{\\}%
+        \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsubsection=#3\beamer@toc@csss\else\beamer@toc@osss\fi\else\beamer@toc@oosss\fi\else\beamer@toc@ooosss\fi}
+        {subsubsection in toc}%
+      }%
+    }}%
+    \beamer@restoreanother%
+  }
+  \beamer@todo%
+  \fi\fi%
+}
+
+\mode
+<article>
+{
+  \AtBeginDocument{
+    \let\beamer@origtableofcontents=\tableofcontents
+    \renewcommand{\tableofcontents}[1][]{\beamer@origtableofcontents}
+    }
+}
+
+
+\mode
+<all>

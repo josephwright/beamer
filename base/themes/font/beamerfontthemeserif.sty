@@ -1,0 +1,33 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\DeclareOptionBeamer{stillsansserifmath}[]{\def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
+\DeclareOptionBeamer{stillsansserifsmall}[]{\def\beamer@tsfont{\sffamily}}
+\DeclareOptionBeamer{stillsansseriflarge}[]{\def\beamer@sfont{\sffamily}}
+\DeclareOptionBeamer{stillsansseriftext}[]{\def\familydefault{\sfdefault}}
+
+\DeclareOptionBeamer{onlymath}[]{
+  \def\beamer@tsfont{\sffamily}
+  \def\beamer@sfont{\sffamily}
+  \def\familydefault{\sfdefault}
+}
+
+\def\beamer@tsfont{\rmfamily}
+\def\beamer@sfont{\rmfamily}
+\def\familydefault{\rmdefault}
+\def\mathfamilydefault{\rmdefault}
+\beamer@sansmathfalse
+
+\ProcessOptionsBeamer
+
+\setbeamerfont{tiny structure}{family=\beamer@tsfont}
+\setbeamerfont{structure}{family=\beamer@sfont}

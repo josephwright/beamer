@@ -1,0 +1,318 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\ifbeamer@amssymb
+\RequirePackage{amssymb}
+% For \blacktriangleright; not explicitly required by article, but can cause
+% weird situations if users find that symbols works in presentation, but not
+% in article mode.
+% However, some classes or font packages clash with amssymb, so allow to
+% disable auto-loading optionally.
+\fi
+
+\mode
+<presentation>
+
+%
+% Font theme stuff
+%
+\define@key{beamerthm}{size}
+  {\expandafter\def\csname beamer@thmfsize@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{size*}
+  {\expandafter\def\csname beamer@thmfsize@\beamer@temp\endcsname{\fontsize#1}}
+\define@key{beamerthm}{shape}
+  {\expandafter\def\csname beamer@thmfshape@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{shape*}
+  {\expandafter\def\csname beamer@thmfshape@\beamer@temp\endcsname{\fontshape{#1}}}
+\define@key{beamerthm}{series}
+  {\expandafter\def\csname beamer@thmfseries@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{series*}
+  {\expandafter\def\csname beamer@thmfseries@\beamer@temp\endcsname{\fontseries{#1}}}
+\define@key{beamerthm}{family}
+  {\expandafter\def\csname beamer@thmffamily@\beamer@temp\endcsname{#1}}
+\define@key{beamerthm}{family*}
+  {\expandafter\def\csname beamer@thmffamily@\beamer@temp\endcsname{\fontfamily{#1}}}
+\define@key{beamerthm}{parent}
+  {\expandafter\def\csname beamer@thmfinherits@\beamer@temp\endcsname{%
+    \@for\@temp:={#1}\do{\expandafter\usebeamerfont\expandafter{\@temp}}}}
+
+\def\setbeamerfont{\@ifstar{\beamer@clearbeamerfont}{\beamer@setbeamerfont}}
+
+\newcommand\beamer@clearbeamerfont[2]{%
+  \def\beamer@temp{#1}
+  \setkeys{beamerthm}{size={},shape={},series={},family={},parent={}}
+  \setkeys{beamerthm}{#2}
+}
+\newcommand\beamer@setbeamerfont[2]{%
+  \def\beamer@temp{#1}
+  \setkeys{beamerthm}{#2}
+}
+
+\def\usebeamerfont{\@ifstar{\reset@font\beamer@usebeamerfont}{\beamer@usebeamerfont}}
+
+\newcommand\beamer@usebeamerfont[1]{%
+  \csname beamer@thmfinherits@#1\endcsname%
+  \csname beamer@thmfsize@#1\endcsname%
+  \csname beamer@thmfshape@#1\endcsname%
+  \csname beamer@thmfseries@#1\endcsname%
+  \csname beamer@thmffamily@#1\endcsname%
+  \selectfont}
+
+
+%
+% computer modern font size stuff - redefinition for oversized fonts.
+% Not used if other packages like lmodern kick in.
+%
+\def\EC@family#1#2#3#4#5{%
+  \DeclareFontShape{#1}{#2}{#3}{#4}%
+  {<5><6><7><8><9><10><10.95><12><14.4>%
+   <17.28><20.74><24.88><29.86><35.83><42.99><51.59>genb*#5}{}}
+\EC@family{T1}{cmr}{m}{n}{ecrm}
+\EC@family{T1}{cmr}{m}{sl}{ecsl}
+\EC@family{T1}{cmr}{m}{it}{ecti}
+\EC@family{T1}{cmr}{m}{sc}{eccc}
+\EC@family{T1}{cmr}{bx}{n}{ecbx}
+\EC@family{T1}{cmr}{b}{n}{ecrb}
+\EC@family{T1}{cmr}{bx}{it}{ecbi}
+\EC@family{T1}{cmr}{bx}{sl}{ecbl}
+\EC@family{T1}{cmr}{bx}{sc}{ecxc}
+\EC@family{T1}{cmr}{m}{ui}{ecui}
+\DeclareFontShape{OT1}{cmr}{m}{n}%
+     {<5><6><7><8><9><10><12>gen*cmr%
+      <10.95>cmr10%
+      <14.4>cmr12%
+      <17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmr17}{}
+\DeclareFontShape{OT1}{cmr}{m}{sl}%
+     {<5><6><7>cmsl8%
+      <8><9>gen*cmsl%
+      <10><10.95>cmsl10%
+      <12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmsl12%
+      }{}
+\DeclareFontShape{OT1}{cmr}{m}{it}%
+     {<5><6><7>cmti7%
+      <8>cmti8%
+      <9>cmti9%
+      <10><10.95>cmti10%
+      <12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmti12%
+      }{}
+\DeclareFontShape{OT1}{cmr}{m}{sc}%
+     {<5><6><7><8><9><10><10.95><12>%
+      <14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmcsc10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{m}{ui}
+   {<5><6><7><8><9><10><10.95><12>%
+      <14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmu10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{b}{n}
+     {<5><6><7><8><9><10><10.95><12>%
+      <14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmb10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{bx}{n}
+   {<5><6><7><8><9>gen*cmbx%
+      <10><10.95>cmbx10%
+      <12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmbx12%
+      }{}
+\DeclareFontShape{OT1}{cmr}{bx}{sl}
+      {<5><6><7><8><9>%
+      <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmbxsl10%
+      }{}
+\DeclareFontShape{OT1}{cmr}{bx}{it}
+      {<5><6><7><8><9>%
+      <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmbxti10%
+    }{}
+\DeclareFontFamily{T1}{cmss}{}
+\EC@family{T1}{cmss}{m}{n}{ecss}
+\EC@family{T1}{cmss}{m}{sl}{ecsi}
+\EC@family{T1}{cmss}{m}{it}{ecsi}
+\EC@family{T1}{cmss}{bx}{n}{ecsx}
+\EC@family{T1}{cmss}{bx}{it}{ecso}
+\EC@family{T1}{cmss}{bx}{sl}{ecso}
+\DeclareFontShape{T1}{cmss}{sbc}{n}{%
+      <5><6><7><8><9><10><10.95><12><14.4><17.28>%
+      <20.74><24.88><29.86><35.83><42.99><51.59>%
+      ecssdc10
+       }{}
+\DeclareFontShape{OT1}{cmss}{m}{n}
+     {%
+      <5><6><7><8>cmss8%
+      <9>cmss9%
+      <10><10.95>cmss10%
+      <12><14.4>cmss12%
+      <17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmss17%
+      }{}
+\DeclareFontShape{OT1}{cmss}{m}{sl}
+    {%
+      <5><6><7><8>cmssi8<9>cmssi9%
+      <10><10.95>cmssi10%
+      <12><14.4>cmssi12%
+      <17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssi17%
+      }{}
+\DeclareFontShape{OT1}{cmss}{m}{it}
+    {%
+      <5><6><7><8>cmssi8<9>cmssi9%
+      <10><10.95>cmssi10%
+      <12><14.4>cmssi12%
+      <17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssi17%
+      }{}
+\DeclareFontShape{OT1}{cmss}{sbc}{n}
+     {%
+      <5><6><7><8><9>cmssdc10%
+       <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssdc10%
+       }{}
+\DeclareFontShape{OT1}{cmss}{bx}{n}
+     {%
+      <5><6><7><8><9>cmssbx10%
+      <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssbx10%
+      }{}
+
+
+
+\AtBeginDocument{%
+\def\beamer@cmr{cmr}
+\edef\beamer@fmdef{\mathfamilydefault}
+
+% supress for standard cm
+\ifx\beamer@fmdef\beamer@cmr\beamer@suppressreplacementstrue\fi
+
+% supress for mathtime serif and math minion serif
+\@ifpackageloaded{arevmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{hvmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{kpfonts}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{lucidabr}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{lucimatx}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mathpmnt}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mathpple}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mathtime}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mtpro}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+\@ifpackageloaded{mtpro2}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+
+\ifbeamer@suppressreplacements\else
+  \ifbeamer@sansmath
+    \SetSymbolFont{operators}{normal}{OT1}{cmss}{m}{n}
+    \ifx\mv@bold\@undefined
+    \else
+      \SetSymbolFont{operators}{bold}{OT1}{cmss}{bx}{n}
+    \fi
+  \fi
+  \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{m}{n}
+  \DeclareSymbolFont{pureletters}{\encodingdefault}{\mathfamilydefault}{m}{it}
+  \SetMathAlphabet{\mathrm}{normal}{\encodingdefault}{\rmdefault}{m}{n}
+  \DeclareMathAlphabet{\mathbf}{\encodingdefault}{\mathfamilydefault}{bx}{n}
+  \DeclareMathAlphabet{\mathsf}{\encodingdefault}{\sfdefault}{m}{n}
+  \DeclareMathAlphabet{\mathit}{\encodingdefault}{\mathfamilydefault}{m}{it}
+  \DeclareMathAlphabet{\mathtt}{\encodingdefault}{\ttdefault}{m}{n}
+  \ifx\mv@bold\@undefined\else
+  \SetSymbolFont{numbers}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{n}
+  \SetSymbolFont{pureletters}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{it}
+  \SetMathAlphabet{\mathrm}{bold}{\encodingdefault}{\rmdefault}{bx}{n}
+  \SetMathAlphabet{\mathbf}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{n}
+  \SetMathAlphabet{\mathsf}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+  \SetMathAlphabet{\mathit}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{it}
+  \SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{bx}{n}
+  \fi
+
+  \def\operator@font{\mathgroup\symnumbers}
+
+  \DeclareMathSymbol{0}\mathalpha{numbers}{"30}
+  \DeclareMathSymbol{1}\mathalpha{numbers}{"31}
+  \DeclareMathSymbol{2}\mathalpha{numbers}{"32}
+  \DeclareMathSymbol{3}\mathalpha{numbers}{"33}
+  \DeclareMathSymbol{4}\mathalpha{numbers}{"34}
+  \DeclareMathSymbol{5}\mathalpha{numbers}{"35}
+  \DeclareMathSymbol{6}\mathalpha{numbers}{"36}
+  \DeclareMathSymbol{7}\mathalpha{numbers}{"37}
+  \DeclareMathSymbol{8}\mathalpha{numbers}{"38}
+  \DeclareMathSymbol{9}\mathalpha{numbers}{"39}
+
+  \DeclareMathSymbol{A}\mathalpha{pureletters}{"41}
+  \DeclareMathSymbol{B}\mathalpha{pureletters}{"42}
+  \DeclareMathSymbol{C}\mathalpha{pureletters}{"43}
+  \DeclareMathSymbol{D}\mathalpha{pureletters}{"44}
+  \DeclareMathSymbol{E}\mathalpha{pureletters}{"45}
+  \DeclareMathSymbol{F}\mathalpha{pureletters}{"46}
+  \DeclareMathSymbol{G}\mathalpha{pureletters}{"47}
+  \DeclareMathSymbol{H}\mathalpha{pureletters}{"48}
+  \DeclareMathSymbol{I}\mathalpha{pureletters}{"49}
+  \DeclareMathSymbol{J}\mathalpha{pureletters}{"4A}
+  \DeclareMathSymbol{K}\mathalpha{pureletters}{"4B}
+  \DeclareMathSymbol{L}\mathalpha{pureletters}{"4C}
+  \DeclareMathSymbol{M}\mathalpha{pureletters}{"4D}
+  \DeclareMathSymbol{N}\mathalpha{pureletters}{"4E}
+  \DeclareMathSymbol{O}\mathalpha{pureletters}{"4F}
+  \DeclareMathSymbol{P}\mathalpha{pureletters}{"50}
+  \DeclareMathSymbol{Q}\mathalpha{pureletters}{"51}
+  \DeclareMathSymbol{R}\mathalpha{pureletters}{"52}
+  \DeclareMathSymbol{S}\mathalpha{pureletters}{"53}
+  \DeclareMathSymbol{T}\mathalpha{pureletters}{"54}
+  \DeclareMathSymbol{U}\mathalpha{pureletters}{"55}
+  \DeclareMathSymbol{V}\mathalpha{pureletters}{"56}
+  \DeclareMathSymbol{W}\mathalpha{pureletters}{"57}
+  \DeclareMathSymbol{X}\mathalpha{pureletters}{"58}
+  \DeclareMathSymbol{Y}\mathalpha{pureletters}{"59}
+  \DeclareMathSymbol{Z}\mathalpha{pureletters}{"5A}
+
+  \DeclareMathSymbol{a}\mathalpha{pureletters}{"61}
+  \DeclareMathSymbol{b}\mathalpha{pureletters}{"62}
+  \DeclareMathSymbol{c}\mathalpha{pureletters}{"63}
+  \DeclareMathSymbol{d}\mathalpha{pureletters}{"64}
+  \DeclareMathSymbol{e}\mathalpha{pureletters}{"65}
+  \DeclareMathSymbol{f}\mathalpha{pureletters}{"66}
+  \DeclareMathSymbol{g}\mathalpha{pureletters}{"67}
+  \DeclareMathSymbol{h}\mathalpha{pureletters}{"68}
+  \DeclareMathSymbol{i}\mathalpha{pureletters}{"69}
+  \DeclareMathSymbol{j}\mathalpha{pureletters}{"6A}
+  \DeclareMathSymbol{k}\mathalpha{pureletters}{"6B}
+  \DeclareMathSymbol{l}\mathalpha{pureletters}{"6C}
+  \DeclareMathSymbol{m}\mathalpha{pureletters}{"6D}
+  \DeclareMathSymbol{n}\mathalpha{pureletters}{"6E}
+  \DeclareMathSymbol{o}\mathalpha{pureletters}{"6F}
+  \DeclareMathSymbol{p}\mathalpha{pureletters}{"70}
+  \DeclareMathSymbol{q}\mathalpha{pureletters}{"71}
+  \DeclareMathSymbol{r}\mathalpha{pureletters}{"72}
+  \DeclareMathSymbol{s}\mathalpha{pureletters}{"73}
+  \DeclareMathSymbol{t}\mathalpha{pureletters}{"74}
+  \DeclareMathSymbol{u}\mathalpha{pureletters}{"75}
+  \DeclareMathSymbol{v}\mathalpha{pureletters}{"76}
+  \DeclareMathSymbol{w}\mathalpha{pureletters}{"77}
+  \DeclareMathSymbol{x}\mathalpha{pureletters}{"78}
+  \DeclareMathSymbol{y}\mathalpha{pureletters}{"79}
+  \DeclareMathSymbol{z}\mathalpha{pureletters}{"7A}
+\fi
+}
+
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+\DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
+\DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
+
+
+\newcommand\Tiny{\@setfontsize\Tiny{4}{5}}
+\newcommand\TINY{\@setfontsize\Tiny{3}{4}}
+
+\mode
+<article>
+{
+  \let\Tiny=\tiny
+  \let\TINY=\tiny
+
+  \newcommand\setbeamerfont{\@ifstar{\@gobbletwo}{\@gobbletwo}}
+  \newcommand\usebeamerfont{\@ifstar{\beamer@optgog}{\beamer@optgog}}
+}
+
+
+\mode
+<all>

@@ -1,0 +1,61 @@
+% Copyright 2007 by Till Tantau
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+
+\mode<presentation>
+
+\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=black}
+\setbeamercolor*{example text}{fg=black}
+\setbeamercolor*{structure}{fg=black}
+
+\providecommand*{\beamer@bftext@only}{%
+  \relax
+  \ifmmode
+    \expandafter\beamer@bftext@warning
+  \else
+    \expandafter\bfseries
+  \fi
+}
+\providecommand*{\beamer@bftext@warning}{%
+  \ClassWarning{beamer}
+    {Cannot use bold for alerted text in math mode}%
+}
+
+\setbeamerfont{alerted text}{series=\beamer@bftext@only}
+
+\setbeamercolor*{palette primary}{fg=black,bg=black!20}
+\setbeamercolor*{palette secondary}{fg=black,bg=black!25}
+\setbeamercolor*{palette tertiary}{fg=black,bg=black!30}
+\setbeamercolor*{palette quaternary}{fg=black,bg=black!35}
+
+\setbeamercolor{sidebar}{bg=black!20}
+
+\setbeamercolor*{palette sidebar primary}{fg=black}
+\setbeamercolor*{palette sidebar secondary}{fg=black}
+\setbeamercolor*{palette sidebar tertiary}{fg=black}
+\setbeamercolor*{palette sidebar quaternary}{fg=black}
+
+\setbeamercolor*{item projected}{fg=black,bg=black!20}
+
+\setbeamercolor*{block title}{fg=black,bg=black!20}
+\setbeamercolor*{block title alerted}{fg=black,bg=black!20}
+\setbeamercolor*{block title example}{fg=black,bg=black!20}
+
+\setbeamercolor*{block body}{fg=black,bg=black!10}
+\setbeamercolor*{block body alerted}{fg=black,bg=black!10}
+\setbeamercolor*{block body example}{fg=black,bg=black!10}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\mode
+<all>
