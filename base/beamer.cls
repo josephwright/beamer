@@ -11,7 +11,7 @@
 
 \RequirePackage{beamerbasercs}
 \ProvidesClassRCS $Header$
-[development version \beamer@version\space A class for typesetting presentations]
+[\beamer@version\space A class for typesetting presentations]
 
 
 \RequirePackage{beamerbasemodes}
