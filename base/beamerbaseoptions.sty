@@ -22,10 +22,13 @@
   \fi
   \edef\@tempa{%
     \noexpand\setkeys{\@currname}{\@tempa\@ptionlist{\@currname.\@currext}}}%
-  \let\beamer@origkverr\KV@err%
-  \ifx\@currext\@clsextension\let\KV@errx=\@gobble\fi% never mind
+  \let\beamer@origkverr\KV@errx%
+  \let\beamer@origxkverr\XKV@err%
+  \ifx\@currext\@clsextension\else\let\KV@errx=\@gobble\fi% never mind
+  \ifx\@currext\@clsextension\else\let\XKV@err=\@gobble\fi% never mind
   \@tempa%
-  \let\KV@err\beamer@origkverr%
+  \let\KV@errx\beamer@origkverr%
+  \let\XKV@err\beamer@origxkverr%
   \AtEndOfPackage{\let\@unprocessedoptions\relax}}
 
 \def\ExecuteOptionsBeamer#1{%
