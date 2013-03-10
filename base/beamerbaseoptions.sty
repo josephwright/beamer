@@ -24,8 +24,8 @@
     \noexpand\setkeys{\@currname}{\@tempa\@ptionlist{\@currname.\@currext}}}%
   \let\beamer@origkverr\KV@errx%
   \let\beamer@origxkverr\XKV@err%
-  \ifx\@currext\@clsextension\else\let\KV@errx=\@gobble\fi% never mind
-  \ifx\@currext\@clsextension\else\let\XKV@err=\@gobble\fi% never mind
+  \let\KV@errx=\@gobble% never mind
+  \let\XKV@err=\@gobble% never mind
   \@tempa%
   \let\KV@errx\beamer@origkverr%
   \let\XKV@err\beamer@origxkverr%
