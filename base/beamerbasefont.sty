@@ -175,26 +175,25 @@
       }{}
 
 
-
+\newcommand*{\beamer@font@check}{%
+  \def\beamer@cmr{cmr}
+  \edef\beamer@fmdef{\mathfamilydefault}
+  % supress for standard cm
+  \ifx\beamer@fmdef\beamer@cmr\beamer@suppressreplacementstrue\fi
+  % supress for mathtime serif and math minion serif
+  \@ifpackageloaded{arevmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{hvmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{kpfonts}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{lucidabr}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{lucimatx}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{mathpmnt}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{mathpple}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{mathtime}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{mtpro}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+  \@ifpackageloaded{mtpro2}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
+}
 \AtBeginDocument{%
-\def\beamer@cmr{cmr}
-\edef\beamer@fmdef{\mathfamilydefault}
-
-% supress for standard cm
-\ifx\beamer@fmdef\beamer@cmr\beamer@suppressreplacementstrue\fi
-
-% supress for mathtime serif and math minion serif
-\@ifpackageloaded{arevmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{hvmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{kpfonts}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{lucidabr}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{lucimatx}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{mathpmnt}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{mathpple}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{mathtime}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{mtpro}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-\@ifpackageloaded{mtpro2}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}
-
+\beamer@font@check
 \ifbeamer@suppressreplacements\else
   \ifbeamer@sansmath
     \SetSymbolFont{operators}{normal}{OT1}{cmss}{m}{n}
