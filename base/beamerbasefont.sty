@@ -288,6 +288,12 @@
 \fi
 }
 
+\ifbeamer@sansmath
+  \IfFileExists{sansmathaccent.sty}
+    {\RequirePackage{sansmathaccent}}
+    {}
+\fi
+
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
 \DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
