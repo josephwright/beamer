@@ -325,7 +325,10 @@
   \else\ifnum#1=32%
     \beamer@paperwidth 13.50cm%
     \beamer@paperheight 9.00cm%
-  \fi\fi\fi\fi\fi\fi%
+  \else\ifnum#1=141%
+    \beamer@paperwidth 14.85cm%
+    \beamer@paperheight10.50cm%
+  \fi\fi\fi\fi\fi\fi\fi%
 }
 
 \RequirePackage[%
