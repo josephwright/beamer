@@ -73,65 +73,65 @@
 
 \def\hyperlinkslideprev{%
   \beamer@prevpage\c@page%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 \def\hyperlinkslidenext{%
   \beamer@nextpage\c@page%
-  \hyperlink{page.\the\beamer@tempcount}}
-\def\hyperlinkframestart{\hyperlink{page.\beamer@startpageofframe}}
-\def\hyperlinkframeend{\hyperlink{page.\beamer@endpageofframe}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkframestart{\hyperlink{Navigation\beamer@startpageofframe}}
+\def\hyperlinkframeend{\hyperlink{Navigation\beamer@endpageofframe}}
 \def\hyperlinkframestartnext{%
   \beamer@nextpage\beamer@endpageofframe%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 \def\hyperlinkframeendprev{%
   \beamer@prevpage\beamer@startpageofframe%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 
-\def\hyperlinksubsectionstart{\hyperlink{page.\beamer@startpageofsubsection}}
-\def\hyperlinksubsectionend{\hyperlink{page.\beamer@endpageofsubsection}}
+\def\hyperlinksubsectionstart{\hyperlink{Navigation\beamer@startpageofsubsection}}
+\def\hyperlinksubsectionend{\hyperlink{Navigation\beamer@endpageofsubsection}}
 \def\hyperlinksubsectionstartnext{%
   \beamer@nextpage\beamer@endpageofsubsection%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 \def\hyperlinksubsectionendprev{%
   \beamer@prevpage\beamer@startpageofsubsection%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 
-\def\hyperlinksectionstart{\hyperlink{page.\beamer@startpageofsection}}
-\def\hyperlinksectionend{\hyperlink{page.\beamer@endpageofsection}}
+\def\hyperlinksectionstart{\hyperlink{Navigation\beamer@startpageofsection}}
+\def\hyperlinksectionend{\hyperlink{Navigation\beamer@endpageofsection}}
 \def\hyperlinksectionstartnext{%
   \beamer@nextpage\beamer@endpageofsection%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 \def\hyperlinksectionendprev{%
   \beamer@prevpage\beamer@startpageofsection%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 
-\def\hyperlinkpartstart{\hyperlink{page.\beamer@startpageofpart}}
-\def\hyperlinkpartend{\hyperlink{page.\beamer@endpageofpart}}
+\def\hyperlinkpartstart{\hyperlink{Navigation\beamer@startpageofpart}}
+\def\hyperlinkpartend{\hyperlink{Navigation\beamer@endpageofpart}}
 \def\hyperlinkpartstartnext{%
   \beamer@nextpage\beamer@endpageofpart%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 \def\hyperlinkpartendprev{%
   \beamer@prevpage\beamer@startpageofpart%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 
-\def\hyperlinkpresentationstart{\hyperlink{page.1}}
+\def\hyperlinkpresentationstart{\hyperlink{Navigation1}}
 \def\hyperlinkpresentationend{%
   \ifx\beamer@startpageofappendix\@empty%
   \beamer@tempcount=\beamer@endpageofdocument%
   \else%
   \beamer@prevpage\beamer@startpageofappendix%
   \fi%
-  \hyperlink{page.\the\beamer@tempcount}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
 \def\hyperlinkappendixstart{%
   \ifx\beamer@startpageofappendix\@empty%
   \beamer@tempcount=\beamer@endpageofdocument%
   \else%
   \beamer@tempcount=\beamer@startpageofappendix%
   \fi%
-  \hyperlink{page.\the\beamer@tempcount}}
-\def\hyperlinkappendixend{\hyperlink{page.\beamer@endpageofdocument}}
+  \hyperlink{Navigation\the\beamer@tempcount}}
+\def\hyperlinkappendixend{\hyperlink{Navigation\beamer@endpageofdocument}}
 
-\def\hyperlinkdocumentstart{\hyperlink{page.1}}
-\def\hyperlinkdocumentend{\hyperlink{page.\beamer@endpageofdocument}}
+\def\hyperlinkdocumentstart{\hyperlink{Navigation1}}
+\def\hyperlinkdocumentend{\hyperlink{Navigation\beamer@endpageofdocument}}
 
 \mode
 <article>
