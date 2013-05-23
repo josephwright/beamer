@@ -114,7 +114,11 @@
   \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
       \beamer@tempcount=#5\relax%
       \advance\beamer@tempcount by\beamer@sectionadjust%
-      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \ifnum\beamer@tempcount>0
+        \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \else
+        \def\inserttocsectionnumber{}%
+      \fi%
       \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
       {
