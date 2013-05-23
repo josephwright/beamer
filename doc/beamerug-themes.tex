@@ -1,0 +1,340 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\section{Themes}
+
+\subsection{Five Flavors of Themes}
+
+\emph{Themes} make it easy to change the appearance of a
+presentation. The \beamer\ class uses five different kinds of themes:
+\begin{description}
+\item[Presentation Themes]
+  Conceptually, a presentation theme dictates for every single detail of a presentation what it looks like. Thus, choosing a particular presentation theme will setup for, say, the numbers in enumeration what color they have, what color their background has, what font is used to render them, whether a circle or ball or rectangle or whatever is drawn behind them, and so forth. Thus, when you choose a presentation theme, your presentation will look the way someone (the creator of the theme) thought that a presentation should look like. Presentation themes typically only choose a particular color theme, font theme, inner theme, and outer theme that go well together.
+\item[Color Themes]
+  A color theme only dictates which colors are used in a presentation. If you have chosen a particular presentation theme and then choose a color theme, only the colors of your presentation will change. A color theme can specify colors in a very detailed way: For example, a color theme can specifically change the colors used to render, say, the border of a button, the background of a button, and the text on a button.
+\item[Font Themes]
+  A font theme dictates which fonts or font attributes are used in a presentation. As for colors, the font of all text elements used in a presentation can be specified independently.
+\item[Inner Themes]
+  An inner theme specifies how certain elements of a presentation are typeset. This includes all elements that are at the ``inside'' of the frame, that is, that are not part of the headline, footline, or sidebars. This includes all enumerations, itemize environments, block environments, theorem environments, or the table of contents. For example, an inner theme might specify that in an enumeration the number should be typeset without a dot and that a small circle should be shown behind it. The inner theme would \emph{not} specify what color should be used for the number or the circle (this is the job of the color theme) nor which font should be used (this is the job of the font theme).
+\item[Outer Themes]
+  An outer theme specifies what the ``outside'' or ``border'' of the presentation slides should look like. It specifies whether there are head- and footlines, what is shown in them, whether there is a sidebar, where the logo goes, where the navigation symbols and bars go, and so on. It also specifies where the frametitle is put and how it is typeset.
+\end{description}
+
+The different themes reside in the five subdirectories |theme|, |color|, |font|, |inner|, and |outer| of the directory |beamer/themes|. Internally, a theme is stored as a normal style file. However, to use a theme, the following special commands should be used:
+
+\begin{command}{\usetheme\oarg{options}\marg{name list}}
+  Installs the presentation theme named \meta{name}. Currently, the effect of this command is the same as saying |\usepackage| for the style file named |beamertheme|\meta{name}|.sty| for each \meta{name} in the \meta{name list}.
+\end{command}
+
+
+\begin{command}{\usecolortheme\oarg{options}\marg{name list}}
+  Same as |\usetheme|, only for color themes. Color style files are named |beamercolortheme|\meta{name}|.sty|.
+\end{command}
+
+\begin{command}{\usefonttheme\oarg{options}\marg{name}}
+  Same as |\usetheme|, only for font themes. Font style files are named |beamerfonttheme|\meta{name}|.sty|.
+\end{command}
+
+\begin{command}{\useinnertheme\oarg{options}\marg{name}}
+  Same as |\usetheme|, only for inner themes. Inner style files are named |beamerinnertheme|\meta{name}|.sty|.
+\end{command}
+
+\begin{command}{\useoutertheme\oarg{options}\marg{name}}
+  Same as |\usetheme|, only for outer themes. Outer style files are named |beameroutertheme|\meta{name}|.sty|.
+\end{command}
+
+If you do not use any of these commands, a sober \emph{default} theme is used for all of them. In the following, the presentation themes that come with the \beamer\ class are described. The element, layout, color, and font themes  are presented in the following sections.
+
+
+\subsection{Presentation Themes without Navigation Bars}
+
+A presentation theme dictates for every single detail of a presentation what it looks like. Normally, having chosen a particular presentation theme, you do not need to specify anything else having to do with the appearance of your presentation---the creator of the theme should have taken care of that for you. However, you still \emph{can} change things afterward either by using a different color, font, element, or even layout theme; or by changing specific colors, fonts, or templates directly.
+
+When Till started naming the presentation themes, he soon ran out of ideas on how to call them. Instead of giving them more and more cumbersome names, he decided to switch to a different naming convention: Except for two special cases, all presentation themes are named after cities. These cities happen to be cities in which or near which there was a conference or workshop that he attended or that a co-author of his attended.
+
+All themes listed without author mentioned were developed by Till. If a theme has not been developped by us (that is, if someone else is to blame), this is indicated with the theme. We have sometimes slightly changed or ``corrected'' submitted themes, but we still list the original authors.
+
+\begin{themeexample}{default}
+  As the name suggests, this theme is installed by default. It is a sober no-nonsense theme that makes minimal use of color or font variations. This theme is useful for all kinds of talks, except for very long talks.
+\end{themeexample}
+
+\begin{themeexample}[{\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}]{boxes}
+  For this theme, you can specify an arbitrary number of templates for the boxes in the headline and in the footline. You can add a template for another box by using the following commands.
+
+  \begin{command}{\addheadbox\marg{beamer color}\marg{box template}}
+    Each time this command is invoked, a new box is added to the head line, with the first added box being shown on the left. All boxes will have the same size.
+
+    The \meta{beamer color} will be used to setup the foreground and background colors of the box.
+
+    \example
+\begin{verbatim}
+\addheadbox{section in head/foot}{\tiny\quad 1. Box}
+\addheadbox{structure}{\tiny\quad 2. Box}
+\end{verbatim}
+
+    A similar effect as the above commands can be achieved by directly installing a head template that contains two |beamercolorbox|es:
+
+\begin{verbatim}
+\setbeamertemplate{headline}
+{\leavevmode
+\begin{beamercolorbox}[width=.5\paperwidth]{section in head/foot}
+  \tiny\quad 1. Box
+\end{beamercolorbox}%
+\begin{beamercolorbox}[width=.5\paperwidth]{structure}
+  \tiny\quad 2. Box
+\end{beamercolorbox}
+}
+\end{verbatim}
+
+    While being more complicated, the above commands offer more flexibility.
+  \end{command}
+
+  \begin{command}{\addfootbox\marg{beamer color}\marg{box template}}
+    \example
+\begin{verbatim}
+\addfootbox{section in head/foot}{\tiny\quad 1. Box}
+\addfootbox{structure}{\tiny\quad 2. Box}
+\end{verbatim}
+  \end{command}
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Bergen}
+  A theme based on the |inmargin| inner theme and the |rectangles| inner theme. Using this theme is not quite trivial since getting the spacing right can be trickier than with most other themes. Also, this theme goes badly with columns. You may wish to consult the remarks on the |inmargin| inner theme.
+
+  Bergen is a town in Norway. It hosted \textsc{iwpec} 2004.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Boadilla}
+  A theme giving much information in little space. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|secheader|} causes a headline to be inserted showing the current section and subsection. By default, this headline is not shown.
+  \end{itemize}
+
+  \themeauthor Manuel Carro. Boadilla is a village in the vicinity of Madrid, hosting the University's Computer Science department.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Madrid}
+  Like the |Boadilla| theme, except that stronger colors are used and that the itemize icons are not modified. The same \meta{options} as for the |Boadilla| theme may be given.
+
+  \themeauthor Manuel Carro. Madrid is the capital of Spain.
+\end{themeexample}
+
+\begin{themeexample}{AnnArbor}
+  Like |Boadilla|, but using the colors of the University of Michigan.
+
+  \themeauthor Madhusudan Singh. The University of Michigan is located at Ann Arbor.
+\end{themeexample}
+
+\begin{themeexample}{CambridgeUS}
+  Like |Boadilla|, but using the colors of MIT.
+
+  \themeauthor Madhusudan Singh.
+\end{themeexample}
+
+\begin{themeexample}{EastLansing}
+  Like |Boadilla|, but using the colors of Michigan State University.
+  
+  \themeauthor Alan Munn. Michigan State University is located in East Lansing.
+\end{themeexample}
+
+\begin{themeexample}{Pittsburgh}
+  A sober theme. The right-flushed frame titles creates an interesting ``tension'' inside each frame.
+
+  Pittsburgh is a town in the eastern USA. It hosted the second \textsc{recomb} workshop of \textsc{snp}s and haplotypes, 2004.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Rochester}
+  A dominant theme without any navigational elements. It can be made less dominant by using a different color theme.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
+  \end{itemize}
+
+  Rochester is a town in upstate New York, USA. Till visited Rochester in 2001.
+\end{themeexample}
+
+
+\subsection{Presentation Themes with a Tree-Like Navigation Bar}
+
+\begin{themeexample}{Antibes}
+  A dominant theme with a tree-like navigation at the top. The rectangular elements mirror the rectangular navigation at the top. The theme can be made less dominant by using a different color theme.
+
+  Antibes is a town in the south of France. It hosted \textsc{stacs} 2002.
+\end{themeexample}
+
+\begin{themeexample}{JuanLesPins}
+  A variation on the |Antibes| theme that has a much ``smoother'' appearance. It can be made less dominant by choosing a different color theme.
+
+  Juan--Les--Pins is a cozy village near Antibes. It hosted \textsc{stacs} 2002.
+\end{themeexample}
+
+\begin{themeexample}{Montpellier}
+  A sober theme giving basic navigational hints. The headline can be made more dominant by using a different color theme.
+
+  Montpellier is in the south of France. It hosted \textsc{stacs} 2004.
+\end{themeexample}
+
+
+\subsection{Presentation Themes with a Table of Contents Sidebar}
+
+\begin{themeexample}[\oarg{options}]{Berkeley}
+  A dominant theme. If the navigation bar is on the left, it dominates since it is seen first. The height of the frame title is fixed to two and a half lines, thus you should be careful with overly long titles. A logo will be put in the corner area. Rectangular areas dominate the layout. The theme can be made less dominant by using a different color theme.
+
+  By default, the current entry of the table of contents in the sidebar will be highlighted by using a more vibrant color. A good alternative is to highlight the current entry by using a different color for the background of the current point. The color theme |sidebartab| installs the appropriate colors, so you just have to say
+\begin{verbatim}
+\usecolortheme{sidebartab}
+\end{verbatim}
+
+  This color theme works with all themes that show a table of contents in the sidebar.
+
+  This theme is useful for long talks like lectures that require a table of contents to be visible all the time.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
+  \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
+  \item \declare{|left|} puts the sidebar on the left (default).
+  \item \declare{|right|} puts the sidebar on the right.
+  \item \declare{|width=|\meta{dimension}} sets the width of the sidebar. If set to zero, no sidebar is created.
+  \end{itemize}
+
+  Berkeley is on the western coast of the USA, near San Francisco. Till visited Berkeley for a year in 2004.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{PaloAlto}
+  A variation on the |Berkeley| theme with less dominance of rectangular areas. The same \meta{options} as for the |Berkeley| theme can be given.
+
+  Palo Alto is also near San Francisco. It hosted the Bay Area Theory Workshop 2004.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Goettingen}
+  A relatively sober theme useful for a longer talk that demands a sidebar with a full table of contents.  The same \meta{options} as for the |Berkeley| theme can be given.
+
+  G\"ottingen is a town in Germany. It hosted the 42nd Theorietag.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Marburg}
+  A very dominant variation of the |Goettingen| theme. The same \meta{options} may be given.
+
+  Marburg is a town in Germany. It hosted the 46th Theorietag.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Hannover}
+  In this theme, the sidebar on the left is balanced by right-flushed frame titles.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
+  \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
+  \item \declare{|width=|\meta{dimension}} sets the width of the sidebar.
+  \end{itemize}
+
+  Hannover is a town in Germany. It hosted the 48th Theorietag.
+\end{themeexample}
+
+
+\subsection{Presentation Themes with a Mini Frame Navigation}
+
+\begin{themeexample}[\oarg{options}]{Berlin}
+  A dominant theme with strong colors and dominating rectangular areas. The head- and footlines give lots of information and leave little space for the actual slide contents. This theme is useful for conferences where the audience is not likely to know the title of the talk or who is presenting it. The theme can be made less dominant by using a different color theme.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|compress|} causes the mini frames in the headline to use only a single line. This is useful for saving space.
+  \end{itemize}
+
+  Berlin is the capital of Germany.
+\end{themeexample}
+
+\begin{themeexample}[\oarg{options}]{Ilmenau}
+  A variation on the |Berlin| theme. The same \meta{options} may be given.
+
+  Ilmenau is a town in Germany. It hosted the 40th Theorietag.
+\end{themeexample}
+
+\begin{themeexample}{Dresden}
+  A variation on the |Berlin| theme with a strong separation into navigational stuff at the top/bottom and a sober main text. The same \meta{options} may be given.
+
+  Dresden is a town in Germany. It hosted STACS 2001.
+\end{themeexample}
+
+
+\begin{themeexample}{Darmstadt}
+  A theme with a strong separation into a navigational upper part and an informational main part. By using a different color theme, this separation can be lessened.
+
+  Darmstadt is a town in Germany.
+\end{themeexample}
+
+\begin{themeexample}{Frankfurt}
+  A variation on the |Darmstadt| theme that is slightly less cluttered by leaving out the subsection information.
+
+  Frankfurt is a town in Germany.
+\end{themeexample}
+
+\begin{themeexample}{Singapore}
+  A not-too-sober theme with navigation that does not dominate.
+
+  Singapore is located in south-eastern Asia. It hosted \textsc{cocoon} 2002.
+\end{themeexample}
+
+\begin{themeexample}{Szeged}
+  A sober theme with a strong dominance of horizontal lines.
+
+  Szeged is on the south border of Hungary. It hosted \textsc{dlt} 2003.
+\end{themeexample}
+
+
+\subsection{Presentation Themes with Section and Subsection Tables}
+
+\begin{themeexample}{Copenhagen}
+  A not-quite-too-dominant theme. This theme gives compressed information about the current section and subsection at the top and about the title and the author at the bottom. No shadows are used, giving the presentation a ``flat'' look. The theme can be made less dominant by using a different color theme.
+
+  Copenhagen is the capital of Denmark. It is connected to Malm\"o by the \O resund bridge.
+\end{themeexample}
+
+\begin{themeexample}{Luebeck}
+  A variation on the |Copenhagen| theme.
+
+  L\"ubeck is a town in nothern Germany. It hosted the 41st Theorietag.
+\end{themeexample}
+
+\begin{themeexample}{Malmoe}
+  A more sober variation of the |Copenhagen| theme.
+
+  Malm\"o is a town in southern Sweden. It hosted \textsc{fct} 2001.
+\end{themeexample}
+
+\begin{themeexample}{Warsaw}
+  A dominant variation of the |Copenhagen| theme.
+
+  Warsaw is the capital of Poland. It hosted \textsc{mfcs} 2002.
+\end{themeexample}
+
+
+\subsection{Presentation Themes Included For Compatibility}
+
+Earlier versions of \beamer\ included some further themes. These themes are still available for compatibility, though they are now implemented differently (they also mainly install appropriate color, font, inner, and outer themes). However, they may or may not honor color themes and they will not be supported in the future. The following list shows which of the new themes should be used instead of the old themes. (When switching, you may want to use the font theme |structurebold| with the option |onlysmall|.)
+
+\medskip
+\begin{tabular}{lp{13cm}}
+  Old theme & Replacement options \\\hline
+  none & Use |compatibility|. \\
+  |bars| & Try |Dresden| instead. \\
+  |classic| & Try |Singapore| instead. \\
+  |lined| & Try |Szeged| instead. \\
+  |plain| & Try none or |Pittsburgh| instead. \\
+  |sidebar| & Try |Goettingen| for the light version and |Marburg| for
+  the dark version. \\
+  |shadow| & Try |Warsaw| instead. \\
+  |split| & Try |Malmoe| instead. \\
+  |tree| & Try |Montpellier| and, for the bars version, |Antibes| or
+  |JuansLesPins|.
+\end{tabular}

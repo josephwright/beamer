@@ -1,0 +1,369 @@
+% Copyright 2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the documentation file for more details.
+
+\section{Translating Strings}
+
+\subsection{Introduction}
+
+\subsubsection{Overview of the Package}
+
+The \translatorname\ package is a \LaTeX\ package that provides a flexible mechanism for translating individual words into different languages. For example, it can be used to translate a word like ``figure'' into, say, the German word ``Abbildung''. Such a translation mechanism is useful when the author of some package would like to localize the package such that texts are correctly translated into the language preferred by the user. The \translatorname\ package is \emph{not} intended to be used to automatically translate more than a few words.
+
+You may wonder whether the \translatorname\ package is really necessary since there is the (very nice) |babel| package available for \LaTeX. This package already provides translations for words like ``figure''. Unfortunately, the architecture of the babel package was designed in such a way that there is no way of adding translations of new words to the (very short) list of translations directly built into babel.
+
+The \translatorname\ package was specifically designed to allow an easy extension of the vocabulary. It is both possible to add new words that should be translated and translations of these words.
+
+The \translatorname\ package can be used together with babel. In this case, babel is used for language-specific things like special quotation marks and input shortcuts, while \translatorname\ is used for the translation of words.
+
+\subsubsection{How to Read This Section}
+
+This section explains the commands of the \translatorname\ package and its usage. The ``public'' commands and environments provided by the |translator| package are described throughout the text. In each such description, the described command, environment or option is printed in red. Text shown in green is optional and can be left out.
+
+In the following documentation, the installation is explained first, followed by an overview of the basic concepts used. Then, we explain the usage of the package.
+
+\subsubsection{Contributing}
+
+Since this package is about internationalization, it needs input from people who can contribute translations to their native tongue.
+
+In order to submit dictionaries, please do the following:
+\begin{enumerate}
+  \item Read this manual and make sure you understand the basic concepts.
+  \item Find out whether the translations should be part of the \translatorname\ package or part of another package. In general, submit translations and new keys to the \translatorname\ project only if they are of public interest.
+
+  For example, translations for keys like |figure| should be send to the \translatorname\ project. Translations for keys that are part of a special package should be send to the author of the package.
+  \item If you are sure that the translations should go to the \translatorname\ package, create a dictionary of the correct name (see this documentation once more).
+  \item Finally, submit the dictionary using the correct forum on the development site.
+\end{enumerate}
+
+\subsubsection{Installation}
+
+This package is distributed with \beamer. Typically, if you have \beamer\ installed, the package will already be installed on your system. If not, look in Section \ref{section-installation} for instructions on how to install \beamer.
+
+
+\subsection{Basic Concepts}
+
+\subsubsection{Keys}
+
+The main purpose of the \translatorname\ package is to provide translations for \emph{keys}. Typically, a key is an English word like |Figure| and the German translation for this key is ``Abbildung''.
+
+For a concept like ``figures'' a single key typically is not enough:
+\begin{enumerate}
+  \item  It is sometimes necessary to translate a group of words like ``Table of figures'' as a whole. While these are three words in English, the German translation in just a single word: ``Abbildungsverzeichnis''.
+  \item Uppercase and lowercase letters may cause problems. Suppose we provide a translation for the key |Figure|. Then what happens when we want to use this word in normal text, spelled with a lowercase first letter? We could use \TeX's functions to turn the translation into lowercase, but that would be wrong with the German translation ``Abbildung'', which is always spelled with a capital letter.
+  \item  Plurals may also cause problems. If we know the translation for ``Figure'', that does not mean that we know the translation for ``Figures'' (which is ``Abbildungen'' in German).
+\end{enumerate}
+
+Because of these problems, there are many keys for the single concept of ``figures'': |Figure|, |figure|, |Figures|, and |figures|. The first key is used for translations of  ``figure'' when used in a headline in singular. The last key is used for translations of ``figure'' when used in normal text in plural.
+
+A key may contain spaces, so |Table of figures| is a permissible key.
+
+Keys are normally English texts whose English translation is the same as the key, but this need not be the case. Theoretically, a key could be anything. However, since the key is used as a last fallback when no translation whatsoever is available, a key should be readable by itself.
+
+\subsubsection{Language Names}
+
+The \translatorname\ package uses names for languages that are different from the names used by other packages like babel. The reason for this is that the names used by babel are a bit of a mess, so Till decided to clean things up for the \translatorname\ package. However, mappings from babel names to \translatorname\ names are provided.
+
+The names used by the \translatorname\ package are the English names commonly used for these languages. Thus, the name for the English language is |English|, the name for German is |German|.
+
+Variants of a language get their own name: The British version of English is called |BritishEnglish|, the US-version is called |AmericanEnglish|.
+
+For German there is the special problem of pre-1998 as opposed to the current (not yet fixed) spelling. The language |German| reflects the current official spelling, but |German1997| refers to the spelling used in 1997.
+
+\subsubsection{Language Paths}
+
+When you request a translation for a key, the \translatorname\ package will try to provide the translation for the current \emph{language}. Examples of languages are German or English.
+
+When the \translatorname\ looks up the translation for the given key in the current language, it may fail to find a translation. In this case, the \translatorname\ will try a fallback strategy: It keeps track of a \emph{language path} and successively tries to find translations for each language on this path.
+
+Language paths are not only useful for fallbacks. They are also used for situations where a language is a variant of another language. For example, when the \translatorname\ looks for the translation for a key in Austrian, the language path starts with Austrian, followed by German. Then, a dictionary for Austrian only needs to provide translations for those keys where Austrian differs from German.
+
+\subsubsection{Dictionaries}
+
+The translations of keys are typically provided by \emph{dictionaries}. A dictionary contains the translations of a specific set of keys into a specific language. For example, a dictionary might contain the translations of the names of months into the language German. Another dictionary might contain the translations of the numbers into French.
+
+
+\subsection{Usage}
+
+\subsubsection{Basic Usage}
+\label{section-translator-basic-usage}
+
+Here is a typical example of how to use the package:
+\begin{verbatim}
+\documentclass[german]{article}
+
+\usepackage{babel}
+\usepackage{some-package-that-uses-translator}
+
+\begin{document}
+...
+\end{document}
+\end{verbatim}
+As can be seen, things really happen behind the scenes, so, typically, you do not really need to do anything. It is the job of other package to load the \translatorname\ package, to load the dictionaries and to request translations of keys.
+
+\subsubsection{Providing Translations}
+
+There are several commands to tell the \translatorname\ package what the translation of a given key is. As said before, as a normal author you typically need not provide such translations explicitly, they are loaded automatically. However, there are two situations in which you need to provide translations:
+\begin{enumerate}
+\item
+  You do not like the existing translation and you would like to provide a new one.
+\item
+  You are writing a dictionary.
+\end{enumerate}
+
+You provide a translation using one of the following commands:
+\begin{command}{\newtranslation\oarg{options}\marg{key}\marg{translation}}
+  This command defines the translation of \meta{key} to be \meta{translation} in the language specified by the \meta{options}.
+
+  You can only use this command if the translation is really ``new'' in the sense that no translation for the keys has yet been given for the language. If there is already a translation, an error message will be printed.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+    \itemoption{to}{}|=|\meta{language} This options tells the \translatorname, that the translation \meta{translation} of \meta{keys} applies to the language \meta{language}.
+
+    Inside a dictionary file (see Section~\ref{section-dictionaries}), this option is set automatically to the language of the dictionary.
+  \end{itemize}
+
+  \example
+  |\newtranslation[to=German]{figure}{Abbildung}|
+
+  \example
+  |\newtranslation[to=German]{Figures}{Abbildungen}|
+\end{command}
+
+\begin{command}{\renewtranslation\oarg{options}\marg{key}\marg{translation}}
+  This command works like |\newtranslation|, only it will redefine an existing translation.
+\end{command}
+
+\begin{command}{\providetranslation\oarg{options}\marg{key}\marg{translation}}
+  This command works like |\newtranslation|, but no error message will be printed if the translation already exists. It this case, the existing translation is not changed.
+
+  This command should be used by dictionary authors since their translations should not overrule any translations given by document authors or other dictionary authors.
+\end{command}
+
+\begin{command}{\deftranslation\oarg{options}\marg{key}\marg{translation}}
+  This command defines the translation ``no matter what''. An existing translation will be overwritten.
+
+  This command should typically used by document authors to install their preferred translations.
+
+  \example
+  |\deftranslation[to=German]{figure}{Figur}|
+\end{command}
+
+Here is an example where a translation is provided by a document author:
+\begin{verbatim}
+\documentclass[ngerman]{article}
+
+\usepackage{babel}
+\usepackage{some-package-that-uses-translator}
+
+\deftranslation[to=German]{Sketch of proof}{Beweisskizze}
+
+\begin{document}
+  ...
+\end{document}
+\end{verbatim}
+
+\subsubsection{Creating and Using Dictionaries}
+\label{section-dictionaries}
+
+Two kind of people will create \emph{dictionaries}: First, package authors will create dictionaries containing translations for the (new) keys used in the package. Second, document authors can create their own private dictionaries that overrule settings from other dictionaries or that provide missing translations.
+
+There is not only one dictionary per language. Rather, many different dictionaries may be used by \textsc{translator} when it tries to find a translation. This makes it easy to add new translations: Instead of having to change \translatorname's main dictionaries (which involves, among other things, the release of a new version of the |translator| package), package authors can just add a new dictionary containing just the keys needed for the package.
+
+Dictionaries are named according to the following rule: The name of the dictionary must start with its \emph{kind}. The kind tells \translatorname\ which kind of keys the dictionary contains. For example, the dictionaries of the kind |translator-months-dictionary| contain keys like |January| (note that this is a key, not a translation). Following the kind, the name of a dictionary must have a dash. Then comes the language for which the dictionary file provides translations. Finally, the file name must end with |.dict|.
+
+To continue the example of the month dictionary, for the German language the dictionary is called
+\begin{verbatim}
+translator-months-dictionary-German.dict
+\end{verbatim}
+Its contents is the following:
+\begin{verbatim}
+\ProvidesDictionary{translator-months-dictionary}{German}
+
+\providetranslation{January}{Januar}
+\providetranslation{February}{Februar}
+\providetranslation{March}{M\"arz}
+\providetranslation{April}{April}
+\providetranslation{May}{Mai}
+\providetranslation{June}{Juni}
+\providetranslation{July}{Juli}
+\providetranslation{August}{August}
+\providetranslation{September}{September}
+\providetranslation{October}{Oktober}
+\providetranslation{November}{November}
+\providetranslation{December}{Dezember}
+\end{verbatim}
+Note that the |\providetranslation| command does not need the option |[to=German]|. Inside a dictionary file \textsc{translator} will always set the default translation language to the language provided by the dictionary. However, you can still specify the language, if you prefer.
+
+The |\ProvidesDictionary| command currently only prints a message in the log-files.
+
+\begin{command}{\ProvidesDictionary\marg{kind}\marg{language}\oarg{version}}
+  This command currently only prints a message in the log-files. The format is the same as for \LaTeX's |\ProvidesPackage| command.
+\end{command}
+
+Dictionaries are stored in a decentralized manner: A special dictionary for a package will typically be stored somewhere in the vicinity of the package. For this reasons, \textsc{translator} needs to be told which \emph{kinds} of dictionaries should be loaded and which \emph{languages}  should be used. This is accomplished using the following two commands:
+
+\begin{command}{\usedictionary\marg{kind}}
+  This command tells the |translator| package, that at the beginning of the document it should load all dictionaries of kind \meta{kind} for the languages used in the document. Note that the dictionaries are not loaded immediately, but only at the beginning of the document.
+
+  If no dictionary of the given \emph{kind} exists for one of the language, nothing bad happens.
+
+  Invocations of this command accumulate, that is, you can call it multiple times for different dictionaries.
+\end{command}
+
+\begin{command}{\uselanguage\marg{list of languages}}
+  This command tells the |translator| package that it should load the dictionaries for all languages in the \meta{list of languages}. The dictionaries are loaded at the beginning of the document.
+\end{command}
+
+Here is an example of how all of this works: Suppose you wish to create a new package for drawing, say, chess boards. Let us call this package |chess|. In the file |chess.sty| we could now write the following:
+\begin{verbatim}
+// This is chess.sty
+
+\RequirePackage{translator}
+\usedictionary{chess}
+
+...
+
+\newcommand\MoveKnight[2]{%
+  ...
+  \translate{knight}
+  ...
+}
+\end{verbatim}
+Now we create dictionaries like the following:
+\begin{verbatim}
+// This is chess-German.dict
+\ProvidesDictionary{chess}{German}
+
+\providetranslation{chess}{Schach}
+\providetranslation{knight}{Springer}
+\providetranslation{bishop}{L\"aufer}
+...
+\end{verbatim}
+and
+\begin{verbatim}
+// This is chess-English.dict
+\ProvidesDictionary{chess}{English}
+
+\providetranslation{chess}{chass}
+\providetranslation{knight}{knight}
+\providetranslation{bishop}{bishop}
+...
+\end{verbatim}
+Here are a few things to note:
+\begin{itemize}
+  \item The package |chess.sty| does not use the command |\uselanguage|. After all, the package does not know (or care) about the language used in the final document. It only needs to tell the \translatorname\ package that it will use the dictionary |chess|.
+  \item You may wonder why we need an English dictionary. After all, the keys themselves are the ultimate fallbacks if no other translation is available. The answer to this question is that, first of all, English should be treated like any other language. Second, there are some situations in which there is a ``better'' English translation than the key itself. An example is explained next.
+  \item The keys we chose may not be optimal. What happens, if some other package, perhaps on medieval architecture, also needs translations of knights and bishops. However, in this different context, the translations of knight and bishop are totally different, namely |Ritter| and |Bischof|.
+
+  Thus, it might be a good idea to add something to the key to make it clear that the ``chess bishop'' is meant:
+\begin{verbatim}
+// This is chess-German.dict
+\providetranslation{knight (chess)}{Springer}
+\providetranslation{bishop (chess)}{L\"aufer}
+\end{verbatim}
+
+\begin{verbatim}
+// This is chess-English.dict
+\providetranslation{knight (chess)}{knight}
+\providetranslation{bishop (chess)}{bishop}
+\end{verbatim}
+\end{itemize}
+
+\subsubsection{Creating a User Dictionary}
+
+There are two ways of creating a personal set of translations. First, you can simply add commands like
+\begin{verbatim}
+\deftranslation[to=German]{figure}{Figur}
+\end{verbatim}
+to your personal macro files.
+
+Second, you can create a personal dictionary file as follows: In your document you say
+\begin{verbatim}
+\documentclass[ngerman]{article}
+
+\usepackage{translator}
+\usedictionary{my-personal-dictionary}
+\end{verbatim}
+and then you create the following file somewhere where \TeX\ can find it:
+\begin{verbatim}
+// This is file my-personal-dictionary-German.dict
+\ProvidesDictionary{my-personal-dictionary}{German}
+
+\deftranslation{figure}{Figur}
+\end{verbatim}
+
+\subsubsection{Translating Keys}
+
+Once the dictionaries and languages have been setup, you can translate keys using the following commands:
+
+\begin{command}{\translate\oarg{options}\marg{key}}
+  This command will insert the translation of the \meta{key} at the current position into the text. The command is robust.
+
+  The translation process of \meta{key} works as follows: \textsc{Translator} iterates over all languages on the current \emph{language  path} (see Section~\ref{section-language-path}). For each language on the path, \textsc{translator} checks whether a translation is available for the \meta{key}. For the first language for which this is the case, the translation is used. If there is no translation available for any language on the path, the \meta{key} itself is used as the translation.
+
+  \example
+  |\caption{\translate{Figure}~2.}|
+
+  The following options may be given:
+  \begin{itemize}
+    \itemoption{to}{}|=|\meta{language} This option overrules the language path setting and installs \meta{language} as the target language(s) for which \textsc{translator} tries to find a translation.
+  \end{itemize}
+\end{command}
+
+\begin{command}{\translatelet\oarg{options}\marg{macro}\marg{key}}
+  This command works like the |\translate| command, only it will not insert the translation into the text, but will set the macro \meta{macro} to the translation found by the |\translate| command.
+
+  \example
+  |\translatelet\localfigure{figure}|
+\end{command}
+
+\subsubsection{Language Path and Language Substitution}
+\label{section-language-path}
+
+\begin{command}{\languagepath\marg{language path}}
+  This command sets the language path that is searched when \textsc{translator} looks for a key.
+
+  The default value of the language path is |\languagename,English|. The |\languagename| is the standard \TeX\ macro that expands to the current language. Typically, this is exactly what you want and there is no real need to change this default language path.
+\end{command}
+
+There is a problem with the names used in the macro |\languagename|. These names, like |ngerman|, are not the ones used by \textsc{translator} and we somehow have to tell the \translatorname\ about aliases for cryptic language names like |ngerman|. This is done using the following command:
+
+\begin{command}{\languagealias\marg{name}\marg{language list}}
+  This command tells the \translatorname\ that the language \meta{name} should be replaced by the language in the \meta{language list}.
+
+  \example
+  |\languagealias{ngerman}{German}|
+
+  \example
+  |\languagealias{german}{German1997,German}|
+\end{command}
+
+For the languages used by the babel package, the aliases are automatically setup, so you typically do not need to call either |\languagepath| or |\languagealias|.
+
+\subsubsection{Package Loading Process}
+
+The \translatorname\ package is loaded ``in stages'':
+\begin{enumerate}
+\item
+  First, some package or the document author requests the \translatorname\ package is loaded.
+\item
+  The \translatorname\ package allows options like |ngerman| to be given. These options cause the necessary aliases and the correct \translatorname\ languages to be requested.
+\item
+  During the preamble, packages and the document author request creating dictionary kinds and certain languages to be used. There requests are protocoled.
+\item
+  At the beginning of the document (|\begin{document}|) the requested dictionary-language-pairs are loaded.
+\end{enumerate}
+
+The first thing that needs to be done is to load the package. Typically, this is done automatically by some other package, but you may wish to include it directly:
+
+\begin{package}{{translator}}
+  When you load the package, you can specify (multiple) babel languages as \meta{options}. The effect of giving such an option is the following: It causes the \translatorname\ package to call |\uselanguage| for the appropriate translation of the babel language names to \translatorname's language names. It also causes |\languagealias| to be called for the languages.
+\end{package}

@@ -1,0 +1,164 @@
+% Copyright 2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the documentation file for more details.
+
+\def\translatorversion{1.10}
+
+\ProvidesPackage{translator}[2010/06/12 ver \translatorversion]
+
+\RequirePackage{keyval}
+
+\def\trans@languages{English}
+
+\newcommand\uselanguage[2][]{%
+  \g@addto@macro\trans@languages{,#2}%
+}
+
+\newcommand\languagealias[2]{%
+  \expandafter\def\csname tr@ml@#1\endcsname{#2}%
+}
+
+\input{translator-language-mappings}
+
+\newcommand\languagepath[1]{\def\trans@languagepath{#1}}
+\def\trans@languagepath{\languagename,English}
+
+\define@key{translator}{to}{\def\trans@to{#1}}
+
+\newcommand\iftranslationdefined[4][]{%
+  \def\trans@to{\trans@defaultto}%
+  \setkeys{translator}{#1}%
+  \begingroup\expandafter\expandafter\expandafter\endgroup
+  \expandafter\ifx\csname tr@@@\trans@to @#2\endcsname\relax%
+    \let\trans@next=\@secondoftwo%
+  \else%
+    \let\trans@next=\@firstoftwo%
+  \fi%
+  \trans@next{#3}{#4}%
+}
+
+\newcommand\deftranslation[3][]{%
+  \def\trans@to{\trans@defaultto}%
+  \setkeys{translator}{#1}%
+  \expandafter\def\csname tr@@@\trans@to @#2\endcsname{#3}%
+}
+
+\newcommand\newtranslation[3][]{%
+  \iftranslationdefined[#1]{#2}{%
+    \PackageError{translator}{Translation of '#2' already defined}{}%
+  }%
+  {%
+    \deftranslation[#1]{#2}{#3}%
+  }%
+}
+
+\newcommand\renewtranslation[3][]{%
+  \iftranslationdefined[#1]{#2}{%
+    \deftranslation[#1]{#2}{#3}%
+  }%
+  {%
+    \PackageError{translator}{Translation of '#2' not defined}{}%
+  }%
+}
+
+\newcommand\providetranslation[3][]{%
+  \iftranslationdefined[#1]{#2}{%
+  }%
+  {%
+    \deftranslation[#1]{#2}{#3}%
+  }%
+}
+
+\begingroup
+\lccode`\A=`\- %
+\lowercase{%
+  \endgroup
+  \def\trans@marker{-A}%
+}
+
+\newcommand\translatelet[3][]{%
+  \edef\trans@to{\trans@languagepath}%
+  \setkeys{translator}{#1}%
+  \let\trans@trans\trans@marker%
+  \let\trans@list\@empty%
+  \@for\trans@lang:=\trans@to\do%
+  {%
+    \expandafter\ifx\csname tr@ml@\trans@lang\endcsname\relax%
+    \else%
+      \expandafter\let\expandafter\trans@lang\expandafter=\csname tr@ml@\trans@lang\endcsname%
+    \fi%
+    \edef\trans@list{\trans@list,\trans@lang}%
+  }%
+  \@for\trans@lang:=\trans@list\do%
+  {%
+    \expandafter\ifx\csname tr@@@\trans@lang @#3\endcsname\relax%
+    \else%
+      \ifx\trans@trans\trans@marker%
+        \expandafter\expandafter\expandafter\def
+        \expandafter\expandafter\expandafter\trans@trans
+        \expandafter\expandafter\expandafter{\csname tr@@@\trans@lang @#3\endcsname}%
+      \fi%
+    \fi%
+  }%
+  \ifx\trans@trans\trans@marker%
+    \def\trans@trans{#3}%
+  \fi%
+  \let#2=\trans@trans%
+}
+
+
+
+\DeclareRobustCommand\translate[2][]{%
+  \translatelet[#1]\trans@temp{#2}%
+  \trans@temp%
+}
+
+
+
+\def\trans@dictionaries{}
+
+\newcommand\usedictionary[1]{%
+  \g@addto@macro\trans@dictionaries{\usedictionary{#1}}%
+}
+
+\def\trans@defaultto{English}
+
+\AtBeginDocument{%
+  \renewcommand\usedictionary[1]{%
+    \@for\trans@lang:=\trans@languages\do{%
+      \ifx\trans@lang\@empty%
+      \else%
+        \expandafter\ifx\csname ver@#1-\trans@lang.dict\endcsname\relax%
+          \edef\trans@temp{%
+            \def\noexpand\trans@defaultto{\trans@lang}%
+            \noexpand\InputIfFileExists{#1-\trans@lang.dict}{}{}%
+            \def\noexpand\trans@defaultto{\trans@defaultto}%
+          }%
+          \trans@temp%
+        \fi%
+      \fi%
+    }}%
+  \trans@dictionaries%
+}
+
+\def\ProvidesDictionary#1#2{%
+  \begingroup
+    \catcode`\ 10 %
+    \@makeother\/%
+    \@ifnextchar[%]
+    {\@providesdictionary{#1}{#2}}{\@providesdictionary{#1}{#2}[]}%
+  }
+\def\@providesdictionary#1#2[#3]{%
+  \wlog{Dictionary: #1, Language: #2 #3}%
+  \expandafter\xdef\csname ver@#1-#2.dict\endcsname{#3}%
+  \endgroup%
+}
+
+
+\endinput

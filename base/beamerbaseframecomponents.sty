@@ -1,0 +1,378 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+% Copyright 2011 by Vedran Mileti\'c, Joseph Wright
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+%
+% Setting the left and right margin
+%
+%
+\beamer@leftmargin=1cm
+\beamer@rightmargin=1cm
+
+\newif\ifbeamer@dogeometry
+
+\define@key{beamer@margin}{text margin left}{\beamer@leftmargin=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{text margin right}{\beamer@rightmargin=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{sidebar width left}{\beamer@leftsidebar=#1\beamer@dogeometrytrue}
+\define@key{beamer@margin}{sidebar width right}{\beamer@rightsidebar=#1\beamer@dogeometrytrue}
+
+\newcommand{\setbeamersize}[1]{%
+  \beamer@dogeometryfalse%
+  \setkeys{beamer@margin}{#1}%
+  \ifbeamer@dogeometry%
+    % Reset left margin now
+    \beamer@tempdim=\beamer@leftmargin%
+    \advance\beamer@tempdim by\beamer@leftsidebar%
+    \geometry{left=\the\beamer@tempdim}%
+    % Reset right margin now
+    \beamer@tempdim=\beamer@rightmargin%
+    \advance\beamer@tempdim by\beamer@rightsidebar%
+    \geometry{right=\the\beamer@tempdim}%
+  \fi%
+}
+
+\mode
+<article>
+{
+  \newcommand{\setbeamersize}[1]{}
+}
+
+
+
+
+
+% Constructing a frame:
+
+\let\@mkboth\@gobbletwo
+\def\ps@navigation{
+  \def\@oddhead{%
+    \begingroup%
+    \setbox\beamer@tempbox=\hbox{\usebeamertemplate***{background canvas}\hyper@pagetransition\hyper@pageduration}%
+    \beamer@tempdim=\ht\beamer@tempbox%
+    \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
+    \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+    \setbox\@tempboxa=\hbox{\usebeamertemplate***{background}}%
+    \beamer@tempdim=\ht\@tempboxa%
+    \setbox\@tempboxa=\hbox{\lower\beamer@tempdim\hbox{\box\@tempboxa}}%
+    \wd\@tempboxa=0pt\ht\@tempboxa=0pt\dp\@tempboxa=0pt%
+    \vbox{\hbox{\hskip-\Gm@lmargin\box\beamer@tempbox\box\@tempboxa}%
+      \hbox{%
+        {%
+          \setbox\beamer@tempbox=\hbox{\hskip-\Gm@lmargin%
+            {\setbox\beamer@tempbox=\hbox{\vbox to \sidebarheight{%
+                  \usebeamercolor*{sidebar left}%
+                  \usebeamertemplate{sidebar canvas left}%
+                  \vss%
+                }}%
+              \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+              \box\beamer@tempbox}%
+            {%
+              \vbox to \sidebarheight{%
+                \usebeamertemplate***{sidebar left}%
+                \vfil%
+            }}}%
+          \beamer@tempdim=\ht\beamer@tempbox%
+          \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
+          \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+          \box\beamer@tempbox%
+        }%
+        {% print right sidebar first, since it should be overwritten by headline
+          \setbox\beamer@tempbox=\hbox{\hskip\textwidth\hskip\beamer@rightmargin%
+            {\setbox\beamer@tempbox=\hbox{\vbox to \sidebarheight{%
+                  \usebeamercolor*{sidebar right}%
+                  \usebeamertemplate{sidebar canvas right}%
+                  \vss%
+                }}%
+              \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+              \box\beamer@tempbox}%
+            {%
+              \vbox to \sidebarheight{%
+                \usebeamertemplate***{sidebar right}%
+                \vfil%
+            }}}%
+          \beamer@tempdim=\ht\beamer@tempbox%
+          \setbox\beamer@tempbox=\hbox{{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}}%
+          \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+          \box\beamer@tempbox%
+        }%
+        \beamer@typesetheadorfoot{headline}%
+      }%
+      \hfil}%
+    \endgroup}
+  \def\@oddfoot{\vbox{\offinterlineskip\hbox{\beamer@typesetheadorfoot{footline}%
+        \hypertarget{Navigation\the\c@page}{}%
+        \hypertarget{page.\the\c@page}{}\hfil}\hbox{}}\hfil}
+  \let\@evenhead\@oddhead
+  \let\@evenfoot\@oddfoot}
+\pagestyle{navigation}
+
+\def\beamer@typesetheadorfoot#1{% typeset the head or footline
+  {\parskip0pt\offinterlineskip%
+    \hbox{%
+      \hskip-\Gm@lmargin%
+      \hbox{%
+        \vbox{%
+          \@tempdima=\textwidth%
+          \textwidth=\paperwidth%
+          \hsize=\textwidth%
+          \def\\{,}%
+          \usebeamertemplate***{#1}%
+        }}%
+      \hskip-\Gm@rmargin%
+    }}\hfil%
+}
+
+%
+% Patch empty page style, so that transitions and navigation still works
+%
+\def\ps@empty{%
+  \let\@mkboth\@gobbletwo%
+  \def\@oddhead{\begingroup%
+    \setbox\beamer@tempbox=\hbox{\usebeamertemplate***{background canvas}\hyper@pagetransition\hyper@pageduration}%
+    \beamer@tempdim=\ht\beamer@tempbox%
+    \setbox\beamer@tempbox=\hbox{\lower\beamer@tempdim\hbox{\box\beamer@tempbox}}%
+    \wd\beamer@tempbox=0pt\ht\beamer@tempbox=0pt\dp\beamer@tempbox=0pt%
+    \setbox\@tempboxa=\hbox{\usebeamertemplate***{background}}%
+    \beamer@tempdim=\ht\@tempboxa%
+    \setbox\@tempboxa=\hbox{\lower\beamer@tempdim\hbox{\box\@tempboxa}}%
+    \wd\@tempboxa=0pt\ht\@tempboxa=0pt\dp\@tempboxa=0pt%
+    \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox\box\@tempboxa}\hfil}%
+    \endgroup%
+  }
+  \def\@oddfoot{\normalcolor{\hypertarget{Navigation\the\c@page}{}\hfil%
+    \setbox\beamer@tempbox=\hbox{\usebeamertemplate***{navigation symbols}\hskip-\Gm@rmargin\hskip2pt}%
+    \ht\beamer@tempbox=0pt%
+    \dp\beamer@tempbox=0pt%
+    \box\beamer@tempbox}}
+  \let\@evenhead\@oddhead\let\@evenfoot\@oddfoot}
+
+\def\beamer@calculateheadfoot{%
+  \setbox\beamer@tempbox=\hbox{{\beamer@typesetheadorfoot{footline}}}%
+  \footheight=\ht\beamer@tempbox%
+  \advance\footheight by \dp\beamer@tempbox%
+  \advance\footheight by 4pt%
+  \setbox\beamer@tempbox=\hbox{{\beamer@typesetheadorfoot{headline}}}%
+  \headheight=\ht\beamer@tempbox%
+  \headdp=\dp\beamer@tempbox%
+  \advance\headheight by\headdp%
+  \sidebarheight=\paperheight%
+  \advance\sidebarheight by-\headheight%
+  \advance\sidebarheight by\headdp%
+  \advance\sidebarheight by-\footheight%
+  \advance\sidebarheight by 4pt%
+  \footskip=\footheight%
+  \textheight=\paperheight%
+  \advance\textheight by-\footheight%
+  \advance\textheight by-\headheight%
+  \@colht\textheight%
+  \@colroom\textheight%
+  \vsize\textheight%
+}
+
+
+\def\insertpagenumber{\thepage}
+
+
+
+%
+%
+% Columns
+%
+%
+\define@key{beamer@col}{onlytextwidth}[true]{%
+  \def\beamer@colentrycode{\hbox to\textwidth\bgroup\ignorespaces}%
+  \def\beamer@colexitcode{\unskip\egroup}}
+\define@key{beamer@col}{totalwidth}{%
+  \def\beamer@colentrycode{\hbox to#1\bgroup\ignorespaces}%
+  \def\beamer@colexitcode{\unskip\egroup}}
+\define@key{beamer@col}{c}[true]{\def\beamer@colmode{c}\def\beamer@colalign{c}\def\beamer@colheadskip{}}
+\define@key{beamer@col}{t}[true]{\def\beamer@colmode{t}\def\beamer@colalign{t}\def\beamer@colheadskip{}}
+\define@key{beamer@col}{T}[true]{\def\beamer@colmode{T}\def\beamer@colalign{t}\def\beamer@colheadskip{\vskip-1ex\nointerlineskip}}
+\define@key{beamer@col}{b}[true]{\def\beamer@colmode{b}\def\beamer@colalign{b}\def\beamer@colheadskip{}}
+
+\newenvironment<>{columns}[1][]{%
+  \begin{actionenv}#2%
+  \def\beamer@colentrycode{%
+    \hbox to\textwidth\bgroup%
+    \leavevmode%
+    \hskip-\beamer@leftmargin%
+    \nobreak%
+    \beamer@tempdim=\textwidth%
+    \advance\beamer@tempdim by\beamer@leftmargin%
+    \advance\beamer@tempdim by\beamer@rightmargin%
+    \hbox to\beamer@tempdim\bgroup%
+    \hbox{}\hfill\ignorespaces}%
+  \def\beamer@colexitcode{\egroup%
+    \nobreak%
+    \hskip-\beamer@rightmargin\egroup}%
+  \ifbeamer@centered\setkeys{beamer@col}{c}\else\setkeys{beamer@col}{t}\fi%
+  \setkeys{beamer@col}{#1}%
+  \par%
+  \beamer@colentrycode%
+  \def\beamer@colclose{}\ignorespaces}%
+  {\beamer@colclose\def\beamer@colclose{}\beamer@colexitcode\end{actionenv}}%
+
+\mode
+<article>
+{
+  % do sth. more intelligent in the future
+  \newenvironment<>{columns}[1][]{}{}
+}
+
+
+
+
+%
+%
+% Column command/environment
+%
+%
+
+\mode
+<all>
+{
+\def\beamer@columnname{column}
+\def\column{%
+  \ifx\@currenvir\beamer@columnname%
+  \let\beamer@next=\beamer@columnenv%
+  \else%
+  \let\beamer@next=\beamer@columncom%
+  \fi%
+  \beamer@next}
+}
+
+\newenvironment<>{beamer@columnenv}[2][\beamer@colmode]{%
+  \beamer@colclose\def\beamer@colclose{}%
+  \begin{actionenv}#3%
+    \setkeys{beamer@col}{#1}%
+    \begin{minipage}[\beamer@colalign]{#2}%
+      \leavevmode\raggedright\beamer@colheadskip\ignorespaces}
+    {\end{minipage}\hfill\end{actionenv}\@ignoretrue}
+\let\endcolumn\endbeamer@columnenv
+
+\newcommand<>\beamer@columncom[2][\beamer@colmode]{%
+  \beamer@colclose%
+  \def\beamer@colclose{\end{minipage}\hfill\end{actionenv}\ignorespaces}%
+\begin{actionenv}#3%
+  \setkeys{beamer@col}{#1}%
+  \begin{minipage}[\beamer@colalign]{#2}%
+    \leavevmode\raggedright\beamer@colheadskip\ignorespaces}
+
+
+\mode
+<article>
+{
+  \newenvironment<>{beamer@columnenv}[2][]{}{}
+  \newcommand<>{\beamer@columncom}[2][]{}
+}
+
+
+
+%
+%
+% Footnotes
+%
+%
+
+\def\@makefnmark{\hbox{\@textsuperscript{{\usebeamercolor[fg]{footnote mark}\usebeamerfont*{footnote mark}\@thefnmark}}}}
+
+\def\@makefntext#1{%
+  \def\insertfootnotetext{#1}%
+  \def\insertfootnotemark{\@makefnmark}%
+  \usebeamertemplate***{footnote}}
+
+\newbox\beamer@footins
+
+\newcommand<>\beamer@framefootnotetext[1]{%
+  \global\setbox\beamer@footins\vbox{%
+    \hsize\framewidth
+    \textwidth\hsize
+    \columnwidth\hsize
+    \unvbox\beamer@footins
+    \reset@font\footnotesize
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@footnote\endcsname\@thefnmark}%
+    \color@begingroup
+      \uncover#2{\@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}}%
+    \color@endgroup}}
+
+\renewcommand<>\@mpfootnotetext[1]{%
+  \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    \reset@font\footnotesize
+    \hsize0.85\paperwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \color@begingroup
+      \uncover#2{\@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}}%
+    \color@endgroup}}
+
+\let\@footnotetext=\beamer@framefootnotetext
+
+\define@key{beamerfootnote}{frame}[true]{%
+  \let\beamer@footnotetext=\beamer@framefootnotetext%
+  \def\beamer@mpfn{footnote}%
+  \def\beamer@thempfn{\thefootnote}}
+
+\renewcommand<>{\footnote}[1][]{%
+  \let\beamer@footnotetext=\@footnotetext%
+  \let\beamer@mpfn=\@mpfn%
+  \let\beamer@thempfn=\thempfn%
+  \let\beamer@kvorig=\KV@errx%
+  \def\beamer@footarg{}%
+  \def\KV@errx##1{\edef\beamer@footarg{\@tempa}}%
+  \setkeys{beamerfootnote}{#1}%
+  \let\KV@errx=\beamer@kvorig%
+  \ifx\beamer@footarg\@empty%
+    \def\beamer@next{\stepcounter\beamer@mpfn
+      \protected@xdef\@thefnmark{\beamer@thempfn}%
+      \@footnotemark\beamer@footnotetext#2}%
+  \else%
+    \def\beamer@next{%
+      \begingroup
+        \csname c@\beamer@mpfn\endcsname\beamer@footarg\relax
+        \unrestored@protected@xdef\@thefnmark{\beamer@thempfn}%
+      \endgroup
+      \@footnotemark\beamer@footnotetext#2}%
+  \fi%
+  \beamer@next}
+
+\mode
+<article>
+{
+  \define@key{beamerfootnote}{frame}[true]{}
+
+\let\beamer@origfootnote=\footnote
+  \renewcommand\footnote[1][]{%
+    \let\beamer@kvorig=\KV@errx%
+    \def\beamer@footarg{}%
+    \def\KV@errx##1{\edef\beamer@footarg{\@tempa}}%
+    \setkeys{beamerfootnote}{#1}%
+    \let\KV@errx=\beamer@kvorig%
+    \ifx\beamer@footarg\@empty%
+      \edef\beamer@next{\noexpand\beamer@origfootnote}%
+    \else%
+      \edef\beamer@next{\noexpand\beamer@origfootnote[\beamer@footarg]}%
+    \fi%
+    \beamer@next}
+}
+
+
+\mode
+<all>

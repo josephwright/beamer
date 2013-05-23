@@ -1,0 +1,61 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\RequirePackage{keyval}[1997/11/10]
+
+\def\ProcessOptionsBeamer{%
+  \let\@tempa\@empty
+  \ifx\@currext\@clsextension%
+  \else
+  \@for\CurrentOption:=\@classoptionslist\do{%
+    \@ifundefined{KV@\@currname @\CurrentOption}%
+    {}{\edef\@tempa{\@tempa,\CurrentOption,}}}%
+  \fi
+  \edef\@tempa{%
+    \noexpand\setkeys{\@currname}{\@tempa\@ptionlist{\@currname.\@currext}}}%
+  \let\beamer@origkverr\KV@errx%
+  \let\beamer@origxkverr\XKV@err%
+  \let\KV@errx=\@gobble% never mind
+  \let\XKV@err=\@gobble% never mind
+  \@tempa%
+  \let\KV@errx\beamer@origkverr%
+  \let\XKV@err\beamer@origxkverr%
+  \AtEndOfPackage{\let\@unprocessedoptions\relax}}
+
+\def\ExecuteOptionsBeamer#1{%
+  \setkeys{\@currname}{#1}}
+
+\def\DeclareOptionBeamer#1{\@ifnextchar[{\beamer@dokv{#1}}{\beamer@dokv{#1}[]}}
+\long\def\beamer@dokv#1[#2]#3{\define@key{\@currname}{#1}[{#2}]{#3}}
+
+
+\def\beamer@filterclassoptions{
+  \def\beamer@filteredclassoptionslist{}
+  \@for\CurrentOption:=\@classoptionslist\do{%
+    \ifx\CurrentOption\@empty\else
+    \@expandtwoargs\in@{=}{\CurrentOption}%
+    \ifin@
+    \else
+    \edef\beamer@filteredclassoptionslist{%
+      \beamer@filteredclassoptionslist,\CurrentOption}
+    \fi
+    \fi
+  }%
+  \let\@classoptionslist=\beamer@filteredclassoptionslist
+}
+
+
+
+\newcommand\defbeameroption{\define@key{beamer@option}}
+\newcommand\setbeameroption{\setkeys{beamer@option}}
+
+
