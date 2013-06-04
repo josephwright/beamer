@@ -196,27 +196,27 @@
 \beamer@font@check
 \ifbeamer@suppressreplacements\else
   \ifbeamer@sansmath
-    \SetSymbolFont{operators}{normal}{OT1}{cmss}{m}{n}
+    \SetSymbolFont{operators}{normal}{OT1}{cmss}{\mddefault}{n}
     \ifx\mv@bold\@undefined
     \else
-      \SetSymbolFont{operators}{bold}{OT1}{cmss}{bx}{n}
+      \SetSymbolFont{operators}{bold}{OT1}{cmss}{\bfdefault}{n}
     \fi
   \fi
-  \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{m}{n}
-  \DeclareSymbolFont{pureletters}{\encodingdefault}{\mathfamilydefault}{m}{it}
-  \SetMathAlphabet{\mathrm}{normal}{\encodingdefault}{\rmdefault}{m}{n}
-  \DeclareMathAlphabet{\mathbf}{\encodingdefault}{\mathfamilydefault}{bx}{n}
-  \DeclareMathAlphabet{\mathsf}{\encodingdefault}{\sfdefault}{m}{n}
-  \DeclareMathAlphabet{\mathit}{\encodingdefault}{\mathfamilydefault}{m}{it}
-  \DeclareMathAlphabet{\mathtt}{\encodingdefault}{\ttdefault}{m}{n}
+  \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{\mddefault}{n}
+  \DeclareSymbolFont{pureletters}{\encodingdefault}{\mathfamilydefault}{\mddefault}{it}
+  \SetMathAlphabet{\mathrm}{normal}{\encodingdefault}{\rmdefault}{\mddefault}{n}
+  \DeclareMathAlphabet{\mathbf}{\encodingdefault}{\mathfamilydefault}{\bfdefault}{n}
+  \DeclareMathAlphabet{\mathsf}{\encodingdefault}{\sfdefault}{\mddefault}{n}
+  \DeclareMathAlphabet{\mathit}{\encodingdefault}{\mathfamilydefault}{\mddefault}{it}
+  \DeclareMathAlphabet{\mathtt}{\encodingdefault}{\ttdefault}{\mddefault}{n}
   \ifx\mv@bold\@undefined\else
-  \SetSymbolFont{numbers}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{n}
-  \SetSymbolFont{pureletters}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{it}
-  \SetMathAlphabet{\mathrm}{bold}{\encodingdefault}{\rmdefault}{bx}{n}
-  \SetMathAlphabet{\mathbf}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{n}
-  \SetMathAlphabet{\mathsf}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
-  \SetMathAlphabet{\mathit}{bold}{\encodingdefault}{\mathfamilydefault}{bx}{it}
-  \SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{bx}{n}
+  \SetSymbolFont{numbers}{bold}{\encodingdefault}{\mathfamilydefault}{\bfdefault}{n}
+  \SetSymbolFont{pureletters}{bold}{\encodingdefault}{\mathfamilydefault}{\bfdefault}{it}
+  \SetMathAlphabet{\mathrm}{bold}{\encodingdefault}{\rmdefault}{\bfdefault}{n}
+  \SetMathAlphabet{\mathbf}{bold}{\encodingdefault}{\mathfamilydefault}{\bfdefault}{n}
+  \SetMathAlphabet{\mathsf}{bold}{\encodingdefault}{\sfdefault}{\bfdefault}{n}
+  \SetMathAlphabet{\mathit}{bold}{\encodingdefault}{\mathfamilydefault}{\bfdefault}{it}
+  \SetMathAlphabet{\mathtt}{bold}{\encodingdefault}{\ttdefault}{\bfdefault}{n}
   \fi
 
   \def\operator@font{\mathgroup\symnumbers}
