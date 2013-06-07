@@ -51,6 +51,7 @@
   \mode<all>
   \refstepcounter{lecture}
   \def\beamer@currentlecturelabel{#3}
+  \@onelevel@sanitize\beamer@currentlecturelabel
   \def\beamer@lecturename{#2}
   \def\beamer@shortlecturename{#1}
   \ifx\beamer@onlylecture\@empty
@@ -73,7 +74,9 @@
   \AtBeginLecture{}
 
   \newcommand\includeonlylecture[1]{%
-    \def\beamer@onlylecture{#1}}
+    \def\beamer@onlylecture{#1}%
+    \@onelevel@sanitize\beamer@onlylecture
+  }
 
   \includeonlylecture{}
 }
