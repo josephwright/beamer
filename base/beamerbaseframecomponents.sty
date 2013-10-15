@@ -111,9 +111,10 @@
       }%
       \hfil}%
     \endgroup}
-  \def\@oddfoot{\vbox{\offinterlineskip\hbox{\beamer@typesetheadorfoot{footline}%
-        \hypertarget{Navigation\the\c@page}{}%
-        \hypertarget{page.\the\c@page}{}\hfil}\hbox{}}\hfil}
+  \def\@oddfoot{%
+    \vbox{\offinterlineskip\hfil\hbox{\beamer@typesetheadorfoot{footline}%
+    \hfil}\hbox{}}\hfil
+  }%
   \let\@evenhead\@oddhead
   \let\@evenfoot\@oddfoot}
 \pagestyle{navigation}
@@ -151,7 +152,7 @@
     \vbox{\hbox{\hskip-\Gm@lmargin\raise\headheight\box\beamer@tempbox\box\@tempboxa}\hfil}%
     \endgroup%
   }
-  \def\@oddfoot{\normalcolor{\hypertarget{Navigation\the\c@page}{}\hfil%
+  \def\@oddfoot{\normalcolor{\hfil%
     \setbox\beamer@tempbox=\hbox{\usebeamertemplate***{navigation symbols}\hskip-\Gm@rmargin\hskip2pt}%
     \ht\beamer@tempbox=0pt%
     \dp\beamer@tempbox=0pt%

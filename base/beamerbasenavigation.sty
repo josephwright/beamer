@@ -846,6 +846,45 @@
 
 \let\beamer@framehypertargets\@empty
 
+% 
+% Page anchors
+%
+
+% This code is copied from hyperref, which doesn't activate this part with
+% option "implicit = false" set. Things are much simplified as we already
+% know that anchors are required and what to use for them.
+
+\def\Hy@EveryPageAnchor{%
+  \Hy@DistillerDestFix
+  \vbox to 0pt{%
+    \kern\voffset
+    \kern\topmargin
+    \kern-1bp\relax
+    \hbox to 0pt{%
+      \kern\hoffset
+      \kern\ifodd\value{page}%
+        \oddsidemargin
+      \else
+        \evensidemargin
+      \fi
+      \kern-1bp\relax
+      \hyper@@anchor{Navigation\the\c@page}\relax%
+      \hyper@@anchor{page.\the\c@page}\relax%
+      \hss
+      }%
+    \vss
+  }%
+}
+
+\AtBeginShipout{%
+  \setbox\AtBeginShipoutBox=\vbox{%
+    \offinterlineskip
+    \Hy@EveryPageAnchor
+    \box\AtBeginShipoutBox
+  }%
+}
+
+\providecommand*{\Hy@DistillerDestFix}{}
 
 \mode
 <all>

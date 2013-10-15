@@ -30,11 +30,11 @@
 \pgfaliasimage{beamericonarticle.!2opaque}{beamericonarticleshaded}
 \pgfdeclareimage[width=14pt,height=14pt]{beamericononline}{beamericononline}
 \pgfdeclareimage[width=14pt,height=14pt]{beamericononlineshaded}{beamericononline.20}
-\pgfaliasimage{beamericonbook.!20opaque}{beamericononlineshaded}
-\pgfaliasimage{beamericonbook.!15opaque}{beamericononlineshaded}
-\pgfaliasimage{beamericonbook.!10opaque}{beamericononlineshaded}
-\pgfaliasimage{beamericonbook.!5opaque}{beamericononlineshaded}
-\pgfaliasimage{beamericonbook.!2opaque}{beamericononlineshaded}
+\pgfaliasimage{beamericononline.!20opaque}{beamericononlineshaded}
+\pgfaliasimage{beamericononline.!15opaque}{beamericononlineshaded}
+\pgfaliasimage{beamericononline.!10opaque}{beamericononlineshaded}
+\pgfaliasimage{beamericononline.!5opaque}{beamericononlineshaded}
+\pgfaliasimage{beamericononline.!2opaque}{beamericononlineshaded}
 
 % Title page: default
 
@@ -42,7 +42,8 @@
 {
   \vbox{}
   \vfill
-  \begin{centering}
+  \begingroup
+    \centering
     \begin{beamercolorbox}[sep=8pt,center,#1]{title}
       \usebeamerfont{title}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
@@ -62,7 +63,7 @@
       \usebeamerfont{date}\insertdate
     \end{beamercolorbox}\vskip0.5em
     {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
-  \end{centering}
+  \endgroup
   \vfill
 }
 
@@ -71,13 +72,14 @@
 
 \defbeamertemplate*{part page}{default}[1][]
 {
-  \begin{centering}
+  \begingroup
+    \centering
     {\usebeamerfont{part name}\usebeamercolor[fg]{part name}\partname~\insertromanpartnumber}
     \vskip1em\par
     \begin{beamercolorbox}[sep=16pt,center,#1]{part title}
       \usebeamerfont{part title}\insertpart\par
     \end{beamercolorbox}
-  \end{centering}
+  \endgroup
 }
 
 
@@ -85,26 +87,28 @@
 
 \defbeamertemplate*{section page}{default}[1][]
 {
-  \begin{centering}
+  \begingroup
+    \centering
     {\usebeamerfont{section name}\usebeamercolor[fg]{section name}\sectionname~\insertsectionnumber}
     \vskip1em\par
     \begin{beamercolorbox}[sep=12pt,center,#1]{part title}
       \usebeamerfont{section title}\insertsection\par
     \end{beamercolorbox}
-  \end{centering}
+  \endgroup
 }
 
 % Subection page: default
 
 \defbeamertemplate*{subsection page}{default}[1][]
 {
-  \begin{centering}
+  \begingroup
+    \centering
     {\usebeamerfont{subsection name}\usebeamercolor[fg]{subsection name}\subsectionname~\insertsubsectionnumber}
     \vskip1em\par
     \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
       \usebeamerfont{subsection title}\insertsubsection\par
     \end{beamercolorbox}
-  \end{centering}
+  \endgroup
 }
 
 
