@@ -1,0 +1,722 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\section[How To Import Presentations Based on Other Packages and Classes]{How To Import Presentations Based on\\ Other Packages and Classes}
+
+The \beamer\ class comes with a number of emulation layers for classes or packages that do not support \beamer\ directly. For example, the package |beamerseminar| maps some (not all) commands of the \seminar\ class to appropriate \beamer\ commands. This way, individual slides or whole sets of slides that have been prepared for a presentation using \seminar\ can be used inside \beamer, provided they are reasonably simple.
+
+None of the emulation layers is a perfect substitute for the original (emulations seldom are) and it is not intended that they ever will be. If you want/need/prefer the features of another class, use that class for preparing your presentations. The intention of these layers is just to help speed up creating \beamer\ presentations that use parts of old presentations. You can simply copy these parts in verbatim, without having to worry about the subtle differences in syntax.
+
+A useful effect of using an emulation layer is that you get access to all the features of \beamer\ while using the syntax of another class. For example, you can use the |article| mode to create a nice article version of a \prosper\ talk.
+
+
+\subsection{Prosper, HA-Prosper and Powerdot}
+\label{section-prosper}
+
+The package |beamerprosper| maps the commands of the \prosper\ package, developed by Fr\'ed\'eric Goualard, to \beamer\ commands. Also, some commands of the \textsc{ha}-\prosper\ and \textsc{powerdot} packages, developed by Hendri Adriaens, are mapped to \beamer\ commands. \emph{These mappings cannot perfectly emulate all of Prosper!} Rather, these mappings are intended as an aid when porting parts of presentations created using \prosper\ to \beamer. \emph{No styles are implemented that mimick Prosper styles.} Rather, the normal \beamer\ themes must be used (although, one could implement \beamer\ themes that mimicks existing \prosper\ styles; we have not done that and do not intend to).
+
+The workflow for creating a \beamer\ presentation that uses \prosper\ code is the following:
+\begin{enumerate}
+\item
+  Use the document class |beamer|, not |prosper|. Most options passed to |prosper| do not apply to |beamer| and should be omitted.
+\item
+  Add a |\usepackage{beamerprosper}| to start the emulation.
+\item
+  If you add slides relying on \textsc{ha}-\prosper, you may wish to add the option |framesassubsections| to |beamerprosper|, though we do not recommend it (use the normal |\subsection| command instead; it gives you more fine-grained control).
+\item
+  If you also copy the title commands, it may be necessary to adjust the content of commands like |\title| or |\author|. Note that in \prosper\ the |\email| command is given outside the |\author| command, whereas in \beamer\ and also in \textsc{ha}-\prosper\ it is given inside.
+\item
+  When copying slides containing the command |\includegraphics|, you will almost surely have to adjust its usage. If you use pdf\LaTeX\ to typeset the presentation, than you cannot include PostScript files. You should convert them to |.pdf| or to |.png| and adjust any usage of |\includegraphics| accordingly.
+\item
+  When starting to change things, you can use all of \beamer's commands and even mix them with \prosper\ commands.
+\end{enumerate}
+
+An example can be found in the file |beamerexample-prosper.tex|.
+
+There are, unfortunately, quite a few places where you may run into problems:
+\begin{itemize}
+\item
+  In \beamer, the command |\PDForPS| will do exactly what the name suggests: insert the first argument when run by |pdflatex|, insert the second argument when run by |latex|. However, in \prosper, the code inserted for the \pdf\ case is actually PostScript code, which is only later converted to \pdf\ by some external program. You will need to adjust this PostScript code such that it works with |pdflatex| (which is not always possible).
+\item
+  If you used fine-grained spacing commands, like adding a little horizontal skip   here and a big negative vertical skip there, the typesetting of the text may be poor. It may be a good idea to just remove these spacing commands.
+\item
+  If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned. You can read more about that in Section~\ref{section-graphics} that talks about graphics.
+\item
+  If the file cannot be compiled because some \prosper\ command is not implemented, you will have to delete this command and try to mimick its behavior using some \beamer\ command.
+\end{itemize}
+
+\begin{package}{{beamerprosper}}
+  Include this package in a |beamer| presentation to get access to \prosper\ commands. Use |beamer| as the document class, not |prosper|. Most of the options passed to the class |prosper| make no sense in |beamer|, so just delete them.
+
+  This package takes the following options:
+  \begin{itemize}
+  \item
+    \declare{|framesassubsections|} causes each frame to create its own subsection with the frame title as subsection name. This behavior mimicks \textsc{ha}-\textsc{prosper}'s behavior. In a long talk this will create way too many subsections.
+  \end{itemize}
+
+  \articlenote
+  The |framesassubsections| option has no effect in |article| mode.
+
+  \example
+\begin{verbatim}
+\documentclass[notes]{beamer}
+
+\usepackage[framesassubsections]{beamerprosper}
+
+\title{A Beamer Presentation Using (HA-)Prosper Commands}
+\subtitle{Subtitles Are Also Supported}
+\author{Till Tantau}
+\institution{The Institution is Mapped To Institute}
+
+\begin{document}
+
+\maketitle
+
+\tsectionandpart{Introduction}
+
+\overlays{2}{
+\begin{slide}{About this file}
+  \begin{itemstep}
+  \item
+    This is a beamer presentation.
+  \item
+    You can use the prosper and the HA-prosper syntax.
+  \item
+    This is done by mapping prosper and HA-prosper commands to beamer
+    commands.
+  \item
+    The emulation is by no means perfect.
+  \end{itemstep}
+\end{slide}
+}
+
+\section{Second Section}
+\subsection{A subsection}
+\begin{frame}
+  \frametitle{A frame created using the \texttt{frame} environment.}
+
+  \begin{itemize}[<+->]
+  \item You can still use the original beamer syntax.
+  \item The emulation is intended only to make recycling slides
+    easier, not to install a whole new syntax for beamer.
+  \end{itemize}
+\end{frame}
+
+\begin{notes}{Notes for these slides}
+My notes for these slides.
+\end{notes}
+\end{document}
+\end{verbatim}
+  You can run, for example, pdf\LaTeX\ on the file to get a \beamer\ presentation with overlays. Adding the |notes| option will also show the notes. Certain commands, like |\LeftFoot|, are ignored. You can change the theme using the usual commands. You can also use all normal \beamer\ commands and concepts, like overlay-specifications, in the file. You can also create an |article| version by using the class |article| and including the package |beamerarticle|.
+\end{package}
+
+In the following, the effects of \prosper\ commands in \beamer\ are listed.
+
+\begin{command}{\email\marg{text}}
+  Simply typesets its argument in typewriter text. Should hence be given \emph{inside} the |\author| command.
+\end{command}
+
+\begin{command}{\institution\marg{text}}
+  This command is mapped to \beamer's |\institute| command if given \emph{outside} the |\author| command, otherwise it typesets its argument in a smaller font.
+\end{command}
+
+\begin{command}{\Logo\opt{|(|\meta{x}|,|\meta{y}|)|}\marg{logo text}}
+  This is mapped to |\logo{|\meta{logo text}|}|. The coordinates are ignored.
+\end{command}
+
+\begin{environment}{{slides}\oarg{options}\marg{frame title}}
+  Inserts a frame with the |fragile=singleslide| option set. The \meta{frame title} will be enclosed in a |\frametitle| command.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|trans=|\meta{prosper transition}} installs the specified \meta{prosper transition} as the transition effect when showing the slide.
+  \item
+    \declare{\meta{prosper transition}} has the same effect as |trans=|\meta{prosper transition}.
+  \item
+    \declare{|toc=|\meta{entry}} overrides the subsection table of contents entry created by this slide by \meta{entry}. Note that a subsection entry is created for a slide only if the |framesassubsections| options is specified.
+  \item
+    \declare{|template|=\meta{text}} is ignored.
+  \end{itemize}
+
+  \example
+  The following two texts have the same effect:
+
+\begin{verbatim}
+\begin{slide}[trans=Glitter,toc=short]{A Title}
+  Hi!
+\end{slide}
+\end{verbatim}
+  and
+\begin{verbatim}
+\subsection{short} % omitted, if framesassubsections is not specified
+\begin{frame}[fragile=singleslide]
+  \transglitter
+  \frametitle{A Title}
+  Hi!
+\end{frame}
+\end{verbatim}
+\end{environment}
+
+\begin{command}{\overlays\marg{number}\marg{slide environment}}
+  This will put the \meta{slide environment} into a frame that does not have the |fragile| option and which can hence contain overlayed text. The \meta{number} is ignored since the number of necessary overlays is computed automatically by \beamer.
+
+  \example
+  The following code fragments have the same effect:
+
+\begin{verbatim}
+\overlays{2}{
+\begin{slide}{A Title}
+  \begin{itemstep}
+  \item Hi!
+  \item Ho!
+  \end{itemstep}
+\end{slide}}
+\end{verbatim}
+  and
+\begin{verbatim}
+\subsection{A Title} % omitted, if framesassubsections is not specified
+\begin{frame}
+  \frametitle{A Title}
+  \begin{itemstep}
+  \item Hi!
+  \item Ho!
+  \end{itemstep}
+\end{frame}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\fromSlide\marg{slide number}\marg{text}}
+  This is mapped to |\uncover<|\meta{slide number}|->{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\fromSlide|*|\marg{slide number}\marg{text}}
+  This is mapped to |\only<|\meta{slide number}|->{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\onlySlide\marg{slide number}\marg{text}}
+  This is mapped to |\uncover<|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\onlySlide|*|\marg{slide number}\marg{text}}
+  This is mapped to |\only<|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\untilSlide\marg{slide number}\marg{text}}
+  This is mapped to |\uncover<-|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\untilsSlide|*|\marg{slide number}\marg{text}}
+  This is mapped to |\only<-|\meta{slide number}|>{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\FromSlide\marg{slide number}}
+  This is mapped to |\onslide<|\meta{slide number}|->|.
+\end{command}
+
+\begin{command}{\OnlySlide\marg{slide number}}
+  This is mapped to |\onslide<|\meta{slide number}|>|.
+\end{command}
+
+\begin{command}{\UntilSlide\marg{slide number}}
+  This is mapped to |\onslide<-|\meta{slide number}|>|.
+\end{command}
+
+\begin{command}{\slideCaption\marg{text}}
+  This is mapped to |\date{|\meta{text}|}|.
+\end{command}
+
+\begin{command}{\fontTitle\marg{text}}
+  Simply inserts \meta{text}.
+\end{command}
+
+\begin{command}{\fontText\marg{text}}
+  Simply inserts \meta{text}.
+\end{command}
+
+\begin{command}{\PDFtransition\marg{prosper transition}}
+  Maps the \meta{prosper transition} to an appropriate |\transxxxx| command.
+\end{command}
+
+\begin{environment}{{Itemize}}
+  This is mapped to |itemize|.
+\end{environment}
+
+\begin{environment}{{itemstep}}
+  This is mapped to |itemize| with the option |[<+->]|.
+\end{environment}
+
+\begin{environment}{{enumstep}}
+  This is mapped to |enumerate| with the option |[<+->]|.
+\end{environment}
+
+\begin{command}{\hiddenitem}
+  This is mapped to |\addtocounter{beamerpauses}{1}|.
+\end{command}
+
+\begin{command}{\prosperpart\oarg{options}\marg{text}}
+  This command has the same effect as \prosper's |\part| command. \beamer's normal |\part| command retains its normal semantics. Thus, you might wish to replace all occurrences of |\part| by |\prosperpart|.
+\end{command}
+
+\begin{command}{\tsection\opt{|*|}\marg{section name}}
+  Creates a section named \meta{section name}. The star, if present, is ignored.
+\end{command}
+
+\begin{command}{\tsectionandpart\opt{|*|}\marg{part text}}
+  Mapped to a |\section| command followed by a |\prosperpart| command.
+
+  \articlenote
+  In |article| mode, no part page is added.
+\end{command}
+
+\begin{command}{\dualslide\oarg{x}\oarg{y}\oarg{z}\marg{options}\marg{left column}\marg{right column}}
+  This command is mapped to a |columns| environment. The \meta{left column} text is shown in the left column, the \meta{right column} text is shown in the right column. The options \meta{x}, \meta{y}, and \meta{z} are ignored. Also, all \meta{options} are ignored, except for \declare{|lcolwidth=|} and \declare{|rcolwidth=|}. These set the width of the left or right column, respectively.
+\end{command}
+
+\begin{command}{\PDForPS\marg{PostScript text}\marg{PDF text}}
+  Inserts either the \meta{PostScript text} or the \meta{PDF text}, depending on whether |latex| or |pdflatex| is used. When porting, the \meta{PDF text} will most likely be \emph{incorrect}, since in \prosper\ the \meta{PDF text} is actually PostScript text that is later transformed to \pdf\ by some external program.
+
+  If the \meta{PDF text} contains an |\includegraphics| command (which is its usual use), you should change the name of the graphic file that is included to a name ending |.pdf|, |.png|, or |.jpg|. Typically, you will have to convert your graphic to this format.
+\end{command}
+
+\begin{command}{\onlyInPDF\meta{PDF text}}
+  The \meta{PDF text} is only included if |pdflatex| is used. The same as for the command |\PDForPS| applies here.
+\end{command}
+
+\begin{command}{\onlyInPS\meta{PS text}}
+  The \meta{PS text} is only included if |latex| is used.
+\end{command}
+
+\begin{environment}{{notes}\marg{title}}
+  Mapped to |\note{\textbf{|\meta{title}|}|\meta{environment contents}|}| (more or less).
+\end{environment}
+
+The following commands are parsed by \beamer, but have no effect:
+\begin{itemize}\itemsep=0pt\parskip=0pt
+\item |\myitem|,
+\item |\FontTitle|,
+\item |\FontText|,
+\item |\ColorFoot|,
+\item |\DefaultTransition|,
+\item |\NoFrenchBabelItemize|,
+\item |\TitleSlideNav|,
+\item |\NormalSlideNav|,
+\item |\HAPsetup|,
+\item |\LeftFoot|, and
+\item |\RightFoot|.
+\end{itemize}
+
+
+\subsection{Seminar}
+\label{section-seminar}
+
+The package |beamerseminar| maps a subset of the commands of the \seminar\ package to \beamer. As for \prosper, the emulation cannot be perfect. For example, no portrait slides are supported, no automatic page breaking, the framing of slides is not emulated. Unfortunately, for all frames (|slide| environments) that contain overlays, you have to put the environment into a |frame| environment ``by hand'' and must remove all occurrences of |\newslide| inside the environment by closing the slide and opening a new one (and then putting these into |frame| environments).
+
+The workflow for the migration is the following:
+\begin{enumerate}
+\item
+  Use the document class |beamer|, not |seminar|. Most options passed to |seminar| do not apply to |beamer| and should be omitted.
+\item
+  If you copy parts of a presentation that is mixed with normal text, add the |ignorenonframetext| option and place \emph{every} |slide| environment inside a |frame| since \beamer\ will not recognize the |\begin{slide}| as the beginning of a frame.
+\item
+  Add a |\usepackage{beamerseminar}| to start the emulation. Add the option |accumulate| if you wish to create a presentation to be held with a video projector.
+\item
+  Possibly add commands to install themes and templates.
+\item
+  There should not be commands in the preamble having to do with page and slide styles. They do not apply to |beamer|.
+\item
+  If a |\newslide| command is used in a |slide| (or similarly |slide*|) environment that contains an overlay, you must replace it by a closing |\end{slide}| and an opening |\begin{slide}|.
+\item
+  Next, for each |slide| or |slide*| environment that contains an overlay, you must place a |frame| environment around it. You can remove the |slide| environment (and hence effectively replace it by |frame|), unless you use the |accumulate| option.
+\item
+  If you use |\section| or |\subsection| commands inside slides, you will have to move them \emph{outside} the frames. It may then be necessary to add a |\frametitle| command to the slide.
+\item
+  If you use pdf\LaTeX\ to typeset the presentation, you cannot include PostScript files. You should convert them to |.pdf| or to |.png| and adjust any usage of |\includegraphics| accordingly.
+\item
+  When starting to change things, you can use all of \beamer's commands and even mix them with \seminar\ commands.
+\end{enumerate}
+
+An example can be found in the file |beamerexample-seminar.tex|.
+
+There are, unfortunately, numerous places where you may run into problems:
+\begin{itemize}
+\item
+  The whole |note| management of |seminar| is so different from |beamer|'s, that you will have to edit notes ``by hand.'' In particular, commands like |\ifslidesonly| and |\ifslide| may not do exactly what you expect.
+\item
+  If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned.
+\item
+  If the file cannot be compiled because some \seminar\ command is not implemented, you will have to delete this command and try to mimick its behavior using some \beamer\ command.
+\end{itemize}
+
+\begin{package}{{beamerseminar}}
+  Include this package in a |beamer| presentation to get access to \seminar\ commands. Use |beamer| as the document class, not |seminar|. Most of the options passed to the class |seminar| make no sense in |beamer|, so just delete them.
+
+  This package takes the following options:
+  \begin{itemize}
+  \item
+    \declare{|accumulate|} causes overlays to be accumulated. The original behavior of the \seminar\ package is that in each overlay only the really ``new'' part of the overlay is shown. This makes sense, if you really print out the overlays on transparencies and then really stack overlays on top of each other. For a presentation with a video projector, you rather want to present an ``accumulated'' version of the overlays. This is what this option does: When the new material of the $i$-th overlay is shown, the material of all previous overlays is also shown.
+  \end{itemize}
+
+  \example
+  The following example is an extract of |beamerexample-seminar.tex|:
+
+\begin{verbatim}
+\documentclass[ignorenonframetext]{beamer}
+\usepackage[accumulated]{beamerseminar}
+\usepackage{beamerthemeclassic}
+
+\title{A beamer presentation using seminar commands}
+\author{Till Tantau}
+
+\let\heading=\frametitle
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+This is some text outside any frame. It will only be shown in the
+article version.
+
+\begin{frame}
+  \begin{slide}
+    \heading{This is a frame title.}
+
+    \begin{enumerate}
+      {\overlay1
+      \item Overlays are a little tricky in seminar.
+        {\overlay2
+        \item But it is possible to use them in beamer.
+        }
+      }
+    \end{enumerate}
+  \end{slide}
+\end{frame}
+\end{document}
+\end{verbatim}
+  You can use all normal \beamer\ commands and concepts, like overlay-specifications, in the file. You can also create an |article| version by using the class |article| and including the package |beamerarticle|.
+\end{package}
+
+In the following, the effects of \seminar\ commands in \beamer\ are listed.
+
+\begin{command}{\overlay\marg{number}}
+  Shows the material till the end of the current \TeX\ group only on overlay numbered $\hbox{\meta{number}}+1$ or, if the |accumulate| option is given, from that overlay on. Usages of this command may be nested (as in \seminar). If an |\overlay| command is given inside another, it temporarily ``overrules'' the outer one as demonstrated in the following example, where it is assumed that the |accumulate| option is given.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \begin{slide}
+    This is shown from the first slide on.
+    {\overlay{2}
+      This is shown from the third slide on.
+      {\overlay{1}
+        This is shown from the second slide on.
+      }
+      This is shown once more from the third slide on.
+    }
+  \end{slide}
+\end{frame}
+\end{verbatim}
+\end{command}
+
+\begin{environment}{{slide}\opt{|*|}}
+  Mainly installs an |\overlay{0}| around the \meta{environment contents}. If the |accumulate| option is given, this has no effect, but otherwise it will cause the main text of the slide to be shown \emph{only} on the first slide. This is useful if you really wish to physically place slides on top of each other.
+
+  The starred version does the same as the nonstarred one.
+
+  If this command is not issued inside a |\frame|, it sets up a frame with the |fragile=singleframe| option set. Thus, this frame will contain only a single slide.
+
+  \example
+\begin{verbatim}
+\begin{slide}
+  Some text.
+\end{slide}
+
+\frame{
+\begin{slide}
+  Some text. And an {\overlay{1} overlay}.
+\end{slide}
+}
+\end{verbatim}
+\end{environment}
+
+\begin{command}{\red}
+  Mapped to |\color{red}|.
+\end{command}
+
+\begin{command}{\blue}
+  Mapped to |\color{blue}|.
+\end{command}
+
+\begin{command}{\green}
+  Mapped to |\color{green}|.
+\end{command}
+
+\begin{command}{\ifslide}
+  True in the |presentation| modes, false in the |article| mode.
+\end{command}
+
+\begin{command}{\ifslidesonly}
+  Same as |\ifslide|.
+\end{command}
+
+\begin{command}{\ifarticle}
+  False in the |presentation| modes, true in the |article| mode.
+\end{command}
+
+\begin{command}{\ifportrait}
+  Always false.
+\end{command}
+
+The following commands are parsed by \beamer, but have no effect:
+\begin{itemize}\itemsep=0pt\parskip=0pt
+\item |\ptsize|.
+\end{itemize}
+
+
+\subsection{Foil\TeX}
+\label{section-foiltex}
+
+The package |beamerfoils| maps a subset of the commands of the \foils\ package to \beamer. Since this package defines only few non-standard \TeX\ commands and since \beamer\ implements all the standard commands, the emulation layer is pretty simple.
+
+A copyright notice: The Foil\TeX\ package has a restricted license. For this reason, no example from the \foils\ package is included in the \beamer\ class. The emulation itself does not use the code of the \foils\ package (rather, it just maps \foils\ commands to \beamer\ commands). For this reason, our understanding is that the \emph{emulation} offered by the \beamer\ class is ``free'' and legally so. IBM has a copyright on the \foils\ class, not on the effect the commands of this class have. (At least, that's our understanding of things.)
+
+The workflow for the migration is the following:
+\begin{enumerate}
+\item
+  Use the document class |beamer|, not |foils|.
+\item
+  Add a |\usepackage{beamerfoils}| to start the emulation.
+\item
+  Possibly add commands to install themes and templates.
+\item
+  If the command |\foilhead| is used inside a |\frame| command or |frame| environment, it behaves like |\frametitle|. If it used outside a frame, it will start a new frame (with the |allowframebreaks| option, thus no overlays are allowed). This frame will persist till the next occurrence of |\foilhead| or of the new command |\endfoil|. Note that a |\frame| command will \emph{not} end a frame started using |\foilhead|.
+\item
+  If you rely on automatic frame creation based on |\foilhead|, you will need to insert an |\endfoil| before the end of the document to end the last frame.
+\item
+  If you use pdf\LaTeX\ to typeset the presentation, than you cannot include PostScript files. You should convert them to |.pdf| or to |.png| and adjust any usage of |\includegraphics| accordingly.
+\item
+  Sizes of objects are different in \beamer, since the scaling is done by the viewer, not by the class. Thus a framebox of size 6 inches will be way too big in a \beamer\ presentation. You will have to manually adjust explicit dimension occurring in a foil\TeX\ presentation.
+\end{enumerate}
+
+\begin{package}{{beamerfoils}}
+  Include this package in a |beamer| presentation to get access to \foils\ commands. Use |beamer| as the document class, not |foils|.
+
+  \example
+  In the following example, frames are automatically created. The |\endfoil| at the end is needed to close the last frame.
+
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{beamerfoils}
+
+\begin{document}
+
+\maketitle
+
+\foilhead{First Frame}
+
+This is on the first frame.
+\pagebreak
+This is on the second frame, which is a continuation of the first.
+
+\foilhead{Third Frame}
+
+This is on the third frame.
+
+\endfoil
+\end{document}
+\end{verbatim}
+
+  \example
+  In this example, frames are manually inserted. No |\endfoil| is needed.
+
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{beamerfoils}
+
+\begin{document}
+
+\frame{\maketitle}
+
+\frame{
+\foilhead{First Frame}
+This is on the first frame.
+}
+
+\frame{
+\foilhead{Second Frame}
+This is on the second frame.
+}
+\end{document}
+\end{verbatim}
+\end{package}
+
+In the following, the effects of \foils\ commands in \beamer\ are listed.
+
+\begin{command}{\MyLogo\marg{logo text}}
+  This is mapped to |\logo|, though the logo is internally stored, such that it can be switched on and off using |\LogoOn| and |\LogoOff|.
+\end{command}
+
+\begin{command}{\LogoOn}
+  Makes the logo visible.
+\end{command}
+
+\begin{command}{\LogoOff}
+  Makes the logo invisible.
+\end{command}
+
+\begin{command}{\foilhead\oarg{dimension}\marg{frame title}}
+  If used inside a |\frame| command or |frame| environment, this is mapped to |\frametitle{|\meta{frame title}|}|. If used outside any frames, a new frame is started with the option |allowframebreaks|. If a frame was previously started using this command, it will be closed before the next frame is started. The \meta{dimension} is ignored.
+\end{command}
+
+\begin{command}{\rotatefoilhead\oarg{dimension}\marg{frame title}}
+  This command has exactly the same effect as |\foilhead|.
+\end{command}
+
+\begin{command}{\endfoil}
+  This is a command that is \emph{not} available in \foils. In \beamer, it can be used to end a frame that has automatically been opened using |\foildhead|. This command must be given before the end of the document if the last frame was opened using |\foildhead|.
+\end{command}
+
+\begin{environment}{{boldequation}\opt{|*|}}
+  This is mapped to the |equation| or the |equation*| environment, with |\boldmath| switched on.
+\end{environment}
+
+\begin{command}{\FoilTeX}
+  Typesets the foil\TeX\ name as in the \foils\ package.
+\end{command}
+
+\begin{command}{\bm\marg{text}}
+  Implemented as in the \foils\ package.
+\end{command}
+
+\begin{command}{\bmstyle\marg{text}\marg{more text}}
+  Implemented as in the \foils\ package.
+\end{command}
+
+The following additional theorem-like environments are predefined:
+\begin{itemize}
+\item |Theorem*|,
+\item |Lemma*|,
+\item |Corollary*|,
+\item |Proposition*|, and
+\item |Definition*|.
+\end{itemize}
+For example, the first is defined using |\newtheorem*{Theorem*}{Theorem}|.
+
+The following commands are parsed by \beamer, but have no effect:
+\begin{itemize}
+\item |\leftheader|,
+\item |\rightheader|,
+\item |\leftfooter|,
+\item |\rightfooter|,
+\item |\Restriction|, and
+\item |\marginpar|.
+\end{itemize}
+
+
+\subsection{\TeX Power}
+\label{section-texpower}
+
+The package |beamertexpower| maps a subset of the commands of the \texpower\ package, due to Stephan Lehmke, to \beamer. This subset is currently rather small, so a lot of adaptions may be necessary. Note that \texpower\ is not a full class by itself, but a package that needs another class, like |seminar| or |prosper| to do the actual typesetting. It may thus be necessary to additionally load an emulation layer for these also. Indeed, it \emph{might} be possible to directly use \texpower\ inside \beamer, but we have not tried that. Perhaps this will be possible in the future.
+
+Currently, the package |beamertexpower| mostly just maps the |\stepwise| and related commands to appropriate \beamer\ commands. The |\pause| command need not be mapped since it is directly implemented by \beamer\ anyway.
+
+The workflow for the migration is the following:
+\begin{enumerate}
+\item
+  Replace the document class by |beamer|. If the document class is |seminar| or |prosper|, you can use the above emulation layers, that is, you can include the files |beamerseminar| or |beamerprosper| to emulate the class.
+
+  All notes on what to do for the emulation of \seminar\ or \prosper\ also apply here.
+\item
+  Additionally, add |\usepackage{beamertexpower}| to start the emulation.
+\end{enumerate}
+
+\begin{package}{{beamertexpower}}
+  Include this package in a |beamer| presentation to get access to the \texpower\ commands having to do with the |\stepwise| command.
+\end{package}
+
+A note on the |\pause| command: Both \beamer\ and \texpower\ implement this command and they have the same semantics; so there is no need to map this command to anything different in |beamertexpower|. However, a difference is that |\pause| can be used almost anywhere in \beamer, whereas it may only be used in non-nested situations in \texpower. Since \beamer\ is only more flexible than \texpower\ here, this will not cause problems when porting.
+
+In the following, the effect of \texpower\ commands in \beamer\ are listed.
+
+\begin{command}{\stepwise\marg{text}}
+  As in \texpower, this initiates text in which commands like |\step| or |\switch| may be given. Text contained in a |\step| command will be enclosed in an |\only| command with the overlay specification |<+(1)->|. This means that the text of the first |\step| is inserted from the second slide onward, the text of the second |\step| is inserted from the third slide onward, and so on.
+\end{command}
+
+\begin{command}{\parstepwise\marg{text}}
+  Same as |\stepwise|, only |\uncover| is used instead of |\only| when mapping the |\step| command.
+\end{command}
+
+\begin{command}{\liststepwise\marg{text}}
+  Same as |\stepwise|, only an invisible horizontal line is inserted before the \meta{text}. This is presumably useful for solving some problems related to vertical spacing in \texpower.
+\end{command}
+
+\begin{command}{\step\marg{text}}
+  This is either mapped to |\only<+(1)->|\meta{text} or to |\uncover<+(1)->|\meta{text}, depending on whether this command is used inside a |\stepwise| environment or inside a |\parstepwise| environment.
+\end{command}
+
+\begin{command}{\steponce\marg{text}}
+  This is either mapped to |\only<+(1)>|\meta{text} or to |\uncover<+(1)>|\meta{text}, depending on whether this command is used inside a |\stepwise| environment or inside a |\parstepwise| environment.
+\end{command}
+
+\begin{command}{\switch\marg{alternate text}\marg{text}}
+  This is mapped to |\alt<+(1)->{|\meta{text}|}{|\meta{alternate text}|}|. Note that the arguments are swapped.
+\end{command}
+
+\begin{command}{\bstep\marg{text}}
+  This is always mapped to |\uncover<+(1)->|\meta{text}.
+\end{command}
+
+\begin{command}{\dstep}
+  This just advances the counter |beamerpauses| by one. It has no other effect.
+\end{command}
+
+\begin{command}{\vstep}
+  Same as |\dstep|.
+\end{command}
+
+\begin{command}{\restep\marg{text}}
+  Same as |\step|, but the \meta{text} is shown one the same slide as the previous |\step| command. This is implemented by first decreasing the counter |beamerpauses| by one before calling |\step|.
+\end{command}
+
+\begin{command}{\reswitch\marg{alternate text}\meta{text}}
+  Like |\restep|, only for the |\switch| command.
+\end{command}
+
+\begin{command}{\rebstep\meta{text}}
+  Like |\restep|, only for the |\bstep| command.
+\end{command}
+
+\begin{command}{\redstep}
+  This command has no effect.
+\end{command}
+
+\begin{command}{\revstep}
+  This command has no effect.
+\end{command}
+
+\begin{command}{\boxedsteps}
+  Temporarily (for the current \TeX\ group) changes the effect of |\step| to issue an |\uncover|, even if used inside a |\stepwise| environment.
+\end{command}
+
+\begin{command}{\nonboxedsteps}
+  Temporarily (for the current \TeX\ group) changes the effect of |\step| to issue an |\only|, even if used inside a |\parstepwise| environment.
+\end{command}
+
+\begin{command}{\code\marg{text}}
+  Typesets the argument using a boldface typewriter font.
+\end{command}
+
+\begin{command}{\codeswitch}
+  Switches to a boldface typewriter font.
+\end{command}

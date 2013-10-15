@@ -1,0 +1,134 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\section{Installation}
+\label{section-installation}
+
+There are different ways of installing the \beamer\ class, depending on your installation and needs. When installing the class, you may have to install some other packages as well as described below. Before installing, you may wish to review the licenses under which the class is distributed, see Section~\ref{section-license}.
+
+Fortunately, most likely your system will already have \beamer\ preinstalled, so you can skip this section.
+
+
+\subsection{Versions and Dependencies}
+
+This documentation is part of version \beamerugversion\ of the \beamer\ class. \beamer\ needs a reasonably recent version of several standard packages to run and also the following versions of two special packages (later versions should work, but not necessarily):
+\begin{itemize}
+\item
+  |pgf.sty| version \beamerugpgfversion,
+\item
+  |xcolor.sty| version \beamerugxcolorversion.
+\end{itemize}
+
+If you use |pdflatex|, which is optional, you need
+\begin{itemize}
+\item
+  |pdflatex| version 0.14 or higher. Earlier versions do not work.
+\end{itemize}
+
+
+\subsection{Installation of Pre-bundled Packages}
+
+We do not create or manage pre-bundled packages of \beamer, but, fortunately, other nice people do. We cannot give detailed instructions on how to install these packages, since we do not manage them, but we \emph{can} tell you were to find them and we can tell you what these nice people told us on how to install them. If you have a problem with installing, you might wish to have a look at the following first.
+
+
+\subsubsection{\TeX\ Live and Mac\TeX}
+
+In \TeX\ Live, use the |tlmgr| tool to install the packages called |beamer|, |pgf|, and |xcolor|. If you have a fairly recent version of \TeX\ Live, and you have done full installation, \beamer\ is included.
+
+
+\subsubsection{MiK\TeX\ and pro\TeX t}
+
+For MiK\TeX\ and pro\TeX t, use the update wizard or package manager to install the (latest versions of the) packages called |beamer|, |pgf|, and |xcolor|.
+
+
+\subsubsection{Debian and Ubuntu}
+
+The command ``|aptitude install latex-beamer|'' should do the trick. If necessary, the packages |pgf| and |latex-xcolor| will be automatically installed. Sit back and relax. In detail, the following packages are installed:
+\begin{verbatim}
+http://packages.debian.org/latex-beamer
+http://packages.debian.org/pgf
+http://packages.debian.org/latex-xcolor
+\end{verbatim}
+
+Debian 5.0 ``lenny'' includes \TeX\ Live 2007, and version 6.0 ``squeeze'' will include \TeX\ Live 2009. This also allows you to manually install newer versions of \beamer\ (into your local directory, see below) without having to update any other \LaTeX\ packages.
+
+Ubuntu 8.04, 9.04 and 9.10 include \TeX\ Live 2007, and version 10.04 includes \TeX\ Live 2009.
+
+
+\subsubsection{Fedora}
+
+Fedora 9, 10, 11, 12 and 13 include \TeX\ Live 2007, which includes \beamer. It can be installed by running the command ``|yum install texlive-texmf-latex|''. As with Debian, this allows you to manually install newer versions of \beamer\ into your local directory (explained below).
+
+Jindrich Novy provides \TeX\ Live 2010 |rpm| packages for Fedora 12 and 13, at
+\begin{verbatim}
+http://fedoraproject.org/wiki/Features/TeXLive
+\end{verbatim}
+Fedora 14 will contain \TeX\ Live 2010 once it's released.
+
+
+\subsection{Installation in a texmf Tree}
+
+If, for whatever reason, you do not wish to use a prebundled package, the ``right'' way to install \beamer\ is to put it in a so-called |texmf| tree. In the following, we explain how to do this.
+
+Obtain the latest source version (ending |.tar.gz| or |.zip|) of the \beamer\ package from
+\begin{verbatim}
+http://bitbucket.org/rivanvx/beamer
+\end{verbatim}
+(most likely, you have already done this). Next, you also need the \textsc{pgf} package and the \textsc{xcolor} packages, which you need to install separately (see their installation instructions).
+
+The package contains a bunch of files; |beamer.cls| is one of these files and happens to be the most important one. You now need to put these files in an appropriate |texmf| tree.
+
+When you ask \TeX\ to use a certain class or package, it usually looks for the necessary files in so-called |texmf| trees. These trees are simply huge directories that contain these files. By default, \TeX\ looks for files in three different |texmf| trees:
+\begin{itemize}
+\item
+  The root |texmf| tree, which is usually located at |/usr/share/texmf/|, |/usr/local/texlive/texmf/|, |c:\texmf\|, or\\ |c:\texlive\texmf\|.
+\item
+  The local  |texmf| tree, which is usually located at |/usr/local/share/texmf/|, |/usr/local/texlive/texmf-local/| |c:\localtexmf\|, or\\ |c:\texlive\texmf-local\|.
+\item
+  Your personal |texmf| tree, which is usually located in your home directory at |~/texmf/| or |~/Library/texmf/|.
+\end{itemize}
+
+You should install the packages either in the local tree or in your personal tree, depending on whether you have write access to the local tree. Installation in the root tree can cause problems, since an update of the whole \TeX\ installation will replace this whole tree.
+
+Inside whatever |texmf| directory you have chosen, create the sub-sub-sub-directory
+\begin{verbatim}
+texmf/tex/latex/beamer
+\end{verbatim}
+and place all files of the package in this directory.
+
+Finally, you need to rebuild \TeX's filename database. This is done by running the command |texhash| or |mktexlsr| (they are the same). In MiK\TeX\ package manager and \TeX\ Live |tlmgr|, there is a menu option to do this.
+
+\vskip1em
+For a more detailed explanation of the standard installation process of packages, you might wish to consult \href{http://www.ctan.org/installationadvice/}{|http://www.ctan.org/installationadvice/|}. However, note that the \beamer\ package does not come with a |.ins| file (simply skip that part).
+
+
+\subsection{Updating the Installation}
+
+To update your installation from a previous version, simply replace everything in the directory
+\begin{verbatim}
+texmf/tex/latex/beamer
+\end{verbatim}
+with the files of the new version. The easiest way to do this is to first delete the old version and then to proceed as described above.
+
+Note that if you have two versions installed, one in |texmf| and other in |texmf-local| directory, \TeX\ distribution will prefer one in |texmf-local| directory. This generally allows you to update packages manually without administrator privileges.
+
+
+\subsection{Testing the Installation}
+
+To test your installation, copy the file |generic-ornate-15min-45min.en.tex| from the directory
+\begin{verbatim}
+beamer/solutions/generic-talks
+\end{verbatim}
+to some place where you usually create presentations. Then run the command |pdflatex| several times on the file and check whether the resulting \pdf\ file looks correct. If so, you are all set.
+
+
+\input{beamerug-compatibility}

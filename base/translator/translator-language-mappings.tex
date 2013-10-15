@@ -1,0 +1,76 @@
+% Copyright 2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the documentation file for more details.
+
+\def\trans@use@and@alias#1#2{%
+  \uselanguage{#2}%
+  \languagealias{#1}{#2}%
+}
+
+\DeclareOption{acadian}        {\trans@use@and@alias{french}    {Acadian,French}}
+\DeclareOption{afrikaans}      {\trans@use@and@alias{afrikaans} {Afrikaans,Dutch}}
+\DeclareOption{american}       {\trans@use@and@alias{american}  {AmericanEnglish,English}}
+\DeclareOption{austrian}       {\trans@use@and@alias{austrian}  {Austrian1997,Austrian,German1997,German}}
+\DeclareOption{bahasa}         {\trans@use@and@alias{bahasa}    {Bahasa}}
+\DeclareOption{basque}         {\trans@use@and@alias{basque}    {Basque}}
+\DeclareOption{brazil}         {\trans@use@and@alias{brazil}    {Brazilian,Portuguese}}
+\DeclareOption{brazilian}      {\trans@use@and@alias{brazilian} {Brazilian,Portuguese}}
+\DeclareOption{breton}         {\trans@use@and@alias{breton}    {Breton}}
+\DeclareOption{british}        {\trans@use@and@alias{british}   {BritishEnglish,English}}
+\DeclareOption{bulgarian}      {\trans@use@and@alias{bulgarian} {Bulgarian}}
+\DeclareOption{canadian}       {\trans@use@and@alias{canadian}  {Canadian,English}}
+\DeclareOption{canadien}       {\trans@use@and@alias{canadien}  {Canadien,French}}
+\DeclareOption{catalan}        {\trans@use@and@alias{catalan}   {Catalan}}
+\DeclareOption{croatian}       {\trans@use@and@alias{croatian}  {Croatian}}
+\DeclareOption{czech}          {\trans@use@and@alias{czech}     {Czech}}
+\DeclareOption{danish}         {\trans@use@and@alias{danish}    {Danish}}
+\DeclareOption{dutch}          {\trans@use@and@alias{dutch}     {Dutch}}
+\DeclareOption{english}        {\trans@use@and@alias{english}   {English}}
+\DeclareOption{esperanto}      {\trans@use@and@alias{esperaton} {Esperanto}}
+\DeclareOption{estonian}       {\trans@use@and@alias{estonian}  {Estonian}}
+\DeclareOption{finnish}        {\trans@use@and@alias{finnish}   {Finnish}}
+\DeclareOption{francais}       {\trans@use@and@alias{french}    {French}}
+\DeclareOption{frenchb}        {\trans@use@and@alias{french}    {French}}
+\DeclareOption{french}         {\trans@use@and@alias{french}    {French}}
+\DeclareOption{galician}       {\trans@use@and@alias{galician}  {Galician}}
+\DeclareOption{german}         {\trans@use@and@alias{german}    {German1997,German}}
+\DeclareOption{germanb}        {\trans@use@and@alias{german}    {German1997,German}}
+\DeclareOption{greek}          {\trans@use@and@alias{greek}     {Greek}}
+\DeclareOption{polutonikogreek}{\trans@use@and@alias{greek}     {Polutoniko,Greek}}
+\DeclareOption{hebrew}         {\trans@use@and@alias{hebrew}    {Hebrew}}
+\DeclareOption{hungarian}      {\trans@use@and@alias{hungarian} {Hungarian}}
+\DeclareOption{icelandic}      {\trans@use@and@alias{icelandic} {Icelandic}}
+\DeclareOption{irish}          {\trans@use@and@alias{irish}     {Irish}}
+\DeclareOption{italian}        {\trans@use@and@alias{italian}   {Italian}}
+\DeclareOption{latin}          {\trans@use@and@alias{latin}     {Latin}}
+\DeclareOption{lowersorbian}   {\trans@use@and@alias{lsorbian}  {LowerSorbian,Sorbian}}
+\DeclareOption{magyar}         {\trans@use@and@alias{magyar}    {Magyar}}
+\DeclareOption{naustrian}      {\trans@use@and@alias{naustrian} {Austrian,German}}
+\DeclareOption{ngerman}        {\trans@use@and@alias{ngerman}   {German}}
+\DeclareOption{norsk}          {\trans@use@and@alias{norsk}     {Norsk}}
+\DeclareOption{samin}          {\trans@use@and@alias{samin}     {Samin}}
+\DeclareOption{nynorsk}        {\trans@use@and@alias{nynorsk}   {Nynorsk,Norsk}}
+\DeclareOption{polish}         {\trans@use@and@alias{polish}    {Polish}}
+\DeclareOption{portuges}       {\trans@use@and@alias{portuges}  {Portuguese}}
+\DeclareOption{portuguese}     {\trans@use@and@alias{portuguese}{portuguese}}
+\DeclareOption{romanian}       {\trans@use@and@alias{romanian}  {Romanian}}
+\DeclareOption{russian}        {\trans@use@and@alias{russian}   {Russian}}
+\DeclareOption{scottish}       {\trans@use@and@alias{scottish}  {Scottish}}
+\DeclareOption{serbian}        {\trans@use@and@alias{serbian}   {Serbian}}
+\DeclareOption{slovak}         {\trans@use@and@alias{slovak}    {Slovak}}
+\DeclareOption{slovene}        {\trans@use@and@alias{slovene}   {Slovene}}
+\DeclareOption{spanish}        {\trans@use@and@alias{spanish}   {Spanish}}
+\DeclareOption{swedish}        {\trans@use@and@alias{swedish}   {Swedish}}
+\DeclareOption{turkish}        {\trans@use@and@alias{turkish}   {Turkish}}
+\DeclareOption{ukrainian}      {\trans@use@and@alias{ukrainian} {Ukrainian}}
+\DeclareOption{uppersorbian}   {\trans@use@and@alias{usorbian}  {UpperSorbian,Sorbian}}
+\DeclareOption{welsh}          {\trans@use@and@alias{welsh}     {Welsh}}
+\DeclareOption{UKenglish}      {\trans@use@and@alias{UKenglish} {BritishEnglish,English}}
+\DeclareOption{USenglish}      {\trans@use@and@alias{USenglish} {AmericanEnglish,English}}
+\ProcessOptions*

@@ -1,0 +1,231 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\mode
+<presentation>
+
+
+% Maximum dead cycles
+\maxdeadcycles=1000
+
+% Calculate maximum number of sections/subsections per part
+\beamer@subsubsectionmax=0\relax
+\beamer@subsectionmax=0\relax
+\beamer@sectionmax=0\relax
+\beamer@sectioncount=0\relax
+
+\def\headcommand#1{\global\advance\beamer@totalheads by1\relax%
+  \expandafter\gdef\csname @@head\the\beamer@totalheads\endcsname{#1}}
+\def\dohead{\beamer@headcounter=0\relax\loop\ifnum\beamer@headcounter<\beamer@totalheads%
+  \advance\beamer@headcounter by1\relax%
+  \csname @@head\the\beamer@headcounter\endcsname\repeat}
+
+\def\beamer@startpageofframe{1}
+\def\beamer@endpageofframe{1}
+\def\beamer@startpageofsubsection{1}
+\def\beamer@endpageofsubsection{1}
+\def\beamer@startpageofsection{1}
+\def\beamer@endpageofsection{1}
+\def\beamer@startpageofpart{1}
+\def\beamer@endpageofpart{1}
+\def\beamer@endpageofdocument{1}
+\def\beamer@startpageofappendix{}
+\def\inserttotalframenumber{1}
+
+\def\partentry#1#2{\beamer@sectioncount=0\relax}
+\def\beamer@initsectionentry#1#2#3#4#5{\advance\beamer@sectioncount by1\relax%
+  \ifnum\beamer@sectionmax<\beamer@sectioncount\beamer@sectionmax=\beamer@sectioncount\fi}
+\def\beamer@initslideentry#1#2#3#4#5#6{\ifnum\beamer@subsectionmax<#2\relax\beamer@subsectionmax=#2\fi}
+\def\beamer@initsubsubsectionentry#1#2#3#4#5#6{\ifnum\beamer@subsubsectionmax<#4\relax\beamer@subsubsectionmax=#4\fi}
+\def\beamer@framepages#1#2{}
+\def\beamer@subsectionpages#1#2{}
+\def\beamer@sectionpages#1#2{}
+\def\beamer@partpages#1#2{}
+\def\beamer@appendixpages#1{\gdef\beamer@startpageofappendix{#1}}
+\def\beamer@documentpages#1{\gdef\beamer@endpageofdocument{#1}}
+
+\setlength\lineskip{1\p@}
+\setlength\normallineskip{1\p@}
+\renewcommand\baselinestretch{}
+
+\setlength\parskip{0\p@}% \@plus \p@}
+\@lowpenalty   51
+\@medpenalty  151
+\@highpenalty 301
+\setcounter{topnumber}{2}
+\renewcommand\topfraction{.7}
+\setcounter{bottomnumber}{1}
+\renewcommand\bottomfraction{.3}
+\setcounter{totalnumber}{3}
+\renewcommand\textfraction{.9}%.2}
+\renewcommand\floatpagefraction{.1}%5}
+\setcounter{dbltopnumber}{2}
+\renewcommand\dbltopfraction{.7}
+\renewcommand\dblfloatpagefraction{.5}
+\@beginparpenalty -\@lowpenalty
+\@endparpenalty   -\@lowpenalty
+\@itempenalty     -\@lowpenalty
+
+\g@addto@macro\beamer@lastminutepatches{
+  \beamer@activecjk
+  \makeatletter
+  \@input{\jobname.nav}
+  \let\beamer@sectionentryorig=\sectionentry
+  \let\beamer@slideentryorig=\slideentry
+  \let\beamer@subsubsectionentryorig=\beamer@subsubsectionentry
+  \let\sectionentry=\beamer@initsectionentry
+  \let\slideentry=\beamer@initslideentry
+  \let\beamer@subsubsectionentry=\beamer@initsubsubsectionentry
+  \dohead
+  \let\sectionentry=\beamer@sectionentryorig
+  \let\slideentry=\beamer@slideentryorig
+  \let\beamer@subsubsectionentry=\beamer@subsubsectionentryorig
+  \beamer@calculateheadfoot
+  \ifbeamer@draftmode
+    \setbeamertemplate{footline}{
+    \color{black!25}%
+    \kern-\Gm@lmargin\vrule width\paperwidth
+    height\footheight\kern-\Gm@rmargin}
+    \setbeamertemplate{headline}{
+    \color{black!25}%
+    \kern-\Gm@lmargin\vrule width\paperwidth
+    height\headheight\kern-\Gm@rmargin}
+    \setbeamertemplate{sidebar left}{%
+    \color{black!20}%
+    \vrule width \beamer@leftsidebar height\sidebarheight}
+    \setbeamertemplate{sidebar right}{%
+    \color{black!20}%
+    \vrule width \beamer@rightsidebar height\sidebarheight}
+    \setbeamertemplate{sidebar canvas left}{}
+    \setbeamertemplate{sidebar canvas right}{}
+  \fi
+  \makeatother
+}
+
+
+\setcounter{tocdepth}{3}
+
+\setlength\arraycolsep{5\p@}
+\setlength\tabcolsep{6\p@}
+\setlength\arrayrulewidth{.4\p@}
+\setlength\doublerulesep{2\p@}
+\setlength\tabbingsep{\labelsep}
+\skip\@mpfootins = \skip\footins
+\setlength\fboxsep{3\p@}
+\setlength\fboxrule{.4\p@}
+
+
+\newcommand\contentsname{\translate{Contents}}
+\newcommand\listfigurename{\translate{List of Figures}}
+\newcommand\listtablename{\translate{List of Tables}}
+\newcommand\refname{\translate{References}}
+\newcommand\bibname{\translate{Bibliography}}
+\newcommand\indexname{\translate{Index}}
+\newcommand\figurename{\translate{Figure}}
+\newcommand\algorithmname{\translate{Algorithm}}
+\newcommand\tablename{\translate{Table}}
+\newcommand\partname{\translate{Part}}
+\newcommand\chaptername{\translate{Chapter}}
+\newcommand\appendixname{\translate{Appendix}}
+\newcommand\abstractname{\translate{Abstract}}
+% This is suboptimal; for full localization babel should be used.
+\def\today{\ifcase\month\or
+  \translate{January}\or \translate{February}\or \translate{March}\or
+  \translate{April}\or \translate{May}\or \translate{June}\or
+  \translate{July}\or \translate{August}\or \translate{September}\or
+  \translate{October}\or \translate{November}\or \translate{December}\fi
+  \space\number\day, \number\year}
+\setlength\columnsep{10\p@}
+\setlength\columnseprule{0\p@}
+\onecolumn
+
+\parindent0pt
+
+\AtEndDocument{%
+  \clearpage
+  \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+  \if@filesw
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@partpages{\the\beamer@partstartpage}{\the\beamer@tempcount}}}}%
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}}%
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}}%
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
+      \immediate\write\@auxout{\string\@writefile{nav}%
+        {\noexpand\headcommand{\noexpand\def\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
+      \newwrite\tf@nav
+      \immediate\openout\tf@nav\jobname.nav\relax
+      \newwrite\tf@toc
+      \immediate\openout\tf@toc\jobname.toc\relax
+      \newwrite\tf@snm
+      \immediate\openout\tf@snm\jobname.snm\relax
+    \fi
+}
+
+
+
+%
+% Managing short inserts
+%
+
+
+\define@key{beamerst}{respectlinebreaks}[true]{%
+  \def\beamer@stlinebreakrule{}}
+\define@key{beamerst}{width}{%
+  \def\beamer@ststart{%
+    \begin{minipage}[t]{#1}%
+      \raggedright%
+      \beamer@stalign%
+      \beamer@stlinebreakrule%
+    }%
+  \def\beamer@stend{\end{minipage}}}
+\define@key{beamerst}{center}[true]{%
+  \def\beamer@stalign{\centering}}
+\define@key{beamerst}{spill}[true]{%
+  \def\beamer@stalign{\parshape...}}%
+\newcommand{\beamer@setupshort}[1]{%
+  \def\beamer@stlinebreakrule{\def\\{}}%
+  \def\beamer@stalign{}%
+  \def\beamer@ststart{\hbox\bgroup\def\\{}}%
+  \def\beamer@stend{\egroup}%
+  \setkeys{beamerst}{#1}}%
+\newcommand{\beamer@insertshort}[1]{%
+  \beamer@ststart#1\beamer@stend%
+}
+
+\mode
+<all>
+
+\AtBeginDocument
+{
+  \ifx\includegraphics\@undefined
+  \else
+    \renewcommand<>\includegraphics[2][]{\only#3{\beameroriginal\includegraphics[{#1}]{#2}}\ignorespaces}
+    % Deal with star case (unique for overlay-aware commands)
+    \let\beamer@includegraphics@maybe@star\includegraphics
+    \DeclareRobustCommand\includegraphics{%
+      \@ifstar
+        {\Gin@cliptrue \beamer@includegraphics@maybe@star}
+        {\Gin@clipfalse \beamer@includegraphics@maybe@star}%
+    }
+  \fi
+
+  \ifx\pgfuseimage\@undefined
+  \else
+    \renewcommand<>\pgfuseimage[1]{\only#2{\beameroriginal\pgfuseimage{#1}}\ignorespaces}
+    \renewcommand<>\pgfimage[2][]{\only#3{\beameroriginal\pgfimage[{#1}]{#2}}\ignorespaces}
+  \fi
+}
+
+
