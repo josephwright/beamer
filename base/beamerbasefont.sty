@@ -201,6 +201,15 @@
     \else
       \SetSymbolFont{operators}{bold}{OT1}{cmss}{\bfdefault}{n}
     \fi
+    \@ifpackageloaded{lmodern}
+      {%
+        \SetSymbolFont{operators}{normal}{OT1}{\sfdefault}{\mddefault}{n}
+        \ifx\mv@bold\@undefined
+        \else
+          \SetSymbolFont{operators}{bold}{OT1}{\sfdefault}{\bfdefault}{n}
+        \fi
+      }%
+      {}%
   \fi
   \DeclareSymbolFont{numbers}{\encodingdefault}{\mathfamilydefault}{\mddefault}{n}
   \DeclareSymbolFont{pureletters}{\encodingdefault}{\mathfamilydefault}{\mddefault}{it}
