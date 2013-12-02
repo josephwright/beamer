@@ -360,6 +360,9 @@
 \RequirePackage{xxcolor}
 % For color management (comes with pgf).
 
+\RequirePackage{atbegshi}
+% Normally loaded by hyperref but to be on the safe side ...
+
 \RequirePackage[implicit=false]{hyperref}
 % For hyperlinks
 
