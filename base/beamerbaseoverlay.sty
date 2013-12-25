@@ -840,24 +840,5 @@
   }
 }
 
-% Make sure \pause is correctly ended when used inside a TikZ picutre
-\AtBeginDocument
-  {
-    \begingroup\expandafter\expandafter\expandafter\endgroup
-    \expandafter\ifx\csname endtikzpicture\endcsname\relax
-    \else
-      \newcommand*{\beamer@tikzpicture@env}{tikzpicture}
-      \begingroup
-        \toks0\expandafter{\endtikzpicture}%
-        \xdef\endtikzpicture{%
-          \noexpand\ifx\noexpand\beamer@tikzpicture@env\noexpand\@currenvir
-            \noexpand\expandafter\noexpand\beamer@endcovered
-          \noexpand\fi
-          \the\toks0
-        }%
-      \endgroup
-    \fi
-  }
-
 \mode
 <all>
