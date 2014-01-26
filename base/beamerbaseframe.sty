@@ -28,6 +28,9 @@
   \beamer@inframefalse
 % Save!
   \let\framelatex=\frame
+  \def\@iframepicbox(#1,#2)[#3]#4{%
+    \framelatex{\@imakepicbox(#1,#2)[#3]{#4}}%
+  }%
 }
 
 \def\refcounter#1{\protected@edef\@currentlabel%
