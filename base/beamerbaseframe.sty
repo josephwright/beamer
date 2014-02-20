@@ -492,13 +492,19 @@
     \fi
   \fi%
   \beamer@howtotreatframe}
-\long\def\beamer@donoframe{%
+\def\gobble@onslide{%
+  \@ifnextchar<%>
+    \gobble@onslide@aux
+    \@firstofone
+}
+\def\gobble@onslide@aux<#1>{\@firstofone}
+\def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
   \setbox\beamer@tempbox\vbox\bgroup%
     \beamer@inframetrue%
     \leavevmode%
     \def\pause{}%
-    \def\onslide{}%
+    \let\onslide\gobble@onslide
     \afterassignment\beamer@checknoslide\let\beamer@next}
 \def\beamer@checknoslide{%
   \ifcat\bgroup\noexpand\beamer@next%
