@@ -361,43 +361,45 @@
 \defbeamertemplate{enumerate item}{ball}
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
-    \usebeamercolor[fg]{item projected}
+    \usebeamercolor{item projected}
     {\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
     {\pgftransformshift{\pgfpoint{0pt}{0.5pt}}
-      \pgftext{\usebeamerfont*{item projected}\insertenumlabel}}
+      \pgftext{%
+        \usebeamerfont*{item projected}%
+        \color{fg}\insertenumlabel}}
   \end{pgfpicture}%
 }
 
 \defbeamertemplate{enumerate subitem}{ball}
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
-    \usebeamercolor[fg]{subitem projected}
+    \usebeamercolor{subitem projected}
     {\pgftransformscale{1.4}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
     \pgftext{%
       \usebeamerfont*{subitem projected}%
-      \insertsubenumlabel}
+      \color{fg}\insertsubenumlabel}
   \end{pgfpicture}%
 }
 
 \defbeamertemplate{enumerate subsubitem}{ball}
 {
   \begin{pgfpicture}{-1ex}{-0.55ex}{1ex}{1ex}
-    \usebeamercolor[fg]{subsubitem projected}
+    \usebeamercolor{subsubitem projected}
     {\pgftransformscale{1.4}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
     \pgftext{%
       \usebeamerfont*{subitem projected}%
-      \insertsubsubenumlabel}
+      \color{fg}\insertsubsubenumlabel}
   \end{pgfpicture}%
 }
 
 \defbeamertemplate{enumerate mini template}{ball}
 {
   \begin{pgfpicture}{-1ex}{-0.65ex}{1ex}{1ex}
-    \usebeamercolor[fg]{\beameritemnestingprefix item projected}
+    \usebeamercolor{\beameritemnestingprefix item projected}
     {\pgftransformscale{1.75}\pgftext{\normalsize\pgfuseshading{bigsphere}}}
     {\pgftransformshift{\pgfpoint{0pt}{0.5pt}}%
      \usebeamerfont*{\beameritemnestingprefix item projected}%
-     \pgftext{\insertenumlabel}}
+     \pgftext{\color{fg}\insertenumlabel}}
   \end{pgfpicture}
 }
 
