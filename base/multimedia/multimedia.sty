@@ -1,0 +1,306 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+% Copyright 2011 by Vedran Mileti\'c, Joseph Wright
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\ProvidesPackage{multimedia}[2012/05/02 ver 0.02]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+
+\RequirePackage{keyval}[1997/11/10]
+
+\RequirePackage{ifpdf}
+
+\ifpdf
+  \let\mm@psorpdf\@secondoftwo
+\else
+  \let\mm@psorpdf\@firstoftwo
+  \PassOptionsToPackage{pdfmark}{hyperref}
+  \define@key{PDF}{Movie}{\pdf@addtoks{#1}{Movie}}
+  \define@key{PDF}{T}{\pdf@addtoks{#1}{T}}
+  \define@key{PDF}{Annotations}{\pdf@addtoks{#1}{A}}
+\fi
+
+\define@key{multimedia}{automute}[true]{\csname mm@autostop#1\endcsname}
+\define@key{multimedia}{autostart}[true]{\csname mm@autostart#1\endcsname}
+\define@key{multimedia}{bitspersample}{\def\mm@b{/B #1}}
+\define@key{multimedia}{borderwidth}{{\@tempdima=#1\relax\@tempdima=0.99626401\@tempdima\xdef\mm@bw{\strip@pt\@tempdima}}}
+\define@key{multimedia}{channels}{\def\mm@c{/C #1}}
+\define@key{multimedia}{depth}{\@tempdimc=#1\relax}
+\define@key{multimedia}{duration}{\mm@convert#1{\mm@duration}{/Duration}}%
+\define@key{multimedia}{encoding}{\def\mm@e{/E /#1}}
+\define@key{multimedia}{externalviewer}[]{\mm@externaltrue}
+\define@key{multimedia}{height}{\@tempdimb=#1\relax}
+\define@key{multimedia}{inlinesound}[true]{\csname mm@inline#1\endcsname}
+\define@key{multimedia}{label}{\def\mm@label{#1}}
+\define@key{multimedia}{loop}[]{\def\mm@playmode{/Mode /Repeat}\def\mm@repeat{/Repeat true}}
+\define@key{multimedia}{mixsound}[true]{\def\mm@mix{/Mix #1}}
+\define@key{multimedia}{once}[]{\def\mm@playmode{/Mode /Once}}
+\define@key{multimedia}{palindrome}[]{\def\mm@playmode{/Mode /Palindrome}}
+\define@key{multimedia}{pause}[]{\def\mm@do{/Operation /Pause}}
+\define@key{multimedia}{play}[]{\def\mm@do{/Operation /Play}}
+\define@key{multimedia}{poster}[true]{\def\mm@poster{/Poster #1}}
+\define@key{multimedia}{repeat}[]{\def\mm@playmode{/Mode /Repeat}\def\mm@repeat{/Repeat true}}
+\define@key{multimedia}{resume}[]{\def\mm@do{/Operation /Resume}}
+\define@key{multimedia}{samplingrate}{\def\mm@r{/R #1}}
+\define@key{multimedia}{showcontrols}[true]{\def\mm@controls{/ShowControls #1}}
+\define@key{multimedia}{start}{\mm@convert#1{\mm@start}{/Start}}%
+\define@key{multimedia}{stop}[]{\def\mm@do{/Operation /Stop}}
+\define@key{multimedia}{width}{\@tempdima=#1\relax}
+\define@key{multimedia}{open}[]{\def\mm@playmode{/Mode /Open}}
+
+\def\mm@convert#1s{\mm@@convert{#1}}
+\def\mm@@convert#1#2#3{%
+  {\@tempdima=#1pt%
+  \@tempcnta=\@tempdima%
+  \divide\@tempcnta by 512%
+  \xdef#2{#3 [\the\@tempcnta\space 128]}}}
+
+\newif\ifmm@autostart
+\newif\ifmm@autostop
+\newif\ifmm@external
+\newif\ifmm@inline
+\newcount\mm@movie
+
+\newcommand\movie[3][]{%
+  \leavevmode%
+  % Sanity check
+  \IfFileExists{\@currdir #3}{}{%
+    \PackageWarning{multimedia}{The movie file ``#3'' could not be
+      found in the current directory, where it must reside for
+      viewing.}%
+  }%
+  {%
+    % Calculate size of the poster
+    \setbox\@tempboxa=\hbox{#2}%
+    \@tempdima=\wd\@tempboxa%
+    \@tempdimb=\ht\@tempboxa%
+    \@tempdimc=\dp\@tempboxa%
+    \global\advance\mm@movie by1\relax%
+    \edef\mm@label{mmdefaultlabel\the\mm@movie}%
+    \def\mm@playmode{}%
+    \def\mm@duration{}%
+    \def\mm@start{}%
+    \def\mm@poster{}%
+    \def\mm@controls{}%
+    \mm@autostartfalse%
+    \mm@externalfalse%
+    \def\mm@bw{0}%
+    \setkeys{multimedia}{#1}%
+    \wd\@tempboxa=\@tempdima%
+    \ht\@tempboxa=\@tempdimb%
+    \dp\@tempboxa=\@tempdimc%
+    \ifmm@external%
+      \href{run:#3}{\box\@tempboxa}%
+    \else%
+      \mm@psorpdf{%
+        \pdfmark[{\box\@tempboxa}]{%
+          pdfmark=/ANN,%
+          Subtype=/Movie,%
+          Movie=<< /F (#3) \mm@poster\space >>,%
+          Annotations=<< \mm@start\space \mm@duration\space \mm@playmode\space \mm@controls\space>>,%
+          T=(\mm@label),
+          Border={0 0 \mm@bw}}%
+       }{%
+        \pdfannot width \@tempdima height \@tempdimb depth \@tempdimc
+        {
+          /Subtype /Movie
+          /T (\mm@label)
+          /Border [0 0 \mm@bw]
+          /Movie << /F (#3) \mm@poster\space >>
+          /A << \mm@start\space \mm@duration\space \mm@playmode\space \mm@controls\space >>
+        }%
+      }%
+      \mm@psorpdf{}{\box\@tempboxa}%
+      \ifmm@autostart%
+      \mm@psorpdf%
+      {%
+        \pdfmark{pdfmark=/PUT,%
+           Raw={{ThisPage} << /AA << /O << /S /Movie
+         /T (\mm@label) /Operation /Play >> >> >>}%
+      }}%
+      {%
+        \immediate\pdfobj {<< /S /Movie /T (\mm@label) /Operation /Play >>}%
+        \pdfannot width 0pt height 0pt depth 0pt {%
+          /Subtype/Widget
+          /FT/Btn/Ff 65537
+          /T (wid@\mm@label)
+          /AA <</PO \the\pdflastobj\space 0 R>>% attention: /O --> /PO for Widget annots
+        }%  
+      }%
+      \fi%
+    \fi%
+  }%
+}
+
+
+\newcommand\hyperlinkmovie[3][]{%
+  \leavevmode%
+  {\def\mm@playmode{}\def\mm@start{}\def\mm@duration{}\def\mm@do{}\def\mm@controls{}%
+  \setkeys{multimedia}{#1}%
+  \mm@psorpdf{%
+    \pdfmark[{#3}]{%
+      Color=\@linkbordercolor,%
+      linktype={link},%
+      AcroHighlight=\@pdfhighlight,%
+      Border=\@pdfborder,%
+      pdfmark=/ANN,%
+      Subtype=/Link,%
+      Annotations=<< /S /Movie /T (#2) \mm@controls\space
+        \mm@do\space \mm@start\space \mm@duration\space \mm@playmode\space
+      >>%
+    }}%
+    {%
+    \pdfstartlink
+    attr{%
+      /Border [\@pdfborder]
+      /H \@pdfhighlight\space
+      /C [\@menubordercolor]%
+    }%
+    user{
+      /Subtype /Link
+      /A <<
+        /S /Movie /T (#2) \mm@controls\space
+        \mm@do\space \mm@start\space \mm@duration\space \mm@playmode\space
+      >>
+    }%
+  #3\pdfendlink}%
+  }%
+}
+
+
+\newcommand\sound[3][]{%
+  \mm@psorpdf{\movie[#1]{#2}{#3}}% no way of defining a stream object...
+  {%
+  \leavevmode%
+  % Sanity check
+  \IfFileExists{\@currdir #3}{}{%
+    \PackageWarning{multimedia}{The movie file ``#3'' could not be
+      found in the current directory, where it must reside for
+      viewing.}%
+  }%
+  {%
+    % Calculate size of the poster
+    \setbox\@tempboxa=\hbox{#2}%
+    \@tempdima=\wd\@tempboxa%
+    \@tempdimb=\ht\@tempboxa%
+    \@tempdimc=\dp\@tempboxa%
+    \def\mm@label{mmdefaultlabel}%
+    \def\mm@playmode{}%
+    \def\mm@duration{}%
+    \def\mm@start{}%
+    \def\mm@repeat{}%
+    \def\mm@mix{/Mix false}%
+    \setkeys{multimedia}{samplingrate=44100,channels=1,bitspersample=16,encoding=muLaw}%
+    \mm@autostartfalse%
+    \mm@autostopfalse%
+    \mm@externalfalse%
+    \mm@inlinefalse%
+    \def\mm@bw{0}%
+    \setkeys{multimedia}{#1}%
+    \wd\@tempboxa=\@tempdima%
+    \ht\@tempboxa=\@tempdimb%
+    \dp\@tempboxa=\@tempdimc%
+    \ifmm@external%
+      \href{run:#3}{\box\@tempboxa}%
+    \else%
+      \ifmm@inline%
+        \pdfobj stream
+        attr {/Type /Sound \mm@r\space \mm@c\space \mm@b\space}
+        file {#3}%
+        \pdfrefobj \pdflastobj%
+      \else
+        \pdfobj stream
+        attr {\mm@r\space \mm@c\space \mm@b\space \mm@e\space /F (#3)}
+        {}%
+        \pdfrefobj \pdflastobj%
+      \fi%
+      \expandafter\xdef\csname mms@\mm@label\endcsname{\the\pdflastobj}%
+      \def\@temp{#2}\ifx\@temp\@empty\else\hyperlinksound[#1]{\mm@label}{\box\@tempboxa}\fi%
+      \ifmm@autostart%
+        \pdfobj {<< /S /Sound /Sound \the\pdflastobj\space 0 R \mm@mix\space >>}%
+        \pdfrefobj\pdflastobj%
+        \xdef\mm@pdfpageadditionalaction{/O \the\pdflastobj\space 0 R }%
+      \fi%
+      \ifmm@autostop%
+        \pdfobj {<< /S /Sound /Sound \mms@mute\space 0 R >>}%
+        \pdfrefobj\pdflastobj%
+        \xdef\mm@pdfpageadditionalaction{%
+          \ifx\mm@pdfpageadditionalaction\relax\else\mm@pdfpageadditionalaction\fi\space /C \the\pdflastobj\space 0 R }%
+      \fi%
+    \fi%
+  }%
+  }%
+}
+
+\mm@psorpdf{}{%
+  \pdfobj stream attr {/R 22050} {}%
+  \pdfrefobj \pdflastobj%
+  \edef\mms@mute{\the\pdflastobj}
+}
+
+\newcommand\hyperlinkmute[1]{\mm@psorpdf{#1}{\hyperlinksound{mute}{#1}}}
+
+\newcommand\hyperlinksound[3][]{%
+  \mm@psorpdf{\hyperlinkmovie[#1]{#2}{#3}}%
+  {%
+  \@ifundefined{mms@#2}%
+  {\PackageError{multimedia}{Sound labeled ``#2'' not defined}{}}
+  {%
+    \leavevmode%
+    \def\mm@mix{/Mix false}%
+    \def\mm@repeat{/Repeat false}%
+    \setkeys{multimedia}{#1}%
+    \pdfstartlink
+    attr{%
+      /Border [\@pdfborder]
+      /H \@pdfhighlight\space
+      /C [\@menubordercolor]%
+    }%
+    user{
+      /Subtype /Link
+      /A << /S /Sound /Sound \csname mms@#2\endcsname\space 0 R \mm@mix\space \mm@repeat\space >>
+    }%
+    #3\pdfendlink}%
+  }%
+}
+
+
+% Copyright Notice: The following code is based on code from hyperref.sty
+\def\mm@pageadditionalaction{%
+  \ifx\mm@pdfpageadditionalaction\relax
+  \else
+    \expandafter\mm@RemoveAAPageAttr\the\pdfpageattr^^J/AA{}>>\END
+    \ifx\mm@pdfpageadditionalaction\@empty
+    \else
+      \edef\@processme{%
+        \global\pdfpageattr{%
+          \the\pdfpageattr
+          ^^J/AA << \mm@pdfpageadditionalaction\space >>%
+        }%
+      }%
+      \@processme
+    \fi
+    \global\let\mm@pdfpageadditionalaction=\@empty% not on next page
+  \fi
+}
+\gdef\mm@RemoveAAPageAttr#1^^J/AA#2#3>>#4\END{%
+  \ifx\\#2\\%
+    \global\pdfpageattr{#1}%
+  \else
+    \mm@RemoveAAPageAttr#1#4\END
+  \fi
+}
+\let\mm@pdfpageadditionalaction=\relax
+
+% This is *not* the way to do it, but it'll have to do for now:
+\let\mm@orighyper@pagetransition=\hyper@pagetransition
+\AtBeginDocument{\def\hyper@pagetransition{\mm@orighyper@pagetransition\mm@pageadditionalaction}}

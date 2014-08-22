@@ -1,0 +1,777 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+% Copyright 2011 by Vedran Mileti\'c, Joseph Wright
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Free Documentation License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+% $Header$
+
+\section{Creating Overlays}
+\label{section-overlay}
+
+
+\subsection{The Pause Commands}
+
+The |pause| command offers an easy, but not very flexible way of creating frames that are uncovered piecewise. If you say |\pause| somewhere in a frame, only the text on the frame up to the |\pause| command is shown on the first slide. On the second slide, everything is shown up to the second |\pause|, and so forth. You can also use |\pause| inside environments; its effect will last after the environment. However, taking this to extremes and using |\pause| deeply within a nested environment may not have the desired result.
+
+A much more fine-grained control over what is shown on each slide can be attained using overlay specifications, see the next sections. However, for many simple cases the |\pause| command is sufficient.
+
+The effect of |\pause| lasts till the next |\pause|, |\onslide|, or the end of the frame.
+\begin{verbatim}
+\begin{frame}
+  \begin{itemize}
+  \item
+    Shown from first slide on.
+  \pause
+  \item
+    Shown from second slide on.
+    \begin{itemize}
+    \item
+      Shown from second slide on.
+    \pause
+    \item
+      Shown from third slide on.
+    \end{itemize}
+  \item
+    Shown from third slide on.
+  \pause
+  \item
+    Shown from fourth slide on.
+  \end{itemize}
+
+  Shown from fourth slide on.
+
+  \begin{itemize}
+  \onslide
+  \item
+    Shown from first slide on.
+  \pause
+  \item
+    Shown from fifth slide on.
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+
+\begin{command}{\pause\oarg{number}}
+  This command causes the text following it to be shown only from the next slide on, or, if the optional \meta{number} is given, from the slide with the number \meta{number}. If the optional \meta{number} is given, the counter |beamerpauses| is set to this number. This command uses the |\onslide| command, internally. This command does \emph{not} work inside |amsmath| environments like |align|, since these do really wicked things.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \begin{itemize}
+  \item
+    A
+  \pause
+  \item
+    B
+  \pause
+  \item
+    C
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+
+  \articlenote
+  This command is ignored.
+
+\end{command}
+
+To ``unpause'' some text, that is, to temporarily suspend pausing, use the command |\onslide|, see below.
+
+
+\subsection{The General Concept of Overlay Specifications}
+\label{section-concept-overlays}
+
+The approach taken by most presentation classes to overlays is somewhat similar to the above |\pause| command. These commands get a certain slide number as input and affect the text on the slide following this command in a certain way. For example, \textsc{prosper}'s |\FromSlide{2}| command causes all text following this command to be shown only from the second slide on.
+
+The \beamer\ class uses a different approach (though the abovementioned command is also available: |\onslide<2->| will have the same effect as |\FromSlide{2}|, except that |\onslide| transcends environments; likewise, |\pause| is internally mapped to a command with an appropriate overlay specification). The idea is to add \emph{overlay specifications} to certain commands. These specifications are always given in pointed brackets and follow the command ``as soon as possible,'' though in certain cases \beamer\ also allows overlay specification to be given a little later. In the simplest case, the specification contains just a number. A command with an overlay specification following it will only have ``effect'' on the slide(s) mentioned in the specification. What exactly ``having an effect'' means, depends on the command. Consider the following example.
+\begin{verbatim}
+\begin{frame}
+  \textbf{This line is bold on all three slides.}
+  \textbf<2>{This line is bold only on the second slide.}
+  \textbf<3>{This line is bold only on the third slide.}
+\end{frame}
+\end{verbatim}
+
+For the command |\textbf|, the overlay specification causes the text to be set in boldface only on the specified slides. On all other slides, the text is set in a normal font.
+
+For a second example, consider the following frame:
+\begin{verbatim}
+\begin{frame}
+  \only<1>{This line is inserted only on slide 1.}
+  \only<2>{This line is inserted only on slide 2.}
+\end{frame}
+\end{verbatim}
+
+The command |\only|, which is introduced by \beamer, normally simply inserts its parameter into the current frame. However, if an overlay specification is present, it ``throws away'' its parameter on slides that are not mentioned.
+
+Overlay specifications can only be written behind certain commands, not every command. Which commands you can use and which effects this will have is explained in the next section. However, it is quite easy to redefine an existing command such that it becomes ``overlay specification aware,'' see also Section~\ref{section-overlay-commands}.
+
+The syntax of (basic) overlay specifications is the following: They are comma-separated lists of slides and ranges. Ranges are specified like this: |2-5|, which means slide two through to five. The start or the end of a range can be omitted. For example, |3-| means ``slides three, four, five, and so on'' and |-5| means the same as |1-5|. A complicated example is |-3,6-8,10,12-15|, which selects the slides 1, 2, 3, 6, 7, 8, 10, 12, 13, 14, and 15.
+
+
+\subsection{Commands with Overlay Specifications}
+\label{section-overlay-commands}
+
+\textbf{Important:} Due to the way overlay specifications are implemented, the
+commands documented here are \emph{all} fragile even if the \LaTeXe{} kernel
+versions are not.
+
+For the following commands, adding an overlay specification causes the command to be simply ignored on slides that are not included in the specification: |\textbf|, |\textit|, |\textsl|, |\textrm|, |\textsf|, |\color|, |\alert|, |\structure|. If a command takes several arguments, like |\color|, the specification should directly follow the command as in the following example (but there are exceptions to this rule):
+\begin{verbatim}
+\begin{frame}
+  \color<2-3>[rgb]{1,0,0} This text is red on slides 2 and 3, otherwise black.
+\end{frame}
+\end{verbatim}
+
+For the following commands, the effect of an overlay specification is special:
+
+\begin{command}{\onslide\opt{\meta{modifier}}\sarg{overlay specification}\opt{\marg{text}}}
+  The behavior of this command depends on whether the optional argument \meta{text} is given or not (note that the optional argument is given in \emph{normal} braces, not in square brackets). If present, the \meta{modifier} can be either a~|+| or a~|*|.
+
+  If no \meta{text} is given, the following happens: All text following this command will only be shown  (uncovered) on the specified slides. On non-specified slides, the text still occupies space. If no slides are specified, the following text is always shown. You need not call this command in the same \TeX\ group, its effect transcends block groups. However, this command has a \emph{different} effect inside an |overprint| environment, see the description of |overprint|.
+
+  If the \meta{modifier} is |+|, hidden text will not be treated as covered, but as invisible. The difference is the same as the difference between |\uncover| and |\visible|. The modifier |*| may not be given if no \meta{text} argument is present.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  Shown on first slide.
+  \onslide<2-3>
+  Shown on second and third slide.
+  \begin{itemize}
+  \item
+    Still shown on the second and third slide.
+  \onslide+<4->
+  \item
+    Shown from slide 4 on.
+  \end{itemize}
+  Shown from slide 4 on.
+  \onslide
+  Shown on all slides.
+\end{frame}
+\end{verbatim}
+
+  If a \meta{text} argument is present, |\onslide| (without a \meta{modifier}) is mapped to |\uncover|, |\onslide+| is mapped to |\visible|, and |\onslide*| is mapped to |\only|.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \onslide<1>{Same effect as the following command.}
+  \uncover<1>{Same effect as the previous command.}
+
+  \onslide+<2>{Same effect as the following command.}
+  \visible<2>{Same effect as the previous command.}
+
+  \onslide*<3>{Same effect as the following command.}
+  \only<3>{Same effect as the previous command.}
+\end{frame}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\only\sarg{overlay specification}\marg{text}\sarg{overlay specification}}
+  If either \meta{overlay specification} is present (though only one may be present), the \meta{text} is inserted only into the specified slides. For other slides, the text is simply thrown away. In particular, it occupies no space.
+
+  \example
+  |\only<3->{Text inserted from slide 3 on.}|
+
+  Since the overlay specification may also be given after the text, you can often use |\only| to make other commands overlay specification-aware in a simple manner:
+
+  \example
+\begin{verbatim}
+\newcommand{\myblue}{\only{\color{blue}}}
+\begin{frame}
+  \myblue<2> This text is blue only on slide 2.
+\end{frame}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\uncover\sarg{overlay specification}\marg{text}}
+  If the \meta{overlay specification} is present, the \meta{text} is shown (``uncovered'') only on the specified slides. On other slides, the text still occupies space and it is still typeset, but it is not shown or only shown as if transparent. For details on how to specify whether the text is invisible or just transparent see Section~\ref{section-transparent}.
+
+  \example
+  |\uncover<3->{Text shown from slide 3 on.}|
+
+  \articlenote
+  This command has the same effect as |\only|.
+\end{command}
+
+\begin{command}{\visible\sarg{overlay specification}\marg{text}}
+  This command does almost the same as |\uncover|. The only difference is that if the text is not shown, it is never shown in a transparent way, but rather it is not shown at all. Thus, for this command the transparency settings have no effect.
+
+  \example
+  |\visible<2->{Text shown from slide 2 on.}|
+
+  \articlenote
+  This command has the same effect as |\only|.
+\end{command}
+
+\begin{command}{\invisible\sarg{overlay specification}\marg{text}}
+  This command is the opposite of |\visible|.
+
+  \example
+  |\invisible<-2>{Text shown from slide 3 on.}|
+\end{command}
+
+\begin{command}{\alt\sarg{overlay specification}\marg{default text}\marg{alternative text}\sarg{overlay specification}}
+  Only one \meta{overlay specification} may be given. The default text is shown on the specified slides, otherwise the alternative text. The specification must always be present.
+
+  \example
+  |\alt<2>{On Slide 2}{Not on slide 2.}|
+
+  Once more, giving the overlay specification at the end is useful when the command is used inside other commands.
+
+  \example
+  Here is the definition of |\uncover|:
+\begin{verbatim}
+\newcommand{\uncover}{\alt{\@firstofone}{\makeinvisible}}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\temporal\ssarg{overlay specification}\marg{before slide text}\marg{default text}\marg{after slide text}}
+  This command alternates between three different texts, depending on whether the current slide is temporally before the specified slides, is one of the specified slides, or comes after them. If the \meta{overlay specification} is not an interval (that is, if it has a ``hole''), the ``hole'' is considered to be part of the before slides.
+
+  \example
+\begin{verbatim}
+  \temporal<3-4>{Shown on 1, 2}{Shown on 3, 4}{Shown 5, 6, 7, ...}
+  \temporal<3,5>{Shown on 1, 2, 4}{Shown on 3, 5}{Shown 6, 7, 8, ...}
+\end{verbatim}
+
+  As a possible application of the |\temporal| command consider the following example:
+
+  \example
+\begin{verbatim}
+\def\colorize<#1>{%
+  \temporal<#1>{\color{red!50}}{\color{black}}{\color{black!50}}}
+
+\begin{frame}
+  \begin{itemize}
+    \colorize<1> \item First item.
+    \colorize<2> \item Second item.
+    \colorize<3> \item Third item.
+    \colorize<4> \item Fourth item.
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+\end{command}
+
+
+\begin{command}{\item\sarg{alert specification}\oarg{item label}\sarg{alert specification}}
+  \beamernote
+  Only one \meta{alert specification} may be given. The effect of \meta{alert specification} is described in Section~\ref{section-action-specifications}.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \begin{itemize}
+  \item<1-> First point, shown on all slides.
+  \item<2-> Second point, shown on slide 2 and later.
+  \item<2-> Third point, also shown on slide 2 and later.
+  \item<3-> Fourth point, shown on slide 3.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{enumerate}
+  \item<3-| alert@3>[0.] A zeroth point, shown at the very end.
+  \item<1-| alert@1> The first and main point.
+  \item<2-| alert@2> The second point.
+  \end{enumerate}
+\end{frame}
+\end{verbatim}
+
+  \articlenote
+  The \meta{action specification} is currently completely ignored.
+
+\end{command}
+
+The related command |\bibitem| is also overlay specification-aware in the same way as |\item|.
+
+\begin{command}{\label\sarg{overlay specification}\marg{label name}}
+  If the \meta{overlay specification} is present, the label is only inserted on the specified slide. Inserting a label on more than one slide will cause a `multiple labels' warning. \emph{However}, if no overlay specification is present, the specification is automatically set to just `1' and the label is thus inserted only on the first slide. This is typically the desired behavior since it does not really matter on which slide the label is inserted, \emph{except} if you use an |\only| command and \emph{except} if you wish to use that label as a hyperjump target. Then you need to specify a slide.
+
+  Labels can be used as target of hyperjumps. A convenient way of labelling a frame is to use the |label=|\meta{name} option of the |frame| environment. However, this will cause the whole frame to be kept in memory till the end of the compilation, which may pose a problem.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \begin{align}
+    a &= b + c   \label{first}\\ % no specification needed
+    c &= d + e   \label{second}\\% no specification needed
+  \end{align}
+
+  Blah blah, \uncover<2>{more blah blah.}
+
+  \only<3>{Specification is needed now.\label<3>{mylabel}}
+\end{frame}
+\end{verbatim}
+\end{command}
+
+
+\subsection{Environments with Overlay Specifications}
+
+Environments can also be equipped with overlay specifications. For most of the predefined environments, see Section~\ref{predefined}, adding an overlay specification causes the whole environment to be uncovered only on the specified slides. This is useful for showing things incrementally as in the following example.
+\begin{verbatim}
+\begin{frame}
+  \frametitle{A Theorem on Infinite Sets}
+
+  \begin{theorem}<1->
+    There exists an infinite set.
+  \end{theorem}
+
+  \begin{proof}<3->
+    This follows from the axiom of infinity.
+  \end{proof}
+
+  \begin{example}<2->
+    The set of natural numbers is infinite.
+  \end{example}
+\end{frame}
+\end{verbatim}
+
+In the example, the first slide only contains the theorem, on the second slide an example is added, and on the third slide the proof is also shown.
+
+For each of the basic commands |\only|, |\alt|, |\visible|, |\uncover|, and |\invisible| there exists ``environment versions'' |onlyenv|, |altenv|, |visibleenv|, |uncoverenv|, and |invisibleenv|. Except for |altenv| and |onlyenv|, these environments do the same as the commands.
+
+\begin{environment}{{onlyenv}\sarg{overlay specification}}
+  If the \meta{overlay specification} is given, the contents of the environment is inserted into the text only on the specified slides. The difference to |\only| is, that the text is actually typeset inside a box that is then thrown away, whereas |\only| immediately throws away its contents. If the text is not ``typesettable,'' the |onlyenv| may produce an error where |\only| would not.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  This line is always shown.
+  \begin{onlyenv}<2>
+    This line is inserted on slide 2.
+  \end{onlyenv}
+\end{frame}
+\end{verbatim}
+\end{environment}
+
+\begin{environment}{{altenv}\sarg{overlay specification}\marg{begin text}\marg{end text}\marg{alternate begin text}\marg{alternate end text}\sarg{overlay specification}}
+  Only one \meta{overlay specification} may be given. On the specified slides, \meta{begin text} will be inserted at the beginning of the environment and \meta{end text} will be inserted at the end. On all other slides, \meta{alternate begin text} and \meta{alternate end text} will be used.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  This
+  \begin{altenv}<2>{(}{)}{[}{]}
+    word
+  \end{altenv}
+  is in round brackets on slide 2 and in square brackets on slide 1.
+\end{frame}
+\end{verbatim}
+\end{environment}
+
+
+\subsection{Dynamically Changing Text or Images}
+
+You may sometimes wish to have some part of a frame change dynamically from slide to slide. On each slide of the frame, something different should be shown inside this area. You could achieve the effect of dynamically changing text by giving a list of |\only| commands like this:
+\begin{verbatim}
+  \only<1>{Initial text.}
+  \only<2>{Replaced by this on second slide.}
+  \only<3>{Replaced again by this on third slide.}
+\end{verbatim}
+
+The trouble with this approach is that it may lead to slight, but annoying differences in the heights of the lines, which may cause the whole frame to ``wobble'' from slide to slide. This problem becomes much more severe if the replacement text is several lines long.
+
+To solve this problem, you can use two environments: |overlayarea| and |overprint|. The first is more flexible, but less user-friendly.
+
+\begin{environment}{{overlayarea}\marg{area width}\marg{area height}}
+  Everything within the environment will be placed in a rectangular area of the specified size. The area will have the same size on all slides of a frame, regardless of its actual contents.
+
+  \example
+\begin{verbatim}
+\begin{overlayarea}{\textwidth}{3cm}
+  \only<1>{Some text for the first slide.\\Possibly several lines long.}
+  \only<2>{Replacement on the second slide.}
+\end{overlayarea}
+\end{verbatim}
+
+\end{environment}
+
+\begin{environment}{{overprint}\oarg{area width}}
+  The \meta{area width} defaults to the text width. Inside the environment, use |\onslide| commands to specify different things that should be shown for this environment on different slides. The |\onslide| commands are used like |\item| commands. Everything within the environment will be placed in a rectangular area of the specified width. The height and depth of the area are chosen large enough to accommodate the largest contents of the area. The overlay specifications of the |\onslide| commands must be disjoint. This may be a problem for handouts, since, there, all overlay specifications default to |1|. If you use the option |handout|, you can disable all but one |\onslide| by setting the others to |0|.
+
+  \example
+\begin{verbatim}
+\begin{overprint}
+  \onslide<1| handout:1>
+    Some text for the first slide.\\
+    Possibly several lines long.
+  \onslide<2| handout:0>
+    Replacement on the second slide. Supressed for handout.
+\end{overprint}
+\end{verbatim}
+
+\end{environment}
+
+A similar need for dynamical changes arises when you have, say, a series of pictures named |first.pdf|, |second.pdf|, and |third.pdf| that show different stages of some process. To make a frame that shows these pictures on different slides, the following code might be used:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Three Process Stages}
+
+  \includegraphics<1>{first.pdf}
+  \includegraphics<2>{second.pdf}
+  \includegraphics<3>{third.pdf}
+\end{frame}
+\end{verbatim}
+
+The above code uses the fact the \beamer\ makes the |\includegraphics| command overlay specification-aware. It works nicely, but only if each |.pdf| file contains the complete graphic to be shown. However, some programs, like |xfig|, sometimes also produce series of graphics in which each file just contains the \emph{additional} graphic elements to be shown on the next slide. In this case, the first graphic must be shown not on overlay~1, but from overlay~1 on, and so on. While this is easy to achieve by changing the overlay specification |<1>| to |<1->|, the graphics must also be shown \emph{on top of each other}. An easy way to achieve this is to use \TeX's |\llap| command like this:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Three Process Stages}
+
+  \includegraphics<1->{first.pdf}%
+  \llap{\includegraphics<2->{second.pdf}}%
+  \llap{\includegraphics<3->{third.pdf}}
+\end{frame}
+\end{verbatim}
+
+or like this:
+\begin{verbatim}
+\begin{frame}
+  \frametitle{The Three Process Stages}
+
+  \includegraphics{first.pdf}%
+  \pause%
+  \llap{\includegraphics{second.pdf}}%
+  \pause%
+  \llap{\includegraphics{third.pdf}}
+\end{frame}
+\end{verbatim}
+
+A more convenient way is to use the |\multiinclude| command, see Section~\ref{section-xmpmulti} for details.
+
+
+\subsection{Advanced Overlay Specifications}
+
+\subsubsection{Making Commands and Environments Overlay Specification-Aware}
+
+This section explains how to define new commands that are overlay specification-aware. Also, it explains how to setup counters correctly that should be increased from frame to frame (like equation numbering), but not from slide to slide. You may wish to skip this section, unless you  want to write your own extensions to the \beamer\ class.
+
+\beamer\ extends the syntax of \LaTeX's standard command |\newcommand|:
+
+\begin{command}{\newcommand\declare{|<>|}\marg{command name}\oarg{argument number}\oarg{default optional value}\marg{text}}
+  Declares the new command named \meta{command name}. The \meta{text} should contain the body of this command and it may contain occurrences of parameters like |#|\meta{number}. Here \meta{number} may be between 1 and $\mbox{\meta{argument number}}+1$. The additionally allowed argument is the overlay specification.
+
+  When \meta{command name} is used, it will scan as many as \meta{argument number} arguments. While scanning them, it will look for an overlay specification, which may be given between any two arguments, before the first argument, or after the last argument. If it finds an overlay specification like |<3>|, it will call \meta{text} with arguments 1 to \meta{argument number} set to the normal arguments and the argument number $\mbox{\meta{argument number}}+1$ set to |<3>| (including the pointed brackets). If no overlay specification is found, the extra argument is empty.
+
+  If the \meta{default optional value} is provided, the first argument of \meta{command name} is optional. If no optional argument is specified in square brackets, the \meta{default optional value} is used.
+
+  \example
+  The following command will typeset its argument in red on the specified slides:
+\begin{verbatim}
+\newcommand<>{\makered}[1]{{\color#2{red}#1}}
+\end{verbatim}
+
+  \example
+  Here is \beamer's definition of |\emph|:
+\begin{verbatim}
+\newcommand<>{\emph}[1]{{\only#2{\itshape}#1}}
+\end{verbatim}
+
+  \example
+  Here is \beamer's definition of |\transdissolve| (the command |\beamer@dotrans| mainly passes its argument to |hyperref|):
+\begin{verbatim}
+\newcommand<>{\transdissolve}[1][]{\only#2{\beamer@dotrans[#1]{Dissolve}}}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\renewcommand\declare{|<>|}\marg{existing command name}\oarg{argument number}\oarg{default optional value}\marg{text}}
+  Redeclares a command that already exists in the same way as |\newcommand<>|. Inside \meta{text}, you can still access to original definitions using the command |\beameroriginal|, see the example.
+
+  \example
+  This command is used in \beamer\ to make |\hyperlink| overlay specification-aware:
+\begin{verbatim}
+\renewcommand<>{\hyperlink}[2]{\only#3{\beameroriginal{\hyperlink}{#1}{#2}}}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\newenvironment\declare{|<>|}\marg{environment name}\oarg{argument number}\oarg{default optional value}\\ \marg{begin text}\marg{end text}}
+  Declares a new environment that is overlay specification-aware. If this environment is encountered, the same algorithm as for |\newcommand<>| is used to parse the arguments and the overlay specification.
+
+  Note that, as always, the \meta{end text} may not contain any arguments like |#1|. In particular, you do not have access to the overlay specification. In this case, it is usually a good idea to use |altenv| environment in the \meta{begin text}.
+
+  \example
+  Declare your own action block:
+\begin{verbatim}
+\newenvironment<>{myboldblock}[1]{%
+  \begin{actionenv}#2%
+    \textbf{#1}
+    \par}
+  {\par%
+  \end{actionenv}}
+
+\begin{frame}
+  \begin{myboldblock}<2>
+    This theorem is shown only on the second slide.
+  \end{myboldblock}
+\end{frame}
+\end{verbatim}
+
+  \example
+  Text in the following environment is normally bold and italic on non-specified slides:
+\begin{verbatim}
+\newenvironment<>{boldornormal}
+  {\begin{altenv}#1
+    {\begin{bfseries}}{\end{bfseries}}
+    {}{}}
+  {\end{altenv}}
+\end{verbatim}
+
+  Incidentally, since |altenv| also accepts its argument at the end, the same effect could have been achieved using just
+\begin{verbatim}
+\newenvironment{boldornormal}
+  {\begin{altenv}
+    {\begin{bfseries}}{\end{bfseries}}
+    {}{}}
+  {\end{altenv}}
+\end{verbatim}
+\end{command}
+
+\begin{command}{\renewenvironment\declare{|<>|}\marg{existing environment name}\oarg{argument number}\oarg{default optional value}\\ \marg{begin text}\marg{end text}}
+  Redefines an existing environment. The original environment is still available under the name |original|\meta{existing environment name}.
+
+  \example
+\begin{verbatim}
+\renewenvironment<>{verse}
+{\begin{actionenv}#1\begin{originalverse}}
+{\end{originalverse}\end{actionenv}}
+\end{verbatim}
+\end{command}
+
+The following two commands can be used to ensure that a certain counter is automatically reset on subsequent slides of a frame. This is necessary for example for the equation count. You might want this count to be increased from frame to frame, but certainly not from overlay slide to overlay slide. For equation counters and footnote counters (you should not use footnotes), these commands have already been invoked.
+
+\begin{command}{\resetcounteronoverlays\marg{counter name}}
+  After you have invoked this command, the value of the specified counter will be the same on all slides of every frame.
+  \example
+  |\resetcounteronoverlays{equation}|
+\end{command}
+
+\begin{command}{\resetcountonoverlays\marg{count register name}}
+  The same as |\resetcounteronoverlays|, except that this command should be used with counts that have been created using the \TeX\ primitive |\newcount| instead of \LaTeX's |\definecounter|.
+  \example
+\begin{verbatim}
+\newcount\mycount
+\resetcountonoverlays{mycount}
+\end{verbatim}
+\end{command}
+
+\subsubsection{Mode Specifications}
+
+This section is only important if you use \beamer's mode mechanism to create different versions of your presentation. If you are not familiar with \beamer's modes, please skip this section or read Section~\ref{section-modes} first.
+
+In certain cases you may wish to have different overlay specifications to apply to a command in different modes. For example, you might wish a certain text to appear only from the third slide on during your presentation, but in a handout for the audience there should be no third slide and the text should appear already on the second slide. In this case you could write
+\begin{verbatim}
+\only<3| handout:2>{Some text}
+\end{verbatim}
+
+The vertical bar, which must be followed by a (white) space, separates the two different specifications |3| and |handout:2|. By writing a mode name before a colon, you specify that the following specification only applies to that mode. If no mode is given, as in |3|, the mode |beamer| is automatically added. For this reason, if you write |\only<3>{Text}| and you are in |handout| mode, the text will be shown on all slides since there is no restriction specified for handouts and since the |3| is the same as |beamer:3|.
+
+It is also possible to give an overlay specification that contains only a mode name (or several, separated by vertical bars):
+\begin{verbatim}
+\only<article>{This text is shown only in article mode.}
+\end{verbatim}
+
+An overlay specification that does not contain any slide numbers is called a (pure) \emph{mode specification}. If a mode specification is given, all modes that are not mentioned are automatically suppressed. Thus |<beamer:1->| means ``on all slides in |beamer| mode and also on all slides in all other modes, since nothing special is specified for them,'' whereas |<beamer>| means ``on all slides in |beamer| mode and not on any other slide.''
+
+Mode specifications can also be used outside frames as in the following examples:
+\begin{verbatim}
+\section<presentation>{This section exists only in the presentation modes}
+\section<article>{This section exists only in the article mode}
+\end{verbatim}
+
+Presentation modes include |beamer|, |trans| and |handout|.
+
+You can also mix pure mode specifications and overlay specifications, although this can get confusing:
+\begin{verbatim}
+\only<article| beamer:1>{Riddle}
+\end{verbatim}
+
+This will cause the text |Riddle| to be inserted in |article| mode and on the first slide of a frame in |beamer| mode, but not at all in |handout| or |trans| mode. (Try to find out how \verb/<beamer| beamer:1>/ differs from |<beamer>| and from |<beamer:1>|.)
+
+As if all this were not already complicated enough, there is another mode that behaves in a special way: the mode |second|. For this mode a special rule applies: An overlay specification for mode |beamer| also applies to mode |second| (but not the other way round). Thus, if we are in mode |second|, the specification |<second:2>| means ``on slide 2'' and |<beamer:2>| also means ``on slide 2''. To get a slide that is typeset in |beamer| mode, but not in |second| mode, you can use, |<second:0>|.
+
+\subsubsection{Action Specifications}
+\label{section-action-specifications}
+
+This section also introduces a rather advanced concept. You may also wish to skip it on first reading.
+
+Some overlay specification-aware commands cannot only handle normal overlay specifications, but also so called \emph{action specifications}. In an action specification, the list of slide numbers and ranges is prefixed by \meta{action}|@|, where \meta{action} is the name of a certain action to be taken on the specified slides:
+\begin{verbatim}
+\item<3-| alert@3> Shown from slide 3 on, alerted on slide 3.
+\end{verbatim}
+
+In the above example, the |\item| command, which allows actions to be specified, will uncover the item text from slide three on and it will, additionally, alert this item exactly on slide 3.
+
+Not all commands can take an action specification. Currently, only |\item| (though not in |article| mode currently), |\action|, the environment |actionenv|, and the block environments (like |block| or |theorem|) handle them.
+
+By default, the following actions are available:
+\begin{itemize}
+\item \declare{|alert|} alters the item or block.
+\item \declare{|uncover|} uncovers the item or block (this is the default, if no action is specified).
+\item \declare{|only|} causes the whole item or block to be inserted only on the specified slides.
+\item \declare{|visible|} causes the text to become visible only on the specified slides (the difference between |uncover| and |visible| is the same as between |\uncover| and |\visible|).
+\item \declare{|invisible|} causes the text to become invisible on the specified slides.
+\end{itemize}
+
+The rest of this section explains how you can add your own actions and make commands action-specification-aware. You may wish to skip it upon first reading.
+
+You can easily add your own actions: An action specification like \meta{action}|@|\meta{slide numbers} simply inserts an environment called \meta{action}|env| around the |\item| or parameter of |\action| with |<|\meta{slide numbers}|>| as overlay specification. Thus, by defining a new overlay specification-aware environment named \meta{my action name}|env|, you can add your own action:
+\begin{verbatim}
+\newenvironment{checkenv}{\only{\setbeamertemplate{itemize item}{X}}}{}
+\end{verbatim}
+
+You can then write
+\begin{verbatim}
+\item<beamer:check@2> Text.
+\end{verbatim}
+
+This will change the itemization symbol before |Text.| to |X| on slide~2 in |beamer| mode. The definition of |checkenv| used the fact that |\only| also accepts an overlay specification given after its argument.
+
+The whole action mechanism is based on the following environment:
+
+\begin{environment}{{actionenv}\sarg{action specification}}
+  This environment extracts all actions from the \meta{action specification} for the current mode. For each action of the form \meta{action}|@|\meta{slide numbers}, it inserts the following text: |\begin{|\meta{action}|env}<|\meta{slide number}|>| at the beginning of the environment and the text |\end{|\meta{action}|env}| at the end. If there are several action specifications, several environments are opened (and closed in the appropriate order). An \meta{overlay specification} without an action is promoted to |uncover@|\meta{overlay specification}.
+
+  If the so called \emph{default overlay specification} is not empty, it will be used in case no \meta{action specification} is given. The default overlay specification is usually just empty, but it may be set either by providing an additional optional argument to the command |\frame| or to the environments |itemize|, |enumerate|, or |description| (see these for details). Also, the default action specification can be set using the command |\beamerdefaultoverlayspecification|, see below.
+
+  \example
+\begin{verbatim}
+\begin{frame}
+  \begin{actionenv}<2-| alert@3-4,6>
+    This text is shown the same way as the text below.
+  \end{actionenv}
+
+  \begin{uncoverenv}<2->
+    \begin{alertenv}<3-4,6>
+      This text is shown the same way as the text above.
+    \end{alertenv}
+  \end{uncoverenv}
+\end{frame}
+\end{verbatim}
+\end{environment}
+
+\begin{command}{\action\sarg{action specification}\marg{text}}
+  This has the same effect as putting \meta{text} in an |actionenv|.
+
+  \example
+  |\action<alert@2>{Could also have used \alert<2>{}.}|
+\end{command}
+
+\begin{command}{\beamerdefaultoverlayspecification\marg{default overlay specification}}
+  Locally sets the default overlay specification to the given value. This overlay specification will be used in every |actionenv| environment and every |\item| that does not have its own overlay specification. The main use of this command is to install an incremental overlay specification like |<+->| or \verb/<+-| alert@+>/, see Section~\ref{section-incremental}.
+
+  Usually, the default overlay specification is installed automatically by the optional arguments to |\frame|, |frame|, |itemize|, |enumerate|, and |description|. You will only have to use this command if you wish to do funny things.
+
+  If given outside any frame, this command sets the default overlay specification for all following frames for which you do not override the default overlay specification.
+
+  \example
+  |\beamerdefaultoverlayspecification{<+->}|
+
+  \example
+  |\beamerdefaultoverlayspecification{}| clears the default overlay specification. (Actually, it installs the default overlay specification |<*>|, which just means ``always,'' but the ``portable'' way of clearing the default overlay specification is this call.)
+\end{command}
+
+\subsubsection{Incremental Specifications}
+\label{section-incremental}
+
+This section is mostly important for people who have already used overlay specifications a lot and have grown tired of writing things like |<1->|, |<2->|, |<3->|, and so on again and again. You should skip this section on first reading.
+
+Often you want to have overlay specifications that follow a pattern similar to the following:
+\begin{verbatim}
+\begin{itemize}
+\item<1-> Apple
+\item<2-> Peach
+\item<3-> Plum
+\item<4-> Orange
+\end{itemize}
+\end{verbatim}
+
+The problem starts if you decide to insert a new fruit, say, at the beginning. In this case, you would have to adjust all of the overlay specifications. Also, if you add a |\pause| command before the |itemize|, you would also have to update the overlay specifications.
+
+\beamer\ offers a special syntax to make creating lists as the one above more ``robust.'' You can replace it by the following list of \emph{incremental overlay specifications}:
+\begin{verbatim}
+\begin{itemize}
+\item<+-> Apple
+\item<+-> Peach
+\item<+-> Plum
+\item<+-> Orange
+\end{itemize}
+\end{verbatim}
+
+The effect of the |+|-sign is the following: You can use it in any overlay specification at any point where you would usually use a number. If a |+|-sign is encountered, it is replaced by the current value of the \LaTeX\ counter |beamerpauses|, which is 1 at the beginning of the frame. Then the counter is increased by 1, though it is only increased once for every overlay specification, even if the specification contains multiple |+|-signs (they are replaced by the same number).
+
+In the above example, the first specification is replaced by |<1->|. Then the second is replaced by |<2->| and so forth. We can now easily insert new entries, without having to change anything. We might also write the following:
+\begin{verbatim}
+\begin{itemize}
+\item<+-| alert@+> Apple
+\item<+-| alert@+> Peach
+\item<+-| alert@+> Plum
+\item<+-| alert@+> Orange
+\end{itemize}
+\end{verbatim}
+
+This will alert the current item when it is uncovered. For example, the first specification \verb/<+-| alert@+>/ is replaced by \verb/<1-| alert@1>/, the second is replaced by \verb/<2-| alert@2>/, and so on. Since the |itemize| environment also allows you to specify a default overlay specification, see the documentation of that environment, the above example can be written even more economically as follows:
+\begin{verbatim}
+\begin{itemize}[<+-| alert@+>]
+\item Apple
+\item Peach
+\item Plum
+\item Orange
+\end{itemize}
+\end{verbatim}
+
+The |\pause| command also updates the counter |beamerpauses|. You can change this counter yourself using the normal \LaTeX\ commands |\setcounter| or |\addtocounter|.
+
+Any occurence of a |+|-sign may be followed by an
+\emph{offset} in round brackets. This offset will
+be added to the value of |beamerpauses|. Thus, if
+|beamerpauses| is 2, then |<+(1)->| expands to
+|<3->| and |<+(-1)-+>| expands to |<1-2>|. For example
+\begin{verbatim}
+\begin{frame}
+\frametitle{Method 1}
+\begin{itemize}
+\item<2-> Apple
+\item<3-> Peach
+\item<4-> Plum
+\item<5-> Orange
+\end{itemize}
+\end{verbatim}
+and
+\begin{verbatim}
+\begin{itemize}[<+(1)->]
+\item Apple
+\item Peach
+\item Plum
+\item Orange
+\end{itemize}
+\end{verbatim}
+are equivalent.
+
+There is another special sign you can use in an overlay specification that behaves similarly to the |+|-sign: a dot. When you write |<.->|, a similar thing as in |<+->| happens \emph{except} that the counter |beamerpauses| is \emph{not} incremented and \emph{except} that you get the value of |beamerpauses| decreased by one. Thus a dot, possibly followed by an offset, just expands to the current value of the counter |beamerpauses| minus one, possibly offset. This dot notation can be useful in case like the following:
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item Apple
+\item<.-> Peach
+\item Plum
+\item Orange
+\end{itemize}
+\end{verbatim}
+
+In the example, the second item is shown at the same time as the first one since it does not update the counter.
+
+In the following example, each time an item is uncovered, the specified text is alerted. When the next item is uncovered, this altering ends.
+\begin{verbatim}
+\begin{itemize}[<+->]
+\item This is \alert<.>{important}.
+\item We want to \alert<.>{highlight} this and \alert<.>{this}.
+\item What is the \alert<.>{matrix}?
+\end{itemize}
+\end{verbatim}

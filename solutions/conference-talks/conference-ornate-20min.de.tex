@@ -1,0 +1,293 @@
+% $Header$
+
+\documentclass{beamer}
+
+% Diese Datei enthält eine Lösungsvorlage für:
+
+% - Vorträge bei einer (deutschsprachigen) Konferenz/einem Kolloquium.
+% - Vortragslänge von etwa 20 Minuten.
+% - Aussehen des Vortrags ist verschnörkelt/dekorativ.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  % oder ...
+
+  \setbeamercovered{transparent}
+  % oder auch nicht
+}
+
+
+\usepackage[german]{babel}
+% oder was auch immer
+
+\usepackage[latin1]{inputenc}
+% oder was auch immer
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Oder was auch immer. Zu beachten ist, das Font und Encoding passen
+% müssen. Falls T1 nicht funktioniert, kann man versuchen, die Zeile
+% mit fontenc zu löschen.
+
+
+\title[Kurzversion des Titels] % (optional, nur bei langen Titeln nötig)
+{Titel wie im Tagunsband angegeben\\ (u.U.\ also englisch)}
+
+\subtitle
+{Untertitel nur angeben, wenn es einen im Tagungsband gibt}
+
+\author[Autor, Anders] % (optional, nur bei vielen Autoren)
+{F.~Autor\inst{1} \and S.~Anders\inst{2}}
+% - Namen müssen in derselben Reihenfolge wie im Papier erscheinen.
+% - Der \inst{?} Befehl sollte nur verwendet werden, wenn die Autoren
+%   unterschiedlichen Instituten angehören.
+
+\institute[Universitäten Hier und Dort] % (optional, aber oft nötig)
+{
+  \inst{1}%
+  Institut für Informatik\\
+  Universität Hier
+  \and
+  \inst{2}%
+  Institut für theoretische Philosophie\\
+  Universität Dort}
+% - Der \inst{?} Befehl sollte nur verwendet werden, wenn die Autoren
+%   unterschiedlichen Instituten angehören.
+% - Keep it simple, niemand interessiert sich für die genau Adresse.
+
+\date[KPT 2003] % (optional, sollte der abgekürzte Konferenzname sein)
+{Konferenz über Präsentationstechniken, 2004}
+% - Vollee oder abgekürzter Name sind möglich.
+% - Dieser Eintrag ist nicht für das Publikum gedacht (das weiß
+%   nämlich, bei welcher Konferenz es ist), sondern für Leute, die die
+%   Folien später lesen.
+
+\subject{Informatik}
+% Dies wird lediglich in den PDF Informationskatalog einfügt. Kann gut
+% weggelassen werden.
+
+
+% Falls eine Logodatei namens "university-logo-filename.xxx" vorhanden
+% ist, wobei xxx ein von latex bzw. pdflatex lesbares Graphikformat
+% ist, so kann man wie folgt ein Logo einfügen:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+
+% Folgendes sollte gelöscht werden, wenn man nicht am Anfang jedes
+% Unterabschnitts die Gliederung nochmal sehen möchte.
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Gliederung}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+% Falls Aufzählungen immer schrittweise gezeigt werden sollen, kann
+% folgendes Kommando benutzt werden:
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Gliederung}
+  \tableofcontents
+  % Die Option [pausesections] könnte nützlich sein.
+\end{frame}
+
+
+
+% Einen Vortrag zu strukturieren ist nicht immer einfach. Die
+% nachfolgende Struktur kann unangemessen sein. Hier ein paar Regeln,
+% die für diese Lösungsvorlage gelten:
+
+% - Es sollte genau zwei oder drei Abschnitte geben (neben der
+%   Zusammenfassung). 
+% - *Höchstens* drei Unterabschnitte pro Abschnitt.
+% - Pro Rahmen sollte man zwischen 30s und 2min reden. Es sollte also
+%   15 bis 30 Rahmen geben.
+
+% - Konferenzteilnehmer wissen oft wenig von der Materie des
+%   Vortrags. Deshalb: vereinfachen!
+% - In 20 Minuten ist es schon schwer genug, die Hauptbotschaft zu
+%   vermitteln. Deshalb sollten Details ausgelassen werden, selbst
+%   wenn dies zu Ungenauigkeiten oder Halbwahrheiten führt.          
+% - Falls man Details weglässt, die eigentlich wichtig für einen
+%   Beweis/Implementation sind, so sagt man dies einmal nüchtern. Alle
+%   werden damit glücklich sein.
+
+\section{Motivation}
+
+\subsection{Das behandelte Problem}
+
+\begin{frame}{Überschriften müssen informativ sein.\\
+    Korrekte Groß-/Kleinschreibung beachten.}{Untertitel sind optional.}
+  % - Eine Überschrift fasst einen Rahmen verständlich zusammen. Man
+  %   muss sie verstehen können, selbst wenn man nicht den Rest des
+  %   Rahmens versteht.
+
+  \begin{itemize}
+  \item
+    Viel \texttt{itemize} benutzen.
+  \item
+    Sehr kurze Sätze oder Satzglieder verwenden.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+
+  Man kann Overlays erzeugen\dots
+  \begin{itemize}
+  \item mit dem \texttt{pause}-Befehl:
+    \begin{itemize}
+    \item
+      Erster Punkt.
+      \pause
+    \item    
+      Zweiter Punkt.
+    \end{itemize}
+  \item
+    mittels Overlay-Spezifikationen:
+    \begin{itemize}
+    \item<3->
+      Erster Punkt.
+    \item<4->
+      Zweiter Punkt.
+    \end{itemize}
+  \item
+    mit dem allgemeinen \texttt{uncover}-Befehl:
+    \begin{itemize}
+      \uncover<5->{\item
+        Erster Punkt.}
+      \uncover<6->{\item
+        Zweiter Punkt.}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Frühere Arbeiten}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+
+\section{Unsere Resultate/Beitrag}
+
+\subsection{Hauptresultate}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+
+
+\subsection{Beweis-/Implementationsideen}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+\begin{frame}{Überschriften müssen informativ sein.}
+\end{frame}
+
+
+
+\section*{Zusammenfassung}
+
+\begin{frame}{Zusammenfassung}
+
+  % Die Zusammenfassung sollte sehr kurz sein.
+  \begin{itemize}
+  \item
+    Die \alert{erste Hauptbotschaft} des Vortrags in ein bis zwei Zeilen.
+  \item
+    Die \alert{zweite Hauptbotschaft} des Vortrags in ein bis zwei Zeilen.
+  \item
+    Eventuell noch eine \alert{dritte Botschaft}, aber nicht noch mehr.
+  \end{itemize}
+  
+  % Der folgende Ausblick ist optional.
+  \vskip0pt plus.5fill
+  \begin{itemize}
+  \item
+    Ausblick
+    \begin{itemize}
+    \item
+      Etwas, was wir noch nicht lösen konnten.
+    \item
+      Nochwas, das wir noch nicht lösen konnten.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+% Alles nachfolgende ist optional und typischerweise nicht nötig.
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Weiterführende Literatur}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Weiterführende Literatur}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Anfangen sollte man mit Übersichtswerken.
+
+  \bibitem{Autor1990}
+    A.~Autor.
+    \newblock {\em Einführung in das Präsentationswesen}.
+    \newblock Klein-Verlag, 1990.
+
+    
+  \beamertemplatearticlebibitems
+  % Vertiefende Literatur kommt später. Die Liste sollte kurz sein.
+
+  \bibitem{Jemand2000}
+    S.~Jemand.
+    \newblock On this and that.
+    \newblock {\em Journal of This and That}, 2(1):50--100, 2000.
+  \end{thebibliography}
+\end{frame}
+
+\end{document}
+
+

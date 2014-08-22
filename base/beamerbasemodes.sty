@@ -1,0 +1,295 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+%
+% Global Declarations used by beamer in all modes
+%
+\newbox\beamer@tempbox
+\newif\ifbeamer@blocks
+\newif\ifbeamer@ams
+\newif\ifbeamer@amssymb
+\newif\ifbeamer@countsect
+\beamer@blockstrue
+\beamer@amstrue
+\beamer@amssymbtrue
+\beamer@countsectfalse
+\newcount\beamer@tempcount
+\newcounter{beamerpauses}
+
+
+\RequirePackage{beamerbasedecode}
+
+%
+% Presentation/article stuff
+%
+% Copyright notice: Part of the following code is taken from the
+% package comment.sty by Victor Eijkhout
+%
+
+
+%
+% Versioning stuff
+%
+\def\beamer@endinputifotherversion#1{%
+  \let\beamer@next=\relax%
+  \@tempdima=\beamer@version pt\relax%
+  \ifdim\@tempdima<#1%
+    \let\beamer@next=\endinput%
+  \else%
+    \ifdim\@tempdima>#1%
+      \let\beamer@next=\endinput%
+    \fi%
+  \fi%
+  \beamer@next}
+
+%
+% Comment stuff. This will also be needed, if we switch to another
+% class, so define it here already.
+%
+\newif\ifbeamer@inpresentation
+\beamer@inpresentationtrue
+
+\def\beamer@makeinnocent#1{\catcode`#1=12 }
+\def\beamer@startcomment{%
+    \begingroup%
+    \let\do\beamer@makeinnocent\dospecials%
+    \beamer@makeinnocent\^^L% and whatever other special cases
+    \endlinechar`\^^M \catcode`\^^M=12 \beamer@processline}
+
+{\catcode`\^^M=12\endlinechar=-1%
+  \long\gdef\beamer@processline#1^^M{%
+    \def\beamer@test{#1}%
+    \ifx\beamer@test\beamer@stopmodestar%
+      \let\next=\beamer@modeoutsideframe%
+    \else%
+    \ifx\beamer@test\beamer@stopmode%
+      \let\next=\mode%
+    \else%
+      \ifx\beamer@test\beamer@stoparticle%
+        \let\next=\article%
+      \else%
+        \ifx\beamer@test\beamer@stoppresentation%
+          \let\next=\presentation%
+        \else%
+          \ifx\beamer@test\beamer@stopcommon%
+            \let\next=\common%
+          \else%
+            \ifx\beamer@test\beamer@stopdocument%
+              \let\next=\beamer@enddocument%
+            \else
+              \ifx\beamer@test\beamer@begindocument%
+                \let\next=\beamer@startdocument%
+              \else
+                \let\next=\beamer@processline%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi%
+    \fi%
+    \next}
+}
+
+\def\beamer@enddocument{\beamer@closer\end{document}}
+\def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}\common}
+\def\beamer@closer{}
+{\escapechar=-1\relax%
+  \xdef\beamer@stopmode{\string\\mode}
+  \xdef\beamer@stopmodestar{\string\\mode*}
+  \xdef\beamer@stoparticle{\string\\article}
+  \xdef\beamer@stoppresentation{\string\\presentation}
+  \xdef\beamer@stopcommon{\string\\common}
+  \xdef\beamer@stopdocument{\string\\end\string\{document\string\}}
+  \xdef\beamer@begindocument{\string\\begin\string\{document\string\}}
+}
+\newbox\beamer@commentbox
+\def\beamer@startcommentinframe{%
+  \begingroup%
+  \edef\beamer@closer{\egroup\beamer@closer}%
+  \setbox\beamer@commentbox=\vbox\bgroup\leavevmode}
+
+\def\beamer@outsidemode{\afterassignment\beamer@treat\let\beamer@nexttoken=}
+\def\beamer@treat{%
+  \ifx\beamer@nexttoken\frame\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\lecture\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\note\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\appendix\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\againframe\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\section\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\subsection\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\subsubsection\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\part\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\article\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\mode\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\common\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\presentation\let\next=\beamer@stopoutsidemode\fi%
+  \ifx\beamer@nexttoken\begin\let\next=\beamer@checkbeginframe\fi%
+  \ifx\beamer@nexttoken\end\let\next=\beamer@checkenddoc\fi%
+  \next}
+
+\def\beamer@stopoutsidemode{\beamer@nexttoken}
+\def\beamer@checkenddoc#1{%
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\beamer@enddoc%
+    \let\next=\beamer@enddocument%
+  \else%
+    \let\next=\beamer@outsidemode%
+  \fi%
+  \next}
+\def\beamer@enddoc{document}
+
+\def\beamer@checkbeginframe#1{%
+  \def\beamer@temp{#1}%
+  \ifx\beamer@temp\beamer@frametext%
+    \let\next=\beamer@beginframeenv%
+  \else%
+    \let\next=\beamer@outsidemode%
+  \fi%
+  \next}
+\def\beamer@beginframeenv{\begin{frame}}
+
+\def\beamer@modeoutsideframe{%
+  \beamer@closer%
+  \gdef\beamer@mode{\beamer@modeoutsideframe}%
+  \ifbeamer@inpresentation%
+    \let\next=\beamer@outsidemode%
+    \gdef\beamer@closer{}%
+  \else%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+  \fi%
+  \next}
+
+
+%obsolete, do note use:
+\def\presentation{\mode<presentation>}
+\def\article{\mode<article>}
+\def\common{\mode<all>}
+
+%
+% Mode command
+%
+\def\mode{\@ifstar\beamer@modeoutsideframe\beamer@@@mode}
+\def\beamer@@@mode<#1>{\beamer@closer\@ifnextchar\bgroup{\beamer@modeinline<#1>}{\beamer@switchmode<#1>}}
+\long\def\beamer@modeinline<#1>#2{%
+  \gdef\beamer@closer{}%
+  \def\beamer@doifnotinframe{\@gobble}\def\beamer@doifinframe{\@firstofone}%
+  {\beamer@saveanother\beamer@slideinframe=1\relax%
+   \beamer@masterdecode{#1}%
+   \beamer@restoreanother}\beamer@donow{#2}%
+  \beamer@mode\par}
+\def\beamer@switchmode<#1>{%
+  \gdef\beamer@mode{\beamer@switchmode<#1>}%
+  \def\beamer@doifnotinframe{%
+    \let\next=\beamer@startcomment%
+    \gdef\beamer@closer{\endgroup}%
+  }%
+  \def\beamer@doifinframe{%
+    \let\next=\relax%
+    \gdef\beamer@closer{}%
+   }%
+  {\beamer@saveanother\beamer@slideinframe=1\relax%
+   \beamer@masterdecode{#1}%
+   \beamer@restoreanother}\beamer@donow%
+  \next}
+
+\mode
+<all>
+
+\newcount\beamer@modecount
+\def\beamer@pushmode#1{%
+  \expandafter\gdef\csname beamer@savedmode@\the\beamer@modecount\endcsname{#1}%
+  \global\advance\beamer@modecount by1\relax}
+\def\beamer@popmode{
+  \global\advance\beamer@modecount by-1\relax%
+  \csname beamer@savedmode@\the\beamer@modecount\endcsname}
+
+\def\beamer@savemode{\expandafter\beamer@pushmode\expandafter{\beamer@mode}}
+\def\beamer@resumemode{\beamer@popmode}
+
+
+
+%
+% Stuff needed in both article and presentation version
+%
+\def\jobnamebeamerversion{}%
+
+\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
+\def\@includeslide[#1]#2{%
+  \ifx\jobnamebeamerversion\@empty%
+  \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
+  \else%
+  \edef\beamer@args{[{#1,page=\csname beamer@slide#2\endcsname}]{\jobnamebeamerversion}}%
+  \expandafter\pgfimage\beamer@args%
+  \fi}
+
+\def\setjobnamebeamerversion#1{%
+  \def\jobnamebeamerversion{#1}%
+  {\makeatletter
+  \@input{\jobnamebeamerversion.snm}}
+}
+
+
+
+%
+% Check whether we should initiate transfer to another class (obsolete)
+%
+
+% Extract class name, if present
+\def\beamer@classname{}
+\def\beamer@classoptions{}
+\def\beamer@classnamename{class}
+\def\beamer@eq{=,}
+\def\beamer@findclassname#1=#2,#3!{
+  \def\beamer@temp{#1}
+  \ifx\beamer@temp\beamer@classnamename
+    \def\beamer@classname{#2}
+    \beamer@stripsign#3!
+  \fi}
+\def\beamer@stripsign#1!{%
+  \def\beamer@temp{#1}
+  \ifx\beamer@temp\beamer@eq
+  % nothing to do
+  \else
+  \beamer@@stripsign#1!
+  \fi
+}
+\def\beamer@@stripsign#1,=,!{
+  \def\beamer@classoptions{#1}
+  }
+
+\def\beamer@transfer{%
+  % Prepare...
+  \def\beamer@slide##1##2{\expandafter\gdef\csname
+    beamer@slide##1\endcsname{##2}}
+
+  \beamer@inpresentationfalse
+
+  \def\beamer@currentmode{article}
+
+  \common
+
+  \edef\beamer@classwhat{[\beamer@classoptions]{\beamer@classname}}
+  \expandafter\LoadClass\beamer@classwhat
+  \endinput
+  }
+
+\expandafter\beamer@findclassname\@classoptionslist,=,!
+\ifx\beamer@classname\@empty
+  \let\beamer@transferifnecessary=\relax
+\else
+  % Need to transfer to another class soon
+  \let\beamer@transferifnecessary=\beamer@transfer
+\fi
+\endinput
+

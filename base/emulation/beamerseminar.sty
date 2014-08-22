@@ -1,0 +1,80 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header$
+
+\newif\ifbeamerseminar@accumulated
+\beamerseminar@accumulatedfalse
+
+\DeclareOption{accumulated}{\beamerseminar@accumulatedtrue}
+\ProcessOptions
+
+
+\newcount\beamerseminar@overlay
+
+\def\overlay#1{%
+  \beamerseminar@overlay=#1\relax%
+  \advance\beamerseminar@overlay by1\relax%
+  \ifbeamerseminar@accumulated%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay->%
+  \else%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay>%
+  \fi%
+  \aftergroup\beamerseminar@endoverlay\ignorespaces}
+\def\beamerseminar@endoverlay{%
+  \ifbeamerseminar@accumulated%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay->%
+  \else%
+    \expandafter\onslide\expandafter<\the\beamerseminar@overlay>%
+  \fi}
+
+\newif\ifbeamerseminar@starred
+\newenvironment{slide}[1][]{%
+  \beamerseminar@starredfalse
+  \ifbeamer@inframe%
+    \beamerseminar@overlay=1\bgroup\overlay{0}%
+  \else%
+    \frame[containsverbatim]\bgroup%
+  \fi}
+  {\egroup}
+\newenvironment{slide*}[1][]{\begin{slide}\beamerseminar@starredtrue}{\end{slide}}
+
+\newcommand{\newslide}{%
+  \ifbeamerseminar@starred%
+    \end{slide*}\begin{slide*}%
+  \else%
+    \end{slide}\begin{slide}%
+  \fi}
+
+\beamerseminar@overlay=1
+
+\def\blue{\color{blue}}
+\def\red{\color{red}}
+\def\green{\color{green}}
+
+\def\ptsize#1{}
+
+\newif\ifarticle
+\articlefalse
+\newif\ifslidesonly
+\slidesonlytrue
+\newif\ifslide
+\slidetrue
+\newif\ifportrait
+\portraitfalse
+\newif\ifcenterslides
+\centerslidestrue
+\newdimen\semin
+\newdimen\semcm
+
+\semin=.5in
+\semcm=.5cm
+
+\mode<article>{\articletrue\slidefalse\slidesonlyfalse}
