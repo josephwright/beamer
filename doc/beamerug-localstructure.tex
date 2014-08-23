@@ -884,6 +884,26 @@ You can use the standard \LaTeX\ environments |figure| and |table| much the same
   These \beamer-color and -font are used to typeset the caption name (a word like ``Figure''). The |caption| template must directly ``use'' them, they are not installed automatically by the |\insertcaptionname| command.
 \end{element}
 
+\begin{element}{caption label separator}\yes\no\no
+  This template is inserted between caption name and caption text.
+  \begin{templateoptions}
+    \itemoption{default}{}
+    Typesets the colon followed by the space.
+    \itemoption{none}{}
+    Typesets no separator.
+    \itemoption{colon}{}
+    Alias for the default.
+    \itemoption{period}{}
+    Typesets the period followed by the space.
+    \itemoption{space}{}
+    Typesets the space.
+    \itemoption{quad}{}
+    Typesets the |\quad| followed by the space.
+    \itemoption{endash}{}
+    Typesets the en-dash surrounded by spaces (| -- |).
+  \end{templateoptions}
+\end{element}
+
 
 \subsection{Splitting a Frame into Multiple Columns}
 
