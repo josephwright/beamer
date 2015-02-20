@@ -262,9 +262,9 @@
 
 \newcommand\donotcoloroutermaths{%
   \everydisplay\expandafter\expandafter\expandafter{%
-    \expandafter\donotcoloroutermaths@aux\the\everydisplay
+    \expandafter\donotcoloroutermaths@aux\the\everymath
       \beamer@setmathcolor\beamer@setmathcolor\beamer@stop
-    \everydisplay\expandafter{\the\everydisplay\beamer@setmathcolor}%
+    \everymath\expandafter{\the\everymath\beamer@setmathcolor}%
   }%
 }
 \newcommand\donotcoloroutermaths@aux
