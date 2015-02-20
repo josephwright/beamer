@@ -261,14 +261,32 @@
   \ifbeamercolorempty[fg]{math text inlined}{}{\color{fg}}}
 
 \newcommand\donotcoloroutermaths{%
-  \everymath{\everymath{\beamer@setmathcolor}}}
+  \everydisplay\expandafter\expandafter\expandafter{%
+    \expandafter\donotcoloroutermaths@aux\the\everydisplay
+      \beamer@setmathcolor\beamer@setmathcolor\beamer@stop
+    \everydisplay\expandafter{\the\everydisplay\beamer@setmathcolor}%
+  }%
+}
+\newcommand\donotcoloroutermaths@aux
+  #1\beamer@setmathcolor#2\beamer@setmathcolor#3\beamer@stop{%
+    #1#2%
+  }
 
 \newcommand\beamer@setdisplaymathcolor{%
   \usebeamercolor{math text displayed}%
   \ifbeamercolorempty[fg]{math text displayed}{}{\color{fg}\aftergroup\ignorespaces}}%
 
 \newcommand\donotcolorouterdisplaymaths{%
-  \everydisplay{\everydisplay{\beamer@setdisplaymathcolor}}}
+  \everydisplay\expandafter\expandafter\expandafter{%
+    \expandafter\donotcolorouterdisplaymaths@aux\the\everydisplay
+      \beamer@setdisplaymathcolor\beamer@setdisplaymathcolor\beamer@stop
+    \everydisplay\expandafter{\the\everydisplay\beamer@setdisplaymathcolor}%
+  }%
+}
+\newcommand\donotcolorouterdisplaymaths@aux
+  #1\beamer@setdisplaymathcolor#2\beamer@setdisplaymathcolor#3\beamer@stop{%
+    #1#2%
+  }
 
 \AtBeginDocument
 {
