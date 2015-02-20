@@ -1,4 +1,4 @@
-% Copyright 2003--2007 by Till Tantau
+/% Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 %
 % This file may be distributed and/or modified
@@ -96,7 +96,7 @@ A common way of globally structuring (math) articles and books is to use consecu
 
 In our opinion, the only situation in which numbered theorems make sense in a presentation is in a lecture, in which the students can read lecture notes in parallel to the lecture where the theorems are numbered in exactly the same way.
 
-If you do number theorems and definition, number everything consecutively. Thus if there are one theorem, one lemma, and one definition, you would have Theorem~1, Lemma~2, and Definition~3. Some people prefer all three to be numbered~1. We would \emph{strongly} like to discourage this. The problem is that this makes it virtually impossible to find anything since Theorem~2 might come after Definition~10 or the other way round. Papers and, worse, books that have a Theorem~1 and a Definition~1 are a pain.
+If you do number theorems and definitions, number everything consecutively. Thus if there are one theorem, one lemma, and one definition, you would have Theorem~1, Lemma~2, and Definition~3. Some people prefer all three to be numbered~1. We would \emph{strongly} like to discourage this. The problem is that this makes it virtually impossible to find anything since Theorem~2 might come after Definition~10 or the other way round. Papers and, worse, books that have a Theorem~1 and a Definition~1 are a pain.
 \begin{itemize}
 \item
   Do not inflict pain on other people.
@@ -124,7 +124,7 @@ You may also wish to present a bibliography at the end of your talk, so that peo
 \label{section-frame-guidelines}
 \label{section-guidelines-local}
 
-Just like your whole presentation, each frame should also be structured. A frame that is solely filled with some long text is very hard to follow. It is your job to structure the contents of each frame such that, ideally, the audience immediately seems which information is important, which information is just a detail, how the presented information is related, and so on.
+Just like your whole presentation, each frame should also be structured. A frame that is solely filled with some long text is very hard to follow. It is your job to structure the contents of each frame such that, ideally, the audience immediately sees which information is important, which information is just a detail, how the presented information is related, and so on.
 
 \paragraph{The Frame Title}
 
@@ -267,7 +267,7 @@ Graphics often convey concepts or ideas much more efficiently than text: A pictu
 \item
   Do \emph{not} use animations just to attract the attention of your audience. This often distracts attention away from the main topic of the slide. No matter how cute a rotating, flying theorem seems to look and no matter how badly you feel your audience needs some action to keep it happy, most people in the audience will typically feel you are making fun of them.
 \item
-  Do \emph{not} use distracting special effects like ``dissolving'' slides unless you have a very good reason for using them. If you use them, use them sparsely. They \emph{can} be useful in some situations: For example, you might show a young boy on a slide and might wish to dissolve this slide into slide showing a grown man instead. In this case, the dissolving  gives the audience visual feedback that the young boy ``slowly becomes'' the man.
+  Do \emph{not} use distracting special effects like ``dissolving'' slides unless you have a very good reason for using them. If you use them, use them sparsely. They \emph{can} be useful in some situations: For example, you might show a young boy on a slide and might wish to dissolve this slide into a slide showing a grown man instead. In this case, the dissolving  gives the audience visual feedback that the young boy ``slowly becomes'' the man.
 \end{itemize}
 
 
@@ -321,7 +321,7 @@ Summing up, the font size has little to do with the actual size of letters. Rath
 
 In a presentation the classical font sizes obviously lose their meaning. Nobody could read a projected text if it were actually 11pt. Instead, the projected letters need to be several centimetres high. Thus, it does not really make sense to specify ``font sizes'' for presentations in the usual way. Instead, you should try to think of the number of lines that will fit on a slide if you were to fill the whole slide with line-by-line text (you are never going to do that in practice, though). Depending on how far your audience is removed from the projection and on how large the projection is, between 10 and 20 lines should fit on each slide. The less lines, the more readable your text will be.
 
-In \beamer, the default sizes of the fonts are chosen in a way that makes it difficult to fit ``too much'' onto a slide. Also, it will ensure that your slides are readable even under bad conditions like a large room and a small only a small projection area. However, you may wish to enlarge or shrink the fonts a bit if you know this to be more appropriate in your presentation environment.
+In \beamer, the default sizes of the fonts are chosen in a way that makes it difficult to fit ``too much'' onto a slide. Also, it will ensure that your slides are readable even under bad conditions like a large room and only a small projection area. However, you may wish to enlarge or shrink the fonts a bit if you know this to be more appropriate in your presentation environment.
 
 Once the size of the normal text is settled, all other sizes are usually defined relative to that size. For this reason, \LaTeX\ has commands like |\large| or |\small|. The actual size these commands select depends on the size of normal text.
 
@@ -331,7 +331,7 @@ However, using small fonts can be tricky. Many PostScript fonts are just scaled 
 
 You can counter both negative effects by using a bold version for small text.
 
-In the other direction, you can use larger text for titles. However, using a larger font does not always have the desired effect. Just because a frame title is printed in large letters does not mean that it is read first. Indeed, have a look at the cover of your favorite magazine. Most likely, the magazine's name is the typeset in the largest font, but you your attention will nevertheless first go to the topics advertised on the cover. Likewise, in the table of contents you are likely to first focus on the entries, not on the words ``Table of Contents.'' Most likely, you would not spot a spelling mistake there (a friend of mine actually managed to misspell \emph{his own name} on the cover of his master's thesis and nobody noticed until a year later). In essence, large text at the top of a page signals ``unimportant since I know what to expect.'' So, instead of using a very large frame title, also consider using a normal size frame title that is typeset in bold or in italics.
+In the other direction, you can use larger text for titles. However, using a larger font does not always have the desired effect. Just because a frame title is printed in large letters does not mean that it is read first. Indeed, have a look at the cover of your favorite magazine. Most likely, the magazine's name is the typeset in the largest font, but your attention will nevertheless first go to the topics advertised on the cover. Likewise, in the table of contents you are likely to first focus on the entries, not on the words ``Table of Contents.'' Most likely, you would not spot a spelling mistake there (a friend of mine actually managed to misspell \emph{his own name} on the cover of his master's thesis and nobody noticed until a year later). In essence, large text at the top of a page signals ``unimportant since I know what to expect.'' So, instead of using a very large frame title, also consider using a normal size frame title that is typeset in bold or in italics.
 
 \subsubsection{Font Families}
 \label{section-guidelines-serif}
@@ -409,7 +409,7 @@ The second font shape supported by \TeX\ are small capital letters. Using them c
 \item
   Small caps either come as ``faked'' small caps or as ``real'' small caps. Faked small caps are created by just scaling down normal uppercase letters. This leads to letters the look too thin. Real small caps are specially designed smaller versions of the uppercase letters that have the same stroke width as normal text.
 \item
-  Computer Modern fonts and expert version of PostScript fonts come with real small caps (though the small caps of Computer Modern are one point size too large for some unfathomable reason---but your audience is going to pardon this since it will not notice anyway). ``Simple'' PostScript fonts like out-of-the-box Helvetica or Times only come with faked small caps.
+  Computer Modern fonts and expert version of PostScript fonts come with real small caps (though the small caps of Computer Modern are one point size too large for some unfathomable reason---but your audience is going to pardon this since it will not be noticed anyway). ``Simple'' PostScript fonts like out-of-the-box Helvetica or Times only come with faked small caps.
 \item
   Text typeset in small caps is harder to read than normal text. The reason is that we read by seeing the ``shape'' of words. For example, the word ``shape'' is mainly recognized by seing one normal letter, one ascending letter, a normal letter, one descending letter, and a normal letter. One has much more trouble spotting a misspelling like ``shepe''  than ``spape''. Small caps destroy the shape of words since \textsc{shape}, \textsc{shepe} and \textsc{spape} all have the same shape, thus making it much harder to tell them apart. Your audience will read small caps more slowly than normal text. This is, by the way, why legal disclaimers are often written in uppercase letters: not to make them appear more important to you, but to make them much harder to actually read.
 \end{itemize}

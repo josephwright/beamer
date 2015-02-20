@@ -298,7 +298,7 @@ In order to simplify changing the color or font of items, the different kinds of
 
 \subsection{Highlighting}
 
-The \beamer\ class predefines commands and environments for highlighting text. Using these commands makes is easy to change the appearance of a document by changing the theme.
+The \beamer\ class predefines commands and environments for highlighting text. Using these commands makes it easy to change the appearance of a document by changing the theme.
 
 \begin{command}{\structure\sarg{overlay specification}\marg{text}}
   The given text is marked as part of the structure, that is, it is supposed to help the audience see the structure of your presentation. If the \meta{overlay specification} is present, the command only has an effect on the specified slides.
@@ -583,7 +583,7 @@ In |article| mode, theorems are automatically numbered. By specifying the class 
 \begin{environment}{{proof}\sarg{action specification}\oarg{proof name}\sarg{action specification}}
   Typesets a proof. If the optional \meta{proof name} is given, it completely replaces the word ``Proof.'' This is different from normal theorems, where the optional argument is shown in brackets.
 
-  At the end of the theorem, a |\qed| symbol is shown, except if you say |\qedhere| earlier in the proof (this is exactly as in |amsthm|). The default |\qed| symbol is an open rectangle. To completely suppress the symbol, write |\def\qedsymbol{}| in your preamble. To get an closed rectangle, say
+  At the end of the theorem, a |\qed| symbol is shown, except if you say |\qedhere| earlier in the proof (this is exactly as in |amsthm|). The default |\qed| symbol is an open circle. To completely suppress the symbol, write |\def\qedsymbol{}| in your preamble. To get a closed square, say
 \begin{verbatim}
 \setbeamertemplate{qed symbol}{\vrule width1.5ex height1.5ex depth0pt}
 \end{verbatim}
@@ -798,7 +798,7 @@ The \beamer\ class also defines two environments for creating colored boxes.
   \item
     \declare{|colsep=|\meta{dimension}} sets the extra ``color separation space'' around the text. This space behaves the same way as the space added by |sep|, only this space is only inserted if the box has a colored background, that is, if the background of the \meta{beamer color} is not empty. This command can be used together with |sep|, the effects accumulate.
   \item
-    \declare{|colsep*=|\meta{dimension}} sets an extra color separation space around the text that is \emph{horizontally outside the box}. This means that if the box has a background, this background will protrude by \meta{dimension} to the left and right of the text, but this protruding background will not be taken intro consideration by \TeX\ for typesetting purposes.
+    \declare{|colsep*=|\meta{dimension}} sets an extra color separation space around the text that is \emph{horizontally outside the box}. This means that if the box has a background, this background will protrude by \meta{dimension} to the left and right of the text, but this protruding background will not be taken into consideration by \TeX\ for typesetting purposes.
 
     A typical example usage of this option arises when you insert a box with a colored background in the middle of normal text. In this case, if the background color is set, you would like a background to be drawn behind the text \emph{and} you would like a certain extra space around this text (the background should not stop immediately at the borders of the text, this looks silly) \emph{and} you would like the normal text always to be at the same horizontal position, independently of whether a background is present or not. In this case, using |colsep*=4pt| is a good option.
   \item
@@ -1008,7 +1008,7 @@ The package |textpos| provides several commands for positioning text absolutely 
 
 \subsection{Verbatim and Fragile Text}
 
-If you wish to use a |{verbatim}| environment in a frame, you have to add the option |[fragile]| to the |{frame}| environment. In this case, you really have to use the |{frame}| environment (not the |\frame| command) and the |\end{frame}| must be alone on a single line. Using this option will cause the frame contents to be written to an external file and the read back. See the description of the |{frame}| environment for more details.
+If you wish to use a |{verbatim}| environment in a frame, you have to add the option |[fragile]| to the |{frame}| environment. In this case, you really have to use the |{frame}| environment (not the |\frame| command) and the |\end{frame}| must be alone on a single line. Using this option will cause the frame contents to be written to an external file and then read back. See the description of the |{frame}| environment for more details.
 
 You must also use the |[fragile]| option for frames that include any ``fragile'' text, which is any text that is not ``interpreted the way text is usually interpreted by \TeX.'' For example, if you use a package that (locally) redefined the meaning of, say, the character |&|, you must use this option.
 

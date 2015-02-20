@@ -165,7 +165,7 @@ Inner color themes only specify the colors of elements used in inner themes. Mos
 
 \subsubsection{Outer Color Themes}
 
-An outer color theme changes the palette colors, on which the colors used in the headline, footline, and sidebar are based by default. Outer color themes normally do not change the color of inner elements, except possibly for |titlelike|. They have happen to be sea-animal names.
+An outer color theme changes the palette colors, on which the colors used in the headline, footline, and sidebar are based by default. Outer color themes normally do not change the color of inner elements, except possibly for |titlelike|. They happen to be sea-animal names.
 
 \begin{colorthemeexample}{whale}
   Installs a white-on-dark palette for the headline, footline, and sidebar. The backgrounds used there are set to shades between the structure \beamer-color and black. The foreground is set to white.
@@ -319,7 +319,7 @@ To set or to change a \beamer-color, you can use the command |\setbeamercolor|.
 
     Note that a change of the foreground or background of a parent changes the corresponding foreground or background of the child (unless it is overruled).
 
-    A \beamer-color cannot only have parents, but also grandparents and so on.
+    A \beamer-color can not only have parents, but also grandparents and so on.
   \item
     \declare{|use=|\meta{another beamer-color}} is used to make sure that another \beamer-color is setup correctly before the foreground or background color specification are evaluated.
 
@@ -352,7 +352,7 @@ To set or to change a \beamer-color, you can use the command |\setbeamercolor|.
 \setbeamercolor{my color B}{use={father,mother},fg=father.fg!50!mother.fg}
 
 {\usebeamercolor[fg]{my color A} dark red text}
-{\usebeamercolor[fg]{my color b} also dark red text}
+{\usebeamercolor[fg]{my color B} also dark red text}
 
 \setbeamercolor{grandfather}{fg=green}
 
@@ -397,7 +397,7 @@ Note that the user can still change the color of every element individually, sim
 In detail, the following palette colors are used by outer themes.
 
 \begin{element}{palette primary}\no\yes\no
-  Outer themes (should) base the color of navigational elements and, possibly, also of other elements, on the four palette colors. The ``primary'' palette should be used for the most important navigational elements, which are usually the ones that change most often and hence require the most attention by the audience. The ``secondary'' and ``tertiary'' are less important, the ``quaternary'' one is least important.
+  Outer themes (should) base the color of navigational elements and, possibly, also of other elements, on the four palette colors. The ``primary'' palette should be used for the most important navigational elements, which are usually the ones that change most often and hence require the most attention by the audience. The ``secondary'' and ``tertiary'' are less important, the ``quaternary'' one is the least important.
 
   By default, the palette colors do not have a background and the foreground ranges from |structure.fg| to |black|.
 

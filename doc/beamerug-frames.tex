@@ -487,7 +487,7 @@ Sidebars are vertical areas that stretch from the lower end of the headline to t
 
 When you install a sidebar template, you must explicitly specify the horizontal size of the sidebar using the command |\setbeamersize| with the option |sidebar left width| or |sidebar right width|. The vertical size is determined automatically. Each sidebar has its own background canvas, which can be setup using the sidebar canvas templates.
 
-Adding a sidebar of a certain size, say 1cm, will make the main text 1cm narrower. The distance between the inner side of a side bar and the outer side of the text, as specified by the command |\setbeamersize| with the option |text margin left| and its counterpart for the right margin, is not changed when a sidebar is installed.
+Adding a sidebar of a certain size, say 1\,cm, will make the main text 1\,cm narrower. The distance between the inner side of a side bar and the outer side of the text, as specified by the command |\setbeamersize| with the option |text margin left| and its counterpart for the right margin, is not changed when a sidebar is installed.
 
 Internally, the sidebars are typeset by showing them as part of the headline. The \beamer\ class keeps track of six dimensions, three for each side: the variables |\beamer@leftsidebar| and |\beamer@rightsidebar| store the (horizontal) sizes of the side bars, the variables |\beamer@leftmargin| and |\beamer@rightmargin| store the distance between sidebar and text, and the macros |\Gm@lmargin| and |\Gm@rmargin| store the distance from the edge of the paper to the edge of the text. Thus the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is exactly |\Gm@lmargin|. Thus, if you wish to put some text right next to the left sidebar, you might write |\hskip-\beamer@leftmargin| to get there.
 
@@ -625,7 +625,7 @@ By the above rules you can:
   Skip the rest of the current frame by clicking on it once.
 \end{itemize}
 
-We also tried making a jump to an already-visited frame jump automatically to the last slide of this frame. However, this turned out to be more confusing than helpful. With the current implementation a double-click always brings you to the end of a slide, regardless from where you ``come.''
+We also tried making a jump to an already-visited frame jump automatically to the last slide of this frame. However, this turned out to be more confusing than helpful. With the current implementation a double-click always brings you to the end of a slide, regardless from where you ``come'' from.
 
 \begin{element}{mini frames}\semiyes\no\no
   This parent template has the children |mini frame| and |mini frame in current subsection|.
