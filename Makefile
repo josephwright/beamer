@@ -30,7 +30,6 @@ STRUCTURE = \
 	base/translator                 \
 	doc                             \
 	doc/licenses                    \
-	doc/themeexamples               \
 	examples/a-conference-talk      \
 	examples/a-lecture              \
 	solutions/conference-talks      \
