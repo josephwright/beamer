@@ -584,7 +584,7 @@
       \def\insertsectionhead{##2}%
       \def\insertsectionheadnumber{##1}%
       \def\insertpartheadnumber{##5}%
-      \hbox{{%
+      \hbox to #1{{%
         \usebeamerfont{section in sidebar}\usebeamercolor[fg]{section in sidebar}%
           \hyperlink{Navigation##3}{%
           \ifnum\c@section=##1%
@@ -632,9 +632,9 @@
       \def\insertpartheadnumber{##1}%
       \def\insertsectionheadnumber{##2}%
       \def\insertsubsectionheadnumber{##3}%
-      \def\insertsubsubsectionheadnumber{##3}%
+      \def\insertsubsubsectionheadnumber{##4}%
       \def\insertsubsubsectionhead{##6}%
-      \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi}%
+      \beamer@tocifnothide{\ifnum\c@section=##2\ifnum\c@subsection=##3\ifnum\c@subsubsection=##4\beamer@nav@css\else\beamer@nav@oss\fi\else\beamer@nav@ooss\fi\else\beamer@nav@ooss\fi}%
       {\hbox{{%
         \usebeamerfont{subsubsection in sidebar}\usebeamercolor[fg]{subsubsection in sidebar}%
           \hyperlink{Navigation##5}{%

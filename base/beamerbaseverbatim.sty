@@ -26,6 +26,7 @@
     \catcode\count@=11%
   }%
   \beamer@makeinnocent\^^L% and whatever other special cases
+  \beamer@makeinnocent\^^I % Allow tab chars
   \endlinechar`\^^M \catcode`\^^M=12%
   \@ifnextchar\bgroup{\afterassignment\beamer@specialprocessframefirstline\let\beamer@temp=}{\beamer@processframefirstline}}%
 

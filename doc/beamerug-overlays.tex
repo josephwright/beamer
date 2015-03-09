@@ -602,7 +602,7 @@ As if all this were not already complicated enough, there is another mode that b
 
 This section also introduces a rather advanced concept. You may also wish to skip it on first reading.
 
-Some overlay specification-aware commands cannot only handle normal overlay specifications, but also so called \emph{action specifications}. In an action specification, the list of slide numbers and ranges is prefixed by \meta{action}|@|, where \meta{action} is the name of a certain action to be taken on the specified slides:
+Some overlay specification-aware commands cannot handle not only normal overlay specifications, but also so called \emph{action specifications}. In an action specification, the list of slide numbers and ranges is prefixed by \meta{action}|@|, where \meta{action} is the name of a certain action to be taken on the specified slides:
 \begin{verbatim}
 \item<3-| alert@3> Shown from slide 3 on, alerted on slide 3.
 \end{verbatim}
@@ -661,7 +661,7 @@ The whole action mechanism is based on the following environment:
   This has the same effect as putting \meta{text} in an |actionenv|.
 
   \example
-  |\action<alert@2>{Could also have used \alert<2>{}.}|
+  |\action<alert@2>{Could also have used \texttt{\string\alert<2>\char`\{\char`\}}.}|
 \end{command}
 
 \begin{command}{\beamerdefaultoverlayspecification\marg{default overlay specification}}
@@ -707,7 +707,7 @@ The problem starts if you decide to insert a new fruit, say, at the beginning. I
 
 The effect of the |+|-sign is the following: You can use it in any overlay specification at any point where you would usually use a number. If a |+|-sign is encountered, it is replaced by the current value of the \LaTeX\ counter |beamerpauses|, which is 1 at the beginning of the frame. Then the counter is increased by 1, though it is only increased once for every overlay specification, even if the specification contains multiple |+|-signs (they are replaced by the same number).
 
-In the above example, the first specification is replaced by |<1->|. Then the second is replaced by |<2->| and so forth. We can now easily insert new entries, without having to change anything. We might also write the following:
+In the above example, the first specification is replaced by |<1->|. Then the second is replaced by |<2->| and so forth. We can now easily insert new entries, without having to change anything else. We might also write the following:
 \begin{verbatim}
 \begin{itemize}
 \item<+-| alert@+> Apple

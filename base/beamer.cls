@@ -242,7 +242,7 @@
   \beamer@sansmathfalse
 }
 \DeclareOptionBeamer{mathsans}{
-  \ClassWarning{beamer}{``mathsans'' is obsolete. Use font theme ``serif'' with option ``butsansserifmath''}
+  \ClassWarning{beamer}{``mathsans'' is obsolete. Use font theme ``serif'' with option ``stillsansserifmath''}
   \def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
 \DeclareOptionBeamer{mathserif}{
   \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}

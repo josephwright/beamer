@@ -317,7 +317,19 @@
 {
   \AtBeginDocument{
     \let\beamer@origdescription=\description
-    \renewcommand{\description}[1][]{\beamer@origdescription}
+    % The description environment doesn't use either optional
+    % arg in article mode, so simply gobble them
+    \def\description{%
+      \@ifnextchar[%]
+        {\beamer@description@}
+        {\beamer@origdescription}%
+    }
+    \def\beamer@description@[#1]{%
+      \@ifnextchar[%]
+        {\beamer@description@@}
+        {\beamer@origdescription}%
+    }
+    \def\beamer@description@@[#1]{\beamer@origdescription}
   }
 }
 

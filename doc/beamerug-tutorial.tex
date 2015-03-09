@@ -207,7 +207,7 @@ The |\item| command is not the only command that takes overlay specifications. A
   \only<4->{The proof used \textit{reductio ad absurdum}.}
 \end{verbatim}
 
-On non-specified slides the |\only| command simply ``throws its argument away'' and the argument does not occupy any space. This leads to different heights of the text on the first three slides and on the fourth slide. If the text is centered vertically, this will cause the text to ``wobble'' and thus |\uncover| should be used. However, you sometimes wish things to ``really disappear'' on some slides and then |\only| is useful. Euclid could also have used the class option |t|, which causes the text in frames to be vertically flushed to the top. Then a differing text height does not cause wobbling. Vertical flushing can also be achieved for only a single frame be by giving the optional argument |[t]| like this to the |frame| environment as in
+On non-specified slides the |\only| command simply ``throws its argument away'' and the argument does not occupy any space. This leads to different heights of the text on the first three slides and on the fourth slide. If the text is centered vertically, this will cause the text to ``wobble'' and thus |\uncover| should be used. However, you sometimes wish things to ``really disappear'' on some slides and then |\only| is useful. Euclid could also have used the class option |t|, which causes the text in frames to be vertically flushed to the top. Then a differing text height does not cause wobbling. Vertical flushing can also be achieved for only a single frame by giving the optional argument |[t]| like this to the |frame| environment as in
 \begin{verbatim}
 \begin{frame}[t]
   \frametitle{There Is No Largest Prime Number}
@@ -278,7 +278,7 @@ Pondering on the problem some more, Euclid decides that it would be even nicer t
 
 Trying this, he is not quite satisfied with the result as the block on the left has a different height than the one on the right. He thinks it would be nicer if they were vertically top-aligned. So he adds the |[t]| option to the |columns| environment.
 
-Euclid is somewhat please to find out that a |\pause| at the end of the first column allows him to ``uncover'' the second column only on the second slide of the frame.
+Euclid is somewhat pleased to find out that a |\pause| at the end of the first column allows him to ``uncover'' the second column only on the second slide of the frame.
 
 
 \subsection{Adding References}
@@ -309,7 +309,7 @@ and he can then add a citation:
 On another frame, Euclid would like to show a listing of an algorithm his friend Eratosthenes has sent him (saying he came up with it while reorganizing his sieve collection). Euclid normally uses the |verbatim| environment and sometimes also similar environments like |lstlisting| to typeset listings. He can also use them in \beamer, but he must add the |fragile| option to the frame:
 \begin{verbatim}
 \begin{frame}[fragile]
-  \frametitle{An Algorithm For Finding Primes Numbers.}
+  \frametitle{An Algorithm For Finding Prime Numbers.}
 
 %\begin{verbatim}
 int main (void)

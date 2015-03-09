@@ -237,7 +237,7 @@ If you try to use |mpmulti.sty| directly, you will run into the problem that it 
 You might also consider using the style |xmpmulti.sty| that comes with \beamer. This file is mainly identical to |mpmulti|, except for two differences: First, it does not include |pause.sty|, a style that conceptually clashes with \beamer, although \beamer\ contains a workaround that sidesteps the problem. Second, it extends the |\multiinclude| command by allowing a special default overlay specification to be given. The effect of this is explained below.
 
 \begin{package}{{xmpmulti}}
-  Defines the command |\multiinclude|. The code of this package is due to Klaus Guntermann with some additions of mine. It can used together with \beamer\ and with ppower4, i.\,e., it can be used as a replacement for |mpmulti| if the |pause| package is also included in a ppower4-presentation.
+  Defines the command |\multiinclude|. The code of this package is due to Klaus Guntermann with some additions of mine. It can be used together with \beamer\ and with ppower4, i.\,e., it can be used as a replacement for |mpmulti| if the |pause| package is also included in a ppower4-presentation.
 \end{package}
 
 \begin{command}{\multiinclude\opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\marg{base file name}}
@@ -402,7 +402,6 @@ Since there is no direct way of stopping the playback of a sound, the following 
 \pdf\ in general, and the Acrobat Reader in particular, offer a standardized way of defining \emph{slide transitions}. Such a transition is a visual effect that is used to show the slide. For example, instead of just showing the slide immediately, whatever was shown before might slowly ``dissolve'' and be replaced by the slide's content.
 
 There are a number of commands that can be used to specify what effect should be used when the current slide is presented. Consider the following example:
-
 \begin{verbatim}
 \frame{\pgfuseimage{youngboy}}
 \frame{
@@ -410,11 +409,9 @@ There are a number of commands that can be used to specify what effect should be
   \pgfuseimage{man}
 }
 \end{verbatim}
-
 The command |\transdissolve| causes the slide of the second frame to be shown in a ``dissolved way.'' Note that the dissolving is a property of the second frame, not of the first one. We could have placed the command anywhere on the frame.
 
 The transition commands are overlay-specification-aware. We could collapse the two frames into one frame like this:
-
 \begin{verbatim}
 \begin{frame}
   \only<1>{\pgfuseimage{youngboy}}
@@ -422,11 +419,9 @@ The transition commands are overlay-specification-aware. We could collapse the t
   \transdissolve<2>
 \end{frame}
 \end{verbatim}
-
 This states that on the first slide the young boy should be shown, on the second slide the old man should be shown, and when the second slide is shown, it should be shown in a ``dissolved way.''
 
 In the following, the different commands for creating transitional effects are listed. All of them take an optional argument that may contain a list of \meta{key}|=|\meta{value} pairs. The following options are possible:
-
 \begin{itemize}
 \item
   |duration=|\meta{seconds}. Specifies the number of \meta{seconds} the transition effect needs. Default is one second, but often a shorter one (like 0.2 seconds) is more appropriate. Viewer applications, especially Acrobat, may interpret this option in slightly strange ways.
@@ -497,8 +492,10 @@ All of these commands are ignored in |article| mode.
 \end{command}
 
 You can also specify how \emph{long} a given slide should be shown, using the following overlay-specification-aware command:
-
 \begin{command}{\transduration\sarg{overlay specification}\marg{number of seconds}}
   In full screen mode, show the slide for \meta{number of seconds}. If zero is specified, the slide is shown as short as possible. This can be used to create interesting pseudo-animations.
   \example|\transduration<2>{1}|
+  Notice that the \emph{duration} of a slide transition is entire separate from the \emph{type} of transition which takes place. Most notably, to cancel an existing auto-advance you need to use 
+  \example|\transduration{}|
+possibly with an overlay specification.
 \end{command}

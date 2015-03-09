@@ -629,10 +629,15 @@
     \usebeamerfont*{caption name}%
     \insertcaptionname~\insertcaptionnumber
     \usebeamertemplate{caption label separator}%
-  }
+  }%
   \insertcaption\par
 }
-\defbeamertemplate*{caption label separator}{colon}{: }
+\defbeamertemplate{caption label separator}{none}{}
+\defbeamertemplate{caption label separator}{colon}{:\ }
+\defbeamertemplate{caption label separator}{period}{.\ }
+\defbeamertemplate{caption label separator}{space}{\ }
+\defbeamertemplate{caption label separator}{quad}{\quad\ }
+\defbeamertemplate{caption label separator}{endash}{\ --\ }
 
 \defbeamertemplate{caption}{caption name own line}
 {%

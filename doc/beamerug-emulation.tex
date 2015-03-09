@@ -133,7 +133,7 @@ In the following, the effects of \prosper\ commands in \beamer\ are listed.
   This is mapped to |\logo{|\meta{logo text}|}|. The coordinates are ignored.
 \end{command}
 
-\begin{environment}{{slides}\oarg{options}\marg{frame title}}
+\begin{environment}{{slide}\oarg{options}\marg{frame title}}
   Inserts a frame with the |fragile=singleslide| option set. The \meta{frame title} will be enclosed in a |\frametitle| command.
 
   The following \meta{options} may be given:
@@ -215,7 +215,7 @@ In the following, the effects of \prosper\ commands in \beamer\ are listed.
   This is mapped to |\uncover<-|\meta{slide number}|>{|\meta{text}|}|.
 \end{command}
 
-\begin{command}{\untilsSlide|*|\marg{slide number}\marg{text}}
+\begin{command}{\untilSlide|*|\marg{slide number}\marg{text}}
   This is mapped to |\only<-|\meta{slide number}|>{|\meta{text}|}|.
 \end{command}
 
@@ -328,7 +328,7 @@ The workflow for the migration is the following:
 \item
   If you copy parts of a presentation that is mixed with normal text, add the |ignorenonframetext| option and place \emph{every} |slide| environment inside a |frame| since \beamer\ will not recognize the |\begin{slide}| as the beginning of a frame.
 \item
-  Add a |\usepackage{beamerseminar}| to start the emulation. Add the option |accumulate| if you wish to create a presentation to be held with a video projector.
+  Add a |\usepackage{beamerseminar}| to start the emulation. Add the option |accumulated| if you wish to create a presentation to be held with a video projector.
 \item
   Possibly add commands to install themes and templates.
 \item
@@ -336,7 +336,7 @@ The workflow for the migration is the following:
 \item
   If a |\newslide| command is used in a |slide| (or similarly |slide*|) environment that contains an overlay, you must replace it by a closing |\end{slide}| and an opening |\begin{slide}|.
 \item
-  Next, for each |slide| or |slide*| environment that contains an overlay, you must place a |frame| environment around it. You can remove the |slide| environment (and hence effectively replace it by |frame|), unless you use the |accumulate| option.
+  Next, for each |slide| or |slide*| environment that contains an overlay, you must place a |frame| environment around it. You can remove the |slide| environment (and hence effectively replace it by |frame|), unless you use the |accumulated| option.
 \item
   If you use |\section| or |\subsection| commands inside slides, you will have to move them \emph{outside} the frames. It may then be necessary to add a |\frametitle| command to the slide.
 \item
@@ -363,7 +363,7 @@ There are, unfortunately, numerous places where you may run into problems:
   This package takes the following options:
   \begin{itemize}
   \item
-    \declare{|accumulate|} causes overlays to be accumulated. The original behavior of the \seminar\ package is that in each overlay only the really ``new'' part of the overlay is shown. This makes sense, if you really print out the overlays on transparencies and then really stack overlays on top of each other. For a presentation with a video projector, you rather want to present an ``accumulated'' version of the overlays. This is what this option does: When the new material of the $i$-th overlay is shown, the material of all previous overlays is also shown.
+    \declare{|accumulated|} causes overlays to be accumulated. The original behavior of the \seminar\ package is that in each overlay only the really ``new'' part of the overlay is shown. This makes sense, if you really print out the overlays on transparencies and then really stack overlays on top of each other. For a presentation with a video projector, you rather want to present an ``accumulated'' version of the overlays. This is what this option does: When the new material of the $i$-th overlay is shown, the material of all previous overlays is also shown.
   \end{itemize}
 
   \example
@@ -410,7 +410,7 @@ article version.
 In the following, the effects of \seminar\ commands in \beamer\ are listed.
 
 \begin{command}{\overlay\marg{number}}
-  Shows the material till the end of the current \TeX\ group only on overlay numbered $\hbox{\meta{number}}+1$ or, if the |accumulate| option is given, from that overlay on. Usages of this command may be nested (as in \seminar). If an |\overlay| command is given inside another, it temporarily ``overrules'' the outer one as demonstrated in the following example, where it is assumed that the |accumulate| option is given.
+  Shows the material till the end of the current \TeX\ group only on overlay numbered $\hbox{\meta{number}}+1$ or, if the |accumulated| option is given, from that overlay on. Usages of this command may be nested (as in \seminar). If an |\overlay| command is given inside another, it temporarily ``overrules'' the outer one as demonstrated in the following example, where it is assumed that the |accumulated| option is given.
 
   \example
 \begin{verbatim}
@@ -430,7 +430,7 @@ In the following, the effects of \seminar\ commands in \beamer\ are listed.
 \end{command}
 
 \begin{environment}{{slide}\opt{|*|}}
-  Mainly installs an |\overlay{0}| around the \meta{environment contents}. If the |accumulate| option is given, this has no effect, but otherwise it will cause the main text of the slide to be shown \emph{only} on the first slide. This is useful if you really wish to physically place slides on top of each other.
+  Mainly installs an |\overlay{0}| around the \meta{environment contents}. If the |accumulated| option is given, this has no effect, but otherwise it will cause the main text of the slide to be shown \emph{only} on the first slide. This is useful if you really wish to physically place slides on top of each other.
 
   The starred version does the same as the nonstarred one.
 
@@ -686,7 +686,7 @@ In the following, the effect of \texpower\ commands in \beamer\ are listed.
 \end{command}
 
 \begin{command}{\restep\marg{text}}
-  Same as |\step|, but the \meta{text} is shown one the same slide as the previous |\step| command. This is implemented by first decreasing the counter |beamerpauses| by one before calling |\step|.
+  Same as |\step|, but the \meta{text} is shown on the same slide as the previous |\step| command. This is implemented by first decreasing the counter |beamerpauses| by one before calling |\step|.
 \end{command}
 
 \begin{command}{\reswitch\marg{alternate text}\meta{text}}

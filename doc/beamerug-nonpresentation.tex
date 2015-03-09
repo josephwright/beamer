@@ -66,7 +66,7 @@ The package |beamerarticle| defines virtually all of \beamer's commands in a way
   \item
     \declare{|noamsthm|} will suppress the loading of the |amsthm| package. No theorems will be defined.
   \item
-    \declare{|notheorem|} will suppress the definition of standard environments like |theorem|, but |amsthm| is still loaded and the |\newtheorem| command still makes the defined environments overlay-specification-aware. Using this option allows you to define the standard environments in whatever way you like while retaining the power of the extensions to |amsthm|.
+    \declare{|notheorems|} will suppress the definition of standard environments like |theorem|, but |amsthm| is still loaded and the |\newtheorem| command still makes the defined environments overlay-specification-aware. Using this option allows you to define the standard environments in whatever way you like while retaining the power of the extensions to |amsthm|.
   \item
     \declare{|envcountsect|} causes theorem, definitions and the like to be numbered with each section. Thus instead of Theorem~1 you get Theorem~1.1. We recommend using this option.
   \item
@@ -329,7 +329,7 @@ The last flavor of the mode command behaves quite differently.
 \begin{command}{\mode\declare{|*|}}
   The effect of this mode is to ignore all text outside frames in the |presentation| modes. In |article| mode it has no effect.
 
-  This mode should only be entered outside of frames. Once entered, if the current mode is a |presentation| mode, \TeX\ will enter a gobbling state similar to the gobbling state of the second ``flavor'' of the |\mode| command. The difference is that the text is now read token-wise, not line-wise. The text is gobbled token by token until one of the following tokens is found: |\mode|, |\frame|, |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|, |\note|, |\begin{frame}|, and |\end{document}| (the last two are really tokens, but they are recognized anyway).
+  This mode should only be entered outside of frames. Once entered, if the current mode is a |presentation| mode, \TeX\ will enter a gobbling state similar to the gobbling state of the second ``flavor'' of the |\mode| command. The difference is that the text is now read token-wise, not line-wise. The text is gobbled token by token until one of the following tokens is found: |\mode|, |\frame|, |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|, |\note|, |\begin{frame}|, and |\end{document}| (the last two are not really tokens, but they are recognized anyway).
 
   Once one of these commands is encountered, the gobbling stops and the command is executed. However, all of these commands restore the mode that was in effect when they started. Thus, once the command is finished, \TeX\ returns to its gobbling.
 

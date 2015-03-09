@@ -24,7 +24,7 @@
   \makeatletter
   \global\let\myempty=\@empty
   \global\let\mygobble=\@gobble
-  \catcode`\@=12
+  \makeatother
   \gdef\getridofats#1@#2\relax{%
     \def\getridtest{#2}%
     \ifx\getridtest\myempty%
@@ -34,16 +34,14 @@
       \getridofats#2\relax%
     \fi%
   }
-
   \gdef\removeats#1{%
     \let\strippedat\myempty%
     \edef\strippedtext{\stripcommand#1}%
     \expandafter\getridofats\strippedtext @\relax%
   }
-
+  \makeatletter
   \gdef\stripcommand#1{\expandafter\@gobble\string#1}
 }
-
 \providecommand\href[2]{\texttt{#1}}
 
 \def\printanat{\char`\@}
