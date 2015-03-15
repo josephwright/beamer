@@ -380,12 +380,6 @@
 \normalfont
 \raggedright
 
-\AtBeginDocument
-{
-  \addtocontents{toc}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
-  \addtocontents{nav}{\protect\beamer@endinputifotherversion{\beamer@version pt}}
-}
-
 \usetheme{default}
 
 % Compatibility stuff
