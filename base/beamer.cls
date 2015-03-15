@@ -366,7 +366,7 @@
 \RequirePackage[implicit=false]{hyperref}
 % For hyperlinks
 
-\hypersetup{pdfcreator={LaTeX with Beamer class version \beamer@version}}
+\hypersetup{pdfcreator={LaTeX with Beamer class}}
 
 % Coding stuff
 \beamer@loaducs
