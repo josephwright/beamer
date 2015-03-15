@@ -35,22 +35,6 @@
 % package comment.sty by Victor Eijkhout
 %
 
-
-%
-% Versioning stuff
-%
-\def\beamer@endinputifotherversion#1{%
-  \let\beamer@next=\relax%
-  \@tempdima=\beamer@version pt\relax%
-  \ifdim\@tempdima<#1%
-    \let\beamer@next=\endinput%
-  \else%
-    \ifdim\@tempdima>#1%
-      \let\beamer@next=\endinput%
-    \fi%
-  \fi%
-  \beamer@next}
-
 %
 % Comment stuff. This will also be needed, if we switch to another
 % class, so define it here already.
