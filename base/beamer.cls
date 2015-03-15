@@ -9,10 +9,8 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
-\RequirePackage{beamerbasercs}
-\ProvidesClassRCS $Header$
-[\beamer@version\space A class for typesetting presentations]
-
+\ProvidesClass{beamer}
+  [2015/03/15 v3.36 A class for typesetting presentations]
 
 \RequirePackage{beamerbasemodes}
 % Setup modes and check for article option
