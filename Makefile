@@ -12,8 +12,8 @@ ROOTFILES = \
 	ChangeLog \
 	FILES     \
 	INSTALL   \
-	README    \
-	TODO
+	README
+
 
 STRUCTURE = \
 	base                            \
