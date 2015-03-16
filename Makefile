@@ -10,7 +10,6 @@ BUILDDIR = $(TMPDIR)/beamer
 ROOTFILES = \
 	AUTHORS   \
 	ChangeLog \
-	FILES     \
 	INSTALL   \
 	README
 
