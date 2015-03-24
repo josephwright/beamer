@@ -146,7 +146,7 @@ A presentation consists of a series of frames. Each frame consists of a series o
 
     In detail, the following happens when this option is given for normal (pdf)\LaTeX: The contents of the frame is scanned and then written to a special file named \meta{jobname}|.vrb| or, if a label has been assigned to the frame, \meta{jobname}|.|\meta{current frame number}|.vrb|. Then, the frame is started anew and the content of this file is read back. Since, upon reading of a file, the character codes can be modified, this allows you to use both verbatim text and overlays.
 
-    To determine the end of the frame, the following rule is used: The first occurence of a single line containing exactly |\end{|\meta{frame environment name}|}| ends the frame. The \meta{environment name} is normally |frame|, but it can be changed using the |environment| option. This special rule is needed since the frame contents is, after all, not interpreted when it is gathered.
+    To determine the end of the frame, the following rule is used: The first occurrence of a single line containing exactly |\end{|\meta{frame environment name}|}| ends the frame. The \meta{environment name} is normally |frame|, but it can be changed using the |environment| option. This special rule is needed since the frame contents is, after all, not interpreted when it is gathered.
 
     You can also add the optional information |=singleslide|. This tells \beamer\ that the frame contains only a single slide. In this case, the frame contents is \emph{not} written to a special file, but interpreted directly, which is ``faster and cleaner.''
   \item
