@@ -16,12 +16,12 @@
 \newwrite\beamer@verbatimfileout
 
 \def\beamer@verbatimreadframe{%
-  \begingroup%
-  \let\do\beamer@makeinnocent\dospecials%
-  \count@=127%
+  \begingroup
+  \let\do\beamer@makeinnocent\dospecials
+  \count@=127 %
   \@whilenum\count@<255 \do{%
-    \advance\count@ by 1%
-    \catcode\count@=11%
+    \advance\count@ by 1 %
+    \catcode\count@=11 %
   }%
   \beamer@makeinnocent\^^L% and whatever other special cases
   \beamer@makeinnocent\^^I % Allow tab chars
@@ -29,10 +29,10 @@
   \@ifnextchar\bgroup{\afterassignment\beamer@specialprocessframefirstline\let\beamer@temp=}{\beamer@processframefirstline}}%
 
 {
-  \catcode`\{=12%
-  \catcode`\<=1%
-  \gdef\beamer@specialprocessframefirstline<%
-    \beamer@processframefirstline{%
+  \catcode`\{=12 %\}
+  \catcode`\<=1 %\>
+  \gdef\beamer@specialprocessframefirstline<%>{
+    \beamer@processframefirstline{%}
   }
 }
 
