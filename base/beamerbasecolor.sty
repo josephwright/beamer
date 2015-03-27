@@ -333,44 +333,6 @@
   \def\text@#1{{\ifbeamercolorempty[fg]{normal text in math text}{}{\usebeamercolor[fg]{normal text in math text}}\beamer@orig@text@{#1}}}
 }
 
-%
-% Address the lack of a proper galley structure in LaTeX2e for dealing
-% with colour on the MVL (cf. xgalley for a long-term solution)
-%
-\newcommand*\if@minipage@and@vmode@TF{%
-  \relax % In case we are in an alignment
-  \ifvmode
-    \if@minipage
-      \expandafter\expandafter\expandafter\@firstoftwo
-    \else
-      \expandafter\expandafter\expandafter\@secondoftwo
-    \fi
-  \else
-    \expandafter\@secondoftwo
-  \fi
-}
-\newcommand*\set@minipage@color{}
-\def\@setminipage{%
-  \@minipagetrue
-  \everypar{%
-    \@minipagefalse % Before the hook so \if@minipage is FALSE
-    \set@minipage@color
-    \gdef\set@minipage@color{}%
-    \everypar{}%
-  }%
-}
-
-% Push visible switching to start of minipage
-\toks@=\expandafter{\pgfsys@begininvisible}
-\toks2={\if@minipage@and@vmode@TF
-  \g@addto@macro\set@minipage@color{\pgfsys@begininvisible}%
-}
-\edef\pgfsys@begininvisible{\the\toks2{\the\toks@}}
-\toks@=\expandafter{\pgfsys@endinvisible}
-\toks2={\if@minipage@and@vmode@TF
-  \g@addto@macro\set@minipage@color{\pgfsys@endinvisible}%
-}
-\edef\pgfsys@endinvisible{\the\toks2{\the\toks@}}
 
 %
 % Allow mixins to survive groups:
@@ -385,17 +347,7 @@
 
 \def\set@color{%
   \edef\beamer@current@colorhook{\beamer@colorhook}%
-  \if@minipage@and@vmode@TF
-    {%
-      \begingroup
-        \let\reset@color\relax
-        \edef\@tempa{\beamerorig@set@color}% Force colour value to be saved
-      % Add the colour setting to the minipage hook
-      \expandafter\endgroup
-      \expandafter\g@addto@macro\expandafter\set@minipage@color
-        \expandafter{\@tempa}%
-    }
-    {\beamerorig@set@color}}
+  \beamerorig@set@color}
 \def\reset@color{%
   \beamer@lastskip=\lastskip%
   \edef\beamer@lastskiptexta{\the\lastskip}%
@@ -418,6 +370,8 @@
     \ifhmode\hskip\beamer@lastskip\fi%
   \fi%
 }
+
+
 
 % compatibility:
 
