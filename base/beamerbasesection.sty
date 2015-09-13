@@ -205,7 +205,7 @@
     \def\insertsection{\expandafter\hyperlink\sectionlink}%
     \def\insertsubsection{}%
     \def\insertsubsubsection{}%
-    \edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}%
+    \protected@edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}%
     \def\insertsubsectionhead{}%
     \def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
