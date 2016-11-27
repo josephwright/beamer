@@ -1,6 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2013,2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2016 Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -15,7 +16,7 @@
 
 \subsection{The Frame Environment}
 
-A presentation consists of a series of frames. Each frame consists of a series of slides. You create a frame using the command |\frame| or the environment |frame|, which do the same. The command takes one parameter, namely the contents of the frame. All of the text that is not tagged by overlay specifications is shown on all slides of the frame. (Overlay specifications are explained in more detail in later sections. For the moment, let's just say that an overlay specification is a list of numbers or number ranges in pointed brackets that is put after certain commands as in |\uncover<1,2>{Text}|.) If a frame contains commands that have an overlay specification, the frame will contain multiple slides; otherwise it contains only one slide.
+A presentation consists of a series of frames. Each frame consists of a series of slides. You create a frame using |frame| environment.\footnote{The command \texttt{\textbackslash frame} is supported for legacy documents.} All of the text that is not tagged by overlay specifications is shown on all slides of the frame. (Overlay specifications are explained in more detail in later sections. For the moment, let's just say that an overlay specification is a list of numbers or number ranges in pointed brackets that is put after certain commands as in |\uncover<1,2>{Text}|.) If a frame contains commands that have an overlay specification, the frame will contain multiple slides; otherwise it contains only one slide.
 
 \begin{environment}{{frame}\sarg{overlay specification}\opt{|[<|\meta{default overlay specification}|>]|}\oarg{options}\opt{\marg{title}\marg{subtitle}}}
   The \meta{overlay specification} dictates which slides of a frame are to be shown. If left out, the number is calculated automatically. The \meta{environment contents} can be normal \LaTeX\ text, but may not contain |\verb| commands or |verbatim| environments or any environment that changes the character codes, unless the |fragile| option is given.
