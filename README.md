@@ -1,4 +1,4 @@
-Beamer---A LaTeX class for producing presentations
+Beamer - A LaTeX class for producing presentations
 ==================================================
 
 * See the documentation in doc/beameruserguide.pdf for a user manual.
