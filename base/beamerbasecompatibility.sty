@@ -24,6 +24,18 @@
 \providecommand\hyper@pageduration{}
 \providecommand\hyper@pagehidden{}
 
+% The definitions that hyperref uses with natbib to give
+% links: our load order is wrong so they don't 'engage'
+\renewcommand*\hyper@natanchorstart[1]{%
+  \Hy@raisedlink{\hyper@anchorstart {cite.#1}}%
+}
+\renewcommand*\hyper@natanchorend{\hyper@anchorend}
+\renewcommand*\hyper@natlinkstart[1]{%
+  \Hy@backout{#1}%
+  \hyper@linkstart{cite}{cite.#1}%
+  \def\hyper@nat@current{#1}%
+}
+\renewcommand*\hyper@natlinkend{\hyper@linkend}
 
 \mode
 <all>
