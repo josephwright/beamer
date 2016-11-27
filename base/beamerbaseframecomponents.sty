@@ -1,6 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011--2013,2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2016 Joseph Wright
 %
 % This file may be distributed and/or modified
 %
