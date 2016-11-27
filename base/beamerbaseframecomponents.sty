@@ -334,10 +334,13 @@
   \let\beamer@mpfn=\@mpfn%
   \let\beamer@thempfn=\thempfn%
   \let\beamer@kvorig=\KV@errx%
+  \let\beamer@xkvorig=\XKV@err
   \def\beamer@footarg{}%
   \def\KV@errx##1{\edef\beamer@footarg{\@tempa}}%
+  \def\XKV@err##1{\edef\beamer@footarg{\XKV@tkey}}%
   \setkeys{beamerfootnote}{#1}%
   \let\KV@errx=\beamer@kvorig%
+  \let\XKV@errx=\beamer@xkvorig
   \ifx\beamer@footarg\@empty%
     \def\beamer@next{\stepcounter\beamer@mpfn
       \protected@xdef\@thefnmark{\beamer@thempfn}%
@@ -360,10 +363,13 @@
 \let\beamer@origfootnote=\footnote
   \renewcommand\footnote[1][]{%
     \let\beamer@kvorig=\KV@errx%
+    \let\beamer@xkvorig=\XKV@err
     \def\beamer@footarg{}%
     \def\KV@errx##1{\edef\beamer@footarg{\@tempa}}%
+    \def\XKV@err##1{\edef\beamer@footarg{\XKV@tkey}}%
     \setkeys{beamerfootnote}{#1}%
     \let\KV@errx=\beamer@kvorig%
+    \let\XKV@errx=\beamer@xkvorig
     \ifx\beamer@footarg\@empty%
       \edef\beamer@next{\noexpand\beamer@origfootnote}%
     \else%
