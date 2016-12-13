@@ -59,8 +59,8 @@
     \fi%
     \next%
   }%
-  \long\gdef\beamer@processframeline#1^^M{%
-    \def\beamer@test{#1}%
+  \protected\long\gdef\beamer@processframeline#1^^M{%
+    \edef\beamer@test{\beamer@strip@whitespace#1\beamer@strip@stop}%
     \ifx\beamer@test\beamer@stopframe%
       \let\next=\beamer@framewritten%
     \else%
@@ -70,6 +70,30 @@
     \next%
   }%
 \endgroup
+
+\begingroup
+\lccode`\+=`\^^I %
+\catcode`\ =12\relax
+\lowercase{%
+\endgroup
+\gdef\beamer@strip@whitespace#1{%
+\ifx#1\beamer@strip@stop
+\else
+\ifx#1 \expandafter\expandafter\expandafter\beamer@strip@whitespace
+\else
+\ifx#1+\expandafter\expandafter\expandafter\expandafter\expandafter
+\expandafter\expandafter\beamer@strip@whitespace
+\else
+\noexpand#1%
+\beamer@strip@end
+\fi
+\fi
+\fi
+}%
+}%
+
+\long\def\beamer@strip@end\fi\fi\fi#1\beamer@strip@stop{\fi\fi\fi\unexpanded{#1}}
+\def\beamer@strip@stop{\beamer@strip@stop}
 
 \def\beamer@setupstoppers#1{%
   {
