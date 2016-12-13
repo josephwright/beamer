@@ -12,6 +12,9 @@
 \ProvidesClass{beamer}
   [2015/03/15 v3.36 A class for typesetting presentations]
 
+% Force e-TeX
+\RequirePackage{etoolbox}
+
 \RequirePackage{beamerbasemodes}
 % Setup modes and check for article option
 
