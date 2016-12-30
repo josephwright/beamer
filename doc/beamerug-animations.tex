@@ -1,6 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2013,2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2016 Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -451,14 +452,30 @@ All of these commands are ignored in |article| mode.
   \example|\transboxout|
 \end{command}
 
+\begin{command}{\transcover\sarg{overlay specification}\oarg{options}}
+  Show the slide by covering the content that was shown before.
+  \example|\transcover|
+\end{command}
+
 \begin{command}{\transdissolve\sarg{overlay specification}\oarg{options}}
   Show the slide by slowly dissolving what was shown before.
   \example|\transdissolve[duration=0.2]|
 \end{command}
 
+\begin{command}{\transfade\sarg{overlay specification}\oarg{options}}
+  Show the slide by slowly fading what was shown before.
+  \example|\transfade|
+\end{command}
+
 \begin{command}{\transglitter\sarg{overlay specification}\oarg{options}}
   Show the slide with a glitter effect that sweeps in the specified direction.
   \example|\transglitter<2-3>[direction=90]|
+\end{command}
+
+\begin{command}{\transpush\sarg{overlay specification}\oarg{options}}
+  Show the slide by pushing what was shown before off the screen using
+  the new content.
+  \example|\transpush|
 \end{command}
 
 \begin{command}{\transreplace\sarg{overlay specification}\oarg{options}}
