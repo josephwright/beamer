@@ -8,9 +8,7 @@ TMPDIR   = /tmp/beamer
 BUILDDIR = $(TMPDIR)/beamer
 
 ROOTFILES = \
-	AUTHORS   \
-	ChangeLog \
-	README
+	README.md
 
 
 STRUCTURE = \
