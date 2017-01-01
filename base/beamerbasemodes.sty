@@ -1,7 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2013,2015 by Vedran Mileti\'c, Joseph Wright
-% Copyright 2016 Joseph Wright
+% Copyright 2016,2017 Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -115,6 +115,7 @@
   \ifx\beamer@nexttoken\subsection\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\subsubsection\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\part\let\next=\beamer@stopoutsidemode\fi
+  \ifx\beamer@nexttoken\input\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\article\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\mode\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\common\let\next=\beamer@stopoutsidemode\fi

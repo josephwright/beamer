@@ -1,7 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2014,2015 by Vedran Mileti\'c, Joseph Wright
-% Copyright 2016 Joseph Wright
+% Copyright 2016,2017 Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -331,7 +331,7 @@ The last flavor of the mode command behaves quite differently.
 \begin{command}{\mode\declare{|*|}}
   The effect of this mode is to ignore all text outside frames in the |presentation| modes. In |article| mode it has no effect.
 
-  This mode should only be entered outside of frames. Once entered, if the current mode is a |presentation| mode, \TeX\ will enter a gobbling state similar to the gobbling state of the second ``flavor'' of the |\mode| command. The difference is that the text is now read token-wise, not line-wise. The text is gobbled token by token until one of the following tokens is found: |\mode|, |\frame|, |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|, |\note|, |\begin{frame}|, and |\end{document}| (the last two are not really tokens, but they are recognized anyway).
+  This mode should only be entered outside of frames. Once entered, if the current mode is a |presentation| mode, \TeX\ will enter a gobbling state similar to the gobbling state of the second ``flavor'' of the |\mode| command. The difference is that the text is now read token-wise, not line-wise. The text is gobbled token by token until one of the following tokens is found: |\mode|, |\frame|, |\againframe|, |\part|, |\section|, |\subsection|, |\appendix|, |\note|, |\input|, |\begin{frame}|, and |\end{document}| (the last two are not really tokens, but they are recognized anyway).
 
   Once one of these commands is encountered, the gobbling stops and the command is executed. However, all of these commands restore the mode that was in effect when they started. Thus, once the command is finished, \TeX\ returns to its gobbling.
 
