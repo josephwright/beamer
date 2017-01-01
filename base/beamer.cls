@@ -1,7 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011--2013,2015 by Vedran Mileti\'c, Joseph Wright
-% Copyright 2016 Joseph Wright
+% Copyright 2016,2017 Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -11,7 +11,7 @@
 % See the file doc/licenses/LICENSE for more details.
 
 \ProvidesClass{beamer}
-  [2015/03/15 v3.36 A class for typesetting presentations]
+  [2017/01/01 v3.37 A class for typesetting presentations]
 
 % Force e-TeX
 \RequirePackage{etoolbox}
