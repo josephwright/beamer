@@ -191,7 +191,7 @@
       {\usecounter\@enumctr%
         \def\makelabel##1{{\hss\llap{{%
                 \usebeamerfont*{enumerate \beameritemnestingprefix item}%
-                ##1}}}}}%
+                \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}##1}}}}}%
   \beamer@cramped%
   \raggedright%
   \beamer@firstlineitemizeunskip%
@@ -250,7 +250,7 @@
           {%
             \hss\llap{{%
                 \usebeamerfont*{itemize \beameritemnestingprefix item}%
-                ##1}}%
+                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1}}%
           }%
         }%
       }
