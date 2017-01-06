@@ -12,7 +12,7 @@
 \let\beamerprosper@entry=\@gobble
 
 \DeclareOption{framesassubsections}{\mode<presentation>
-  {\def\beamerprosper@entry#1{\beamer@ifempty{#1}{}{\subsection{#1}}}}}
+  {\def\beamerprosper@entry#1{\ifblank{#1}{}{\subsection{#1}}}}}
 
 \ProcessOptions
 

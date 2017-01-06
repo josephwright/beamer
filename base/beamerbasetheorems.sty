@@ -55,7 +55,7 @@
   }
 
   \newcommand<>\beamer@begintheorem[1][]{%
-    \beamer@ifempty{#1}
+    \ifblank{#1}
     {\def\inserttheoremaddition{}}
     {\def\inserttheoremaddition{#1}}
     \usebeamertemplate{theorem begin}#2}

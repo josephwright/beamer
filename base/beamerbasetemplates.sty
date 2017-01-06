@@ -43,7 +43,7 @@
 \newtoks\beamer@sbttoks
 
 \newcommand<>\defbeamertemplate{
-  \beamer@ifempty{#1}
+  \ifblank{#1}
   {\def\beamer@@oar{<presentation>}}
   {\def\beamer@@oar{#1}}\beamer@defbeamertemplate}
 \def\beamer@defbeamertemplate{\@ifstar{\beamer@sbttrue\beamer@sbtoo}{\beamer@sbtfalse\beamer@sbtoo}}

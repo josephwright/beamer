@@ -32,21 +32,21 @@
 \define@key{beamertoc}{subsectionstyle}{\beamer@toc@subsectionstyle{#1}}
 \define@key{beamertoc}{subsubsectionstyle}{\beamer@toc@subsubsectionstyle{#1}}
 \def\beamer@toc@process#1#2#3/#4/{%
-  \beamer@ifempty{#4}{\def#1{#3}\def#2{#3}}{\def#1{#3}\def#2{#4}\@gobble}}
+  \ifblank{#4}{\def#1{#3}\def#2{#3}}{\def#1{#3}\def#2{#4}\@gobble}}
   
 \def\beamer@toc@sprocess#1#2#3#4/#5/#6/{%
-  \beamer@ifempty{#5}%
+  \ifblank{#5}%
   {\def#1{#4}\def#2{#4}\def#3{#4}}
-  {\beamer@ifempty{#6}
+  {\ifblank{#6}
     {\def#1{#4}\def#2{#5}\def#3{#5}\@gobble}
     {\def#1{#4}\def#2{#5}\def#3{#6}\@gobbletwo}}}
 
 \def\beamer@toc@ssprocess#1#2#3#4#5/#6/#7/#8/{%
-  \beamer@ifempty{#6}%
+  \ifblank{#6}%
   {\def#1{#5}\def#2{#5}\def#3{#5}\def#4{#5}}
-  {\beamer@ifempty{#7}
+  {\ifblank{#7}
     {\def#1{#5}\def#2{#6}\def#3{#6}\def#4{#6}\@gobble}
-    {\beamer@ifempty{#8}
+    {\ifblank{#8}
       {\def#1{#5}\def#2{#6}\def#3{#7}\def#4{#7}\@gobbletwo}
       {\def#1{#5}\def#2{#6}\def#3{#7}\def#4{#8}\expandafter\@gobble\@gobbletwo}}}% no gobblethree?
 }

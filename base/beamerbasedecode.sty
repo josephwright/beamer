@@ -21,14 +21,6 @@
 % Used to know that beamerpauses needs to be used in substitution
 \newif\ifbeamer@plusencountered
 
-%
-%
-% Empty test
-%
-%
-\long\def\beamer@ifempty#1{\beamer@xifempty#1@@..\@nil}
-\long\def\beamer@xifempty#1#2@#3#4#5\@nil{%
-  \ifx#3#4\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
 \let\beamer@ifnextchar=\@ifnextchar
 
 \def\beamer@stoptexts{| stop:0| }
@@ -80,7 +72,7 @@
   \beamer@ifnextchar\@undefined% get rid of spaces
   {\beamer@@@decodefind#1:|}{\beamer@@@decodefind#1:|}}
 \def\beamer@@@decodefind#1:#2|{%
-  \beamer@ifempty{#2}%
+  \ifblank{#2}%
   {\beamer@decodefind beamer:#1:}%
   {\beamer@decodefind #1:#2}}
 
@@ -173,7 +165,7 @@
   \def\beamer@spec{}\beamer@@decodeplus}
 \def\beamer@@decodeplus#1+#2:{%
   \edef\beamer@spec{\beamer@spec#1}% everything up to first +
-  \beamer@ifempty{#2}{}
+  \ifblank{#2}{}
   {% ok, check if followed by number:
     \beamer@plusencounteredtrue%
     \beamer@@@decodeplus#2:}}
@@ -190,7 +182,7 @@
   \def\beamer@spec{}\beamer@@decodedot}
 \def\beamer@@decodedot#1.#2:{%
   \edef\beamer@spec{\beamer@spec#1}% everything up to first .
-  \beamer@ifempty{#2}{}{\beamer@@@decodedot#2:}}
+  \ifblank{#2}{}{\beamer@@@decodedot#2:}}
 \def\beamer@@@decodedot{%
   \beamer@ifnextchar({\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
 \def\beamer@relnumberdot(#1){%
