@@ -20,10 +20,12 @@
 \newif\ifbeamer@countsect \beamer@countsectfalse % A no-op but for clarity
 \newif\ifbeamer@keywords  \beamer@keywordstrue
 
-% Global Declarations used by beamer in all modes
-%
+% Scratch space
 \newbox\beamer@tempbox
 \newcount\beamer@tempcount
+
+% The pauses counter is public and global, and required by both
+% beamer and beamerarticle
 \newcounter{beamerpauses}
 
 \RequirePackage{beamerbasedecode}
