@@ -13,14 +13,13 @@
 \ProvidesClass{beamer}
   [2017/01/01 v3.38 A class for typesetting presentations]
 
-% Force e-TeX
-\RequirePackage{etoolbox}
-
-\RequirePackage{beamerbasemodes}
 % Setup modes and check for article option
+% Also loads packages required by both beamer and beamerarticle
+\RequirePackage{beamerbasemodes}
 
 \beamer@transferifnecessary
 
+% For testing PDF versus DVI mode
 \RequirePackage{ifpdf}
 
 %

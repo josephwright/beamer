@@ -1,5 +1,6 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
+% Copyright 2017 by Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -55,7 +56,7 @@
   }
 
   \newcommand<>\beamer@begintheorem[1][]{%
-    \beamer@ifempty{#1}
+    \ifblank{#1}
     {\def\inserttheoremaddition{}}
     {\def\inserttheoremaddition{#1}}
     \usebeamertemplate{theorem begin}#2}

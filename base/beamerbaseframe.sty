@@ -1,6 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011--2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2017 by Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -61,7 +62,7 @@
     \fi%
   \fi%
   \global\c@beamerpauses=1\relax%
-  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{%
+  \expandafter\ifblank\expandafter{\beamer@framestartpage}{%
     \stepcounter{subsectionslide}%
     \xdef\beamer@framestartpage{\the\c@page}% only first time
   }{\clearpage\beamer@notesactions}% cleanup from previous slide
@@ -365,14 +366,14 @@
   \beamer@copewithframeenv}
 
 \def\beamer@checkforverbatim#1containsverbatim#2\relax{%
-  \beamer@ifempty{#2}%
+  \ifblank{#2}%
   {\beamer@checkforfragile#1fragile\relax}
   {% contains verbatim
     \endgroup% end environment
     \expandafter\beamer@framecommand\beamer@frameoptions\bgroup}%
 }
 \def\beamer@checkforfragile#1fragile#2\relax{%
-  \beamer@ifempty{#2}%
+  \ifblank{#2}%
   {\beamer@frameenv}% normal frame
   {% contains verbatim
     \endgroup% end environment
@@ -396,7 +397,7 @@
   \fi%
   \beamer@next{#1#2}}
 \def\beamer@checkforcolon#1:#2.{%
-  \beamer@ifempty{#2}{}{\let\beamer@next=\beamer@oldframesyntax}}
+  \ifblank{#2}{}{\let\beamer@next=\beamer@oldframesyntax}}
 \def\beamer@newframesyntax#1{\beamer@@@frame<*>[#1]}
 \def\beamer@oldframesyntax#1{\beamer@@@frame<#1>[]}
 
@@ -591,7 +592,7 @@
   \csname end#1\endcsname}
 
 \def\beamer@writeslidentry{%
-  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  \expandafter\ifblank\expandafter{\beamer@framestartpage}{}% does not happen normally
   {%else
     \addtocontents{nav}%
       {\protect\headcommand{%

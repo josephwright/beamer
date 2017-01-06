@@ -1,6 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2010--2013,2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2017 by Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -78,7 +79,7 @@
   \beamer@todo}
 
 \def\beamer@processactions#1{%
-  \beamer@ifempty{#1}{}{%
+  \ifblank{#1}{}{%
     \expandafter\beamer@@processactions\expandafter{\beamer@todo}#1}}
 \long\def\beamer@@processactions#1#2<#3>{%
   \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{%
@@ -102,7 +103,7 @@
 \def\endactionenv{\beamer@todoend}
 
 \def\beamer@processactionsbegin#1{%
-  \beamer@ifempty{#1}{}{%
+  \ifblank{#1}{}{%
     \expandafter\beamer@@processactionsbegin\expandafter{\beamer@todobegin}#1}}
 \long\def\beamer@@processactionsbegin#1#2<#3>{%
   \def\beamer@todobegin{\begin{#2env}<all:#3>#1}%
@@ -110,7 +111,7 @@
 
 
 \def\beamer@processactionsend#1{%
-  \beamer@ifempty{#1}{}{%
+  \ifblank{#1}{}{%
     \expandafter\beamer@@processactionsend\expandafter{\beamer@todoend}#1}}
 \long\def\beamer@@processactionsend#1#2<#3>{%
   \def\beamer@todoend{#1\end{#2env}}%
@@ -391,7 +392,7 @@
 {\beamer@endpause}
 
 \newcommand{\beamer@@pause}[1][]{%
-  \beamer@ifempty{#1}%
+  \ifblank{#1}%
     {\global\advance\c@beamerpauses by1\relax}%
     {\global\c@beamerpauses=#1\relax}%
   \onslide<\c@beamerpauses->\relax%
@@ -499,7 +500,7 @@
 
 
 \def\beamerdefaultoverlayspecification#1{%
-  \beamer@ifempty{#1}%
+  \ifblank{#1}%
   {%
     \def\beamer@gdefaultospec{<*>}%
     \def\beamer@defaultospec{<*>}}%

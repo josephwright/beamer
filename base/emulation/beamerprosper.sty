@@ -1,6 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011,2013,2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2017 by Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -12,7 +13,7 @@
 \let\beamerprosper@entry=\@gobble
 
 \DeclareOption{framesassubsections}{\mode<presentation>
-  {\def\beamerprosper@entry#1{\beamer@ifempty{#1}{}{\subsection{#1}}}}}
+  {\def\beamerprosper@entry#1{\ifblank{#1}{}{\subsection{#1}}}}}
 
 \ProcessOptions
 

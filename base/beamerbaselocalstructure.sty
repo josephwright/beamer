@@ -1,6 +1,7 @@
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2010,2012--2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2017 by Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -24,7 +25,7 @@
 %
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
 \long\def\beamer@@frametitle[#1]#2{%
-  \beamer@ifempty{#2}{}{%
+  \ifblank{#2}{}{%
     \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
   \gdef\beamer@frametitle{#2}%
   \gdef\beamer@shortframetitle{#1}%
@@ -42,7 +43,7 @@
 <all>
 {
   \let\beamer@aftersubtitle=\relax
-  \newcommand<>\framesubtitle[1]{\only#2{\beamer@ifempty{#1}{}{\gdef\insertframesubtitle{{#1}}\beamer@aftersubtitle}}}
+  \newcommand<>\framesubtitle[1]{\only#2{\ifblank{#1}{}{\gdef\insertframesubtitle{{#1}}\beamer@aftersubtitle}}}
 }
 
 
@@ -237,7 +238,7 @@
 %
 
 \renewcommand{\itemize}[1][]{%
-  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
+  \ifblank{#1}{}{\def\beamer@defaultospec{#1}}%
   \ifnum \@itemdepth >2\relax\@toodeep\else
     \advance\@itemdepth\@ne
     \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
