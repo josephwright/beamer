@@ -13,23 +13,18 @@
 % Force e-TeX and provide \patchcmd
 \RequirePackage{etoolbox}
 
-%
+% Booleans for options available for both beamer and beamerarticle
+\newif\ifbeamer@blocks    \beamer@blockstrue
+\newif\ifbeamer@ams       \beamer@amstrue
+\newif\ifbeamer@amssymb   \beamer@amssymbtrue
+\newif\ifbeamer@countsect \beamer@countsectfalse % A no-op but for clarity
+\newif\ifbeamer@keywords  \beamer@keywordstrue
+
 % Global Declarations used by beamer in all modes
 %
 \newbox\beamer@tempbox
-\newif\ifbeamer@blocks
-\newif\ifbeamer@ams
-\newif\ifbeamer@amssymb
-\newif\ifbeamer@countsect
-\newif\ifbeamer@keywords
-\beamer@blockstrue
-\beamer@amstrue
-\beamer@amssymbtrue
-\beamer@countsectfalse
-\beamer@keywordstrue
 \newcount\beamer@tempcount
 \newcounter{beamerpauses}
-
 
 \RequirePackage{beamerbasedecode}
 
