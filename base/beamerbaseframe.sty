@@ -451,7 +451,7 @@
   \ifx\beamer@againname\@empty%
     \beamer@slideinframe=0\relax%
     \beamer@anotherslidefalse%
-    {\beamer@masterdecode{\beamer@whichframes}}%
+    \beamer@masterdecode{\beamer@whichframes}%
     \ifbeamer@anotherslide%
 %%       \beamer@slideinframe=2\relax%
 %%       \def\beamer@doifnotinframe{}%
@@ -522,7 +522,7 @@
   \def\beamer@doifinframe{\begin{beamer@frameslide}%
     #1%
   \end{beamer@frameslide}}%
-  {\beamer@masterdecode{\beamer@whichframes}}%
+  \beamer@masterdecode{\beamer@whichframes}%
   \beamer@donow%
   \ifbeamer@twoscreenstext%
     \beamer@dosecondscreennow{#1}% two screen stuff
@@ -660,7 +660,7 @@
     \refstepcounter{framenumber}%
     \beamer@slideinframe=0\relax%
     \beamer@anotherslidefalse%
-    {\beamer@masterdecode{#1}}%
+    \beamer@masterdecode{#1}%
     \ifbeamer@anotherslide%
       \let\beamer@howtotreatframe\beamer@dosingleframe%
     \else% no slides in frame

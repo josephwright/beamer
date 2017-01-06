@@ -34,11 +34,11 @@
 \def\only{\@ifnextchar<{\beamer@only}{\beamer@@only}}
 \long\def\beamer@only<#1>#2{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{#2}%
-  {\beamer@masterdecode{#1}}\beamer@donow}
+  \beamer@masterdecode{#1}\beamer@donow}
 \long\def\beamer@@only#1{\beamer@ifnextcharospec{\beamer@@@only{#1}}{#1}}
 \long\def\beamer@@@only#1<#2>{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{#1}%
-  {\beamer@masterdecode{#2}}\beamer@donow}
+  \beamer@masterdecode{#2}\beamer@donow}
 
 %
 % \alt and \altenv
@@ -47,10 +47,10 @@
 \long\def\beamer@alttwo#1#2{\beamer@ifnextcharospec{\beamer@altget{#1}{#2}}{#1}}
 \long\def\beamer@altget#1#2<#3>{%
   \def\beamer@doifnotinframe{#2}\def\beamer@doifinframe{#1}%
-  {\beamer@masterdecode{#3}}\beamer@donow}
+  \beamer@masterdecode{#3}\beamer@donow}
 \long\def\beamer@alt<#1>#2#3{%
   \def\beamer@doifnotinframe{#3}\def\beamer@doifinframe{#2}%
-  {\beamer@masterdecode{#1}}\beamer@donow}
+  \beamer@masterdecode{#1}\beamer@donow}
 
 
 \def\altenv{\@ifnextchar<{\beamer@altenv}{\beamer@@@altenv}}
@@ -68,7 +68,7 @@
 \def\action{\@ifnextchar<{\beamer@parsedaction}{\expandafter\beamer@parsedaction\beamer@defaultospec}}
 \long\def\beamer@parsedaction<#1>#2{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
-  {{\beamer@masterdecode{#1}}}%
+  {\beamer@masterdecode{#1}}%
   \ifx\beamer@decodefound\beamer@plus%
     \long\def\beamer@todo{#2}%
   \else%
@@ -89,7 +89,7 @@
 \def\actionenv{\beamer@ifnextcharospec{\beamer@parsedactionenv}{\expandafter\beamer@parsedactionenv\beamer@defaultospec}}
 \def\beamer@parsedactionenv<#1>{%
   \def\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
-  {{\beamer@masterdecode{#1}}}%
+  {\beamer@masterdecode{#1}}%
   \ifx\beamer@decodefound\beamer@plus%
     \def\beamer@todobegin{}%
     \def\beamer@todoend{}%
@@ -126,8 +126,8 @@
 %
 \long\def\temporal<#1>#2#3#4{% past, present, future
   \def\beamer@doifnotinframe{\beamer@picked}\def\beamer@doifinframe{#3}%
-  {\beamer@masterdecode{#1}%
-   \ifbeamer@anotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi}\beamer@donow}
+  \beamer@masterdecode{#1}%
+   \ifbeamer@anotherslide\gdef\beamer@picked{#2}\else\gdef\beamer@picked{#4}\fi\beamer@donow}
 
 
 %
