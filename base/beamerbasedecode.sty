@@ -22,8 +22,6 @@
 % Used to know that beamerpauses needs to be used in substitution
 \newif\ifbeamer@plusencountered
 
-\let\beamer@ifnextchar=\@ifnextchar
-
 \def\beamer@stoptexts{| stop:0| }
 {
    \catcode`\|=13
@@ -70,7 +68,7 @@
   \global\let\beamer@decodefound=\beamer@allsign%
   \beamer@@decodefind}
 \def\beamer@@decodefind#1|{%
-  \beamer@ifnextchar\@undefined% get rid of spaces
+  \kernel@ifnextchar\@undefined% get rid of spaces
   {\beamer@@@decodefind#1:|}{\beamer@@@decodefind#1:|}}
 \def\beamer@@@decodefind#1:#2|{%
   \ifblank{#2}%
@@ -171,7 +169,7 @@
     \beamer@plusencounteredtrue%
     \beamer@@@decodeplus#2:}}
 \def\beamer@@@decodeplus{%
-  \beamer@ifnextchar({\beamer@relnumber}{\beamer@relnumber(0)}}
+  \kernel@ifnextchar({\beamer@relnumber}{\beamer@relnumber(0)}}
 \def\beamer@relnumber(#1){%
   \beamer@plusencounteredtrue%
   \beamer@tempcount=#1\relax
@@ -185,7 +183,7 @@
   \edef\beamer@spec{\beamer@spec#1}% everything up to first .
   \ifblank{#2}{}{\beamer@@@decodedot#2:}}
 \def\beamer@@@decodedot{%
-  \beamer@ifnextchar({\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
+  \kernel@ifnextchar({\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
 \def\beamer@relnumberdot(#1){%
   \beamer@tempcount=#1\relax
   \advance\beamer@tempcount by\c@beamerpauses\relax%
@@ -195,12 +193,12 @@
 
 \def\beamer@doifnotinframe{}
 \def\beamer@@decode{%
-  \beamer@ifnextchar!%
+  \kernel@ifnextchar!%
   {\beamer@decodeend}%
   {%
-    \beamer@ifnextchar*%
+    \kernel@ifnextchar*%
     {\beamer@decodeall}{%
-      \beamer@ifnextchar-%
+      \kernel@ifnextchar-%
       {\beamer@decodeuntil}%
       {\beamer@decodenumber}}}}
 \def\beamer@decodeend!{}
@@ -217,15 +215,15 @@
   \ifnum\beamer@slideinframe>#1\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
   \beamer@@decode}
 \def\beamer@decodenumber#1{%
-  \beamer@ifnextchar,%
+  \kernel@ifnextchar,%
   {\beamer@decodeone{#1}}%
-  {\beamer@ifnextchar-%
+  {\kernel@ifnextchar-%
     {\beamer@decodenumberto{#1}}%
     {\beamer@decodegobble{#1}}}}
 \def\beamer@decodegobble#1#2{%
   \beamer@decodenumber{#1#2}}
 \def\beamer@decodenumberto#1-{
-  \beamer@ifnextchar,%
+  \kernel@ifnextchar,%
   {\beamer@decodeto{#1}}%
   {\beamer@decodebetween{#1}}}
 \def\beamer@decodeto#1,{%
