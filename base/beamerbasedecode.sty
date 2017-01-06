@@ -9,11 +9,16 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
+% To track which slide we are on in a frame
 \newcount\beamer@slideinframe
 \newcount\beamer@minimum
+
+% Indicate whether another slide needs to be processed in this frame:
+% the first is set globally, the second locally
 \newif\ifbeamer@anotherslide
 \newif\ifbeamer@localanotherslide
 
+% Used to know that beamerpauses needs to be used in substitution
 \newif\ifbeamer@plusencountered
 
 %
