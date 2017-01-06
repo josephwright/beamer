@@ -24,25 +24,25 @@
 
 \def\beamer@stoptexts{| stop:0| }
 \begingroup
-   \catcode`\|=13
-   \catcode`\:=13
-   \catcode`\,=13
-   \catcode`\.=13
-   \catcode`\+=13
-   \catcode`\-=13
-   \catcode`\(=13
-   \catcode`\)=13
-   \catcode`\ =13
+   \catcode`\|=\active
+   \catcode`\:=\active
+   \catcode`\,=\active
+   \catcode`\.=\active
+   \catcode`\+=\active
+   \catcode`\-=\active
+   \catcode`\(=\active
+   \catcode`\)=\active
+   \catcode`\ =\active
 \gdef\beamer@masterdecode#1{% must be called within a group
-\ifnum\catcode`\|=13\edef|{\string|}\fi%
-\ifnum\catcode`\:=13\edef:{\string:}\fi%
-\ifnum\catcode`\,=13\edef,{\string,}\fi%
-\ifnum\catcode`\.=13\edef.{\string.}\fi%
-\ifnum\catcode`\+=13\edef+{\string+}\fi%
-\ifnum\catcode`\-=13\edef-{\string-}\fi%
-\ifnum\catcode`\(=13\edef({\string(}\fi%
-\ifnum\catcode`\)=13\edef){\string)}\fi%
-\ifnum\catcode`\ =13\edef {\string }\fi%
+\ifnum\catcode`\|=\active\edef|{\string|}\fi%
+\ifnum\catcode`\:=\active\edef:{\string:}\fi%
+\ifnum\catcode`\,=\active\edef,{\string,}\fi%
+\ifnum\catcode`\.=\active\edef.{\string.}\fi%
+\ifnum\catcode`\+=\active\edef+{\string+}\fi%
+\ifnum\catcode`\-=\active\edef-{\string-}\fi%
+\ifnum\catcode`\(=\active\edef({\string(}\fi%
+\ifnum\catcode`\)=\active\edef){\string)}\fi%
+\ifnum\catcode`\ =\active\edef {\string }\fi%
 \edef\beamer@@@temp{#1\beamer@stoptexts}%
 \beamer@localanotherslidefalse%
 \setbox0=\hbox{%
