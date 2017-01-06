@@ -20,8 +20,6 @@
 % Used to know that beamerpauses needs to be used in substitution
 \newif\ifbeamer@plusencountered
 
-\def\beamer@stoptexts{| stop:0| }
-
 % The main decoding macro tolerates a range of active characters, which
 % require a little set up. In particular, as an active space is allowed
 % all of the lines here have to be terminated with "%".
@@ -46,7 +44,7 @@
 \ifnum\catcode`\(=\active\edef({\string(}\fi%
 \ifnum\catcode`\)=\active\edef){\string)}\fi%
 \ifnum\catcode`\ =\active\edef {\string }\fi%
-\edef\beamer@@@temp{#1\beamer@stoptexts}%
+\edef\beamer@@@temp{#1| stop:0| }%
 \expandafter\beamer@decode\beamer@@@temp}%
 }%
 \endgroup
