@@ -14,10 +14,8 @@
 \newcount\beamer@slideinframe
 \newcount\beamer@minimum
 
-% Indicate whether another slide needs to be processed in this frame:
-% the first is set globally, the second locally
+% Indicate whether another slide needs to be processed in this frame
 \newif\ifbeamer@anotherslide
-\newif\ifbeamer@localanotherslide
 
 % Used to know that beamerpauses needs to be used in substitution
 \newif\ifbeamer@plusencountered
@@ -38,7 +36,6 @@
   \catcode`\)=\active
   \catcode`\ =\active
 \gdef\beamer@masterdecode#1{% must be called within a group
-\beamer@localanotherslidefalse%
 \setbox0=\hbox{%
 \ifnum\catcode`\|=\active\edef|{\string|}\fi%
 \ifnum\catcode`\:=\active\edef:{\string:}\fi%
@@ -50,8 +47,7 @@
 \ifnum\catcode`\)=\active\edef){\string)}\fi%
 \ifnum\catcode`\ =\active\edef {\string }\fi%
 \edef\beamer@@@temp{#1\beamer@stoptexts}%
-\expandafter\beamer@decode\beamer@@@temp%
-\ifbeamer@localanotherslide\aftergroup\beamer@localanotherslidetrue\fi}%
+\expandafter\beamer@decode\beamer@@@temp}%
 }%
 \endgroup
 
@@ -210,12 +206,11 @@
   \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
   \ifnum1>\beamer@slideinframe%
   \global\beamer@anotherslidetrue%
-  \beamer@localanotherslidetrue%
   \fi%
   \gdef\beamer@doifnotinframe{\beamer@doifinframe}\beamer@@decode}
 \def\beamer@decodeuntil-#1,{%
   \ifnum1<\beamer@minimum\global\beamer@minimum=1\fi%
-  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\fi%
   \ifnum\beamer@slideinframe>#1\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
   \beamer@@decode}
 \def\beamer@decodenumber#1{%
@@ -232,18 +227,18 @@
   {\beamer@decodebetween{#1}}}
 \def\beamer@decodeto#1,{%
   \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
-  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\fi%
   \ifnum#1>\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
   \beamer@@decode}
 \def\beamer@decodebetween#1#2,{%
   \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
-  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
-  \ifnum#2>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\fi%
+  \ifnum#2>\beamer@slideinframe\global\beamer@anotherslidetrue\fi%
   \ifnum#1>\beamer@slideinframe\else\ifnum#2<\beamer@slideinframe\else\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi\fi%
   \beamer@@decode}
 \def\beamer@decodeone#1,{%
   \ifnum#1<\beamer@minimum\global\beamer@minimum=#1\fi%
-  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\beamer@localanotherslidetrue\fi%
+  \ifnum#1>\beamer@slideinframe\global\beamer@anotherslidetrue\fi%
   \ifnum#1=\beamer@slideinframe\gdef\beamer@doifnotinframe{\beamer@doifinframe}\fi%
   \beamer@@decode}
 
