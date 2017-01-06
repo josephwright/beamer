@@ -38,6 +38,8 @@
   \catcode`\)=\active
   \catcode`\ =\active
 \gdef\beamer@masterdecode#1{% must be called within a group
+\beamer@localanotherslidefalse%
+\setbox0=\hbox{%
 \ifnum\catcode`\|=\active\edef|{\string|}\fi%
 \ifnum\catcode`\:=\active\edef:{\string:}\fi%
 \ifnum\catcode`\,=\active\edef,{\string,}\fi%
@@ -48,8 +50,6 @@
 \ifnum\catcode`\)=\active\edef){\string)}\fi%
 \ifnum\catcode`\ =\active\edef {\string }\fi%
 \edef\beamer@@@temp{#1\beamer@stoptexts}%
-\beamer@localanotherslidefalse%
-\setbox0=\hbox{%
 \expandafter\beamer@decode\beamer@@@temp%
 \ifbeamer@localanotherslide\aftergroup\beamer@localanotherslidetrue\fi}%
 }%
