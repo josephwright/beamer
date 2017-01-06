@@ -23,6 +23,10 @@
 \newif\ifbeamer@plusencountered
 
 \def\beamer@stoptexts{| stop:0| }
+
+% The main decoding macro tolerates a range of active characters, which
+% require a little set up. In particular, as an active space is allowed
+% all of the lines here have to be terminated with "%".
 \begingroup
   \catcode`\|=\active
   \catcode`\:=\active
