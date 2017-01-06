@@ -33,8 +33,9 @@
   \catcode`\(=\active
   \catcode`\)=\active
   \catcode`\ =\active
-\gdef\beamer@masterdecode#1{%
+\xdef\beamer@masterdecode#1{%
 \setbox0=\hbox{%
+\unexpanded{%
 \ifnum\catcode`\|=\active\edef|{\string|}\fi%
 \ifnum\catcode`\:=\active\edef:{\string:}\fi%
 \ifnum\catcode`\,=\active\edef,{\string,}\fi%
@@ -43,9 +44,9 @@
 \ifnum\catcode`\-=\active\edef-{\string-}\fi%
 \ifnum\catcode`\(=\active\edef({\string(}\fi%
 \ifnum\catcode`\)=\active\edef){\string)}\fi%
-\ifnum\catcode`\ =\active\edef {\string }\fi%
-\edef\beamer@@@temp{#1\detokenize{| stop:0| }}%
-\expandafter\beamer@decode\beamer@@@temp}%
+\ifnum\catcode`\ =\active\edef {\string }\fi}%
+\edef\noexpand\beamer@@@temp{#1\detokenize{| }stop\detokenize{:0| }}%
+\unexpanded{\expandafter\beamer@decode\beamer@@@temp}}%
 }%
 \endgroup
 
