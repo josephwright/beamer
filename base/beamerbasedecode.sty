@@ -102,7 +102,7 @@
   \ifx\beamer@ovmode\beamer@ovmodestop
     \expandafter\beamer@@decode\beamer@decodefound,!%
     \let\beamer@next=\relax
-    \ifbeamer@plusencountered\global\advance\c@beamerpauses by1\relax\fi
+    \ifbeamer@plusencountered\stepcounter{beamerpauses}\fi
   \else
     \ifx\beamer@ovmode\beamer@currentmode
       \beamer@@decodefound
