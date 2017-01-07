@@ -191,7 +191,8 @@
   \edef\beamer@spec{\beamer@spec#1}% everything up to first .
   \ifblank{#2}{}{\beamer@@@decodedot#2:}}
 \def\beamer@@@decodedot{%
-  \kernel@ifnextchar({\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
+  \kernel@ifnextchar(%)
+    {\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
 \def\beamer@relnumberdot(#1){%
   \beamer@tempcount=#1\relax
   \advance\beamer@tempcount by\c@beamerpauses\relax%
