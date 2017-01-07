@@ -569,7 +569,7 @@ In certain cases you may wish to have different overlay specifications to apply 
 \only<3| handout:2>{Some text}
 \end{verbatim}
 
-The vertical bar, which must be followed by a (white) space, separates the two different specifications |3| and |handout:2|. By writing a mode name before a colon, you specify that the following specification only applies to that mode. If no mode is given, as in |3|, the mode |beamer| is automatically added. For this reason, if you write |\only<3>{Text}| and you are in |handout| mode, the text will be shown on all slides since there is no restriction specified for handouts and since the |3| is the same as |beamer:3|.
+The vertical bar separates the two different specifications |3| and |handout:2|. By writing a mode name before a colon, you specify that the following specification only applies to that mode. If no mode is given, as in |3|, the mode |beamer| is automatically added. For this reason, if you write |\only<3>{Text}| and you are in |handout| mode, the text will be shown on all slides since there is no restriction specified for handouts and since the |3| is the same as |beamer:3|.
 
 It is also possible to give an overlay specification that contains only a mode name (or several, separated by vertical bars):
 \begin{verbatim}
