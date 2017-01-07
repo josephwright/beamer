@@ -146,30 +146,23 @@
 \def\beamer@currentaction{default}
 
 \edef\beamer@decodeaction#1{%
-  \noexpand\beamer@@decodeaction#1\string @:}
+  \noexpand\beamer@@decodeaction#1\string @\string @:}
 \begingroup
 \edef\beamer@@@temp{%
   \endgroup
-  \def\noexpand\beamer@@decodeaction##1\string @##2:{%
-    \noexpand\beamer@@@decodeaction{##1}{##2}%
-  }%
-  \def\noexpand\beamer@getridof@##1\string @{%
-    \gdef\noexpand\beamer@@spec{##1}%
+  \def\noexpand\beamer@@decodeaction##1\string @##2\string @##3:{%
+    \noexpand\ifblank{##2}%
+      {%
+        \gdef\noexpand\beamer@action{default}%
+        \gdef\noexpand\beamer@spec{##1}%
+      }%
+      {%
+        \gdef\noexpand\beamer@action{##1}%
+        \gdef\noexpand\beamer@spec{##2}%
+      }%
   }%
 }%
 \beamer@@@temp
-
-\def\beamer@@@decodeaction#1#2{%
-  \gdef\beamer@spec{#2}%
-  \ifx\beamer@spec\@empty%
-    \xdef\beamer@spec{#1}%
-    \gdef\beamer@action{default}%
-  \else%
-    \xdef\beamer@action{#1}%
-    \beamer@getridof@#2%
-    \xdef\beamer@spec{\beamer@@spec}
-  \fi%
-}
 
 \def\beamer@decodeplus{%
   \def\beamer@spec{}\beamer@@decodeplus}
