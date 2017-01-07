@@ -93,7 +93,8 @@
 \def\beamer@decodefind#1:#2:{%
   \def\beamer@ovmode{#1}%
   \beamer@decodeaction{#2}%
-  \expandafter\futurelet\expandafter\next\expandafter\beamer@checkcat\beamer@spec:%
+  \expandafter\futurelet\expandafter\next\expandafter
+    \beamer@checkcat\beamer@spec:%
   \expandafter\beamer@decodeplus\beamer@spec+:%
   \expandafter\beamer@decodedot\beamer@spec.:%
   \ifx\beamer@ovmode\beamer@ovmodestop%
