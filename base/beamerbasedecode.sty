@@ -180,10 +180,9 @@
   \kernel@ifnextchar(%)
     {\beamer@relnumber}{\beamer@relnumber(0)}}
 \def\beamer@relnumber(#1){%
-  \beamer@plusencounteredtrue%
-  \beamer@tempcount=#1\relax
-  \advance\beamer@tempcount by\c@beamerpauses\relax%
-  \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
+  \beamer@plusencounteredtrue
+  \edef\beamer@spec
+    {\beamer@spec\number\numexpr #1 + \value{beamerpauses}\relax}%
   \beamer@@decodeplus}
 
 \def\beamer@decodedot{%
