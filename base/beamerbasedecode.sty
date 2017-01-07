@@ -194,10 +194,8 @@
   \kernel@ifnextchar(%)
     {\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
 \def\beamer@relnumberdot(#1){%
-  \beamer@tempcount=#1\relax
-  \advance\beamer@tempcount by\c@beamerpauses\relax%
-  \advance\beamer@tempcount by-1\relax%
-  \edef\beamer@spec{\beamer@spec\the\beamer@tempcount}%
+  \edef\beamer@spec
+    {\beamer@spec\number\numexpr #1 + \value{beamerpauses} -1\relax}%
   \beamer@@decodedot}
 
 \def\beamer@doifnotinframe{}
