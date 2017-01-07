@@ -157,11 +157,11 @@
   \def\noexpand\beamer@@decodeaction##1\string @##2\string @##3:{%
     \noexpand\ifblank{##2}%
       {%
-        \gdef\noexpand\beamer@action{default}%
+        \def\noexpand\beamer@action{default}%
         \def\noexpand\beamer@spec{##1}%
       }%
       {%
-        \gdef\noexpand\beamer@action{##1}%
+        \def\noexpand\beamer@action{##1}%
         \def\noexpand\beamer@spec{##2}%
       }%
   }%
