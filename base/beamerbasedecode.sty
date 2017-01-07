@@ -136,7 +136,7 @@
     \ifx\beamer@decodefound\beamer@allsign
       \gdef\beamer@decodefound{0}%
     \fi
-    \gdef\beamer@spec{1-}%
+    \def\beamer@spec{1-}%
   \fi}
 
 \def\beamer@@decodefound{%
@@ -158,11 +158,11 @@
     \noexpand\ifblank{##2}%
       {%
         \gdef\noexpand\beamer@action{default}%
-        \gdef\noexpand\beamer@spec{##1}%
+        \def\noexpand\beamer@spec{##1}%
       }%
       {%
         \gdef\noexpand\beamer@action{##1}%
-        \gdef\noexpand\beamer@spec{##2}%
+        \def\noexpand\beamer@spec{##2}%
       }%
   }%
 }%
