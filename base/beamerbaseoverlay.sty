@@ -334,6 +334,8 @@
   }%
 }%
 
+\def\beamer@saveanother{\let\beamer@savedif=\ifbeamer@anotherslide}
+\def\beamer@restoreanother{\global\let\ifbeamer@anotherslide=\beamer@savedif}
 
 \define@key{beamer@mixin}{still covered}{\def\beamer@uncoverbeforeactions{\ignorespaces#1}}
 \define@key{beamer@mixin}{again covered}{\def\beamer@uncoverafteractions{\ignorespaces#1}}
