@@ -22,7 +22,9 @@
 
 % The main decoding macro tolerates a range of active characters, which
 % require a little set up. In particular, as an active space is allowed
-% all of the lines here have to be terminated with "%".
+% all of the lines here have to be terminated with "%". The two-step
+% setup for \beamer@@@temp makes sure everything is expanded and removes
+% all of the spaces at this stage.
 \begingroup
   \catcode`\|=\active
   \catcode`\:=\active
@@ -45,7 +47,9 @@
 \ifnum\catcode`\(=\active\edef({\string(}\fi%
 \ifnum\catcode`\)=\active\edef){\string)}\fi%
 \ifnum\catcode`\ =\active\edef {\string }\fi}%
-\edef\noexpand\beamer@@@temp{#1\detokenize{| }stop\detokenize{:0| }}%
+\edef\noexpand\beamer@@@temp{#1\string|stop\string:0\string|}%
+\edef\noexpand\beamer@@@temp{\noexpand\expandafter\noexpand\zap@space%
+\noexpand\beamer@@@temp\space\noexpand\@empty}%
 \unexpanded{\expandafter\beamer@decode\beamer@@@temp}}%
 }%
 \endgroup
@@ -66,9 +70,7 @@
   \gdef\beamer@decactionrev{}%
   \global\let\beamer@decodefound=\beamer@allsign
   \beamer@@decodefind}
-\def\beamer@@decodefind#1|{%
-  \kernel@ifnextchar\@undefined% get rid of spaces
-  {\beamer@@@decodefind#1:|}{\beamer@@@decodefind#1:|}}
+\def\beamer@@decodefind#1|{\beamer@@@decodefind#1:|}
 \def\beamer@@@decodefind#1:#2|{%
   \ifblank{#2}%
   {\beamer@decodefind beamer:#1:}%
