@@ -90,6 +90,9 @@
 \def\beamer@modeall{all}
 \def\beamer@ovmodestop{stop}
 
+% The main parsing function for each sub-part starts by splitting at any
+% "@" and then checking the spec for various cases: keywords, "+", ".".
+% After that, there is some cleanup to do before potentially looping.
 \def\beamer@decodefind#1:#2:{%
   \def\beamer@ovmode{#1}%
   \beamer@decodeaction{#2}%
@@ -126,6 +129,8 @@
   \fi
  \beamer@next}
 
+% Search for the case where the specification is a keyword, and if it
+% is set the overlay mode and spec.
 \def\beamer@checkcat#1:{%
   \ifcat\next a%
     \gdef\beamer@ovmode{#1}%
