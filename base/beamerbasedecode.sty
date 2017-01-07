@@ -72,7 +72,6 @@
   \beamer@plusencounteredfalse
   \global\beamer@minimum=10000\relax
   \gdef\beamer@decaction{}%
-  \gdef\beamer@decactionrev{}%
   \global\let\beamer@decodefound=\beamer@allsign
   \beamer@@decodefind}
 \def\beamer@@decodefind#1|{\beamer@@@decodefind#1:|}
@@ -145,7 +144,6 @@
     \expandafter\gdef\expandafter\beamer@decodefound\expandafter{\beamer@spec}%
   \else
     \xdef\beamer@decaction{\beamer@decaction{\beamer@action<\beamer@spec>}}
-    \xdef\beamer@decactionrev{{\beamer@action}\beamer@decactionrev}
   \fi}
 \def\beamer@currentaction{default}
 
