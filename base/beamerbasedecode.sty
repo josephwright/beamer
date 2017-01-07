@@ -48,8 +48,8 @@
 \ifnum\catcode`\)=\active\edef){\string)}\fi%
 \ifnum\catcode`\ =\active\edef {\string }\fi}%
 \edef\noexpand\beamer@@@temp{#1\string|stop\string:0\string|}%
-\edef\noexpand\beamer@@@temp{\noexpand\expandafter\noexpand\zap@space%
-\noexpand\beamer@@@temp\space\noexpand\@empty}%
+\edef\noexpand\beamer@@@temp{\unexpanded{\expandafter\zap@space\beamer@@@temp}%
+\space\noexpand\@empty}%
 \unexpanded{\expandafter\beamer@decode\beamer@@@temp}}%
 }%
 \endgroup
