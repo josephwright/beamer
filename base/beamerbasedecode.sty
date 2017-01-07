@@ -174,10 +174,11 @@
   \edef\beamer@spec{\beamer@spec#1}% everything up to first +
   \ifblank{#2}{}
   {% ok, check if followed by number:
-    \beamer@plusencounteredtrue%
+    \beamer@plusencounteredtrue
     \beamer@@@decodeplus#2:}}
 \def\beamer@@@decodeplus{%
-  \kernel@ifnextchar({\beamer@relnumber}{\beamer@relnumber(0)}}
+  \kernel@ifnextchar(%)
+    {\beamer@relnumber}{\beamer@relnumber(0)}}
 \def\beamer@relnumber(#1){%
   \beamer@plusencounteredtrue%
   \beamer@tempcount=#1\relax
