@@ -128,25 +128,6 @@
   \fi
  \beamer@next}
 
-% Search for the case where the specification is a keyword, and if it
-% is set the overlay mode and spec.
-\def\beamer@checkcat#1:{%
-  \ifcat\next a%
-    \gdef\beamer@ovmode{#1}%
-    \ifx\beamer@decodefound\beamer@allsign
-      \gdef\beamer@decodefound{0}%
-    \fi
-    \def\beamer@spec{1-}%
-  \fi}
-
-\def\beamer@@decodefound{%
-  \ifx\beamer@action\beamer@default
-    \xdef\beamer@decodefound{\beamer@spec}%
-  \else
-    \xdef\beamer@decaction{\beamer@decaction{\beamer@action<\beamer@spec>}}%
-  \fi}
-\def\beamer@currentaction{default}
-
 % The aim here is to find any "<action>@" spec, and to split it off the
 % action from the rest. That uses a pretty stand search approach.
 \edef\beamer@decodeaction#1{%
@@ -167,6 +148,17 @@
   }%
 }%
 \beamer@@@temp
+
+% Search for the case where the specification is a keyword, and if it
+% is set the overlay mode and spec.
+\def\beamer@checkcat#1:{%
+  \ifcat\next a%
+    \gdef\beamer@ovmode{#1}%
+    \ifx\beamer@decodefound\beamer@allsign
+      \gdef\beamer@decodefound{0}%
+    \fi
+    \def\beamer@spec{1-}%
+  \fi}
 
 \def\beamer@decodeplus{%
   \def\beamer@spec{}\beamer@@decodeplus}
@@ -197,6 +189,14 @@
   \edef\beamer@spec
     {\beamer@spec\number\numexpr #1 + \value{beamerpauses} -1\relax}%
   \beamer@@decodedot}
+
+\def\beamer@@decodefound{%
+  \ifx\beamer@action\beamer@default
+    \xdef\beamer@decodefound{\beamer@spec}%
+  \else
+    \xdef\beamer@decaction{\beamer@decaction{\beamer@action<\beamer@spec>}}%
+  \fi}
+\def\beamer@currentaction{default}
 
 \def\beamer@doifnotinframe{}
 \def\beamer@@decode{%
