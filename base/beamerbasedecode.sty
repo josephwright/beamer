@@ -171,7 +171,7 @@
 \def\beamer@decodeplus{%
   \def\beamer@spec{}\beamer@@decodeplus}
 \def\beamer@@decodeplus#1+#2:{%
-  \edef\beamer@spec{\beamer@spec#1}% everything up to first +
+  \edef\beamer@spec{\beamer@spec#1}% everything up to a +
   \ifblank{#2}{}
   {% ok, check if followed by number:
     \beamer@plusencounteredtrue
