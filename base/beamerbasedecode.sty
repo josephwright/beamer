@@ -91,7 +91,7 @@
 \def\beamer@ovmodestop{stop}
 \def\beamer@decodefind#1:#2:{%
   \def\beamer@ovmode{#1}%
-  \beameratdecodeaction{#2}%
+  \beamer@decodeaction{#2}%
   \expandafter\futurelet\expandafter\next\expandafter\beamer@checkcat\beamer@spec:%
   \expandafter\beamer@decodeplus\beamer@spec+:%
   \expandafter\beamer@decodedot\beamer@spec.:%
@@ -143,26 +143,29 @@
   \fi}
 \def\beamer@currentaction{default}
 
-{
-\makeatother
-\gdef\beameratdecodeaction#1{%
-  \beameratdecodeactionb#1@:}
-\gdef\beameratdecodeactionb#1@#2:{%
-  \beameratdecodeactionc{#1}{#2}}
-\gdef\beameratgetridofat#1@{%
-  \gdef\beameratspec{#1}%
-}
-}
+\edef\beamer@decodeaction#1{%
+  \noexpand\beamer@@decodeaction#1\string @:}
+\begingroup
+\edef\beamer@@@temp{%
+  \endgroup
+  \def\noexpand\beamer@@decodeaction##1\string @##2:{%
+    \noexpand\beamer@@@decodeaction{##1}{##2}%
+  }%
+  \def\noexpand\beamer@getridof@##1\string @{%
+    \gdef\noexpand\beamer@@spec{##1}%
+  }%
+}%
+\beamer@@@temp
 
-\def\beameratdecodeactionc#1#2{%
+\def\beamer@@@decodeaction#1#2{%
   \gdef\beamer@spec{#2}%
   \ifx\beamer@spec\@empty%
     \xdef\beamer@spec{#1}%
     \gdef\beamer@action{default}%
   \else%
     \xdef\beamer@action{#1}%
-    \beameratgetridofat#2%
-    \xdef\beamer@spec{\beameratspec}
+    \beamer@getridof@#2%
+    \xdef\beamer@spec{\beamer@@spec}
   \fi%
 }
 
