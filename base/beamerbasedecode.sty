@@ -97,33 +97,33 @@
     \beamer@checkcat\beamer@spec:%
   \expandafter\beamer@decodeplus\beamer@spec+:%
   \expandafter\beamer@decodedot\beamer@spec.:%
-  \ifx\beamer@ovmode\beamer@ovmodestop%
+  \ifx\beamer@ovmode\beamer@ovmodestop
     \expandafter\beamer@@decode\beamer@decodefound,!%
-    \let\beamer@next=\relax%
-    \ifbeamer@plusencountered\global\advance\c@beamerpauses by1\relax\fi%
+    \let\beamer@next=\relax
+    \ifbeamer@plusencountered\global\advance\c@beamerpauses by1\relax\fi
   \else
-    \ifx\beamer@ovmode\beamer@currentmode%
-      \beamer@@decodefound%
-    \else%
-      \ifx\beamer@ovmode\beamer@modeall%
-        \beamer@@decodefound%
-      \else%
-        \ifx\beamer@ovmode\beamer@presentationmode%
-          \ifx\beamer@currentmode\beamer@articlemode%
-          \else%
-            \beamer@@decodefound%
-          \fi%
-        \else%
-          \ifx\beamer@ovmode\beamer@beamermode%
-            \ifx\beamer@currentmode\beamer@secondmode%
-              \beamer@@decodefound%
-            \fi%
-          \fi%
-        \fi%
-      \fi%
-    \fi%
-    \let\beamer@next=\beamer@@decodefind%
-  \fi%
+    \ifx\beamer@ovmode\beamer@currentmode
+      \beamer@@decodefound
+    \else
+      \ifx\beamer@ovmode\beamer@modeall
+        \beamer@@decodefound
+      \else
+        \ifx\beamer@ovmode\beamer@presentationmode
+          \ifx\beamer@currentmode\beamer@articlemode
+          \else
+            \beamer@@decodefound
+          \fi
+        \else
+          \ifx\beamer@ovmode\beamer@beamermode
+            \ifx\beamer@currentmode\beamer@secondmode
+              \beamer@@decodefound
+            \fi
+          \fi
+        \fi
+      \fi
+    \fi
+    \let\beamer@next=\beamer@@decodefind
+  \fi
  \beamer@next}
 
 \def\beamer@checkcat#1:{%
