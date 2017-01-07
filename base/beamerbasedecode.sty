@@ -145,6 +145,8 @@
   \fi}
 \def\beamer@currentaction{default}
 
+% The aim here is to find any "<action>@" spec, and to split it off the
+% action from the rest. That uses a pretty stand search approach.
 \edef\beamer@decodeaction#1{%
   \noexpand\beamer@@decodeaction#1\string @\string @:}
 \begingroup
