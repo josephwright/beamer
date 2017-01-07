@@ -63,6 +63,11 @@
 
 \def\beamer@allsign{*}
 
+% The main decoding routine starts by initialising the starting a search
+% for everything up to "|": to allow for the simple case of overlays in
+% slides for presentations there is a need to insert "beamer:". Notice
+% that \beamer@@decodefind may be called multiple times, hence being set
+% up as an auxiliary.
 \def\beamer@decode{%
   \beamer@plusencounteredfalse
   \global\beamer@minimum=10000\relax
