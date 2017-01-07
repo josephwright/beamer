@@ -199,6 +199,10 @@
 \def\beamer@currentaction{default}
 
 \def\beamer@doifnotinframe{}
+
+% A set of macros to deal with what can form the basis of an action
+% spec once we know the basic shape: the key concepts are whether there
+% are more slides to do and how many there are in total.
 \def\beamer@@decode{%
   \kernel@ifnextchar!%
   {\beamer@decodeend}%
