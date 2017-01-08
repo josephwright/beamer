@@ -167,14 +167,14 @@
   \next}
 
 % Obsolete, do not use!
-\protected\def\presentation{\mode<presentation>}
-\protected\def\article{\mode<article>}
-\protected\def\common{\mode<all>}
+\newrobustcmd*\presentation{\mode<presentation>}
+\newrobustcmd*\article{\mode<article>}
+\newrobustcmd*\common{\mode<all>}
 
 %
 % Mode command
 %
-\protected\def\mode{\@ifstar\beamer@modeoutsideframe\beamer@@@mode}
+\newrobustcmd*\mode{\@ifstar\beamer@modeoutsideframe\beamer@@@mode}
 \def\beamer@@@mode<#1>{%
   \beamer@closer
   \@ifnextchar\bgroup
@@ -233,10 +233,9 @@
 %
 % Stuff needed in both article and presentation version
 %
-\def\jobnamebeamerversion{}%
+\newcommand*\jobnamebeamerversion{}
 
-\protected\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
-\def\@includeslide[#1]#2{%
+\newrobustcmd*\includeslide[2][]{%
   \ifx\jobnamebeamerversion\@empty
     \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}\@ehc
   \else
@@ -245,7 +244,7 @@
     \expandafter\pgfimage\beamer@args
   \fi}
 
-\protected\def\setjobnamebeamerversion#1{%
+\newrobustcmd*\setjobnamebeamerversion[1]{%
   \gdef\jobnamebeamerversion{#1}%
   \begingroup
     \makeatletter
