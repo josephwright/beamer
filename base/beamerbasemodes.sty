@@ -238,7 +238,7 @@
 \protected\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
 \def\@includeslide[#1]#2{%
   \ifx\jobnamebeamerversion\@empty
-    \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
+    \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}\@ehc
   \else
     \edef\beamer@args
       {[{#1,page=\csname beamer@slide#2\endcsname}]{\jobnamebeamerversion}}%
