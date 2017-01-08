@@ -89,7 +89,7 @@
 \endgroup
 
 \def\beamer@enddocument{\beamer@closer\end{document}}
-\def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}\common}
+\def\beamer@startdocument{\beamer@closer\begin{document}\gdef\beamer@closer{}\common}
 \def\beamer@closer{}
 \begingroup
   \escapechar=-1\relax
@@ -105,7 +105,7 @@
 \newbox\beamer@commentbox
 \def\beamer@startcommentinframe{%
   \begingroup
-    \edef\beamer@closer{\egroup\beamer@closer}%
+    \xdef\beamer@closer{\egroup\beamer@closer}%
     \setbox\beamer@commentbox=\vbox\bgroup\leavevmode}
 
 \def\beamer@outsidemode{\afterassignment\beamer@treat\let\beamer@nexttoken=}
