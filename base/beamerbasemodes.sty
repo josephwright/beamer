@@ -44,11 +44,10 @@
 \newif\ifbeamer@inpresentation
 \beamer@inpresentationtrue
 
-\def\beamer@makeinnocent#1{\catcode`#1=12 }
 \def\beamer@startcomment{%
     \begingroup%
-    \let\do\beamer@makeinnocent\dospecials%
-    \beamer@makeinnocent\^^L% and whatever other special cases
+    \let\do\@makeother\dospecials%
+    \@makeother\^^L% and whatever other special cases
     \endlinechar`\^^M \catcode`\^^M=12 \beamer@processline}
 
 {\catcode`\^^M=12\endlinechar=-1%
