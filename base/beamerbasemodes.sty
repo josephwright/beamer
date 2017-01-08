@@ -175,7 +175,11 @@
 % Mode command
 %
 \protected\def\mode{\@ifstar\beamer@modeoutsideframe\beamer@@@mode}
-\def\beamer@@@mode<#1>{\beamer@closer\@ifnextchar\bgroup{\beamer@modeinline<#1>}{\beamer@switchmode<#1>}}
+\def\beamer@@@mode<#1>{%
+  \beamer@closer
+  \@ifnextchar\bgroup
+    {\beamer@modeinline<#1>}%
+    {\beamer@switchmode<#1>}}
 \long\def\beamer@modeinline<#1>#2{%
   \gdef\beamer@closer{}%
   \def\beamer@doifnotinframe{\@gobble}\def\beamer@doifinframe{\@firstofone}%
