@@ -17,8 +17,6 @@
 % Also loads packages required by both beamer and beamerarticle
 \RequirePackage{beamerbasemodes}
 
-\beamer@transferifnecessary
-
 % For testing PDF versus DVI mode
 \RequirePackage{ifpdf}
 
