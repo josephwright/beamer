@@ -182,10 +182,15 @@
     {\beamer@switchmode<#1>}}
 \long\def\beamer@modeinline<#1>#2{%
   \gdef\beamer@closer{}%
-  \def\beamer@doifnotinframe{\@gobble}\def\beamer@doifinframe{\@firstofone}%
-  {\beamer@saveanother\beamer@slideinframe=1\relax%
-   \beamer@masterdecode{#1}%
-   \beamer@restoreanother}\beamer@donow{#2}%
+  \def\beamer@doifnotinframe{\@gobble}%
+  \def\beamer@doifinframe{\@firstofone}%
+  \begingroup
+    \beamer@saveanother
+    \beamer@slideinframe=1\relax%
+    \beamer@masterdecode{#1}%
+    \beamer@restoreanother
+  \endgroup
+  \beamer@donow{#2}%
   \beamer@mode\par}
 \def\beamer@switchmode<#1>{%
   \gdef\beamer@mode{\beamer@switchmode<#1>}%
