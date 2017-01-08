@@ -36,7 +36,6 @@
 \newrobustcmd\DeclareOptionBeamer[1]{\@ifnextchar[{\beamer@dokv{#1}}{\beamer@dokv{#1}[]}}
 \long\def\beamer@dokv#1[#2]#3{\define@key{\@currname}{#1}[{#2}]{#3}}
 
-
 \def\beamer@filterclassoptions{
   \def\beamer@filteredclassoptionslist{}
   \@for\CurrentOption:=\@classoptionslist\do{%
@@ -52,8 +51,6 @@
   \let\@classoptionslist=\beamer@filteredclassoptionslist
 }
 
-
 \newrobustcmd*\defbeameroption{\define@key{beamer@option}}
 \newrobustcmd*\setbeameroption{\setkeys{beamer@option}}
-
 
