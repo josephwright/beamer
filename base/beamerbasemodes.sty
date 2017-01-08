@@ -188,6 +188,9 @@
    \beamer@restoreanother}\beamer@donow%
   \next}
 
+\def\beamer@saveanother{\let\beamer@savedif=\ifbeamer@anotherslide}
+\def\beamer@restoreanother{\global\let\ifbeamer@anotherslide=\beamer@savedif}
+
 \mode
 <all>
 
