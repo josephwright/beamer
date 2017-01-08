@@ -182,7 +182,7 @@
     {\beamer@switchmode<#1>}}
 \long\def\beamer@modeinline<#1>#2{%
   \gdef\beamer@closer{}%
-  \def\beamer@doifnotinframe{\@gobble}%
+  \gdef\beamer@doifnotinframe{\@gobble}%
   \def\beamer@doifinframe{\@firstofone}%
   \begingroup
     \beamer@saveanother
@@ -194,7 +194,7 @@
   \beamer@mode\par}
 \def\beamer@switchmode<#1>{%
   \gdef\beamer@mode{\beamer@switchmode<#1>}%
-  \def\beamer@doifnotinframe{%
+  \gdef\beamer@doifnotinframe{%
     \let\next=\beamer@startcomment%
     \gdef\beamer@closer{\endgroup}%
   }%
