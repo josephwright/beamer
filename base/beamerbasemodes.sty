@@ -89,7 +89,11 @@
 \endgroup
 
 \def\beamer@enddocument{\beamer@closer\end{document}}
-\def\beamer@startdocument{\beamer@closer\begin{document}\gdef\beamer@closer{}\common}
+\def\beamer@startdocument{%
+  \beamer@closer
+  \begin{document}%
+  \gdef\beamer@closer{}%
+  \mode<all>}
 \def\beamer@closer{}
 \begingroup
   \escapechar=-1\relax
@@ -271,7 +275,7 @@
 
   \def\beamer@currentmode{article}
 
-  \common
+  \mode<all>%
 
   \edef\beamer@classwhat{[\beamer@classoptions]{\beamer@classname}}
   \expandafter\LoadClass\beamer@classwhat
