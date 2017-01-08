@@ -27,7 +27,6 @@
 %
 
 % Public
-\newdimen\headheight    % Total height of the headline (including depth)
 \newdimen\headdp        % Depth of the headline
 \newdimen\footheight    % Height of the footline
 \newdimen\sidebarheight % Height of the sidebars
