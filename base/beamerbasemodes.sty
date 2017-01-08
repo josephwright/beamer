@@ -59,31 +59,31 @@
     \ifx\beamer@test\beamer@stopmodestar%
       \let\next=\beamer@modeoutsideframe%
     \else%
-    \ifx\beamer@test\beamer@stopmode%
-      \let\next=\mode%
-    \else%
-      \ifx\beamer@test\beamer@stoparticle%
-        \let\next=\article%
+      \ifx\beamer@test\beamer@stopmode%
+        \let\next=\mode%
       \else%
-        \ifx\beamer@test\beamer@stoppresentation%
-          \let\next=\presentation%
+        \ifx\beamer@test\beamer@stoparticle%
+          \let\next=\article%
         \else%
-          \ifx\beamer@test\beamer@stopcommon%
-            \let\next=\common%
+          \ifx\beamer@test\beamer@stoppresentation%
+            \let\next=\presentation%
           \else%
-            \ifx\beamer@test\beamer@stopdocument%
-              \let\next=\beamer@enddocument%
-            \else
-              \ifx\beamer@test\beamer@begindocument%
-                \let\next=\beamer@startdocument%
+            \ifx\beamer@test\beamer@stopcommon%
+              \let\next=\common%
+            \else%
+              \ifx\beamer@test\beamer@stopdocument%
+                \let\next=\beamer@enddocument%
               \else
-                \let\next=\beamer@processline%
+                \ifx\beamer@test\beamer@begindocument%
+                  \let\next=\beamer@startdocument%
+                \else
+                  \let\next=\beamer@processline%
+                \fi%
               \fi%
             \fi%
           \fi%
         \fi%
       \fi%
-    \fi%
     \fi%
     \next}
 \endgroup
