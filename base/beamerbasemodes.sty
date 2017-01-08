@@ -45,10 +45,12 @@
 \beamer@inpresentationtrue
 
 \def\beamer@startcomment{%
-    \begingroup%
-    \let\do\@makeother\dospecials%
-    \@makeother\^^L% and whatever other special cases
-    \endlinechar`\^^M \catcode`\^^M=12 \beamer@processline}
+  \begingroup
+    \let\do\@makeother\dospecials
+    \@makeother\^^L % and whatever other special cases
+    \endlinechar`\^^M %
+    \catcode`\^^M=12 %
+    \beamer@processline}
 
 {\catcode`\^^M=12\endlinechar=-1%
   \long\gdef\beamer@processline#1^^M{%
