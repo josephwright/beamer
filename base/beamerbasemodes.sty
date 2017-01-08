@@ -109,6 +109,9 @@
     \setbox\beamer@commentbox=\vbox\bgroup\leavevmode}
 
 \def\beamer@outsidemode{\afterassignment\beamer@treat\let\beamer@nexttoken=}
+
+% Deals with the various tokens that need to be 'active' even when skipping
+% material outside frames
 \def\beamer@treat{%
   \ifx\beamer@nexttoken\frame\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\lecture\let\next=\beamer@stopoutsidemode\fi
@@ -160,8 +163,7 @@
   \fi%
   \next}
 
-
-%obsolete, do note use:
+% Obsolete, do not use!
 \def\presentation{\mode<presentation>}
 \def\article{\mode<article>}
 \def\common{\mode<all>}
