@@ -104,9 +104,9 @@
 
 \newbox\beamer@commentbox
 \def\beamer@startcommentinframe{%
-  \begingroup%
-  \edef\beamer@closer{\egroup\beamer@closer}%
-  \setbox\beamer@commentbox=\vbox\bgroup\leavevmode}
+  \begingroup
+    \edef\beamer@closer{\egroup\beamer@closer}%
+    \setbox\beamer@commentbox=\vbox\bgroup\leavevmode}
 
 \def\beamer@outsidemode{\afterassignment\beamer@treat\let\beamer@nexttoken=}
 \def\beamer@treat{%
@@ -130,32 +130,32 @@
 \def\beamer@stopoutsidemode{\beamer@nexttoken}
 \def\beamer@checkenddoc#1{%
   \def\beamer@temp{#1}%
-  \ifx\beamer@temp\beamer@enddoc%
-    \let\next=\beamer@enddocument%
-  \else%
-    \let\next=\beamer@outsidemode%
-  \fi%
+  \ifx\beamer@temp\beamer@enddoc
+    \let\next=\beamer@enddocument
+  \else
+    \let\next=\beamer@outsidemode
+  \fi
   \next}
 \def\beamer@enddoc{document}
 
 \def\beamer@checkbeginframe#1{%
   \def\beamer@temp{#1}%
-  \ifx\beamer@temp\beamer@frametext%
-    \let\next=\beamer@beginframeenv%
-  \else%
-    \let\next=\beamer@outsidemode%
-  \fi%
+  \ifx\beamer@temp\beamer@frametext
+    \let\next=\beamer@beginframeenv
+  \else
+    \let\next=\beamer@outsidemode
+  \fi
   \next}
 \def\beamer@beginframeenv{\begin{frame}}
 
 \def\beamer@modeoutsideframe{%
-  \beamer@closer%
+  \beamer@closer
   \gdef\beamer@mode{\beamer@modeoutsideframe}%
-  \ifbeamer@inpresentation%
-    \let\next=\beamer@outsidemode%
+  \ifbeamer@inpresentation
+    \let\next=\beamer@outsidemode
     \gdef\beamer@closer{}%
-  \else%
-    \let\next=\relax%
+  \else
+    \let\next=\relax
     \gdef\beamer@closer{}%
   \fi%
   \next}
