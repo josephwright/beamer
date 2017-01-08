@@ -247,9 +247,10 @@
 
 \protected\def\setjobnamebeamerversion#1{%
   \def\jobnamebeamerversion{#1}%
-  {\makeatletter
-  \@input{\jobnamebeamerversion.snm}}
-}
+  \begingroup
+    \makeatletter
+    \@input{\jobnamebeamerversion.snm}%
+  \endgroup}
 
 
 
