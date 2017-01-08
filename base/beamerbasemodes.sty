@@ -235,7 +235,7 @@
 %
 \def\jobnamebeamerversion{}%
 
-\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
+\protected\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
 \def\@includeslide[#1]#2{%
   \ifx\jobnamebeamerversion\@empty%
   \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
