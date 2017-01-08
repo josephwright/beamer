@@ -237,11 +237,12 @@
 
 \protected\def\includeslide{\@ifnextchar[{\@includeslide}{\@includeslide[]}}
 \def\@includeslide[#1]#2{%
-  \ifx\jobnamebeamerversion\@empty%
-  \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
-  \else%
-  \edef\beamer@args{[{#1,page=\csname beamer@slide#2\endcsname}]{\jobnamebeamerversion}}%
-  \expandafter\pgfimage\beamer@args%
+  \ifx\jobnamebeamerversion\@empty
+    \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}{}%
+  \else
+    \edef\beamer@args
+      {[{#1,page=\csname beamer@slide#2\endcsname}]{\jobnamebeamerversion}}%
+    \expandafter\pgfimage\beamer@args
   \fi}
 
 \def\setjobnamebeamerversion#1{%
