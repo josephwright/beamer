@@ -167,14 +167,14 @@
   \next}
 
 % Obsolete, do not use!
-\def\presentation{\mode<presentation>}
-\def\article{\mode<article>}
-\def\common{\mode<all>}
+\protected\def\presentation{\mode<presentation>}
+\protected\def\article{\mode<article>}
+\protected\def\common{\mode<all>}
 
 %
 % Mode command
 %
-\def\mode{\@ifstar\beamer@modeoutsideframe\beamer@@@mode}
+\protected\def\mode{\@ifstar\beamer@modeoutsideframe\beamer@@@mode}
 \def\beamer@@@mode<#1>{\beamer@closer\@ifnextchar\bgroup{\beamer@modeinline<#1>}{\beamer@switchmode<#1>}}
 \long\def\beamer@modeinline<#1>#2{%
   \gdef\beamer@closer{}%
