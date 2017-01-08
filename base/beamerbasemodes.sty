@@ -47,13 +47,13 @@
 \def\beamer@startcomment{%
   \begingroup
     \let\do\@makeother\dospecials
-    \@makeother\^^L % and whatever other special cases
+    \catcode`\^^L=12 % and whatever other special cases
     \endlinechar`\^^M %
     \catcode`\^^M=12 %
     \beamer@processline}
 
 \begingroup
-\catcode`\^^M=12\endlinechar=-1%
+  \catcode`\^^M=12\relax\endlinechar=-1\relax%
   \long\gdef\beamer@processline#1^^M{%
     \def\beamer@test{#1}%
     \ifx\beamer@test\beamer@stopmodestar%
