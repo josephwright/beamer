@@ -52,7 +52,8 @@
     \catcode`\^^M=12 %
     \beamer@processline}
 
-{\catcode`\^^M=12\endlinechar=-1%
+\begingroup
+\catcode`\^^M=12\endlinechar=-1%
   \long\gdef\beamer@processline#1^^M{%
     \def\beamer@test{#1}%
     \ifx\beamer@test\beamer@stopmodestar%
@@ -85,7 +86,7 @@
     \fi%
     \fi%
     \next}
-}
+\endgroup
 
 \def\beamer@enddocument{\beamer@closer\end{document}}
 \def\beamer@startdocument{\beamer@closer\begin{document}\def\beamer@closer{}\common}
