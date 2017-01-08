@@ -74,7 +74,6 @@
 \newcount\beamer@sectionadjust
 \newcount\beamer@tocsectionnumber
 
-
 \newif\ifbeamer@sansmath
 \newif\ifbeamer@altmode
 \newif\ifbeamer@notes
