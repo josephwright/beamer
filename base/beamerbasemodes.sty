@@ -153,13 +153,12 @@
 
 \def\beamer@modeoutsideframe{%
   \beamer@closer
+  \gdef\beamer@closer{}%
   \gdef\beamer@mode{\beamer@modeoutsideframe}%
   \ifbeamer@inpresentation
     \let\next=\beamer@outsidemode
-    \gdef\beamer@closer{}%
   \else
     \let\next=\relax
-    \gdef\beamer@closer{}%
   \fi%
   \next}
 
