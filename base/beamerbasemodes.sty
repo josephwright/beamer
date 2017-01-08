@@ -195,16 +195,20 @@
 \def\beamer@switchmode<#1>{%
   \gdef\beamer@mode{\beamer@switchmode<#1>}%
   \gdef\beamer@doifnotinframe{%
-    \let\next=\beamer@startcomment%
+    \let\next=\beamer@startcomment
     \gdef\beamer@closer{\endgroup}%
   }%
   \def\beamer@doifinframe{%
-    \let\next=\relax%
+    \let\next=\relax
     \gdef\beamer@closer{}%
-   }%
-  {\beamer@saveanother\beamer@slideinframe=1\relax%
-   \beamer@masterdecode{#1}%
-   \beamer@restoreanother}\beamer@donow%
+  }%
+  \begingroup
+    \beamer@saveanother
+    \beamer@slideinframe=1\relax%
+    \beamer@masterdecode{#1}%
+    \beamer@restoreanother
+  \endgroup
+  \beamer@donow
   \next}
 
 \def\beamer@saveanother{\let\beamer@savedif=\ifbeamer@anotherslide}
