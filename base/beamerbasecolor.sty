@@ -360,18 +360,6 @@
   }%
 }
 
-% Push visible switching to start of minipage
-\toks@=\expandafter{\pgfsys@begininvisible}
-\toks2={\if@minipage@and@vmode@TF
-  {\g@addto@macro\set@minipage@color{\pgfsys@begininvisible}}%
-}
-\edef\pgfsys@begininvisible{\the\toks2{\the\toks@}}
-\toks@=\expandafter{\pgfsys@endinvisible}
-\toks2={\if@minipage@and@vmode@TF
-  {\g@addto@macro\set@minipage@color{\pgfsys@endinvisible}}%
-}
-\edef\pgfsys@endinvisible{\the\toks2{\the\toks@}}
-
 %
 % Allow mixins to survive groups:
 %
