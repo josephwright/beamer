@@ -293,28 +293,28 @@
 \setlength\beamer@paperheight{9.60cm}
 
 \DeclareOptionBeamer{aspectratio}[43]{%
-  \ifnum#1=1610%
+  \ifnum#1=1610 %
     \setlength\beamer@paperwidth{16.00cm}%
     \setlength\beamer@paperheight{10.00cm}%
-  \else\ifnum#1=169%
+  \else\ifnum#1=169 %
     \setlength\beamer@paperwidth{16.00cm}%
     \setlength\beamer@paperheight{9.00cm}%
-  \else\ifnum#1=149%
+  \else\ifnum#1=149 %
     \setlength\beamer@paperwidth{14.00cm}%
     \setlength\beamer@paperheight{9.00cm}%
-  \else\ifnum#1=54%
+  \else\ifnum#1=54 %
     \setlength\beamer@paperwidth{12.50cm}%
     \setlength\beamer@paperheight{10.00cm}%
-  \else\ifnum#1=43%
+  \else\ifnum#1=43 %
     \setlength\beamer@paperwidth{12.80cm}%
     \setlength\beamer@paperheight{9.60cm}%
-  \else\ifnum#1=32%
+  \else\ifnum#1=32 %
     \setlength\beamer@paperwidth{13.50cm}%
     \setlength\beamer@paperheight{9.00cm}%
-  \else\ifnum#1=141%
+  \else\ifnum#1=141 %
     \setlength\beamer@paperwidth{14.85cm}%
     \setlength\beamer@paperheight{10.50cm}%
-  \fi\fi\fi\fi\fi\fi\fi%
+  \fi\fi\fi\fi\fi\fi\fi
 }
 
 \RequirePackage[%
