@@ -86,10 +86,8 @@
 \newif\ifbeamer@ignorenonframe
 \newif\ifbeamer@autopdfinfo
 
+% Option management
 \RequirePackage{beamerbaseoptions}
-% For option management
-
-
 
 %
 %
@@ -116,7 +114,6 @@
 
 \DeclareOptionBeamer{t}{\beamer@centeredfalse}
 \DeclareOptionBeamer{c}{\beamer@centeredtrue}
-
 
 \DeclareOptionBeamer{leqno}{\input{leqno.clo}}
 \DeclareOptionBeamer{fleqn}{\input{fleqn.clo}}
@@ -159,22 +156,16 @@
 \def\beamer@hypercjk{}
 
 \DeclareOptionBeamer{CJK}{\ExecuteOptionsBeamer{cjk}}
-\DeclareOptionBeamer{cjk}{
+\DeclareOptionBeamer{cjk}{%
   \def\beamer@hypercjk{\hypersetup{CJKbookmarks=true}}
-
-  \def\beamer@activecjk{
+  \def\beamer@activecjk{%
     % Activate all >=128 characters.
-    \count@=127
+    \count@=127 %
     \@whilenum\count@<254 \do{%
-      \advance\count@ by 1
+      \advance\count@ by 1 %
       \lccode`\~=\count@
       \catcode\count@=\active
-      \lowercase{\def~{\kern1ex}}
-    }
-  }
-}
-
-
+      \lowercase{\def~{\kern1ex}}}}}
 
 % obsolete options
 \DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
@@ -194,36 +185,36 @@
   \nofiles
 }
 \def\beamer@notesaction@onlyslideswithnotes{%
-  \beamer@notestrue%
-  \beamer@frameswithnotesonlytrue%
+  \beamer@notestrue
+  \beamer@frameswithnotesonlytrue
   \nofiles
 }
-\DeclareOptionBeamer{inrow}{
+\DeclareOptionBeamer{inrow}{%
   \ClassError{beamer}{``inrow'' no longer supported. Use ``compress'' instead.}{}}
 \DeclareOptionBeamer{compressnotes}{%
   \ClassWarning{beamer}{``compressnotes'' is obsolete. Use
     \noexpand\setbeamertemplate{note page}[compressed] instead}
   \AtBeginDocument{\beamertemplatenotecompress}}
-\DeclareOptionBeamer{notesonly}{
+\DeclareOptionBeamer{notesonly}{%
   \ClassWarning{beamer}{``notesonly'' is obsolete. Use beamer option
     ``show only notes'' instead.}
   \beamer@notesaction@only}
-\DeclareOptionBeamer{blue}{
+\DeclareOptionBeamer{blue}{%
   \ClassWarning{beamer}{``blue'' is obsolete. Use color theme structure instead}
   \def\beamer@loadlater{\usecolortheme[rgb={0.2,0.2,0.7}]{structure}}}
-\DeclareOptionBeamer{red}{
+\DeclareOptionBeamer{red}{%
   \ClassWarning{beamer}{``red'' is obsolete. Use color theme structure instead}
   \def\beamer@loadlater{\usecolortheme[rgb={0.7,0.2,0.2}]{structure}}}
-\DeclareOptionBeamer{blackandwhite}{
+\DeclareOptionBeamer{blackandwhite}{%
   \ClassWarning{beamer}{``blackandwhite'' is obsolete. Use color theme structure instead}
   \def\beamer@loadlater{\usecolortheme[rgb={0.2,0.2,0.2}]{structure}}}
-\DeclareOptionBeamer{brown}{
+\DeclareOptionBeamer{brown}{%
   \ClassWarning{beamer}{``brown'' is obsolete. Use color theme structure instead}
   \def\beamer@loadlater{\usecolortheme[rgb={0.66,0.4,0.166}]{structure}}}
-\DeclareOptionBeamer{slidescentered}{
+\DeclareOptionBeamer{slidescentered}{%
   \ClassWarning{beamer}{``slidescentered'' is obsolete. Use ``c'' instead}
   \beamer@centeredtrue}
-\DeclareOptionBeamer{slidestop}{
+\DeclareOptionBeamer{slidestop}{%
   \ClassWarning{beamer}{``slidestop'' is obsolete. Use ``t'' instead}
   \beamer@centeredfalse}
 \DeclareOptionBeamer{sans}{%
@@ -238,13 +229,13 @@
   \def\mathfamilydefault{\rmdefault}
   \beamer@sansmathfalse
 }
-\DeclareOptionBeamer{mathsans}{
+\DeclareOptionBeamer{mathsans}{%
   \ClassWarning{beamer}{``mathsans'' is obsolete. Use font theme ``serif'' with option ``stillsansserifmath''}
   \def\mathfamilydefault{\sfdefault}\beamer@sansmathtrue}
-\DeclareOptionBeamer{mathserif}{
+\DeclareOptionBeamer{mathserif}{%
   \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}
   \def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
-\DeclareOptionBeamer{professionalfont}{
+\DeclareOptionBeamer{professionalfont}{%
   \ClassWarning{beamer}{``professionalfont'' is obsolete. Use font theme ``professionalfonts'' instead}
   \beamer@suppressreplacementstrue}
 
@@ -252,8 +243,6 @@
 \def\familydefault{\sfdefault}
 \def\mathfamilydefault{\sfdefault}
 \beamer@sansmathtrue
-
-
 
 \PassOptionsToPackage{bookmarks=true,%
   bookmarksopen=true,%
@@ -271,13 +260,13 @@
 \DeclareOptionBeamer{ucs}{%
   \ifpdf
     \PassOptionsToPackage{pdftex,unicode}{hyperref}
-    \def\beamer@loaducs{
+    \def\beamer@loaducs{%
       \RequirePackage[hyperref]{ucs}%
       \AtBeginDocument{\PreloadUnicodePage{0}}%
       \AtBeginDocument{\PreloadUnicodePage{1}}%
     }
   \else    
-    \def\beamer@loaducs{
+    \def\beamer@loaducs{%
       \RequirePackage{ucs}%
       \AtBeginDocument{\PreloadUnicodePage{0}}%
       \AtBeginDocument{\PreloadUnicodePage{1}}%
@@ -287,10 +276,10 @@
 \DeclareOptionBeamer{utf8x}{\ExecuteOptionsBeamer{ucs}%
   \g@addto@macro\beamer@loaducs{\RequirePackage[utf8x]{inputenc}}%
 }
-\DeclareOptionBeamer{utf8}{
-  \ClassWarning{beamer}{This option works no longer loads ucs.}
-  \RequirePackage[utf8]{inputenc}
-  \PassOptionsToPackage{unicode}{hyperref}
+\DeclareOptionBeamer{utf8}{%
+  \ClassWarning{beamer}{This option works no longer loads ucs.}%
+  \RequirePackage[utf8]{inputenc}%
+  \PassOptionsToPackage{unicode}{hyperref}%
 }
 
 %
@@ -298,9 +287,9 @@
 % Default value is set right after declaring width and height
 % because it doesn't work otherwise.
 %
-\newlength\beamer@paperwidth%
+\newlength\beamer@paperwidth
 \beamer@paperwidth 12.80cm%
-\newlength\beamer@paperheight%
+\newlength\beamer@paperheight
 \beamer@paperheight 9.60cm%
 
 \DeclareOptionBeamer{aspectratio}[43]{%

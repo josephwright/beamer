@@ -49,8 +49,8 @@
   }
   {}
 
+% Option management
 \RequirePackage{beamerbaseoptions}
-% For option management
 
 \ifbeamer@articleutf
   \RequirePackage[utf8]{inputenc}
@@ -58,8 +58,6 @@
 
 \ifbeamer@articlehyperref
   \RequirePackage[pdfborder={0 0 0},bookmarksnumbered]{hyperref}
-  % For hyperlinks
-
   \hypersetup{pdfcreator={LaTeX with Beamer class (article mode)}}
   \ifbeamer@articleutf
     \hypersetup{unicode=true}
@@ -68,12 +66,10 @@
 
 \ifbeamer@articlexcolor
   \RequirePackage[override]{xcolor}
-  % For color support
 \fi
 
-\RequirePackage{beamerbaserequires}
 % Beamer packages required both by presentation and article modes
-
+\RequirePackage{beamerbaserequires}
 
 % Default article templates:
 \defbeamertemplate<article>*{frame begin}{default}{}
