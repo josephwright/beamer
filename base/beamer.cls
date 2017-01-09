@@ -11,7 +11,7 @@
 % See the file doc/licenses/LICENSE for more details.
 
 \ProvidesClass{beamer}
-  [2017/01/01 v3.38 A class for typesetting presentations]
+  [2017/01/09 v3.39 A class for typesetting presentations]
 
 % Force e-TeX
 \RequirePackage{etoolbox}
