@@ -14,7 +14,7 @@
 
 \newrobustcmd*\ProcessOptionsBeamer{%
   \let\@tempa\@empty
-  \ifx\@currext\@clsextension%
+  \ifx\@currext\@clsextension
   \else
   \@for\CurrentOption:=\@classoptionslist\do{%
     \@ifundefined{KV@\@currname @\CurrentOption}%
@@ -22,13 +22,13 @@
   \fi
   \edef\@tempa{%
     \noexpand\setkeys{\@currname}{\@tempa\@ptionlist{\@currname.\@currext}}}%
-  \let\beamer@origkverr\KV@errx%
-  \let\beamer@origxkverr\XKV@err%
+  \let\beamer@origkverr\KV@errx
+  \let\beamer@origxkverr\XKV@err
   \let\KV@errx=\@gobble% never mind
   \let\XKV@err=\@gobble% never mind
-  \@tempa%
-  \let\KV@errx\beamer@origkverr%
-  \let\XKV@err\beamer@origxkverr%
+  \@tempa
+  \let\KV@errx\beamer@origkverr
+  \let\XKV@err\beamer@origxkverr
   \AtEndOfPackage{\let\@unprocessedoptions\relax}}
 
 \newrobustcmd\ExecuteOptionsBeamer[1]{%
@@ -37,15 +37,15 @@
 \newrobustcmd\DeclareOptionBeamer[1]{\@ifnextchar[{\beamer@dokv{#1}}{\beamer@dokv{#1}[]}}
 \long\def\beamer@dokv#1[#2]#3{\define@key{\@currname}{#1}[{#2}]{#3}}
 
-\def\beamer@filterclassoptions{
-  \def\beamer@filteredclassoptionslist{}
+\def\beamer@filterclassoptions{%
+  \def\beamer@filteredclassoptionslist{}%
   \@for\CurrentOption:=\@classoptionslist\do{%
     \ifx\CurrentOption\@empty\else
     \@expandtwoargs\in@{=}{\CurrentOption}%
     \ifin@
     \else
     \edef\beamer@filteredclassoptionslist{%
-      \beamer@filteredclassoptionslist,\CurrentOption}
+      \beamer@filteredclassoptionslist,\CurrentOption}%
     \fi
     \fi
   }%
