@@ -339,28 +339,23 @@
 % Filter class option list
 \beamer@filterclassoptions
 
-
+% Low-level graphic drawing and advanced color support.
 \RequirePackage{pgfcore}
-% We need only the core stuff.
-
 \RequirePackage{xxcolor}
-% For color management (comes with pgf).
 
-\RequirePackage{atbegshi}
 % Normally loaded by hyperref but to be on the safe side ...
+\RequirePackage{atbegshi}
 
 \RequirePackage[implicit=false]{hyperref}
-% For hyperlinks
 
 \hypersetup{pdfcreator={LaTeX with Beamer class}}
 
-% Coding stuff
+% Encoding stuff
 \beamer@loaducs
 \beamer@hypercjk
 
-
-\RequirePackage{beamerbaserequires}
 % Beamer packages required both by presentation and article modes
+\RequirePackage{beamerbaserequires}
 
 % Defaults
 \normalfont
