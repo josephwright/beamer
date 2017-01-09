@@ -288,32 +288,32 @@
 % because it doesn't work otherwise.
 %
 \newlength\beamer@paperwidth
-\beamer@paperwidth 12.80cm%
+\setlength\beamer@paperwidth{12.80cm}
 \newlength\beamer@paperheight
-\beamer@paperheight 9.60cm%
+\setlength\beamer@paperheight{9.60cm}
 
 \DeclareOptionBeamer{aspectratio}[43]{%
   \ifnum#1=1610%
-    \beamer@paperwidth 16.00cm%
-    \beamer@paperheight 10.00cm%
+    \setlength\beamer@paperwidth{16.00cm}%
+    \setlength\beamer@paperheight{10.00cm}%
   \else\ifnum#1=169%
-    \beamer@paperwidth 16.00cm%
-    \beamer@paperheight 9.00cm%
+    \setlength\beamer@paperwidth{16.00cm}%
+    \setlength\beamer@paperheight{9.00cm}%
   \else\ifnum#1=149%
-    \beamer@paperwidth 14.00cm%
-    \beamer@paperheight 9.00cm%
+    \setlength\beamer@paperwidth{14.00cm}%
+    \setlength\beamer@paperheight{9.00cm}%
   \else\ifnum#1=54%
-    \beamer@paperwidth 12.50cm%
-    \beamer@paperheight 10.00cm%
+    \setlength\beamer@paperwidth{12.50cm}%
+    \setlength\beamer@paperheight{10.00cm}%
   \else\ifnum#1=43%
-    \beamer@paperwidth 12.80cm%
-    \beamer@paperheight 9.60cm%
+    \setlength\beamer@paperwidth{12.80cm}%
+    \setlength\beamer@paperheight{9.60cm}%
   \else\ifnum#1=32%
-    \beamer@paperwidth 13.50cm%
-    \beamer@paperheight 9.00cm%
+    \setlength\beamer@paperwidth{13.50cm}%
+    \setlength\beamer@paperheight{9.00cm}%
   \else\ifnum#1=141%
-    \beamer@paperwidth 14.85cm%
-    \beamer@paperheight10.50cm%
+    \setlength\beamer@paperwidth{14.85cm}%
+    \setlength\beamer@paperheight{10.50cm}%
   \fi\fi\fi\fi\fi\fi\fi%
 }
 
