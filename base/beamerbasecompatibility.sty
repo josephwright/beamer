@@ -198,15 +198,14 @@
 \providecommand\ext@table{}
 \providecommand\ext@figure{}
 
-
-
-
 %
 % Obsolete commands from old versions of beamer
 %
 \mode
 <all>
 {
+  \let\beamer@ifempty=\ifblank
+
   \let\beamer@verb@egroup=\verb@egroup
 
   \def\beamer@setb{\setbox0=\copy}
