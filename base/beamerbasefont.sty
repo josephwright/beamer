@@ -45,7 +45,8 @@
   {\expandafter\def\csname beamer@thmfinherits@\beamer@temp\endcsname{%
     \@for\@temp:={#1}\do{\expandafter\usebeamerfont\expandafter{\@temp}}}}
 
-\def\setbeamerfont{\@ifstar{\beamer@clearbeamerfont}{\beamer@setbeamerfont}}
+\newrobustcmd*\setbeamerfont{%
+  \@ifstar{\beamer@clearbeamerfont}{\beamer@setbeamerfont}}
 
 \newcommand\beamer@clearbeamerfont[2]{%
   \def\beamer@temp{#1}
@@ -57,7 +58,8 @@
   \setkeys{beamerthm}{#2}
 }
 
-\def\usebeamerfont{\@ifstar{\reset@font\beamer@usebeamerfont}{\beamer@usebeamerfont}}
+\newrobustcmd*\usebeamerfont{%
+  \@ifstar{\reset@font\beamer@usebeamerfont}{\beamer@usebeamerfont}}
 
 \newcommand\beamer@usebeamerfont[1]{%
   \csname beamer@thmfinherits@#1\endcsname%
