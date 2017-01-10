@@ -15,25 +15,25 @@
 <presentation>
 {
   \def\beamer@calltheme#1#2#3{%
-    \def\beamer@themelist{#2}
+    \def\beamer@themelist{#2}%
     \@for\beamer@themename:=\beamer@themelist\do
     {\usepackage[{#1}]{#3\beamer@themename}}}
 
-  \newcommand\usetheme[2][]{\beamer@calltheme{#1}{#2}{beamertheme}}
-  \newcommand\usecolortheme[2][]{\beamer@calltheme{#1}{#2}{beamercolortheme}}
-  \newcommand\usefonttheme[2][]{\beamer@calltheme{#1}{#2}{beamerfonttheme}}
-  \newcommand\useoutertheme[2][]{\beamer@calltheme{#1}{#2}{beameroutertheme}}
-  \newcommand\useinnertheme[2][]{\beamer@calltheme{#1}{#2}{beamerinnertheme}}
+  \newrobustcmd*\usetheme[2][]{\beamer@calltheme{#1}{#2}{beamertheme}}
+  \newrobustcmd*\usecolortheme[2][]{\beamer@calltheme{#1}{#2}{beamercolortheme}}
+  \newrobustcmd*\usefonttheme[2][]{\beamer@calltheme{#1}{#2}{beamerfonttheme}}
+  \newrobustcmd*\useoutertheme[2][]{\beamer@calltheme{#1}{#2}{beameroutertheme}}
+  \newrobustcmd*\useinnertheme[2][]{\beamer@calltheme{#1}{#2}{beamerinnertheme}}
 }
 
 \mode
 <article>
 {
-  \newcommand\usetheme[2][]{}
-  \newcommand\usecolortheme[2][]{}
-  \newcommand\usefonttheme[2][]{}
-  \newcommand\useoutertheme[2][]{}
-  \newcommand\useinnertheme[2][]{}
+  \newrobustcmd*\usetheme[2][]{}
+  \newrobustcmd*\usecolortheme[2][]{}
+  \newrobustcmd*\usefonttheme[2][]{}
+  \newrobustcmd*\useoutertheme[2][]{}
+  \newrobustcmd*\useinnertheme[2][]{}
 }
 
 \mode
