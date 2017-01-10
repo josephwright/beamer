@@ -49,24 +49,24 @@
   \@ifstar{\beamer@clearbeamerfont}{\beamer@setbeamerfont}}
 
 \newcommand\beamer@clearbeamerfont[2]{%
-  \def\beamer@temp{#1}
-  \setkeys{beamerthm}{size={},shape={},series={},family={},parent={}}
-  \setkeys{beamerthm}{#2}
+  \def\beamer@temp{#1}%
+  \setkeys{beamerthm}{size={},shape={},series={},family={},parent={}}%
+  \setkeys{beamerthm}{#2}%
 }
 \newcommand\beamer@setbeamerfont[2]{%
-  \def\beamer@temp{#1}
-  \setkeys{beamerthm}{#2}
+  \def\beamer@temp{#1}%
+  \setkeys{beamerthm}{#2}%
 }
 
 \newrobustcmd*\usebeamerfont{%
   \@ifstar{\reset@font\beamer@usebeamerfont}{\beamer@usebeamerfont}}
 
 \newcommand\beamer@usebeamerfont[1]{%
-  \csname beamer@thmfinherits@#1\endcsname%
-  \csname beamer@thmfsize@#1\endcsname%
-  \csname beamer@thmfshape@#1\endcsname%
-  \csname beamer@thmfseries@#1\endcsname%
-  \csname beamer@thmffamily@#1\endcsname%
+  \csname beamer@thmfinherits@#1\endcsname
+  \csname beamer@thmfsize@#1\endcsname
+  \csname beamer@thmfshape@#1\endcsname
+  \csname beamer@thmfseries@#1\endcsname
+  \csname beamer@thmffamily@#1\endcsname
   \selectfont}
 
 
