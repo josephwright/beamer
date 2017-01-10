@@ -315,9 +315,8 @@
 \DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
 
-
-\newcommand\Tiny{\@setfontsize\Tiny{4}{5}}
-\newcommand\TINY{\@setfontsize\Tiny{3}{4}}
+\newrobustcmd*\Tiny{\@setfontsize\Tiny{4}{5}}
+\newrobustcmd*\TINY{\@setfontsize\Tiny{3}{4}}
 
 \mode
 <article>
@@ -325,10 +324,9 @@
   \let\Tiny=\tiny
   \let\TINY=\tiny
 
-  \newcommand\setbeamerfont{\@ifstar{\@gobbletwo}{\@gobbletwo}}
-  \newcommand\usebeamerfont{\@ifstar{\beamer@optgog}{\beamer@optgog}}
+  \newrobustcmd\*setbeamerfont{\@ifstar{\@gobbletwo}{\@gobbletwo}}
+  \newrobustcmd*\usebeamerfont{\@ifstar{\beamer@optgog}{\beamer@optgog}}
 }
-
 
 \mode
 <all>
