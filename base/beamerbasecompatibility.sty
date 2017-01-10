@@ -103,19 +103,18 @@
 % but as of geometry v5.0, it is no longer provided.
 %
 \ifx\Gm@lmargin\@undefined
-\def\Gm@lmargin{\Geom@lmargin}\def\Gm@rmargin{\Geom@rmargin}
+  \def\Gm@lmargin{\Geom@lmargin}
+  \def\Gm@rmargin{\Geom@rmargin}
 \else
-\geometry{includeheadfoot}
+  \geometry{includeheadfoot}
 \fi
-
-
 
 %
 % Fix deluxetabular floats
 %
-\AtBeginDocument{
+\AtBeginDocument{%
   \def\@plano@float@#1{\begin{table}}
-  \def\end@plano@float@{\end{table}}
+  \def\end@plano@float@{\end{table}}%
 }
 
 %
@@ -131,8 +130,8 @@
 % Heiko's fix for correct generation of section* and subsection* bookmarks
 %
 \g@addto@macro\beamer@lastminutepatches{%
-  \long\def\@LongEmpty{}
-  \newcommand*{\org@beamer@section}{}
+  \long\def\@LongEmpty{}%
+  \newcommand*{\org@beamer@section}{}%
   \let\org@beamer@section\beamer@section{}%
   \let\org@writebookmark\Hy@writebookmark{}%
   \long\def\beamer@section[#1]#2{%
@@ -146,8 +145,8 @@
       \def\Hy@writebookmark##1##2##3##4##5{}%
     \fi
     \org@beamer@section[{#1}]{#2}%
-  }
-  \newcommand*{\org@beamer@subsection}{}
+  }%
+  \newcommand*{\org@beamer@subsection}{}%
   \let\org@beamer@subsection\beamer@subsection{}%
   \long\def\beamer@subsection[#1]#2{%
     \let\Hy@writebookmark\org@writebookmark
@@ -160,7 +159,7 @@
       \def\Hy@writebookmark##1##2##3##4##5{}%
     \fi
     \org@beamer@subsection[{#1}]{#2}%
-  }
+  }%
 }
 
 %
