@@ -10,13 +10,13 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
-\ifbeamer@amssymb
-\RequirePackage{amssymb}
 % For \blacktriangleright; not explicitly required by article, but can cause
 % weird situations if users find that symbols works in presentation, but not
 % in article mode.
 % However, some classes or font packages clash with amssymb, so allow to
 % disable auto-loading optionally.
+\ifbeamer@amssymb
+  \RequirePackage{amssymb}
 \fi
 
 \mode
