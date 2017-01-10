@@ -52,6 +52,11 @@
 {
   \newcommand<>\frametitle[2][]{\only#3{\gdef\insertframetitle{#2}%
       \@ifnextchar\framesubtitle{\beamer@donextsubtitle}{\usebeamertemplate{frametitle}}}}
+   \renewcommand<>\framesubtitle[1]{%
+     \only#2{%
+       \beamer@ifempty{#1}
+         {\usebeamertemplate{frametitle}}
+         {\gdef\insertframesubtitle{{#1}}\beamer@aftersubtitle}}}
   \def\beamer@donextsubtitle{%
     % Ugly hack...
     \def\beamer@aftersubtitle{\usebeamertemplate{frametitle}\let\beamer@aftersubtitle=\relax}
