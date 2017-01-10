@@ -51,34 +51,31 @@
 %
 \let\beamer@origdocument\document
 \def\document{%
-  \beamer@firstminutepatches%
-  \endgroup%
-
+    \beamer@firstminutepatches
+  \endgroup
   \AtBeginDocument{% fix spanish.ldf's meddling with < and >
     %
     % Fix spanish.ldf's meddling with < and >
     %
-    \@ifundefined{deactivatequoting}{}{\deactivatequoting}
-
+    \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
     % Fix meddline with enumerate items
-    \renewcommand\theenumi{\@arabic\c@enumi}
-    \renewcommand\theenumii{\@arabic\c@enumii}
-    \renewcommand\theenumiii{\@arabic\c@enumiii}
-  }
-
+    \renewcommand\theenumi{\@arabic\c@enumi}%
+    \renewcommand\theenumii{\@arabic\c@enumii}%
+    \renewcommand\theenumiii{\@arabic\c@enumiii}%
+  }%
   \AtBeginDocument{% fix frenchb.ldf's meddling with itemize and :
     \let\labelitemi\beamer@labelitemi
     \let\labelitemii\beamer@labelitemii
     \let\itemize\beamer@itemize
     \let\list\beamer@list
-    \let\@trivlist\beamer@@trivlist%
-    \catcode`<=12\catcode`>=12}
-
-  \begingroup\beamer@origdocument%
-  \beamer@lastminutepatches%
-  \ifbeamer@ignorenonframe%
-    \expandafter\mode\expandafter*%
-  \fi}
+    \let\@trivlist\beamer@@trivlist
+    \catcode`<=12 \catcode`>=12 }%
+  \begingroup
+    \beamer@origdocument
+    \beamer@lastminutepatches
+    \ifbeamer@ignorenonframe
+      \expandafter\mode\expandafter*%
+    \fi}
 
 \mode
 <article>
@@ -91,16 +88,13 @@
   \g@addto@macro\beamer@lastminutepatches{%
     \ifbeamer@articleactive
     \else
-      \catcode`<=12\catcode`>=12
+      \catcode`<=12 %
+      \catcode`>=12 %
     \fi
     }
 }
 
-
 \AtBeginDocument{\def\es@itemize#1#2#3#4{}}% fix spanish.ldf's with \itemize
-
-
-
 
 %
 % Fix for older versions of geometry
