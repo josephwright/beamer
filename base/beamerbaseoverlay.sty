@@ -53,14 +53,17 @@
 
 \newrobustcmd*\action{\@ifnextchar<{\beamer@parsedaction}{\expandafter\beamer@parsedaction\beamer@defaultospec}}
 \long\def\beamer@parsedaction<#1>#2{%
-  \gdef\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
-  {\beamer@masterdecode{#1}}%
-  \ifx\beamer@decodefound\beamer@plus%
+  \gdef\beamer@doifnotinframe{}%
+  \def\beamer@doifinframe{}%
+  \begingroup
+    \beamer@masterdecode{#1}%
+  \endgroup
+  \ifx\beamer@decodefound\beamer@plus
     \long\def\beamer@todo{#2}%
-  \else%
-    \expandafter\long\expandafter\def\expandafter\beamer@todo%
+  \else
+    \expandafter\long\expandafter\def\expandafter\beamer@todo
     \expandafter{\expandafter\uncover\expandafter<\expandafter a\expandafter l\expandafter l\expandafter:\beamer@decodefound>{#2}}%
-  \fi%
+  \fi
   \expandafter\beamer@processactions\beamer@decaction{}%
   \beamer@todo}
 
@@ -74,15 +77,18 @@
 
 \newrobustcmd*\actionenv{\@ifnextchar<{\beamer@parsedactionenv}{\expandafter\beamer@parsedactionenv\beamer@defaultospec}}
 \def\beamer@parsedactionenv<#1>{%
-  \gdef\beamer@doifnotinframe{}\def\beamer@doifinframe{}%
-  {\beamer@masterdecode{#1}}%
-  \ifx\beamer@decodefound\beamer@plus%
+  \gdef\beamer@doifnotinframe{}%
+  \def\beamer@doifinframe{}%
+  \begingroup
+    \beamer@masterdecode{#1}%
+  \endgroup
+  \ifx\beamer@decodefound\beamer@plus
     \def\beamer@todobegin{}%
     \def\beamer@todoend{}%
-  \else%
+  \else
     \edef\beamer@todobegin{\noexpand\begin{uncoverenv}<all:\beamer@decodefound>}%
     \def\beamer@todoend{\end{uncoverenv}}%
-  \fi%
+  \fi
   \expandafter\beamer@processactionsbegin\beamer@decaction{}%
   \expandafter\beamer@processactionsend\beamer@decaction{}%
   \beamer@todobegin}
@@ -95,14 +101,12 @@
   \def\beamer@todobegin{\begin{#2env}<all:#3>#1}%
   \beamer@processactionsbegin}
 
-
 \def\beamer@processactionsend#1{%
   \ifblank{#1}{}{%
     \expandafter\beamer@@processactionsend\expandafter{\beamer@todoend}#1}}
 \long\def\beamer@@processactionsend#1#2<#3>{%
   \def\beamer@todoend{#1\end{#2env}}%
   \beamer@processactionsend}
-
 
 \def\beamer@defaultospec{<*>}
 \def\beamer@emptyospec{<*>}
