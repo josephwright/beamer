@@ -736,12 +736,12 @@
 {
   \expandafter\let\expandafter\beamer@origbreak\expandafter=%
     \csname\expandafter\@gobble\string\\ \endcsname% evil trickery to add a space to the name
-  \DeclareRobustCommand\\{\beamer@ifnextcharospec{\beamer@breaker}{\beamer@@breaker}}
+  \DeclareRobustCommand\\{\@ifnextchar<{\beamer@breaker}{\beamer@@breaker}}
   \def\beamer@breaker<#1>{\only<#1>{\beamer@origbreak}}
   \def\beamer@@breaker{\ifbeamer@inframe\else\expandafter\beamer@origbreak\fi}
 
   \let\beamer@origbreakcenter=\@centercr
-  \def\@centercr{\beamer@ifnextcharospec{\beamer@breakercenter}{\beamer@@breakercenter}}
+  \def\@centercr{\@ifnextchar<{\beamer@breakercenter}{\beamer@@breakercenter}}
   \def\beamer@breakercenter<#1>{\only<#1>{\beamer@origbreakcenter}}
   \def\beamer@@breakercenter{\ifbeamer@inframe\else\expandafter\beamer@origbreakcenter\fi}
 }
