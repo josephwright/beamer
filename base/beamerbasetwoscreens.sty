@@ -19,43 +19,41 @@
 \newif\ifbeamer@dosecondmode
 
 \defbeameroption{previous slide on second screen}[right]%
-{
-  \pgfpagesuselayout{two screens with lagging second}[second #1]
+{%
+  \pgfpagesuselayout{two screens with lagging second}[second #1]%
   \beamer@twoscreenstexttrue
   \nofiles
 }
 
 \defbeameroption{second mode text on second screen}[right]%
-{
-  \pgfpagesuselayout{two screens with optional second}[second #1]
+{%
+  \pgfpagesuselayout{two screens with optional second}[second #1]%
   \beamer@twoscreenstexttrue
 }
 
 \defbeameroption{always typeset second mode}[true]%
-{
-  \def\beamer@defaultdosecondmode{#1}
+{%
+  \def\beamer@defaultdosecondmode{#1}%
 }
 \def\beamer@defaultdosecondmode{false}
-
 
 \long\def\beamer@dosecondscreennow#1{% called from \beamer@doseveralframes
   \ifbeamer@dosecondmode%
     {%
-      \clearpage%
-      \def\beamer@currentmode{second}
+      \clearpage
+      \def\beamer@currentmode{second}%
       \gdef\beamer@doifnotinframe{}%
       \def\beamer@doifinframe{\begin{beamer@frameslide}%
           #1%
         \end{beamer@frameslide}%
         \pgfpagescurrentpagewillbelogicalpage{2}%
-        \clearpage%
+        \clearpage
       }%
       \beamer@masterdecode{\beamer@whichframes}%
-      \beamer@donow%
+      \beamer@donow
     }%
-  \fi%
+  \fi
 }
-
 
 \mode
 <all>
