@@ -205,13 +205,24 @@
 {
   \ifx\includegraphics\@undefined
   \else
-    \renewcommand<>\includegraphics[2][]{\only#3{\beameroriginal\includegraphics[{#1}]{#2}}\ignorespaces}
-    % Deal with star case (unique for overlay-aware commands)
-    \let\beamer@includegraphics@maybe@star\includegraphics
-    \DeclareRobustCommand\includegraphics{%
+    \renewcommand<>\includegraphics{%
       \@ifstar
-        {\Gin@cliptrue \beamer@includegraphics@maybe@star}
-        {\Gin@clipfalse \beamer@includegraphics@maybe@star}%
+        {\Gin@cliptrue}
+        {\Gin@clipfalse}%
+      \@ifnextchar[%]
+         {\beamer@includegraphics{#1}}
+         {\beamer@@@includegraphics{#1}{}}%
+    }
+    \long\def\beamer@includegraphics#1[#2]{%
+      \@ifnextchar[%]
+        {\beamer@@includegraphics{#1}{#2}}
+        {\beamer@@@includegraphics{#1}{#2}}%
+    }
+    \long\def\beamer@@includegraphics#1#2[#3]#4{%
+      \only#1{\beameroriginal\includegraphics[{#2}][{#3}]{#4}}%
+    }
+    \long\def\beamer@@@includegraphics#1#2#3{%
+      \only#1{\beameroriginal\includegraphics[{#2}]{#3}}%
     }
   \fi
 
