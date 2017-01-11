@@ -55,9 +55,7 @@
 \long\def\beamer@parsedaction<#1>#2{%
   \gdef\beamer@doifnotinframe{}%
   \def\beamer@doifinframe{}%
-  \begingroup
-    \beamer@masterdecode{#1}%
-  \endgroup
+  \beamer@masterdecode{#1}%
   \ifx\beamer@decodefound\beamer@plus
     \long\def\beamer@todo{#2}%
   \else
@@ -79,9 +77,7 @@
 \def\beamer@parsedactionenv<#1>{%
   \gdef\beamer@doifnotinframe{}%
   \def\beamer@doifinframe{}%
-  \begingroup
-    \beamer@masterdecode{#1}%
-  \endgroup
+  \beamer@masterdecode{#1}%
   \ifx\beamer@decodefound\beamer@plus
     \def\beamer@todobegin{}%
     \def\beamer@todoend{}%
