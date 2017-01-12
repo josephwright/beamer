@@ -167,9 +167,11 @@
 \def\beamer@@newcom#1[#2]{\@ifnextchar[{\beamer@newcomopt{#1}{#2}}{\beamer@newcomnoopt{#1}{#2}}}
 \long\def\beamer@newcomnoopt#1#2#3{%
   \ifnum#2=0\relax%
-    \expandafter\def\expandafter#1\expandafter{\expandafter\beamer@sortzero\expandafter{\csname beamerx@\string#1\endcsname}}%
+    \protected\edef#1%
+      {\noexpand\beamer@sortzero\csexpandonce{beamerx@\string#1}}%
   \else
-    \expandafter\def\expandafter#1\expandafter{\expandafter\beamer@sort\expandafter{\csname beamerx@\string#1\endcsname}{#2}}%
+    \protected\edef#1%
+      {\noexpand\beamer@sort\csexpandonce{beamerx@\string#1}{#2}}%
   \fi%
   \beamer@argscount=#2\relax%
   \advance\beamer@argscount by 1\relax%
