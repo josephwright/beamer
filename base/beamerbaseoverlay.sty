@@ -185,9 +185,15 @@
 }
 \long\def\beamer@newcomopt#1#2[#3]#4{%
   \expandafter\def\expandafter#1\expandafter{\expandafter\beamer@presort\expandafter{\csname beamerx@\string#1\endcsname}{#2}{#3}}%
-  \beamer@argscount=#2\relax%
-  \advance\beamer@argscount by 1\relax%
-  \expandafter\newcommand\csname beamerx@\string#1\endcsname[\beamer@argscount]{#4}%
+  \beamer@argscount=#2\relax
+  \advance\beamer@argscount by 1\relax
+  \ifx\l@ngrel@x\relax
+    \expandafter\expandafter\expandafter\newcommand
+      \expandafter\expandafter\expandafter*%
+  \else
+    \expandafter\expandafter\expandafter\newcommand
+  \fi
+    \csname beamerx@\string#1\endcsname[\beamer@argscount]{#4}%
 }
 
 \let\beamer@origrenewcommand=\renewcommand
