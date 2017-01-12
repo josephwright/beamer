@@ -219,7 +219,7 @@
 \long\def\beamer@preget#1<#2>{\def\beamer@ospec{<#2>}\beamer@precheckb{#1}}
 \long\def\beamer@precheckb#1{\@ifnextchar[{\beamer@pregetb}{\beamer@pregetb[{#1}]}}
 \long\def\beamer@pregetb[#1]{%
-  \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
+  \expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
   \advance\beamer@argscount by-1\relax%
   \beamer@parseargs%
 }
