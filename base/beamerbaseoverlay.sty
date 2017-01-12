@@ -213,33 +213,32 @@
 \long\def\beamer@presort#1#2#3{%
   \def\beamer@todo{#1}%
   \def\beamer@ospec{}%
-  \beamer@argscount=#2\relax%
+  \beamer@argscount=#2\relax
   \beamer@prechecka{#3}}
 \long\def\beamer@prechecka#1{\@ifnextchar<{\beamer@preget{#1}}{\beamer@precheckb{#1}}}
 \long\def\beamer@preget#1<#2>{\def\beamer@ospec{<#2>}\beamer@precheckb{#1}}
 \long\def\beamer@precheckb#1{\@ifnextchar[{\beamer@pregetb}{\beamer@pregetb[{#1}]}}
 \long\def\beamer@pregetb[#1]{%
   \expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
-  \advance\beamer@argscount by-1\relax%
-  \beamer@parseargs%
+  \advance\beamer@argscount by-1\relax
+  \beamer@parseargs
 }
 
 \def\beamer@sortzero#1{\@ifnextchar<{\beamer@sortzeroread{#1}}{#1{}}}
 \def\beamer@sortzeroread#1<#2>{#1{<#2>}}
 
-
 \def\beamer@sort#1#2{%
   \def\beamer@todo{#1}%
   \def\beamer@ospec{}%
-  \beamer@argscount=#2\relax%
+  \beamer@argscount=#2\relax
   \beamer@parseargs}
 
 \def\beamer@parseargs{%
-  \ifnum\beamer@argscount=0\relax%
-    \let\next=\beamer@finalargscheck%
-  \else%
-    \let\next=\beamer@lookforarg%
-  \fi%
+  \ifnum\beamer@argscount=0\relax
+    \let\next=\beamer@finalargscheck
+  \else
+    \let\next=\beamer@lookforarg
+  \fi
   \next}
 \def\beamer@lookforarg{%
   \@ifnextchar<\beamer@foundspec\beamer@readarg}
@@ -248,17 +247,14 @@
   \beamer@lookforarg}
 \long\def\beamer@readarg#1{%
   \expandafter\long\expandafter\def\expandafter\beamer@todo\expandafter{\beamer@todo{#1}}%
-  \advance\beamer@argscount by-1\relax%
-  \beamer@parseargs%
+  \advance\beamer@argscount by-1\relax
+  \beamer@parseargs
 }
 
 \def\beamer@finalargscheck{\@ifnextchar<\beamer@finalspec\beamer@finalnospec}
 \def\beamer@finalspec<#1>{\def\beamer@ospec{<#1>}\beamer@finalnospec}
 \def\beamer@finalnospec{%
   \expandafter\beamer@todo\expandafter{\beamer@ospec}}
-
-
-
 
 \mode
 <presentation>
