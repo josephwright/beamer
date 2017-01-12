@@ -131,6 +131,9 @@
 \def\beamer@newenv<>{\@star@or@long\beamer@new@environment}
 \def\beamer@new@environment#1{\@ifnextchar[{\beamer@@newenv{#1}}{\beamer@newenvnoopt{#1}{0}}}
 \def\beamer@@newenv#1[#2]{\@ifnextchar[{\beamer@newenvopt{#1}{#2}}{\beamer@newenvnoopt{#1}{#2}}}
+% The beamer syntax for \newenvironment<> follows the pattern for \newcommand<>
+% and allows the overlay spec anywhere: the same code path is therefore used for
+% both.
 \long\def\beamer@newenvnoopt#1#2#3#4{%
   \expandafter\newcommand\expandafter<\expandafter>\csname#1\endcsname[#2]{#3}%
   \expandafter\long\expandafter\def\csname end#1\endcsname{#4}%
