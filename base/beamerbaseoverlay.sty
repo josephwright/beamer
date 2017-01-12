@@ -211,7 +211,7 @@
 % To handle that, beamer first collects up material potentially
 % including overlay info before passing to the 'real' definition.
 \long\def\beamer@presort#1#2#3{%
-  \long\def\beamer@todo{#1}%
+  \def\beamer@todo{#1}%
   \def\beamer@ospec{}%
   \beamer@argscount=#2\relax%
   \beamer@prechecka{#3}}
@@ -229,7 +229,7 @@
 
 
 \def\beamer@sort#1#2{%
-  \long\def\beamer@todo{#1}%
+  \def\beamer@todo{#1}%
   \def\beamer@ospec{}%
   \beamer@argscount=#2\relax%
   \beamer@parseargs}
