@@ -207,7 +207,9 @@
   \expandafter\let\csname beamerx@\string#1\endcsname\@undefined
   \newcommand<>#1}
 
-
+% The class allows overlays specs at any position in a command.
+% To handle that, beamer first collects up material potentially
+% including overlay info before passing to the 'real' definition.
 \long\def\beamer@presort#1#2#3{%
   \long\def\beamer@todo{#1}%
   \def\beamer@ospec{}%
