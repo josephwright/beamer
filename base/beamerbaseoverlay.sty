@@ -166,15 +166,15 @@
 \def\beamer@new@command#1{\@ifnextchar[{\beamer@@newcom{#1}}{\beamer@newcomnoopt{#1}{0}}}
 \def\beamer@@newcom#1[#2]{\@ifnextchar[{\beamer@newcomopt{#1}{#2}}{\beamer@newcomnoopt{#1}{#2}}}
 \long\def\beamer@newcomnoopt#1#2#3{%
-  \ifnum#2=0\relax%
+  \ifnum#2=0\relax
     \protected\edef#1%
       {\noexpand\beamer@sortzero\csexpandonce{beamerx@\string#1}}%
   \else
     \protected\edef#1%
       {\noexpand\beamer@sort\csexpandonce{beamerx@\string#1}{#2}}%
-  \fi%
-  \beamer@argscount=#2\relax%
-  \advance\beamer@argscount by 1\relax%
+  \fi
+  \beamer@argscount=#2\relax
+  \advance\beamer@argscount by 1\relax
   \expandafter\newcommand\csname beamerx@\string#1\endcsname[\beamer@argscount]{#3}%
 }
 \long\def\beamer@newcomopt#1#2[#3]#4{%
