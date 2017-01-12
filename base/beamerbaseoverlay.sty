@@ -143,7 +143,6 @@
   \expandafter\long\expandafter\def\csname end#1\endcsname{#5}%
 }
 
-
 \let\beamer@origrenewenvironment=\renewenvironment
 
 \def\renewenvironment{\@ifnextchar<{\beamer@renewenv}{\beamer@origrenewenvironment}}
@@ -153,7 +152,6 @@
   \edef\beamer@do{\csname endoriginal#1\endcsname=\expandafter\noexpand\csname end#1\endcsname}
   \expandafter\let\beamer@do%
   \newenvironment<>{#1}}
-
 
 %
 % newcommand extension
