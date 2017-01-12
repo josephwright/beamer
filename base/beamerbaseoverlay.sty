@@ -148,11 +148,11 @@
 \def\renewenvironment{\@ifnextchar<{\beamer@renewenv}{\beamer@origrenewenvironment}}
 \def\beamer@renewenv<>#1{%
   \ifcsdef{original#1}%
-    {}%
     {%
       \csletcs{original#1}{#1}%
       \csletcs{endoriginal#1}{end#1}%
     }%
+    {}%
   \fi
   \csundef{#1}%
   \newenvironment<>{#1}}
