@@ -205,7 +205,7 @@
   \ifcsundef{@orig\string#1}%
     {\cslet{@orig\string#1}#1}%
     {}%
-  \expandafter\let\csname beamerx@\string#1\endcsname\@undefined
+  \csundef{beamerx@\string#1}%
   \newcommand<>#1}
 
 % The class allows overlays specs at any position in a command.
