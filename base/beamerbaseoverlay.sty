@@ -336,23 +336,23 @@
           \the\beamer@coveringdepth\endcsname}%
         \color{.}%
       }}}%
-  \ifnum\beamer@slideinframe<\beamer@minimum%ok, at beginning
-  {%
-    \beamer@saveanother%
-    \advance\beamer@minimum by-\beamer@slideinframe%
-    \beamer@slideinframe=\beamer@minimum%
-    \beamer@uncoverbeforeactions%
-    \beamer@restoreanother%
-  }%
-  \else%
-  {%
-    \beamer@saveanother%
-    \advance\beamer@slideinframe by-\beamer@minimum%
-    \beamer@uncoverafteractions%
-    \beamer@restoreanother%
-  }%
-  \fi%
-  \beamer@do%
+  \ifnum\beamer@slideinframe<\beamer@minimum %ok, at beginning
+    \begingroup
+      \beamer@saveanother
+      \advance\beamer@minimum by-\beamer@slideinframe
+      \beamer@slideinframe=\beamer@minimum
+      \beamer@uncoverbeforeactions
+      \beamer@restoreanother
+    \endgroup
+  \else
+    \begingroup
+      \beamer@saveanother
+      \advance\beamer@slideinframe by-\beamer@minimum
+      \beamer@uncoverafteractions
+      \beamer@restoreanother
+    \endgroup
+  \fi
+  \beamer@do
   }%
 }
 \def\beamer@endcovered{%
