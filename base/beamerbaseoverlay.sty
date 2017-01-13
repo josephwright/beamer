@@ -487,26 +487,26 @@
 
 \def\item{%
   \@ifnextchar\relax\beamer@origitem{%
-  \ifhmode%
-    \unskip\unskip\par%
-  \fi%
+  \ifhmode
+    \unskip\unskip\par
+  \fi
   \beamer@closeitem\gdef\beamer@closeitem{}%
   \@ifnextchar<{\beamer@parseitem}{\beamer@itemcheckopt}}}
 \def\beamer@itemcheckopt{\@ifnextchar[{\beamer@itemcheckopta}{%
-    \ifx\beamer@defaultospec\beamer@emptyospec%
-      \let\next=\beamer@callorigitem%
-    \else%
-      \let\next=\beamer@defaultparse%
-    \fi%
-    \next%
+    \ifx\beamer@defaultospec\beamer@emptyospec
+      \let\next=\beamer@callorigitem
+    \else
+      \let\next=\beamer@defaultparse
+    \fi
+    \next
   }}
 \def\beamer@defaultparse{\expandafter\beamer@parseitem\beamer@defaultospec}
 \long\def\beamer@itemcheckopta[#1]{\@ifnextchar<{\beamer@itemreverse[{#1}]}{%
-    \ifx\beamer@defaultospec\beamer@emptyospec%
-      \let\next=\beamer@callorigitem%
-    \else%
-      \let\next=\beamer@defaultparse%
-    \fi%
+    \ifx\beamer@defaultospec\beamer@emptyospec
+      \let\next=\beamer@callorigitem
+    \else
+      \let\next=\beamer@defaultparse
+    \fi
     \next[{#1}]}}
 \long\def\beamer@itemreverse[#1]<#2>{\beamer@parseitem<#2>[{#1}]}
 
@@ -539,17 +539,17 @@
 
 \let\beamer@orig@trivlist=\@trivlist
 \def\@trivlist{%
-  \global\advance\beamer@trivlistdepth by1\relax%
-  \expandafter\global\expandafter\let\csname beamer@closeitem\the\beamer@trivlistdepth\endcsname=\beamer@closeitem%
+  \global\advance\beamer@trivlistdepth by1\relax
+  \expandafter\global\expandafter\let\csname beamer@closeitem\the\beamer@trivlistdepth\endcsname=\beamer@closeitem
   \gdef\beamer@closeitem{}%
-  \beamer@orig@trivlist%
+  \beamer@orig@trivlist
   }
 \let\beamer@origendtrivlist=\endtrivlist
 \def\endtrivlist{%
-  \beamer@closeitem%
+  \beamer@closeitem
   \expandafter\global\expandafter\let\expandafter\beamer@closeitem\expandafter=\csname
-  beamer@closeitem\the\beamer@trivlistdepth\endcsname%
-  \global\advance\beamer@trivlistdepth by-1\relax%
+  beamer@closeitem\the\beamer@trivlistdepth\endcsname
+  \global\advance\beamer@trivlistdepth by-1\relax
   \beamer@origendtrivlist}
 
 \def\beamer@closeitem{}
