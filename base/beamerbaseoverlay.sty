@@ -168,10 +168,10 @@
 \long\def\beamer@newcomnoopt#1#2#3{%
   \ifnum#2=0\relax
     \protected\edef#1%
-      {\noexpand\beamer@sortzero\csexpandonce{beamerx@\string#1}}%
+      {\noexpand\beamer@sortzero\expandafter\noexpand\csname beamerx@\string#1\endcsname}%
   \else
     \protected\edef#1%
-      {\noexpand\beamer@sort\csexpandonce{beamerx@\string#1}{#2}}%
+      {\noexpand\beamer@sort\expandafter\noexpand\csname beamerx@\string#1\endcsname{#2}}%
   \fi
   \beamer@argscount=#2\relax
   \advance\beamer@argscount by 1\relax
