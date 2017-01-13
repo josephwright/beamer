@@ -20,6 +20,10 @@
 %
 %
 
+% This variant based on \@ifnextchar does not skip spaces
+% (So like amsmath's \new@ifnextchar). It is used where beamer allows
+% an overlay at the end of a command, and would thus otherwise result in
+% space gobbling.
 \long\def\beamer@ifnextcharospec#1#2{%
   \def\reserved@a{#1}%
   \def\reserved@b{#2}%
