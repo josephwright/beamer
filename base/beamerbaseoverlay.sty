@@ -408,16 +408,16 @@
 
 \newenvironment{beamer@framepauses}%internal
 {%
-  \global\c@beamerpauses=1\relax%
+  \setcounter{beamerpauses}{1}%
   \gdef\beamer@endpause{}%
 }
 {\beamer@endpause}
 
 \newcommand{\beamer@@pause}[1][]{%
   \ifblank{#1}%
-    {\global\advance\c@beamerpauses by1\relax}%
-    {\global\c@beamerpauses=#1\relax}%
-  \onslide<\c@beamerpauses->\relax%
+    {\stepcounter{beamerpauses}}%
+    {\setcounter{beamerpauses}{#1}}%
+  \onslide<\value{beamerpauses}->\relax%
 }
 
 \mode
