@@ -413,7 +413,7 @@
 }
 {\beamer@endpause}
 
-\newcommand{\beamer@@pause}[1][]{%
+\newrobustcmd{\beamer@@pause}[1][]{%
   \ifblank{#1}%
     {\stepcounter{beamerpauses}}%
     {\setcounter{beamerpauses}{#1}}%
@@ -438,7 +438,7 @@
 \mode
 <all>
 {
-  \def\onslide{\@ifstar{\only}{\@ifnextchar+{\expandafter\beamer@visibleonslide\@gobble}{\beamer@mainonslide}}}
+  \newrobustcmd*\onslide{\@ifstar{\only}{\@ifnextchar+{\expandafter\beamer@visibleonslide\@gobble}{\beamer@mainonslide}}}
 
   \newcommand<>{\beamer@visibleonslide}{%
     \@ifnextchar\bgroup
@@ -469,7 +469,7 @@
 \mode
 <article>
 {
-  \newcommand\beamer@@pause[1][]{}
+  \newrobustcmd\beamer@@pause[1][]{}
   \newcommand<>{\beamer@noargsonslide}{}
   \newcommand<>{\beamer@noargsvisibleonslide}{}
 }
@@ -521,7 +521,7 @@
 \begin{actionenv}<#1>\beamer@callorigitem}
 
 
-\def\beamerdefaultoverlayspecification#1{%
+\newrobustcmd*\beamerdefaultoverlayspecification#1{%
   \ifblank{#1}%
   {%
     \def\beamer@gdefaultospec{<*>}%
@@ -595,9 +595,9 @@
 \long\def\beamer@makecovered#1{\beamer@startcovered#1\beamer@endcovered}
 \long\def\beamer@reallymakeinvisible#1{\beamer@begininvisible#1\beamer@endinvisible}
 
-\newcommand{\uncover}{\alt{\beamer@fakeinvisible}{\beamer@makecovered}}
-\newcommand{\visible}{\alt{\beamer@fakeinvisible}{\beamer@reallymakeinvisible}}
-\newcommand{\invisible}{\alt{\beamer@reallymakeinvisible}{\beamer@fakeinvisible}}
+\newrobustcmd*{\uncover}{\alt{\beamer@fakeinvisible}{\beamer@makecovered}}
+\newrobustcmd*{\visible}{\alt{\beamer@fakeinvisible}{\beamer@reallymakeinvisible}}
+\newrobustcmd*{\invisible}{\alt{\beamer@reallymakeinvisible}{\beamer@fakeinvisible}}
 \newenvironment{visibleenv}{\begin{altenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@begininvisible}{\beamer@endinvisible}}{\end{altenv}}
 \newenvironment{invisibleenv}{\begin{altenv}{\beamer@begininvisible}{\beamer@endinvisible}{\beamer@spacingcover}{\beamer@spacingcover}}{\end{altenv}}
 \newenvironment{uncoverenv}{\begin{altenv}{\beamer@spacingcover}{\beamer@spacingcover}{\beamer@startcovered}{\beamer@endcovered}}{\end{altenv}}
@@ -607,9 +607,9 @@
 \mode
 <article>
 {
-  \newcommand{\uncover}{\alt{\@firstofone}{\@gobble}}
-  \newcommand{\visible}{\alt{\@firstofone}{\@gobble}}
-  \newcommand{\invisible}{\alt{\@gobble}{\@firstofone}}
+  \newrobustcmd*{\uncover}{\alt{\@firstofone}{\@gobble}}
+  \newrobustcmd*{\visible}{\alt{\@firstofone}{\@gobble}}
+  \newrobustcmd*{\invisible}{\alt{\@gobble}{\@firstofone}}
   \newenvironment{onlyenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
   \newenvironment{uncoverenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
   \newenvironment{visibleenv}{\begin{altenv}{}{}{\begingroup\setbox0=\vbox\bgroup}{\egroup\endgroup}}{\end{altenv}}
