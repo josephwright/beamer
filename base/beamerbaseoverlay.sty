@@ -287,13 +287,19 @@
 \newskip\beamer@lastskipcover
 \def\beamer@smuggle#1{%
   {}%
-  \beamer@lastskipcover=\lastskip%
+  \beamer@lastskipcover=\lastskip
   \edef\beamer@lastskiptext{\the\lastskip}%
-  \ifx\beamer@lastskiptext\beamer@zeropt\else%
-  \ifvmode\unskip\fi\ifhmode\unskip\fi\fi%
+  \ifx\beamer@lastskiptext\beamer@zeropt
+  \else
+    \ifvmode\unskip\fi
+    \ifhmode\unskip\fi
+  \fi
   #1%
-  \ifx\beamer@lastskiptext\beamer@zeropt\else%
-  \ifvmode\vskip\beamer@lastskipcover\fi\ifhmode\hskip\beamer@lastskipcover\fi\fi%
+  \ifx\beamer@lastskiptext\beamer@zeropt
+  \else
+    \ifvmode\vskip\beamer@lastskipcover\fi
+    \ifhmode\hskip\beamer@lastskipcover\fi
+  \fi
 }
 
 %
