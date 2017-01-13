@@ -357,8 +357,8 @@
 }
 \def\beamer@endcovered{%
   \beamer@smuggle{%
-  \csname beamer@doafter\the\beamer@coveringdepth\endcsname%
-  \global\advance\beamer@coveringdepth by -1\relax%
+  \csname beamer@doafter\the\beamer@coveringdepth\endcsname
+  \global\advance\beamer@coveringdepth by -1\relax
   }%
 }%
 
@@ -366,19 +366,19 @@
 \define@key{beamer@mixin}{again covered}{\def\beamer@uncoverafteractions{\ignorespaces#1}}
 
 \define@key{beamer@mixin}{invisible}[]{%
-  \def\beamer@uncoverbeforeactions{\ignorespaces}
+  \def\beamer@uncoverbeforeactions{\ignorespaces}%
   \def\beamer@uncoverafteractions{\ignorespaces}}
 
 \define@key{beamer@mixin}{transparent}[15]{%
-  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1->{#1}}
+  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1->{#1}}%
   \def\beamer@uncoverafteractions{\ignorespaces\opaqueness<1->{#1}}}
 
 \define@key{beamer@mixin}{dynamic}[]{%
-  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1-2>{10}\opaqueness<3->{5}}
+  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1-2>{10}\opaqueness<3->{5}}%
   \def\beamer@uncoverafteractions{\ignorespaces\opaqueness<1-2>{10}\opaqueness<3->{5}}}
 
 \define@key{beamer@mixin}{highly dynamic}[]{%
-  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}
+  \def\beamer@uncoverbeforeactions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}%
   \def\beamer@uncoverafteractions{\ignorespaces\opaqueness<1>{15}\opaqueness<2>{10}\opaqueness<3>{5}\opaqueness<4->{2}}}
 
 
