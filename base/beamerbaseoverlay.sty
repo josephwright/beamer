@@ -15,13 +15,31 @@
 % of "\@ifnextchar<".
 
 %
+%
+% Basic overlay commands
+%
+%
+
+\long\def\beamer@ifnextcharospec#1#2{%
+  \def\reserved@a{#1}%
+  \def\reserved@b{#2}%
+  \futurelet\@let@token\beamer@ifnch}
+\def\beamer@ifnch{%
+  \ifx\@let@token<%
+    \let\reserved@c\reserved@a%
+  \else%
+    \let\reserved@c\reserved@b%
+  \fi%
+  \reserved@c}
+
+%
 % \only
 %
 \newrobustcmd*\only{\@ifnextchar<{\beamer@only}{\beamer@@only}}
 \long\def\beamer@only<#1>#2{%
   \gdef\beamer@doifnotinframe{}\def\beamer@doifinframe{#2}%
   \beamer@masterdecode{#1}\beamer@donow}
-\long\def\beamer@@only#1{\@ifnextchar<{\beamer@@@only{#1}}{#1}}
+\long\def\beamer@@only#1{\beamer@ifnextcharospec{\beamer@@@only{#1}}{#1}}
 \long\def\beamer@@@only#1<#2>{%
   \gdef\beamer@doifnotinframe{}\def\beamer@doifinframe{#1}%
   \beamer@masterdecode{#2}\beamer@donow}
@@ -30,7 +48,7 @@
 % \alt and \altenv
 %
 \newrobustcmd*\alt{\@ifnextchar<{\beamer@alt}{\beamer@alttwo}}
-\long\def\beamer@alttwo#1#2{\@ifnextchar<{\beamer@altget{#1}{#2}}{#1}}
+\long\def\beamer@alttwo#1#2{\beamer@ifnextcharospec{\beamer@altget{#1}{#2}}{#1}}
 \long\def\beamer@altget#1#2<#3>{%
   \gdef\beamer@doifnotinframe{#2}\def\beamer@doifinframe{#1}%
   \beamer@masterdecode{#3}\beamer@donow}
@@ -41,7 +59,7 @@
 
 \newrobustcmd*\altenv{\@ifnextchar<{\beamer@altenv}{\beamer@@@altenv}}
 \def\beamer@altenv<#1>{\beamer@@altenv{<#1>}}
-\long\def\beamer@@@altenv#1#2#3#4{\@ifnextchar<{\beamer@altenvsort{#1}{#2}{#3}{#4}}{\beamer@@altenv{}{#1}{#2}{#3}{#4}}}
+\long\def\beamer@@@altenv#1#2#3#4{\beamer@ifnextcharospec{\beamer@altenvsort{#1}{#2}{#3}{#4}}{\beamer@@altenv{}{#1}{#2}{#3}{#4}}}
 \long\def\beamer@altenvsort#1#2#3#4<#5>{\beamer@@altenv{<#5>}{#1}{#2}{#3}{#4}}
 \long\def\beamer@@altenv#1#2#3#4#5{\alt#1{\long\def\beamer@eoenv{#3}#2}{\long\def\beamer@eoenv{#5}#4}}
 \protected\def\endaltenv{\beamer@eoenv}
@@ -73,7 +91,7 @@
     \csname#2\endcsname<all:#3>{#1}}%
   \beamer@processactions}
 
-\newrobustcmd*\actionenv{\@ifnextchar<{\beamer@parsedactionenv}{\expandafter\beamer@parsedactionenv\beamer@defaultospec}}
+\newrobustcmd*\actionenv{\beamer@ifnextcharospec{\beamer@parsedactionenv}{\expandafter\beamer@parsedactionenv\beamer@defaultospec}}
 \def\beamer@parsedactionenv<#1>{%
   \gdef\beamer@doifnotinframe{}%
   \def\beamer@doifinframe{}%
@@ -225,7 +243,7 @@
   \beamer@parseargs
 }
 
-\def\beamer@sortzero#1{\@ifnextchar<{\beamer@sortzeroread{#1}}{#1{}}}
+\def\beamer@sortzero#1{\beamer@ifnextcharospec{\beamer@sortzeroread{#1}}{#1{}}}
 \def\beamer@sortzeroread#1<#2>{#1{<#2>}}
 
 \def\beamer@sort#1#2{%
@@ -252,7 +270,7 @@
   \beamer@parseargs
 }
 
-\def\beamer@finalargscheck{\@ifnextchar<\beamer@finalspec\beamer@finalnospec}
+\def\beamer@finalargscheck{\beamer@ifnextcharospec\beamer@finalspec\beamer@finalnospec}
 \def\beamer@finalspec<#1>{\def\beamer@ospec{<#1>}\beamer@finalnospec}
 \def\beamer@finalnospec{%
   \expandafter\beamer@todo\expandafter{\beamer@ospec}}
