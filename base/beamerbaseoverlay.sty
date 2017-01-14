@@ -645,21 +645,21 @@
 % Insert area
 %
 \newenvironment{overlayarea}[2]{%
-  \beamer@animht=#1\relax%
-  \beamer@animwd=#2\relax%
-  \setbox\beamer@areabox=\vbox to\beamer@animwd\bgroup%
+  \beamer@animht=#1\relax
+  \beamer@animwd=#2\relax
+  \setbox\beamer@areabox=\vbox to\beamer@animwd\bgroup
   \strut\begin{minipage}[t]{\beamer@animht}%
   % Make the minipage behave like the main part of the slide
   \normalfont
   \raggedright
   }
   {%
-  \end{minipage}\vfil%
-  \egroup%
-  \wd\beamer@areabox=\beamer@animht%
-  \ht\beamer@areabox=\beamer@animwd%
-  \dp\beamer@areabox=0pt%
-  \box\beamer@areabox%
+  \end{minipage}\vfil
+  \egroup
+  \wd\beamer@areabox=\beamer@animht
+  \ht\beamer@areabox=\beamer@animwd
+  \dp\beamer@areabox=0pt %
+  \box\beamer@areabox
 }
 
 \mode
