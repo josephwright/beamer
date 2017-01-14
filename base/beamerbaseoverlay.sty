@@ -626,9 +626,9 @@
 \mode
 <article>
 {
-  \g@addto@macro\beamer@lastminutepatches{
+  \g@addto@macro\beamer@lastminutepatches{%
     % These have to be done late...
-    \renewcommand<>{\hypertarget}[2]{\only#3{\beameroriginal{\hypertarget}{#1}{#2}}}
+    \renewcommand<>{\hypertarget}[2]{\only#3{\beameroriginal{\hypertarget}{#1}{#2}}}%
     \renewcommand<>{\hyperlink}[2]{\only#3{\beameroriginal{\hyperlink}{#1}{#2}}}
   }
 }
