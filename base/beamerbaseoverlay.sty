@@ -647,8 +647,8 @@
 \newenvironment{overlayarea}[2]{%
   \beamer@animht=#1\relax%
   \beamer@animwd=#2\relax%
-  \setbox\beamer@areabox=\vbox to#2\bgroup%
-  \strut\begin{minipage}[t]{#1}%
+  \setbox\beamer@areabox=\vbox to\beamer@animwd\bgroup%
+  \strut\begin{minipage}[t]{\beamer@animht}%
   % Make the minipage behave like the main part of the slide
   \normalfont
   \raggedright
