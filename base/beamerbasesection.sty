@@ -64,15 +64,14 @@
   \beamer@resumemode
 }
 
-
 \mode
 <all>
 {
-  \long\def\AtBeginLecture#1{%
+  \newrobustcmd\AtBeginLecture[1]{%
     \def\beamer@atbeginlecture{#1}}
   \AtBeginLecture{}
 
-  \newcommand\includeonlylecture[1]{%
+  \newcommand*\includeonlylecture[1]{%
     \def\beamer@onlylecture{#1}%
     \@onelevel@sanitize\beamer@onlylecture
   }
@@ -90,9 +89,8 @@
 \mode
 <article>
 {
-  \newcommand\lecture[3][]{\def\insertlecture{#2}\def\insertshortlecture{#1}}
+  \newrobustcmd*\lecture[3][]{\def\insertlecture{#2}\def\insertshortlecture{#1}}
 }
-
 
 %
 % Part Definitions
