@@ -669,21 +669,21 @@
 }
 
 \newenvironment{overprint}[1][\textwidth]{%
-  \let\beamer@noargsonslide=\beamer@onslide%
-  \let\beamer@noargsvisibleonslide=\beamer@onslide%
-  \beamer@animht=0pt%
-  \beamer@animdp=0pt%
-  \beamer@animwd=#1\relax%
-  \setbox\beamer@animcurrent=\box\beamer@animshowbox% makes animshowbox empty
+  \let\beamer@noargsonslide=\beamer@onslide
+  \let\beamer@noargsvisibleonslide=\beamer@onslide
+  \beamer@animht=0pt\relax
+  \beamer@animdp=0pt\relax
+  \beamer@animwd=#1\relax
+  \setbox\beamer@animcurrent=\box\beamer@animshowbox % makes animshowbox empty
   \setbox\beamer@animcurrent=\hbox{}%
   \def\beamer@endaction{}%
 }{%
-  \beamer@endaction%
-  \ifvoid\beamer@animshowbox\setbox\beamer@animshowbox=\hbox{}\fi%
-  \ht\beamer@animshowbox=\beamer@animht%
-  \dp\beamer@animshowbox=\beamer@animdp%
-  \wd\beamer@animshowbox=\beamer@animwd%
-  \box\beamer@animshowbox%
+  \beamer@endaction
+  \ifvoid\beamer@animshowbox\setbox\beamer@animshowbox=\hbox{}\fi
+  \ht\beamer@animshowbox=\beamer@animht
+  \dp\beamer@animshowbox=\beamer@animdp
+  \wd\beamer@animshowbox=\beamer@animwd
+  \box\beamer@animshowbox
 }
 
 \def\beamer@onslide<#1>{%
