@@ -149,7 +149,7 @@
 \mode
 <all>
 {
-  \long\def\AtBeginPart#1{%
+  \neweobustcmd\AtBeginPart#1{%
     \def\beamer@atbeginpart{#1}}
   \AtBeginPart{}
 }
