@@ -777,26 +777,26 @@
 \protected\def\animate<#1>{\transduration<#1| handout:0| trans:0>{0}}
 \protected\def\animatevalue<#1-#2>#3#4#5{%
   \only<#1-#2>{}% enforce these frames
-  \ifnum\beamer@slideinframe<#1\relax%
-    #3=#4\relax%
-  \else%
-    \ifnum\beamer@slideinframe<#2\relax%
-      #3=#4\relax%
-      #3=-#3\relax%
-      \advance#3 by#5\relax%
-      \beamer@animationtempa=#2\relax%
-      \advance\beamer@animationtempa by-#1%
-      \ifnum\beamer@animationtempa>0%
-        \divide#3 by\beamer@animationtempa%
-      \fi%
-      \beamer@animationtempa=\beamer@slideinframe%
-      \advance\beamer@animationtempa by-#1%
-      \multiply#3 by\beamer@animationtempa%
-      \advance#3 by#4%
+  \ifnum\beamer@slideinframe<#1\relax
+    #3=#4\relax
+  \else
+    \ifnum\beamer@slideinframe<#2\relax
+      #3=#4\relax
+      #3=-#3\relax
+      \advance#3 by#5\relax
+      \beamer@animationtempa=#2\relax
+      \advance\beamer@animationtempa by-#1 %
+      \ifnum\beamer@animationtempa>0 %
+        \divide#3 by\beamer@animationtempa
+      \fi
+      \beamer@animationtempa=\beamer@slideinframe
+      \advance\beamer@animationtempa by-#1 %
+      \multiply#3 by\beamer@animationtempa
+      \advance#3 by#4 %
     \else
-      #3=#5\relax%
-    \fi%
-  \fi%
+      #3=#5\relax
+    \fi
+  \fi
 }
 
 \mode
