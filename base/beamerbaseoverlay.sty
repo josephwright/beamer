@@ -687,20 +687,20 @@
 }
 
 \def\beamer@onslide<#1>{%
-  \beamer@endaction%
+  \beamer@endaction
   \alt<#1>{%
-    \ifvoid\beamer@animshowbox\else\ClassError{beamer}{Overprints may not overlap}{}\fi%
+    \ifvoid\beamer@animshowbox\else\ClassError{beamer}{Overprints may not overlap}{}\fi
     \def\beamer@endaction{%
     \end{minipage}%
-    \egroup%
-      \ifdim\beamer@animht<\ht\beamer@animcurrent\beamer@animht=\ht\beamer@animcurrent\fi%
-      \ifdim\beamer@animdp<\dp\beamer@animcurrent\beamer@animdp=\dp\beamer@animcurrent\fi%
-      \setbox\beamer@animshowbox=\copy\beamer@animcurrent}
+    \egroup
+      \ifdim\beamer@animht<\ht\beamer@animcurrent\beamer@animht=\ht\beamer@animcurrent\fi
+      \ifdim\beamer@animdp<\dp\beamer@animcurrent\beamer@animdp=\dp\beamer@animcurrent\fi
+      \setbox\beamer@animshowbox=\copy\beamer@animcurrent}%
   }%
   {\def\beamer@endaction{%
     \end{minipage}%
-    \egroup%
-      \ifdim\beamer@animht<\ht\beamer@animcurrent\beamer@animht=\ht\beamer@animcurrent\fi%
+    \egroup
+      \ifdim\beamer@animht<\ht\beamer@animcurrent\beamer@animht=\ht\beamer@animcurrent\fi
       \ifdim\beamer@animdp<\dp\beamer@animcurrent\beamer@animdp=\dp\beamer@animcurrent\fi}%
   }%
   \setbox\beamer@animcurrent=\vbox\bgroup\begin{minipage}[t]{\beamer@animwd}%
