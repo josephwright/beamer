@@ -45,20 +45,20 @@
 \renewcommand\thelecture{\@arabic\c@lecture}
 \let\insertlecturenumber=\thelecture
 \newrobustcmd*\lecture{\@dblarg\beamer@lecture}
-\long\def\beamer@lecture[#1]#2#3{
+\long\def\beamer@lecture[#1]#2#3{%
   \beamer@savemode
-  \mode<all>
-  \refstepcounter{lecture}
-  \def\beamer@currentlecturelabel{#3}
+  \mode<all>%
+  \refstepcounter{lecture}%
+  \def\beamer@currentlecturelabel{#3}%
   \@onelevel@sanitize\beamer@currentlecturelabel
-  \def\beamer@lecturename{#2}
-  \def\beamer@shortlecturename{#1}
+  \def\beamer@lecturename{#2}%
+  \def\beamer@shortlecturename{#1}%
   \ifx\beamer@onlylecture\@empty
   \else
     \expandafter\beamer@if@in@clist@TF\expandafter\beamer@onlylecture
       \expandafter{\beamer@currentlecturelabel}%
-      {\beamer@inlecturetrue}
-      {\beamer@inlecturefalse}
+      {\beamer@inlecturetrue}%
+      {\beamer@inlecturefalse}%
   \fi
   \beamer@atbeginlecture
   \beamer@resumemode
