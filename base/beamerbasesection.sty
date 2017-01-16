@@ -71,7 +71,7 @@
     \def\beamer@atbeginlecture{#1}}
   \AtBeginLecture{}
 
-  \newcommand*\includeonlylecture[1]{%
+  \newrobustcmd*\includeonlylecture[1]{%
     \def\beamer@onlylecture{#1}%
     \@onelevel@sanitize\beamer@onlylecture
   }
@@ -79,12 +79,12 @@
   \includeonlylecture{}
 }
 
-\newcommand\insertlecture{\beamer@lecturename}
-\newcommand\insertshortlecture[1][]{%
-  {%
+\newrobustcmd*\insertlecture{\beamer@lecturename}
+\newrobustcmd*\insertshortlecture[1][]{%
+  \begingroup
     \beamer@setupshort{#1}%
     \beamer@insertshort{\beamer@shortlecturename}%
-  }}
+  \endgroup}
 
 \mode
 <article>
@@ -101,9 +101,9 @@
 
 \newcommand<>{\part}{\alt#1{\@dblarg\beamer@part}{\beamer@gobbleoptional}}
 \long\def\beamer@part[#1]#2{%
-  \beamer@savemode%
+  \beamer@savemode
   \mode<all>%
-  \ifbeamer@inlecture%
+  \ifbeamer@inlecture
     \refstepcounter{part}%
     \def\beamer@partname{#2}%
     \def\beamer@partnameshort{#1}%
@@ -117,34 +117,34 @@
         \protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
     \addtocontents{nav}{\protect\headcommand{%
         \protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
-    \beamer@partstartpage=\c@page%
-    \beamer@sectionstartpage=\c@page%
-    \beamer@subsectionstartpage=\c@page%
+    \beamer@partstartpage=\c@page
+    \beamer@sectionstartpage=\c@page
+    \beamer@subsectionstartpage=\c@page
     \setcounter{subsection}{0}%
-    \def\insertsection{}%
-    \def\insertsubsection{}%
-    \def\insertsubsubsection{}%
-    \def\insertsectionhead{}%
-    \def\insertsubsectionhead{}%
-    \def\insertsubsubsectionhead{}%
+    \protected\def\insertsection{}%
+    \protected\def\insertsubsection{}%
+    \protected\def\insertsubsubsection{}%
+    \protected\def\insertsectionhead{}%
+    \protected\def\insertsubsectionhead{}%
+    \protected\def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
-    \def\insertpart{\expandafter\hyperlink\partlink}%
+    \protected\def\insertpart{\expandafter\hyperlink\partlink}%
     \Hy@writebookmark{\the\c@section}{#1}{Outline\the\c@part}{1}{toc}%
-    \hyper@anchorstart{Outline\the\c@part}\hyper@anchorend%
-    \beamer@atbeginpart%
+    \hyper@anchorstart{Outline\the\c@part}\hyper@anchorend
+    \beamer@atbeginpart
   \fi%
   \beamer@resumemode}%
 \def\insertpart{}
 \def\partlinkshort{{Navigation1}{}}
 
-\def\insertromanpartnumber{\@Roman\c@part}
-\def\insertpartnumber{\@arabic\c@part}
+\newrobustcmd*\insertromanpartnumber{\@Roman\c@part}
+\newrobustcmd*\insertpartnumber{\@arabic\c@part}
 
-\newcommand\insertshortpart[1][]{%
-  {%
+\newrobustcmd*\insertshortpart[1][]{%
+  \begingroup
     \beamer@setupshort{#1}%
     \beamer@insertshort{\expandafter\hyperlink\partlinkshort}%
-  }}
+  \endgroup}
 
 \mode
 <all>
