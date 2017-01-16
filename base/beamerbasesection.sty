@@ -44,7 +44,7 @@
 \newcounter{lecture}
 \renewcommand\thelecture{\@arabic\c@lecture}
 \let\insertlecturenumber=\thelecture
-\newcommand\lecture{\@dblarg\beamer@lecture}
+\newrobustcmd*\lecture{\@dblarg\beamer@lecture}
 \long\def\beamer@lecture[#1]#2#3{
   \beamer@savemode
   \mode<all>
