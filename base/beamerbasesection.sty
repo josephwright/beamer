@@ -224,7 +224,7 @@
 \mode
 <all>
 {
-  \def\AtBeginSection{\@ifnextchar[{\beamer@AtBeginSection}{\beamer@@AtBeginSection}}
+  \newrobustcmd*\AtBeginSection{\@ifnextchar[{\beamer@AtBeginSection}{\beamer@@AtBeginSection}}
   \long\def\beamer@@AtBeginSection#1{\beamer@AtBeginSection[{#1}]{#1}}
   \long\def\beamer@AtBeginSection[#1]#2{%
     \def\beamer@atbeginsection{#2}%
@@ -296,7 +296,7 @@
 \mode
 <all>
 {
-  \def\AtBeginSubsection{\@ifnextchar[{\beamer@AtBeginSubsection}{\beamer@@AtBeginSubsection}}
+  \newrobustcmd*\AtBeginSubsection{\@ifnextchar[{\beamer@AtBeginSubsection}{\beamer@@AtBeginSubsection}}
   \long\def\beamer@@AtBeginSubsection#1{\beamer@AtBeginSubsection[{#1}]{#1}}
   \long\def\beamer@AtBeginSubsection[#1]#2{%
     \def\beamer@atbeginsubsection{#2}%
@@ -352,7 +352,7 @@
 \mode
 <all>
 {
-  \def\AtBeginSubsubsection{\@ifnextchar[{\beamer@AtBeginSubsubsection}{\beamer@@AtBeginSubsubsection}}
+  \newrobustcmd*\AtBeginSubsubsection{\@ifnextchar[{\beamer@AtBeginSubsubsection}{\beamer@@AtBeginSubsubsection}}
   \long\def\beamer@@AtBeginSubsubsection#1{\beamer@AtBeginSubsubsection[{#1}]{#1}}
   \long\def\beamer@AtBeginSubsubsection[#1]#2{%
     \def\beamer@atbeginsubsubsection{#2}%
