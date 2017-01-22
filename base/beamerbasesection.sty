@@ -205,6 +205,8 @@
     \def\insertsection{\expandafter\hyperlink\sectionlink}%
     \def\insertsubsection{}%
     \def\insertsubsubsection{}%
+    % Deal with a defective patch in metropolis theme
+    \def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
     \protected@edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}%
     \def\insertsubsectionhead{}%
     \def\insertsubsubsectionhead{}%
@@ -280,6 +282,8 @@
     \edef\subsectionlink{{Navigation\the\c@page}{\noexpand\subsecname}}%
     \def\insertsubsection{\expandafter\hyperlink\subsectionlink}%
     \def\insertsubsubsection{}%
+    % Deal with a faulty patch in metropolis theme
+    \def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
     \protected@edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}%
     \def\insertsubsubsectionhead{}%
     \Hy@writebookmark{\the\c@subsection}{#2}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
