@@ -203,6 +203,9 @@
 \mode
 <article>
 {
+  \long\def\beamer@sectionintoc#1#2#3#4#5{}
+  \long\def\beamer@subsectionintoc#1#2#3#4#5#6{}
+  \long\def\beamer@subsubsectionintoc#1#2#3#4#5#6#7{}
   \AtBeginDocument{
     \let\beamer@origtableofcontents=\tableofcontents
     \renewcommand{\tableofcontents}[1][]{\beamer@origtableofcontents}
