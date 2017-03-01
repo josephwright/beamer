@@ -14,7 +14,7 @@ fontthemes = default serif structurebold structureitalicserif structuresmallcaps
 
 colorthemes = default crane albatross seahorse whale dolphin \
   rose orchid sidebartab lily structure dove seagull beetle fly wolverine spruce \
-  beaver 
+  beaver monarca
 
 outerthemes = default infolines miniframes shadow sidebar smoothbars smoothtree split tree
 
