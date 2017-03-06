@@ -305,6 +305,8 @@
   \def\underline#1{{\donotcoloroutermaths\beamer@orig@underline{#1}}}
 
   % Fix $ usage in underline:
+  \let\beamer@orig@@textsubscript=\@textsubscript
+  \def\@textsubscript#1{{\donotcoloroutermaths\beamer@orig@@textsubscript{#1}}}
   \let\beamer@orig@@textsuperscript=\@textsuperscript
   \def\@textsuperscript#1{{\donotcoloroutermaths\beamer@orig@@textsuperscript{#1}}}
 
