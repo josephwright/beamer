@@ -492,8 +492,8 @@
        {\ifcsundef{abx@name@labelname}{}{\let\bbx@tempa\labelnamepunct}%
         \bbx@tempa\newblock\unspace\usebeamercolor[fg]{bibliography entry title}}{}{}
      \apptocmd{\abx@macro@title}
-       {\ifcsundef{abx@field@title}{}{\midsentence\newunitpunct}%
-        \newblock\usebeamercolor[fg]{bibliography entry note}}{}{}}
+       {\ifcsundef{abx@field@title}{}{\ifpunct{}{\midsentence\newunitpunct}}%
+        \newblock\unspace\usebeamercolor[fg]{bibliography entry note}}{}{}}
     {}}
 
 \mode
