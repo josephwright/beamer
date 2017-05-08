@@ -563,7 +563,9 @@
 
 \def\beamer@doframeinput{\@ifnextchar<{\beamer@frameinput}{\beamer@frameinput<*>}}
 \def\beamer@frameinput<#1>{\@ifnextchar[{\beamer@@frameinput<#1>}{\beamer@@frameinput<#1>[]}}
-\def\beamer@@frameinput<#1>[{\@ifnextchar<{\beamer@@@@frameinput<#1>[}{\beamer@@@frameinput<#1>[<*>][}}
+\def\beamer@@frameinput<#1>[{\@ifnextchar<{\beamer@@@@frameinput<#1>[}%
+  {\edef\beamer@temp{\noexpand\beamer@@@frameinput<#1>[\beamer@defaultospec][}%
+  \beamer@temp}}
 \def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[{#2}]}{\beamer@@@frameinput<#1>[{#2}][]}}
 \def\beamer@@@frameinput<#1>[#2][#3]{%
   \global\advance\c@framenumber by-1\relax%
