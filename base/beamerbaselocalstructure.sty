@@ -73,11 +73,11 @@
 <all>
 {
   \newenvironment{alertenv}{\begin{altenv}%
-      {\usebeamertemplate{alerted text begin}\usebeamercolor[fg]{alerted text}\usebeamerfont{alerted text}}
+      {\usebeamercolor[fg]{alerted text}\usebeamerfont{alerted text}\usebeamertemplate{alerted text begin}}
       {\usebeamertemplate{alerted text end}}{\color{.}}{}}{\end{altenv}}
 
   \newenvironment{structureenv}{\begin{altenv}%
-      {\usebeamertemplate{structure text begin}\usebeamercolor[fg]{structure}\usebeamerfont{structure}}
+      {\usebeamercolor[fg]{structure}\usebeamerfont{structure}\usebeamertemplate{structure text begin}}
       {\usebeamertemplate{structure text end}}{\color{.}}{}}{\end{altenv}}
 
   \newcommand<>{\alert}[1]{\begin{alertenv}#2\relax#1\end{alertenv}}
