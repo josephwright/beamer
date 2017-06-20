@@ -296,6 +296,9 @@
   \beamer@descdefault\wd\beamer@tempbox\@@description}
 \def\@@description{%
   \advance\beamer@descdefault by \labelsep%
+  \usebeamerfont{description body}%
+  \usebeamercolor[fg]{description body}%
+  \usebeamertemplate{description body begin}%
   \list
   {}
   {\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
@@ -303,7 +306,8 @@
   \raggedright
   \beamer@firstlineitemizeunskip%
 }
-\def\enddescription{\ifhmode\unskip\fi\endlist}
+\def\enddescription{\ifhmode\unskip\fi\endlist%
+  \usebeamertemplate{description body end}}
 \long\def\beamer@descriptionitem#1{%
   \def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep{\usebeamertemplate**{description item}}}

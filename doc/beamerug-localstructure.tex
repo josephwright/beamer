@@ -258,6 +258,14 @@ There exist corresponding templates like |itemize/enumerate subbody begin| for s
       \iteminsert{\insertdescriptionitem} inserts the text of the current description item.
     \end{templateinserts}
   \end{element}
+
+  \begin{element}{description body begin}\yes\no\no
+    This template is inserted at the beginning of a |description| environment. Furthermore, before this template is inserted, the \beamer-font and -color |description body| is used.
+  \end{element}
+
+  \begin{element}{description body end}\yes\no\no
+    This template is inserted at the end of a |description| environment.
+  \end{element}
 \end{environment}
 
 In order to simplify changing the color or font of items, the different kinds of items inherit from or just use the following ``general'' \beamer-color and fonts:
