@@ -74,11 +74,11 @@
 {
   \newenvironment{alertenv}{\begin{altenv}%
       {\usebeamercolor[fg]{alerted text}\usebeamerfont{alerted text}\usebeamertemplate{alerted text begin}}
-      {\usebeamertemplate{alerted text end}}{\color{.}}{}}{\end{altenv}}
+      {\usebeamertemplate{alerted text end}}{\color{.}}{}\ignorespaces}{\ifhmode\unskip\fi\end{altenv}}
 
   \newenvironment{structureenv}{\begin{altenv}%
       {\usebeamercolor[fg]{structure}\usebeamerfont{structure}\usebeamertemplate{structure text begin}}
-      {\usebeamertemplate{structure text end}}{\color{.}}{}}{\end{altenv}}
+      {\usebeamertemplate{structure text end}}{\color{.}}{}\ignorespaces}{\ifhmode\unskip\fi\end{altenv}}
 
   \newcommand<>{\alert}[1]{\begin{alertenv}#2\relax#1\end{alertenv}}
   \newcommand<>{\structure}[1]{\begin{structureenv}#2\relax#1\end{structureenv}}
@@ -296,6 +296,9 @@
   \beamer@descdefault\wd\beamer@tempbox\@@description}
 \def\@@description{%
   \advance\beamer@descdefault by \labelsep%
+  \usebeamerfont{description body}%
+  \usebeamercolor[fg]{description body}%
+  \usebeamertemplate{description body begin}%
   \list
   {}
   {\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
@@ -303,7 +306,8 @@
   \raggedright
   \beamer@firstlineitemizeunskip%
 }
-\def\enddescription{\ifhmode\unskip\fi\endlist}
+\def\enddescription{\ifhmode\unskip\fi\endlist%
+  \usebeamertemplate{description body end}}
 \long\def\beamer@descriptionitem#1{%
   \def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep{\usebeamertemplate**{description item}}}
