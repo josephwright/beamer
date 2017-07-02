@@ -146,7 +146,6 @@
 \newdimen\beamer@bg@ht \newdimen\beamer@bg@wd \newdimen\beamer@bg@dp
 
 \newenvironment{beamercolorbox}[2][]{%
-  \begingroup%
   \def\beamer@vmode{\leavevmode}%
   \setkeys{beamercolbox}{wd=\linewidth,ht={},dp={},%
     leftskip=0pt,rightskip=0pt plus1fil,%
@@ -212,7 +211,7 @@
       \setbox\beamer@tempbox=\hbox to\linewidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@leftmargin\relax}%
     \fi%
     \leavevmode\box\beamer@tempbox%
-  \fi\endgroup%
+  \fi
 }
 
 \mode
