@@ -146,8 +146,9 @@
 \newdimen\beamer@bg@ht \newdimen\beamer@bg@wd \newdimen\beamer@bg@dp
 
 \newenvironment{beamercolorbox}[2][]{%
+  \begingroup%
   \def\beamer@vmode{\leavevmode}%
-  \setkeys{beamercolbox}{wd=\textwidth,ht={},dp={},%
+  \setkeys{beamercolbox}{wd=\linewidth,ht={},dp={},%
     leftskip=0pt,rightskip=0pt plus1fil,%
     sep=0pt,colsep=0pt,colsep*=0pt,%
     shadow=false,rounded=false,ignorebg=false}%
@@ -164,15 +165,16 @@
   \fi%
   \setbox\beamer@tempbox=\hbox\bgroup\color@begingroup\color{fg}\vbox\bgroup%
     \hsize=\beamer@colbox@wd%
+    \@arrayparboxrestore%
     \leftskip=\beamer@colbox@ls%
-    \ifdim\beamer@colbox@colsep>\z@\advance\leftskip\beamer@colbox@sep\fi%
+    \ifdim\beamer@colbox@sep>\z@\advance\leftskip\beamer@colbox@sep\fi%
     \rightskip=\beamer@colbox@rs%
-    \ifdim\beamer@colbox@colsep>\z@\advance\rightskip\beamer@colbox@sep\fi%
-    \if@tempswa%
+    \ifdim\beamer@colbox@sep>\z@\advance\rightskip\beamer@colbox@sep\fi%
+    \if@tempswa\ifdim\beamer@colbox@colsep>\z@%
       \advance\leftskip by\beamer@colbox@colsep%
       \advance\rightskip by\beamer@colbox@colsep%
-      \ifdim\beamer@colbox@colsep>\z@\vskip\beamer@colbox@colsep\fi%
-    \fi%
+      \vskip\beamer@colbox@colsep%
+    \fi\fi%
     \ifdim\beamer@colbox@sep>\z@\vskip\beamer@colbox@sep\fi%
     \beamer@vmode\ignorespaces}{%
     \ifdim\beamer@colbox@sep>\z@\vskip\beamer@colbox@sep\fi%
@@ -190,8 +192,8 @@
         \box\beamer@tempbox%
       \end{beamerboxesrounded}%
     \else%
-      \ifdim\wd\beamer@tempbox>\textwidth%
-        \setbox\beamer@tempbox=\hbox to\textwidth{\hss\box\beamer@tempbox\hss}%
+      \ifdim\wd\beamer@tempbox>\linewidth%
+        \setbox\beamer@tempbox=\hbox to\linewidth{\hss\box\beamer@tempbox\hss}%
       \fi%
       \box\beamer@tempbox%
     \fi%
@@ -206,11 +208,11 @@
         \rlap{\color@begingroup\color{bg}\vrule\@width\beamer@bg@wd\@height\beamer@bg@ht\@depth\beamer@bg@dp\color@endgroup}%
         \ifdim\beamer@colbox@colseps>\z@\hskip\beamer@colbox@colseps\fi%
       \fi\box\beamer@tempbox}%
-    \ifdim\wd\beamer@tempbox>\textwidth%
-      \setbox\beamer@tempbox=\hbox to\textwidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@leftmargin\relax}%
+    \ifdim\wd\beamer@tempbox>\linewidth%
+      \setbox\beamer@tempbox=\hbox to\linewidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@leftmargin\relax}%
     \fi%
     \leavevmode\box\beamer@tempbox%
-  \fi%
+  \fi\endgroup%
 }
 
 \mode
