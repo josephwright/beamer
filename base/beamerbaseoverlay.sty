@@ -562,6 +562,7 @@
     \def\beamer@item{\@ifnextchar[\beamer@@@item\beamer@origitem}
     \def\beamer@@@item[#1]{\@ifnextchar<{\beamer@@@@item[{#1}]}{\beamer@origitem[{#1}]}}
     \def\beamer@@@@item[#1]<#2>{\beamer@origitem[{#1}]}
+    \newrobustcmd*\beamerdefaultoverlayspecification[1]{}
   }
 }
 
