@@ -72,11 +72,11 @@
 \mode
 <all>
 {
-  \newenvironment{alertenv}{\begin{altenv}%
+  \newenvironment<>{alertenv}{\begin{altenv}#1%
       {\usebeamercolor[fg]{alerted text}\usebeamerfont{alerted text}\usebeamertemplate{alerted text begin}}
       {\usebeamertemplate{alerted text end}}{\color{.}}{}\ignorespaces}{\ifhmode\unskip\fi\end{altenv}}
 
-  \newenvironment{structureenv}{\begin{altenv}%
+  \newenvironment<>{structureenv}{\begin{altenv}#1%
       {\usebeamercolor[fg]{structure}\usebeamerfont{structure}\usebeamertemplate{structure text begin}}
       {\usebeamertemplate{structure text end}}{\color{.}}{}\ignorespaces}{\ifhmode\unskip\fi\end{altenv}}
 
