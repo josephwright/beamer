@@ -359,24 +359,7 @@
 \mode
 <article>
 {
-  \define@key{beamerfootnote}{frame}[true]{}
-
-\let\beamer@origfootnote=\footnote
-  \renewcommand\footnote[1][]{%
-    \let\beamer@kvorig=\KV@errx%
-    \let\beamer@xkvorig=\XKV@err
-    \def\beamer@footarg{}%
-    \def\KV@errx##1{\edef\beamer@footarg{\@tempa}}%
-    \def\XKV@err##1{\edef\beamer@footarg{\XKV@tkey}}%
-    \setkeys{beamerfootnote}{#1}%
-    \let\KV@errx=\beamer@kvorig%
-    \let\XKV@errx=\beamer@xkvorig
-    \ifx\beamer@footarg\@empty%
-      \edef\beamer@next{\noexpand\beamer@origfootnote}%
-    \else%
-      \edef\beamer@next{\noexpand\beamer@origfootnote[\beamer@footarg]}%
-    \fi%
-    \beamer@next}
+  \renewcommand<>{\footnote}{\beameroriginal{\footnote}}%
 }
 
 
