@@ -417,9 +417,9 @@
 
 \newrobustcmd{\beamer@@pause}[1][]{%
   \ifblank{#1}%
-    {\stepcounter{beamerpauses}}%
-    {\setcounter{beamerpauses}{#1}}%
-  \onslide<\value{beamerpauses}->\relax%
+    {\def\beamer@@pause@ospec{+-}}%
+    {\setcounter{beamerpauses}{#1}\edef\beamer@@pause@ospec{\value{beamerpauses}-}}%
+  \onslide<\beamer@@pause@ospec>\relax%
 }
 
 \mode
