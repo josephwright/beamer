@@ -11,7 +11,7 @@
 % See the file doc/licenses/LICENSE for more details.
 
 \ProvidesClass{beamer}
-  [2017/01/23 v3.41 A class for typesetting presentations]
+  [2017/07/13 v3.42 A class for typesetting presentations]
 
 % Setup modes and check for article option
 % Also loads packages required by both beamer and beamerarticle
