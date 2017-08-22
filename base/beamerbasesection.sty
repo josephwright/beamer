@@ -203,7 +203,7 @@
     \def\insertsubsubsection{}%
     % Deal with a defective patch in metropolis theme
     \def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
-    \protected@edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}%
+    \edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}%
     \def\insertsubsectionhead{}%
     \def\insertsubsubsectionhead{}%
     \def\lastsubsection{}%
@@ -280,7 +280,7 @@
     \def\insertsubsubsection{}%
     % Deal with a faulty patch in metropolis theme
     \def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
-    \protected@edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{#1}}%
+    \edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}%
     \def\insertsubsubsectionhead{}%
     \Hy@writebookmark{\the\c@subsection}{#2}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
     \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
