@@ -157,18 +157,17 @@
     sep=0pt,colsep=0pt,colsep*=0pt,%
     shadow=false,rounded=false,ignorebg=false}%
   \setkeys{beamercolbox}{#1}%
-  \def\beamer@colbox@color{#2}%
   \ifbeamercolorempty[bg]{#2}{\@tempswafalse}{\@tempswatrue}%
   \ifbeamer@colbox@ignorebg\@tempswafalse\fi%
-  \setbox\beamer@tempbox=\hbox\bgroup%
-    \ifbeamer@colbox@ignorebg%
-      \colorlet{beamer@temp@color}{bg}%
-      \usebeamercolor{#2}%
-      \colorlet{bg}{beamer@temp@color}%
-    \else%
-      \usebeamercolor{#2}%
-    \fi%
-    \color@begingroup\color{fg}\vbox\bgroup%
+  \def\beamer@colbox@color{#2}%
+  \ifbeamer@colbox@ignorebg%
+    \colorlet{beamer@temp@color}{bg}%
+    \usebeamercolor{#2}%
+    \colorlet{bg}{beamer@temp@color}%
+  \else%
+    \usebeamercolor{#2}%
+  \fi%
+  \setbox\beamer@tempbox=\hbox\bgroup\color@begingroup\color{fg}\vbox\bgroup%
     \hsize=\beamer@colbox@wd%
     \@arrayparboxrestore%
     \leftskip=\beamer@colbox@ls%
