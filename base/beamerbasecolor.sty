@@ -160,14 +160,15 @@
   \ifbeamercolorempty[bg]{#2}{\@tempswafalse}{\@tempswatrue}%
   \ifbeamer@colbox@ignorebg\@tempswafalse\fi%
   \def\beamer@colbox@color{#2}%
-  \ifbeamer@colbox@ignorebg%
-    \colorlet{beamer@temp@color}{bg}%
-    \usebeamercolor{#2}%
-    \colorlet{bg}{beamer@temp@color}%
-  \else%
-    \usebeamercolor{#2}%
-  \fi%
-  \setbox\beamer@tempbox=\hbox\bgroup\color@begingroup\color{fg}\vbox\bgroup%
+  \setbox\beamer@tempbox=\hbox\bgroup\color@begingroup
+    \ifbeamer@colbox@ignorebg%
+      \colorlet{beamer@temp@color}{bg}%
+      \usebeamercolor[fg]{#2}%
+      \colorlet{bg}{beamer@temp@color}%
+    \else%
+      \usebeamercolor[fg]{#2}%
+    \fi%
+    \vbox\bgroup%
     \hsize=\beamer@colbox@wd%
     \@arrayparboxrestore%
     \leftskip=\beamer@colbox@ls%
@@ -209,6 +210,7 @@
           \advance\beamer@bg@wd\beamer@colbox@colseps\advance\beamer@bg@wd\beamer@colbox@colseps%
           \advance\beamer@bg@ht\beamer@colbox@colseps\advance\beamer@bg@dp\beamer@colbox@colseps%
           \hskip-\beamer@colbox@colseps\fi%
+        \usebeamercolor{\beamer@colbox@color}%
         \rlap{\color@begingroup\color{bg}\vrule\@width\beamer@bg@wd\@height\beamer@bg@ht\@depth\beamer@bg@dp\color@endgroup}%
         \ifdim\beamer@colbox@colseps>\z@\hskip\beamer@colbox@colseps\fi%
       \fi\box\beamer@tempbox}%
