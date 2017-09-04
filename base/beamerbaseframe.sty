@@ -71,6 +71,7 @@
   \@ifundefined{thispdfpagelabel}{}{%
   \thispdfpagelabel{\insertframenumber}}%
   \xdef\beamer@frameendpage{\the\c@page}% every time
+  \xdef\beamer@showslideinframe{\the\beamer@slideinframe}%
   \beamer@setuplinks%
   \beamer@displaybreak%
   \global\setbox\beamer@zoombox=\box\voidb@x%
@@ -710,6 +711,8 @@
 {
   \newcounter{framenumber}
   \def\insertframenumber{\@arabic\c@framenumber}
+  \def\insertslideinframe{\beamer@showslideinframe}
+  \def\beamer@showslideinframe{0}
 }
 
 
