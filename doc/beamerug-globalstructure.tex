@@ -143,7 +143,7 @@ You can structure your text using the commands |\section| and |\subsection|. Unl
 In order to create a line break in the table of contents (usually not a good idea), you can use the command |\breakhere|. Note that the standard command |\\| does not work (actually, we do not really know why; comments would be appreciated).
 
 \begin{command}{\section\sarg{mode specification}\oarg{short section name}\marg{section name}}
-  Starts a section. No heading is created. The \meta{section name} is shown in the table of contents and in the navigation bars, except if \meta{short section name} is specified. In this case, \meta{short section name} is used in the navigation bars instead. If a \meta{mode specification} is given, the command only has an effect for the specified modes.
+  Starts a section. No heading is created. By default the \meta{section name} is shown in the table of contents and in the navigation bars; if \meta{short section name} is specified, it will be used in the navigation bars instead; if \meta{short section name} is explicitly empty, it will not appear in the navigation bars. If a \meta{mode specification} is given, the command only has an effect for the specified modes.
 
   \example
   |\section[Summary]{Summary of Main Results}|
