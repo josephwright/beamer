@@ -666,7 +666,8 @@
   \long\def\beamer@donoframe{%
     \setbox\beamer@tempbox\vbox\bgroup%
     \beamer@inframetrue%
-    \let\frame=\framelatex
+    \let\frame=\framelatex%
+    \def\@parmoderr{\let\@currbox\@tempboxa}% A trick here to gobble floats
     \usebeamertemplate{frame begin}%
     \bgroup\aftergroup\beamer@endframe%
     \beamer@article@startframe}%
