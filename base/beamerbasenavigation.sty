@@ -550,11 +550,11 @@
 
 \def\sectionentry#1#2#3#4#5{% section number, section title, page
   \ifnum#5=\c@part%
-  \beamer@section@set@min@width
+  \beamer@section@set@min@width%
   \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
-  \beamer@ypos@offset=0\relax
+  \beamer@ypos@offset=0\relax%
   \setbox\beamer@sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \def\insertsectionheadnumber{#1}%
@@ -668,7 +668,8 @@
         \beamer@ypos@offset=1\relax%
       \fi
       \beamer@xpos=#3\relax%
-      \beamer@ypos=\numexpr#2+\beamer@ypos@offset\relax%
+      \beamer@ypos=#2\relax%
+      \advance\beamer@ypos by \beamer@ypos@offset\relax
     \fi%
   \hbox to 0pt{%
     \beamer@tempdim=-\beamer@vboxoffset%
@@ -710,18 +711,22 @@
   }
 
 \def\fakeslideentry#1#2#3#4#5#6{%
-  \ifnum#2>0\ifnum#3>0%
-  \ifbeamer@compress%
-  \advance\beamer@xpos by1\relax%
-  \else%
-  \beamer@xpos=#3\relax%
-  \beamer@ypos=#2\relax%
-  \fi%
+  \ifnum#3>0%
+    \ifbeamer@compress%
+      \advance\beamer@xpos by1\relax%
+    \else%
+      \ifnum#2=0%
+        \beamer@ypos@offset=1\relax%
+      \fi
+      \beamer@xpos=#3\relax%
+      \beamer@ypos=#2\relax%
+      \advance\beamer@ypos by \beamer@ypos@offset\relax
+    \fi%
   \hbox to 0pt{\beamer@tempdim=-\beamer@vboxoffset%
     \advance\beamer@tempdim by -\beamer@boxsize%
     \multiply\beamer@tempdim by\beamer@ypos%
     \advance\beamer@tempdim by -.05cm%
-    \raise\beamer@tempdim\hbox{}}\fi\fi\ignorespaces}
+    \raise\beamer@tempdim\hbox{}}\fi\ignorespaces}
 
 
 \def\beamer@link(#1/#2){%
