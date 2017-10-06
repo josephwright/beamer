@@ -554,6 +554,7 @@
   \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
+  \beamer@ypos@offset=0\relax
   \setbox\beamer@sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \def\insertsectionheadnumber{#1}%
@@ -659,12 +660,15 @@
 
 \def\slideentry#1#2#3#4#5#6{%
   %section number, subsection number, slide number, first/last frame, page number, part number
-  \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
+  \ifnum#6=\c@part\ifnum#3>0%
     \ifbeamer@compress%
       \advance\beamer@xpos by1\relax%
     \else%
+      \ifnum#2=0%
+        \beamer@ypos@offset=1\relax%
+      \fi
       \beamer@xpos=#3\relax%
-      \beamer@ypos=#2\relax%
+      \beamer@ypos=\numexpr#2+\beamer@ypos@offset\relax%
     \fi%
   \hbox to 0pt{%
     \beamer@tempdim=-\beamer@vboxoffset%
@@ -699,7 +703,7 @@
             \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
           \fi%
         }}}\hskip-10cm plus 1fil%
-  }\fi\fi%
+  }\fi%
   \else%
   \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
   \fi\ignorespaces
