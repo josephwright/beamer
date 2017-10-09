@@ -340,7 +340,7 @@
       \addtocontents{toc}{\protect\beamer@subsubsectionintoc%
         {\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{#2}{\the\c@page}{\the\c@part}{\the\beamer@tocsectionnumber}}%
     }%
-    \ifblank{#2}{}{%
+    \ifblank{#1}{}{%
       \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsubsectionentry%
         {\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@subsubsection}{\the\c@page}{\lastsubsubsection}}}%
     }
