@@ -549,12 +549,12 @@
   }}}
 
 \def\sectionentry#1#2#3#4#5{% section number, section title, page
-  \ifnum#5=\c@part%
-  \beamer@section@set@min@width%
-  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
   \beamer@ypos@offset=0\relax%
+  \ifnum#5=\c@part%
+  \beamer@section@set@min@width%
+  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \setbox\beamer@sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \def\insertsectionheadnumber{#1}%
