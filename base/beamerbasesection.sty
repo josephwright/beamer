@@ -377,9 +377,12 @@
 % Appendix stuff
 %
 
+\newcommand<>\beamer@appendix{}
 \newcommand<>\appendix{%
-  \only#1{\part{\appendixname}
-  \addtocontents{nav}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}}}
+  \only#1{\part{\appendixname}%
+  \addtocontents{nav}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}%
+  \global\let\appendix\beamer@appendix}%
+}
 
 \mode
 <article>
