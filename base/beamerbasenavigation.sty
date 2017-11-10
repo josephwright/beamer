@@ -538,6 +538,7 @@
     \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
     \beamer@xpos=0\relax%
     \beamer@ypos=1\relax%
+    \beamer@ypos@offset=0\relax%
     \hbox to #1{\hskip.3cm\setbox\beamer@sectionbox=\hbox{\kern1sp}%
       \ht\beamer@sectionbox=1.875ex%
       \dp\beamer@sectionbox=0.75ex%
@@ -549,11 +550,12 @@
   }}}
 
 \def\sectionentry#1#2#3#4#5{% section number, section title, page
-  \ifnum#5=\c@part%
-  \beamer@section@set@min@width
-  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \beamer@xpos=0\relax%
   \beamer@ypos=1\relax%
+  \beamer@ypos@offset=0\relax%
+  \ifnum#5=\c@part%
+  \beamer@section@set@min@width%
+  \box\beamer@sectionbox\hskip1.875ex plus 1fill%
   \setbox\beamer@sectionbox=
   \hbox{\def\insertsectionhead{#2}%
     \def\insertsectionheadnumber{#1}%
@@ -659,12 +661,16 @@
 
 \def\slideentry#1#2#3#4#5#6{%
   %section number, subsection number, slide number, first/last frame, page number, part number
-  \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
+  \ifnum#6=\c@part\ifnum#3>0%
     \ifbeamer@compress%
       \advance\beamer@xpos by1\relax%
     \else%
+      \ifnum#2=0%
+        \beamer@ypos@offset=1\relax%
+      \fi
       \beamer@xpos=#3\relax%
       \beamer@ypos=#2\relax%
+      \advance\beamer@ypos by \beamer@ypos@offset\relax
     \fi%
   \hbox to 0pt{%
     \beamer@tempdim=-\beamer@vboxoffset%
@@ -699,25 +705,29 @@
             \usebeamertemplate{mini frame in other subsection}%\beamer@minislide%
           \fi%
         }}}\hskip-10cm plus 1fil%
-  }\fi\fi%
+  }\fi%
   \else%
   \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
   \fi\ignorespaces
   }
 
 \def\fakeslideentry#1#2#3#4#5#6{%
-  \ifnum#2>0\ifnum#3>0%
-  \ifbeamer@compress%
-  \advance\beamer@xpos by1\relax%
-  \else%
-  \beamer@xpos=#3\relax%
-  \beamer@ypos=#2\relax%
-  \fi%
+  \ifnum#3>0%
+    \ifbeamer@compress%
+      \advance\beamer@xpos by1\relax%
+    \else%
+      \ifnum#2=0%
+        \beamer@ypos@offset=1\relax%
+      \fi
+      \beamer@xpos=#3\relax%
+      \beamer@ypos=#2\relax%
+      \advance\beamer@ypos by \beamer@ypos@offset\relax
+    \fi%
   \hbox to 0pt{\beamer@tempdim=-\beamer@vboxoffset%
     \advance\beamer@tempdim by -\beamer@boxsize%
     \multiply\beamer@tempdim by\beamer@ypos%
     \advance\beamer@tempdim by -.05cm%
-    \raise\beamer@tempdim\hbox{}}\fi\fi\ignorespaces}
+    \raise\beamer@tempdim\hbox{}}\fi\ignorespaces}
 
 
 \def\beamer@link(#1/#2){%

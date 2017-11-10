@@ -68,6 +68,7 @@
 \newcount\beamer@animationtempb
 \newcount\beamer@xpos
 \newcount\beamer@ypos
+\newcount\beamer@ypos@offset
 \newcount\beamer@showpartnumber
 \newcount\beamer@currentsubsection
 \newcount\beamer@coveringdepth
