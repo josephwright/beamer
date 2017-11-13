@@ -16,6 +16,7 @@
 
 % Indicate whether another slide needs to be processed in this frame
 \newif\ifbeamer@anotherslide
+\newif\ifbeamer@localanotherslide
 
 % Used to know that beamerpauses needs to be used in substitution
 \newif\ifbeamer@plusencountered
@@ -36,6 +37,7 @@
   \catcode`\)=\active
   \catcode`\ =\active
 \xdef\beamer@masterdecode#1{%
+\noexpand\beamer@localanotherslidefalse%
 \setbox0=\hbox{%
 \unexpanded{%
 \ifnum\catcode`\|=\active\edef|{\string|}\fi%
@@ -50,7 +52,9 @@
 \edef\noexpand\beamer@@@temp{#1\string|stop\string:0\string|}%
 \edef\noexpand\beamer@@@temp{\unexpanded{\expandafter\zap@space\beamer@@@temp}%
 \space\noexpand\@empty}%
-\unexpanded{\expandafter\beamer@decode\beamer@@@temp}}%
+\unexpanded{\expandafter\beamer@decode\beamer@@@temp%
+\ifbeamer@localanotherslide\aftergroup\beamer@localanotherslidetrue\fi}%
+}%
 }%
 \endgroup
 
@@ -218,7 +222,7 @@
     \global\beamer@minimum=1\relax
   \fi
   \ifnum1>\beamer@slideinframe
-    \global\beamer@anotherslidetrue
+    \global\beamer@anotherslidetrue\beamer@localanotherslidetrue
   \fi
   \gdef\beamer@doifnotinframe{\beamer@doifinframe}%
   \beamer@@decode}
@@ -227,7 +231,7 @@
     \global\beamer@minimum=1\relax
   \fi
   \ifnum#1>\beamer@slideinframe
-    \global\beamer@anotherslidetrue
+    \global\beamer@anotherslidetrue\beamer@localanotherslidetrue
   \fi
   \ifnum\beamer@slideinframe>#1\relax
   \else
@@ -251,7 +255,7 @@
     \global\beamer@minimum=#1\relax
   \fi
   \ifnum#1>\beamer@slideinframe
-    \global\beamer@anotherslidetrue
+    \global\beamer@anotherslidetrue\beamer@localanotherslidetrue
   \fi
   \ifnum#1>\beamer@slideinframe
   \else
@@ -263,10 +267,10 @@
     \global\beamer@minimum=#1\relax
   \fi
   \ifnum#1>\beamer@slideinframe
-    \global\beamer@anotherslidetrue
+    \global\beamer@anotherslidetrue\beamer@localanotherslidetrue
   \fi
   \ifnum#2>\beamer@slideinframe
-    \global\beamer@anotherslidetrue
+    \global\beamer@anotherslidetrue\beamer@localanotherslidetrue
   \fi
   \ifnum#1>\beamer@slideinframe
   \else
@@ -281,7 +285,7 @@
     \global\beamer@minimum=#1\relax
   \fi
   \ifnum#1>\beamer@slideinframe
-    \global\beamer@anotherslidetrue
+    \global\beamer@anotherslidetrue\beamer@localanotherslidetrue
   \fi
   \ifnum#1=\beamer@slideinframe
     \gdef\beamer@doifnotinframe{\beamer@doifinframe}%
