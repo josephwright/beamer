@@ -140,7 +140,7 @@ By default, the |\title| and |\author| commands will also insert their arguments
 
 You can structure your text using the commands |\section| and |\subsection|. Unlike standard \LaTeX, these commands will not create a heading at the position where you use them. Rather, they will add an entry to the table of contents and also to the navigation bars.
 
-In order to create a line break in the table of contents (usually not a good idea), you can use the command |\breakhere|. Note that the standard command |\\| does not work (actually, we do not really know why; comments would be appreciated).
+In order to create a line break in the table of contents (usually not a good idea), you can use the command |\breakhere|. Note that the standard command |\\| is modified so that it's no longer robust (see Section 9.3).
 
 \begin{command}{\section\sarg{mode specification}\oarg{short section name}\marg{section name}}
   Starts a section. No heading is created. By default the \meta{section name} is shown in the table of contents and in the navigation bars; if \meta{short section name} is specified, it will be used in the navigation bars instead; if \meta{short section name} is explicitly empty, it will not appear in the navigation bars. If a \meta{mode specification} is given, the command only has an effect for the specified modes.
