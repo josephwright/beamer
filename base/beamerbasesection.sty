@@ -127,7 +127,9 @@
     \protected\def\insertsectionhead{}%
     \protected\def\insertsubsectionhead{}%
     \protected\def\insertsubsubsectionhead{}%
+    \def\lastsection{}%
     \def\lastsubsection{}%
+    \def\lastsubsubsection{}%
     \protected\def\insertpart{\expandafter\hyperlink\partlink}%
     \Hy@writebookmark{\the\c@part}{#1}{Outline\the\c@part}{1}{toc}%
     \hyper@anchorstart{Outline\the\c@part}\hyper@anchorend
@@ -194,7 +196,7 @@
     \addtocontents{nav}{\protect\headcommand{\protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
     \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
     \ifblank{#1}{}{%
-      \addtocontents{nav}{\protect\headcommand{\protect\sectionentry{\the\c@section}{#1}{\the\c@page}{\secname}{\the\c@part}}}%
+      \addtocontents{nav}{\protect\headcommand{\protect\sectionentry{\the\c@section}{#1}{\the\c@page}{\lastsection}{\the\c@part}}}%
     }%
     \beamer@sectionstartpage=\c@page%
     \beamer@subsectionstartpage=\c@page%
@@ -202,7 +204,6 @@
     \def\insertsubsection{}%
     \def\insertsubsubsection{}%
     % Deal with a defective patch in metropolis theme
-    \def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
     \edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}%
     \def\insertsubsectionhead{}%
     \def\insertsubsubsectionhead{}%
@@ -213,15 +214,13 @@
   \fi%
   \beamer@resumemode}%
 \def\insertsection{}
-\def\lastsubsection{}
-
+\def\insertsectionhead{}
 \def\insertsectionnumber{\@arabic\c@section}
+\def\lastsection{}
 
 \def\breakhere{\protect\beamer@breakhere}
 \def\beamer@breakhere{}
 
-\def\insertsectionhead{}
-\def\insertsubsectionhead{}
 
 \mode
 <all>
@@ -255,8 +254,6 @@
 
 \def\beamer@@subsection{\@ifnextchar*\beamer@@ssubsection\beamer@@@subsection}
 \long\def\beamer@@ssubsection*#1{\beamer@subsection[{#1}]{}}
-%\long\def\beamer@@ssubsection*#1{%
-%  \ifblank{#1}{\beamer@untitledsubsection}{\beamer@subsection[{#1}]{}}}
 \def\beamer@@@subsection#1{\beamer@subsection[{#1}]{#1}}
 \def\beamer@subsection[#1]#2{%
   \beamer@savemode%
@@ -279,7 +276,6 @@
     \def\insertsubsection{\expandafter\hyperlink\subsectionlink}%
     \def\insertsubsubsection{}%
     % Deal with a faulty patch in metropolis theme
-    \def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
     \edef\insertsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}%
     \def\insertsubsubsectionhead{}%
     \Hy@writebookmark{\the\c@subsection}{\subsecname}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
@@ -288,14 +284,9 @@
   \fi%
   \beamer@resumemode}
 \def\insertsubsection{}
-
 \def\insertsubsectionnumber{\@arabic\c@subsection}
-
-\def\beamer@untitledsubsection{%
-  \refstepcounter{subsection}%
-  \def\insertsubsection{}%
-  \def\lastsubsection{}}
-
+\def\insertsubsectionhead{}
+\def\lastsubsection{}
 
 \mode
 <all>
@@ -346,14 +337,16 @@
     }
     \edef\subsubsectionlink{{Navigation\the\c@page}{\noexpand\subsubsecname}}%
     \def\insertsubsubsection{\expandafter\hyperlink\subsubsectionlink}%
-    \def\insertsubsubsectionhead{#1}%
+    \edef\insertsubsubsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}
     \Hy@writebookmark{\the\c@subsubsection}{\subsubsecname}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}{4}{toc}%
     \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@subsubsection.\the\c@page}\hyper@anchorend%
     \ifblank{#2}{\beamer@atbeginsubsubsections}{\beamer@atbeginsubsubsection}%
   \fi%
   \beamer@resumemode}
 \def\insertsubsubsection{}
+\def\insertsubsubsectionnumber{\@arabic\c@subsubsection}
 \def\insertsubsubsectionhead{}
+\def\lastsubsubsection{}
 
 \mode
 <all>
