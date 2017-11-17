@@ -127,9 +127,7 @@
     \protected\def\insertsectionhead{}%
     \protected\def\insertsubsectionhead{}%
     \protected\def\insertsubsubsectionhead{}%
-    \def\lastsection{}%
     \def\lastsubsection{}%
-    \def\lastsubsubsection{}%
     \protected\def\insertpart{\expandafter\hyperlink\partlink}%
     \Hy@writebookmark{\the\c@part}{#1}{Outline\the\c@part}{1}{toc}%
     \hyper@anchorstart{Outline\the\c@part}\hyper@anchorend
@@ -216,7 +214,6 @@
 \def\insertsection{}
 \def\insertsectionhead{}
 \def\insertsectionnumber{\@arabic\c@section}
-\def\lastsection{}
 
 \def\breakhere{\protect\beamer@breakhere}
 \def\beamer@breakhere{}
@@ -346,7 +343,6 @@
 \def\insertsubsubsection{}
 \def\insertsubsubsectionnumber{\@arabic\c@subsubsection}
 \def\insertsubsubsectionhead{}
-\def\lastsubsubsection{}
 
 \mode
 <all>
