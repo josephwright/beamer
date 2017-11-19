@@ -97,14 +97,8 @@
   \g@addto@macro\beamer@firstminutepatches
   {
     \begingroup
-      \let\beamer@saved@hook\pdfstringdefPreHook
-      \pdfstringdefDisableCommands{%
-        \let\\=\
-        \let\newline=\\%
-      }%
       \let\thanks=\@gobble%
       \hypersetup{pdftitle={\inserttitle\ifx\insertsubtitle\@empty\else\ - \insertsubtitle\fi}}
-      \global\let\pdfstringdefPreHook\beamer@saved@hook
     \endgroup
   }
 \fi%

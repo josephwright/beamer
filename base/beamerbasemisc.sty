@@ -76,6 +76,13 @@
 \@endparpenalty   -\@lowpenalty
 \@itempenalty     -\@lowpenalty
 
+\g@addto@macro\beamer@firstminutepatches{%
+  \pdfstringdefDisableCommands{%
+    \let\\=\
+    \let\newline=\\%
+  }%
+}
+
 \g@addto@macro\beamer@lastminutepatches{%
   \beamer@activecjk
   \makeatletter
