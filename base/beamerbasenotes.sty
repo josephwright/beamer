@@ -165,12 +165,15 @@
   \gdef\beamer@notesactions{%
     \beamer@outsideframenote{%
       \beamer@atbeginnote%
+      % Notice that the note page is typeset at the beginning of the next slide
+      \advance\beamer@slideinframe by-1\relax
       \beamer@notes%
       \ifx\beamer@noteitems\@empty\else
       \begin{enumerate}\itemsep=0pt\parskip=0pt%
         \beamer@noteitems%
       \end{enumerate}%
       \fi%
+      \advance\beamer@slideinframe by 1\relax%
       \beamer@atendnote%
     }%
     \gdef\beamer@notesactions{}%
