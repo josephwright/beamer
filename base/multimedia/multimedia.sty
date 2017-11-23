@@ -17,6 +17,10 @@
 
 \RequirePackage{ifpdf}
 
+\ifx\directlua\@undefined\else
+  \RequirePackage{luatex85}
+\fi
+
 \ifpdf
   \let\mm@psorpdf\@secondoftwo
 \else
