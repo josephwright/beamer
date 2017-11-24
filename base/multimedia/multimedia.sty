@@ -17,8 +17,13 @@
 
 \RequirePackage{ifpdf}
 
-\ifx\directlua\@undefined\else
-  \RequirePackage{luatex85}
+\ifx\directlua\@undefined\else %
+  \protected\def\pdfobj{\pdfextension obj }
+  \protected\def\pdfrefobj{\pdfextension refobj }
+  \protected\def\pdflastobj{\numexpr\pdffeedback lastobj\relax}
+  \protected\def\pdfannot{\pdfextension annot }
+  \protected\def\pdfstartlink{\pdfextension startlink }
+  \protected\def\pdfendlink{\pdfextension endlink\relax}
 \fi
 
 \ifpdf
