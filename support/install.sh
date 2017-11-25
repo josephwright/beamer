@@ -38,7 +38,4 @@ tlmgr option -- autobackup 0
 # Update the TL install but add nothing new
 tlmgr update --self --all --no-auto-install
 
-mkdir -p ~/texmf/tex/latex/
-push ~/texmf/tex/latex/
-ln -s ~/beamer/
-popd
+export TEXINPUTS=`pwd`/..:$TEXINPUTS
