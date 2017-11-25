@@ -38,6 +38,12 @@
   \defbeamertemplate*{frametitle}{sidebar theme}
   {%
     \nointerlineskip%
+    \ifbeamer@plainframe%
+      \hbox{\usebeamercolor[bg]{frametitle}%
+        \@tempdima\paperwidth\advance\@tempdima-\beamer@sidebarwidth
+        \hskip-\beamer@leftmargin\vrule height\beamer@headheight width\@tempdima\hskip-\beamer@rightmargin}%
+      \nointerlineskip%
+    \fi%
     \vskip-\beamer@headheight%
     \vbox to \beamer@headheight{%
       \vfil
