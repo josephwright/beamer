@@ -24,7 +24,6 @@ STRUCTURE = \
 	base/themes/outer               \
 	base/themes/theme               \
 	base/themes/theme/compatibility \
-	base/translator                 \
 	doc                             \
 	doc/licenses                    \
 	examples/a-conference-talk      \
@@ -60,10 +59,6 @@ ctan:
 	for I in $(STRUCTURE) ; do \
 	  mkdir -p $(BUILDDIR)/$$I  ; \
 	  cp ./$$I/*.* $(BUILDDIR)/$$I/ ; \
-	done
-	for I in $(TRANSLATOR) ; do \
-	  mkdir -p $(BUILDDIR)/base/translator/dicts/translator-$$I-dictionary  ; \
-	  cp ./base/translator/dicts/translator-$$I-dictionary/*.* $(BUILDDIR)/base/translator/dicts/translator-$$I-dictionary/ ; \
 	done
 	mkdir -p $(BUILDDIR)/doc/licenses
 	cp ./doc/licenses/LICENSE $(BUILDDIR)/doc/licenses/
