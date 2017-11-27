@@ -314,7 +314,6 @@
 
 \long\def\beamer@push@begins#1\begin#2{\ifx\end#2\else b\expandafter\beamer@push@begins\fi}
 \long\def\beamer@collect@@body#1\end#2{%
-  \def\test{#1}%
   \edef\beamer@begin@stack{\beamer@push@begins#1\begin\end \expandafter\@gobble\beamer@begin@stack}%
   \ifx\@empty\beamer@begin@stack
       \global\beamer@envbody\expandafter{\the\beamer@envbody#1}%
