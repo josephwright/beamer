@@ -478,11 +478,17 @@
   \fi%
   \beamer@howtotreatframe}
 \def\gobble@onslide{%
+  \@ifstar{\gobble@onslide@aux}{%
+    \@ifnextchar+{\expandafter\gobble@onslide@aux\@gobble}%
+    {\gobble@onslide@aux}%
+  }%
+}
+\def\gobble@onslide@aux{%
   \@ifnextchar<%>
-    \gobble@onslide@aux
+    \gobble@onslide@@aux
     \@firstofone
 }
-\def\gobble@onslide@aux<#1>{\@firstofone}
+\def\gobble@onslide@@aux<#1>{\@firstofone}
 \def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
   \setbox\beamer@tempbox\vbox\bgroup%
