@@ -17,7 +17,7 @@ unpackfiles  = { }
 
 -- Typeset only the main documentation file,
 -- but make all sources available
-docfiles     = {*.tex"}
+docfiles     = {"*.tex"}
 typesetfiles = {"beameruserguide.tex"}
 
 -- Release a TDS-style zip
