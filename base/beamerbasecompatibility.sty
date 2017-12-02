@@ -64,6 +64,13 @@
     \renewcommand\theenumii{\@arabic\c@enumii}%
     \renewcommand\theenumiii{\@arabic\c@enumiii}%
   }%
+  \AtBeginDocument{% fix frenchb.ldf's meddling with itemize and :
+    \let\labelitemi\beamer@labelitemi
+    \let\labelitemii\beamer@labelitemii
+    \let\itemize\beamer@itemize
+    \let\list\beamer@list
+    \let\@trivlist\beamer@@trivlist
+    \catcode`<=12 \catcode`>=12 }%
   \begingroup
     \beamer@origdocument
     \beamer@lastminutepatches
