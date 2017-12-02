@@ -64,7 +64,7 @@
     \renewcommand\theenumii{\@arabic\c@enumii}%
     \renewcommand\theenumiii{\@arabic\c@enumiii}%
   }%
-  \AtBeginDocument{% fix frenchb.ldf's meddling with itemize and :
+  \AtBeginDocument{% Allow for paralist loading
     \let\labelitemi\beamer@labelitemi
     \let\labelitemii\beamer@labelitemii
     \let\itemize\beamer@itemize
