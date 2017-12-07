@@ -28,6 +28,7 @@ tlmgr install \
   rsfs \
   symbol \
   times \
+  translator \
   xcolor \
   yfonts \
   zapfding
