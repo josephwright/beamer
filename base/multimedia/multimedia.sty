@@ -17,20 +17,20 @@
 
 \RequirePackage{ifpdf}
 
-\ifx\directlua\@undefined\else %
-  \protected\def\beamer@pdfobj{\pdfextension obj }
-  \protected\def\beamer@pdfrefobj{\pdfextension refobj }
-  \protected\def\beamer@pdflastobj{\numexpr\pdffeedback lastobj\relax}
-  \protected\def\beamer@pdfannot{\pdfextension annot }
-  \protected\def\beamer@pdfstartlink{\pdfextension startlink }
-  \protected\def\beamer@pdfendlink{\pdfextension endlink\relax}
-\else
+\ifx\directlua\@undefined
   \let\beamer@pdfobj\pdfobj
   \let\beamer@pdfrefobj\pdfrefobj
   \let\beamer@pdflastobj\pdflastobj
   \let\beamer@pdfannot\pdfannot
   \let\beamer@pdfstartlink\pdfstartlink
   \let\beamer@pdfendlink\pdfendlink
+\else %
+  \protected\def\beamer@pdfobj{\pdfextension obj }
+  \protected\def\beamer@pdfrefobj{\pdfextension refobj }
+  \protected\def\beamer@pdflastobj{\numexpr\pdffeedback lastobj\relax}
+  \protected\def\beamer@pdfannot{\pdfextension annot }
+  \protected\def\beamer@pdfstartlink{\pdfextension startlink }
+  \protected\def\beamer@pdfendlink{\pdfextension endlink\relax}
 \fi
 
 \ifpdf
