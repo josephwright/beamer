@@ -17,8 +17,11 @@ unpackfiles  = { }
 
 -- Typeset only the main documentation file,
 -- but make all sources available
-docfiles     = {"*.tex"}
+docfiles     = {"*.tex", "**/*.txt"}
 typesetfiles = {"beameruserguide.tex"}
+
+-- Only copy Markdown files to main dir
+textfiles = {"*.md"}
 
 -- Release a TDS-style zip
 packtdszip = true
