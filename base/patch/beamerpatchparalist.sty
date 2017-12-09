@@ -1,0 +1,79 @@
+\mode<presentation>
+
+\if@plnewitem
+  \def\enumerate{%
+    \ifnum \@enumdepth >\tw@
+      \@toodeep
+    \else
+      \advance\@enumdepth \@ne
+      \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+      \advance\@itemdepth \@ne%
+    \fi
+    \def\@enum@widestlabel{7}%
+    \beamer@computepref\@enumdepth%
+    \expandafter\edef\csname label\@enumctr\endcsname{\noexpand\usebeamertemplate{enumerate \beameritemnestingprefix item}}%
+    \@ifnextchar[{\beamer@@enum@}{\beamer@enummerate@}}
+  }
+  \def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
+  \def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
+    \@ifnextchar[{\beamer@@@enum@}{\beamer@enummerate@}}
+  \def\beamer@@@enum@[#1]{\@enumlabel@{\beamer@enummerate@}[#1]}
+  \def\beamer@enummerate@{%
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \@adjust@enum@labelwidth
+    \expandafter\list\csname label\@enumctr\endcsname{%
+      \usecounter{\@enumctr}%
+      \labelwidth
+        \csname leftmargin\romannumeral\@listdepth\endcsname
+      \advance\labelwidth-\labelsep
+      \let\makelabel\enumlabel}%
+    \beamer@cramped%
+    \raggedright%
+    \beamer@firstlineitemizeunskip%
+  }
+  \def\itemize{%
+    \ifnum \@itemdepth >\tw@
+      \@toodeep
+    \else
+      \advance\@itemdepth\@ne
+      \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \fi
+    \beamer@computepref\@itemdepth%
+    \expandafter\edef\csname\@itemitem\endcsname{\noexpand\usebeamertemplate{itemize \beameritemnestingprefix item}}%
+    \@ifnextchar[{\beamer@@item@}{\beamer@itemize@}}%
+  \def\beamer@@item@[{\@ifnextchar<{\beamer@itemdefault[}{\beamer@@@item@[}}
+  \def\beamer@itemdefault[#1]{\def\beamer@defaultospec{#1}%
+    \@ifnextchar[{\beamer@@@item@}{\beamer@itemize@}}
+  \def\beamer@@@item@[#1]{\@itemlabel@{\beamer@itemize@}[#1]}
+  \def\beamer@itemize@{%
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \@adjust@item@labelwidth
+    \expandafter\list\csname\@itemitem\endcsname{%
+      \labelwidth
+        \csname leftmargin\romannumeral\@listdepth\endcsname
+      \advance\labelwidth-\labelsep
+      \let\makelabel\itemlabel}%
+    \beamer@cramped%
+    \raggedright%
+    \beamer@firstlineitemizeunskip%
+  }
+\fi
+\if@plflushright
+  \def\enumlabel#1{{\usebeamerfont*{enumerate \beameritemnestingprefix item}%
+                    \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}\hss#1}}
+  \def\itemlabel#1{{\usebeamerfont*{itemize \beameritemnestingprefix item}%
+                    \usebeamercolor[fg]{itemize \beameritemnestingprefix item}\hss#1}}
+\else
+  \def\enumlabel#1{{\usebeamerfont*{enumerate \beameritemnestingprefix item}%
+                    \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}#1\hfil}}
+  \def\itemlabel#1{{\usebeamerfont*{itemize \beameritemnestingprefix item}%
+                    \usebeamercolor[fg]{itemize \beameritemnestingprefix item}#1\hfil}}
+\fi
+
+\mode
+<all>
