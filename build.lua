@@ -32,6 +32,10 @@ textfiles = {"*.md"}
 -- Custom clean-up settings
 cleanfiles = {"beameruserguide.pdf", "*.zip"}
 
+-- Test set up
+checkengines   = {"pdftex"}
+checksuppfiles = {"*.tex"}
+
 -- Release a TDS-style zip
 packtdszip = true
 
