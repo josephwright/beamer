@@ -11,7 +11,7 @@ docfiledir    = "./doc"
 sourcefiledir = "./base"
 
 -- Install all files from the source tree directly
-installfiles = {"**/*"}
+installfiles = {"**/*.cls", "**/*.sty", "**/beamericon*.*"}
 sourcefiles  = installfiles
 unpackfiles  = { }
 
