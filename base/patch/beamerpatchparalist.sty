@@ -13,10 +13,9 @@
     \beamer@computepref\@enumdepth%
     \expandafter\edef\csname label\@enumctr\endcsname{\noexpand\usebeamertemplate{enumerate \beameritemnestingprefix item}}%
     \@ifnextchar[{\beamer@@enum@}{\beamer@enummerate@}}
-  }
   \def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
   \def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
-    \@ifnextchar[{\beamer@@@enum@[}{\beamer@enummerate@}}
+    \@ifnextchar[{\beamer@@@enum@}{\beamer@enummerate@}}
   \def\beamer@@@enum@[#1]{\@enumlabel@{\beamer@enummerate@}[#1]}
   \def\beamer@enummerate@{%
     \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
@@ -46,7 +45,7 @@
     \@ifnextchar[{\beamer@@item@}{\beamer@itemize@}}%
   \def\beamer@@item@[{\@ifnextchar<{\beamer@itemdefault[}{\beamer@@@item@[}}
   \def\beamer@itemdefault[#1]{\def\beamer@defaultospec{#1}%
-    \@ifnextchar[{\beamer@@@item@[}{\beamer@itemize@}}
+    \@ifnextchar[{\beamer@@@item@}{\beamer@itemize@}}
   \def\beamer@@@item@[#1]{\@itemlabel@{\beamer@itemize@}[#1]}
   \def\beamer@itemize@{%
     \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
