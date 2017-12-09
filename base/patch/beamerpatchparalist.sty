@@ -16,7 +16,7 @@
   \def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
   \def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
     \@ifnextchar[{\beamer@@@enum@}{\beamer@enummerate@}}
-  \def\beamer@@@enum@[#1]{\@enumlabel@{\beamer@enummerate@}[#1]}
+  \def\beamer@@@enum@[#1]{\@enumlabel@{\beamer@enummerate@}[[#1]} % Here a token is gobbled in paralist package
   \def\beamer@enummerate@{%
     \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
     \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
