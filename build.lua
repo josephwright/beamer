@@ -17,8 +17,14 @@ unpackfiles  = { }
 
 -- Typeset only the main documentation file,
 -- but make all sources available
-docfiles     = {"*.tex", "**/*.txt"}
-typesetfiles = {"beameruserguide.tex"}
+docfiles     = {"**/*.tex", "**/*.txt"}
+typesetfiles = 
+  {
+    "beameruserguide.tex",
+    "beamerexample-conference-talk.tex",
+    "beamerexample-lecture-beamer-version.tex",
+    "beamerexample-lecture-print-version.tex"
+  }
 
 -- Only copy Markdown files to main dir
 textfiles = {"*.md"}
