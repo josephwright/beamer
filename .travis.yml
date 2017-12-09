@@ -1,0 +1,9 @@
+install:
+ - source ./install.sh
+
+cache:
+  directories:
+    - /tmp/texlive
+
+script:
+ - texlua build.lua check -H
