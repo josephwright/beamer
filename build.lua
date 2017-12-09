@@ -23,6 +23,9 @@ typesetfiles = {"beameruserguide.tex"}
 -- Only copy Markdown files to main dir
 textfiles = {"*.md"}
 
+-- Custom clean-up settings
+cleanfiles = {"beameruserguide.pdf", "*.zip"}
+
 -- Release a TDS-style zip
 packtdszip = true
 
