@@ -36,6 +36,20 @@ cleanfiles = {"beameruserguide.pdf", "*.zip"}
 checkengines   = {"pdftex"}
 checksuppfiles = {"*.tex"}
 
+-- Auto-versioning
+versionfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex"}
+function setversion_update_line(line, date, version)
+  local date = string.gsub(date, "%-", "/")
+  if string.match(line, "^  %[%d%d%d%d/%d%d/%d%d v%d%.%d+ ") then
+    line = string.gsub(line, "%d%d%d%d/%d%d/%d%d", date)
+    line = string.gsub(line, "v%d%.%d+ ", "v" .. version .. " ")
+  end
+  if string.match(line, "\\def\\beamerugversion") then
+    line = string.gsub(line, "%d%.%d+", version)
+  end
+  return line
+end
+
 -- Release a TDS-style zip
 packtdszip = true
 
