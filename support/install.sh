@@ -14,6 +14,9 @@ if ! command -v texlua > /dev/null; then
   cd ..
 fi
 
+# l3build itself and LuaTeX: need for texlua
+tlmgr install l3build luatex
+
 tlmgr install \
   babel-german \
   cmap \
