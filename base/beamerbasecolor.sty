@@ -160,7 +160,7 @@
   \ifbeamercolorempty[bg]{#2}{\@tempswafalse}{\@tempswatrue}%
   \ifbeamer@colbox@ignorebg\@tempswafalse\fi%
   \def\beamer@colbox@color{#2}%
-  \setbox\beamer@tempbox=\hbox\bgroup\color@begingroup
+  \setbox\beamer@tempbox=\vbox\bgroup%
     \ifbeamer@colbox@ignorebg%
       \colorlet{beamer@temp@color}{bg}%
       \usebeamercolor[fg]{#2}%
@@ -168,7 +168,6 @@
     \else%
       \usebeamercolor[fg]{#2}%
     \fi%
-    \vbox\bgroup%
     \hsize=\beamer@colbox@wd%
     \@arrayparboxrestore%
     \leftskip=\beamer@colbox@ls%
@@ -179,17 +178,14 @@
       \advance\leftskip by\beamer@colbox@colsep%
       \advance\rightskip by\beamer@colbox@colsep%
       \vskip\beamer@colbox@colsep%
-    \fi%
-      \ifdim\beamer@colbox@colseps>\z@\vskip\beamer@colbox@colseps\fi%
-    \fi%
+    \fi\fi%
     \ifdim\beamer@colbox@sep>\z@\vskip\beamer@colbox@sep\fi%
     \beamer@vmode\ignorespaces}{%
     \ifdim\beamer@colbox@sep>\z@\vskip\beamer@colbox@sep\fi%
     \if@tempswa
       \ifdim\beamer@colbox@colsep>\z@\vskip\beamer@colbox@colsep\fi%
-      \ifdim\beamer@colbox@colseps>\z@\vskip\beamer@colbox@colseps\fi%
     \fi%
-  \egroup\color@endgroup\egroup%
+  \egroup%
   \ifx\beamer@colbox@ht\@empty\else\ht\beamer@tempbox=\beamer@colbox@ht\fi%
   \ifx\beamer@colbox@dp\@empty\else\dp\beamer@tempbox=\beamer@colbox@dp\fi%
   \ifbeamer@colbox@rounded%
@@ -213,7 +209,7 @@
       \if@tempswa%
         \ifdim\beamer@colbox@colseps>\z@%
           \advance\beamer@bg@wd\beamer@colbox@colseps\advance\beamer@bg@wd\beamer@colbox@colseps%
-%          \advance\beamer@bg@ht\beamer@colbox@colseps\advance\beamer@bg@dp\beamer@colbox@colseps%
+          \advance\beamer@bg@ht\beamer@colbox@colseps\advance\beamer@bg@dp\beamer@colbox@colseps%
           \hskip-\beamer@colbox@colseps\fi%
         \usebeamercolor{\beamer@colbox@color}%
         \rlap{\color@begingroup\color{bg}\vrule\@width\beamer@bg@wd\@height\beamer@bg@ht\@depth\beamer@bg@dp\color@endgroup}%
