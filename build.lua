@@ -17,7 +17,14 @@ unpackfiles  = { }
 
 -- Typeset only the main documentation file,
 -- but make all sources available
-docfiles     = {"**/*.tex", "**/*.txt"}
+docfiles     =
+  {
+    "**/*.jpg", 
+    "**/*.tex",
+    "**/*.txt",
+    "**/beamerlogo.pdf",
+    "**/beamerexample-lecture-logo.pdf"
+  }
 typesetfiles = 
   {
     "beameruserguide.tex",
