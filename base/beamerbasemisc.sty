@@ -169,7 +169,7 @@
       \immediate\write\@auxout{\string\@writefile{nav}%
         {\noexpand\headcommand{\noexpand\beamer@documentpages{\the\beamer@tempcount}}}}
       \immediate\write\@auxout{\string\@writefile{nav}%
-        {\noexpand\headcommand{\noexpand\def\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
+        {\noexpand\headcommand{\noexpand\gdef\noexpand\inserttotalframenumber{\the\c@framenumber}}}}
       \newwrite\tf@nav
       \immediate\openout\tf@nav\jobname.nav\relax
       \newwrite\tf@toc
