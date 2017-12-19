@@ -86,7 +86,9 @@
 \g@addto@macro\beamer@lastminutepatches{%
   \beamer@activecjk
   \makeatletter
-  \@input{\jobname.nav}
+  \begingroup
+    \@input{\jobname.nav}%
+  \endgroup
   \let\beamer@sectionentryorig=\sectionentry
   \let\beamer@slideentryorig=\slideentry
   \let\beamer@subsubsectionentryorig=\beamer@subsubsectionentry
