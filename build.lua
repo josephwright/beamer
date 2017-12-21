@@ -104,14 +104,15 @@ function typeset_demo_tasks()
         "pdflatex \\def\\themename{" .. theme .. "}"
           .. "\\input " .. name .. "\""
       )
-      if errorlevel == 0 then
-        ren(typesetdir,
-          string.gsub(name, "%.tex$", ".pdf"),
-          "beamerug" .. themetype .. "theme" .. theme .. ".pdf")
+      if errorlevel ~= 0 then
+        return errorlevel
       end
+      ren(typesetdir,
+        string.gsub(name, "%.tex$", ".pdf"),
+        "beamerug" .. themetype .. "theme" .. theme .. ".pdf")
     end
   end
-  return errorlevel
+  return 0
 end
 
 -- Find and run the build system
