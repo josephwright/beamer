@@ -81,7 +81,8 @@ themes =
       {
         "default", "crane", "albatross", "seahorse", "whale", "dolphin",
         "rose", "orchid", "sidebartab", "lily", "structure", "dove", "seagull",
-        "beetle", "fly", "wolverine", "spruce", "beaver", "monarca"
+        "beetle", "fly", "wolverine", "spruce", "beaver", "monarca",
+        "albatrossstylish" -- This is a special case: see the .tex file
       },
     outer =
       {
