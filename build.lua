@@ -102,7 +102,7 @@ function typeset_demo_tasks()
         "", ".",
         "TEXINPUTS",
         "pdflatex \\def\\themename{" .. theme .. "}"
-          .. "\\input " .. name .. "\""
+          .. "\\input " .. name .. " "
       )
       if errorlevel ~= 0 then
         return errorlevel
