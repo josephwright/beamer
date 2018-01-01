@@ -371,9 +371,13 @@
 \newcommand<>\beamer@appendix{}
 \newcommand<>\appendix{%
   \only#1{\part{\appendixname}%
+  \immediate\write\@auxout{\string\@writefile{nav}%
+    {\noexpand\headcommand{\noexpand\gdef\noexpand\insertmainframenumber{\the\c@framenumber}}}}%
   \addtocontents{nav}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}%
   \global\let\appendix\beamer@appendix}%
 }
+
+\def\insertappendixframenumber{\the\numexpr\inserttotalframenumber-\insertmainframenumber\relax}
 
 \mode
 <article>
