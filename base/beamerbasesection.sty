@@ -368,8 +368,11 @@
 % Appendix stuff
 %
 
+\newif\ifbeamer@inappendix
+
 \newcommand<>\beamer@appendix{}
 \newcommand<>\appendix{%
+  \beamer@inappendixtrue%
   \only#1{\part{\appendixname}%
   \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\gdef\noexpand\insertmainframenumber{\the\c@framenumber}}}}%
@@ -378,6 +381,7 @@
 }
 
 \def\insertappendixframenumber{\the\numexpr\inserttotalframenumber-\insertmainframenumber\relax}
+\def\insertframenumberinappendix{\ifbeamer@inappendix\the\numexpr\insertframenumber-\insertmainframenumber\relax\else0\fi}
 
 \mode
 <article>
