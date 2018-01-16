@@ -552,6 +552,23 @@
 \defbeamertemplate{headline}{text line}[1]
 {\hskip\Gm@lmargin\hbox to\@tempdima{\textwidth=\@tempdima\hsize=\textwidth\relax#1\hfil}\hskip\Gm@rmargin}
 
+% Framenumbers in footline
+\defbeamertemplate{framenumber in foot}{framenumber}{\insertframenumber}
+
+\defbeamertemplate{framenumber in foot}{totalframenumber}{\insertframenumber\,/\,\inserttotalframenumber}
+
+\defbeamertemplate{framenumber in foot}{appendixframenumber}{%
+	\ifbeamer@inappendix%
+  	\insertframenumberinappendix\,/\,\insertappendixframenumber%
+  \else%
+  	\insertframenumber\,/\,\insertmainframenumber%
+  \fi%
+}
+
+\defbeamertemplate{framenumber in foot}{pagenumber}{\insertpagenumber}
+
+\defbeamertemplate{framenumber in foot}{totalpagenumber}{\insertpagenumber\,/\,\insertpresentationendpage}
+
 
 % Footline
 
@@ -563,7 +580,8 @@
   \hfill%
   \usebeamercolor[fg]{page number in head/foot}%
   \usebeamerfont{page number in head/foot}%
-  \insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
+  \setbeamertemplate{framenumber in foot}[totalpagenumber]%
+  \usebeamertemplate*{framenumber in foot}\kern1em\vskip2pt%
 }
 
 \defbeamertemplate{footline}{frame number}
@@ -571,10 +589,9 @@
   \hfill%
   \usebeamercolor[fg]{page number in head/foot}%
   \usebeamerfont{page number in head/foot}%
-  \insertframenumber\,/\,\inserttotalframenumber\kern1em\vskip2pt%
+  \setbeamertemplate{framenumber in foot}[totalframenumber]%
+  \usebeamertemplate*{framenumber in foot}\kern1em\vskip2pt%
 }
-
-
 
 
 % Mini frames
