@@ -60,6 +60,9 @@ end
 -- Release a TDS-style zip
 packtdszip = true
 
+-- Preserve structure for CTAN
+flatten = false
+
 -- Custom data for the theme demos
 themes =
   {
