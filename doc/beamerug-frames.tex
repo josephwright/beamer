@@ -463,6 +463,8 @@ The appearance of the headline and footline is determined by the following templ
 
     \iteminsert{\insertdocumentendpage}
     Inserts the page number of the last page of the document (including the appendix).
+    
+    \iteminsert{\usebeamertemplate*\{page number in head/foot\}} inserts a customisable template which e.g. inserts the current and total number of frames.
   \end{itemize}
 \end{element}
 
@@ -488,8 +490,26 @@ The appearance of the headline and footline is determined by the following templ
 
   The same inserts as for headlines can be used.
 
-  \begin{element}{page number in head/foot}\no\yes\yes
+  \begin{element}{page number in head/foot}\yes\yes\yes
     These \beamer-color and -font are used to typeset the page number or frame number in the footline.
+    
+    The \beamer-template provides a convenient way to format the page or frame number in the footline. It is used by the |infolines| outer theme and the |page number| and |frame number| footline themes.
+    
+    \begin{templateoptions}
+      \itemoption{default}{} The default option is empty.
+      
+      \itemoption{framenumber}{} This option inserts the current frame number.
+      
+      \itemoption{totalframenumber}{} In addition to the current frame number, this option also shows the total number of frames. 
+      
+      \itemoption{appendixframenumber}{} This options replicates the behaviour of the |appendixnumberbeamer| package. In the main part before the |\appendix| command the current frame number and the total number of frames in the main part is displayed. In the appendix only the frame number within the appendix and the total number of frames in the appendix are shown.
+
+			\itemoption{pagenumber}{} Shows the current page number.
+      
+      \itemoption{totalpagenumber}{} In addition to the current page number also the total page number is displayed.
+      
+    \end{templateoptions}
+     
   \end{element}
 \end{element}
 

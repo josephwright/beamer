@@ -553,11 +553,13 @@
 {\hskip\Gm@lmargin\hbox to\@tempdima{\textwidth=\@tempdima\hsize=\textwidth\relax#1\hfil}\hskip\Gm@rmargin}
 
 % Framenumbers in footline
-\defbeamertemplate{framenumber in foot}{framenumber}{\insertframenumber}
+\defbeamertemplate{page number in head/foot}{default}{}
 
-\defbeamertemplate{framenumber in foot}{totalframenumber}{\insertframenumber\,/\,\inserttotalframenumber}
+\defbeamertemplate{page number in head/foot}{framenumber}{\insertframenumber}
 
-\defbeamertemplate{framenumber in foot}{appendixframenumber}{%
+\defbeamertemplate{page number in head/foot}{totalframenumber}{\insertframenumber\,/\,\inserttotalframenumber}
+
+\defbeamertemplate{page number in head/foot}{appendixframenumber}{%
 	\ifbeamer@inappendix%
   	\insertframenumberinappendix\,/\,\insertappendixframenumber%
   \else%
@@ -565,9 +567,9 @@
   \fi%
 }
 
-\defbeamertemplate{framenumber in foot}{pagenumber}{\insertpagenumber}
+\defbeamertemplate{page number in head/foot}{pagenumber}{\insertpagenumber}
 
-\defbeamertemplate{framenumber in foot}{totalpagenumber}{\insertpagenumber\,/\,\insertpresentationendpage}
+\defbeamertemplate{page number in head/foot}{totalpagenumber}{\insertpagenumber\,/\,\insertpresentationendpage}
 
 
 % Footline
@@ -580,8 +582,8 @@
   \hfill%
   \usebeamercolor[fg]{page number in head/foot}%
   \usebeamerfont{page number in head/foot}%
-  \setbeamertemplate{framenumber in foot}[totalpagenumber]%
-  \usebeamertemplate*{framenumber in foot}\kern1em\vskip2pt%
+  \setbeamertemplate{page number in head/foot}[totalpagenumber]%
+  \usebeamertemplate*{page number in head/foot}\kern1em\vskip2pt%
 }
 
 \defbeamertemplate{footline}{frame number}
@@ -589,8 +591,8 @@
   \hfill%
   \usebeamercolor[fg]{page number in head/foot}%
   \usebeamerfont{page number in head/foot}%
-  \setbeamertemplate{framenumber in foot}[totalframenumber]%
-  \usebeamertemplate*{framenumber in foot}\kern1em\vskip2pt%
+  \setbeamertemplate{page number in head/foot}[totalframenumber]%
+  \usebeamertemplate*{page number in head/foot}\kern1em\vskip2pt%
 }
 
 
