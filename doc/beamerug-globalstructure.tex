@@ -299,6 +299,8 @@ Often, you may want a certain type of frame to be shown directly after a section
 
 \beamer\ also provides |\sectionpage| and |\subsectionpage| commands, which are used to fill a frame with section or subsection number and title in a stylish way. They are very similar to |\partpage| command described below.
 
+\begin{command}{\sectionpage}
+	This command shows a frame with the section number and title of the current section.
   \example
 \begin{verbatim}
 \section{A section}
@@ -307,6 +309,59 @@ Often, you may want a certain type of frame to be shown directly after a section
 
   \frame{Some text.}
 \end{verbatim}
+
+  \begin{element}{section page}\yes\no\no
+    This template is invoked when the |\sectionpage| command is used.
+
+    \begin{templateoptions}
+      \itemoption{default}{\oarg{alignment}}
+      The section page is typeset showing the current section number and, below, the current section title. The templates
+      \begin{element}{section name}\no\yes\yes
+      \end{element}
+      and
+      \begin{element}{section title}\no\yes\yes
+      \end{element}
+      are used, including the background color of |section title|. As for the |title page| template, the \meta{alignment} option is passed on the |beamercolorbox|.
+    \end{templateoptions}
+
+    The following commands are useful for this template:
+    \begin{templateinserts}
+      \iteminsert{\sectionname}
+      inserts the current section name.
+      \iteminsert{\insertsection}
+      inserts the title of the current section.
+      \iteminsert{\insertsectionnumber}
+      inserts the current section number.
+    \end{templateinserts}
+  \end{element}
+\end{command}
+
+\begin{command}{\subsectionpage}
+	Works the same way as the |\sectionpage|.
+  \begin{element}{subsection page}\yes\no\no
+      \begin{templateoptions}
+      \itemoption{default}{\oarg{alignment}}
+
+			 The templates
+      \begin{element}{subsection name}\no\yes\yes
+      \end{element}
+      and
+      \begin{element}{subsection title}\no\yes\yes
+      \end{element}
+      are used, including the background color of |subsection title|. As for the |title page| template, the \meta{alignment} option is passed on the |beamercolorbox|.
+    \end{templateoptions}
+
+    The following commands are useful for this template:
+    \begin{templateinserts}
+      \iteminsert{\subsectionname}
+      inserts the current subsection name.
+      \iteminsert{\insertsubsection}
+      inserts the title of the current subsection.
+      \iteminsert{\insertsubsectionnumber}
+      inserts the current subsection number.
+    \end{templateinserts}
+  \end{element}
+\end{command}
 
 \subsection{Adding Parts}
 
