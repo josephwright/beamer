@@ -358,12 +358,18 @@ To create a new part, use the |\part| command. All sections and subsections foll
   \example
   |\frame{\partpage}|
 
-  \begin{element}{part page}\yes\yes\yes
+  \begin{element}{part page}\yes\no\no
     This template is invoked when the |\partpage| command is used.
 
     \begin{templateoptions}
       \itemoption{default}{\oarg{alignment}}
-      The part page is typeset showing the current part number and, below, the current part title. The \beamer-color and -font |part page| are used, including the background color of |part page|. As for the |title page| template, the \meta{alignment} option is passed on the |beamercolorbox|.
+      The part page is typeset showing the current part number and, below, the current part title. The templates
+      \begin{element}{part name}\no\yes\yes
+      \end{element}
+      and
+      \begin{element}{part title}\no\yes\yes
+      \end{element}
+      are used, including the background color of |part title|. As for the |title page| template, the \meta{alignment} option is passed on the |beamercolorbox|.
     \end{templateoptions}
 
     The following commands are useful for this template:
