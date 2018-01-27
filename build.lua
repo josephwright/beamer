@@ -43,6 +43,9 @@ cleanfiles = {"beameruserguide.pdf", "*.zip"}
 checkengines   = {"pdftex"}
 checksuppfiles = {"*.tex"}
 
+-- Use standard MakeIndex style
+indexstyle = ""
+
 -- Auto-versioning
 versionfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex"}
 function setversion_update_line(line, date, version)
