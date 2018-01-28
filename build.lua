@@ -19,6 +19,7 @@ unpackfiles  = { }
 -- but make all sources available
 docfiles     =
   {
+    "**/LICENSE",
     "**/*.jpg", 
     "**/*.tex",
     "**/*.txt",
