@@ -24,7 +24,10 @@
       leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
       \leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
       \hfill%
-      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
+      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
+      \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+      \usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
+      }%
     \end{beamercolorbox}%
     \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
     \end{beamercolorbox}
@@ -39,7 +42,10 @@
       leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
       \leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
       \hfill%
-      {\usebeamerfont{author in head/foot}\usebeamercolor[fg]{author in head/foot}\insertshortauthor}%
+      {\usebeamerfont{author in head/foot}\usebeamercolor[fg]{author in head/foot}\insertshortauthor%
+      \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+      \usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
+      }%
     \end{beamercolorbox}%
     \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
     \end{beamercolorbox}
@@ -54,7 +60,10 @@
       leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
       \leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
       \hfill%
-      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
+      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
+      \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+      \usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%      
+      }%
     \end{beamercolorbox}%
     \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
     \end{beamercolorbox}
@@ -73,7 +82,7 @@
     \end{beamercolorbox}%
     \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
-      {\usebeamerfont{title in head/foot}\insertshorttitle}%
+      {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill{\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}}%
     \end{beamercolorbox}%
     \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
     \end{beamercolorbox}
