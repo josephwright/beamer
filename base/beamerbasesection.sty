@@ -371,13 +371,14 @@
 \newif\ifbeamer@inappendix
 
 \newcommand<>\beamer@appendix{}
+\def\beamer@resetappendix{\global\let\appendix\beamer@appendix}
 \newcommand<>\appendix{%
   \beamer@inappendixtrue%
   \only#1{\part{\appendixname}%
   \immediate\write\@auxout{\string\@writefile{nav}%
     {\noexpand\headcommand{\noexpand\gdef\noexpand\insertmainframenumber{\the\c@framenumber}}}}%
   \addtocontents{nav}{\protect\headcommand{\protect\beamer@appendixpages{\the\c@page}}}%
-  \global\let\appendix\beamer@appendix}%
+  \beamer@resetappendix}%
 }
 
 \def\insertappendixframenumber{\the\numexpr\inserttotalframenumber-\insertmainframenumber\relax}
