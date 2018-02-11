@@ -19,6 +19,7 @@
 \RequirePackage{ifpdf}
 
 \ifx\directlua\@undefined
+  \let\beamer@pdfpageattr\pdfpageattr
   \let\beamer@pdfobj\pdfobj
   \let\beamer@pdfrefobj\pdfrefobj
   \let\beamer@pdflastobj\pdflastobj
@@ -26,6 +27,7 @@
   \let\beamer@pdfstartlink\pdfstartlink
   \let\beamer@pdfendlink\pdfendlink
 \else %
+  \edef\beamer@pdfpageattr{\pdfvariable pageattr}
   \protected\def\beamer@pdfobj{\pdfextension obj }
   \protected\def\beamer@pdfrefobj{\pdfextension refobj }
   \protected\def\beamer@pdflastobj{\numexpr\pdffeedback lastobj\relax}
