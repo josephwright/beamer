@@ -186,13 +186,13 @@
 % (sub-)section in toc: sections numbered
 
 \defbeamertemplate{section in toc}{sections numbered}
-{\leavevmode\inserttocsectionnumber. \inserttocsection\par}
+{\leavevmode\inserttocsectionnumber\null.\null\inserttocsection\par}
 
 \defbeamertemplate{subsection in toc}{sections numbered}
-{\leavevmode\leftskip=2.5em\inserttocsubsection\par}
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=2.5em \inserttocsubsection\par}
 
 \defbeamertemplate{subsubsection in toc}{sections numbered}
-{\leavevmode\normalsize\usebeamerfont{subsection in toc}\leftskip=3.5em\usebeamerfont{subsubsection in toc}%
+{\leavevmode\normalsize\usebeamerfont{subsection in toc}\ifbeamer@rtl \rightskip\else \leftskip\fi=3.5em\usebeamerfont{subsubsection in toc}%
   \inserttocsubsubsection\par}
 
 
@@ -202,24 +202,22 @@
 % (sub-)section in toc: subsections numbered
 
 \defbeamertemplate{section in toc}{subsections numbered}
-{\leavevmode\leftskip=2em\inserttocsection\par}
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=2em\inserttocsection\par}
 
 \defbeamertemplate{subsection in toc}{subsections numbered}
-{\leavevmode\leftskip=2em\rlap{\hskip-2em\inserttocsectionnumber.\inserttocsubsectionnumber}\inserttocsubsection\par}
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=2em\rlap{\hskip-2em\inserttocsectionnumber\null.\null\inserttocsubsectionnumber}\inserttocsubsection\par}
 
 \defbeamertemplate{subsubsection in toc}{subsections numbered}
 {\leavevmode\normalsize\usebeamerfont{subsection in
-    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+    toc}\ifbeamer@rtl \rightskip\else \leftskip\fi=3em\usebeamerfont{subsubsection in toc}%
   \inserttocsubsubsection\par}
-
-
 
 
 
 % (sub-)section in toc: circle
 
 \defbeamertemplate{section in toc}{circle}
-{\leavevmode\leftskip=2ex%
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=2ex%
   \llap{%
     \usebeamerfont*{section number projected}%
     \usebeamercolor{section number projected}%
@@ -233,11 +231,11 @@
   \inserttocsection\par}
 
 \defbeamertemplate{subsection in toc}{circle}
-{\leavevmode\leftskip=2em\inserttocsubsection\par}
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=2em\inserttocsubsection\par}
 
 \defbeamertemplate{subsubsection in toc}{circle}
 {\leavevmode\normalsize\usebeamerfont{subsection in
-    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+    toc}\ifbeamer@rtl \rightskip\else \leftskip\fi=3em\usebeamerfont{subsubsection in toc}%
   \inserttocsubsubsection\par}
 
 
@@ -246,26 +244,54 @@
 % (sub-)section in toc: square
 
 \defbeamertemplate{section in toc}{square}
-{\leavevmode\leftskip=1.75ex%
-  \llap{%
-    \usebeamerfont*{section number projected}%
-    \usebeamercolor[bg]{section number projected}%
-    \vrule width2.25ex height1.85ex depth.4ex%
-    \hskip-2.25ex%
-    \hbox to2.25ex{\hfil\color{fg}\inserttocsectionnumber\hfil}}%
-  \kern1.25ex\inserttocsection\par}
+{\leavevmode
+ \ifbeamer@rtl %
+	    \rightskip=1.75ex
+	    \LR{\rlap{%
+	    \usebeamerfont*{section number projected}%
+	    \usebeamercolor[bg]{section number projected}%
+	    \vrule width2.25ex height1.85ex depth.4ex%
+	    \hskip-2.25ex%
+	    \hbox to2.25ex{\hfil{\color{fg}\inserttocsectionnumber}\hfil}}}
+ \else       		
+	    \leftskip=1.75ex%
+	    \llap{%
+	    \usebeamerfont*{section number projected}%
+	    \usebeamercolor[bg]{section number projected}%
+	    \vrule width2.25ex height1.85ex depth.4ex%
+	    \hskip-2.25ex%
+	    \hbox to2.25ex{\hfil{\color{fg}\inserttocsectionnumber}\hfil}}
+ \fi%
+        \kern1.25ex\inserttocsection\par}
 
 \defbeamertemplate{subsection in toc}{square}
-{\leavevmode\leftskip=5ex\llap{%
+{\leavevmode%
+  \ifbeamer@rtl %  	
+	\rightskip=5ex\LR{\rlap{%
     \usebeamercolor[bg]{subsection number projected}%
-    \vrule width1ex height1ex\kern1ex}\inserttocsubsection\par}
+    \vrule width1ex height1ex}}%
+   \else
+    \leftskip=5ex\llap{%
+    \usebeamercolor[bg]{subsection number projected}%
+    \vrule width1ex height1ex}%
+   \fi%     
+\kern1ex\inserttocsubsection\par}
 
 \defbeamertemplate{subsubsection in toc}{square}
 {\leavevmode\normalsize\usebeamerfont{subsection in
-    toc}\leftskip=7ex\usebeamerfont{subsubsection in toc}%
-  \llap{%
+    toc}%
+  \ifbeamer@rtl %
+     \rightskip=7ex\usebeamerfont{subsubsection in toc}%
+     \LR{\rlap{%
     \usebeamercolor[bg]{subsubsection number projected}%
-    \vrule width0.75ex height0.75ex\kern1ex}\inserttocsubsubsection\par}
+    \vrule width0.75ex height0.75ex}}%
+  \else 
+     \leftskip=7ex\usebeamerfont{subsubsection in toc}%
+    \llap{%
+  	\usebeamercolor[bg]{subsubsection number projected}%
+  	\vrule width0.75ex height0.75ex}%
+  \fi
+\kern1ex\inserttocsubsubsection\par}
 
 
 
@@ -276,12 +302,12 @@
 {\leavevmode\raise0.1ex\beamer@usesphere{section number projected}{bigsphere}\kern1.25ex\inserttocsection\par}
 
 \defbeamertemplate{subsection in toc}{ball unnumbered}
-{\leavevmode\leftskip=1.5em\raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}%
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=1.5em\raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}%
   \kern1ex\inserttocsubsection\par}
 
 \defbeamertemplate{subsubsection in toc}{ball unnumbered}
 {\leavevmode\normalsize\usebeamerfont{subsection in
-    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
+    toc}\ifbeamer@rtl \rightskip\else \leftskip\fi=3em\usebeamerfont{subsubsection in toc}%
   \beamer@usesphere{subsubsection number projected}{smallsphere}%
   \kern0.75ex\inserttocsubsubsection\par}
 
@@ -291,7 +317,7 @@
 % (sub-)section in toc: ball numbered
 
 \defbeamertemplate{section in toc}{ball}
-{\leavevmode\leftskip=2.75ex%
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=2.75ex%
   \llap{%
     \normalsize%
     \begin{pgfpicture}{-1ex}{-0.7ex}{1ex}{1ex}
@@ -309,14 +335,14 @@
 {\setbeamerfont{section number projected}{size=\scriptsize}}
 
 \defbeamertemplate{subsection in toc}{ball}
-{\leavevmode\leftskip=5ex%
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=5ex%
   \llap{\raise0.1ex\beamer@usesphere{subsection number projected}{bigsphere}\kern1ex}%
   \inserttocsubsection\par%
 }
 
 \defbeamertemplate{subsubsection in toc}{ball}
 {\leavevmode\normalsize\usebeamerfont{subsection in
-    toc}\leftskip=7ex\usebeamerfont{subsubsection in toc}%
+    toc}\ifbeamer@rtl \rightskip\else \leftskip\fi=7ex\usebeamerfont{subsubsection in toc}%
   \llap{\beamer@usesphere{subsubsection number projected}{bigsphere}\kern0.75ex}%
   \inserttocsubsubsection\par%
 }
@@ -413,12 +439,13 @@
   \hbox{%
     \usebeamerfont*{item projected}%
     \usebeamercolor[bg]{item projected}%
-    \vrule width2.25ex height1.85ex depth.4ex%
+    \ifbeamer@rtl \else\let\LR\relax\fi%
+    \LR{\vrule width2.25ex height1.85ex depth.4ex%
     \hskip-2.25ex%
     \hbox to2.25ex{%
       \hfil%
       \color{fg}\insertenumlabel%
-      \hfil}%
+      \hfil}}%
   }%
 }
 [action]
@@ -429,12 +456,13 @@
   \hbox{%
     \usebeamerfont*{subitem projected}%
     \usebeamercolor[bg]{subitem projected}%
-    \vrule width2.25ex height1.85ex depth.4ex%
+    \ifbeamer@rtl \else\let\LR\relax\fi%
+    \LR{\vrule width2.25ex height1.85ex depth.4ex%
     \hskip-2.25ex%
     \hbox to2.25ex{%
       \hfil%
       \color{fg}\insertsubenumlabel%
-      \hfil}%
+      \hfil}}%
   }%
 }
 
@@ -443,12 +471,13 @@
   \hbox{%
     \usebeamerfont*{subitem projected}%
     \usebeamercolor[bg]{subsubitem projected}%
-    \vrule width2.25ex height1.85ex depth.4ex%
+    \ifbeamer@rtl \else\def\LR{\relax}\fi%
+    \LR{\vrule width2.25ex height1.85ex depth.4ex%
     \hskip-2.25ex%
     \hbox to2.25ex{%
       \hfil%
       \color{fg}\insertsubsubenumlabel%
-      \hfil}%
+      \hfil}}%
   }%
 }
 
@@ -457,12 +486,13 @@
   \hbox{%
     \usebeamerfont*{\beameritemnestingprefix item projected}%
     \usebeamercolor[bg]{\beameritemnestingprefix item projected}%
-    \vrule width2.25ex height1.85ex depth.4ex%
+    \ifbeamer@rtl \else\let\LR\relax\fi%
+    \LR{\vrule width2.25ex height1.85ex depth.4ex%
     \hskip-2.25ex%
     \hbox to2.25ex{%
       \hfil%
       \color{fg}\insertenumlabel%
-      \hfil}%
+      \hfil}}%
   }%
 }
 
@@ -660,7 +690,7 @@
 \defbeamertemplate{caption}{caption name own line}
 {%
   \begin{minipage}{\textwidth}
-    \raggedright
+    \ifbeamer@rtl \raggedleft\else \raggedright\fi
   {%
     \usebeamercolor[fg]{caption name}%
     \usebeamerfont*{caption name}%
@@ -712,8 +742,8 @@
 {%
   \par\vskip\medskipamount%
   \begin{beamerboxesrounded}[upper=block title,lower=block body,#1]%
-    {\raggedright\usebeamerfont*{block title}\insertblocktitle}%
-    \raggedright%
+    {\ifbeamer@rtl \raggedleft\else \raggedright\fi\usebeamerfont*{block title}\insertblocktitle}%
+    \rightskip0pt%
     \usebeamerfont{block body}%
 }
 \defbeamertemplate{block end}{rounded}[1][]
@@ -723,8 +753,8 @@
 {%
   \par\vskip\medskipamount%
   \begin{beamerboxesrounded}[upper=block title alerted,lower=block body alerted,#1]%
-    {\raggedright\usebeamerfont*{block title alerted}\insertblocktitle}%
-    \raggedright%
+    {\ifbeamer@rtl \raggedleft\else \raggedright\fi\usebeamerfont*{block title alerted}\insertblocktitle}%
+    \ifbeamer@rtl \raggedleft\else \raggedright\fi%
     \usebeamerfont{block body alerted}%
 }%
 \defbeamertemplate{block alerted end}{rounded}[1][]
@@ -734,8 +764,8 @@
 {%
   \par\vskip\medskipamount%
   \begin{beamerboxesrounded}[upper=block title example,lower=block body example,#1]
-    {\raggedright\usebeamerfont*{block title example}\insertblocktitle}%
-    \raggedright%
+    {\ifbeamer@rtl \raggedleft\else \raggedright\fi\usebeamerfont*{block title example}\insertblocktitle}%
+    \ifbeamer@rtl \raggedleft\else \raggedright\fi%
     \usebeamerfont{block body example}%
 }%
 \defbeamertemplate{block example end}{rounded}[1][]
