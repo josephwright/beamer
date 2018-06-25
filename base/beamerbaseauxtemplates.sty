@@ -439,8 +439,8 @@
   \hbox{%
     \usebeamerfont*{item projected}%
     \usebeamercolor[bg]{item projected}%
-    \ifbeamer@rtl \else\let\LR\relax\fi%
-    \LR{\vrule width2.25ex height1.85ex depth.4ex%
+    \ifbeamer@rtl \expandafter\LR\fi%
+    {\vrule width2.25ex height1.85ex depth.4ex%
     \hskip-2.25ex%
     \hbox to2.25ex{%
       \hfil%
