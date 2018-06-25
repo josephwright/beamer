@@ -79,7 +79,7 @@
       {\usebeamercolor[fg]{structure}\usebeamerfont{structure}\usebeamertemplate{structure text begin}}
       {\usebeamertemplate{structure text end}}{\color{.}}{}\ignorespaces}{\ifhmode\unskip\fi\end{altenv}}
 
-  \newcommand<>{\alert}[1]{\begin{alertenv}#2\relax#1\end{alertenv}}
+  \newcommand<>{\alert}[1]{\leavevmode\begin{alertenv}#2\relax#1\end{alertenv}}
   \newcommand<>{\structure}[1]{\begin{structureenv}#2\relax#1\end{structureenv}}
 }
 
@@ -138,16 +138,16 @@
 \setlength  \labelwidth{\leftmargini}
 \addtolength\labelwidth{-\labelsep}
 
-\def\@listi{\leftmargin\leftmargini
+\def\@listi{\leftmargin\leftmargini  
             \topsep 3\p@ \@plus2\p@ \@minus2.5\p@
             \parsep 0\p@
             \itemsep3\p@ \@plus2\p@ \@minus3\p@}
 \let\@listI\@listi
-\def\@listii{\leftmargin\leftmarginii
+\def\@listii{\leftmargin\leftmarginii 
               \topsep    2\p@ \@plus1\p@ \@minus2\p@
               \parsep    0\p@   \@plus\p@
               \itemsep   \parsep}
-\def\@listiii{\leftmargin\leftmarginiii
+\def\@listiii{\leftmargin\leftmarginiii 
               \topsep    2\p@ \@plus1\p@ \@minus2\p@
               \parsep    0\p@   \@plus\p@
               \itemsep   \parsep}
@@ -195,10 +195,10 @@
                 \usebeamerfont*{enumerate \beameritemnestingprefix item}%
                 \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}##1}}}}}%
   \beamer@cramped%
-  \raggedright%
+  \ifbeamer@rtl \raggedleft\else\raggedright\fi%
   \beamer@firstlineitemizeunskip%
 }
-\def\endenumerate{\ifhmode\unskip\fi\endlist%
+\def\endenumerate{\ifhmode\unskip\fi\ifbeamer@rtl \par\fi\endlist\ifbeamer@rtl \beginR\fi%
    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}}
 
 \def\beamer@computepref#1{%
@@ -258,11 +258,11 @@
       }
   \fi%
   \beamer@cramped%
-  \raggedright%
+  \ifbeamer@rtl \raggedleft\else\raggedright\fi%
   \beamer@firstlineitemizeunskip%
 }
 
-\def\enditemize{\ifhmode\unskip\fi\endlist%
+\def\enditemize{\ifhmode\unskip\fi\ifbeamer@rtl \par\fi\endlist\ifbeamer@rtl \beginR\fi%
   \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}}
 
 \let\beamer@itemize\itemize
@@ -299,7 +299,7 @@
   {}
   {\labelwidth\beamer@descdefault\leftmargin\beamer@descdefault\let\makelabel\beamer@descriptionitem}%
   \beamer@cramped%
-  \raggedright
+  \ifbeamer@rtl \raggedleft\else\raggedright\fi
   \beamer@firstlineitemizeunskip%
 }
 \def\enddescription{\ifhmode\unskip\fi\endlist%
