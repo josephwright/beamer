@@ -333,7 +333,7 @@
 \defbeamertemplate*{footnote}{default}
 {
   \parindent 1em\noindent%
-  \raggedleft
+  \ifbeamer@rtl \raggedleft\else\raggedright\fi
   \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
 }
 
@@ -342,7 +342,7 @@
 
 \defbeamertemplate*{caption}{default}
 {%
-  \raggedright
+  \ifbeamer@rtl \raggedleft\else\raggedright\fi
   {%
     \usebeamercolor[fg]{caption name}%
     \usebeamerfont*{caption name}%
