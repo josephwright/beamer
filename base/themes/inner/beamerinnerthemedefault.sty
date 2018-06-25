@@ -9,6 +9,7 @@
 %
 % See the file doc/licenses/LICENSE for more details.
 
+
 \mode<presentation>
 
 % Some images:
@@ -132,10 +133,10 @@
 {\inserttocsection\par}
 
 \defbeamertemplate*{subsection in toc}{default}
-{\leavevmode\leftskip=1.5em\inserttocsubsection\par}
+{\leavevmode\ifbeamer@rtl \rightskip\else \leftskip\fi=1.5em\inserttocsubsection\par}
 
 \defbeamertemplate*{subsubsection in toc}{default}
-{\leavevmode\normalsize\usebeamerfont{subsection in toc}\leftskip=3em%
+{\leavevmode\normalsize\usebeamerfont{subsection in toc}\ifbeamer@rtl \rightskip\else \leftskip\fi=3em%
   \usebeamerfont{subsubsection in toc}\inserttocsubsubsection\par}
 
 
@@ -170,9 +171,9 @@
 
 % Itemize items, default
 
-\defbeamertemplate*{itemize item}{default}{\usebeamerfont*{itemize item}\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-\defbeamertemplate*{itemize subitem}{default}{\usebeamerfont*{itemize subitem}\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-\defbeamertemplate*{itemize subsubitem}{default}{\usebeamerfont*{itemize subsubitem}\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
+\defbeamertemplate*{itemize item}{default}{\usebeamerfont*{itemize item}\raise1.25pt\hbox{\donotcoloroutermaths$\ifbeamer@rtl \blacktriangleleft\else \blacktriangleright\fi$}}
+\defbeamertemplate*{itemize subitem}{default}{\usebeamerfont*{itemize subitem}\raise1.5pt\hbox{\donotcoloroutermaths$\ifbeamer@rtl \blacktriangleleft\else \blacktriangleright\fi$}}
+\defbeamertemplate*{itemize subsubitem}{default}{\usebeamerfont*{itemize subsubitem}\raise1.5pt\hbox{\donotcoloroutermaths$\ifbeamer@rtl \blacktriangleleft\else \blacktriangleright\fi$}}
 
 
 % Enumerate items, default
@@ -180,9 +181,9 @@
 \defbeamertemplateparent{enumerate items}{enumerate item,enumerate subitem,enumerate subsubitem,enumerate mini template}
 {}
 
-\defbeamertemplate*{enumerate item}{default}{\insertenumlabel.}
-\defbeamertemplate*{enumerate subitem}{default}{\insertenumlabel.\insertsubenumlabel}
-\defbeamertemplate*{enumerate subsubitem}{default}{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+\defbeamertemplate*{enumerate item}{default}{\insertenumlabel\null.}
+\defbeamertemplate*{enumerate subitem}{default}{\insertenumlabel\null.\null\insertsubenumlabel}
+\defbeamertemplate*{enumerate subsubitem}{default}{\insertenumlabel\null.\null\insertsubenumlabel\null.\null\insertsubsubenumlabel}
 \defbeamertemplate*{enumerate mini template}{default}{\insertenumlabel}
 
 
@@ -244,7 +245,7 @@
   \beamer@tempdim=\wd\beamer@tempbox%
   \beamer@dima=\beamer@tempdim\advance\beamer@dima by2.2pt
   \beamer@dimb=\beamer@tempdim\advance\beamer@dimb by4pt
-  \begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
+  \ifbeamer@rtl \expandafter\LR\fi{\begin{pgfpicture}{-4pt}{0pt}{\the\beamer@tempdim}{8pt}
     \color{bg}
     \pgfsetlinewidth{0.8pt}
     \pgfpathqmoveto{0pt}{0pt}
@@ -279,7 +280,7 @@
     \pgfusepathqstroke
   \end{pgfpicture}%
   \hskip-\beamer@tempdim%
-  \box\beamer@tempbox%
+  \ifbeamer@rtl \expandafter\RL\fi{\box\beamer@tempbox}}%
   \kern4pt%
 }
 
@@ -332,7 +333,7 @@
 \defbeamertemplate*{footnote}{default}
 {
   \parindent 1em\noindent%
-  \raggedright
+  \raggedleft
   \hbox to 1.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
 }
 
@@ -363,15 +364,15 @@
 {
   \par\vskip\medskipamount%
   \begin{beamercolorbox}[colsep*=.75ex]{block title}
-    \usebeamerfont*{block title}\insertblocktitle%
+    \usebeamerfont*{block title}\ifbeamer@rtl \raggedleft\fi\insertblocktitle%
   \end{beamercolorbox}%
   {\parskip0pt\par}%
   \ifbeamercolorempty[bg]{block title}
   {}
   {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body}%
-  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}%
-    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+  \begin{beamercolorbox}[colsep*=.75ex]{block body}%
+    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\ifbeamer@rtl \else\vbox{}\fi%
 }
 \defbeamertemplate*{block end}{default}  
 {\end{beamercolorbox}\vskip\smallskipamount}
@@ -380,7 +381,7 @@
 {
   \par\vskip\medskipamount%
   \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
-    \usebeamerfont*{block title alerted}\insertblocktitle%
+    \usebeamerfont*{block title alerted}\ifbeamer@rtl \raggedleft\fi\insertblocktitle%
   \end{beamercolorbox}%
   {\parskip0pt\par}%
   \ifbeamercolorempty[bg]{block title alerted}
@@ -399,7 +400,7 @@
 {
   \par\vskip\medskipamount%
   \begin{beamercolorbox}[colsep*=.75ex]{block title example}
-    \usebeamerfont*{block title example}\insertblocktitle%
+    \usebeamerfont*{block title example}\ifbeamer@rtl \raggedleft\fi\insertblocktitle%
   \end{beamercolorbox}%
   {\parskip0pt\par}%
   \ifbeamercolorempty[bg]{block title example}
