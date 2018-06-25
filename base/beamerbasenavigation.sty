@@ -463,16 +463,30 @@
 
 \pgfdefobject{beamergotosymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
 {
+\ifbeamer@rtl %
+  \pgfpathqmoveto{3.5bp}{0.5bp}
+  \pgfpathqlineto{1.5bp}{2bp}
+  \pgfpathqlineto{3.5bp}{3.5bp}
+  \pgfusepathqfill
+\else%	
   \pgfpathqmoveto{1.5bp}{0.5bp}
   \pgfpathqlineto{3.5bp}{2bp}
   \pgfpathqlineto{1.5bp}{3.5bp}
   \pgfusepathqfill
+\fi%
 }
 
 \def\insertgotosymbol{%
+\ifbeamer@rtl
+  \begin{pgfpicture}{0pt}{0pt}{5pt}{5pt}
+    \pgfuseobject{beamergotosymbol}%
+  \end{pgfpicture}
+\else 
   \begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
     \pgfuseobject{beamergotosymbol}%
-  \end{pgfpicture}}
+  \end{pgfpicture}
+\fi
+}
 
 \pgfdefobject{beamerskipsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
 {
@@ -492,17 +506,31 @@
 
 
 \pgfdefobject{beamerreturnsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
-{
-  \pgfpathqmoveto{3.5bp}{0.5bp}
-  \pgfpathqlineto{1.5bp}{2bp}
-  \pgfpathqlineto{3.5bp}{3.5bp}
-  \pgfusepathqfill
+{%
+\ifbeamer@rtl 
+   \pgfpathqmoveto{1.5bp}{0.5bp}
+   \pgfpathqlineto{3.5bp}{2bp}
+   \pgfpathqlineto{1.5bp}{3.5bp}
+   \pgfusepathqfill
+\else% 
+   \pgfpathqmoveto{3.5bp}{0.5bp}
+   \pgfpathqlineto{1.5bp}{2bp}
+   \pgfpathqlineto{3.5bp}{3.5bp}
+   \pgfusepathqfill
+\fi%   
 }
 
 \def\insertreturnsymbol{%
-  \begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+\ifbeamer@rtl	
+  \begin{pgfpicture}{0pt}{0pt}{5pt}{5pt}
     \pgfuseobject{beamerreturnsymbol}%
-  \end{pgfpicture}}
+  \end{pgfpicture}
+\else
+ \begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+	\pgfuseobject{beamerreturnsymbol}%
+ \end{pgfpicture}
+\fi
+}
 
 
 \def\beamerbutton#1{\def\insertbuttontext{#1}\usebeamertemplate**{button}}
@@ -547,7 +575,7 @@
         \global\beamer@section@min@dim\z@
         \dohead%
         \beamer@section@set@min@width
-      \box\beamer@sectionbox\hfil\hskip.3cm}%
+         \box\beamer@sectionbox\hfil\hskip.3cm}%
   }}}
 
 \def\sectionentry#1#2#3#4#5{% section number, section title, page
