@@ -1,3 +1,5 @@
+% changed
+
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011--2013,2015 by Vedran Mileti\'c, Joseph Wright
@@ -87,6 +89,7 @@
 \newif\ifbeamer@frameswithnotesonly
 \newif\ifbeamer@ignorenonframe
 \newif\ifbeamer@autopdfinfo
+\newif\ifbeamer@rtl
 
 % Option management
 \RequirePackage{beamerbaseoptions}
@@ -106,6 +109,7 @@
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
 \beamer@autopdfinfotrue
+\beamer@rtlfalse
 
 \DeclareOptionBeamer{usepdftitle}[true]{\csname beamer@autopdfinfo#1\endcsname}
 \DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
@@ -284,6 +288,13 @@
   \PassOptionsToPackage{unicode}{hyperref}%
 }
 
+\DeclareOptionBeamer{rtl}{%
+\beamer@rtltrue	
+\AtEndPreamble{\RequirePackage{bidi}
+\setRTL}%
+}
+
+
 %
 % Geometry: allows 16:10, 16:9, 14:9, 5:4 and 4:3 (default 4:3).
 % Default value is set right after declaring width and height
@@ -361,7 +372,11 @@
 
 % Defaults
 \normalfont
+\ifbeamer@rtl
+\raggedleft
+\else
 \raggedright
+\fi
 
 \usetheme{default}
 

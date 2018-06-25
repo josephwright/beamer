@@ -18,6 +18,8 @@
 \def\beamer@theme@footline@authorinstitute{
   \defbeamertemplate*{footline}{miniframes theme}
   {%
+  \ifbeamer@rtl
+  	\LR{%	
     \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
     \end{beamercolorbox}
     \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
@@ -26,68 +28,119 @@
       \hfill%
       {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
       \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
-      \usebeamercolor[fg]{page number in head/foot}\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
+      \usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
       }%
     \end{beamercolorbox}%
     \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+    \end{beamercolorbox}}
+ \else%
+    \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
     \end{beamercolorbox}
-  }
-}
+    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+	leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+	\leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
+	\hfill%
+	{\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
+		\ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+		\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
+	}%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+    \end{beamercolorbox}%
+ \fi}
+ }
+
 \def\beamer@theme@footline@authortitle{
   \defbeamertemplate*{footline}{miniframes theme}
   {%
-    \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
-    \end{beamercolorbox}
-    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
-      leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
-      \leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
-      \hfill%
-      {\usebeamerfont{author in head/foot}\usebeamercolor[fg]{author in head/foot}\insertshortauthor%
-      \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
-      \usebeamercolor[fg]{page number in head/foot}\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
-      }%
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
-    \end{beamercolorbox}
-  }
-}
+  	\ifbeamer@rtl
+  		\LR{%	
+  			\begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+  			\end{beamercolorbox}
+  			\begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+  				leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+            \leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
+   				\hfill%
+  				{\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
+  					\ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+  					\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
+  				}%
+  			\end{beamercolorbox}%
+  			\begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+  		\end{beamercolorbox}}
+  		\else%
+  		\begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+  		\end{beamercolorbox}
+  		\begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+  			leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+  	     \leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
+  			\hfill%
+        {\usebeamerfont{author in head/foot}\usebeamercolor[fg]{author in head/foot}\insertshortauthor%
+   	    \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+ 	    \usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%
+  			}%
+  		\end{beamercolorbox}%
+  		\begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+  		\end{beamercolorbox}%
+  		\fi}
+ }
+
+  
 \def\beamer@theme@footline@institutetitle{
   \defbeamertemplate*{footline}{miniframes theme}
   {%
-    \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
-    \end{beamercolorbox}
-    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
-      leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
-      \leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
-      \hfill%
-      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
-      \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
-      \usebeamercolor[fg]{page number in head/foot}\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%      
-      }%
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
-    \end{beamercolorbox}
-  }
-}
+  	\ifbeamer@rtl
+  		\LR{%	
+  			\begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+  			\end{beamercolorbox}
+  			\begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+  				leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+  			\leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
+  			\hfill%
+  	     	{\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
+  		    \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+  		    \usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%      
+  		}%
+  			\end{beamercolorbox}%
+  			\begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+  		\end{beamercolorbox}}
+  		\else%
+  		\begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+  		\end{beamercolorbox}
+  		\begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+  			leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+  			\leavevmode{\usebeamerfont{title in head/foot}\insertshorttitle}%
+  			\hfill%
+         {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute%
+	     \ifbeamertemplateempty{page number in head/foot}{}{\qquad}%
+	     \usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}%      
+}%
+  		\end{beamercolorbox}%
+  		\begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+  		\end{beamercolorbox}%
+  		\fi}
+   }
+
+  
 \def\beamer@theme@footline@authorinstitutetitle{
   \defbeamertemplate*{footline}{miniframes theme}
   {%
-    \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
-    \end{beamercolorbox}
-    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
-      leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
-      \leavevmode{\usebeamerfont{author in head/foot}\insertshortauthor}%
-      \hfill%
-      {\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
-      leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
-      {\usebeamerfont{title in head/foot}\insertshorttitle}\hfill{\usebeamercolor[fg]{page number in head/foot}\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}}%
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
-    \end{beamercolorbox}
+   		\begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+  			\end{beamercolorbox}
+  			\begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+  				leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+  				\insertshortauthor%
+  				\hfill%
+  				{\usebeamerfont{institute in head/foot}\usebeamercolor[fg]{institute in head/foot}\insertshortinstitute}%
+  			\end{beamercolorbox}%
+    	   \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+  				leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+  				{\usebeamerfont{title in head/foot}\insertshorttitle}\hfill{\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}}%
+  			\end{beamercolorbox}%
+  			\begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+  		\end{beamercolorbox}
   }
-}
+  }
 
 \newif\ifbeamer@theme@subsection
 \beamer@theme@subsectiontrue
