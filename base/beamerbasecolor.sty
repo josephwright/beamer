@@ -108,14 +108,8 @@
   \fi%
 }
 
-
-\mode
-<all>
-{
-  \colorlet{fg}{black}
-  \colorlet{bg}{white}
-}
-
+\colorlet{fg}{black}
+\colorlet{bg}{white}
 
 \mode
 <article>
@@ -123,6 +117,11 @@
   \newcommand\setbeamercolor{\@ifstar{\@gobbletwo}{\@gobbletwo}}
   \newcommand\usebeamercolor{\@ifstar{\beamer@optgog}{\beamer@optgog}}
   \newcommand\beamer@optgog[2][]{}
+  \ifbeamer@articlexcolor
+  {%
+    \colorlet{fg}{black}
+    \colorlet{bg}{white}
+  }
 }
 
 
