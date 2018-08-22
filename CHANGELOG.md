@@ -10,7 +10,7 @@ a major and minor version only.
 
 ## [v3.51]
 
-## Changed
+### Changed
 - Add `\include` and `\input` to commands respected in 'skipping' mode
 - Dynamically calculate note page size (see #487)
 
