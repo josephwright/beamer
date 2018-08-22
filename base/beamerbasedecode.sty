@@ -198,7 +198,7 @@
   \ifx\beamer@action\beamer@default
     \xdef\beamer@decodefound{\beamer@spec}%
   \else
-    \xdef\beamer@decaction{{\beamer@action<\beamer@spec>}}%
+    \xdef\beamer@decaction{\beamer@decaction{\beamer@action<\beamer@spec>}}%
   \fi}
 \def\beamer@currentaction{default}
 

@@ -47,17 +47,18 @@ checksuppfiles = {"*.tex"}
 indexstyle = ""
 
 -- Auto-versioning
-versionfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex"}
-function setversion_update_line(line, date, version)
-  local date = string.gsub(date, "%-", "/")
-  if string.match(line, "^  %[%d%d%d%d/%d%d/%d%d v%d%.%d+ ") then
-    line = string.gsub(line, "%d%d%d%d/%d%d/%d%d", date)
-    line = string.gsub(line, "v%d%.%d+ ", "v" .. version .. " ")
+tagfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex"}
+function update_tag(file,content,tagname,tagdate)
+  local tagdate = string.gsub(tagdate,"%-","/")
+  if string.match(file,"%.tex") then
+    return string.gsub(content,
+      "\\def\\beamerugversion{%d%.%d+}",
+      "\\def\\beamerugversion{" .. string.gsub(tagname,"^v","") .. "}")
+  else
+    return string.gsub(content,
+      "%d%d%d%d/%d%d/%d%d v?%d%.%d+",
+      tagdate .. " " .. tagname)
   end
-  if string.match(line, "\\def\\beamerugversion") then
-    line = string.gsub(line, "%d%.%d+", version)
-  end
-  return line
 end
 
 -- Release a TDS-style zip
@@ -123,5 +124,7 @@ function typeset_demo_tasks()
 end
 
 -- Find and run the build system
-kpse.set_program_name("kpsewhich")
-dofile(kpse.lookup("l3build.lua"))
+kpse.set_program_name ("kpsewhich")
+if not release_date then
+  dofile(kpse.lookup("l3build.lua"))
+end
