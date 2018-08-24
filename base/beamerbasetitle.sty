@@ -237,7 +237,7 @@
  \def\beamer@shortinstitute{#1}}
 \institute{}
 
-\def\beamer@instinst#1{{\donotcoloroutermaths$^{#1}$}\ignorespaces}
+\def\beamer@instinst#1{\textsuperscript{#1}\ignorespaces}
 \def\beamer@andinst{\\[1em]}
 
 \newcommand\insertshortinstitute[1][]{%
@@ -261,7 +261,7 @@
   \fi
 
   \providecommand\and{\unskip, }
-  \providecommand\inst[1]{$^{#1}$}
+  \providecommand\inst[1]{\textsuperscript{#1}}
 }
 
 
