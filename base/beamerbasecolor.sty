@@ -148,7 +148,6 @@
 
 \newif\ifbeamer@colbox@rounded
 \newif\ifbeamer@colbox@ignorebg
-\newdimen\beamer@bg@ht \newdimen\beamer@bg@wd \newdimen\beamer@bg@dp
 
 \newenvironment{beamercolorbox}[2][]{%
   \def\beamer@vmode{\leavevmode}%
@@ -208,17 +207,16 @@
       \box\beamer@tempbox%
     \fi%
   \else%
-    \beamer@bg@ht=\ht\beamer@tempbox\relax\beamer@bg@dp=\dp\beamer@tempbox\relax\beamer@bg@wd=\wd\beamer@tempbox\relax%
     \setbox\beamer@tempbox=\hbox{%
-      \if@tempswa%
-        \ifdim\beamer@colbox@colseps>\z@%
-          \advance\beamer@bg@wd\beamer@colbox@colseps\advance\beamer@bg@wd\beamer@colbox@colseps%
-%          \advance\beamer@bg@ht\beamer@colbox@colseps\advance\beamer@bg@dp\beamer@colbox@colseps%
-          \hskip-\beamer@colbox@colseps\fi%
-        \usebeamercolor{\beamer@colbox@color}%
-        \rlap{\color@begingroup\color{bg}\vrule\@width\beamer@bg@wd\@height\beamer@bg@ht\@depth\beamer@bg@dp\color@endgroup}%
-        \ifdim\beamer@colbox@colseps>\z@\hskip\beamer@colbox@colseps\fi%
-      \fi\box\beamer@tempbox}%
+      \usebeamercolor{\beamer@colbox@color}%
+      \hskip-\beamer@colbox@colseps%
+      \fboxsep=\z@\colorbox{bg}{%
+        \hskip\beamer@colbox@colseps%
+        \box\beamer@tempbox%
+        \hskip\beamer@colbox@colseps%
+      }%
+      \hskip-\beamer@colbox@colseps%
+      }%
     \ifdim\wd\beamer@tempbox>\textwidth%
       \setbox\beamer@tempbox=\hbox to\textwidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@leftmargin\relax}%
     \fi%
