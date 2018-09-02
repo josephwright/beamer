@@ -9,7 +9,8 @@ a major and minor version only.
 ## [Unreleased]
 
 ### Fixed
-- Incorrect shadows when using DVI routes (#492)
+- Behaviour of `\inst` (see #489)
+- Incorrect shadows when using DVI routes (see #492)
 
 ## [v3.51]
 
