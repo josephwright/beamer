@@ -8,6 +8,9 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+- Incorrect shadows when using DVI routes (#492)
+
 ## [v3.51]
 
 ### Changed
