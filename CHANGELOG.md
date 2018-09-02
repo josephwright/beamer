@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.52]
+
 ### Fixed
 - Behaviour of `\inst` (see #489)
 - Incorrect shadows when using DVI routes (see #492)
@@ -26,5 +28,6 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.51...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.52...HEAD
+[v3.52]: https://github.com/josephwright/beamer/compare/v3.51...v3.52
 [v3.51]: https://github.com/josephwright/beamer/compare/v3.50...v3.51
