@@ -8,6 +8,12 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.53]
+
+### Fixed
+
+- Behavior of `bg` key
+
 ## [v3.52]
 
 ### Fixed
@@ -28,6 +34,7 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.52...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.53...HEAD
+[v3.53]: https://github.com/josephwright/beamer/compare/v3.52...v3.53
 [v3.52]: https://github.com/josephwright/beamer/compare/v3.51...v3.52
 [v3.51]: https://github.com/josephwright/beamer/compare/v3.50...v3.51
