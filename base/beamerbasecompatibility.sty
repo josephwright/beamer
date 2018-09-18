@@ -66,6 +66,7 @@
     \renewcommand\theenumiii{\@arabic\c@enumiii}%
   }%
   \AtBeginDocument{% Allow for paralist loading
+    \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}
 %    \let\labelitemi\beamer@labelitemi
 %    \let\labelitemii\beamer@labelitemii
 %    \let\itemize\beamer@itemize
