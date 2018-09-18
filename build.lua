@@ -109,8 +109,8 @@ function typeset_demo_tasks()
       errorlevel = errorlevel + runtool(
         "", ".",
         "TEXINPUTS",
-        "pdflatex \\def\\themename{" .. theme .. "}"
-          .. "\\input " .. name .. " "
+        "pdflatex << EOF\n\\def\\themename{" .. theme .. "}"
+          .. "\\input " .. name .. "\nEOF"
       )
       if errorlevel ~= 0 then
         return errorlevel
