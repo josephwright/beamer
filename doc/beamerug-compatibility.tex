@@ -161,9 +161,14 @@ When using certain packages or classes together with the |beamer| class, extra o
 \end{package}
 
 \begin{package}{{musixtex}}
-  When using MusiX\TeX\ to typeset musical scores, you have to have $\varepsilon$-\TeX extensions enabled. Most modern distributions enable that by default both in |pdflatex| and |latex|. However, if you have an older distribution, the document must be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or |latex|.
+  When using MusiX\TeX\ to typeset musical scores, you have to have $\varepsilon$-\TeX\ extensions enabled. Most modern distributions enable that by default both in |pdflatex| and |latex|. However, if you have an older distribution, the document must be compiled with |pdfelatex| or |elatex| instead of |pdflatex| or |latex|.
 
   Inside a |music| environment, the |\pause| is redefined to match MusiX\TeX's definition (a rest during one quarter of a whole). You can use the |\beamerpause| command to create overlays in this environment.
+\end{package}
+
+\begin{package}{{paralist}}
+  \beamernote
+  \beamer\ automatically patches list-related commands using |beamerpatchparalist| package at the beginning of document.
 \end{package}
 
 \begin{package}{{pdfpages}}
