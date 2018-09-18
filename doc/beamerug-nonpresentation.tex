@@ -92,7 +92,13 @@ The package |beamerarticle| defines virtually all of \beamer's commands in a way
 \end{verbatim}
 \end{package}
 
-There is one remaining problem: While the |article| version can easily \TeX\ the whole file, even in the presence of commands like |\frame<2>|, we do not want the special article text to be inserted into our original \beamer\ presentation. That means, we would like all text \emph{between} frames to be suppressed. More precisely, we want all text except for commands like |\section| and so on to be suppressed. This behavior can be enforced by specifying the option |ignorenonframetext| in the presentation version. The option will insert a |\mode*| at the beginning of your presentation.
+There is one remaining problem: While the |article| version can easily \TeX\ the whole file, even in the presence of commands like |\frame<2>|, we do not want the special article text to be inserted into our original \beamer\ presentation. That means, we would like all text \emph{between} frames to be suppressed. More precisely, we want all text except for commands like |\section| and so on to be suppressed. This behavior can be enforced by specifying the option |ignorenonframetext| in the presentation version. 
+
+\begin{classoption}{ignorenonframetext}
+  Cause |beamer| to ignore (almost) all texts and commands outside frames in the |presentation| mode. The option will insert a |\mode*| at the beginning of your presentation.
+
+  \emph{Note:} When using |\include| or |\input| commands, conversions of modes must be controlled manually. See Section~\ref{section-mode-details} for details.
+\end{classoption}
 
 The following example shows a simple usage of the |article| mode:
 
