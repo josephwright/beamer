@@ -142,6 +142,8 @@ A presentation consists of a series of frames. Each frame consists of a series o
   \item
     \declare{|b|}, \declare{|c|}, \declare{|t|} will cause the frame to be vertically aligned at the bottom/center/top. This overrides the global placement policy, which is governed by the class options |t| and |c|.
   \item
+    \declare{|noframenumbering|} tells \beamer\ not to step the |framenumber| counter for this frame.
+  \item
     \declare{|fragile|\opt{|=singleslide|}} tells \beamer\ that the frame contents is ``fragile.'' This means that the frame contains text that is not ``interpreted as usual.'' For example, this applies to verbatim text, which is, obviously, interpreted somewhat differently from normal text.
 
     If a frame contains fragile text, different internal mechanisms are used to typeset the frame to ensure that inside the frame the character codes can be reset. The price of switching to another internal mechanism is that either you cannot use overlays or an external file needs to be written and read back (which is not always desirable).
