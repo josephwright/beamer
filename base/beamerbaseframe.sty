@@ -436,6 +436,9 @@
   \beamer@frametemplate%
   \ifbeamer@noframenumbering%
     \beamer@noframenumberingfalse%
+    \ifbeamer@isfragile%Fragile frames will be processed twice
+      \stepcounter{framenumber}%
+    \fi%
   \else%
     \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
   \fi%
