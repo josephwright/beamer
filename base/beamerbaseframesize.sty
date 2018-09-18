@@ -249,7 +249,9 @@
 \newtoks\beamer@framesubtitletoks
 
 \def\beamer@continueautobreak{%
-  \refstepcounter{framenumber}%
+  \ifbeamer@noframenumbering\else%
+    \refstepcounter{framenumber}%
+  \fi%
   \expandafter\beamer@frametitletoks\expandafter{\beamer@frametitle}%
   \expandafter\beamer@framesubtitletoks\expandafter{\beamer@shortframetitle}%
   \edef\beamer@callframetitle{\noexpand\frametitle[\the\beamer@framesubtitletoks]{\the\beamer@frametitletoks}}%

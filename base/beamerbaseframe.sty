@@ -272,7 +272,6 @@
 }
 
 \newif\ifbeamer@noframenumbering
-\beamer@noframenumberingfalse
 
 \define@key{beamerframe}{noframenumbering}[true]{\beamer@noframenumberingtrue}
 
@@ -423,6 +422,7 @@
   \beamer@autobreakcount=0\relax%
   \beamer@autobreaklastheight=16000pt%
   \beamer@zoomcount=0\relax%
+  \beamer@noframenumberingfalse%
   \beamer@containsverbatimfalse%
   \beamer@isfragilefalse%
   \beamer@autobreakfalse%
@@ -435,7 +435,6 @@
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
   \ifbeamer@noframenumbering%
-    \beamer@noframenumberingfalse%
     \ifbeamer@isfragile%Fragile frames will be processed twice
       \stepcounter{framenumber}%
     \fi%
