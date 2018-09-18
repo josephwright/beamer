@@ -122,7 +122,7 @@
       \fi%
       \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
-      {
+      {%
         \ifbeamer@pausesections\pause\fi%
         \ifx\beamer@toc@ooss\beamer@hidetext
           \vskip1.5em
@@ -136,7 +136,7 @@
          \par%
         }%
       }%
-    }
+    }%
   }%
   \beamer@restoreanother%
   }
@@ -167,7 +167,7 @@
       }%
     }}%
     \beamer@restoreanother%
-  }
+  }%
   \beamer@todo%
   \fi\fi%
 }
