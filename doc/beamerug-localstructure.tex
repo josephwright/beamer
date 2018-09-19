@@ -729,6 +729,18 @@ In the |article| version, the package |amsthm| sometimes clashes with the docume
   Inserted at the end of a theorem.
 \end{element}
 
+\begin{element}{proof begin}\yes\no\no
+  Inserted at the beginning of a |proof| environment. This template behaves like a normal |block begin| template by default.
+
+  \begin{itemize}
+    \iteminsert{\insertproofname}
+    This will expand to the proof name, followed by a period most of the time.
+  \end{itemize}
+\end{element}
+
+\begin{element}{proof end}\yes\no\no
+  Inserted at the end of a |proof| environment.
+\end{element}
 
 \subsection{Framed and Boxed Text}
 
