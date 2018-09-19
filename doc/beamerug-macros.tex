@@ -54,12 +54,12 @@
 \item\extractcommand#1@\par\topsep=0pt}
 \def\endcommand{\endlist}
 \def\extractcommand#1#2@{\strut\declare{\texttt{\string#1}}#2%
-  \index{\stripcommand#1@\protect\myprintocmmand{\stripcommand#1}}}
+  \index{\stripcommand#1@\protect\myprintcommand{\stripcommand#1}}}
 
 %\let\textoken=\command
 %\let\endtextoken=\endcommand
 
-\def\myprintocmmand#1{\texttt{\char`\\#1}}
+\def\myprintcommand#1{\texttt{\char`\\#1}}
 
 \def\example{\par\smallskip\noindent\textit{Example: }}
 \def\themeauthor{\par\smallskip\noindent\textit{Theme author: }}
@@ -183,7 +183,7 @@
 \def\endtemplateinserts{\end{itemize}}
 
 \def\iteminsert#1{\item {\texttt{\declare{\string#1}}}%
-  \index{Inserts!\stripcommand#1@\protect\myprintocmmand{\stripcommand#1}}}
+  \index{Inserts!\stripcommand#1@\protect\myprintcommand{\stripcommand#1}}}
 
 \newcommand\opt[1]{{\color{black!50!green}#1}}
 \renewcommand\oarg[1]{\opt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
@@ -261,7 +261,7 @@
 %\def\extractcommand#1#2\@@{%
 %  \translatormanualentryheadline{\declare{\texttt{\string#1}}#2}%
 %  \removeats{#1}%
-%  \index{\strippedat @\protect\myprintocmmand{\strippedat}}}
+%  \index{\strippedat @\protect\myprintcommand{\strippedat}}}
 
 
 \renewenvironment{environment}[1]{

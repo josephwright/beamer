@@ -326,7 +326,7 @@ The \beamer\ class predefines commands and environments for highlighting text. U
   \end{element}
 
   \begin{element}{local structure}\no\yes\no
-    This color should be used to typeset structural elements that change their color according to the ``local environment.'' For example, an item ``button'' in an |itemize| environment changes its color according to circumstances. If it is used inside an example block, it should have the |example text| color; if it is currently ``alerted'' it should have the |alerted text| color. This color is setup by certain environments to have the color that should be used to typset things like item buttons. Since the color used for items, |item|, inherits from this color by default, items automatically change their color according to the current situation.
+    This color should be used to typeset structural elements that change their color according to the ``local environment.'' For example, an item ``button'' in an |itemize| environment changes its color according to circumstances. If it is used inside an example block, it should have the |example text| color; if it is currently ``alerted'' it should have the |alerted text| color. This color is setup by certain environments to have the color that should be used to typeset things like item buttons. Since the color used for items, |item|, inherits from this color by default, items automatically change their color according to the current situation.
 
     If you write your own environment in which the item buttons and similar structural elements should have a different color, you should change the color |local structure| inside these environments.
   \end{element}
@@ -715,7 +715,7 @@ In the |article| version, the package |amsthm| sometimes clashes with the docume
     This will expand to the name of the environment to be typeset (like ``Theorem'' or ``Corollary'').
 
     \iteminsert{\inserttheoremnumber}
-    This will expand to the number of the current theorem preceeded by a space or to nothing, if the current theorem does not have a number.
+    This will expand to the number of the current theorem preceded by a space or to nothing, if the current theorem does not have a number.
 
     \iteminsert{\inserttheoremaddition}
     This will expand to the optional argument given to the environment or will be empty, if there was no optional argument.
@@ -1047,7 +1047,7 @@ Inside |{verbatim}| environments you obviously cannot use commands like |\alert<
 
 \subsection{Abstract}
 
-The |{abstract}| environment is overlay specificiation-aware in \beamer:
+The |{abstract}| environment is overlay specification-aware in \beamer:
 
 \begin{environment}{{abstract}\sarg{action specification}}
   You can use this environment to typeset an abstract.

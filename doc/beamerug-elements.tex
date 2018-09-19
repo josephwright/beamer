@@ -15,7 +15,7 @@
 
 This section discusses the inner and outer themes that are available in \beamer. These themes install certain \emph{templates} for the different elements of a presentation. The template mechanism is explained at the end of the section.
 
-Before we plunge into the details, let us agree on some terminology for this section. In \beamer, an \emph{element} is part of a presentation that is potentially typeset in some special way. Examples of elements are frame titles, the author's name, or the footnote sign. The appearance of every element is governed by a \emph{template} for this element. Appropriate templates are installed by inner and outer themes, where the \emph{inner} themes only install templates for elements that are typically ``inside the main text,'' while \emph{outer} themes install templates for elements ``around the main text.'' Thus, from the templates's point of view, there is no real difference between inner and outer themes.
+Before we plunge into the details, let us agree on some terminology for this section. In \beamer, an \emph{element} is part of a presentation that is potentially typeset in some special way. Examples of elements are frame titles, the author's name, or the footnote sign. The appearance of every element is governed by a \emph{template} for this element. Appropriate templates are installed by inner and outer themes, where the \emph{inner} themes only install templates for elements that are typically ``inside the main text,'' while \emph{outer} themes install templates for elements ``around the main text.'' Thus, from the templates' point of view, there is no real difference between inner and outer themes.
 
 
 \subsection{Inner Themes}
@@ -271,7 +271,7 @@ In |article| mode, most of the template mechanism is switched off and has no eff
 Here are a few hints that might be helpful when you wish to set a template:
 \begin{itemize}
 \item
-  Usually, you might wish to copy code from an existing template. The code often takes care of some things that you may not yet have thought about. The default inner and outer themes might be useful starting points. Also, the file |beamerbaseauxtemplates.sty| contains interesting ``auxilliary'' templates.
+  Usually, you might wish to copy code from an existing template. The code often takes care of some things that you may not yet have thought about. The default inner and outer themes might be useful starting points. Also, the file |beamerbaseauxtemplates.sty| contains interesting ``auxiliary'' templates.
 \item
   When copying code from another template and when inserting this code in the preamble of your document (not in another style file), you may have to ``switch on'' the at-character (|@|). To do so, add the command |\makeatletter| before the |\setbeamertemplate| command and the command |\makeatother| afterward.
 \item
@@ -456,7 +456,7 @@ The \beamer-template mechanism implements a simple form of inheritance via \emph
 %% The following command has the same effect as the three commands below:
 \setbeamertemplate{itemize items}[circle]
 
-\setbeamertemplate{itemite item}[circle] % actually, the ``empty'' argument is added
+\setbeamertemplate{itemize item}[circle] % actually, the ``empty'' argument is added
 \setbeamertemplate{itemize subitem}[circle]
 \setbeamertemplate{itemize subsubitem}[circle]
 \end{verbatim}
