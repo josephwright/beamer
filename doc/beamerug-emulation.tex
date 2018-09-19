@@ -21,7 +21,7 @@ A useful effect of using an emulation layer is that you get access to all the fe
 \subsection{Prosper, HA-Prosper and Powerdot}
 \label{section-prosper}
 
-The package |beamerprosper| maps the commands of the \prosper\ package, developed by Fr\'ed\'eric Goualard, to \beamer\ commands. Also, some commands of the \textsc{ha}-\prosper\ and \textsc{powerdot} packages, developed by Hendri Adriaens, are mapped to \beamer\ commands. \emph{These mappings cannot perfectly emulate all of Prosper!} Rather, these mappings are intended as an aid when porting parts of presentations created using \prosper\ to \beamer. \emph{No styles are implemented that mimick Prosper styles.} Rather, the normal \beamer\ themes must be used (although, one could implement \beamer\ themes that mimicks existing \prosper\ styles; we have not done that and do not intend to).
+The package |beamerprosper| maps the commands of the \prosper\ package, developed by Fr\'ed\'eric Goualard, to \beamer\ commands. Also, some commands of the \textsc{ha}-\prosper\ and \textsc{powerdot} packages, developed by Hendri Adriaens, are mapped to \beamer\ commands. \emph{These mappings cannot perfectly emulate all of Prosper!} Rather, these mappings are intended as an aid when porting parts of presentations created using \prosper\ to \beamer. \emph{No styles are implemented that mimic Prosper styles.} Rather, the normal \beamer\ themes must be used (although, one could implement \beamer\ themes that mimics existing \prosper\ styles; we have not done that and do not intend to).
 
 The workflow for creating a \beamer\ presentation that uses \prosper\ code is the following:
 \begin{enumerate}
@@ -50,7 +50,7 @@ There are, unfortunately, quite a few places where you may run into problems:
 \item
   If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned. You can read more about that in Section~\ref{section-graphics} that talks about graphics.
 \item
-  If the file cannot be compiled because some \prosper\ command is not implemented, you will have to delete this command and try to mimick its behavior using some \beamer\ command.
+  If the file cannot be compiled because some \prosper\ command is not implemented, you will have to delete this command and try to mimic its behavior using some \beamer\ command.
 \end{itemize}
 
 \begin{package}{{beamerprosper}}
@@ -59,7 +59,7 @@ There are, unfortunately, quite a few places where you may run into problems:
   This package takes the following options:
   \begin{itemize}
   \item
-    \declare{|framesassubsections|} causes each frame to create its own subsection with the frame title as subsection name. This behavior mimicks \textsc{ha}-\textsc{prosper}'s behavior. In a long talk this will create way too many subsections.
+    \declare{|framesassubsections|} causes each frame to create its own subsection with the frame title as subsection name. This behavior mimics \textsc{ha}-\textsc{prosper}'s behavior. In a long talk this will create way too many subsections.
   \end{itemize}
 
   \articlenote
@@ -167,7 +167,7 @@ In the following, the effects of \prosper\ commands in \beamer\ are listed.
 \end{environment}
 
 \begin{command}{\overlays\marg{number}\marg{slide environment}}
-  This will put the \meta{slide environment} into a frame that does not have the |fragile| option and which can hence contain overlayed text. The \meta{number} is ignored since the number of necessary overlays is computed automatically by \beamer.
+  This will put the \meta{slide environment} into a frame that does not have the |fragile| option and which can hence contain overlaid text. The \meta{number} is ignored since the number of necessary overlays is computed automatically by \beamer.
 
   \example
   The following code fragments have the same effect:
@@ -353,7 +353,7 @@ There are, unfortunately, numerous places where you may run into problems:
 \item
   If you use |pstricks| commands, you will either have to stick to using |latex| and |dvips| or will have to work around them using, for example, |pgf|. Porting lots of |pstricks| code is bound to be difficult, if you wish to switch over to |pdflatex|, so be warned.
 \item
-  If the file cannot be compiled because some \seminar\ command is not implemented, you will have to delete this command and try to mimick its behavior using some \beamer\ command.
+  If the file cannot be compiled because some \seminar\ command is not implemented, you will have to delete this command and try to mimic its behavior using some \beamer\ command.
 \end{itemize}
 
 \begin{package}{{beamerseminar}}
