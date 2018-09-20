@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.54]
+
 ## Changed
 
 - Add the instructions of `proof begin` and `proof end` template
@@ -47,7 +49,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.53...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.54...HEAD
+[v3.54]: https://github.com/josephwright/beamer/compare/v3.53...v3.54
 [v3.53]: https://github.com/josephwright/beamer/compare/v3.52...v3.53
 [v3.52]: https://github.com/josephwright/beamer/compare/v3.51...v3.52
 [v3.51]: https://github.com/josephwright/beamer/compare/v3.50...v3.51
