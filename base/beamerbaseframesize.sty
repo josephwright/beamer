@@ -204,6 +204,7 @@
   \global\setbox\beamer@splitbox=\box\voidb@x%
   \ifbeamer@autobreak%
     % Ok, frame was overful -> split it!
+    \splittopskip\baselineskip%
     \setbox\@tempboxa=\vsplit\beamer@framebox to\beamer@autobreakfactor\textheight%
     \global\setbox\beamer@splitbox=\box\beamer@framebox%
     \@tempdima=\ht\beamer@splitbox%
