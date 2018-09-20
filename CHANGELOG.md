@@ -8,6 +8,19 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## Changed
+
+- Add the instructions of `proof begin` and `proof end` template
+- Patch for `paralist` package
+
+### Fixed
+
+- Wrong frame number by `noframenumbering` option (see #450)
+- Missing `nokeywords` option in the article mode
+- Vertical glues by `allowframebreak` option (see #325)
+- Typos and bad boxes in the documentation (see #491, #504 and #505)
+- Revert the addition of `\input` and `\include`
+
 ## [v3.53]
 
 ### Fixed
