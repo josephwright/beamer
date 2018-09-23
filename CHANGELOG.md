@@ -8,6 +8,11 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- Compact glue settings for lists
+- Turn off font substitution for `unicode-math` package (see #508)
+
 ## [v3.54]
 
 ## Changed
