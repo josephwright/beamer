@@ -183,6 +183,8 @@
   \edef\beamer@fmdef{\mathfamilydefault}%
   % supress for standard cm
   \ifx\beamer@fmdef\beamer@cmr\beamer@suppressreplacementstrue\fi
+  % supress for unicode math fonts
+  \@ifpackageloaded{unicode-math}{\beamer@suppressreplacementstrue}{}
   % supress for mathtime serif and math minion serif
   \@ifpackageloaded{arevmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%
   \@ifpackageloaded{hvmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%
