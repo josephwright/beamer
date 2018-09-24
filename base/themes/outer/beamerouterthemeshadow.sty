@@ -51,11 +51,9 @@
           \vbox{}\vskip-.75ex%
           \leftskip0.3cm%
           \rightskip0.3cm plus1fil\leavevmode
-          \insertframetitle%
-          \ifx\insertframesubtitle\@empty%
-            \strut\par%
-          \else
-            \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
+          \usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\strut\insertframetitle\par%
+          \ifx\insertframesubtitle\@empty\else%
+            {\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
           \fi%
           \nointerlineskip
           \vbox{}%

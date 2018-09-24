@@ -52,8 +52,10 @@
       \advance\leftskip by0.3cm%
       \rightskip=-\beamer@rightmargin%
       \advance\rightskip by0.3cm plus1fil%
-      {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}%
-      {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\insertframesubtitle\par}%
+      {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\strut\insertframetitle\par}%
+      \ifx\insertframesubtitle\@empty\else%
+        {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\strut\insertframesubtitle\par}%
+      \fi%
       \vbox{}%
       \vskip-1em%
       \vfil
