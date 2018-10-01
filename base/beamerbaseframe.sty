@@ -655,7 +655,10 @@
 
   \def\frame{\@ifnextchar<\beamer@frame{\beamer@frame<*>}}
   \def\beamer@frame<#1>{\@ifnextchar[{\beamer@@frame<#1>}{\beamer@@frame<#1>[]}}
-  \long\def\beamer@@frame<#1>[#2]{%
+  \def\beamer@@frame<#1>[{\@ifnextchar<{\beamer@framedefaultospec<#1>[}{\beamer@@@@frame<#1>[}}
+  \def\beamer@framedefaultospec<#1>[#2]{%
+    \@ifnextchar[{\beamer@@@@frame<#1>}{\beamer@@@@frame<#1>[]}}
+  \long\def\beamer@@@frame<#1>[#2]{%
     \global\let\insertframetitle=\@empty%
     \global\let\insertframesubtitle=\@empty%
     \beamer@slideinframe=1\relax%
