@@ -16,7 +16,7 @@ a major and minor version only.
 
 ## [v3.54]
 
-## Changed
+### Changed
 
 - Add the instructions of `proof begin` and `proof end` template
 - Patch for `paralist` package
