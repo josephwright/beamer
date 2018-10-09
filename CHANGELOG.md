@@ -10,6 +10,7 @@ a major and minor version only.
 
 ### Fixed
 
+- Inner behaviors for shaded ToC
 - Fix optional arguments of `\frame` in `beamerarticle` (see #509)
 - Compact glue settings for lists
 - Turn off font substitution for `unicode-math` package (see #508)
