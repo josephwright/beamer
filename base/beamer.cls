@@ -295,7 +295,10 @@
 \setlength\beamer@paperheight{9.60cm}
 
 \DeclareOptionBeamer{aspectratio}[43]{%
-  \ifnum#1=1610 %
+  \ifnum#1=2013 %
+    \setlength\beamer@paperwidth{14.00cm}%
+    \setlength\beamer@paperheight{9.10cm}%
+  \else\ifnum#1=1610 %
     \setlength\beamer@paperwidth{16.00cm}%
     \setlength\beamer@paperheight{10.00cm}%
   \else\ifnum#1=169 %
@@ -316,7 +319,7 @@
   \else\ifnum#1=141 %
     \setlength\beamer@paperwidth{14.85cm}%
     \setlength\beamer@paperheight{10.50cm}%
-  \fi\fi\fi\fi\fi\fi\fi
+  \fi\fi\fi\fi\fi\fi\fi\fi
 }
 
 \RequirePackage[%

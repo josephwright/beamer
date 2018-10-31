@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Added
+
+- `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
+
 ### Fixed
 
 - Inner behaviors for shaded ToC
