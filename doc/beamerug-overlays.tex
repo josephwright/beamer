@@ -121,7 +121,7 @@ The syntax of (basic) overlay specifications is the following: They are comma-se
 commands documented here are \emph{all} fragile even if the \LaTeXe{} kernel
 versions are not.
 
-For the following commands, adding an overlay specification causes the command to be simply ignored on slides that are not included in the specification: |\textbf|, |\textit|, |\textrm|, |\textsl|, |\textsf|, |\emph|; |\color|, |\textcolor|; |\alert|, |\structure|. If a command takes several arguments, like |\color|, the specification should directly follow the command as in the following example (but there are exceptions to this rule):
+For the following commands, adding an overlay specification causes the command to be simply ignored on slides that are not included in the specification: |\textbf|, |\textit|, |\textmd|, |\textnormal|, |\textrm|, |\textsc|, |\textsf|, |\textsl|, |\texttt|, |\textup|, |\emph|; |\color|, |\textcolor|; |\alert|, |\structure|. If a command takes several arguments, like |\color|, the specification should directly follow the command as in the following example (but there are exceptions to this rule):
 \begin{verbatim}
 \begin{frame}
   \color<2-3>[rgb]{1,0,0} This text is red on slides 2 and 3, otherwise black.
