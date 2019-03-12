@@ -8,6 +8,11 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- Add missing commands with overlay specification (see #525)
+- Replace fixed text width in `inmargin` theme (see #529)
+
 ## [v3.55]
 
 ### Fixed
