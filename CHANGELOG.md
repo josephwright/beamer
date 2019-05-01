@@ -12,6 +12,7 @@ a major and minor version only.
 
 - Add missing commands with overlay specification (see #525)
 - Replace fixed text width in `inmargin` theme (see #529)
+- Treatment of `+` and `.` overlay specifiations (see #538)
 
 ## [v3.55]
 

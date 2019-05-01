@@ -177,8 +177,10 @@
     {\beamer@relnumber}{\beamer@relnumber(0)}}
 \def\beamer@relnumber(#1){%
   \beamer@plusencounteredtrue
+  \@tempcnta=\numexpr #1 + \value{beamerpauses}\relax%
+  \ifnum\@tempcnta<0\@tempcnta=0\fi%
   \edef\beamer@spec
-    {\beamer@spec\number\numexpr #1 + \value{beamerpauses}\relax}%
+    {\beamer@spec\number\@tempcnta}%
   \beamer@@decodeplus}
 
 \def\beamer@decodedot{%
@@ -190,8 +192,10 @@
   \kernel@ifnextchar(%)
     {\beamer@relnumberdot}{\beamer@relnumberdot(0)}}
 \def\beamer@relnumberdot(#1){%
+  \@tempcnta=\numexpr #1 + \value{beamerpauses} -1\relax%
+  \ifnum\@tempcnta<0\@tempcnta=0\fi%
   \edef\beamer@spec
-    {\beamer@spec\number\numexpr #1 + \value{beamerpauses} -1\relax}%
+    {\beamer@spec\number\@tempcnta}%
   \beamer@@decodedot}
 
 \def\beamer@@decodefound{%
