@@ -26,6 +26,7 @@
 % all of the lines here have to be terminated with "%". The two-step
 % setup for \beamer@@@temp makes sure everything is expanded and removes
 % all of the spaces at this stage.
+\newbox\beamer@decode@box
 \begingroup
   \catcode`\|=\active
   \catcode`\:=\active
@@ -38,7 +39,7 @@
   \catcode`\ =\active
 \xdef\beamer@masterdecode#1{%
 \noexpand\beamer@localanotherslidefalse%
-\setbox0=\hbox{%
+\setbox\beamer@decode@box=\hbox{%
 \unexpanded{%
 \ifnum\catcode`\|=\active\edef|{\string|}\fi%
 \ifnum\catcode`\:=\active\edef:{\string:}\fi%

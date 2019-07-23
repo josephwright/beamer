@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- Improved parser for overlays
+
 ### Fixed
 
 - Add missing commands with overlay specification (see #525)
