@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.56]
+
 ### Changed
 
 - Improved parser for overlays
@@ -68,8 +70,9 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.55...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.56...HEAD
 [v3.55]: https://github.com/josephwright/beamer/compare/v3.54...v3.55
+[v3.55]: https://github.com/josephwright/beamer/compare/v3.55...v3.56
 [v3.54]: https://github.com/josephwright/beamer/compare/v3.53...v3.54
 [v3.53]: https://github.com/josephwright/beamer/compare/v3.52...v3.53
 [v3.52]: https://github.com/josephwright/beamer/compare/v3.51...v3.52
