@@ -106,11 +106,10 @@ function typeset_demo_tasks()
     if  type~= "core" then themetype = tostring(type) end
     local name = "beamer" .. themetype .. "themeexample.tex"
     for _,theme in pairs(themelist) do
-      errorlevel = errorlevel + runtool(
-        "", ".",
-        "TEXINPUTS",
+      errorlevel = errorlevel + runcmd(
         "pdflatex \"\\def\\themename{" .. theme .. "}"
-          .. "\\input " .. name .. "\" "
+          .. "\\input " .. name .. "\" ",
+          typesetdir, {"TEXINPUTS"}
       )
       if errorlevel ~= 0 then
         return errorlevel
