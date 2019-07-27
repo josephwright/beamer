@@ -9,7 +9,7 @@
 
 \mode<presentation>
 
-\if@plnewitem
+\if@plnewenum
   \def\enumerate{%
     \ifnum \@enumdepth >\tw@
       \@toodeep
@@ -42,6 +42,8 @@
     \raggedright%
     \beamer@firstlineitemizeunskip%
   }
+\fi
+\if@plnewitem
   \def\itemize{%
     \ifnum \@itemdepth >\tw@
       \@toodeep
