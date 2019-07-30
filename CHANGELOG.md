@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- More patch for `paralist` package (see #539)
+
 ## [v3.56]
 
 ### Changed

@@ -168,7 +168,13 @@ When using certain packages or classes together with the |beamer| class, extra o
 
 \begin{package}{{paralist}}
   \beamernote
-  \beamer\ automatically patches list-related commands using |beamerpatchparalist| package at the beginning of document.
+  \beamer\ automatically patches list-related commands using |beamerpatchparalist| package at the beginning of document. Besides, \beamer\ also supports using |compactitem| and |compactenum| environments with overlays, just like the usage of |enumerate| environments:
+\begin{verbatim}
+\begin{compactitem}[<+->][$\bullet$]
+  \item Alpha
+  \item Bravo
+\end{compactitem}
+\end{verbatim}
 \end{package}
 
 \begin{package}{{pdfpages}}
