@@ -614,7 +614,7 @@ In |article| mode, theorems are automatically numbered. By specifying the class 
 You can define new environments using the following command:
 
 \begin{command}{\newtheorem\opt{|*|}\marg{environment name}\oarg{numbered same as}\marg{head text}\oarg{number within}}
-  This command is used exactly the same way as in the |amsthm| package (as a matter of fact, it is the command from that package), see its documentation. The only difference is that environments declared using this command are overlay specification-aware in \beamer\ and that, when typeset, are typeset according to \beamer's templates.
+  This command is used exactly the same way as in the |amsthm| package (as a matter of fact, it is the command from that package). For example, the two optional arguments, \meta{numbered same as} and \meta{number within}, are mutually exclusive; see the documentation of |amsthm| for details. The only difference is that environments declared using this command are overlay specification-aware in \beamer\ and that, when typeset, are typeset according to \beamer's templates.
 
   \articlenote
   Environments declared using this command are also overlay specification-aware in |article| mode.
