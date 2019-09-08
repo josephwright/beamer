@@ -1,0 +1,242 @@
+\documentclass[RTL]{beamer}
+\usepackage{hologo} % pdflatex, xelatex, lualatex logos 
+
+\usepackage[layout=counters.lists]{babel}
+\babelprovide[import=ar-DZ, main]{arabic}
+\babelprovide[import]{english}
+\babelfont{sf}{Amiri}
+
+
+\mode<presentation>{\usetheme{CambridgeUS}}
+\usecolortheme{spruce}
+
+\title{اضافة الخيار RTL للكلاس بيمر}
+
+\author{Salim Bou}
+
+
+\date{\today}
+
+\setbeamercovered{transparent=10}
+\newtheorem*{thm}{نظرية.}
+
+\def\cs#1{\babelsublr{\texttt{\textbackslash#1}}}
+
+\let\oldpgfuseshading\pgfuseshading
+		\def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
+
+\begin{document}
+
+
+\parskip=6pt
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{\contentsname}
+\tableofcontents
+\end{frame}
+
+\section{مدخل}
+
+\begin{frame}[fragile]
+\frametitle{مدخل}
+انشاء عرض بيمر عربي (اتجاه النص من اليمين لليسار) اعتمادا على 
+ \hologo{pdfLaTeX} أو \hologo{XeLaTeX} مازال يعترضه الكثير من المشاكل والمعوقات خاصة ما يتعلق بالألوان والروابط والتي لم يوجد لها حلولا~بعد. 
+
+فريق  \hologo{LuaTeX} 
+أوجد حلولا لهذه المشاكل، الشكر لهم ولـ 
+\textit{Javier~Bezos}
+لأعماله بالحزمة
+\verb|babel| وخصوصا الكتابة بالاتجاهين (\verb|bidi| writing)    
+
+ المعالجة تتطلب استخدام 
+\hologo{LuaLaTeX} 
+
+\end{frame}
+
+\section{كيفية استعمال الخيار}
+
+\begin{frame}[fragile]
+\frametitle{كيفية استعمال الخيار}
+
+\selectlanguage{nil}
+
+\begin{verbatim}
+\documentclass[RTL]{beamer}
+\usepackage{babel}
+\babelprovide[import=ar-DZ, main]{arabic}
+\babelfont{sf}{Amiri}
+
+\mode<presentation>{\usetheme{Warsaw}}
+\begin{document}
+...
+\end{document}
+
+\end{verbatim}
+
+\end{frame}
+
+\section{أمثلة}
+\subsection{الإطارات}
+
+\begin{frame}[fragile]
+\frametitle{الإطارات}
+
+{\selectlanguage{nil}
+\verb:\setbeamertemplate{blocks}[default]:
+}
+
+\setbeamertemplate{blocks}[default]
+
+
+\begin{block}{أورستد}
+  لاحظ هانز أورستد في 21 أبريل 1820 وهو يُعد أحد التجارب أن إبرة
+  البوصلة تنحرف عن اتجاهها نحو الشمال عندما كان يغلق ويفتح التيار في
+  دائرة كهربائية يُعدها.
+\end{block}
+
+{\selectlanguage{nil}
+\verb:\setbeamertemplate{blocks}[rounded][shadow=true]:
+}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+\begin{block}{أورستد}
+  لاحظ هانز أورستد في 21 أبريل 1820 وهو يُعد أحد التجارب أن إبرة
+  البوصلة تنحرف عن اتجاهها نحو الشمال عندما كان يغلق ويفتح التيار في
+  دائرة كهربائية يُعدها.
+\end{block}
+
+\end{frame}
+
+\subsection{القوائم}
+
+\begin{frame}[fragile]
+\frametitle{enumerate, itemize}
+
+\begin{enumerate}
+\item فيزياء تطبيقية
+\item فيزياء تجريبية
+\item فيزياء نظرية
+\end{enumerate}
+
+\setbeamertemplate{itemize item}[triangle]
+
+{\selectlanguage{nil}
+\verb|\setbeamertemplate{itemize item}[triangle]|
+}
+
+\begin{itemize}
+\item فيزياء تطبيقية
+\item فيزياء تجريبية
+\item فيزياء نظرية
+\end{itemize}
+
+\selectlanguage{nil}
+
+\begin{itemize}
+\item first item
+\item second item
+\item third item
+\end{itemize}
+
+\end{frame}
+
+\subsection{الروابط}
+
+\begin{frame}
+\frametitle{الروابط}
+\begin{itemize}
+\item<1-> العنصر الأول.
+\item<2-> العنصر الثاني.
+\item<3-> العنصر الثالث.
+\end{itemize}
+\hyperlink{jumptosecond}{\beamerreturnbutton{الرجوع إلى الشريحة الثانية}}
+\hypertarget<2>{jumptosecond}{}
+
+\end{frame}
+
+
+\subsection{النظريات}
+
+\begin{frame}
+\frametitle{النظريات}
+
+\framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+\begin{thm}
+There is no largest prime number.
+\end{thm}
+\begin{proof}
+\begin{enumerate}[<+-| alert@+>]
+\item Suppose $p$ were the largest prime number.
+\item Let $q$ be the product of the first $p$ numbers.
+\item Then $q+1$ is not divisible by any of them.
+\item But $q + 1$ is greater than $1$, thus divisible by some prime
+number not in the first $p$ numbers.\qedhere
+\end{enumerate}
+\end{proof}
+
+\end{frame}
+
+\subsection{التكبير}
+
+\begin{frame}[fragile]
+\frametitle{التكبير}
+
+\framezoom<1><2>[border=2](2cm,2cm)(2cm,2cm)
+\pgfimage[height=5cm]{example-image}
+
+\selectlanguage{nil}
+
+\begin{verbatim}
+\framezoom<1><2>[border=2](2cm,2cm)(2cm,2cm)
+\pgfimage[height=5cm]{example-image}
+\end{verbatim}
+\end{frame}
+
+\section{بعض الملاحظات}
+
+\begin{frame}[fragile]
+\frametitle{بعض الملاحظات}
+
+\begin{itemize}
+\item
+الخيار RTL  
+  : يقوم بتبادل لكل من التعليمتين  
+  \cs{blacktriangleright} و   \cs{blacktriangleleft}
+   في حالة نص من اليمين لليسار
+
+\bigskip
+
+{\selectlanguage{nil}
+\centering
+\begin{tabular}{c|cc}
+\hline
+ &  \verb:\blacktriangleright: & \verb:\blacktriangleleft:   \\
+\hline 
+LTR context & \blacktriangleright & \blacktriangleleft \\
+\hline
+RTL context & {\selectlanguage{arabic}\blacktriangleright} & {\selectlanguage{arabic}\blacktriangleleft} \\
+\hline
+\end{tabular}
+\par
+}
+
+\bigskip
+ 
+ 
+\item
+في بعض الحالات يمكن استعمال التعليمة 
+ \cs{babelsublr} التي توفرها الحزمة  \verb:bebel: 
+لادراج نص من اليسار لليمين (لاتيني) في وسط نص من اليمين لليسار،
+ على سبيل المثال  في حال اردنا ادراج رسم  
+ \verb:pspicture: ضمن نص من اليمين لليسار. 
+\end{itemize}
+
+
+\end{frame}
+
+\end{document}

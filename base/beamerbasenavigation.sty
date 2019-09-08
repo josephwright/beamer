@@ -474,6 +474,13 @@
     \pgfuseobject{beamergotosymbol}%
   \end{pgfpicture}}
 
+\beamer@activertl{
+\def\insertgotosymbol{%
+	\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+		\pgfuseobject{\ifcase\bbl@thepardir beamergotosymbol\else beamerreturnsymbol\fi}%
+\end{pgfpicture}}
+}
+
 \pgfdefobject{beamerskipsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
 {
   \pgfpathqmoveto{1.5bp}{0.5bp}
@@ -485,11 +492,29 @@
   \pgfusepathqfill
 }
 
+\pgfdefobject{beamerskipsymbolrl}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{7pt}{5pt}}
+{
+	\pgfpathqmoveto{3.5bp}{0.5bp}
+	\pgfpathqlineto{1.5bp}{2bp}
+	\pgfpathqlineto{3.5bp}{3.5bp}
+	\pgfpathqmoveto{5.5bp}{0.5bp}
+	\pgfpathqlineto{3.5bp}{2bp}
+	\pgfpathqlineto{5.5bp}{3.5bp}
+	\pgfusepathqfill
+}
+
+
 \def\insertskipsymbol{%
   \begin{pgfpicture}{1pt}{0pt}{8pt}{5pt}
     \pgfuseobject{beamerskipsymbol}%
   \end{pgfpicture}}
 
+\beamer@activertl{
+\def\insertskipsymbol{%
+	\begin{pgfpicture}{-1pt}{0pt}{6pt}{5pt}
+		\pgfuseobject{\ifcase\bbl@thepardir beamerskipsymbol\else beamerskipsymbolrl\fi}%
+\end{pgfpicture}}
+}
 
 \pgfdefobject{beamerreturnsymbol}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{5pt}{5pt}}
 {
@@ -504,11 +529,18 @@
     \pgfuseobject{beamerreturnsymbol}%
   \end{pgfpicture}}
 
+\beamer@activertl{
+	\def\insertreturnsymbol{%
+		\begin{pgfpicture}{1pt}{0pt}{6pt}{5pt}
+			\pgfuseobject{\ifcase\bbl@thepardir beamerreturnsymbol\else beamergotosymbol\fi}%
+	\end{pgfpicture}}
+}
+
 
 \def\beamerbutton#1{\def\insertbuttontext{#1}\usebeamertemplate**{button}}
-\def\beamergotobutton#1{\beamerbutton{\insertgotosymbol#1}}
-\def\beamerskipbutton#1{\beamerbutton{\insertskipsymbol#1}}
-\def\beamerreturnbutton#1{\beamerbutton{\insertreturnsymbol#1}}
+\def\beamergotobutton#1{\beamerbutton{\insertgotosymbol\ #1}}
+\def\beamerskipbutton#1{\beamerbutton{\insertskipsymbol\ #1}}
+\def\beamerreturnbutton#1{\beamerbutton{\insertreturnsymbol\ #1}}
 
 \mode
 <article>

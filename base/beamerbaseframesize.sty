@@ -62,6 +62,7 @@
     \global\setbox\beamer@zoombox=\vbox to0pt{\unvbox\beamer@zoombox\box\@tempboxa}%
   }%
   \only<#2>{%
+  	\beamer@activertl{\pardir TLT}%
     \@ifundefined{\beamer@labelzoomed}%
     {%
       \hypertarget{\beamer@labelzoomed}{}%
@@ -105,6 +106,7 @@
       \dp\@tempboxa=0pt%
       \setbox\beamer@framebox=\vbox to\beamer@frametextheight{{%
           \ifbeamer@plainframe\beamer@leftmargin=\Gm@lmargin\fi%
+          \beamer@activertl{\pardir TLT}%
           \begin{pgfpicture}{\beamer@leftmargin}{-\beamer@frametextheight}{\beamer@leftmargin}{0pt}
             \pgftext[left,top]{\box\@tempboxa}
             \pgfpathrectangle{\pgfpoint{0pt}{-\@tempdimc}}{\pgfpoint{\@tempdimb}{\@tempdimc}}%

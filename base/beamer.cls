@@ -169,6 +169,30 @@
       \catcode\count@=\active
       \lowercase{\def~{\kern1ex}}}}}
 
+% RTL option
+
+\let\beamer@activertl\@gobble
+
+\DeclareOptionBeamer{RTL}{%
+	\let\beamer@activertl\@firstofone
+	\PassOptionsToPackage{unicode}{hyperref}
+	\PassOptionsToPackage{nil,bidi=basic-r}{babel}
+	%
+	\AtBeginDocument{%
+		\let\old@blacktriangleright\blacktriangleright
+		\let\old@blacktriangleleft\blacktriangleleft
+		\def\blacktriangleright{%
+			\ifcase\bbl@thepardir \old@blacktriangleright\else\old@blacktriangleleft\fi}
+		\def\blacktriangleleft{%
+			\ifcase\bbl@thepardir \old@blacktriangleleft\else\old@blacktriangleright\fi}
+		\let\oldpgfpicture\pgfpicture
+		\let\oldendpgfpicture\endpgfpicture
+		\def\pgfpicture{\babelsublr\bgroup\oldpgfpicture}
+		\def\endpgfpicture{\oldendpgfpicture\egroup}
+	}
+}
+
+
 % obsolete options
 \DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
 \def\beamer@notesaction@hide{%

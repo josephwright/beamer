@@ -29,7 +29,9 @@
 \newdimen\bmb@temp
 \newdimen\bmb@dima
 \newdimen\bmb@dimb
+\newdimen\bmb@dimc
 \newdimen\bmb@prevheight
+
 
 \newcommand\beamerboxesrounded[2][]{%
   \global\let\beamer@firstlineitemizeunskip=\relax%
@@ -72,8 +74,10 @@
   \bmb@temp=\bmb@width%
   \bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
   \bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
+  \bmb@dimc=0bp%
+  \beamer@activertl{\bmb@dimc=\bmb@width}%
   \hbox{%
-    \begin{pgfpicture}{0bp}{+-\ht\bmb@box}{0bp}{+-\ht\bmb@box}
+    \beamer@activertl{\textdir TLT}\begin{pgfpicture}{0bp}{+-\ht\bmb@box}{\bmb@dimc}{+-\ht\bmb@box}
       \ifdim\wd\bmb@box=0pt%
         \color{lower.bg}%
       \else%
@@ -135,7 +139,7 @@
   \bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
   \bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
   \hbox{%
-    \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
+    \beamer@activertl{\textdir TLT}\begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
       \ifbmb@shadow%
       {\pgftransformshift{\pgfpoint{4bp}{-3bp}}\pgftext{\copy\bmb@boxshadowball}}
       \begin{pgfscope}
