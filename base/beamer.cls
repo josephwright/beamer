@@ -189,6 +189,8 @@
 		\let\oldendpgfpicture\endpgfpicture
 		\def\pgfpicture{\babelsublr\bgroup\oldpgfpicture}
 		\def\endpgfpicture{\oldendpgfpicture\egroup}
+		\let\oldpgfuseshading\pgfuseshading
+		\def\pgfuseshading##1{\babelsublr{\oldpgfuseshading{##1}}}
 	}
 }
 
