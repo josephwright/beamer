@@ -12,6 +12,10 @@ a major and minor version only.
 
 - More patch for `paralist` package (see #539)
 
+### Fixed
+
+- Reset the width of color box in case of change in `\hsize`
+
 ## [v3.56]
 
 ### Changed
