@@ -311,6 +311,8 @@ The second flavor of the |\mode| command takes no argument. ``No argument'' mean
 
   \emph{Note:} When a \TeX\ file ends, \TeX\ must not be in the gobbling state. Switch this state off using |\mode| on one line and |<all>| on the next.
 
+  \emph{Note:} The behavior of |\mode| command is different inside a frame: instead of line-wise gobbling, it puts every subsequent tokens inside a ``comment box'' until another |\mode| command is encountered. Some commands may cause errors in this situation, including the assignment of global variables and |\mode| of the first flavor, since they are not actually ``gobbled''. Please use |\mode| command \emph{of any flavor} outside frames.
+
   \example
 \begin{verbatim}
 \mode<article>

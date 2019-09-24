@@ -14,6 +14,7 @@ a major and minor version only.
 
 ### Fixed
 
+- Replace `\mode` with `\only` (see #543)
 - Reset the width of color box in case of change in `\hsize`
 
 ## [v3.56]
