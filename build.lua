@@ -49,13 +49,24 @@ indexstyle = ""
 typesetruns = 3
 
 -- Auto-versioning
-tagfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex"}
+tagfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex", "CHANGELOG.md"}
 function update_tag(file,content,tagname,tagdate)
   local tagdate = string.gsub(tagdate,"%-","/")
   if string.match(file,"%.tex") then
     return string.gsub(content,
       "\\def\\beamerugversion{%d%.%d+}",
       "\\def\\beamerugversion{" .. string.gsub(tagname,"^v","") .. "}")
+  elseif string.match(file,"CHANGELOG.md") then
+    local url = "https://github.com/josephwright/beamer/compare/"
+    local previous = string.match(content,"compare/(v%d%.%d%d)%.%.%.HEAD")
+    if tagname == previous then return content end
+    content = string.gsub(content,
+      "## %[Unreleased%]",
+      "## [Unreleased]\n\n## [" .. tagname .."]")
+    return string.gsub(content,
+      "v%d.%d%d%.%.%.HEAD",
+      tagname .. "...HEAD\n[" .. tagname .. "]: " .. url .. previous
+        .. "..." .. tagname)
   else
     return string.gsub(content,
       "%d%d%d%d/%d%d/%d%d v?%d%.%d+",
