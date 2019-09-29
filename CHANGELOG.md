@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.57]
+
 ### Changed
 
 - More patch for `paralist` package (see #539)
@@ -79,7 +81,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.56...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.57...HEAD
+[v3.57]: https://github.com/josephwright/beamer/compare/v3.56...v3.57
 [v3.56]: https://github.com/josephwright/beamer/compare/v3.55...v3.56
 [v3.55]: https://github.com/josephwright/beamer/compare/v3.54...v3.55
 [v3.54]: https://github.com/josephwright/beamer/compare/v3.53...v3.54
