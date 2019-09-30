@@ -9,6 +9,7 @@ module = "beamer"
 -- Non-standard structure
 docfiledir    = "./doc"
 sourcefiledir = "./base"
+flattentds = false
 
 -- Install all files from the source tree directly
 installfiles = {"**/*.cls", "**/*.sty", "**/beamericon*.*"}
