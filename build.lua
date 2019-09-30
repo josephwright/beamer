@@ -47,8 +47,6 @@ checksuppfiles = {"*.tex"}
 -- Use standard MakeIndex style
 indexstyle = ""
 
-typesetruns = 3
-
 -- Auto-versioning
 tagfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex", "CHANGELOG.md"}
 function update_tag(file,content,tagname,tagdate)
