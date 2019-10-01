@@ -1,0 +1,21 @@
+% load babel with bidi=basic-r and change required stuff for RTL
+
+\let\beamer@activertl\@firstofone
+\PassOptionsToPackage{unicode}{hyperref}
+\RequirePackage[nil,bidi=basic-r]{babel}
+	%
+\AtBeginDocument{%
+		\let\old@blacktriangleright\blacktriangleright
+		\let\old@blacktriangleleft\blacktriangleleft
+		\def\blacktriangleright{%
+			\ifcase\bbl@thepardir \old@blacktriangleright\else\old@blacktriangleleft\fi}
+		\def\blacktriangleleft{%
+			\ifcase\bbl@thepardir \old@blacktriangleleft\else\old@blacktriangleright\fi}
+		\let\oldpgfpicture\pgfpicture
+		\let\oldendpgfpicture\endpgfpicture
+		\def\pgfpicture{\babelsublr\bgroup\oldpgfpicture}
+		\def\endpgfpicture{\oldendpgfpicture\egroup}
+		\let\oldpgfuseshading\pgfuseshading
+		\def\pgfuseshading#1{\babelsublr{\oldpgfuseshading{#1}}}
+}
+

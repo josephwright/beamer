@@ -87,6 +87,7 @@
 \newif\ifbeamer@frameswithnotesonly
 \newif\ifbeamer@ignorenonframe
 \newif\ifbeamer@autopdfinfo
+\newif\ifbeamer@rtl
 
 % Option management
 \RequirePackage{beamerbaseoptions}
@@ -106,6 +107,7 @@
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
 \beamer@autopdfinfotrue
+\beamer@rtlfalse
 
 \DeclareOptionBeamer{usepdftitle}[true]{\csname beamer@autopdfinfo#1\endcsname}
 \DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
@@ -174,24 +176,13 @@
 \let\beamer@activertl\@gobble
 
 \DeclareOptionBeamer{RTL}{%
-	\let\beamer@activertl\@firstofone
-	\PassOptionsToPackage{unicode}{hyperref}
-	\PassOptionsToPackage{nil,bidi=basic-r}{babel}
-	%
-	\AtBeginDocument{%
-		\let\old@blacktriangleright\blacktriangleright
-		\let\old@blacktriangleleft\blacktriangleleft
-		\def\blacktriangleright{%
-			\ifcase\bbl@thepardir \old@blacktriangleright\else\old@blacktriangleleft\fi}
-		\def\blacktriangleleft{%
-			\ifcase\bbl@thepardir \old@blacktriangleleft\else\old@blacktriangleright\fi}
-		\let\oldpgfpicture\pgfpicture
-		\let\oldendpgfpicture\endpgfpicture
-		\def\pgfpicture{\babelsublr\bgroup\oldpgfpicture}
-		\def\endpgfpicture{\oldendpgfpicture\egroup}
-		\let\oldpgfuseshading\pgfuseshading
-		\def\pgfuseshading##1{\babelsublr{\oldpgfuseshading{##1}}}
-	}
+	% testing luatex with RTL
+	\RequirePackage{ifluatex}	
+	\ifluatex
+	\else
+	\ClassError{beamer}{RTL need to use luatex}
+	\fi
+	\beamer@rtltrue
 }
 
 
@@ -282,6 +273,7 @@
 \DeclareOptionBeamer{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
 \DeclareOptionBeamer{color}{\PassOptionsToPackage{#1}{color}}
 \DeclareOptionBeamer{xcolor}{\PassOptionsToPackage{#1}{xcolor}}
+\DeclareOptionBeamer{babel}{\ifbeamer@rtl \PassOptionsToPackage{#1}{babel}\else \ClassError{beamer}{babel option work with RTL}\fi}
 
 \def\beamer@loaducs{}
 
@@ -377,6 +369,10 @@
 \RequirePackage[implicit=false]{hyperref}
 
 \hypersetup{pdfcreator={LaTeX with Beamer class}}
+
+\ifbeamer@rtl
+\RequirePackage{beamer-rtl} % load babel and add required stuff
+\fi
 
 % Encoding stuff
 \beamer@loaducs
