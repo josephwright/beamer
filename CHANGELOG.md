@@ -10,6 +10,7 @@ a major and minor version only.
 
 ### Changed
 
+- re-introduced `\strut` after the frametitle (see #535)
 - Promote bookmark level for index (see #554)
 
 ## [v3.57]
