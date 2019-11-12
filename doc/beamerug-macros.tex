@@ -319,7 +319,7 @@
 }
 
 \makeatletter
-\def\index@prologue{\section*{Index}\addcontentsline{toc}{section}{Index}
+\def\index@prologue{\let\toclevel@section\toclevel@part\section*{Index}\addcontentsline{toc}{section}{Index}
   This index only contains automatically generated entries, sorry. A good
   index should also contain carefully selected keywords.
   \bigskip

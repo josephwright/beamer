@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- Promote bookmark level for index (see #554)
+
 ## [v3.57]
 
 ### Changed
