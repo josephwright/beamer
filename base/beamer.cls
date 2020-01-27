@@ -316,6 +316,9 @@
   \else\ifnum#1=141 %
     \setlength\beamer@paperwidth{14.85cm}%
     \setlength\beamer@paperheight{10.50cm}%
+  \else
+    \ClassError{beamer}{unsupported aspect ratio ``#1'' specified. The supported
+      ratios are: ``1610'', ``169'', ``149'', ``54'', ``43'', ``32'' and ``141''.}{}
   \fi\fi\fi\fi\fi\fi\fi
 }
 
