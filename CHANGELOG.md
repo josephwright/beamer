@@ -12,6 +12,36 @@ a major and minor version only.
 
 - `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
 
+### Changed
+
+- re-introduced `\strut` after the frametitle (see #535)
+- Promote bookmark level for index (see #554)
+
+## [v3.57]
+
+### Changed
+
+- More patch for `paralist` package (see #539)
+
+### Fixed
+
+- Replace `\mode` with `\only` (see #543)
+- Reset the width of color box in case of change in `\hsize`
+
+## [v3.56]
+
+### Changed
+
+- Improved parser for overlays
+
+### Fixed
+
+- Add missing commands with overlay specification (see #525)
+- Replace fixed text width in `inmargin` theme (see #529)
+- Treatment of `+` and `.` overlay specifiations (see #538)
+
+## [v3.55]
+
 ### Fixed
 
 - Inner behaviors for shaded ToC
@@ -60,7 +90,10 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.54...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.57...HEAD
+[v3.57]: https://github.com/josephwright/beamer/compare/v3.56...v3.57
+[v3.56]: https://github.com/josephwright/beamer/compare/v3.55...v3.56
+[v3.55]: https://github.com/josephwright/beamer/compare/v3.54...v3.55
 [v3.54]: https://github.com/josephwright/beamer/compare/v3.53...v3.54
 [v3.53]: https://github.com/josephwright/beamer/compare/v3.52...v3.53
 [v3.52]: https://github.com/josephwright/beamer/compare/v3.51...v3.52

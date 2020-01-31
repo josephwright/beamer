@@ -269,6 +269,38 @@ In addition to these modes, \beamer\ recognizes the following names for modes se
   \declare{|presentation|} refers to the first four modes, that is, to all modes except for the |article| mode.
 \end{itemize}
 
+\begin{center}
+	\begin{pgfpicture}
+	  \pgftransformshift{\pgfpoint{0cm}{0cm}}
+	  \pgfnode{rectangle}{center}{|all|}{allnode}{}
+	  \pgftransformshift{\pgfpoint{-2cm}{-1.25cm}}
+	  \pgfnode{rectangle}{center}{|presentation|}{presentationnode}{}
+	  \pgftransformshift{\pgfpoint{4cm}{0cm}}
+	  \pgfnode{rectangle}{center}{|article|}{articlenode}{}
+	  \pgftransformshift{\pgfpoint{-7cm}{-1.5cm}}
+	  \pgfnode{rectangle}{center}{|beamer|}{beamernode}{}    
+	  \pgftransformshift{\pgfpoint{2cm}{0cm}}
+	  \pgfnode{rectangle}{center}{|second|}{secondnode}{}
+	  \pgftransformshift{\pgfpoint{2cm}{0cm}}        
+	  \pgfnode{rectangle}{center}{|handout|}{handoutnode}{}
+	  \pgftransformshift{\pgfpoint{2cm}{0cm}}
+	  \pgfnode{rectangle}{center}{|trans|}{transnode}{}
+	  \pgfpathmoveto{\pgfpointanchor{allnode}{south west}}
+	  \pgfpathlineto{\pgfpointanchor{presentationnode}{north}}
+	  \pgfpathmoveto{\pgfpointanchor{allnode}{south east}}
+	  \pgfpathlineto{\pgfpointanchor{articlenode}{north}}    
+	  \pgfpathmoveto{\pgfpointanchor{presentationnode}{south west}}
+	  \pgfpathlineto{\pgfpointanchor{beamernode}{north}}
+	  \pgfpathmoveto{\pgfpointadd{\pgfpointanchor{presentationnode}{south}}{\pgfpoint{-0.3cm}{0cm}}}
+	  \pgfpathlineto{\pgfpointanchor{secondnode}{north}}
+	  \pgfpathmoveto{\pgfpointadd{\pgfpointanchor{presentationnode}{south}}{\pgfpoint{0.3cm}{0cm}}}
+	  \pgfpathlineto{\pgfpointanchor{handoutnode}{north}}
+	  \pgfpathmoveto{\pgfpointanchor{presentationnode}{south east}}
+	  \pgfpathlineto{\pgfpointanchor{transnode}{north}}            
+	  \pgfusepath{stroke}    
+	\end{pgfpicture}
+\end{center}
+
 Depending on the current mode, you may wish to have certain text inserted only in that mode. For example, you might wish a certain frame or a certain table to be left out of your article version. In some situations, you can use the |\only| command for this purpose. However, the command |\mode|, which is described in the following, is much more powerful than |\only|.
 
 The command actually comes in three ``flavors,'' which only slightly differ in syntax. The first, and simplest, is the version that takes one argument. It behaves essentially the same way as |\only|.
@@ -310,6 +342,8 @@ The second flavor of the |\mode| command takes no argument. ``No argument'' mean
   \emph{Note:} When searching line-wise for a |\mode| command to shake it out of its gobbling state, \TeX\ will not recognize a |\mode| command if a mode specification follows on the same line. Thus, such a specification must be given on the next line.
 
   \emph{Note:} When a \TeX\ file ends, \TeX\ must not be in the gobbling state. Switch this state off using |\mode| on one line and |<all>| on the next.
+
+  \emph{Note:} The behavior of |\mode| command is different inside a frame: instead of line-wise gobbling, it puts every subsequent tokens inside a ``comment box'' until another |\mode| command is encountered. Some commands may cause errors in this situation, including the assignment of global variables and |\mode| of the first flavor, since they are not actually ``gobbled''. Please use |\mode| command \emph{of any flavor} outside frames.
 
   \example
 \begin{verbatim}

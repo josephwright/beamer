@@ -614,7 +614,7 @@ In |article| mode, theorems are automatically numbered. By specifying the class 
 You can define new environments using the following command:
 
 \begin{command}{\newtheorem\opt{|*|}\marg{environment name}\oarg{numbered same as}\marg{head text}\oarg{number within}}
-  This command is used exactly the same way as in the |amsthm| package (as a matter of fact, it is the command from that package), see its documentation. The only difference is that environments declared using this command are overlay specification-aware in \beamer\ and that, when typeset, are typeset according to \beamer's templates.
+  This command is used exactly the same way as in the |amsthm| package (as a matter of fact, it is the command from that package). For example, the two optional arguments, \meta{numbered same as} and \meta{number within}, are mutually exclusive; see the documentation of |amsthm| for details. The only difference is that environments declared using this command are overlay specification-aware in \beamer\ and that, when typeset, are typeset according to \beamer's templates.
 
   \articlenote
   Environments declared using this command are also overlay specification-aware in |article| mode.
@@ -932,8 +932,8 @@ The \beamer\ class offers several commands and environments for splitting (perha
 
 The main environment for creating columns is called |columns|. Inside this environment, you can either place several |column| environments, each of which creates a new column, or use the |\column| command to create new columns.
 
-\begin{environment}{{columns}\oarg{options}}
-  A multi-column area. Inside the environment you should place only |column| environments or |\column| commands (see below). The following \meta{options} may be given:
+\begin{environment}{{columns}\sarg{overlay specification}\oarg{options}}
+  A multi-column area. If \meta{overlay specification} is present, the environment will only be shown on the specified slides. Inside the environment you should place only |column| environments or |\column| commands (see below). The following \meta{options} may be given:
   \begin{itemize}
   \item
     \declare{|b|} will cause the bottom lines of the columns to be vertically aligned.
@@ -980,8 +980,8 @@ The main environment for creating columns is called |columns|. Inside this envir
 
 To create a column, you can either use the |column| environment or the |\column| command.
 
-\begin{environment}{{column}\oarg{placement}\marg{column width}}
-  Creates a single column of width \meta{column width}. The vertical placement of the enclosing |columns| environment can be overruled by specifying a specific \meta{placement} (|t| and |T| for the two top modes, |c| for centered, and |b| for bottom).
+\begin{environment}{{column}\sarg{overlay specification}\oarg{placement}\marg{column width}}
+  Creates a single column of width \meta{column width}. If \meta{overlay specification} is present, the column will only be shown on the specified slides. The vertical placement of the enclosing |columns| environment can be overruled by specifying a specific \meta{placement} (|t| and |T| for the two top modes, |c| for centered, and |b| for bottom).
 
   \example
   The following code has the same effect as the above examples:
@@ -1001,7 +1001,7 @@ To create a column, you can either use the |column| environment or the |\column|
 
 \end{environment}
 
-\begin{command}{{\column}\oarg{placement}\marg{column width}}
+\begin{command}{{\column}\sarg{overlay specification}\oarg{placement}\marg{column width}}
   Starts a single column. The parameters and options are the same as for the |column| environment. The column automatically ends with the next occurrence of |\column| or of a |column| environment or of the end of the current |columns| environment.
 
   \example
