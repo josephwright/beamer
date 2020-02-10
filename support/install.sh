@@ -22,15 +22,18 @@ tlmgr install l3build luatex
 
 tlmgr install \
   babel-german \
+  bitset \
   cmap \
   courier \
   ec \
   etoolbox \
   extsizes \
   helvetic \
+  letltxmacro \
   listings \
   lm \
   pgf \
+  pdfescape \
   rsfs \
   symbol \
   times \
