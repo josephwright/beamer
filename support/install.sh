@@ -29,6 +29,7 @@ tlmgr install \
   etoolbox \
   extsizes \
   helvetic \
+  hyphen-german \
   letltxmacro \
   listings \
   lm \
