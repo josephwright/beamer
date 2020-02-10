@@ -14,6 +14,9 @@ if ! command -v texlua > /dev/null; then
   cd ..
 fi
 
+# Update the TL install but add nothing new
+tlmgr update --self --all --no-auto-install
+
 # l3build itself and LuaTeX: need for texlua
 tlmgr install l3build luatex
 
@@ -38,6 +41,3 @@ tlmgr install \
 
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
-
-# Update the TL install but add nothing new
-tlmgr update --self --all --no-auto-install
