@@ -13,6 +13,10 @@ a major and minor version only.
 - re-introduced `\strut` after the frametitle (see #535)
 - Promote bookmark level for index (see #554)
 
+### Fixed
+
+- Avoid loop with overlayarea in vmode (issue #580)
+
 ## [v3.57]
 
 ### Changed
