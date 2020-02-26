@@ -16,6 +16,7 @@ a major and minor version only.
 ### Fixed
 
 - Avoid loop with overlayarea in vmode (issue #580)
+- Handling of `\\` in article mode (issue #582)
 
 ## [v3.57]
 
