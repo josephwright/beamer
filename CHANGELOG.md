@@ -12,7 +12,7 @@ a major and minor version only.
 
 - re-introduced `\strut` after the frametitle (see #535)
 - Promote bookmark level for index (see #554)
-- clip \insertslideintonotes to show only visible area
+- clip `\insertslideintonotes` to show only visible area
 
 ### Fixed
 
