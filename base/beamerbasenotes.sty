@@ -203,7 +203,7 @@
     \begin{pgflowlevelscope}{\pgftransformscale{#1}}%
       \color{normal text.bg}
       \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\paperheight}}
-      \pgfusepath{fill}
+      \pgfusepath{fill,clip}
       \color{normal text.fg}
       {\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgflowlevelscope}
