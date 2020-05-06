@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.58]
+
 ### Changed
 
 - re-introduced `\strut` after the frametitle (see #535)
@@ -93,7 +95,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.57...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.58...HEAD
+[v3.58]: https://github.com/josephwright/beamer/compare/v3.57...v3.58
 [v3.57]: https://github.com/josephwright/beamer/compare/v3.56...v3.57
 [v3.56]: https://github.com/josephwright/beamer/compare/v3.55...v3.56
 [v3.55]: https://github.com/josephwright/beamer/compare/v3.54...v3.55
