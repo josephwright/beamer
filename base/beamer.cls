@@ -226,7 +226,7 @@
   \beamer@sansmathtrue
 }
 \DeclareOptionBeamer{serif}{%
-  \ClassWarning{beamer}{``serif'' is obsolete. Use font theme ``serif'' instead}
+  \ClassWarning{beamer}{``serif'' option is obsolete. Use font theme ``serif'' instead}
   \def\familydefault{\rmdefault}
   \def\mathfamilydefault{\rmdefault}
   \beamer@sansmathfalse
@@ -238,7 +238,7 @@
   \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}
   \def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
 \DeclareOptionBeamer{professionalfont}{%
-  \ClassWarning{beamer}{``professionalfont'' is obsolete. Use font theme ``professionalfonts'' instead}
+  \ClassWarning{beamer}{``professionalfont'' option is obsolete. Use font theme ``professionalfonts'' instead}
   \beamer@suppressreplacementstrue}
 
 % has to be done here for compatibility
