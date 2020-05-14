@@ -20,7 +20,13 @@
 
 \defbeameroption{previous slide on second screen}[right]%
 {%
-  \RequirePackage{pgfpages}
+  \ifx\@onlypreamble\@notprerr 
+    \ltx@ifpackageloaded{pgfpages}{}{%
+      \ClassError{beamer}{`pgfpages' package necessary for this option}{}%
+    }%
+  \else%
+    \RequirePackage{pgfpages}%
+  \fi%
   \pgfpagesuselayout{two screens with lagging second}[second #1]%
   \beamer@twoscreenstexttrue
   \nofiles
@@ -28,7 +34,13 @@
 
 \defbeameroption{second mode text on second screen}[right]%
 {%
-  \RequirePackage{pgfpages}
+  \ifx\@onlypreamble\@notprerr 
+    \ltx@ifpackageloaded{pgfpages}{}{%
+      \ClassError{beamer}{`pgfpages' package necessary for this option}{}%
+    }%
+  \else%
+    \RequirePackage{pgfpages}%
+  \fi%
   \pgfpagesuselayout{two screens with optional second}[second #1]%
   \beamer@twoscreenstexttrue
 }
