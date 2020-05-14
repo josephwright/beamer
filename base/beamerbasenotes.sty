@@ -31,6 +31,13 @@
 
 \defbeameroption{show notes on second screen}[right]%
 {
+  \ifx\@onlypreamble\@notprerr 
+    \ltx@ifpackageloaded{pgfpages}{}{%
+      \ClassError{beamer}{`pgfpages' package necessary for this option}{}%
+    }%
+  \else%
+    \RequirePackage{pgfpages}%
+  \fi%
   \pgfpagesuselayout{two screens with optional second}[second #1]
   \beamer@twoscreensnotestrue
   \beamer@notestrue
