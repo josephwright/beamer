@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- added `\transfly` macro for `Fly` page transition (see #609)
+
 ## [v3.58]
 
 ### Changed
