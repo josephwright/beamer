@@ -11,6 +11,7 @@ a major and minor version only.
 ### Changed
 
 - added `\transfly` macro for `Fly` page transition (see #609)
+- Preparations for LaTeX2e 2020-10-01
 
 ## [v3.58]
 
