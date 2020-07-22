@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.59]
+
 ### Changed
 
 - added `\transfly` macro for `Fly` page transition (see #609)
@@ -100,7 +102,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.58...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.59...HEAD
+[v3.59]: https://github.com/josephwright/beamer/compare/v3.58...v3.59
 [v3.58]: https://github.com/josephwright/beamer/compare/v3.57...v3.58
 [v3.57]: https://github.com/josephwright/beamer/compare/v3.56...v3.57
 [v3.56]: https://github.com/josephwright/beamer/compare/v3.55...v3.56
