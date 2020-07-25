@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- Margins in frame title color box (see #614)
+
 ## [v3.59]
 
 ### Changed
