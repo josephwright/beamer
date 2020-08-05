@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- added translations for author, institute and date indicator of inmargin theme (see #616)
+
 ### Fixed
 
 - Margins in frame title color box (see #614)
