@@ -503,19 +503,23 @@
   \mode<presentation>{\setbeamertemplate{bibliography item}{\insertbiblabel}}}  
 \csappto{blx@filehook@postload@authoryear.bbx}{%
   \mode<presentation>{%
-      \newlength{\beamer@bibiconwidth}
-      \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}
-      \setlength{\labelwidth}{-\beamer@bibiconwidth}
-      \addtolength{\labelwidth}{2\labelsep}
-      \addtolength{\bibhang}{\labelsep}
+    \pretocmd{\printbibliography}{%
+      \newlength{\beamer@bibiconwidth}%
+      \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}%
+      \setlength{\labelwidth}{-\beamer@bibiconwidth}%
+      \addtolength{\labelwidth}{2\labelsep}%
+      \addtolength{\bibhang}{\labelsep}%
+    }{}{}%
   }}  
 \csappto{blx@filehook@postload@authortitle.bbx}{%
   \mode<presentation>{%
-      \newlength{\beamer@bibiconwidth}
-      \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}
-      \setlength{\labelwidth}{-\beamer@bibiconwidth}
-      \addtolength{\labelwidth}{2\labelsep}
-      \addtolength{\bibhang}{\labelsep}
+    \pretocmd{\printbibliography}{%
+      \newlength{\beamer@bibiconwidth}%
+      \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}%
+      \setlength{\labelwidth}{-\beamer@bibiconwidth}%
+      \addtolength{\labelwidth}{2\labelsep}%
+      \addtolength{\bibhang}{\labelsep}%
+    }{}{}%
   }}
 
 
