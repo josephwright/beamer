@@ -15,6 +15,7 @@ a major and minor version only.
 ### Fixed
 
 - Margins in frame title color box (see #614)
+- adding font substitution (see #630)
 
 ## [v3.59]
 
