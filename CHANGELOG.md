@@ -16,6 +16,7 @@ a major and minor version only.
 
 - Margins in frame title color box (see #614)
 - adding font substitution (see #630)
+- delaying fixes for biblatex styles until the bibliography (see #625)
 
 ## [v3.59]
 
