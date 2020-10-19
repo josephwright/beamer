@@ -119,7 +119,6 @@
     %\color{.}%
   }
 
-\newcount\pgf@shadingboxcnt
 \def\endbeamerboxesrounded{%
   \end{minipage}\egroup%
   \bmb@temp=\dp\bmb@box%
@@ -131,7 +130,6 @@
   \advance\bmb@boxheight by4bp%
   \advance\bmb@boxheight by\bmb@prevheight%
   \ifbmb@shadow%
-    \global\advance \pgf@shadingboxcnt by 1
     \pgfdeclareradialshading{bmb@shadowball}{\pgfpointorigin}
     {%
       color(0bp)=(pgftransparent!50);
@@ -142,24 +140,24 @@
       color(0bp)=(pgftransparent!0);
       color(8bp)=(pgftransparent!100)
     }%
-    \pgfdeclarehorizontalshading{bmb@shadowhorz\the\pgf@shadingboxcnt}{\bmb@boxheight-6bp}
+    \pgfdeclarehorizontalshading{bmb@shadowhorz\the\bmb@boxwidth}{\bmb@boxheight-6bp}
     {%
       color(0bp)=(pgftransparent!0);
       color(8bp)=(pgftransparent!100)
     }%
-    \pgfdeclareverticalshading{bmb@shadowvert\the\pgf@shadingboxcnt}{\bmb@boxwidth-4bp}
+    \pgfdeclareverticalshading{bmb@shadowvert\the\bmb@boxheight}{\bmb@boxwidth-4bp}
     {%
       color(0bp)=(pgftransparent!100);
       color(8bp)=(pgftransparent!0)
     }%
-    \pgfdeclarefading{bmb@shadowmask\the\pgf@shadingboxcnt}
+    \pgfdeclarefading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}
     {%
       \begin{pgfpicture}
         \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}
         \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}
         \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}
-        \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\pgf@shadingboxcnt}}
-        \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{8bp}]{\pgfuseshading{bmb@shadowhorz\the\pgf@shadingboxcnt}}
+        \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\bmb@boxheight}}
+        \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{8bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxwidth}}
         %
         % clipping is needed because shadow is typeset on top of box
         \begin{pgfscope}
@@ -179,7 +177,7 @@
         \begin{pgfscope}
           \pgfpathrectangle{\pgfpoint{0bp}{-7bp}}
             {\pgfpoint{\bmb@boxwidth+8bp}{\bmb@boxheight+6bp}}
-          \pgfsetfading{bmb@shadowmask\the\pgf@shadingboxcnt}{%
+          \pgfsetfading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}{%
             \pgftransformshift{\pgfpoint{0.5\bmb@boxwidth+6bp}{0.5\bmb@boxheight-4bp}}}
           \pgfusepath{fill}
         \end{pgfscope}
