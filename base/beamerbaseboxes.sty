@@ -119,6 +119,7 @@
     %\color{.}%
   }
 
+\newcount\pgf@shadingboxcnt
 \def\endbeamerboxesrounded{%
   \end{minipage}\egroup%
   \bmb@temp=\dp\bmb@box%
@@ -130,6 +131,7 @@
   \advance\bmb@boxheight by4bp%
   \advance\bmb@boxheight by\bmb@prevheight%
   \ifbmb@shadow%
+    \global\advance \pgf@shadingboxcnt by 1
     \pgfdeclareradialshading{bmb@shadowball}{\pgfpointorigin}
     {%
       color(0bp)=(pgftransparent!50);
@@ -140,32 +142,32 @@
       color(0bp)=(pgftransparent!0);
       color(8bp)=(pgftransparent!100)
     }%
-    \pgfdeclarehorizontalshading{bmb@shadowhorz}{\bmb@boxheight-6bp}
+    \pgfdeclarehorizontalshading{bmb@shadowhorz\the\pgf@shadingboxcnt}{\bmb@boxheight-6bp}
     {%
       color(0bp)=(pgftransparent!0);
       color(8bp)=(pgftransparent!100)
     }%
-    \pgfdeclareverticalshading{bmb@shadowvert}{\bmb@boxwidth-4bp}
+    \pgfdeclareverticalshading{bmb@shadowvert\the\pgf@shadingboxcnt}{\bmb@boxwidth-4bp}
     {%
       color(0bp)=(pgftransparent!100);
       color(8bp)=(pgftransparent!0)
     }%
-    \pgfdeclarefading{bmb@shadowmask}
+    \pgfdeclarefading{bmb@shadowmask\the\pgf@shadingboxcnt}
     {%
       \begin{pgfpicture}
         \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}
         \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}
         \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}
-        \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert}}
-        \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{8bp}]{\pgfuseshading{bmb@shadowhorz}}
-        % 
+        \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\pgf@shadingboxcnt}}
+        \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{8bp}]{\pgfuseshading{bmb@shadowhorz\the\pgf@shadingboxcnt}}
+        %
         % clipping is needed because shadow is typeset on top of box
         \begin{pgfscope}
           \pgfsetcolor{black}
           \pgfpathrectangle{\pgfpoint{4bp}{8bp}}{\pgfpoint{\bmb@boxwidth-0.2bp}{\bmb@boxheight-2bp}}
           \pgfusepath{fill}
         \end{pgfscope}
-      \end{pgfpicture}%
+      \end{pgfpicture}
     }%
   \fi%
   \bmb@temp=\bmb@width%
@@ -177,8 +179,8 @@
         \begin{pgfscope}
           \pgfpathrectangle{\pgfpoint{0bp}{-7bp}}
             {\pgfpoint{\bmb@boxwidth+8bp}{\bmb@boxheight+6bp}}
-          \pgfsetfading{bmb@shadowmask}{%
-            \pgftransformshift{\pgfpoint{0.5\bmb@boxwidth+4.2bp}{0.5\bmb@boxheight-4bp}}}
+          \pgfsetfading{bmb@shadowmask\the\pgf@shadingboxcnt}{%
+            \pgftransformshift{\pgfpoint{0.5\bmb@boxwidth+6bp}{0.5\bmb@boxheight-4bp}}}
           \pgfusepath{fill}
         \end{pgfscope}
       \fi%
@@ -191,10 +193,10 @@
       {\pgfpoint{\the\bmb@dimb}{-1.2bp}}%
       {\pgfpoint{\the\bmb@dimb}{1bp}}%
       {
-      \bmb@dima=\ht\bmb@box%
-      \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-      \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
-      \pgfusepath{fill}
+        \bmb@dima=\ht\bmb@box%
+        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
+        \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
+        \pgfusepath{fill}
       }
     \end{pgfpicture}%
     \box\bmb@box%
