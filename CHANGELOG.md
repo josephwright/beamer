@@ -11,6 +11,7 @@ a major and minor version only.
 ### Changed
 
 - added translations for author, institute and date indicator of inmargin theme (see #616)
+- re-introducing transparent shadows from v3.51 (see #492)
 
 ### Fixed
 
