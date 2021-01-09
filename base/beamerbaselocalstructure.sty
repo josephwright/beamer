@@ -504,7 +504,6 @@
 \csappto{blx@filehook@postload@authoryear.bbx}{%
   \mode<presentation>{%
     \pretocmd{\bibsetup}{%
-      \newlength{\beamer@bibiconwidth}%
       \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}%
       \setlength{\labelwidth}{-\beamer@bibiconwidth}%
       \addtolength{\labelwidth}{2\labelsep}%
@@ -514,14 +513,13 @@
 \csappto{blx@filehook@postload@authortitle.bbx}{%
   \mode<presentation>{%
     \pretocmd{\bibsetup}{%
-      \newlength{\beamer@bibiconwidth}%
       \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}%
       \setlength{\labelwidth}{-\beamer@bibiconwidth}%
       \addtolength{\labelwidth}{2\labelsep}%
       \addtolength{\bibhang}{\labelsep}%
     }{}{}%
   }}
-
+\newlength{\beamer@bibiconwidth}%
 
 \mode
 <article>
