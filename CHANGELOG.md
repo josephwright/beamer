@@ -10,7 +10,7 @@ a major and minor version only.
 
 ### Fixed
 
-- \beamer@bibiconwidth already defined bug (see #652)
+- `\beamer@bibiconwidth` already defined bug (see #652)
 - shadowboxes and transparent overlays (see #654)
 - workaround for misaligment of biblatex with sidebar theme (see #645)
 
