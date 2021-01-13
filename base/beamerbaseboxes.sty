@@ -130,7 +130,8 @@
   \advance\bmb@boxheight by4bp%
   \advance\bmb@boxheight by\bmb@prevheight%
   \ifbmb@shadow%
-    \def\beamer@colorhook{}
+    \xdef\beamer@storecolorhook{\beamer@colorhook}
+    \xdef\beamer@colorhook{}
     \pgfdeclareradialshading{bmb@shadowball}{\pgfpointorigin}
     {%
       color(0bp)=(pgftransparent!50);
@@ -206,6 +207,7 @@
     \vskip2bp%
   \fi%
   \egroup% of \vbox\bgroup
+  \xdef\beamer@colorhook{\beamer@storecolorhook}
 }
 
 % Shadings
