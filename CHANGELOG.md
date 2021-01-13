@@ -8,6 +8,11 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- \beamer@bibiconwidth already defined bug (see #652)
+- shadowboxes and transparent overlays (see #654)
+
 ## [v3.60]
 
 ### Changed
