@@ -130,6 +130,7 @@
   \advance\bmb@boxheight by4bp%
   \advance\bmb@boxheight by\bmb@prevheight%
   \ifbmb@shadow%
+    \def\beamer@colorhook{}
     \pgfdeclareradialshading{bmb@shadowball}{\pgfpointorigin}
     {%
       color(0bp)=(pgftransparent!50);
