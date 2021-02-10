@@ -13,6 +13,7 @@ a major and minor version only.
 - `\beamer@bibiconwidth` already defined bug (see #652)
 - shadowboxes and transparent overlays (see #654)
 - workaround for misaligment of biblatex with sidebar theme (see #645)
+- bug with nonshadow rounded boxed (see #660)
 
 ## [v3.60]
 
