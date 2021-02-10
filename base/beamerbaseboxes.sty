@@ -207,7 +207,9 @@
     \vskip2bp%
   \fi%
   \egroup% of \vbox\bgroup
-  \xdef\beamer@colorhook{\beamer@storecolorhook}
+  \ifbmb@shadow%
+    \xdef\beamer@colorhook{\beamer@storecolorhook}
+  \fi
 }
 
 % Shadings
