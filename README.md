@@ -12,7 +12,7 @@ range of environments to enable complex slide relationships to be constructed.
 The appearance of slides is controlled by a template system. Many of the
 elements of slides can be adjusted by setting simple key-based values in
 the preamble. More complex changes can be implemented by altering specific,
-targeted definitions without needing to re-write entire blocks of code. This
+targeted definitions without needing to rewrite entire blocks of code. This
 allows a variety of visual appearances to be selected for the same content
 source.
 
