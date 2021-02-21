@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `beamer` class is focussed on producing (on-screen) presentations, along
+The `beamer` class is focused on producing (on-screen) presentations, along
 with support material such as handouts and speaker notes. Content is created
 in a `frame` environment, each of which can be divided up into a number of
 slides (actual output pages). A simple 'action' notation is used to specify
