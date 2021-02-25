@@ -119,8 +119,8 @@ function typeset_demo_tasks()
     local name = "beamer" .. themetype .. "themeexample.tex"
     for _,theme in pairs(themelist) do
       print( -- printing current job for easier debugging
-        "\n\27[1;34mrunning pdflatex \"\\def\\themename{" .. theme .. "}"
-          .. "\\input " .. name .. "\" \27[0m\n"
+        "\nrunning pdflatex \"\\def\\themename{" .. theme .. "}"
+          .. "\\input " .. name .. "\" \n"
       )
       errorlevel = errorlevel + runcmd(
         "pdflatex \"\\def\\themename{" .. theme .. "}"
