@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- fixed problem with `\insertmainframenumber` in combination with `ignorenonframetext` (see #665)
+
 ## [v3.61]
 
 ### Fixed
