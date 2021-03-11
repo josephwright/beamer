@@ -168,7 +168,7 @@ The following workflow steps are optional, but they can simplify the creation of
 \item
   In the main file |main.tex|, delete the first line, which sets the document class.
 \item
-  Create a file named, say, |main.beamer.tex| with the following content:
+  Create a file named, say, |main_beamer.tex| with the following content:
 
 \begin{verbatim}
 \documentclass[ignorenonframetext]{beamer}
@@ -176,7 +176,7 @@ The following workflow steps are optional, but they can simplify the creation of
 \end{verbatim}
 
 \item
-  Create an extra file named, say, |main.article.tex| with the following content:
+  Create an extra file named, say, |main_article.tex| with the following content:
 
 \begin{verbatim}
 \documentclass{article}
@@ -186,7 +186,7 @@ The following workflow steps are optional, but they can simplify the creation of
 \end{verbatim}
 
 \item
-  You can now run |pdflatex| or |latex| on the two files |main.beamer.tex| and |main.article.tex|.
+  You can now run |pdflatex| or |latex| on the two files |main_beamer.tex| and |main_article.tex|.
 \end{itemize}
 
 The command |\setjobnamebeamerversion| tells the article version where to find the presentation version. This is necessary if you wish to include slides from the presentation version in an article as figures.
@@ -235,9 +235,9 @@ The exact effect of passing the option |page=|\meta{page of label name} to the c
   \begin{quote}
     \meta{filename}|.page|\meta{page of label name}|.|\meta{extension}
   \end{quote}
-  For each page of your |.pdf| or |.ps| file that is to be included in this way, you must create such a file by hand. For example, if the PostScript file of your presentation version is named |main.beamer.ps| and you wish to include the slides with page numbers 2 and~3, you must create (single page) files |main.beamer.page2.ps| and |main.beamer.page3.ps| ``by hand'' (or using some script). If these files cannot be found, |pgf| will complain.
+  For each page of your |.pdf| or |.ps| file that is to be included in this way, you must create such a file by hand. For example, if the PostScript file of your presentation version is named |main_beamer.ps| and you wish to include the slides with page numbers 2 and~3, you must create (single page) files |main_beamer.page2.ps| and |main_beamer.page3.ps| ``by hand'' (or using some script). If these files cannot be found, |pgf| will complain.
 \item
-  For new versions of |pdflatex|, |pdflatex| also looks for the files according to the above naming scheme. However, if it fails to find them (because you have not produced them), it uses a special mechanism to directly extract the desired page from the presentation file |main.beamer.pdf|.
+  For new versions of |pdflatex|, |pdflatex| also looks for the files according to the above naming scheme. However, if it fails to find them (because you have not produced them), it uses a special mechanism to directly extract the desired page from the presentation file |main_beamer.pdf|.
 \end{itemize}
 
 
