@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.62]
+
 ### Fixed
 - Issue with naming of file hooks (#670)
 - fixed problem with `\insertmainframenumber` in combination with `ignorenonframetext` (see #665)
@@ -128,7 +130,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.61...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.62...HEAD
+[v3.62]: https://github.com/josephwright/beamer/compare/v3.61...v3.62
 [v3.61]: https://github.com/josephwright/beamer/compare/v3.60...v3.61
 [v3.60]: https://github.com/josephwright/beamer/compare/v3.59...v3.60
 [v3.59]: https://github.com/josephwright/beamer/compare/v3.58...v3.59
