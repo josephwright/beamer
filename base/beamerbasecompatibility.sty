@@ -51,7 +51,27 @@
 %
 % Fixes right before the start of the document.
 %
-\@ifundefined{AddToHook}
+\providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+\IfFormatAtLeastTF{2020-10-01}
+  {%
+    \AddToHook{env/document/begin}[beamer]{\beamer@firstminutepatches}%
+    \AddToHook{env/document/begin}[beamer]{%
+      \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}%
+    }%
+    \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
+      {%
+        \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
+        % Fix meddline with enumerate items
+        \renewcommand\theenumi{\@arabic\c@enumi}%
+        \renewcommand\theenumii{\@arabic\c@enumii}%
+        \renewcommand\theenumiii{\@arabic\c@enumiii}%
+        \catcode`<=12 \catcode`>=12 %% right place??
+        \beamer@lastminutepatches
+        \ifbeamer@ignorenonframe
+         \expandafter\mode\expandafter*%
+       \fi
+      }
+  }
   {%
     \let\beamer@origdocument\document
     \def\document{%
@@ -82,37 +102,18 @@
           \expandafter\mode\expandafter*%
         \fi}%
   }
-  {%
-    \AddToHook{env/document/begin}[beamer]{\beamer@firstminutepatches}%
-    \AddToHook{env/document/begin}[beamer]{%
-      \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}%
-    }%
-    \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
-      {%
-        \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
-        % Fix meddline with enumerate items
-        \renewcommand\theenumi{\@arabic\c@enumi}%
-        \renewcommand\theenumii{\@arabic\c@enumii}%
-        \renewcommand\theenumiii{\@arabic\c@enumiii}%
-        \catcode`<=12 \catcode`>=12 %% right place??
-        \beamer@lastminutepatches
-        \ifbeamer@ignorenonframe
-         \expandafter\mode\expandafter*%
-       \fi
-      }
-  }
 
 \mode
 <article>
 {
-  \@ifundefined{AddToHook}
+  \IfFormatAtLeastTF{2020-10-01}
+    {\AddToHook{env/begin/document}[beamer]{\beamer@lastminutepatches}}
     {%
       \let\beamer@origdocument\document
       \def\document{%
         \beamer@origdocument%
         \beamer@lastminutepatches}
     }
-    {\AddToHook{env/begin/document}[beamer]{\beamer@lastminutepatches}}
 
   \g@addto@macro\beamer@lastminutepatches{%
     \ifbeamer@articleactive
