@@ -9,7 +9,7 @@ a major and minor version only.
 ## [Unreleased]
 
 ### Fixed
-
+- Issue with naming of file hooks (#670)
 - fixed problem with `\insertmainframenumber` in combination with `ignorenonframetext` (see #665)
 
 ## [v3.61]

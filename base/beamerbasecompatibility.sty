@@ -83,8 +83,8 @@
         \fi}%
   }
   {%
-    \AddToHook{env/begin/document}[beamer]{\beamer@firstminutepatches}%
-    \AddToHook{env/begin/document}[beamer]{%
+    \AddToHook{env/document/begin}[beamer]{\beamer@firstminutepatches}%
+    \AddToHook{env/document/begin}[beamer]{%
       \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}%
     }%
     \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
