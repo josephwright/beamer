@@ -250,7 +250,7 @@
   bookmarksopen=true,%
   pdfborder={0 0 0},%
   pdfhighlight={/N},%
-  linkbordercolor={.5 .5 .5}}{hyperref}
+  linkbordercolor=[rgb]{0.5,0.5,0.5}}{hyperref}
 
 \DeclareOptionBeamer{pgf}{\PassOptionsToPackage{#1}{pgf}}
 \DeclareOptionBeamer{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
