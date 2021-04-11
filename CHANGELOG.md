@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- Removed superflous period in combination with the `firstsection` option #674
+
 ## [v3.62]
 
 ### Fixed

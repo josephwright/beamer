@@ -185,8 +185,14 @@
 
 % (sub-)section in toc: sections numbered
 
-\defbeamertemplate{section in toc}{sections numbered}
-{\leavevmode\inserttocsectionnumber. \inserttocsection\par}
+\defbeamertemplate{section in toc}{sections numbered}{%
+  \leavevmode%
+  % prevents the period to be printed with the firstsection option
+  \ifnum\beamer@tempcount>0 
+    \inserttocsectionnumber. 
+  \fi%
+  \inserttocsection\par%
+}
 
 \defbeamertemplate{subsection in toc}{sections numbered}
 {\leavevmode\leftskip=2.5em\inserttocsubsection\par}
