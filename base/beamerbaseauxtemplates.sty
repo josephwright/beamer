@@ -187,7 +187,8 @@
 
 \defbeamertemplate{section in toc}{sections numbered}{%
   \leavevmode%
-  \ifnum\beamer@tempcount>0
+  % prevents the period to be printed with the firstsection option
+  \ifnum\beamer@tempcount>0 
     \inserttocsectionnumber. 
   \fi%
   \inserttocsection\par%
