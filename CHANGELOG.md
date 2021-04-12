@@ -8,9 +8,13 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- adding `lastsection` option to toc (#675)
+
 ### Fixed
 
-- Removed superflous period in combination with the `firstsection` option #674
+- Removed superflous period in combination with the `firstsection` option (#674)
 
 ## [v3.62]
 

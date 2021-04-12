@@ -548,6 +548,8 @@ sectionstyle=show/shaded,subsectionstyle=show/show/shaded
   \item
     \declare{|hideothersubsections|} causes the subsections of sections other than the current one to be hidden. This command is a shorthand for specifying the option |subsectionstyle=show/show/hide|.
   \item
+    \declare{|lastsection=|\meta{section number}} similar to |firstsection|, this option specifies which section should be the last numbered section.  This is useful if you have unnumbered sections at the end, like a summary or outlook. Section numbers are not shown by default. To show them, you must install a different table of contents templates.    
+  \item
     \declare{|part=|\meta{part number}} causes the table of contents of part \meta{part number} to be shown, instead of the table of contents of the current part (which is the default). This option can be combined with the other options, although combining it with the |current| option obviously makes no sense.
   \item
     \declare{|pausesections|} causes a |\pause| command to be issued before each section. This is useful if you wish to show the table of contents in an incremental way.

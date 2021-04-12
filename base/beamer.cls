@@ -74,6 +74,7 @@
 \newcount\beamer@currentsubsection
 \newcount\beamer@coveringdepth
 \newcount\beamer@sectionadjust
+\newcount\beamer@toclastsection
 \newcount\beamer@tocsectionnumber
 
 \newif\ifbeamer@sansmath
