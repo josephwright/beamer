@@ -10,7 +10,8 @@ a major and minor version only.
 
 ### Fixed
 
-- Removed superflous period in combination with the `firstsection` option #674
+- Removed superflous period in combination with the `firstsection` option (#674)
+- adding `lastsection` option to toc (#675)
 
 ## [v3.62]
 

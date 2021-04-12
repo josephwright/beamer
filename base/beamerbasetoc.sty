@@ -63,6 +63,7 @@
 \define@key{beamertoc}{part}{\beamer@showpartnumber=#1\relax}
 \define@key{beamertoc}{sections}{\beamer@parsetocsections#1[]}
 \define@key{beamertoc}{firstsection}{\beamer@sectionadjust=-#1\relax\advance\beamer@sectionadjust by 1\relax}
+\define@key{beamertoc}{lastsection}{\beamer@toclastsection=#1}
 \def\beamer@parsetocsections{\@ifnextchar<\beamer@@parsetocsections\beamer@@@parsetocsections}
 \def\beamer@@parsetocsections#1[]{\def\beamer@tocsections{#1}}
 \def\beamer@@@parsetocsections#1[]{\def\beamer@tocsections{<all:#1>}}
@@ -105,6 +106,9 @@
 
 \def\beamer@hidetext{hide}
 
+% initialize count with largest possible value
+\beamer@toclastsection=2147483647
+
 \def\sectionintoc{}
 \def\beamer@sectionintoc#1#2#3#4#5{%
   \ifnum\c@tocdepth>0%
@@ -116,8 +120,12 @@
   \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
       \beamer@tempcount=#5\relax%
       \advance\beamer@tempcount by\beamer@sectionadjust%
-      \ifnum\beamer@tempcount>0
-        \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \ifnum\beamer@tempcount>0 
+        \ifnum\beamer@tempcount>\beamer@toclastsection
+          \def\inserttocsectionnumber{}%
+        \else
+          \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+        \fi
       \else
         \def\inserttocsectionnumber{}%
       \fi%
