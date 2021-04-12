@@ -106,8 +106,9 @@
 
 \def\beamer@hidetext{hide}
 
-% initialize count with largest possible value
-\beamer@toclastsection=2147483647
+% initialize count with something large 
+\beamer@toclastsection=\maxdimen
+\multiply\beamer@toclastsection by 2
 
 \def\sectionintoc{}
 \def\beamer@sectionintoc#1#2#3#4#5{%
