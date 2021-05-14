@@ -12,7 +12,7 @@
 % See the file doc/licenses/LICENSE for more details.
 
 \ProvidesClass{beamer}
-  [2018/09/20 v3.54 A class for typesetting presentations]
+  [2021/03/19 v3.62 A class for typesetting presentations]
 
 % Setup modes and check for article option
 % Also loads packages required by both beamer and beamerarticle
@@ -74,6 +74,7 @@
 \newcount\beamer@currentsubsection
 \newcount\beamer@coveringdepth
 \newcount\beamer@sectionadjust
+\newcount\beamer@toclastsection
 \newcount\beamer@tocsectionnumber
 
 \newif\ifbeamer@sansmath
@@ -226,7 +227,7 @@
   \beamer@sansmathtrue
 }
 \DeclareOptionBeamer{serif}{%
-  \ClassWarning{beamer}{``serif'' is obsolete. Use font theme ``serif'' instead}
+  \ClassWarning{beamer}{``serif'' option is obsolete. Use font theme ``serif'' instead}
   \def\familydefault{\rmdefault}
   \def\mathfamilydefault{\rmdefault}
   \beamer@sansmathfalse
@@ -238,7 +239,7 @@
   \ClassWarning{beamer}{``mathserif'' is obsolete. Use font theme ``serif'' with option ``onlymath''}
   \def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse}
 \DeclareOptionBeamer{professionalfont}{%
-  \ClassWarning{beamer}{``professionalfont'' is obsolete. Use font theme ``professionalfonts'' instead}
+  \ClassWarning{beamer}{``professionalfont'' option is obsolete. Use font theme ``professionalfonts'' instead}
   \beamer@suppressreplacementstrue}
 
 % has to be done here for compatibility
@@ -250,7 +251,7 @@
   bookmarksopen=true,%
   pdfborder={0 0 0},%
   pdfhighlight={/N},%
-  linkbordercolor={.5 .5 .5}}{hyperref}
+  linkbordercolor=[rgb]{0.5,0.5,0.5}}{hyperref}
 
 \DeclareOptionBeamer{pgf}{\PassOptionsToPackage{#1}{pgf}}
 \DeclareOptionBeamer{hyperref}{\PassOptionsToPackage{#1}{hyperref}}

@@ -75,11 +75,11 @@
   \vskip-.5ex%
   \nointerlineskip%
   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.935cm,rightskip=.3cm plus1fil]{frametitle}
-    \usebeamerfont*{frametitle}\insertframetitle%
+    \usebeamerfont*{frametitle}\strut\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%
       \else
-        \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\strut\par}%
+        \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle}\strut\par}%
       \fi%%
     \usebeamerfont{headline}%
     \vskip.5ex  

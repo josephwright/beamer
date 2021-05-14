@@ -9,7 +9,7 @@
 
 \mode<presentation>
 
-\if@plnewitem
+\if@plnewenum
   \def\enumerate{%
     \ifnum \@enumdepth >\tw@
       \@toodeep
@@ -42,6 +42,45 @@
     \raggedright%
     \beamer@firstlineitemizeunskip%
   }
+\fi
+\def\compactenum{%
+  \ifnum \@enumdepth >\tw@
+    \@toodeep
+  \else
+    \advance\@enumdepth \@ne
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \advance\@itemdepth \@ne%
+  \fi
+  \def\@enum@widestlabel{7}%
+  \beamer@computepref\@enumdepth%
+  \expandafter\edef\csname label\@enumctr\endcsname{\noexpand\usebeamertemplate{enumerate \beameritemnestingprefix item}}%
+  \@ifnextchar[{\beamer@@cenum@}{\beamer@compactenum@}}
+\def\beamer@@cenum@[{\@ifnextchar<{\beamer@cenumdefault[}{\beamer@@@cenum@[}}
+\def\beamer@cenumdefault[#1]{\def\beamer@defaultospec{#1}%
+  \@ifnextchar[{\beamer@@@cenum@}{\beamer@compactenum@}}
+\def\beamer@@@cenum@[#1]{\@enumlabel@{\beamer@compactenum@}[[#1]} % Here a token is gobbled in paralist package
+\def\beamer@compactenum@{%
+  \beamer@computepref\@itemdepth%
+  \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+  \@adjust@enum@labelwidth
+  \expandafter\list\csname label\@enumctr\endcsname{%
+    \usecounter{\@enumctr}%
+    \parsep\plparsep
+    \itemsep\plitemsep
+    \topsep\pltopsep
+    \partopsep\plpartopsep
+    \labelwidth
+      \csname leftmargin\romannumeral\@listdepth\endcsname
+    \advance\labelwidth-\labelsep
+    \let\makelabel\enumlabel}%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+\def\endcompactenum{\ifhmode\par\fi\endlist}
+
+\if@plnewitem
   \def\itemize{%
     \ifnum \@itemdepth >\tw@
       \@toodeep
@@ -71,6 +110,39 @@
     \beamer@firstlineitemizeunskip%
   }
 \fi
+\def\compactitem{%
+  \ifnum \@itemdepth >\tw@
+    \@toodeep
+  \else
+    \advance\@itemdepth\@ne
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+  \fi
+  \beamer@computepref\@itemdepth%
+  \expandafter\edef\csname\@itemitem\endcsname{\noexpand\usebeamertemplate{itemize \beameritemnestingprefix item}}%
+  \@ifnextchar[{\beamer@@citem@}{\beamer@compactitem@}}%
+\def\beamer@@citem@[{\@ifnextchar<{\beamer@citemdefault[}{\beamer@@@citem@[}}
+\def\beamer@citemdefault[#1]{\def\beamer@defaultospec{#1}%
+  \@ifnextchar[{\beamer@@@citem@}{\beamer@compactitem@}}
+\def\beamer@@@citem@[#1]{\@itemlabel@{\beamer@compactitem@}[#1]}
+\def\beamer@compactitem@{%
+  \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+  \@adjust@item@labelwidth
+  \expandafter\list\csname\@itemitem\endcsname{%
+    \parsep\plparsep
+    \itemsep\plitemsep
+    \topsep\pltopsep
+    \partopsep\plpartopsep
+    \labelwidth
+      \csname leftmargin\romannumeral\@listdepth\endcsname
+    \advance\labelwidth-\labelsep
+    \let\makelabel\itemlabel}%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+\def\endcompactitem{\ifhmode\par\fi\endlist}
+
 \if@plflushright
   \def\enumlabel#1{{\usebeamerfont*{enumerate \beameritemnestingprefix item}%
                     \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}\hss#1}}

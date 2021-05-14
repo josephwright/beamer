@@ -9,6 +9,7 @@ module = "beamer"
 -- Non-standard structure
 docfiledir    = "./doc"
 sourcefiledir = "./base"
+flattentds = false
 
 -- Install all files from the source tree directly
 installfiles = {"**/*.cls", "**/*.sty", "**/beamericon*.*"}
@@ -47,13 +48,24 @@ checksuppfiles = {"*.tex"}
 indexstyle = ""
 
 -- Auto-versioning
-tagfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex"}
+tagfiles = {"beamer.cls", "beamerarticle.sty", "beameruserguide.tex", "CHANGELOG.md"}
 function update_tag(file,content,tagname,tagdate)
   local tagdate = string.gsub(tagdate,"%-","/")
   if string.match(file,"%.tex") then
     return string.gsub(content,
       "\\def\\beamerugversion{%d%.%d+}",
       "\\def\\beamerugversion{" .. string.gsub(tagname,"^v","") .. "}")
+  elseif string.match(file,"CHANGELOG.md") then
+    local url = "https://github.com/josephwright/beamer/compare/"
+    local previous = string.match(content,"compare/(v%d%.%d%d)%.%.%.HEAD")
+    if tagname == previous then return content end
+    content = string.gsub(content,
+      "## %[Unreleased%]",
+      "## [Unreleased]\n\n## [" .. tagname .."]")
+    return string.gsub(content,
+      "v%d.%d%d%.%.%.HEAD",
+      tagname .. "...HEAD\n[" .. tagname .. "]: " .. url .. previous
+        .. "..." .. tagname)
   else
     return string.gsub(content,
       "%d%d%d%d/%d%d/%d%d v?%d%.%d+",
@@ -106,11 +118,14 @@ function typeset_demo_tasks()
     if  type~= "core" then themetype = tostring(type) end
     local name = "beamer" .. themetype .. "themeexample.tex"
     for _,theme in pairs(themelist) do
-      errorlevel = errorlevel + runtool(
-        "", ".",
-        "TEXINPUTS",
+      print( -- printing current job for easier debugging
+        "\nrunning pdflatex \"\\def\\themename{" .. theme .. "}"
+          .. "\\input " .. name .. "\" \n"
+      )
+      errorlevel = errorlevel + runcmd(
         "pdflatex \"\\def\\themename{" .. theme .. "}"
-          .. "\\input " .. name .. "\" "
+          .. "\\input " .. name .. "\" ",
+          typesetdir, {"TEXINPUTS"}
       )
       if errorlevel ~= 0 then
         return errorlevel

@@ -184,6 +184,7 @@
       \ifdim\beamer@colbox@colseps>\z@\vskip\beamer@colbox@colseps\fi%
     \fi%
   \egroup\color@endgroup\egroup%
+  \wd\beamer@tempbox=\beamer@colbox@wd%
   \ifx\beamer@colbox@ht\@empty\else\ht\beamer@tempbox=\beamer@colbox@ht\fi%
   \ifx\beamer@colbox@dp\@empty\else\dp\beamer@tempbox=\beamer@colbox@dp\fi%
   \ifbeamer@colbox@rounded%
@@ -213,7 +214,7 @@
       \hskip-\beamer@colbox@colseps%
       }\fi%
     \ifdim\wd\beamer@tempbox>\textwidth%
-      \setbox\beamer@tempbox=\hbox to\textwidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@leftmargin\relax}%
+      \setbox\beamer@tempbox=\hbox to\textwidth{\hskip0pt minus\beamer@leftmargin\relax\box\beamer@tempbox\hskip0pt minus\beamer@rightmargin\relax}%
     \fi%
     \box\beamer@tempbox%
   \fi%

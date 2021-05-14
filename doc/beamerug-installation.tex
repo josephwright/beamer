@@ -37,7 +37,7 @@ If you use |pdflatex|, which is optional, you need
 
 \subsection{Installation of Pre-bundled Packages}
 
-We do not create or manage pre-bundled packages of \beamer, but, fortunately, other nice people do. We cannot give detailed instructions on how to install these packages, since we do not manage them, but we \emph{can} tell you were to find them and we can tell you what these nice people told us on how to install them. If you have a problem with installing, you might wish to have a look at the following first.
+We do not create or manage pre-bundled packages of \beamer, but, fortunately, other nice people do. We cannot give detailed instructions on how to install these packages, since we do not manage them, but we \emph{can} tell you where to find them and we can tell you what these nice people told us on how to install them. If you have a problem with installing, you might wish to have a look at the following first.
 
 
 \subsubsection{\TeX\ Live and Mac\TeX}
@@ -90,9 +90,9 @@ The package contains a bunch of files; |beamer.cls| is one of these files and ha
 When you ask \TeX\ to use a certain class or package, it usually looks for the necessary files in so-called |texmf| trees. These trees are simply huge directories that contain these files. By default, \TeX\ looks for files in three different |texmf| trees:
 \begin{itemize}
 \item
-  The root |texmf| tree, which is usually located at |/usr/share/texmf/|, |/usr/local/texlive/texmf/|, |c:\texmf\|, or\\ |c:\texlive\texmf\|.
+  The root |texmf| tree, which is usually located at |/usr/share/texmf/|, |/usr/local/texlive/texmf/|, |c:\texmf\|, or |c:\texlive\texmf\|.
 \item
-  The local  |texmf| tree, which is usually located at |/usr/local/share/texmf/|, |/usr/local/texlive/texmf-local/| |c:\localtexmf\|, or\\ |c:\texlive\texmf-local\|.
+  The local  |texmf| tree, which is usually located at |/usr/local/share/texmf/|,\\ |/usr/local/texlive/texmf-local/|, |c:\localtexmf\|, or |c:\texlive\texmf-local\|.
 \item
   Your personal |texmf| tree, which is usually located in your home directory at |~/texmf/| or |~/Library/texmf/|.
 \end{itemize}
@@ -126,7 +126,7 @@ Note that if you have two versions installed, one in |texmf| and other in |texmf
 
 To test your installation, copy the file |generic-ornate-15min-45min.en.tex| from the directory
 \begin{verbatim}
-beamer/solutions/generic-talks
+beamer/doc/solutions/generic-talks
 \end{verbatim}
 to some place where you usually create presentations. Then run the command |pdflatex| several times on the file and check whether the resulting \pdf\ file looks correct. If so, you are all set.
 

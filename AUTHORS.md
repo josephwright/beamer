@@ -4,6 +4,7 @@
 
 - Louis Stuart <louisstuart96@gmail.com>
 - Joseph Wright <joseph.wright@morningstar2.co.uk>
+- samcarter <sam.carter8@aol.com>
 
 ## Former
 

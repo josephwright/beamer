@@ -107,7 +107,7 @@
     \begin{actionenv}#2%
       \def\insertblocktitle{#1}%
       \par%
-      \mode<presentation>{%\usebeamerfont{block}%
+      \only<presentation>{%\usebeamerfont{block}%
         \setbeamercolor{local structure}{parent=alerted text}}%
       \usebeamertemplate{block alerted begin}}
     {\par%
@@ -118,7 +118,7 @@
     \begin{actionenv}#2%
       \def\insertblocktitle{#1}%
       \par%
-      \mode<presentation>{%\usebeamerfont{block}%
+      \only<presentation>{%\usebeamerfont{block}%
         \setbeamercolor{local structure}{parent=example text}}%
       \usebeamertemplate{block example begin}}
     {\par%
@@ -495,6 +495,31 @@
        {\ifcsundef{abx@field@title}{}{\ifpunct{}{\midsentence\newunitpunct}}%
         \newblock\unspace\usebeamercolor[fg]{bibliography entry note}}{}{}}
     {}}
+    
+% Adding patches to some biblatex styles
+\csappto{blx@filehook@postload@numeric.bbx}{%
+  \mode<presentation>{\setbeamertemplate{bibliography item}{\insertbiblabel}}}
+\csappto{blx@filehook@postload@alphabetic.bbx}{%
+  \mode<presentation>{\setbeamertemplate{bibliography item}{\insertbiblabel}}}  
+\csappto{blx@filehook@postload@authoryear.bbx}{%
+  \mode<presentation>{%
+    \pretocmd{\bibsetup}{%
+      \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}%
+      \setlength{\labelwidth}{-\beamer@bibiconwidth}%
+      \addtolength{\labelwidth}{2\labelsep}%
+      \addtolength{\bibhang}{\labelsep}%
+    }{}{}%
+  }}  
+\csappto{blx@filehook@postload@authortitle.bbx}{%
+  \mode<presentation>{%
+    \pretocmd{\bibsetup}{%
+      \settowidth\beamer@bibiconwidth{\usebeamertemplate*{bibliography item}}%
+      \setlength{\labelwidth}{-\beamer@bibiconwidth}%
+      \addtolength{\labelwidth}{2\labelsep}%
+      \addtolength{\bibhang}{\labelsep}%
+    }{}{}%
+  }}
+\newlength{\beamer@bibiconwidth}%
 
 \mode
 <article>

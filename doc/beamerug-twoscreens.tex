@@ -20,16 +20,9 @@ For the presentation you attach two screens to the system. The windowing system 
 
 When the presentation program displays the specially prepared superwide \beamer-presentation, exactly the left half of the screen will be filled with the main presentation, the right part is filled with the auxiliary material---voil\`a. Not all presentation programs support this special feature. For example, the Acrobat Reader 6.0.2 will only use one screen in fullscreen mode on MacOS~X. On the other hand, a program named PDF Presenter supports showing dual-screen presentations. Generally, you will have to find out for yourself whether your display program and system support showing superwide presentations stretching over two screens.
 
-\beamer\ uses the package |pgfpages| to typeset two-screen presentations. Because of this, your first step when creating a two-screen presentation is to include this package:
-\begin{verbatim}
-\documentclass{beamer}
-\usepackage{pgfpages}
-\end{verbatim}
-
-The next step is to choose an appropriate option for showing something special on the second screen. These options are discussed in the following sections.
+\beamer\ uses the package |pgfpages| to typeset two-screen presentations. One can choose from several appropriate options for showing something special on the second screen. These options are discussed in the following sections.
 
 One of the things these options do is to setup a certain |pgfpages|-layout that is appropriate for two-screen presentations. However, you can still change the |pgfpages|-layout arbitrarily, afterwards. For example, you might wish to enlarge the virtual pages. For details, see the documentation of |pgfpages|.
-
 
 \subsection{Showing Notes on the Second Screen}
 
@@ -54,7 +47,6 @@ To specify what is shown on the second screen, you can use a special \beamer-mod
   \example
 \begin{verbatim}
 \documentclass{beamer}
-\usepackage{pgfpages}
 \setbeameroption{second mode text on second screen}
 \begin{document}
 \begin{frame}[typeset second]
@@ -78,7 +70,6 @@ To specify what is shown on the second screen, you can use a special \beamer-mod
   The following example shows how translations can be added in a comfortable way.
 \begin{verbatim}
 \documentclass{beamer}
-\usepackage{pgfpages}
 \setbeameroption{second mode text on second screen}
 \DeclareRobustCommand\translation[1]{\mytranslation#1\relax}
 \long\def\mytranslation#1|#2\relax{\alt<second>{#2}{#1}}

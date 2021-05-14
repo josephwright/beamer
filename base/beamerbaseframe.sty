@@ -493,6 +493,7 @@
 \def\gobble@onslide@@aux<#1>{\@firstofone}
 \def\beamer@donoframe{%
   \beamer@slideinframe=1\relax%
+  \global\c@beamerpauses=1\relax%
   \setbox\beamer@tempbox\vbox\bgroup%
     \beamer@inframetrue%
     \beamer@framenotesbegin%
@@ -754,6 +755,9 @@
 {
   \expandafter\let\expandafter\beamer@origbreak\expandafter=%
     \csname\expandafter\@gobble\string\\ \endcsname% evil trickery to add a space to the name
+  \ifx\beamer@origbreak\relax
+    \let\beamer@origbreak\\
+  \fi
   \DeclareRobustCommand\\{\beamer@ifnextcharospec{\beamer@breaker}{\beamer@@breaker}}
   \def\beamer@breaker<#1>{\only<#1>{\beamer@origbreak}}
   \def\beamer@@breaker{\ifbeamer@inframe\else\expandafter\beamer@origbreak\fi}

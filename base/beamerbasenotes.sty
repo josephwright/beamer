@@ -31,6 +31,13 @@
 
 \defbeameroption{show notes on second screen}[right]%
 {
+  \ifx\@onlypreamble\@notprerr 
+    \ltx@ifpackageloaded{pgfpages}{}{%
+      \ClassError{beamer}{`pgfpages' package necessary for this option}{}%
+    }%
+  \else%
+    \RequirePackage{pgfpages}%
+  \fi%
   \pgfpagesuselayout{two screens with optional second}[second #1]
   \beamer@twoscreensnotestrue
   \beamer@notestrue
@@ -203,7 +210,7 @@
     \begin{pgflowlevelscope}{\pgftransformscale{#1}}%
       \color{normal text.bg}
       \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\paperheight}}
-      \pgfusepath{fill}
+      \pgfusepath{fill,clip}
       \color{normal text.fg}
       {\pgftransformshift{\pgfpoint{\beamer@origlmargin}{\footheight}}\pgftext[left,bottom]{\copy\beamer@frameboxcopy}}
     \end{pgflowlevelscope}
