@@ -107,7 +107,7 @@
 <article>
 {
   \IfFormatAtLeastTF{2020-10-01}
-    {\AddToHook{env/begin/document}[beamer]{\beamer@lastminutepatches}}
+    {\AddToHook{begindocument/end}[beamer]{\beamer@lastminutepatches}}
     {%
       \let\beamer@origdocument\document
       \def\document{%

@@ -15,6 +15,7 @@ a major and minor version only.
 ### Fixed
 
 - Removed superflous period in combination with the `firstsection` option (#674)
+- Behaviour of `\label` in article mode (#685)
 
 ## [v3.62]
 
