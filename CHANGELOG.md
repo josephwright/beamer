@@ -16,6 +16,7 @@ a major and minor version only.
 
 - Removed superflous period in combination with the `firstsection` option (#674)
 - Behaviour of `\label` in article mode (#685)
+- Problem with date position in infolines theme (#684)
 
 ## [v3.62]
 
