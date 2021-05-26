@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.63]
+
 ### Changed
 
 - adding `lastsection` option to toc (#675)
@@ -140,7 +142,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.62...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.63...HEAD
+[v3.63]: https://github.com/josephwright/beamer/compare/v3.62...v3.63
 [v3.62]: https://github.com/josephwright/beamer/compare/v3.61...v3.62
 [v3.61]: https://github.com/josephwright/beamer/compare/v3.60...v3.61
 [v3.60]: https://github.com/josephwright/beamer/compare/v3.59...v3.60
