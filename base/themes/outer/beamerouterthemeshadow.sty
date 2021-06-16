@@ -12,29 +12,32 @@
 
 \useoutertheme{split}
 
-
 \setbeamercolor{frametitle}{parent=subsection in head/foot}
 \setbeamercolor{frametitle right}{parent=section in head/foot}
 
-
 \pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\paperheight}{%
   color(0pt)=(frametitle.bg);
-  color(\paperwidth)=(frametitle right.bg)}
-
-\AtBeginDocument{
-  \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{%
-    color(0pt)=(bg);
-    color(4pt)=(black!50!bg)}
+  color(\paperwidth)=(frametitle right.bg)
 }
+
+\pgfdeclareverticalshading{beamer@topshade}{2\paperwidth}{%
+  color(0pt)=(pgftransparent!100);
+  color(8pt)=(pgftransparent!0)
+}
+
+\pgfdeclarefading{beamer@topshadowmask}{\pgfuseshading{beamer@topshade}}
 
 \addtobeamertemplate{headline}
 {}
 {%
-  \vskip-0.2pt
-  \pgfuseshading{beamer@topshade}
+  \vskip0pt
+  \begin{pgfpicture}
+    \pgfpathrectangle{\pgfpoint{0pt}{-4pt}}{\pgfpoint{\paperwidth}{4pt}}%
+    \pgfsetfading{beamer@topshadowmask}{}%
+    \pgfusepath{fill}%
+  \end{pgfpicture}
   \vskip-2pt
 }
-
 
 \defbeamertemplate*{frametitle}{shadow theme}
 {%
@@ -61,23 +64,26 @@
       \beamer@tempdim=\ht\beamer@tempbox%
       \advance\beamer@tempdim by 2pt%
       \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{\beamer@tempdim}
-        \usebeamercolor{frametitle right}
-        \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}
-        \pgfusepath{clip}
-        \pgftext[left,base]{\pgfuseshading{beamer@frametitleshade}}
+        \begin{pgfscope}
+          \pgfsetfillcolor{black}%
+          \pgfpathrectangle{\pgfpoint{0pt}{-4pt}}{\pgfpoint{\paperwidth}{8pt}}%
+          \pgfsetfading{beamer@topshadowmask}{}%
+          \pgfusepath{fill}%
+        \end{pgfscope}
+        \begin{pgfscope}
+          \usebeamercolor{frametitle right}%
+          \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\paperwidth}{\beamer@tempdim}}%
+          \pgfusepath{clip}%
+          \pgftext[left,base]{\pgfuseshading{beamer@frametitleshade}}%
+        \end{pgfscope}
       \end{pgfpicture}
       \hskip-\paperwidth%
       \box\beamer@tempbox%
     }%
     \hskip-\Gm@rmargin%
   }%
-  \nointerlineskip
-    \vskip-0.2pt
-    \hbox to\textwidth{\hskip-\Gm@lmargin\pgfuseshading{beamer@topshade}\hskip-\Gm@rmargin}
-    \vskip-2pt
+  \vskip-2pt
 }
-
-
 
 \mode
 <all>

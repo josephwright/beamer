@@ -8,14 +8,70 @@ a major and minor version only.
 
 ## [Unreleased]
 
-### Added
+### Changed
 
-- `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
+- added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
+
+## [v3.63]
+
+### Changed
+
+- adding `lastsection` option to toc (#675)
+
+### Fixed
+
+- Removed superflous period in combination with the `firstsection` option (#674)
+- Behaviour of `\label` in article mode (#685)
+- Problem with date position in infolines theme (#684)
+
+## [v3.62]
+
+### Fixed
+- Issue with naming of file hooks (#670)
+- fixed problem with `\insertmainframenumber` in combination with `ignorenonframetext` (see #665)
+
+## [v3.61]
+
+### Fixed
+
+- `\beamer@bibiconwidth` already defined bug (see #652)
+- shadowboxes and transparent overlays (see #654)
+- workaround for misaligment of biblatex with sidebar theme (see #645)
+- bug with nonshadow rounded boxed (see #660)
+
+## [v3.60]
+
+### Changed
+
+- added translations for author, institute and date indicator of inmargin theme (see #616)
+- re-introducing transparent shadows from v3.51 (see #492)
+
+### Fixed
+
+- Margins in frame title color box (see #614)
+- adding font substitution (see #630)
+- delaying fixes for biblatex styles until the bibliography (see #625)
+
+## [v3.59]
+
+### Changed
+
+- added `\transfly` macro for `Fly` page transition (see #609)
+- Preparations for LaTeX2e 2020-10-01
+
+## [v3.58]
 
 ### Changed
 
 - re-introduced `\strut` after the frametitle (see #535)
 - Promote bookmark level for index (see #554)
+- clip `\insertslideintonotes` to show only visible area
+- using biblatex filehooks to make adjustments to the bibliography appearence (see #581)
+
+### Fixed
+
+- Avoid loop with overlayarea in vmode (issue #580)
+- Handling of `\\` in article mode (issue #582)
 
 ## [v3.57]
 
@@ -90,7 +146,13 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.57...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.63...HEAD
+[v3.63]: https://github.com/josephwright/beamer/compare/v3.62...v3.63
+[v3.62]: https://github.com/josephwright/beamer/compare/v3.61...v3.62
+[v3.61]: https://github.com/josephwright/beamer/compare/v3.60...v3.61
+[v3.60]: https://github.com/josephwright/beamer/compare/v3.59...v3.60
+[v3.59]: https://github.com/josephwright/beamer/compare/v3.58...v3.59
+[v3.58]: https://github.com/josephwright/beamer/compare/v3.57...v3.58
 [v3.57]: https://github.com/josephwright/beamer/compare/v3.56...v3.57
 [v3.56]: https://github.com/josephwright/beamer/compare/v3.55...v3.56
 [v3.55]: https://github.com/josephwright/beamer/compare/v3.54...v3.55

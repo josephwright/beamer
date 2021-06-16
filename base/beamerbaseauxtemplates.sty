@@ -185,8 +185,16 @@
 
 % (sub-)section in toc: sections numbered
 
-\defbeamertemplate{section in toc}{sections numbered}
-{\leavevmode\inserttocsectionnumber. \inserttocsection\par}
+\defbeamertemplate{section in toc}{sections numbered}{%
+  \leavevmode%
+  % prevents the period to be printed with the first/last section option
+  \ifnum\beamer@tempcount>\beamer@toclastsection
+  \else
+  \ifnum\beamer@tempcount>0 
+    \inserttocsectionnumber. 
+  \fi\fi%
+  \inserttocsection\par%
+}
 
 \defbeamertemplate{subsection in toc}{sections numbered}
 {\leavevmode\leftskip=2.5em\inserttocsubsection\par}
@@ -554,22 +562,43 @@
 {\hskip\Gm@lmargin\hbox to\@tempdima{\textwidth=\@tempdima\hsize=\textwidth\relax#1\hfil}\hskip\Gm@rmargin}
 
 % Framenumbers in footline
-\defbeamertemplate{page number in head/foot}{framenumber}{\insertframenumber}
+\defbeamertemplate{page number in head/foot}{framenumber}{%
+	\setbox\beamer@tempbox=\hbox{\inserttotalframenumber}%
+	\beamer@tempdim=\wd\beamer@tempbox%
+	\makebox[\beamer@tempdim][r]{\insertframenumber}%
+}
 
-\defbeamertemplate{page number in head/foot}{totalframenumber}{\insertframenumber\,/\,\inserttotalframenumber}
+\defbeamertemplate{page number in head/foot}{totalframenumber}{%
+	\setbox\beamer@tempbox=\hbox{\inserttotalframenumber\,/\,\inserttotalframenumber}%
+	\beamer@tempdim=\wd\beamer@tempbox%
+	\makebox[\beamer@tempdim][r]{\insertframenumber\,/\,\inserttotalframenumber}%
+}
 
 \defbeamertemplate{page number in head/foot}{appendixframenumber}{%
+	\ifnum\insertappendixframenumber<\insertmainframenumber%
+		\setbox\beamer@tempbox=\hbox{\insertmainframenumber\,/\,\insertmainframenumber}%
+	\else%
+		\setbox\beamer@tempbox=\hbox{\insertappendixframenumber\,/\,\insertappendixframenumber}%
+	\fi%
+	\beamer@tempdim=\wd\beamer@tempbox%
 	\ifbeamer@inappendix%
-  	\insertframenumberinappendix\,/\,\insertappendixframenumber%
+  	\makebox[\beamer@tempdim][r]{\insertframenumberinappendix\,/\,\insertappendixframenumber}%
   \else%
-  	\insertframenumber\,/\,\insertmainframenumber%
+  	\makebox[\beamer@tempdim][r]{\insertframenumber\,/\,\insertmainframenumber}%
   \fi%
 }
 
-\defbeamertemplate{page number in head/foot}{pagenumber}{\insertpagenumber}
+\defbeamertemplate{page number in head/foot}{pagenumber}{%
+	\setbox\beamer@tempbox=\hbox{\insertpresentationendpage}%
+	\beamer@tempdim=\wd\beamer@tempbox%
+	\makebox[\beamer@tempdim][r]{\insertpagenumber}%
+}
 
-\defbeamertemplate{page number in head/foot}{totalpagenumber}{\insertpagenumber\,/\,\insertpresentationendpage}
-
+\defbeamertemplate{page number in head/foot}{totalpagenumber}{%
+	\setbox\beamer@tempbox=\hbox{\insertpresentationendpage\,/\,\insertpresentationendpage}%
+	\beamer@tempdim=\wd\beamer@tempbox%
+	\makebox[\beamer@tempdim][r]{\insertpagenumber\,/\,\insertpresentationendpage}%	
+}
 
 % Footline
 

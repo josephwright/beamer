@@ -2,7 +2,7 @@
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011,2012,2015 by Vedran Mileti\'c, Joseph Wright
 % Copyright 2016 by Joseph Wright
-% Copyright 2017,2018 by Louis Stuart, Joseph Wright
+% Copyright 2017-2020 by Louis Stuart, Joseph Wright
 %
 % This file may be distributed and/or modified
 %
@@ -51,42 +51,69 @@
 %
 % Fixes right before the start of the document.
 %
-\let\beamer@origdocument\document
-\def\document{%
-    \beamer@firstminutepatches
-  \endgroup
-  \AtBeginDocument{% fix spanish.ldf's meddling with < and >
-    %
-    % Fix spanish.ldf's meddling with < and >
-    %
-    \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
-    % Fix meddline with enumerate items
-    \renewcommand\theenumi{\@arabic\c@enumi}%
-    \renewcommand\theenumii{\@arabic\c@enumii}%
-    \renewcommand\theenumiii{\@arabic\c@enumiii}%
-  }%
-  \AtBeginDocument{% Allow for paralist loading
-    \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}
-%    \let\labelitemi\beamer@labelitemi
-%    \let\labelitemii\beamer@labelitemii
-%    \let\itemize\beamer@itemize
-%    \let\list\beamer@list
-%    \let\@trivlist\beamer@@trivlist
-    \catcode`<=12 \catcode`>=12 }%
-  \begingroup
-    \beamer@origdocument
-    \beamer@lastminutepatches
-    \ifbeamer@ignorenonframe
-      \expandafter\mode\expandafter*%
-    \fi}
+\providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+\IfFormatAtLeastTF{2020-10-01}
+  {%
+    \AddToHook{env/document/begin}[beamer]{\beamer@firstminutepatches}%
+    \AddToHook{env/document/begin}[beamer]{%
+      \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}%
+    }%
+    \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
+      {%
+        \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
+        % Fix meddline with enumerate items
+        \renewcommand\theenumi{\@arabic\c@enumi}%
+        \renewcommand\theenumii{\@arabic\c@enumii}%
+        \renewcommand\theenumiii{\@arabic\c@enumiii}%
+        \catcode`<=12 \catcode`>=12 %% right place??
+        \beamer@lastminutepatches
+        \ifbeamer@ignorenonframe
+         \expandafter\mode\expandafter*%
+       \fi
+      }
+  }
+  {%
+    \let\beamer@origdocument\document
+    \def\document{%
+      \beamer@firstminutepatches
+      \endgroup
+      \AtBeginDocument{% fix spanish.ldf's meddling with < and >
+        %
+        % Fix spanish.ldf's meddling with < and >
+        %
+        \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
+        % Fix meddline with enumerate items
+        \renewcommand\theenumi{\@arabic\c@enumi}%
+        \renewcommand\theenumii{\@arabic\c@enumii}%
+        \renewcommand\theenumiii{\@arabic\c@enumiii}%
+      }%
+      \AtBeginDocument{% Allow for paralist loading
+        \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}
+        \let\labelitemi\beamer@labelitemi
+        \let\labelitemii\beamer@labelitemii
+        \let\itemize\beamer@itemize
+        \let\list\beamer@list
+        \let\@trivlist\beamer@@trivlist
+        \catcode`<=12 \catcode`>=12 }%
+      \begingroup
+        \beamer@origdocument
+        \beamer@lastminutepatches
+        \ifbeamer@ignorenonframe
+          \expandafter\mode\expandafter*%
+        \fi}%
+  }
 
 \mode
 <article>
 {
-  \let\beamer@origdocument\document
-  \def\document{%
-    \beamer@origdocument%
-    \beamer@lastminutepatches}
+  \IfFormatAtLeastTF{2020-10-01}
+    {\AddToHook{begindocument/end}[beamer]{\beamer@lastminutepatches}}
+    {%
+      \let\beamer@origdocument\document
+      \def\document{%
+        \beamer@origdocument%
+        \beamer@lastminutepatches}
+    }
 
   \g@addto@macro\beamer@lastminutepatches{%
     \ifbeamer@articleactive
