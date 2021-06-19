@@ -13,6 +13,7 @@ a major and minor version only.
 ### Changed
 
 - adding `lastsection` option to toc (#675)
+- solved font-dependant problem with shadow boxes (partial fix for #647)
 
 ### Fixed
 
