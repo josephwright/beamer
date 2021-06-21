@@ -12,12 +12,15 @@ a major and minor version only.
 
 - added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
 
+### Fixed
+
+- solved font-dependant problem with shadow boxes (partial fix for #647)
+
 ## [v3.63]
 
 ### Changed
 
 - adding `lastsection` option to toc (#675)
-- solved font-dependant problem with shadow boxes (partial fix for #647)
 
 ### Fixed
 
