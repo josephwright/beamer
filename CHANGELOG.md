@@ -11,6 +11,7 @@ a major and minor version only.
 ### Changed
 
 - added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
+- Remove redefinition of `\addtocontents` (see #698)
 
 ### Fixed
 
