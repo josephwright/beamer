@@ -314,9 +314,11 @@ The command actually comes in three ``flavors,'' which only slightly differ in s
 \begin{verbatim}
 \mode<article>{Extra detail mentioned only in the article version.}
 
-\mode
-<beamer| trans>
-{\frame{\tableofcontents[currentsection]}}
+\mode<beamer| trans>{
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
 \end{verbatim}
 \end{command}
 
@@ -352,10 +354,11 @@ The second flavor of the |\mode| command takes no argument. ``No argument'' mean
 This text is typeset only in |article| mode.
 \verb!verbatim text is ok {!
 
-\mode
-<presentation>
-{ % this text is inserted only in presentation mode
-\frame{\tableofcontents[currentsection]}}
+\mode<presentation>{% this text is inserted only in presentation mode
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
 
 Here we are back to article mode stuff. This text
 is not inserted in presentation mode

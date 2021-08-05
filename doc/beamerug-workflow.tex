@@ -136,13 +136,17 @@ Second, you can use the following command:
 \begin{verbatim}
 \includeonlyframes{example1,example3}
 
-\frame[label=example1]
-{This frame will be included. }
+\begin{frame}[label=example1]
+This frame will be included. 
+\end{frame}
 
-\frame[label=example2]
-{This frame will not be included. }
+\begin{frame}[label=example2]
+This frame will not be included. 
+\end{frame}
 
-\frame{This frame will not be included.}
+\begin{frame}
+This frame will not be included.
+\end{frame}
 
 \againframe{example1} % Will be included
 \end{verbatim}
