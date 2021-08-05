@@ -106,7 +106,7 @@ The following commands can be used to specify in an abstract way what a button w
 
   \example
 \begin{verbatim}
-\frame{
+\begin{frame}
   \begin{theorem}
     ...
   \end{theorem}
@@ -119,7 +119,7 @@ The following commands can be used to specify in an abstract way what a button w
       ...
     \end{proof}
   \end{overprint}
-}
+\end{frame}
 \end{verbatim}
 \end{command}
 
@@ -128,8 +128,7 @@ The following commands can be used to specify in an abstract way what a button w
 
   \example
 \begin{verbatim}
-\frame<1>[label=mytheorem]
-{
+\begin{frame}<1>[label=mytheorem]
   \begin{theorem}
     ...
   \end{theorem}
@@ -143,7 +142,7 @@ The following commands can be used to specify in an abstract way what a button w
     \end{proof}
     \hfill\hyperlink{mytheorem<1>}{\beamerreturnbutton{Return}}
   \end{overprint}
-}
+\end{frame}
 \appendix
 \againframe<2>{mytheorem}
 \end{verbatim}
@@ -218,19 +217,17 @@ Sometimes you may wish some slides of a frame to be shown in your main talk, but
 
   \example
 \begin{verbatim}
-\frame<1-2>[label=myframe]
-{
+\begin{frame}<1-2>[label=myframe]
   \begin{itemize}
   \item<alert@1> First subject.
   \item<alert@2> Second subject.
   \item<alert@3> Third subject.
   \end{itemize}
-}
+\end{frame}
 
-\frame
-{
+\begin{frame}
   Some stuff explaining more on the second matter.
-}
+\end{frame}
 
 \againframe<3>{myframe}
 \end{verbatim}
@@ -239,8 +236,7 @@ Sometimes you may wish some slides of a frame to be shown in your main talk, but
 
   \example
 \begin{verbatim}
-\frame<1>[label=Cantor]
-{
+\begin{frame}<1>[label=Cantor]
   \frametitle{Main Theorem}
 
   \begin{Theorem}
@@ -259,7 +255,7 @@ Sometimes you may wish some slides of a frame to be shown in your main talk, but
 
     \hfill\hyperlink{Cantor<1>}{\beamerreturnbutton{Return}}
   \end{overprint}
-}
+\end{frame}
 
 ...
 \appendix
