@@ -536,9 +536,11 @@
 \defbeamertemplate{frametitle continuation}{from second}[1][\insertcontinuationtext]
 {\expandafter\ifnum\insertcontinuationcount>1\relax#1\fi}
 
-
-
-
+\defbeamertemplate{frametitle continuation}{singleframecheck}[1][\insertcontinuationcountroman]{%
+    \ifnum \numexpr\beamer@endpageofframe+1-\beamer@startpageofframe\relax > 1
+      #1
+    \fi%
+}
 
 % Bibliography items
 

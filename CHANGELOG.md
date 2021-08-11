@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Added
+
+- new continuation count template "singleframecheck" which will only show the continuation count if a break actually occurs (see #423)
+
 ### Changed
 
 - added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
