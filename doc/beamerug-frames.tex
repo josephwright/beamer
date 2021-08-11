@@ -95,6 +95,9 @@ A presentation consists of a series of frames. Each frame consists of a series o
 
           \itemoption{from second}{\oarg{text}}
           Installs a template that inserts \meta{text} from the second page of a frame on. By default, the text inserted is |\insertcontinuationtext|,  which  in turn is |(cont.)| by default.
+          
+          \itemoption{singleframecheck}{\oarg{text}}
+          Installs a template that inserts \meta{text} starting from the first page, but only if one or more frame breaks occur in the frame. By default, the text inserted is  |\insertcontinuationcountroman|,  which  will show the continuation count as Roman number.
         \end{templateoptions}
         The following inserts are available:
         \begin{templateinserts}
