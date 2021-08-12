@@ -70,7 +70,13 @@
         \ifbeamer@ignorenonframe
          \expandafter\mode\expandafter*%
        \fi
-      }
+      }%
+    %
+    % Patching pdfpages package to avoid the included pages from being covered by the background canvas
+    \AddToHook{cmd/includepdf/before}[beamer]{\begingroup\setbeamercolor{background canvas}{bg=}}%
+    \AddToHook{cmd/includepdf/after}[beamer]{\endgroup}%
+    \AddToHook{cmd/includepdfmerge/before}[beamer]{\begingroup\setbeamercolor{background canvas}{bg=}}%
+    \AddToHook{cmd/includepdfmerge/after}[beamer]{\endgroup}%
   }
   {%
     \let\beamer@origdocument\document
