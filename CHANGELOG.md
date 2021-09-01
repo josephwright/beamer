@@ -11,6 +11,7 @@ a major and minor version only.
 ### Added
 
 - new continuation count template "singleframecheck" which will only show the continuation count if a break actually occurs (see #423)
+- new templated for lined note pages
 
 ### Changed
 
