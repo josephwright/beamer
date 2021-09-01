@@ -811,7 +811,15 @@
   \insertnote
 }
 
-
+\defbeamertemplate{note page}{lined}[1][6]{%
+    \vfill%
+    \beamer@tempcount=1%
+    \loop%
+    \hrulefill\vfill%
+    \advance\beamer@tempcount by 1%
+    \ifnum\beamer@tempcount<#1%
+    \repeat%
+}
 
 %
 % Theorem templates
