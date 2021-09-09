@@ -65,7 +65,6 @@
         \AddToHook{cmd/includepdfmerge/after}[beamer]{\endgroup}%
       }{}%
     }%
-    \AddToHook{env/document/begin}[beamer]{%
     \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
       {%
         \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
@@ -79,7 +78,6 @@
          \expandafter\mode\expandafter*%
        \fi
       }%
-    }%
   }
   {%
     \let\beamer@origdocument\document
@@ -241,6 +239,12 @@
 %
 \providecommand\ext@table{}
 \providecommand\ext@figure{}
+
+%
+% Fix for polyglossia
+% https://github.com/josephwright/beamer/issues/706
+%
+\DeclareHookRule{begindocument/end}{beamer}{after}{polyglossia}
 
 %
 % Obsolete commands from old versions of beamer
