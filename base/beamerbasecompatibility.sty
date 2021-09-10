@@ -244,7 +244,9 @@
 % Fix for polyglossia
 % https://github.com/josephwright/beamer/issues/706
 %
-\DeclareHookRule{begindocument/end}{beamer}{after}{polyglossia}
+\IfFormatAtLeastTF{2020-10-01}{%
+  \DeclareHookRule{begindocument/end}{beamer}{after}{polyglossia}%
+}{}
 
 %
 % Obsolete commands from old versions of beamer
