@@ -22,6 +22,7 @@ a major and minor version only.
 ### Fixed
 
 - solved font-dependant problem with shadow boxes (partial fix for #647)
+- adding hook rule for polyglossia to compensate for the different execution order of the new hook system (see #706) 
 
 ## [v3.63]
 
