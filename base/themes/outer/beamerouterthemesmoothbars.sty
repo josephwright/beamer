@@ -47,9 +47,8 @@
        }
     \else
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
-         color(0ex)=(global.bg);%
-         color(1ex)=(section in head/foot.bg);%
-         color(7ex)=(section in head/foot.bg)%
+         color(0ex)=(section in head/foot.bg);%
+         color(6ex)=(section in head/foot.bg)%
        }
      \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
          color(0ex)=(frametitle.bg);%
@@ -83,7 +82,7 @@
   \ifbeamer@sb@subsection%
     \vskip-9.75ex%
   \else%
-    \vskip-7ex%
+    \vskip-7.5ex%
   \fi%
   \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
     \insertnavigation{\paperwidth}
@@ -126,7 +125,7 @@
     \end{pgfscope}%
   \end{pgfpicture}%
   \end{beamercolorbox}%
-  \vskip-1ex%
+  \vskip-0.5ex%
 }
   
   
