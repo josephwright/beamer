@@ -35,16 +35,15 @@
 
     \ifbeamer@sb@subsection
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
-         color(0ex)=(global.bg);%
-         color(1ex)=(subsection in head/foot.bg);%
-         color(3.25ex)=(subsection in head/foot.bg);%
-         color(4.25ex)=(section in head/foot.bg);%
-         color(9.75ex)=(section in head/foot.bg)%
+         color(0ex)=(subsection in head/foot.bg);%
+         color(2.25ex)=(subsection in head/foot.bg);%
+         color(3.25ex)=(section in head/foot.bg);%
+         color(8.75ex)=(section in head/foot.bg)%
        }
        \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
          color(0ex)=(frametitle.bg);%
          color(1ex)=(frametitle.bg);%
-         color(2ex)=(subsection in head/foot.bg)
+         color(3ex)=(subsection in head/foot.bg)
        }
     \else
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
@@ -71,6 +70,16 @@
 \defbeamertemplate*{headline}{smoothbars theme}
 {%
   \pgfuseshading{beamer@barshade}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.49ex,dp=0ex]{empty}
+  \begin{pgfpicture}
+    \begin{pgfscope}%
+      \pgfsetfillcolor{subsection in head/foot.bg}%
+      \pgfpathrectangle{\pgfpoint{0pt}{-1ex}}{\pgfpoint{\paperwidth}{2ex}}%
+      \pgfsetfading{beamer@belowframetitlemask}{\pgftransformxscale{2}}%
+      \pgfusepath{fill}%
+    \end{pgfscope}%
+  \end{pgfpicture}%
+  \end{beamercolorbox}%
   \ifbeamer@sb@subsection%
     \vskip-9.75ex%
   \else%
