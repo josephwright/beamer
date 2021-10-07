@@ -59,7 +59,7 @@
        }
     \fi  
 
-    \pgfdeclareverticalshading{beamer@belowframetitle}{2\the\paperwidth}{%
+    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
       color(0ex)=(pgftransparent!100);%
       color(1ex)=(pgftransparent!0)
     }
@@ -108,16 +108,17 @@
     \vskip.5ex  
   \end{beamercolorbox}%
   \nointerlineskip%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=.5ex,dp=0ex]{empty}
-  \begin{pgfpicture}{0pt}{0pt}{\paperwidth}{1ex}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex]{empty}
+  \begin{pgfpicture}
     \begin{pgfscope}%
       \pgfsetfillcolor{frametitle.bg}%
       \pgfpathrectangle{\pgfpoint{0pt}{-1ex}}{\pgfpoint{\paperwidth}{2ex}}%
-      \pgfsetfading{beamer@belowframetitlemask}{}%
+      \pgfsetfading{beamer@belowframetitlemask}{\pgftransformxscale{2}}%
       \pgfusepath{fill}%
     \end{pgfscope}%
   \end{pgfpicture}%
   \end{beamercolorbox}%
+  \vskip-1.5ex%  
 }
   
   
