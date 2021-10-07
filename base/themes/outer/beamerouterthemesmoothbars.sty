@@ -72,7 +72,11 @@
   \begin{beamercolorbox}[wd=\paperwidth,ht=1.49ex,dp=0ex]{empty}
   \begin{pgfpicture}
     \begin{pgfscope}%
-      \pgfsetfillcolor{subsection in head/foot.bg}%
+      \ifbeamer@sb@subsection%
+        \pgfsetfillcolor{subsection in head/foot.bg}%
+      \else%
+        \pgfsetfillcolor{section in head/foot.bg}%
+      \fi%
       \pgfpathrectangle{\pgfpoint{0pt}{-1ex}}{\pgfpoint{\paperwidth}{2ex}}%
       \pgfsetfading{beamer@belowframetitlemask}{\pgftransformxscale{2}}%
       \pgfusepath{fill}%
