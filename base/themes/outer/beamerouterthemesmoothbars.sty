@@ -69,7 +69,8 @@
 \defbeamertemplate*{headline}{smoothbars theme}
 {%
   \pgfuseshading{beamer@barshade}%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1.49ex,dp=0ex]{empty}
+  \vskip-0.05ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=0ex]{empty}
   \begin{pgfpicture}
     \begin{pgfscope}%
       \ifbeamer@sb@subsection%
@@ -77,8 +78,8 @@
       \else%
         \pgfsetfillcolor{section in head/foot.bg}%
       \fi%
-      \pgfpathrectangle{\pgfpoint{0pt}{-1ex}}{\pgfpoint{\paperwidth}{2ex}}%
-      \pgfsetfading{beamer@belowframetitlemask}{\pgftransformxscale{2}}%
+      \pgfpathrectangle{\pgfpoint{-.5\paperwidth}{-0.5ex}}{\pgfpoint{\paperwidth}{1ex}}%
+      \pgfsetfading{beamer@belowframetitlemask}{}%
       \pgfusepath{fill}%
     \end{pgfscope}%
   \end{pgfpicture}%
@@ -119,17 +120,17 @@
     \usebeamerfont{headline}%
   \end{beamercolorbox}%
   \nointerlineskip%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1.49ex,dp=0ex]{empty}
+  \vskip-0.05ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=0ex]{empty}
   \begin{pgfpicture}
     \begin{pgfscope}%
       \pgfsetfillcolor{frametitle.bg}%
-      \pgfpathrectangle{\pgfpoint{0pt}{-1ex}}{\pgfpoint{\paperwidth}{2ex}}%
-      \pgfsetfading{beamer@belowframetitlemask}{\pgftransformxscale{2}}%
+      \pgfpathrectangle{\pgfpoint{-.5\paperwidth}{-.5ex}}{\pgfpoint{\paperwidth}{1ex}}%
+      \pgfsetfading{beamer@belowframetitlemask}{}%
       \pgfusepath{fill}%
     \end{pgfscope}%
   \end{pgfpicture}%
   \end{beamercolorbox}%
-  \vskip-0.5ex%
 }
   
   
