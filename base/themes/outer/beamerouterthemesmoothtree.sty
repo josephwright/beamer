@@ -77,16 +77,16 @@
     \usebeamerfont{subsection in head/foot}%
     \hskip12pt\insertsubsectionhead
   \end{beamercolorbox}
+  \vskip-0.75ex%
 }
 
 \defbeamertemplate*{frametitle}{smoothtree theme}
 {%
   \nointerlineskip%
-  \vskip-1.05ex
+  \vskip-0.6ex
   \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=0ex]{empty}
     \pgfuseshading{beamer@aboveframetitle}%
   \end{beamercolorbox}
-%  \vskip-1ex%
   \nointerlineskip%
   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.935cm,rightskip=.3cm plus1fil]{frametitle}
     \usebeamerfont*{frametitle}\strut\insertframetitle%
@@ -96,7 +96,6 @@
         \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle}\strut\par}%
       \fi%%
     \usebeamerfont{headline}%
-    \vskip.5ex  
   \end{beamercolorbox}%
   \nointerlineskip
   \vskip-0.35ex%
@@ -110,6 +109,7 @@
     \end{pgfscope}%
   \end{pgfpicture}%
   \end{beamercolorbox}%  
+  \vskip-0.35ex%
 }
   
   
