@@ -56,12 +56,15 @@
          color(2ex)=(section in head/foot.bg)
        }
     \fi  
-
-    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
-      color(0ex)=(pgftransparent!100);%
-      color(1ex)=(pgftransparent!0)
-    }
-    \pgfdeclarefading{beamer@belowframetitlemask}{\pgfuseshading{beamer@belowframetitle}}
+    
+    \begingroup
+      \selectcolormodel{gray}
+      \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+        color(0ex)=(pgftransparent!100);%
+        color(1ex)=(pgftransparent!0)
+      }
+      \pgfdeclarefading{beamer@belowframetitlemask}{\pgfuseshading{beamer@belowframetitle}}
+    \endgroup
   }
 }
 
