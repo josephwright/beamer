@@ -19,6 +19,7 @@ a major and minor version only.
 - Remove redefinition of `\addtocontents` (see #698)
 - patched macros from the `pdfpages` package to automaticlly remove the frame background for the included pages
 - transparent shadows for smoothbars outer theme (see #717)
+- transparent shadows for smoothtree outer theme (see #720) 
 
 ### Fixed
 
