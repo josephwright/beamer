@@ -33,7 +33,7 @@
     
     \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
       color(0ex)=(frametitle.bg);%
-      color(2ex)=(subsection in head/foot.bg)
+      color(1ex)=(subsection in head/foot.bg)
     }
     
     \begingroup
@@ -63,7 +63,7 @@
   \end{pgfpicture}%
   \end{beamercolorbox}%  
   \vskip-9.15ex%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=2.125ex,dp=1.125ex,ignorebg,%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.125ex,dp=1.125ex,ignorebg,%
     leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
     \usebeamerfont{title in head/foot}\insertshorttitle
   \end{beamercolorbox}
@@ -77,18 +77,20 @@
     \usebeamerfont{subsection in head/foot}%
     \hskip12pt\insertsubsectionhead
   \end{beamercolorbox}
-  \vskip-0.75ex%
+  \vskip-0.4ex%
 }
 
 \defbeamertemplate*{frametitle}{smoothtree theme}
 {%
   \nointerlineskip%
+  \vskip-0.05ex%
   \usebeamerfont{headline}%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=0ex]{empty}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.85ex,dp=0ex]{empty}
     \pgfuseshading{beamer@aboveframetitle}%
   \end{beamercolorbox}
   \nointerlineskip%
   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.935cm,rightskip=.3cm plus1fil]{frametitle}
+    \vskip-1.2ex%
     \usebeamerfont*{frametitle}\strut\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%
@@ -98,6 +100,7 @@
     \usebeamerfont{headline}%
   \end{beamercolorbox}%
   \nointerlineskip
+  \vskip-0.2ex%
   \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=0ex]{empty}
   \begin{pgfpicture}
     \begin{pgfscope}%
@@ -108,7 +111,6 @@
     \end{pgfscope}%
   \end{pgfpicture}%
   \end{beamercolorbox}%  
-  \vskip-0.35ex%
 }
   
   
