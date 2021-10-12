@@ -43,8 +43,7 @@
        }
        \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
          color(0ex)=(frametitle.bg);%
-         color(1ex)=(frametitle.bg);%
-         color(2ex)=(subsection in head/foot.bg)
+         color(1ex)=(subsection in head/foot.bg)
        }
     \else
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
@@ -90,13 +89,15 @@
 \defbeamertemplate*{frametitle}{smoothbars theme}
 {%
   \nointerlineskip%
+  \vskip-0.19ex%
   \usebeamerfont{headline}%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex,vmode]{empty}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=1ex,vmode]{empty}
     \pgfuseshading{beamer@aboveframetitle}%
   \end{beamercolorbox}%
-  \vskip-.5ex%
+  \vskip-1ex%
   \nointerlineskip%
   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil,vmode]{frametitle}
+    \vskip0.5ex%
     \usebeamerfont*{frametitle}\strut\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%
@@ -104,7 +105,7 @@
         \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle}\strut\par}%
       \fi%%
     \usebeamerfont{headline}%
-    \vskip.5ex  
+    \vskip0.05ex%
   \end{beamercolorbox}%
   \nointerlineskip
   \begin{beamercolorbox}[wd=\paperwidth,ht=.5ex,dp=0ex]{empty}
