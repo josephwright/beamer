@@ -18,7 +18,6 @@ a major and minor version only.
 - added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
 - Remove redefinition of `\addtocontents` (see #698)
 - patched macros from the `pdfpages` package to automaticlly remove the frame background for the included pages
-- transparent shadows for smoothbars outer theme (see #717)
 
 ### Fixed
 
