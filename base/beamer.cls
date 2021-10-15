@@ -188,6 +188,8 @@
   \nofiles
 }
 \def\beamer@notesaction@onlyslideswithnotes{%
+  \ClassWarning{beamer}{This option is obsolete. Use beamer option
+    ``show only slides with notes'' instead.}%
   \beamer@notestrue
   \beamer@frameswithnotesonlytrue
   \nofiles
