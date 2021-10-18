@@ -22,6 +22,7 @@ a major and minor version only.
 - transparent shadows for smoothtree outer theme (see #720) 
 - added new beamer option "show only slides with notes", the old class option "notes=onlyslideswithnotes" now gives an obsolete warning like all the other note options (see #724)
 - make footnotetext and footnoterule adapt to the current column with (see #713)
+- using `mathversion{sf}` for the kpfonts package (fix #711)
 
 ### Fixed
 
