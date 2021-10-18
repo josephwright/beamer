@@ -315,7 +315,7 @@
   \global\setbox\@mpfootins\vbox{%
     \unvbox\@mpfootins
     \reset@font\footnotesize
-    \hsize0.85\paperwidth
+    \hsize\columnwidth
     \@parboxrestore
     \protected@edef\@currentlabel
          {\csname p@mpfootnote\endcsname\@thefnmark}%
@@ -356,6 +356,10 @@
       \@footnotemark\beamer@footnotetext#2}%
   \fi%
   \beamer@next}
+  
+\renewcommand{\footnoterule}{%
+  \kern -3\p@ \hrule width .4\columnwidth \kern 2.6\p@%
+}  
 
 \mode
 <article>
