@@ -35,22 +35,19 @@
 
     \ifbeamer@sb@subsection
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
-         color(0ex)=(global.bg);%
-         color(1ex)=(subsection in head/foot.bg);%
-         color(3.25ex)=(subsection in head/foot.bg);%
-         color(4.25ex)=(section in head/foot.bg);%
-         color(9.75ex)=(section in head/foot.bg)%
+         color(0ex)=(subsection in head/foot.bg);%
+         color(2.25ex)=(subsection in head/foot.bg);%
+         color(3.25ex)=(section in head/foot.bg);%
+         color(8.75ex)=(section in head/foot.bg)%
        }
        \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
          color(0ex)=(frametitle.bg);%
-         color(1ex)=(frametitle.bg);%
-         color(2ex)=(subsection in head/foot.bg)
+         color(1ex)=(subsection in head/foot.bg)
        }
     \else
       \pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
-         color(0ex)=(global.bg);%
-         color(1ex)=(section in head/foot.bg);%
-         color(7ex)=(section in head/foot.bg)%
+         color(0ex)=(section in head/foot.bg);%
+         color(6ex)=(section in head/foot.bg)%
        }
      \pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
          color(0ex)=(frametitle.bg);%
@@ -58,11 +55,15 @@
          color(2ex)=(section in head/foot.bg)
        }
     \fi  
-
-    \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
-      color(0ex)=(global.bg);%
-      color(1ex)=(frametitle.bg)
-    }
+    
+    \begingroup
+      \selectcolormodel{gray}
+      \pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+        color(0ex)=(pgftransparent!100);%
+        color(1ex)=(pgftransparent!0)
+      }
+      \pgfdeclarefading{beamer@belowframetitlemask}{\pgfuseshading{beamer@belowframetitle}}
+    \endgroup
   }
 }
 
@@ -70,10 +71,25 @@
 \defbeamertemplate*{headline}{smoothbars theme}
 {%
   \pgfuseshading{beamer@barshade}%
+  \vskip-0.05ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=0ex]{empty}
+  \begin{pgfpicture}
+    \begin{pgfscope}%
+      \ifbeamer@sb@subsection%
+        \pgfsetfillcolor{subsection in head/foot.bg}%
+      \else%
+        \pgfsetfillcolor{section in head/foot.bg}%
+      \fi%
+      \pgfpathrectangle{\pgfpoint{-.5\paperwidth}{-0.5ex}}{\pgfpoint{\paperwidth}{1ex}}%
+      \pgfsetfading{beamer@belowframetitlemask}{}%
+      \pgfusepath{fill}%
+    \end{pgfscope}%
+  \end{pgfpicture}%
+  \end{beamercolorbox}%
   \ifbeamer@sb@subsection%
     \vskip-9.75ex%
   \else%
-    \vskip-7ex%
+    \vskip-6.85ex%
   \fi%
   \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
     \insertnavigation{\paperwidth}
@@ -90,13 +106,15 @@
 \defbeamertemplate*{frametitle}{smoothbars theme}
 {%
   \nointerlineskip%
+  \vskip-0.19ex%
   \usebeamerfont{headline}%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex,vmode]{empty}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=1ex,vmode]{empty}
     \pgfuseshading{beamer@aboveframetitle}%
   \end{beamercolorbox}%
-  \vskip-.5ex%
+  \vskip-1ex%
   \nointerlineskip%
   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil,vmode]{frametitle}
+    \vskip0.5ex%
     \usebeamerfont*{frametitle}\strut\insertframetitle%
       \ifx\insertframesubtitle\@empty%
         \strut\par%
@@ -104,11 +122,19 @@
         \par{\usebeamerfont*{framesubtitle}{\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle}\strut\par}%
       \fi%%
     \usebeamerfont{headline}%
-    \vskip.5ex  
+    \vskip0.05ex%
   \end{beamercolorbox}%
-  \nointerlineskip
-  \begin{beamercolorbox}[wd=\paperwidth,ht=.5ex,dp=0ex]{empty}
-    \pgfuseshading{beamer@belowframetitle}%
+  \nointerlineskip%
+  \vskip-0.05ex%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=0ex]{empty}
+  \begin{pgfpicture}
+    \begin{pgfscope}%
+      \pgfsetfillcolor{frametitle.bg}%
+      \pgfpathrectangle{\pgfpoint{-.5\paperwidth}{-.5ex}}{\pgfpoint{\paperwidth}{1ex}}%
+      \pgfsetfading{beamer@belowframetitlemask}{}%
+      \pgfusepath{fill}%
+    \end{pgfscope}%
+  \end{pgfpicture}%
   \end{beamercolorbox}%
 }
   
