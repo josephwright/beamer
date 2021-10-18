@@ -18,6 +18,9 @@ a major and minor version only.
 - added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
 - Remove redefinition of `\addtocontents` (see #698)
 - patched macros from the `pdfpages` package to automaticlly remove the frame background for the included pages
+- transparent shadows for smoothbars outer theme (see #717)
+- transparent shadows for smoothtree outer theme (see #720) 
+- added new beamer option "show only slides with notes", the old class option "notes=onlyslideswithnotes" now gives an obsolete warning like all the other note options (see #724)
 - make footnotetext and footnoterule adapt to the current column with (see #713)
 
 ### Fixed
