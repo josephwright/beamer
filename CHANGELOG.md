@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- using `gray` colormodel for the delcarartion of fadings (workaround for #718)
+
 ## [v3.64]
 
 ### Added
