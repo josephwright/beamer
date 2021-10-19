@@ -152,24 +152,27 @@
       color(0bp)=(pgftransparent!100);
       color(8bp)=(pgftransparent!0)
     }%
-    \pgfdeclarefading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}
-    {%
-      \begin{pgfpicture}
-        \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}
-        \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}
-        \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}
-        \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\bmb@boxwidth}}
-        \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{8bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxheight}}
-        %
-        % clipping is needed because shadow is typeset on top of box
-        \begin{pgfscope}
-          \pgfsetcolor{black}
-          \pgfpathrectangle{\pgfpoint{4bp}{8bp}}{\pgfpoint{\bmb@boxwidth-0.2bp}{\bmb@boxheight-2bp}}
-          \pgfusepath{fill}
-        \end{pgfscope}
-      \end{pgfpicture}%
-      \hskip4bp%      
-    }%
+    \begingroup%
+      \selectcolormodel{gray}
+      \pgfdeclarefading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}
+      {%
+        \begin{pgfpicture}
+          \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}
+          \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}
+          \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}
+          \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\bmb@boxwidth}}
+          \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{8bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxheight}}
+          %
+          % clipping is needed because shadow is typeset on top of box
+          \begin{pgfscope}
+            \pgfsetcolor{black}
+            \pgfpathrectangle{\pgfpoint{4bp}{8bp}}{\pgfpoint{\bmb@boxwidth-0.2bp}{\bmb@boxheight-2bp}}
+            \pgfusepath{fill}
+          \end{pgfscope}
+        \end{pgfpicture}%
+        \hskip4bp%      
+      }%
+    \endgroup%
   \fi%
   \bmb@temp=\bmb@width%
   \bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
