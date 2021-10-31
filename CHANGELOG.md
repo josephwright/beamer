@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Added
+
+- adding new `onlytextwidth` class option to use this key for all `columns` environments by default (see #731)
+
 ### Fixed
 
 - using `gray` colormodel for the delcarartion of fadings (workaround for #718)

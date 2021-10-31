@@ -205,19 +205,24 @@
 
 \newenvironment<>{columns}[1][]{%
   \begin{actionenv}#2%
-  \def\beamer@colentrycode{%
-    \hbox to\textwidth\bgroup%
-    \leavevmode%
-    \hskip-\beamer@leftmargin%
-    \nobreak%
-    \beamer@tempdim=\textwidth%
-    \advance\beamer@tempdim by\beamer@leftmargin%
-    \advance\beamer@tempdim by\beamer@rightmargin%
-    \hbox to\beamer@tempdim\bgroup%
-    \hbox{}\hfill\ignorespaces}%
-  \def\beamer@colexitcode{\egroup%
-    \nobreak%
-    \hskip-\beamer@rightmargin\egroup}%
+  \ifbeamer@onlytextwidth
+    \def\beamer@colentrycode{\hbox to\textwidth\bgroup\ignorespaces}%
+    \def\beamer@colexitcode{\unskip\egroup}
+  \else%
+    \def\beamer@colentrycode{%
+      \hbox to\textwidth\bgroup%
+      \leavevmode%
+      \hskip-\beamer@leftmargin%
+      \nobreak%
+      \beamer@tempdim=\textwidth%
+      \advance\beamer@tempdim by\beamer@leftmargin%
+      \advance\beamer@tempdim by\beamer@rightmargin%
+      \hbox to\beamer@tempdim\bgroup%
+      \hbox{}\hfill\ignorespaces}%
+    \def\beamer@colexitcode{\egroup%
+      \nobreak%
+      \hskip-\beamer@rightmargin\egroup}%
+  \fi%
   \ifbeamer@centered\setkeys{beamer@col}{c}\else\setkeys{beamer@col}{t}\fi%
   \setkeys{beamer@col}{#1}%
   \par%
