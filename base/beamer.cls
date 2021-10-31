@@ -88,6 +88,7 @@
 \newif\ifbeamer@frameswithnotesonly
 \newif\ifbeamer@ignorenonframe
 \newif\ifbeamer@autopdfinfo
+\newif\ifbeamer@onlytextwidth
 
 % Option management
 \RequirePackage{beamerbaseoptions}
@@ -107,6 +108,7 @@
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
 \beamer@autopdfinfotrue
+\beamer@onlytextwidthfalse
 
 \DeclareOptionBeamer{usepdftitle}[true]{\csname beamer@autopdfinfo#1\endcsname}
 \DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
@@ -169,6 +171,8 @@
       \lccode`\~=\count@
       \catcode\count@=\active
       \lowercase{\def~{\kern1ex}}}}}
+      
+\DeclareOptionBeamer{onlytextwidth}{\beamer@onlytextwidthtrue}      
 
 % obsolete options
 \DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
