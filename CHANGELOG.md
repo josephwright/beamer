@@ -15,6 +15,7 @@ a major and minor version only.
 ### Fixed
 
 - using `gray` colormodel for the delcarartion of fadings (workaround for #718)
+- fixed bullet colour of alerted items for custom item colour (see #735)
 
 ## [v3.64]
 
