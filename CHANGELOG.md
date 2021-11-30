@@ -17,6 +17,7 @@ a major and minor version only.
 - using `gray` colormodel for the delcarartion of fadings (workaround for #718)
 - fixed bullet colour of alerted items for custom item colour (see #735)
 - workaround to make miniframes clickable in xelatex (see #332)
+- added mising encoding value to multimedia sound macro (see #607)
 
 ## [v3.64]
 
