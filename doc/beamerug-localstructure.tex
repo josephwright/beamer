@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012--2015 by Vedran Mileti\'c, Joseph Wright
@@ -947,7 +948,9 @@ The main environment for creating columns is called |columns|. Inside this envir
   \item
     \declare{|c|} will cause the columns to be centered vertically relative to each other. Default, unless the global option |t| is used.
   \item
-    \declare{|onlytextwidth|} is the same as |totalwidth=\textwidth|.
+    \declare{|onlytextwidth|} is the same as |totalwidth=\textwidth|. This option can also be set for the whole document with the |onlytextwidth| class option:
+    \begin{classoption}{onlytextwidth}
+    \end{classoption}
   \item
     \declare{|t|} will cause the first lines of the columns to be aligned. Default if global option |t| is used.
   \item

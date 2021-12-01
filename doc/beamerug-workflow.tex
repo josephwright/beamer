@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011--2013,2015 by Vedran Mileti\'c, Joseph Wright
@@ -136,13 +137,17 @@ Second, you can use the following command:
 \begin{verbatim}
 \includeonlyframes{example1,example3}
 
-\frame[label=example1]
-{This frame will be included. }
+\begin{frame}[label=example1]
+This frame will be included. 
+\end{frame}
 
-\frame[label=example2]
-{This frame will not be included. }
+\begin{frame}[label=example2]
+This frame will not be included. 
+\end{frame}
 
-\frame{This frame will not be included.}
+\begin{frame}
+This frame will not be included.
+\end{frame}
 
 \againframe{example1} % Will be included
 \end{verbatim}

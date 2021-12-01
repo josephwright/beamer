@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2015 by Vedran Mileti\'c, Joseph Wright
@@ -178,31 +179,9 @@ When using certain packages or classes together with the |beamer| class, extra o
 \end{package}
 
 \begin{package}{{pdfpages}}
-  Commands like |\includepdf| only work \emph{outside} frames as they produce pages ``by themselves.'' You may also wish to say
-\begin{verbatim}
-\setbeamercolor{background canvas}{bg=}
-\end{verbatim}
-  when you use such a command since the background (even a white background) will otherwise be printed over the image you try to include.
-
-  \example
-\begin{verbatim}
-\begin{document}
-\begin{frame}
-  \titlepage
-\end{frame}
-
-{
-  \setbeamercolor{background canvas}{bg=}
-  \includepdf{somepdfimages.pdf}
-}
-
-\begin{frame}
-  A normal frame.
-\end{frame}
-\end{document}
-\end{verbatim}
-\end{package}
-
+  Commands like |\includepdf| only work \emph{outside} frames as they produce pages ``by themselves.''
+\end{package}  
+ 
 \begin{package}{{\normalfont\meta{professional font package}}}
   \beamernote
   If you use a professional font package, \beamer's internal redefinition of how variables are typeset may interfere with the font package's superior way of typesetting them. In this case, you should use the class option |professionalfonts| to suppress any font substitution. See Section~\ref{section-substition} for details.

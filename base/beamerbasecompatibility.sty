@@ -57,6 +57,13 @@
     \AddToHook{env/document/begin}[beamer]{\beamer@firstminutepatches}%
     \AddToHook{env/document/begin}[beamer]{%
       \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}%
+      \@ifpackageloaded{pdfpages}{%
+        % Patching pdfpages package to avoid the included pages from being covered by the background canvas
+        \AddToHook{cmd/includepdf/before}[beamer]{\begingroup\setbeamercolor{background canvas}{bg=}}%
+        \AddToHook{cmd/includepdf/after}[beamer]{\endgroup}%
+        \AddToHook{cmd/includepdfmerge/before}[beamer]{\begingroup\setbeamercolor{background canvas}{bg=}}%
+        \AddToHook{cmd/includepdfmerge/after}[beamer]{\endgroup}%
+      }{}%
     }%
     \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
       {%
@@ -70,7 +77,7 @@
         \ifbeamer@ignorenonframe
          \expandafter\mode\expandafter*%
        \fi
-      }
+      }%
   }
   {%
     \let\beamer@origdocument\document
@@ -232,6 +239,14 @@
 %
 \providecommand\ext@table{}
 \providecommand\ext@figure{}
+
+%
+% Fix for polyglossia
+% https://github.com/josephwright/beamer/issues/706
+%
+\IfFormatAtLeastTF{2020-10-01}{%
+  \DeclareHookRule{begindocument/end}{beamer}{after}{polyglossia}%
+}{}
 
 %
 % Obsolete commands from old versions of beamer

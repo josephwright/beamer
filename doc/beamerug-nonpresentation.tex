@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2014,2015 by Vedran Mileti\'c, Joseph Wright
@@ -270,35 +271,20 @@ In addition to these modes, \beamer\ recognizes the following names for modes se
 \end{itemize}
 
 \begin{center}
-	\begin{pgfpicture}
-	  \pgftransformshift{\pgfpoint{0cm}{0cm}}
-	  \pgfnode{rectangle}{center}{|all|}{allnode}{}
-	  \pgftransformshift{\pgfpoint{-2cm}{-1.25cm}}
-	  \pgfnode{rectangle}{center}{|presentation|}{presentationnode}{}
-	  \pgftransformshift{\pgfpoint{4cm}{0cm}}
-	  \pgfnode{rectangle}{center}{|article|}{articlenode}{}
-	  \pgftransformshift{\pgfpoint{-7cm}{-1.5cm}}
-	  \pgfnode{rectangle}{center}{|beamer|}{beamernode}{}    
-	  \pgftransformshift{\pgfpoint{2cm}{0cm}}
-	  \pgfnode{rectangle}{center}{|second|}{secondnode}{}
-	  \pgftransformshift{\pgfpoint{2cm}{0cm}}        
-	  \pgfnode{rectangle}{center}{|handout|}{handoutnode}{}
-	  \pgftransformshift{\pgfpoint{2cm}{0cm}}
-	  \pgfnode{rectangle}{center}{|trans|}{transnode}{}
-	  \pgfpathmoveto{\pgfpointanchor{allnode}{south west}}
-	  \pgfpathlineto{\pgfpointanchor{presentationnode}{north}}
-	  \pgfpathmoveto{\pgfpointanchor{allnode}{south east}}
-	  \pgfpathlineto{\pgfpointanchor{articlenode}{north}}    
-	  \pgfpathmoveto{\pgfpointanchor{presentationnode}{south west}}
-	  \pgfpathlineto{\pgfpointanchor{beamernode}{north}}
-	  \pgfpathmoveto{\pgfpointadd{\pgfpointanchor{presentationnode}{south}}{\pgfpoint{-0.3cm}{0cm}}}
-	  \pgfpathlineto{\pgfpointanchor{secondnode}{north}}
-	  \pgfpathmoveto{\pgfpointadd{\pgfpointanchor{presentationnode}{south}}{\pgfpoint{0.3cm}{0cm}}}
-	  \pgfpathlineto{\pgfpointanchor{handoutnode}{north}}
-	  \pgfpathmoveto{\pgfpointanchor{presentationnode}{south east}}
-	  \pgfpathlineto{\pgfpointanchor{transnode}{north}}            
-	  \pgfusepath{stroke}    
-	\end{pgfpicture}
+  \begin{tikzpicture}[
+    every node/.style={draw,anchor=base,font=\ttfamily\strut},
+    level 1/.style={sibling distance=50mm},
+    level 2/.style={sibling distance=20mm}
+  ]
+    \node {all}
+      child {node {presentation}
+        child {node {beamer}}
+        child {node {second}}
+        child {node {handout}}
+        child {node {trans}}
+      }
+      child {node {article}};
+  \end{tikzpicture}
 \end{center}
 
 Depending on the current mode, you may wish to have certain text inserted only in that mode. For example, you might wish a certain frame or a certain table to be left out of your article version. In some situations, you can use the |\only| command for this purpose. However, the command |\mode|, which is described in the following, is much more powerful than |\only|.
@@ -314,9 +300,11 @@ The command actually comes in three ``flavors,'' which only slightly differ in s
 \begin{verbatim}
 \mode<article>{Extra detail mentioned only in the article version.}
 
-\mode
-<beamer| trans>
-{\frame{\tableofcontents[currentsection]}}
+\mode<beamer| trans>{
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
 \end{verbatim}
 \end{command}
 
@@ -352,10 +340,11 @@ The second flavor of the |\mode| command takes no argument. ``No argument'' mean
 This text is typeset only in |article| mode.
 \verb!verbatim text is ok {!
 
-\mode
-<presentation>
-{ % this text is inserted only in presentation mode
-\frame{\tableofcontents[currentsection]}}
+\mode<presentation>{% this text is inserted only in presentation mode
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
 
 Here we are back to article mode stuff. This text
 is not inserted in presentation mode

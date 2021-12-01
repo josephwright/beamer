@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010,2013,2015 by Vedran Mileti\'c, Joseph Wright
 % Copyright 2016 by Joseph Wright
@@ -49,31 +50,16 @@ In \TeX\ Live, use the |tlmgr| tool to install the packages called |beamer|, |pg
 
 For MiK\TeX\ and pro\TeX t, use the update wizard or package manager to install the (latest versions of the) packages called |beamer|, |pgf|, and |xcolor|.
 
+\subsubsection{Linux distributions}
 
-\subsubsection{Debian and Ubuntu}
+Most linux distributions provide pre-packaged bundles of \TeX{} Live. It is probably easiest to install a full (or at least recommended) scheme of \TeX{} Live, but if you only want to install \beamer:
 
-The command ``|aptitude install latex-beamer|'' should do the trick. If necessary, the packages |pgf| and |latex-xcolor| will be automatically installed. Sit back and relax. In detail, the following packages are installed:
-\begin{verbatim}
-http://packages.debian.org/latex-beamer
-http://packages.debian.org/pgf
-http://packages.debian.org/latex-xcolor
-\end{verbatim}
-
-Debian 5.0 ``lenny'' includes \TeX\ Live 2007, and version 6.0 ``squeeze'' will include \TeX\ Live 2009. This also allows you to manually install newer versions of \beamer\ (into your local directory, see below) without having to update any other \LaTeX\ packages.
-
-Ubuntu 8.04, 9.04 and 9.10 include \TeX\ Live 2007, and version 10.04 includes \TeX\ Live 2009.
-
-
-\subsubsection{Fedora}
-
-Fedora 9, 10, 11, 12 and 13 include \TeX\ Live 2007, which includes \beamer. It can be installed by running the command ``|yum install texlive-texmf-latex|''. As with Debian, this allows you to manually install newer versions of \beamer\ into your local directory (explained below).
-
-Jindrich Novy provides \TeX\ Live 2010 |rpm| packages for Fedora 12 and 13, at
-\begin{verbatim}
-http://fedoraproject.org/wiki/Features/TeXLive
-\end{verbatim}
-Fedora 14 will contain \TeX\ Live 2010 once it's released.
-
+\begin{itemize}
+\item
+  Ubuntu/Debian: |apt install texlive-latex-recommended|
+\item 
+  Fedora: |dnf install texlive-beamer|
+\end{itemize}
 
 \subsection{Installation in a texmf Tree}
 
@@ -90,9 +76,9 @@ The package contains a bunch of files; |beamer.cls| is one of these files and ha
 When you ask \TeX\ to use a certain class or package, it usually looks for the necessary files in so-called |texmf| trees. These trees are simply huge directories that contain these files. By default, \TeX\ looks for files in three different |texmf| trees:
 \begin{itemize}
 \item
-  The root |texmf| tree, which is usually located at |/usr/share/texmf/|, |/usr/local/texlive/texmf/|, |c:\texmf\|, or |c:\texlive\texmf\|.
+  The root |texmf| tree, which is usually located at |/usr/share/texmf/|, |/usr/local/texlive/texmf/|, |C:\texmf\|, or |C:\texlive\texmf\|.
 \item
-  The local  |texmf| tree, which is usually located at |/usr/local/share/texmf/|,\\ |/usr/local/texlive/texmf-local/|, |c:\localtexmf\|, or |c:\texlive\texmf-local\|.
+  The local  |texmf| tree, which is usually located at |/usr/local/share/texmf/|,\\ |/usr/local/texlive/texmf-local/|, |C:\localtexmf\|, or |C:\texlive\texmf-local\|.
 \item
   Your personal |texmf| tree, which is usually located in your home directory at |~/texmf/| or |~/Library/texmf/|.
 \end{itemize}

@@ -8,13 +8,39 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Added
+
+- adding new `onlytextwidth` class option to use this key for all `columns` environments by default (see #731)
+
+### Fixed
+
+- using `gray` colormodel for the delcarartion of fadings (workaround for #718)
+- fixed bullet colour of alerted items for custom item colour (see #735)
+- workaround to make miniframes clickable in xelatex (see #332)
+- added mising encoding value to multimedia sound macro (see #607)
+
+## [v3.64]
+
+### Added
+
+- new continuation count template "singleframecheck" which will only show the continuation count if a break actually occurs (see #423)
+- new templated for lined note pages (#704)
+
 ### Changed
 
 - added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
+- Remove redefinition of `\addtocontents` (see #698)
+- patched macros from the `pdfpages` package to automaticlly remove the frame background for the included pages
+- transparent shadows for smoothbars outer theme (see #717)
+- transparent shadows for smoothtree outer theme (see #720) 
+- added new beamer option "show only slides with notes", the old class option "notes=onlyslideswithnotes" now gives an obsolete warning like all the other note options (see #724)
+- make footnotetext and footnoterule adapt to the current column with (see #713)
+- using `mathversion{sf}` for the kpfonts package (fix #711)
 
 ### Fixed
 
 - solved font-dependant problem with shadow boxes (partial fix for #647)
+- adding hook rule for polyglossia to compensate for the different execution order of the new hook system (see #706) 
 
 ## [v3.63]
 
@@ -150,7 +176,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.63...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.64...HEAD
+[v3.64]: https://github.com/josephwright/beamer/compare/v3.63...v3.64
 [v3.63]: https://github.com/josephwright/beamer/compare/v3.62...v3.63
 [v3.62]: https://github.com/josephwright/beamer/compare/v3.61...v3.62
 [v3.61]: https://github.com/josephwright/beamer/compare/v3.60...v3.61

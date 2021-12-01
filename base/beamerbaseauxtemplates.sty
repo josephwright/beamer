@@ -536,9 +536,11 @@
 \defbeamertemplate{frametitle continuation}{from second}[1][\insertcontinuationtext]
 {\expandafter\ifnum\insertcontinuationcount>1\relax#1\fi}
 
-
-
-
+\defbeamertemplate{frametitle continuation}{singleframecheck}[1][\insertcontinuationcountroman]{%
+    \ifnum \numexpr\beamer@endpageofframe+1-\beamer@startpageofframe\relax > 1
+      #1
+    \fi%
+}
 
 % Bibliography items
 
@@ -809,7 +811,15 @@
   \insertnote
 }
 
-
+\defbeamertemplate{note page}{lined}[1][6]{%
+    \vfill%
+    \beamer@tempcount=1%
+    \loop%
+    \hrulefill\vfill%
+    \advance\beamer@tempcount by 1%
+    \ifnum\beamer@tempcount<#1%
+    \repeat%
+}
 
 %
 % Theorem templates

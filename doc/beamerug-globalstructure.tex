@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2013,2015 by Vedran Mileti\'c, Joseph Wright
@@ -21,9 +22,9 @@ You can use the |\titlepage| command to insert a title page into a frame. By def
 \begin{command}{\titlepage}
   Inserts the text of a title page into the current frame.
   \example
-  |\frame{\titlepage}|
+  |\begin{frame}\titlepage\end{frame}|
   \example
-  |\frame[plain]{\titlepage}| for a titlepage that fills the whole frame.
+  |\begin{frame}[plain]\titlepage\end{frame}| for a titlepage that fills the whole frame.
 
   \begin{element}{title page}\yes\yes\yes
     This template is invoked when the |\titlepage| command is used.
@@ -51,7 +52,7 @@ For compatibility with other classes, in |article| mode the following command is
 
 \begin{command}{\maketitle}
   \beamernote
-  If used inside a frame, it has the same effect as |\titlepage|. If used outside a frame, it has the same effect as |\frame{\titlepage}|; in other words, a frame is added if necessary.
+  If used inside a frame, it has the same effect as |\titlepage|. If used outside a frame, it has the same effect as |\begin{frame}\titlepage\end{frame}|; in other words, a frame is added if necessary.
 \end{command}
 
 Before you invoke the title page command, you must specify all elements you wish to be shown. This is done using the following commands:
@@ -214,17 +215,22 @@ In order to create a line break in the table of contents (usually not a good ide
 \begin{verbatim}
 \section{Summary}
 
-  \frame{This frame is not shown in the navigation bar}
+  \begin{frame}
+    This frame is not shown in the navigation bar
+  \end{frame}
 
   \subsection*{}
 
-  \frame{This frame is shown in the navigation bar, but no subsection
-    entry is shown.}
+  \begin{frame}
+    This frame is shown in the navigation bar, but no subsection entry is shown.
+  \end{frame}
 
   \subsection*{A subsection}
 
-  \frame{Normal frame, shown in navigation bar. The subsection name is
-    also shown in the navigation bar, but not in the table of contents.}
+  \begin{frame}
+    Normal frame, shown in navigation bar. The subsection name is
+    also shown in the navigation bar, but not in the table of contents.
+  \end{frame}
 \end{verbatim}
 \end{command}
 
@@ -306,9 +312,13 @@ Often, you may want a certain type of frame to be shown directly after a section
 \begin{verbatim}
 \section{A section}
 
-  \frame{\sectionpage}
+  \begin{frame}
+    \sectionpage
+  \end{frame}
 
-  \frame{Some text.}
+  \begin{frame}
+    Some text.
+  \end{frame}
 \end{verbatim}
 
   \begin{element}{section page}\yes\no\no
@@ -371,36 +381,48 @@ To create a new part, use the |\part| command. All sections and subsections foll
   \example
 \begin{verbatim}
 \begin{document}
-  \frame{\titlepage}
+  \begin{frame}
+  \titlepage
+  \end{frame}
 
   \section*{Outlines}
   \subsection{Part I: Review of Previous Lecture}
-  \frame{
+  \begin{frame}
     \frametitle{Outline of Part I}
-    \tableofcontents[part=1]}
+    \tableofcontents[part=1]
+  \end{frame}
   \subsection{Part II: Today's Lecture}
-  \frame{
+  \begin{frame}
     \frametitle{Outline of Part II}
-    \tableofcontents[part=2]}
+    \tableofcontents[part=2]
+  \end{frame}
 
   \part{Review of Previous Lecture}
-  \frame{\partpage}
+  \begin{frame}
+    \partpage
+  \end{frame}
   \section[Previous Lecture]{Summary of the Previous Lecture}
   \subsection{Topics}
-  \frame{...}
+  \begin{frame}...\end{frame}
   \subsection{Learning Objectives}
-  \frame{...}
+  \begin{frame}...\end{frame}
 
   \part{Today's Lecture}
-  \frame{\partpage}
+  \begin{frame}
+    \partpage
+  \end{frame}
   \section{Topic A}
-  \frame{\tableofcontents[currentsection]}
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
   \subsection{Foo}
-  \frame{...}
+  \begin{frame}...\end{frame}
   \section{Topic B}
-  \frame{\tableofcontents[currentsection]}
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
   \subsection{bar}
-  \frame{...}
+  \begin{frame}...\end{frame}
 \end{document}
 \end{verbatim}
 \end{command}
@@ -408,7 +430,7 @@ To create a new part, use the |\part| command. All sections and subsections foll
 \begin{command}{\partpage}
   Works like |\titlepage|, only that the current part, not the current presentation is ``advertised.''
   \example
-  |\frame{\partpage}|
+  |\begin{frame}\partpage\end{frame}|
 
   \begin{element}{part page}\yes\no\no
     This template is invoked when the |\partpage| command is used.
@@ -441,7 +463,11 @@ To create a new part, use the |\part| command. All sections and subsections foll
 
   \example
 \begin{verbatim}
-\AtBeginPart{\frame{\partpage}}
+\AtBeginPart{
+  \begin{frame}
+    \partpage
+  \end{frame}
+}
 \end{verbatim}
 \end{command}
 
@@ -495,7 +521,11 @@ By default, the |\lecture| command has no other effect. It does not create any f
 
   \example
 \begin{verbatim}
-\AtBeginLecture{\frame{\Large Today's Lecture: \insertlecture}}
+\AtBeginLecture{
+  \begin{frame}
+    \Large Today's Lecture: \insertlecture
+  \end{frame}
+}
 \end{verbatim}
 
   \articlenote
@@ -513,22 +543,28 @@ You can create a table of contents using the command |\tableofcontents|. Unlike 
   \example
 \begin{verbatim}
 \section*{Outline}
-\frame{\tableofcontents}
+\begin{frame}
+  \tableofcontents
+\end{frame}
 
 \section{Introduction}
-\frame{\tableofcontents[currentsection]}
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
 \subsection{Why?}
-\frame{...}
-\frame{...}
+\begin{frame}...\end{frame}
+\begin{frame}...\end{frame}
 \subsection{Where?}
-\frame{...}
+\begin{frame}...\end{frame}
 
 \section{Results}
-\frame{\tableofcontents[currentsection]}
+\begin{frame}
+  \tableofcontents[currentsection]
+\end{frame}
 \subsection{Because}
-\frame{...}
+\begin{frame}...\end{frame}
 \subsection{Here}
-\frame{...}
+\begin{frame}...\end{frame}
 \end{verbatim}
 
   The following options can be given:
@@ -728,22 +764,38 @@ You can add an appendix to your talk by using the |\appendix| command. You shoul
   \example
 \begin{verbatim}
 \begin{document}
-\frame{\titlepage}
+\begin{frame}
+  \titlepage
+\end{frame}
 \section*{Outline}
-\frame{\tableofcontents}
+\begin{frame}
+  \tableofcontents
+\end{frame}
 \section{Main Text}
-\frame{Some text}
+\begin{frame}
+  Some text
+\end{frame}
 \section*{Summary}
-\frame{Summary text}
+\begin{frame}
+  Summary text
+\end{frame}
 
 \appendix
 \section{\appendixname}
-\frame{\tableofcontents}
+\begin{frame}
+  \tableofcontents
+\end{frame}
 \subsection{Additional material}
-\frame{Details}
-\frame{Text omitted in main talk.}
+\begin{frame}
+  Details
+\end{frame}
+\begin{frame}
+  Text omitted in main talk.
+\end{frame}
 \subsection{Even more additional material}
-\frame{More details}
+\begin{frame}
+  More details
+\end{frame}
 \end{document}
 \end{verbatim}
 \end{command}
