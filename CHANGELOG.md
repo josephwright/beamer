@@ -11,6 +11,7 @@ a major and minor version only.
 ### Added
 
 - adding new `onlytextwidth` class option to use this key for all `columns` environments by default (see #731)
+- adding new stretchable frame option `s` (see #696)
 
 ### Fixed
 
