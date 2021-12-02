@@ -130,10 +130,6 @@
   \advance\bmb@boxheight by4bp%
   \advance\bmb@boxheight by\bmb@prevheight%
   \ifbmb@shadow%
-%    \typeout{Quack \the\bmb@boxheight}
-%    \ifdim\bmb@boxheight<10bp%
-%      \bmb@boxheight=9bp%
-%    \fi%
     \xdef\beamer@storecolorhook{\beamer@colorhook}
     \xdef\beamer@colorhook{}
     \pgfdeclareradialshading{bmb@shadowball}{\pgfpointorigin}
@@ -157,15 +153,19 @@
       color(8bp)=(pgftransparent!0)
     }%
     \begingroup%
-%      \selectcolormodel{gray}
+      \selectcolormodel{gray}
       \pgfdeclarefading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}
       {%
         \begin{pgfpicture}
           \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}% bottom left shadow
-          \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}% bottom right shadow
-          \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}% top right shadow
+          \ifdim\bmb@boxheight>9.5bp%
+            \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}% bottom right shadow
+            \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}% top right shadow
+            \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{7.5bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxheight}}% right edge             
+          \else%
+            \pgftext[at=\pgfpoint{\bmb@boxwidth}{4bp}]{\pgfuseshading{bmb@shadowball}}% top right shadow
+          \fi%
           \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\bmb@boxwidth}}% bottom edge
-          \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{7.5bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxheight}}% right edge 
           %
           % clipping is needed because shadow is typeset on top of box
           \begin{pgfscope}
