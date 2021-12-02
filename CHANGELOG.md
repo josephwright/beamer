@@ -19,6 +19,7 @@ a major and minor version only.
 - fixed bullet colour of alerted items for custom item colour (see #735)
 - workaround to make miniframes clickable in xelatex (see #332)
 - added mising encoding value to multimedia sound macro (see #607)
+- imporoved problem with shadow of blocks without title (see #647)
 
 ## [v3.64]
 
