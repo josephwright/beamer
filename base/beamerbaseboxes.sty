@@ -130,10 +130,6 @@
   \advance\bmb@boxheight by4bp%
   \advance\bmb@boxheight by\bmb@prevheight%
   \ifbmb@shadow%
-%    \typeout{Quack \the\bmb@boxheight}
-%    \ifdim\bmb@boxheight<10bp%
-%      \bmb@boxheight=9bp%
-%    \fi%
     \xdef\beamer@storecolorhook{\beamer@colorhook}
     \xdef\beamer@colorhook{}
     \pgfdeclareradialshading{bmb@shadowball}{\pgfpointorigin}
@@ -157,7 +153,7 @@
       color(8bp)=(pgftransparent!0)
     }%
     \begingroup%
-%      \selectcolormodel{gray}
+      \selectcolormodel{gray}
       \pgfdeclarefading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}
       {%
         \begin{pgfpicture}
