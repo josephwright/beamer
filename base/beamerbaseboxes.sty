@@ -157,16 +157,16 @@
       \pgfdeclarefading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}
       {%
         \begin{pgfpicture}
-          \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}
-          \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}
-          \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}
-          \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\bmb@boxwidth}}
-          \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{7.5bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxheight}}
+          \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}% bottom left shadow
+          \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}% bottom right shadow
+          \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}% top right shadow
+          \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\bmb@boxwidth}}% bottom edge
+          \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{7.5bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxheight}}% right edge 
           %
           % clipping is needed because shadow is typeset on top of box
           \begin{pgfscope}
             \pgfsetcolor{black}
-            \pgfpathrectangle{\pgfpoint{4bp}{8bp}}{\pgfpoint{\bmb@boxwidth}{\bmb@boxheight-2bp}}
+            \pgfpathrectangle{\pgfpoint{4bp}{8.1bp}}{\pgfpoint{\bmb@boxwidth}{\bmb@boxheight-2bp}}
             \pgfusepath{fill}
           \end{pgfscope}
         \end{pgfpicture}%
