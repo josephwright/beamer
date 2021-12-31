@@ -21,6 +21,7 @@ a major and minor version only.
 - added mising encoding value to multimedia sound macro (see #607)
 - imporoved problem with shadow of blocks without title (see #647)
 - reduced artefacts in poppler based viewers for shadow blocks (see #647)
+- workaround to make `\framezoom` clickable in xelatex (see #619)
 
 ## [v3.64]
 
