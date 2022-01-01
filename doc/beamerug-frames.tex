@@ -624,6 +624,8 @@ Adding a sidebar of a certain size, say 1\,cm, will make the main text 1\,cm nar
 
 Internally, the sidebars are typeset by showing them as part of the headline. The \beamer\ class keeps track of six dimensions, three for each side: the variables |\beamer@leftsidebar| and |\beamer@rightsidebar| store the (horizontal) sizes of the side bars, the variables |\beamer@leftmargin| and |\beamer@rightmargin| store the distance between sidebar and text, and the macros |\Gm@lmargin| and |\Gm@rmargin| store the distance from the edge of the paper to the edge of the text. Thus the sum |\beamer@leftsidebar| and |\beamer@leftmargin| is exactly |\Gm@lmargin|. Thus, if you wish to put some text right next to the left sidebar, you might write |\hskip-\beamer@leftmargin| to get there.
 
+For convenience, the width of the sidebar and the height of its headline are accessible through the macros |\beamersidebarwidth| and |\beamerheadheight|, respectively. 
+
 \begin{element}{sidebar left}\yes\yes\yes
   \colorfontparents{sidebar}
   The template is used to typeset the left sidebar. As mentioned above, the size of the left sidebar is set using the command
