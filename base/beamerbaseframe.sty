@@ -411,6 +411,8 @@
   \def\beamer@defaultospec{#2}%
   \@ifnextchar[{\beamer@@@@frame<#1>}{\beamer@@@@frame<#1>[]}}
 
+\def\beamer@testzero{0}
+
 \newdimen\framewidth
 \def\beamer@frame<#1>{
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
@@ -442,10 +444,14 @@
   \beamer@frametemplate%
   \ifbeamer@noframenumbering%
     \ifbeamer@isfragile%Fragile frames will be processed twice
-      \stepcounter{framenumber}%
+      \ifx\beamer@whichframes\beamer@testzero\else
+        \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
+      \fi%
     \fi%
   \else%
-    \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
+    \ifx\beamer@whichframes\beamer@testzero\else
+      \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
+    \fi%
   \fi%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\beamer@framestartpage{}%
