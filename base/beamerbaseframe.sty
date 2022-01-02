@@ -442,14 +442,12 @@
   \setkeys{beamerframe}{environment=frame}%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
-  \ifbeamer@noframenumbering%
-    \ifbeamer@isfragile%Fragile frames will be processed twice
-      \ifx\beamer@whichframes\beamer@testzero\else
+  \ifx\beamer@whichframes\beamer@testzero\else
+    \ifbeamer@noframenumbering%
+      \ifbeamer@isfragile%Fragile frames will be processed twice
         \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
       \fi%
-    \fi%
-  \else%
-    \ifx\beamer@whichframes\beamer@testzero\else
+    \else%
       \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
     \fi%
   \fi%
