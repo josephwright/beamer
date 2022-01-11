@@ -23,6 +23,7 @@ a major and minor version only.
 - imporoved problem with shadow of blocks without title (see #647)
 - reduced artefacts in poppler based viewers for shadow blocks (see #647)
 - workaround to make `\framezoom` clickable in xelatex (see #619)
+- exclude invisible frames from being counted (see #592)
 
 ## [v3.64]
 
