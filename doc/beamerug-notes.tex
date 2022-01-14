@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2013,2015 by Vedran Mileti\'c, Joseph Wright
@@ -16,7 +17,7 @@ A \emph{note} is text that is intended as a reminder to yourself of what you sho
 
 \subsection{Specifying Note Contents}
 
-To add a note to a slide or a frame, use the |\note| command. This command can be used both inside and outside frames, but it has quite different behaviors then: Inside frames, |\note| commands accumulate and append a single note page after the current slide; outside frames each |\note| directly inserts a single note page with the given parameter as contents. Using the |\note| command inside frames is usually preferably over using them outside, since only commands issued inside frames profit from the class option |onlyslideswithnotes|, see below.
+To add a note to a slide or a frame, use the |\note| command. This command can be used both inside and outside frames, but it has quite different behaviors then: Inside frames, |\note| commands accumulate and append a single note page after the current slide; outside frames each |\note| directly inserts a single note page with the given parameter as contents. Using the |\note| command inside frames is usually preferably over using them outside, since only commands issued inside frames profit from the option |show only slides with notes|.
 
 Inside a frame, the effect of |\note|\meta{text} is the following: When you use it somewhere inside the frame on a specific slide, a note page is created after the slide, containing the \meta{text}. Since you can add an overlay specification to the |\note| command, you can specify after which slide the note should be shown. If you use multiple |\note| commands on one slide, they ``accumulate'' and are all shown on the same note.
 
@@ -60,7 +61,7 @@ In the following, the syntax and effects of the |\note| command \emph{inside} fr
 Next, the syntax and effects of the |\note| command \emph{outside} frames are described:
 
 \begin{command}{\note\oarg{options}\marg{note text}}
-  Outside frames, this command creates a note page. This command is \emph{not} affected by the option |notes=onlyframeswithnotes|, see below.
+  Outside frames, this command creates a note page. This command is \emph{not} affected by the option |show only slides with notes|.
 
   The following \meta{options} may be given:
   \begin{itemize}
@@ -72,7 +73,9 @@ Next, the syntax and effects of the |\note| command \emph{outside} frames are de
 
   \example
 \begin{verbatim}
-\frame{some text}
+\begin{frame}
+some text
+\end{frame}
 \note{Talk no more than 1 minute.}
 
 \note[enumerate]
@@ -97,6 +100,8 @@ The following element dictates how the note pages are rendered:
     The option produces an output that is similar to the default, only more fits onto each note page at the price of legibility.
     \itemoption{plain}{}
     Just inserts the note text, no fancy hints.
+    \itemoption{lined}{\oarg{number}}
+    Instead of printing the note text, this option fills the note page with lines on which the audience can write their own notes on. \meta{number} specifies how many lines will be shown, the default is 6 lines. For a more sophisticated interface, the \href{https://www.ctan.org/pkg/handoutwithnotes}{|handoutwithnotes|} package can be used.
   \end{templateoptions}
   The following two inserts are useful for note pages:
   \begin{itemize}
@@ -208,7 +213,10 @@ Since you normally do not wish the notes to be part of your presentation, you mu
 \end{verbatim}
 \end{beameroption}
 
-
 \begin{beameroption}{show only notes}{}
   Include only the notes in the output file and suppresses all frames. This options is useful for printing them. If you specify this command, the |.aux| and |.toc| files are \emph{not} updated. So, if you add a section and re\TeX\ your presentation, this will not be reflected in the navigation bars (which you do not see anyway since only notes are output).
+\end{beameroption}
+
+\begin{beameroption}{show only slides with notes}{}
+  Include only slides in the output file that have an accompanying note page. Slides without notes will be excluded. If you specify this command, the |.aux| and |.toc| files are \emph{not} updated. So, if you add a section and re\TeX\ your presentation, this will not be reflected in the navigation bars.
 \end{beameroption}

@@ -210,9 +210,10 @@
 
 % Alerted text
 
-\defbeamertemplate*{alerted text begin}{default}{\setbeamercolor{local structure}{parent=alerted text}}
-
-
+\defbeamertemplate*{alerted text begin}{default}{%
+  \setbeamercolor{local structure}{parent=alerted text}%
+  \setbeamercolor{item}{fg=alerted text.fg}%
+}
 
 % Structured text
 

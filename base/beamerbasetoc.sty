@@ -63,6 +63,7 @@
 \define@key{beamertoc}{part}{\beamer@showpartnumber=#1\relax}
 \define@key{beamertoc}{sections}{\beamer@parsetocsections#1[]}
 \define@key{beamertoc}{firstsection}{\beamer@sectionadjust=-#1\relax\advance\beamer@sectionadjust by 1\relax}
+\define@key{beamertoc}{lastsection}{\beamer@toclastsection=#1}
 \def\beamer@parsetocsections{\@ifnextchar<\beamer@@parsetocsections\beamer@@@parsetocsections}
 \def\beamer@@parsetocsections#1[]{\def\beamer@tocsections{#1}}
 \def\beamer@@@parsetocsections#1[]{\def\beamer@tocsections{<all:#1>}}
@@ -90,8 +91,6 @@
     \vfill}%
   }
 
-\renewcommand\addcontentsline[3]{\addtocontents{#1}{\protect\contentsline{#2}{#3}}}
-
 \def\beamer@tocaction@show#1{\usebeamertemplate**{#1}}
 \def\beamer@tocaction@shaded#1{\usebeamertemplate**{#1 shaded}}
 \def\beamer@tocaction@hide#1{}
@@ -105,6 +104,10 @@
 
 \def\beamer@hidetext{hide}
 
+% initialize count with something large 
+\beamer@toclastsection=\maxdimen
+\multiply\beamer@toclastsection by 2
+
 \def\sectionintoc{}
 \def\beamer@sectionintoc#1#2#3#4#5{%
   \ifnum\c@tocdepth>0%
@@ -116,8 +119,12 @@
   \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
       \beamer@tempcount=#5\relax%
       \advance\beamer@tempcount by\beamer@sectionadjust%
-      \ifnum\beamer@tempcount>0
-        \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \ifnum\beamer@tempcount>0 
+        \ifnum\beamer@tempcount>\beamer@toclastsection
+          \def\inserttocsectionnumber{}%
+        \else
+          \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+        \fi
       \else
         \def\inserttocsectionnumber{}%
       \fi%

@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2011--2013,2015 by Vedran Mileti\'c, Joseph Wright
@@ -20,7 +21,7 @@ This section presents a possible workflow for creating a \beamer\ presentation a
 \beamernote
 It is advisable that you create a folder for each presentation. Even though your presentation will usually reside in a single file, \TeX\ produces so many extra files that things can easily get very confusing otherwise. The folder's name should ideally start with the date of your talk in ISO format (like 2003-12-25 for a Christmas talk), followed by some reminder text of what the talk is all about. Putting the date at the front in this format causes your presentation folders to be listed nicely when you have several of them residing in one directory. If you use an extra directory for each presentation, you can call your main file |main.tex|.
 
-To create an initial |main.tex| file for your talk, copy an existing file from the |beamer/solutions| directory and adapt it to your needs. A list of possible \beamer\ solutions that contain templates for presentation \TeX-files can be found below.
+To create an initial |main.tex| file for your talk, copy an existing file from the |beamer/doc/solutions| directory and adapt it to your needs. A list of possible \beamer\ solutions that contain templates for presentation \TeX-files can be found below.
 
 If you wish your talk to reside in the same file as some different, non-presentation article version of your text, it is advisable to setup a more elaborate file scheme. See Section~\ref{section-article-version-workflow} for details.
 
@@ -136,13 +137,17 @@ Second, you can use the following command:
 \begin{verbatim}
 \includeonlyframes{example1,example3}
 
-\frame[label=example1]
-{This frame will be included. }
+\begin{frame}[label=example1]
+This frame will be included. 
+\end{frame}
 
-\frame[label=example2]
-{This frame will not be included. }
+\begin{frame}[label=example2]
+This frame will not be included. 
+\end{frame}
 
-\frame{This frame will not be included.}
+\begin{frame}
+This frame will not be included.
+\end{frame}
 
 \againframe{example1} % Will be included
 \end{verbatim}

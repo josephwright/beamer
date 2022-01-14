@@ -23,9 +23,9 @@
 \newif\ifbmb@shadow
 \newbox\bmb@box
 \newbox\bmb@colorbox
-\newbox\bmb@boxshadow
-\newbox\bmb@boxshadowball
-\newbox\bmb@boxshadowballlarge
+\newdimen\bmb@boxwidth
+\newdimen\bmb@boxheight
+\newdimen\bmb@prevheight
 \newdimen\bmb@temp
 \newdimen\bmb@dima
 \newdimen\bmb@dimb
@@ -110,11 +110,6 @@
   \nointerlineskip%
   \vskip-0.5pt%
   \fi%
-  \ifbmb@shadow%
-    \setbox\bmb@boxshadow=\hbox{\pgfuseshading{bmb@shadow}}%
-    \setbox\bmb@boxshadowball=\hbox{\pgfuseshading{bmb@shadowball}}%
-    \setbox\bmb@boxshadowballlarge=\hbox{\pgfuseshading{bmb@shadowballlarge}}%
-  \fi%
   \setbox\bmb@colorbox=\hbox{{\pgfpicturetrue\pgfsetcolor{lower.bg}}}%
   \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
     \vskip2pt%
@@ -126,49 +121,76 @@
 
 \def\endbeamerboxesrounded{%
   \end{minipage}\egroup%
-  \wd\bmb@box=\bmb@width%
   \bmb@temp=\dp\bmb@box%
   \advance\bmb@temp by.5pt%
   \setbox\bmb@box=\hbox{\raise\bmb@temp\hbox{\box\bmb@box}}%
   \dp\bmb@box=0pt%
-  \bmb@temp=\wd\bmb@box%
+  \bmb@boxwidth=\bmb@width%
+  \bmb@boxheight=\ht\bmb@box%
+  \advance\bmb@boxheight by4bp%
+  \advance\bmb@boxheight by\bmb@prevheight%
+  \ifbmb@shadow%
+    \xdef\beamer@storecolorhook{\beamer@colorhook}
+    \xdef\beamer@colorhook{}
+    \pgfdeclareradialshading{bmb@shadowball}{\pgfpointorigin}
+    {%
+      color(0bp)=(pgftransparent!50);
+      color(4bp)=(pgftransparent!100)
+    }%
+    \pgfdeclareradialshading{bmb@shadowballlarge}{\pgfpointorigin}
+    {%
+      color(0bp)=(pgftransparent!0);
+      color(8bp)=(pgftransparent!100)
+    }%
+    \pgfdeclarehorizontalshading{bmb@shadowhorz\the\bmb@boxheight}{\bmb@boxheight-5.5bp}
+    {%
+      color(0bp)=(pgftransparent!0);
+      color(8bp)=(pgftransparent!100)
+    }%
+    \pgfdeclareverticalshading{bmb@shadowvert\the\bmb@boxwidth}{\bmb@boxwidth-4bp}
+    {%
+      color(0bp)=(pgftransparent!100);
+      color(8bp)=(pgftransparent!0)
+    }%
+    \begingroup%
+      \selectcolormodel{gray}
+      \pgfdeclarefading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}
+      {%
+        \begin{pgfpicture}
+          \pgftext[at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowball}}% bottom left shadow
+          \ifdim\bmb@boxheight>9.5bp%
+            \pgftext[at=\pgfpoint{\bmb@boxwidth}{8bp}]{\pgfuseshading{bmb@shadowballlarge}}% bottom right shadow
+            \pgftext[at=\pgfpoint{\bmb@boxwidth+4bp}{\bmb@boxheight+2bp}]{\pgfuseshading{bmb@shadowball}}% top right shadow
+            \pgftext[base, at=\pgfpoint{\bmb@boxwidth+4bp}{7.5bp}]{\pgfuseshading{bmb@shadowhorz\the\bmb@boxheight}}% right edge shadow
+          \else%
+            \pgftext[at=\pgfpoint{\bmb@boxwidth}{4bp}]{\pgfuseshading{bmb@shadowball}}% right shadow
+          \fi%
+          \pgftext[left, at=\pgfpoint{4bp}{4bp}]{\pgfuseshading{bmb@shadowvert\the\bmb@boxwidth}}% bottom edge
+          %
+          % clipping is needed because shadow is typeset on top of box
+          \begin{pgfscope}
+            \pgfsetcolor{black}
+            \pgfpathrectangle{\pgfpoint{4bp}{8.1bp}}{\pgfpoint{\bmb@boxwidth}{\bmb@boxheight-2bp}}
+            \pgfusepath{fill}
+          \end{pgfscope}
+        \end{pgfpicture}%
+        \hskip4bp%      
+      }%
+    \endgroup%
+  \fi%
+  \bmb@temp=\bmb@width%
   \bmb@dima=\bmb@temp\advance\bmb@dima by2.2bp%
   \bmb@dimb=\bmb@temp\advance\bmb@dimb by4bp%
   \hbox{%
     \begin{pgfpicture}{0bp}{0bp}{0bp}{0bp}
       \ifbmb@shadow%
-      {\pgftransformshift{\pgfpoint{4bp}{-3bp}}\pgftext{\copy\bmb@boxshadowball}}
-      \begin{pgfscope}
-        {%
-        \advance\bmb@temp by-1bp%
-        \pgfpathrectangle{\pgfpoint{\bmb@temp}{-7bp}}{\pgfpoint{9bp}{9bp}}%
-        \pgfusepath{clip}
-        }%
-        {\pgftransformshift{\pgfpoint{\bmb@temp}{1bp}}\pgftext{\box\bmb@boxshadowballlarge}}
-      \end{pgfscope}
-      \begin{pgfscope}
-        \advance\bmb@temp by-4bp%
-        \pgfpathrectangle{\pgfpoint{4bp}{-7bp}}{\pgfpoint{\bmb@temp}{5bp}}
-        \pgfusepath{clip}
-        {\pgftransformshift{\pgfpoint{4bp}{-7bp}}\pgftext[left,base]{\copy\bmb@boxshadow}}%
-      \end{pgfscope}
-      \begin{pgfscope}
-        \advance\bmb@temp by 4bp%
-        \bmb@dima=\ht\bmb@box%
-        \advance\bmb@dima by\bmb@prevheight%
-        \advance\bmb@dima by 4bp%
-        \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
-        \pgfusepath{clip}
-        \advance\bmb@dima by-4bp%
-        {\pgftransformshift{\pgfpoint{\bmb@temp}{\bmb@dima}}\pgftext{\box\bmb@boxshadowball}}
-        \advance\bmb@dima by-1bp%
-        \pgfpathrectangle{\pgfpoint{\bmb@temp}{1bp}}{\pgfpoint{4bp}{\bmb@dima}}
-        \pgfusepath{clip}
-        \advance\bmb@temp by4bp%
-        {\pgftransformshift{\pgfpoint{\bmb@temp}{-3bp}}%
-          \pgftransformrotate{90}%
-          \pgftext[left,base]{\box\bmb@boxshadow}}%
-      \end{pgfscope}
+        \begin{pgfscope}
+          \pgfpathrectangle{\pgfpoint{0bp}{-7bp}}
+            {\pgfpoint{\bmb@boxwidth+8bp}{\bmb@boxheight+6bp}}
+          \pgfsetfading{bmb@shadowmask\the\bmb@boxwidth\the\bmb@boxheight}{%
+            \pgftransformshift{\pgfpoint{0.5\bmb@boxwidth+6bp}{0.5\bmb@boxheight-4bp}}}
+          \pgfusepath{fill}
+        \end{pgfscope}
       \fi%
       \unhbox\bmb@colorbox%
       \pgfpathqmoveto{-4bp}{1bp}
@@ -179,47 +201,11 @@
       {\pgfpoint{\the\bmb@dimb}{-1.2bp}}%
       {\pgfpoint{\the\bmb@dimb}{1bp}}%
       {
-      \bmb@dima=\ht\bmb@box%
-      \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-      \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
-      \pgfusepath{fill}
-      }
-      \ifbmb@shadow%
-      {
-        \color{black!50!bg}
-        \pgfsetlinewidth{0pt}
-        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{-.5bp}}
         \bmb@dima=\ht\bmb@box%
-        \advance\bmb@dima by\bmb@prevheight%
-        \advance\bmb@dima by 1bp%
         \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath{stroke}
-        \bmb@temp=\bmb@dima
-        \advance\bmb@dima by 1bp%
-        \color{black!31!bg}
-        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath{stroke}
-        \advance\bmb@dima by 1bp%
-        \advance\bmb@temp by 1bp%
-        \color{black!19!bg}
-        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath{stroke}
-        \advance\bmb@dima by 1bp%
-        \advance\bmb@temp by 1bp%
-        \color{black!6!bg}
-        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath{stroke}
-        \advance\bmb@dima by 1.5bp%
-        \advance\bmb@temp by 1bp%
-        \color{bg}
-        \pgfpathmoveto{\pgfpoint{\bmb@dimb}{\bmb@temp}}
-        \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
-        \pgfusepath{stroke}
+        \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
+        \pgfusepath{fill}
       }
-      \fi
     \end{pgfpicture}%
     \box\bmb@box%
   }%
@@ -229,19 +215,12 @@
     \vskip2bp%
   \fi%
   \egroup% of \vbox\bgroup
+  \ifbmb@shadow%
+    \xdef\beamer@colorhook{\beamer@storecolorhook}
+  \fi
 }
 
-%
 % Shadings
-%
-
-% Shadows
-\pgfdeclareradialshading[black,bg]{bmb@shadowball}{\pgfpointorigin}{%
-  color(0bp)=(black!50!bg); color(4bp)=(bg)}
-\pgfdeclareradialshading[black,bg]{bmb@shadowballlarge}{\pgfpointorigin}{%
-  color(0bp)=(black!50!bg); color(4bp)=(black!50!bg); color(8bp)=(bg)}
-\pgfdeclareverticalshading[black,bg]{bmb@shadow}{200cm}{%
-  color(0bp)=(bg); color(4bp)=(black!50!bg); color(8bp)=(black!50!bg)}
 
 % Transition line
 \pgfdeclareverticalshading[lower.bg,upper.bg]{bmb@transition}{200cm}{%

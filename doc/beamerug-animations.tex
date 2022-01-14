@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012,2013,2015 by Vedran Mileti\'c, Joseph Wright
@@ -406,11 +407,13 @@ Since there is no direct way of stopping the playback of a sound, the following 
 
 There are a number of commands that can be used to specify what effect should be used when the current slide is presented. Consider the following example:
 \begin{verbatim}
-\frame{\pgfuseimage{youngboy}}
-\frame{
+\begin{frame}
+  \pgfuseimage{youngboy}
+\end{frame}
+\begin{frame}
   \transdissolve
   \pgfuseimage{man}
-}
+\end{frame}
 \end{verbatim}
 The command |\transdissolve| causes the slide of the second frame to be shown in a ``dissolved way.'' Note that the dissolving is a property of the second frame, not of the first one. We could have placed the command anywhere on the frame.
 

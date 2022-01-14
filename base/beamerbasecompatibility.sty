@@ -51,7 +51,34 @@
 %
 % Fixes right before the start of the document.
 %
-\@ifundefined{AddToHook}
+\providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+\IfFormatAtLeastTF{2020-10-01}
+  {%
+    \AddToHook{env/document/begin}[beamer]{\beamer@firstminutepatches}%
+    \AddToHook{env/document/begin}[beamer]{%
+      \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}%
+      \@ifpackageloaded{pdfpages}{%
+        % Patching pdfpages package to avoid the included pages from being covered by the background canvas
+        \AddToHook{cmd/includepdf/before}[beamer]{\begingroup\setbeamercolor{background canvas}{bg=}}%
+        \AddToHook{cmd/includepdf/after}[beamer]{\endgroup}%
+        \AddToHook{cmd/includepdfmerge/before}[beamer]{\begingroup\setbeamercolor{background canvas}{bg=}}%
+        \AddToHook{cmd/includepdfmerge/after}[beamer]{\endgroup}%
+      }{}%
+    }%
+    \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
+      {%
+        \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
+        % Fix meddline with enumerate items
+        \renewcommand\theenumi{\@arabic\c@enumi}%
+        \renewcommand\theenumii{\@arabic\c@enumii}%
+        \renewcommand\theenumiii{\@arabic\c@enumiii}%
+        \catcode`<=12 \catcode`>=12 %% right place??
+        \beamer@lastminutepatches
+        \ifbeamer@ignorenonframe
+         \expandafter\mode\expandafter*%
+       \fi
+      }%
+  }
   {%
     \let\beamer@origdocument\document
     \def\document{%
@@ -82,37 +109,18 @@
           \expandafter\mode\expandafter*%
         \fi}%
   }
-  {%
-    \AddToHook{env/begin/document}[beamer]{\beamer@firstminutepatches}%
-    \AddToHook{env/begin/document}[beamer]{%
-      \@ifpackageloaded{paralist}{\RequirePackage{beamerpatchparalist}}{}%
-    }%
-    \AddToHook{begindocument/end}[beamer]%need to be later than spanish.ldf?
-      {%
-        \@ifundefined{deactivatequoting}{}{\deactivatequoting}%
-        % Fix meddline with enumerate items
-        \renewcommand\theenumi{\@arabic\c@enumi}%
-        \renewcommand\theenumii{\@arabic\c@enumii}%
-        \renewcommand\theenumiii{\@arabic\c@enumiii}%
-        \catcode`<=12 \catcode`>=12 %% right place??
-        \beamer@lastminutepatches
-        \ifbeamer@ignorenonframe
-         \expandafter\mode\expandafter*%
-       \fi
-      }
-  }
 
 \mode
 <article>
 {
-  \@ifundefined{AddToHook}
+  \IfFormatAtLeastTF{2020-10-01}
+    {\AddToHook{begindocument/end}[beamer]{\beamer@lastminutepatches}}
     {%
       \let\beamer@origdocument\document
       \def\document{%
         \beamer@origdocument%
         \beamer@lastminutepatches}
     }
-    {\AddToHook{env/begin/document}[beamer]{\beamer@lastminutepatches}}
 
   \g@addto@macro\beamer@lastminutepatches{%
     \ifbeamer@articleactive
@@ -231,6 +239,14 @@
 %
 \providecommand\ext@table{}
 \providecommand\ext@figure{}
+
+%
+% Fix for polyglossia
+% https://github.com/josephwright/beamer/issues/706
+%
+\IfFormatAtLeastTF{2020-10-01}{%
+  \DeclareHookRule{begindocument/end}{beamer}{after}{polyglossia}%
+}{}
 
 %
 % Obsolete commands from old versions of beamer

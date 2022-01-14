@@ -1,3 +1,4 @@
+% !TeX root = beameruserguide.tex
 % Copyright 2003--2007 by Till Tantau
 % Copyright 2010 by Vedran Mileti\'c
 % Copyright 2012--2015 by Vedran Mileti\'c, Joseph Wright
@@ -644,6 +645,13 @@ In the |article| version, the package |amsthm| sometimes clashes with the docume
   Does not load |amssymb|. This option is mainly intended for users who are loading specialist font packages. Note that |\blacktriangleright| needs to be defined if |itemize| environments are in use.
 \end{classoption}
 
+\begin{classoption}{leqno}
+  Place equation numbers on the left.
+\end{classoption}
+
+\begin{classoption}{fleqn}
+  Position equations at a fixed indent from the left margin rather than centered in the text column.
+\end{classoption}
 
 \begin{element}{theorems}\semiyes\no\no
   This template is a parent of |theorem begin| and |theorem end|, see the first for a detailed discussion of how the theorem templates are set.
@@ -940,7 +948,9 @@ The main environment for creating columns is called |columns|. Inside this envir
   \item
     \declare{|c|} will cause the columns to be centered vertically relative to each other. Default, unless the global option |t| is used.
   \item
-    \declare{|onlytextwidth|} is the same as |totalwidth=\textwidth|.
+    \declare{|onlytextwidth|} is the same as |totalwidth=\textwidth|. This option can also be set for the whole document with the |onlytextwidth| class option:
+    \begin{classoption}{onlytextwidth}
+    \end{classoption}
   \item
     \declare{|t|} will cause the first lines of the columns to be aligned. Default if global option |t| is used.
   \item

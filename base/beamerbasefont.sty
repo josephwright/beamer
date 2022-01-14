@@ -176,7 +176,7 @@
       <3><4><5><6><7><8><9>cmssbx10%
       <10><10.95><12><14.4><17.28><20.74><24.88><29.86><35.83><42.99><51.59>cmssbx10%
       }{}
-
+\DeclareFontShape{OT1}{cmss}{b}{n}{<->ssub * cmss/bx/n}{}
 
 \newcommand*{\beamer@font@check}{%
   \def\beamer@cmr{cmr}%
@@ -188,7 +188,7 @@
   % supress for mathtime serif and math minion serif
   \@ifpackageloaded{arevmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%
   \@ifpackageloaded{hvmath}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%
-  \@ifpackageloaded{kpfonts}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%
+  \@ifpackageloaded{kpfonts}{\ifbeamer@sansmath\mathversion{sf}\else\beamer@suppressreplacementstrue\fi}{}%
   \@ifpackageloaded{lucidabr}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%
   \@ifpackageloaded{lmodern}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%
   \@ifpackageloaded{lucimatx}{\ifbeamer@sansmath\else\beamer@suppressreplacementstrue\fi}{}%

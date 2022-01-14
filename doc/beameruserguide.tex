@@ -13,8 +13,8 @@
 
 \documentclass{ltxdoc}
 
-\def\beamerugversion{3.59}
-\def\beamerugpgfversion{1.00}
+\def\beamerugversion{3.64}
+\def\beamerugpgfversion{3.1.7}
 \def\beamerugxcolorversion{2.00}
 
 \usepackage{cmap}
@@ -28,7 +28,7 @@
 \usepackage[pdfborder={0 0 0},bookmarksnumbered]{hyperref}
 \usepackage[left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
 \usepackage{translator}
-
+\usepackage{tikz}
 
 \input{beamerug-macros}
 
@@ -64,8 +64,7 @@ User Guide for version \beamerugversion.}
     \item<1-| alert@1> Suppose $p$ were the largest prime number.
     \item<2-> Let $q$ be the product of the first $p$ numbers.
     \item<3-> Then $q+1$ is not divisible by any of them.
-    \item<1-> But $q + 1$ is greater than $1$, thus divisible by some prime
-      number not in the first $p$ numbers.\qedhere
+    \item<1-> Thus $q+1$ is also prime and greater than $p$.\qedhere
     \end{enumerate}
   \end{proof}
 \end{frame}

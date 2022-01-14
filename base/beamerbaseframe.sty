@@ -270,6 +270,12 @@
   \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
   \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
 }
+\define@key{beamerframe}{s}[true]{% stretch
+  \beamer@frametopskip=0pt\relax%
+  \beamer@framebottomskip=0pt plus 0.001fill\relax%
+  \beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+  \beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+}
 
 \newif\ifbeamer@noframenumbering
 
@@ -405,6 +411,8 @@
   \def\beamer@defaultospec{#2}%
   \@ifnextchar[{\beamer@@@@frame<#1>}{\beamer@@@@frame<#1>[]}}
 
+\def\beamer@testzero{0}
+
 \newdimen\framewidth
 \def\beamer@frame<#1>{
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
@@ -434,12 +442,14 @@
   \setkeys{beamerframe}{environment=frame}%
   \setkeys{beamerframe}{#2}%
   \beamer@frametemplate%
-  \ifbeamer@noframenumbering%
-    \ifbeamer@isfragile%Fragile frames will be processed twice
-      \stepcounter{framenumber}%
-    \fi%
-  \else%
+  \ifbeamer@isfragile%Fragile frames will be processed twice
     \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
+  \else%  
+    \ifx\beamer@whichframes\beamer@testzero\else
+      \ifbeamer@noframenumbering\else%
+        \stepcounter{framenumber}%do not set \label here - it interferes with AtBegin*
+      \fi%
+    \fi%
   \fi%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\beamer@framestartpage{}%

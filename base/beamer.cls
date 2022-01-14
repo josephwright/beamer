@@ -12,7 +12,7 @@
 % See the file doc/licenses/LICENSE for more details.
 
 \ProvidesClass{beamer}
-  [2020/07/22 v3.59 A class for typesetting presentations]
+  [2021/10/18 v3.64 A class for typesetting presentations]
 
 % Setup modes and check for article option
 % Also loads packages required by both beamer and beamerarticle
@@ -74,6 +74,7 @@
 \newcount\beamer@currentsubsection
 \newcount\beamer@coveringdepth
 \newcount\beamer@sectionadjust
+\newcount\beamer@toclastsection
 \newcount\beamer@tocsectionnumber
 
 \newif\ifbeamer@sansmath
@@ -87,6 +88,7 @@
 \newif\ifbeamer@frameswithnotesonly
 \newif\ifbeamer@ignorenonframe
 \newif\ifbeamer@autopdfinfo
+\newif\ifbeamer@onlytextwidth
 
 % Option management
 \RequirePackage{beamerbaseoptions}
@@ -106,6 +108,7 @@
 \beamer@frameswithnotesonlyfalse
 \beamer@ignorenonframefalse
 \beamer@autopdfinfotrue
+\beamer@onlytextwidthfalse
 
 \DeclareOptionBeamer{usepdftitle}[true]{\csname beamer@autopdfinfo#1\endcsname}
 \DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
@@ -168,6 +171,8 @@
       \lccode`\~=\count@
       \catcode\count@=\active
       \lowercase{\def~{\kern1ex}}}}}
+      
+\DeclareOptionBeamer{onlytextwidth}{\beamer@onlytextwidthtrue}      
 
 % obsolete options
 \DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
@@ -187,6 +192,8 @@
   \nofiles
 }
 \def\beamer@notesaction@onlyslideswithnotes{%
+  \ClassWarning{beamer}{This option is obsolete. Use beamer option
+    ``show only slides with notes'' instead.}%
   \beamer@notestrue
   \beamer@frameswithnotesonlytrue
   \nofiles
@@ -250,7 +257,7 @@
   bookmarksopen=true,%
   pdfborder={0 0 0},%
   pdfhighlight={/N},%
-  linkbordercolor={.5 .5 .5}}{hyperref}
+  linkbordercolor=[rgb]{0.5,0.5,0.5}}{hyperref}
 
 \DeclareOptionBeamer{pgf}{\PassOptionsToPackage{#1}{pgf}}
 \DeclareOptionBeamer{hyperref}{\PassOptionsToPackage{#1}{hyperref}}
@@ -295,7 +302,10 @@
 \setlength\beamer@paperheight{9.60cm}
 
 \DeclareOptionBeamer{aspectratio}[43]{%
-  \ifnum#1=1610 %
+  \ifnum#1=2013 %
+    \setlength\beamer@paperwidth{14.00cm}%
+    \setlength\beamer@paperheight{9.10cm}%
+  \else\ifnum#1=1610 %
     \setlength\beamer@paperwidth{16.00cm}%
     \setlength\beamer@paperheight{10.00cm}%
   \else\ifnum#1=169 %
@@ -316,7 +326,7 @@
   \else\ifnum#1=141 %
     \setlength\beamer@paperwidth{14.85cm}%
     \setlength\beamer@paperheight{10.50cm}%
-  \fi\fi\fi\fi\fi\fi\fi
+  \fi\fi\fi\fi\fi\fi\fi\fi
 }
 
 \RequirePackage[%
