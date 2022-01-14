@@ -545,16 +545,12 @@ This section explains how to define new commands that are overlay specification-
 \end{verbatim}
 \end{command}
 
-In a similar way |\NewDocumentCommand| and |\NewDocumentEnvironment| can be used to define overlay aware commands and environments:
+In a similar way |\NewDocumentCommand|, |\NewDocumentEnvironment| etc. can be used to define overlay aware commands and environments. The overlay argument can be specified via |d<>| (without default value) or |D<>{}| (with default value) type arguments.
 
 \example
 \begin{verbatim}
-\NewDocumentCommand{\makeblue}{d<> m}{{\color<#1>{blue}#2}}
+\NewDocumentCommand{\makeblue}{D<>{.-} m}{{\color<#1>{blue}#2}}
 \end{verbatim}
-
-
-
-
 
 The following two commands can be used to ensure that a certain counter is automatically reset on subsequent slides of a frame. This is necessary for example for the equation count. You might want this count to be increased from frame to frame, but certainly not from overlay slide to overlay slide. For equation counters and footnote counters (you should not use footnotes), these commands have already been invoked.
 
