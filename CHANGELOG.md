@@ -24,6 +24,7 @@ a major and minor version only.
 - reduced artefacts in poppler based viewers for shadow blocks (see #647)
 - workaround to make `\framezoom` clickable in xelatex (see #619)
 - exclude invisible frames from being counted (see #592)
+- fixed cut off miniframes for 8pt and 9pt (see #752)
 
 ## [v3.64]
 
