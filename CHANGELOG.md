@@ -13,6 +13,7 @@ a major and minor version only.
 - adding new `onlytextwidth` class option to use this key for all `columns` environments by default (see #731)
 - adding new stretchable frame option `s` (see #696)
 - adding user-accessible commands for `\beamersidebarwidth` and `\beamerheadheight` (see #537)
+- allow custom values for `aspectratio` option (see #549)
 
 ### Fixed
 

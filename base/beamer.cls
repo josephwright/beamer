@@ -326,6 +326,14 @@
   \else\ifnum#1=141 %
     \setlength\beamer@paperwidth{14.85cm}%
     \setlength\beamer@paperheight{10.50cm}%
+  \else
+    \setlength\beamer@paperheight{9.60cm}%
+    \ifnum#1<1000%
+      \pgfmathparse{(#1-mod(#1,10))/10.0/mod(#1,10)}%
+    \else%
+      \pgfmathparse{(#1-mod(#1,100))/100.0/mod(#1,100)}%
+    \fi%
+    \setlength\beamer@paperwidth{\pgfmathresult\beamer@paperheight}%
   \fi\fi\fi\fi\fi\fi\fi\fi
 }
 
@@ -342,6 +350,9 @@
 % Process Options
 %
 
+% before processing beamer options for \pgfmathparse
+\RequirePackage{pgfcore}
+
 \ExecuteOptionsBeamer{c}
 \ProcessOptionsBeamer
 
@@ -352,7 +363,6 @@
 \beamer@filterclassoptions
 
 % Low-level graphic drawing and advanced color support.
-\RequirePackage{pgfcore}
 \RequirePackage{xxcolor}
 
 % Normally loaded by hyperref but to be on the safe side ...

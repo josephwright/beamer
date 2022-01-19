@@ -1248,6 +1248,17 @@ To change ``paper size'' and aspect ratio, you can use the following class optio
   Sets aspect ratio to 3:2, and frame size to 135\,mm by 90\,mm.
 \end{classoption}
 
+\begin{classoption}{aspectratio=xxxx}
+  Allows the user to set their own aspect ratio. For the height of the resulting frame, the default value of 96\,mm is used and the width will be calculated accordingly to match the desired aspect ratio.
+  
+  The custom aspect ratio allows for two to four digits and will be interpreted as shown in the following examples:
+  \begin{itemize}
+    \item two digits: |aspectratio=42| as 4:2
+    \item three digits: |aspectratio=137| as 13:7 (e.g. always in landscape format)
+    \item four digits: |aspectratio=1024| as 10:24
+  \end{itemize} 
+\end{classoption}
+
 Aside from using these options, you should refrain from changing the ``paper size.'' However, you \emph{can} change the size of the left and right margins, which default to 1\,cm. To change them, you should use the following command:
 
 \begin{command}{\setbeamersize\marg{options}}
