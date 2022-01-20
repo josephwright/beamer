@@ -48,8 +48,9 @@
     \ifx\beamer@thc@bg\@empty\def\beamer@thc@bg{bg}\fi%
     \global\let\beamer@thc@gfg\beamer@thc@fg%
     \global\let\beamer@thc@gbg\beamer@thc@bg%
-    \beamer@color@smuggle{#1.fg}{\beamer@thc@gfg}%
-    \beamer@color@smuggle{#1.bg}{\beamer@thc@gbg}%
+    \globalcolorstrue%
+    \colorlet{#1.fg}{\beamer@thc@gfg}%
+    \colorlet{#1.bg}{\beamer@thc@gbg}%
   \endgroup%
 }
 
