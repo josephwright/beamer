@@ -84,19 +84,19 @@
   \beamer@thc@prepcolor%
   \beamer@thc@docolor{#2}%
   \ifx\beamer@thc@fg\@empty%
-    \@namelet{\string\color@ temp@fg}{\string\color@ fg}%
+    \colorlet{temp@fg}{fg}%
   \else%
     \colorlet{temp@fg}{\csname beamer@thc@fg\endcsname}%
   \fi%
   \ifx\beamer@thc@bg\@empty%
-    \@namelet{\string\color@ temp@bg}{\string\color@ bg}%
+    \colorlet{temp@bg}{bg}%
   \else%
     \colorlet{temp@bg}{\csname beamer@thc@bg\endcsname}%
   \fi%
-  \@namelet{\string\color@ parent.fg}{\string\color@ fg}%
-  \@namelet{\string\color@ parent.bg}{\string\color@ bg}%
-  \@namelet{\string\color@ fg}{\string\color@ temp@fg}%
-  \@namelet{\string\color@ bg}{\string\color@ temp@bg}%
+  \colorlet{parent.fg}{fg}%
+  \colorlet{parent.bg}{bg}%
+  \colorlet{fg}{temp@fg}%
+  \colorlet{bg}{temp@bg}%
   \begingroup%
     \global\@namelet{\string\color@ #2.fg}{\string\color@ temp@fg}%
     \global\@namelet{\string\color@ #2.bg}{\string\color@ temp@bg}%
