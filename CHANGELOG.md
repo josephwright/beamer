@@ -20,7 +20,7 @@ a major and minor version only.
 - using `gray` colormodel for the delcarartion of fadings (workaround for #718)
 - fixed bullet colour of alerted items for custom item colour (see #735)
 - workaround to make miniframes clickable in xelatex (see #332)
-- added mising encoding value to multimedia sound macro (see #607)
+- added missing encoding value to multimedia sound macro (see #607)
 - imporoved problem with shadow of blocks without title (see #647)
 - reduced artefacts in poppler based viewers for shadow blocks (see #647)
 - workaround to make `\framezoom` clickable in xelatex (see #619)
