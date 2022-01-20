@@ -97,10 +97,9 @@
   \colorlet{parent.bg}{bg}%
   \colorlet{fg}{temp@fg}%
   \colorlet{bg}{temp@bg}%
-  \begingroup%
-    \global\@namelet{\string\color@ #2.fg}{\string\color@ temp@fg}%
-    \global\@namelet{\string\color@ #2.bg}{\string\color@ temp@bg}%
-  \endgroup%
+  \globalcolorstrue
+  \colorlet{#2.fg}{temp@fg}%
+  \colorlet{#2.bg}{temp@bg}%
   \def\beamer@temp{#1}%
   \ifx\beamer@temp\@empty%
   \else%
