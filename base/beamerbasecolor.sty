@@ -79,19 +79,6 @@
 }
 
 
-% Allow colors to escape a group
-\protected\def\beamer@color@smuggle#1#2{%
-  \expandafter\xdef\csname beamer@color@smuggle@#1\endcsname
-    {%
-      \noexpand\colorlet{#1}{\noexpand#2}%
-      \noexpand\ifnum\noexpand\currentgrouplevel=0 \noexpand\else
-        \noexpand\aftergroup\expandafter\noexpand
-          \csname beamer@color@smuggle@#1\endcsname
-      \noexpand\fi
-    }%
-  \csname beamer@color@smuggle@#1\endcsname
-}
-
 \def\usebeamercolor{\@ifstar{\beamer@usebeamercolor[fg]{normal text}\beamer@usebeamercolor}{\beamer@usebeamercolor}}
 \newcommand\beamer@usebeamercolor[2][]{%
   \beamer@thc@prepcolor%
@@ -110,8 +97,10 @@
   \colorlet{parent.bg}{bg}%
   \colorlet{fg}{temp@fg}%
   \colorlet{bg}{temp@bg}%
-  \beamer@color@smuggle{#2.fg}{temp@fg}%
-  \beamer@color@smuggle{#2.bg}{temp@bg}%
+  \begingroup%
+    \global\@namelet{\string\color@ #2.fg}{\string\color@ temp@fg}%
+    \global\@namelet{\string\color@ #2.bg}{\string\color@ temp@bg}%
+  \endgroup%
   \def\beamer@temp{#1}%
   \ifx\beamer@temp\@empty%
   \else%

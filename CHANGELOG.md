@@ -15,11 +15,6 @@ a major and minor version only.
 - adding user-accessible commands for `\beamersidebarwidth` and `\beamerheadheight` (see #537)
 - allow custom values for `aspectratio` option (see #549)
 
-### Changed
-
-- Remove usage of `\globalcolor`, such that all colors are
-  set correctly
-
 ### Fixed
 
 - using `gray` colormodel for the delcarartion of fadings (workaround for #718)
