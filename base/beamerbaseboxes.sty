@@ -38,13 +38,11 @@
   \setkeys{beamerboxes}{#1}%
   {%
     \usebeamercolor{\bmb@lower}%
-    \globalcolorstrue%
-    \colorlet{lower.bg}{bg}%
+    \beamer@color@smuggle{lower.bg}{bg}%
   }%
   {%
     \usebeamercolor{\bmb@upper}%
-    \globalcolorstrue%
-    \colorlet{upper.bg}{bg}%
+    \beamer@color@smuggle{upper.bg}{bg}%
   }%
   %
   % Typeset head

@@ -322,7 +322,7 @@
         \the\beamer@coveringdepth\endcsname{\beamer@colorhook}%
         \expandafter\xdef\csname beamer@oldpgfextension%
         \the\beamer@coveringdepth\endcsname{\beamer@pgfextension}%
-        {\globalcolorstrue\colorlet{beamer@freeze\the\beamer@coveringdepth}{bg}}%
+        {\beamer@color@smuggle{beamer@freeze\the\beamer@coveringdepth}{bg}}%
         \xdef\beamer@colorhook{!##2!beamer@freeze%
           \the\beamer@coveringdepth\beamer@colorhook}%
         \gdef\beamer@pgfextension{!##2opaque}%
