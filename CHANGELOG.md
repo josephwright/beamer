@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.65]
+
 ### Added
 
 - adding new `onlytextwidth` class option to use this key for all `columns` environments by default (see #731)
@@ -184,7 +186,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.64...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.65...HEAD
+[v3.65]: https://github.com/josephwright/beamer/compare/v3.64...v3.65
 [v3.64]: https://github.com/josephwright/beamer/compare/v3.63...v3.64
 [v3.63]: https://github.com/josephwright/beamer/compare/v3.62...v3.63
 [v3.62]: https://github.com/josephwright/beamer/compare/v3.61...v3.62
