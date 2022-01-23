@@ -19,7 +19,7 @@
 \RequirePackage{beamerbasemodes}
 
 % For testing PDF versus DVI mode
-\RequirePackage{ifpdf}
+\RequirePackage{iftex}
 
 %
 %
