@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- fixed edge case in numbering of hidden and unnumbered frames (see #756) 
+
 ## [v3.65]
 
 ### Added
