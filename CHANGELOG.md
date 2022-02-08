@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.66]
+
 ### Fixed
 
 - fixed edge case in numbering of hidden and unnumbered frames (see #756) 
@@ -191,7 +193,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.65...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.66...HEAD
+[v3.66]: https://github.com/josephwright/beamer/compare/v3.65...v3.66
 [v3.65]: https://github.com/josephwright/beamer/compare/v3.64...v3.65
 [v3.64]: https://github.com/josephwright/beamer/compare/v3.63...v3.64
 [v3.63]: https://github.com/josephwright/beamer/compare/v3.62...v3.63
