@@ -11,6 +11,7 @@ a major and minor version only.
 ### Fixed
 
 - fixed edge case in numbering of hidden and unnumbered frames (see #756) 
+- fixed regression of class options not being passed to packages like xcolor (see #759)
 
 ## [v3.65]
 
