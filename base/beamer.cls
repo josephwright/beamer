@@ -351,7 +351,7 @@
 %
 
 % before processing beamer options for \pgfmathparse
-\RequirePackage{pgfcore}
+\RequirePackage{pgfmath}
 
 \ExecuteOptionsBeamer{c}
 \ProcessOptionsBeamer
@@ -363,6 +363,7 @@
 \beamer@filterclassoptions
 
 % Low-level graphic drawing and advanced color support.
+\RequirePackage{pgfcore}
 \RequirePackage{xxcolor}
 
 % Normally loaded by hyperref but to be on the safe side ...
