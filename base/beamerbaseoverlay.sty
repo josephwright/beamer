@@ -741,6 +741,7 @@
   \edef\beamer@temp{{pdfpagetransition={#2 \beamer@transdir\space\beamer@dur}}}%
   \expandafter\hypersetup\beamer@temp}
 
+
 \mode
 <article>
 {
@@ -770,6 +771,27 @@
 }
 
 \newcommand<>{\transduration}[1]{\only#2{\hypersetup{pdfpageduration={#1}}}}
+
+\@ifundefined{IfPDFManagementActiveTF}{}
+ {
+  \IfPDFManagementActiveTF
+   {
+     \renewcommand\beamer@dotrans[2][]{%
+           \hypersetup{pdfpagetransition={style=#2,#1}}%
+     }
+     \renewcommand<>{\transblindshorizontal}[1][]{\only#2{\beamer@dotrans[{#1,direction=H}]{Blinds}}}
+     \renewcommand<>{\transblindsvertical}[1][]{\only#2{\beamer@dotrans[{#1,direction=V}]{Blinds}}}
+     \renewcommand<>{\transboxin}[1][]{\only#2{\beamer@dotrans[{#1,motion=I}]{Box}}}
+     \renewcommand<>{\transboxout}[1][]{\only#2{\beamer@dotrans[{#1,motion=O}]{Box}}}
+     \renewcommand<>{\transsplitverticalin}[1][]{\only#2{\beamer@dotrans[{#1,direction=V,motion=I}]{Split}}}
+     \renewcommand<>{\transsplitverticalout}[1][]{\only#2{\beamer@dotrans[{#1,direction=V,motion=O}]{Split}}}
+     \renewcommand<>{\transsplithorizontalin}[1][]{\only#2{\beamer@dotrans[{#1,direction=H,motion=I}]{Split}}}
+     \renewcommand<>{\transsplithorizontalout}[1][]{\only#2{\beamer@dotrans[{#1,direction=H,motion=O}]{Split}}}
+     \renewcommand<>{\transreplace}[1][]{\only#2{\beamer@dotrans[{#1}]{R}}}
+   }
+   {}
+ }
+
 
 \mode
 <article>
