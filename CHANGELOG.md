@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+- slide transitions if the new pdfmanagement is used
+- name of transition replace in pdf is R not Replace
+
 ## [v3.66]
 
 ### Fixed
