@@ -239,13 +239,22 @@
   \ifx\jobnamebeamerversion\@empty
     \ClassError{beamer}{Invoke macro "setjobnamebeamerversion" first}\@ehc
   \else
-    \edef\beamer@args
-      {[{#1,page=\csname beamer@slide#2\endcsname}]{\jobnamebeamerversion}}%
-    \expandafter\pgfimage\beamer@args
+    \ifcsname beamer@slide#2\endcsname%
+      \edef\beamer@args
+        {[{#1,page=\csname beamer@slide#2\endcsname}]{\jobnamebeamerversion}}%
+      \expandafter\pgfimage\beamer@args
+    \else
+      \ClassWarning{beamer}{ref #2 doesn't exist (yet),
+        requires \jobnamebeamerversion.snm}
+      \texttt{[slide #2]}
+    \fi
   \fi}
 
 \newrobustcmd*\setjobnamebeamerversion[1]{%
   \gdef\jobnamebeamerversion{#1}%
+  \def\beamer@slide##1##2{%
+    \message{( beamer@slide ##1 ##2 )}%
+    \expandafter\gdef\csname beamer@slide##1\endcsname{##2}}%
   \begingroup
     \makeatletter
     \@input{\jobnamebeamerversion.snm}%
