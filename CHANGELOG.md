@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.67]
+
 ### Changed
 - beamer sets \@currentlabelname itself and no longer relies on nameref patches.
 
@@ -200,7 +202,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.66...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.67...HEAD
+[v3.67]: https://github.com/josephwright/beamer/compare/v3.66...v3.67
 [v3.66]: https://github.com/josephwright/beamer/compare/v3.65...v3.66
 [v3.65]: https://github.com/josephwright/beamer/compare/v3.64...v3.65
 [v3.64]: https://github.com/josephwright/beamer/compare/v3.63...v3.64
