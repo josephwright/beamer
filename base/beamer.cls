@@ -171,8 +171,8 @@
       \lccode`\~=\count@
       \catcode\count@=\active
       \lowercase{\def~{\kern1ex}}}}}
-      
-\DeclareOptionBeamer{onlytextwidth}{\beamer@onlytextwidthtrue}      
+
+\DeclareOptionBeamer{onlytextwidth}{\beamer@onlytextwidthtrue}
 
 % obsolete options
 \DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}
@@ -274,7 +274,7 @@
       \AtBeginDocument{\PreloadUnicodePage{0}}%
       \AtBeginDocument{\PreloadUnicodePage{1}}%
     }
-  \else    
+  \else
     \def\beamer@loaducs{%
       \RequirePackage{ucs}%
       \AtBeginDocument{\PreloadUnicodePage{0}}%
@@ -368,7 +368,8 @@
 
 % Normally loaded by hyperref but to be on the safe side ...
 \RequirePackage{atbegshi}
-
+% suppress the nameref beamer patches as they are now done by beamer:
+\def\NR@nopatch@beamer{}
 \RequirePackage[implicit=false]{hyperref}
 
 \hypersetup{pdfcreator={LaTeX with Beamer class}}

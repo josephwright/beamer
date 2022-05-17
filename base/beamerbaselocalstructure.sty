@@ -305,6 +305,8 @@
 \def\enddescription{\ifhmode\unskip\fi\endlist%
   \usebeamertemplate{description body end}}
 \long\def\beamer@descriptionitem#1{%
+  \GetTitleString{#1}%
+  \let\@currentlabelname\GetTitleStringResult
   \def\insertdescriptionitem{#1}%
   \hfil\hspace\labelsep{\usebeamertemplate**{description item}}}
 
@@ -495,12 +497,12 @@
        {\ifcsundef{abx@field@title}{}{\ifpunct{}{\midsentence\newunitpunct}}%
         \newblock\unspace\usebeamercolor[fg]{bibliography entry note}}{}{}}
     {}}
-    
+
 % Adding patches to some biblatex styles
 \csappto{blx@filehook@postload@numeric.bbx}{%
   \mode<presentation>{\setbeamertemplate{bibliography item}{\insertbiblabel}}}
 \csappto{blx@filehook@postload@alphabetic.bbx}{%
-  \mode<presentation>{\setbeamertemplate{bibliography item}{\insertbiblabel}}}  
+  \mode<presentation>{\setbeamertemplate{bibliography item}{\insertbiblabel}}}
 \csappto{blx@filehook@postload@authoryear.bbx}{%
   \mode<presentation>{%
     \pretocmd{\bibsetup}{%
@@ -509,7 +511,7 @@
       \addtolength{\labelwidth}{2\labelsep}%
       \addtolength{\bibhang}{\labelsep}%
     }{}{}%
-  }}  
+  }}
 \csappto{blx@filehook@postload@authortitle.bbx}{%
   \mode<presentation>{%
     \pretocmd{\bibsetup}{%

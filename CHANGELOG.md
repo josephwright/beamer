@@ -8,6 +8,9 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+- beamer sets \@currentlabelname itself and no longer relies on nameref patches.
+
 ### Fixed
 - slide transitions if the new pdfmanagement is used
 - name of transition replace in pdf is R not Replace

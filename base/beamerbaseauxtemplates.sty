@@ -190,8 +190,8 @@
   % prevents the period to be printed with the first/last section option
   \ifnum\beamer@tempcount>\beamer@toclastsection
   \else
-  \ifnum\beamer@tempcount>0 
-    \inserttocsectionnumber. 
+  \ifnum\beamer@tempcount>0
+    \inserttocsectionnumber.
   \fi\fi%
   \inserttocsection\par%
 }
@@ -854,7 +854,12 @@
 \defbeamertemplate{theorem end}{numbered}
 {\end{\inserttheoremblockenv}}
 
-
+\AtBeginDocument{%
+  \addtobeamertemplate{theorem begin}{%
+     \expandafter\GetTitleString\expandafter{\inserttheoremaddition}%
+     \let\@currentlabelname\GetTitleStringResult}{}%
+ }
+ 
 \defbeamertemplate{theorem begin}{normal font}
 {
   \normalfont
