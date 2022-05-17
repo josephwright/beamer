@@ -178,6 +178,8 @@
 \long\def\beamer@@ssection*#1{\beamer@section[{#1}]{}}
 \long\def\beamer@@@section#1{\beamer@section[{#1}]{#1}}
 \long\def\beamer@section[#1]#2{%
+  \GetTitleString{#1}%
+  \let\@currentlabelname\GetTitleStringResult
   \beamer@savemode%
   \mode<all>%
   \ifbeamer@inlecture
@@ -202,7 +204,7 @@
     \def\insertsubsection{}%
     \def\insertsubsubsection{}%
     % Deal with a defective patch in metropolis theme
-    \def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}% 
+    \def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
     \edef\insertsectionhead{\noexpand\hyperlink{Navigation\the\c@page}{\unexpanded{#1}}}%
     \def\insertsubsectionhead{}%
     \def\insertsubsubsectionhead{}%
@@ -254,6 +256,8 @@
 \long\def\beamer@@ssubsection*#1{\beamer@subsection[{#1}]{}}
 \def\beamer@@@subsection#1{\beamer@subsection[{#1}]{#1}}
 \def\beamer@subsection[#1]#2{%
+  \GetTitleString{#1}%
+  \let\@currentlabelname\GetTitleStringResult
   \beamer@savemode%
   \mode<all>%
   \ifbeamer@inlecture%
@@ -319,6 +323,8 @@
 \long\def\beamer@@ssubsubsection*#1{\beamer@subsubsection[{#1}]{}}
 \def\beamer@@@subsubsection#1{\beamer@subsubsection[{#1}]{#1}}
 \def\beamer@subsubsection[#1]#2{%
+  \GetTitleString{#1}%
+  \let\@currentlabelname\GetTitleStringResult
   \beamer@savemode%
   \mode<all>%
   \ifbeamer@inlecture%
