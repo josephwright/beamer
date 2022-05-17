@@ -1,0 +1,54 @@
+name: Create release
+
+# We create releases for all new tags
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Build release
+    environment: Release
+    steps:
+      # Boilerplate
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      # GitHub Actions don't regenerate the test if the key doesn't change, so
+      # we integrate a random UUID into the key to keep them different.
+      # DO NOT CHANGE THIS
+      - name: Generate unique ID
+        id: get-id
+        run: |
+          echo -n ::set-output name=id::
+          cat /proc/sys/kernel/random/uuid
+      # Actually load the cache. Since we never reuse the key, we need restore-keys
+      # to indicate the prefix of our caches. This loads the newest cache with this
+      # prefix in the key.
+      #
+      # If we want to force regeneration of the cache, increase the number after
+      # *both* instances of "texlive-v"
+      - name: Load cache
+        uses: actions/cache@v2
+        with:
+          path: ~/texlive
+          key: texlive-v1-${{ steps.get-id.outputs.id }}
+          restore-keys: texlive-v1-
+      # We need Ghostscript for XeTeX tests.
+      - run: sudo apt-get update && sudo apt-get install ghostscript
+      - name: Install TeX Live
+        uses: zauguin/install-texlive@v1
+        with:
+          # List the required TeX Live packages in a separate file to allow reuse in
+          # different workflows.
+          package_file: .github/tl_packages
+      - name: Run l3build
+        run: l3build ctan -q -H
+      # Now create the release (this only runs if the previous steps were successful)
+      - name: Create GitHub release
+        uses: ncipollo/release-action@880be3d0a71bc0fa98db60201d2cbdc27324f547
+        id: release
+        with:
+          artifacts: "build/distrib/ctan/*.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
