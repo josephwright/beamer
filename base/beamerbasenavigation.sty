@@ -213,11 +213,10 @@
 \fi
   {%
     \def\beamer@linkspace#1{%
+      \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
       \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
-        \pgfsetfillopacity{0}
-        \pgftext[x=0pt,y=-1.5pt]{.}
-        \pgftext[x=#1,y=5.5pt]{.}
-      \end{pgfpicture}}
+      \end{pgfpicture}
+    }
   }
 
 \pgfdefobject{beamerslidenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
