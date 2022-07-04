@@ -21,18 +21,16 @@
 \newcommand{\beamer@xelatex@fixminiframes}{%
   \expandafter\ifx\csname XeTeXrevision\endcsname\relax
   \else
-    \pgfsetfillopacity{0}
-    \pgftext[x=0cm,y=0.0cm]{.}
-    \pgftext[x=0.1cm,y=0.1cm]{.}    
+  \special{dvipdfmx:catch_phantom true height 0.1cm depth 0cm}%
   \fi
 }
 
 \defbeamertemplate*{mini frame}{default}
 {%
+  \beamer@xelatex@fixminiframes
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
     \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
     \pgfusepath{fill,stroke}
-    \beamer@xelatex@fixminiframes
   \end{pgfpicture}%
 }
 [action]
@@ -42,19 +40,19 @@
 
 \defbeamertemplate*{mini frame in current section}{default}
 {%
+  \beamer@xelatex@fixminiframes
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
     \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
     \pgfusepath{stroke}
-    \beamer@xelatex@fixminiframes
   \end{pgfpicture}%
 }
 
 \defbeamertemplate*{mini frame in current subsection}{default}
 {%
+  \beamer@xelatex@fixminiframes
   \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
     \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
     \pgfusepath{stroke}
-    \beamer@xelatex@fixminiframes
   \end{pgfpicture}%
 }
 
