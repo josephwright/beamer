@@ -8,6 +8,9 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+- fixed height of non-text links to prevent overlaps in vertically stacked miniframes (see #780)
+
 ## [v3.67]
 
 ### Changed
