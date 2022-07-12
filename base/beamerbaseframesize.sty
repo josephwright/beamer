@@ -51,21 +51,14 @@
   \only<#1>{%
     {\hypersetup{pdfhighlight={/P},pdfborder={0 0 \beamer@zoomborderwidth}}%
     \global\setbox\@tempboxa=\vbox{\hyperlink{\beamer@labelzoomed}{%
-      \expandafter\ifx\csname XeTeXrevision\endcsname\relax
-        \vbox to #7{%
-          \hbox to#6{\hfil}%
-          \vfil%
-        }%      
+      \expandafter\ifx\csname XeTeXrevision\endcsname\relax%
       \else%
-        \begingroup%
-          \normalsize%
-          \begin{pgfpicture}{0pt}{0pt}{#6}{#7}%
-            \pgfsetfillopacity{0}
-            \pgftext[x=0cm,y=3pt]{.}
-            \pgftext[x=#6,y=\dimexpr#7-\baselineskip+3pt]{.}    
-          \end{pgfpicture}%
-        \endgroup%
-      \fi%    
+        \special{pdf:xann width #6 height #7 depth 0pt}%
+      \fi%
+      \vbox to #7{%
+        \hbox to#6{\hfil}%
+        \vfil%
+      }%
     }}}%
     \ht\@tempboxa=0pt%
     \wd\@tempboxa=0pt%
