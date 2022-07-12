@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- simplified non-text links for navigation symbols and framezoom
+
 ### Fixed
 - fixed height of non-text links to prevent overlaps in vertically stacked miniframes (see #780)
 
