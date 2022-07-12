@@ -213,10 +213,22 @@
 \fi
   {%
     \def\beamer@linkspace#1{%
-      \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
-      \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
-      \end{pgfpicture}
-    }
+      \@ifundefined{if@RTL}{%
+        \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
+        \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
+        \end{pgfpicture}%
+      }{%
+        \if@RTL%
+        \else%
+          \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
+        \fi%
+          \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
+          \end{pgfpicture}%
+        \if@RTL%
+          \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
+        \fi%
+      }%
+    }%
   }
 
 \pgfdefobject{beamerslidenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
