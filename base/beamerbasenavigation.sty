@@ -218,12 +218,11 @@
         \vbox to7.5pt{}\kern#1%
       }{%
         \if@RTL%
+          \vbox to7.5pt{}\kern#1%
+          \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
         \else%
           \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
-        \fi%
           \vbox to7.5pt{}\kern#1%
-        \if@RTL%
-          \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
         \fi%
       }%
     }%
