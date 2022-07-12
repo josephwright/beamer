@@ -215,15 +215,13 @@
     \def\beamer@linkspace#1{%
       \@ifundefined{if@RTL}{%
         \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
-        \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
-        \end{pgfpicture}%
+        \vbox to7.5pt{}\kern#1%
       }{%
         \if@RTL%
         \else%
           \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
         \fi%
-          \begin{pgfpicture}{0pt}{-1.5pt}{#1}{5.5pt}
-          \end{pgfpicture}%
+          \vbox to7.5pt{}\kern#1%
         \if@RTL%
           \special{dvipdfmx:catch_phantom true height 8pt depth 1.5pt}%
         \fi%
