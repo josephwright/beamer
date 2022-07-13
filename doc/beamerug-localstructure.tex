@@ -1036,6 +1036,18 @@ Normally, \beamer\ uses \TeX's normal typesetting mechanism to position text and
 
 The package |textpos| provides several commands for positioning text absolutely and it works together with \beamer. When using this package, you will typically have to specify the options |overlay| and perhaps |absolute|. For details on how to use the package, please see its documentation.
 
+Another package to conveniently position elements at specific positions on the frame is Ti\emph{k}Z. Besides the possibility to manually chose coordinates, this also allows to position elements in respect to the page:
+
+  \example
+\begin{verbatim}
+\usepackage{tikz}
+
+\begin{frame}
+  \tikz[remember picture, overlay] \node at (3.1415,1) {I'm here};
+
+  \tikz[remember picture, overlay] \node at (current page.center) {I'm the centre of the frame!};
+\end{frame}	
+\end{verbatim} 
 
 \subsection{Verbatim and Fragile Text}
 
