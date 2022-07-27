@@ -14,6 +14,7 @@ a major and minor version only.
 
 ### Fixed
 - fixed height of non-text links to prevent overlaps in vertically stacked miniframes (see #780)
+- avoid problem with non-black black (see #772 and #659)
 
 ## [v3.67]
 
