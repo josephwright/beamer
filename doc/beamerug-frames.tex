@@ -946,41 +946,27 @@ By clicking on the document title in a navigation bar (not all themes show it), 
 Navigation symbols are small icons that are shown on every slide in |beamer| mode by default. The following symbols are shown:
 \begin{description}
 \item[{\makebox[0.7cm][l]{\insertslidenavigationsymbol}}]
-  A slide icon, which is depicted as a single rectangle. To the left and right of this symbol, a left and right arrow are shown.
+  A slide icon, which is depicted as a single rectangle. To the left and right of this symbol, a left and right arrow are shown.\newline
+  If supported by the viewer application, clicking on a slide icon pops up a window that allows you to enter a slide number to which you wish to jump.
 \item[{\makebox[0.7cm][l]{\insertframenavigationsymbol}}]
-  A frame icon, which is depicted as three slide icons ``stacked on top of each other''. This symbol is framed by arrows.
+  A frame icon, which is depicted as three slide icons ``stacked on top of each other''. This symbol is framed by arrows.\newline
+  Clicking on the left side of a frame icon will jump to the first slide of the frame, clicking on the right side will jump to the last slide of the frame (this can be useful for skipping overlays).
 \item[{\makebox[0.7cm][l]{\insertsubsectionnavigationsymbol}}]
-  A subsection icon, which is depicted as a highlighted subsection entry in a table of contents. This symbol is framed by arrows.
+  A subsection icon, which is depicted as a highlighted subsection entry in a table of contents. This symbol is framed by arrows.\newline
+  Clicking on the left side of a subsection icon will jump to the first slide of the subsection, clicking on the right side will jump to the last slide of the subsection.
 \item[{\makebox[0.7cm][l]{\insertsectionnavigationsymbol}}]
-  A section icon, which is depicted as a highlighted section entry (together with all subsections) in a table of contents. This symbol is framed by arrows.
+  A section icon, which is depicted as a highlighted section entry (together with all subsections) in a table of contents. This symbol is framed by arrows.\newline
+  Clicking on the left side of a section icon will jump to the first slide of the section, clicking on the right side will jump to the last slide of the section.
 \item[{\makebox[0.7cm][l]{\insertdocnavigationsymbol}}]
-  A presentation icon, which is depicted as a completely highlighted table of contents and an appendix icon, which is depicted as a completely highlighted table of contents consisting of only one section. (This icon is only shown if there is an appendix.)
+  A presentation icon, which is depicted as a completely highlighted table of contents and an appendix icon, which is depicted as a completely highlighted table of contents consisting of only one section. (This icon is only shown if there is an appendix.)\newline
+  Clicking on the left side of the presentation icon will jump to the first slide, clicking on the right side will jump to the last slide of the presentation. However, this does \emph{not} include the appendix. Clicking on the left side of the appendix icon will jump to the first slide of the appendix, clicking on the right side will jump to the last slide of the appendix.
 \item[{\makebox[0.7cm][l]{\insertbackfindforwardnavigationsymbol}}]
-  Back and forward icons, depicted as circular arrows and a ``search'' or ``find'' icon, depicted as a detective's magnifying glass.
+  Back and forward icons, depicted as circular arrows and a ``search'' or ``find'' icon, depicted as a detective's magnifying glass.\newline
+  If supported by the viewer application, clicking on the back and forward symbols jumps to the previously visited slides and clicking on the search icon pops up a window that allows you to enter a search string. If found, the viewer application will jump to this string.
 \end{description}
 \endgroup
 
 Clicking on the left arrow next to an icon always jumps to (the last slide of) the previous slide, frame, subsection, or section. Clicking on the right arrow next to an icon always jumps to (the first slide of) the next slide, frame, subsection, or section.
-
-Clicking \emph{on} any of these icons has different effects:
-\begin{enumerate}
-\item
-  If supported by the viewer application, clicking on a slide icon pops up a window that allows you to enter a slide number to which you wish to jump.
-\item
-  Clicking on the left side of a frame icon will jump to the first slide of the frame, clicking on the right side will jump to the last slide of the frame (this can be useful for skipping overlays).
-\item
-  Clicking on the left side of a subsection icon will jump to the first slide of the subsection, clicking on the right side will jump to the last slide of the subsection.
-\item
-  Clicking on the left side of a section icon will jump to the first slide of the section, clicking on the right side will jump to the last slide of the section.
-\item
-  Clicking on the left side of the presentation icon will jump to the first slide, clicking on the right side will jump to the last slide of the presentation. However, this does \emph{not} include the appendix.
-\item
-  Clicking on the left side of the appendix icon will jump to the first slide of the appendix, clicking on the right side will jump to the last slide of the appendix.
-\item
-  If supported by the viewer application, clicking on the back and forward symbols jumps to the previously visited slides.
-\item
-  If supported by the viewer application, clicking on the search icon pops up a window that allows you to enter a search string. If found, the viewer application will jump to this string.
-\end{enumerate}
 
 You can reduce the number of icons that are shown or their layout by adjusting the |navigation symbols| template.
 
