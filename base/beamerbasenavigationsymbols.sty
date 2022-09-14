@@ -1,0 +1,246 @@
+% Copyright 2003--2007 by Till Tantau
+% Copyright 2010 by Vedran Mileti\'c
+% Copyright 2012--2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2017,2018 by Louis Stuart, Joseph Wright
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\pgfdefobject{beamerslidenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfusepathqfill
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill}
+\pgfdefobject{beamerslidenavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathrectangle{\pgfpoint{8.3pt}{0.8pt}}{\pgfpoint{3.4pt}{2.4pt}}%
+  \pgfusepathqstroke%
+}
+
+\def\insertslidenavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerslidenavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamerslidenavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkslideprev{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoToPage}{\beamer@linkspace{8pt}}%
+  \hyperlinkslidenext{\beamer@linkspace{6pt}}}
+
+\pgfdefobject{beamerframenavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+ {\pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill}
+\pgfdefobject{beamerframenavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathrectangle{\pgfpoint{7pt}{0pt}}{\pgfpoint{3.4pt}{2.4pt}}
+  \pgfpathqmoveto{7.8bp}{2.4bp}
+  \pgfpathqlineto{7.8bp}{3.2bp}
+  \pgfpathqlineto{11.2bp}{3.2bp}
+  \pgfpathqlineto{11.2bp}{.8bp}
+  \pgfpathqlineto{10.4bp}{.8bp}
+  \pgfpathqmoveto{8.6bp}{3.2bp}
+  \pgfpathqlineto{8.6bp}{4bp}
+  \pgfpathqlineto{12bp}{4bp}
+  \pgfpathqlineto{12bp}{1.6bp}
+  \pgfpathqlineto{11.2bp}{1.6bp}
+  \pgfusepathqstroke}
+
+\def\insertframenavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerframenavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamerframenavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinkframeendprev{\beamer@linkspace{5pt}}%
+  \hyperlinkframestart{\beamer@linkspace{5pt}}%
+  \hyperlinkframeend{\beamer@linkspace{5pt}}%
+  \hyperlinkframestartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamersubsectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{4bp}
+  \pgfpathqlineto{11bp}{4bp}
+  \pgfpathqmoveto{9bp}{2bp}
+  \pgfpathqlineto{12bp}{2bp}
+  \pgfpathqmoveto{8bp}{1bp}
+  \pgfpathqlineto{11bp}{1bp}
+  \pgfpathqmoveto{9bp}{0bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke}
+\pgfdefobject{beamersubsectionnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{9bp}{3bp}
+  \pgfpathqlineto{12bp}{3bp}
+  \pgfusepathqstroke}
+
+\def\insertsubsectionnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamersubsectionnavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamersubsectionnavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinksubsectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksubsectionstartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamersectionnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathqmoveto{4bp}{0.5bp}
+  \pgfpathqlineto{2bp}{2bp}
+  \pgfpathqlineto{4bp}{3.5bp}
+  \pgfpathqmoveto{16bp}{0.5bp}
+  \pgfpathqlineto{18bp}{2bp}
+  \pgfpathqlineto{16bp}{3.5bp}
+  \pgfusepathqfill
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{1bp}
+  \pgfpathqlineto{11bp}{1bp}
+  \pgfpathqmoveto{9bp}{0bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke}
+\pgfdefobject{beamersectionnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{4bp}
+  \pgfpathqlineto{11bp}{4bp}
+  \pgfpathqmoveto{9bp}{3bp}
+  \pgfpathqlineto{12bp}{3bp}
+  \pgfpathqmoveto{9bp}{2bp}
+  \pgfpathqlineto{12bp}{2bp}
+  \pgfusepathqstroke
+}
+
+\def\insertsectionnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamersectionnavstrong}%
+    \usebeamercolor[fg]{navigation symbols dimmed}
+    \pgfuseobject{beamersectionnavlight}%
+  \end{pgfpicture}\kern-20pt%
+  \hyperlinksectionendprev{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstart{\beamer@linkspace{5pt}}%
+  \hyperlinksectionend{\beamer@linkspace{5pt}}%
+  \hyperlinksectionstartnext{\beamer@linkspace{5pt}}}
+
+\pgfdefobject{beamerdocnavlight}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfpathqmoveto{10bp}{-.5bp}
+  \pgfpathqlineto{10bp}{4.5bp}
+  \pgfusepathqstroke
+}
+\pgfdefobject{beamerdocnavstrong}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{4bp}{4bp}
+  \pgfpathqlineto{7bp}{4bp}
+  \pgfpathqmoveto{5bp}{3bp}
+  \pgfpathqlineto{8bp}{3bp}
+  \pgfpathqmoveto{5bp}{2bp}
+  \pgfpathqlineto{8bp}{2bp}
+  \pgfpathqmoveto{3bp}{1bp}
+  \pgfpathqlineto{7bp}{1bp}
+  \pgfpathqmoveto{5bp}{0bp}
+  \pgfpathqlineto{8bp}{0bp}
+  \pgfpathqmoveto{12bp}{3bp}
+  \pgfpathqlineto{15bp}{3bp}
+  \pgfpathqmoveto{13bp}{2bp}
+  \pgfpathqlineto{16bp}{2bp}
+  \pgfpathqmoveto{13bp}{1bp}
+  \pgfpathqlineto{16bp}{1bp}
+  \pgfusepathqstroke
+}
+
+\pgfdefobject{beamerdocnavstrongsingle}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{%
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{8bp}{4bp}
+  \pgfpathqlineto{11bp}{4bp}
+  \pgfpathqmoveto{9bp}{3bp}
+  \pgfpathqlineto{12bp}{3bp}
+  \pgfpathqmoveto{9bp}{2bp}
+  \pgfpathqlineto{12bp}{2bp}
+  \pgfpathqmoveto{8bp}{1bp}
+  \pgfpathqlineto{11bp}{1bp}
+  \pgfpathqmoveto{9bp}{0bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke%
+}
+
+\def\insertdocnavigationsymbol{%
+  \ifx\beamer@startpageofappendix\@empty%
+    \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+      \pgfuseobject{beamerdocnavstrongsingle}%
+    \end{pgfpicture}\kern-20pt%
+    \hyperlinkpresentationstart{\beamer@linkspace{9pt}}%
+    \hyperlinkpresentationend{\beamer@linkspace{11pt}}%
+  \else%
+    \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+      \pgfuseobject{beamerdocnavstrong}%
+      \usebeamercolor[fg]{navigation symbols dimmed}
+      \pgfuseobject{beamerdocnavlight}%
+    \end{pgfpicture}\kern-20pt%
+    \hyperlinkpresentationstart{\beamer@linkspace{5pt}}%
+    \hyperlinkpresentationend{\beamer@linkspace{5pt}}%
+    \hyperlinkappendixstart{\beamer@linkspace{3.5pt}}%
+    \hyperlinkappendixend{\beamer@linkspace{6.5pt}}%
+  \fi}
+
+\pgfdefobject{beamerbackfindforwardnav}{\pgfpoint{0pt}{-1pt}}{\pgfpoint{20pt}{5pt}}
+{
+  % search symbol
+  \pgfsetlinewidth{0.6pt}
+  \pgfpathqmoveto{10.4bp}{1.6bp}
+  \pgfpathqlineto{12bp}{0bp}
+  \pgfusepathqstroke
+  \pgfsetlinewidth{0.4pt}
+  \pgfpathcircle{\pgfpoint{9.5pt}{2.5pt}}{1.2pt}
+  \pgfusepathqstroke
+  % left arrow
+  \pgfsetroundcap
+  \pgfpathqmoveto{4bp}{0bp}
+  \pgfpathqcurveto{5.1pt}{0pt}{6bp}{0.9bp}{6bp}{2bp}
+  \pgfpathqcurveto{6bp}{3.1bp}{5.1bp}{4bp}{4bp}{4bp}
+  \pgfpathqcurveto{2.9bp}{4bp}{2bp}{3.1bp}{2bp}{2bp}
+  \pgfpathqmoveto{3.2bp}{2.6bp}
+  \pgfpathqlineto{2bp}{1.6bp}
+  \pgfpathqlineto{0.8bp}{2.6bp}
+  % right arrow
+  \pgfpathqmoveto{16bp}{0bp}
+  \pgfpathqcurveto{14.9bp}{0bp}{14bp}{0.9bp}{14bp}{2bp}
+  \pgfpathqcurveto{14bp}{3.1bp}{14.9bp}{4bp}{16bp}{4bp}
+  \pgfpathqcurveto{17.1bp}{4bp}{18bp}{3.1bp}{18bp}{2bp}
+  \pgfpathqmoveto{19.2bp}{2.6bp}
+  \pgfpathqlineto{18bp}{1.6bp}
+  \pgfpathqlineto{16.8bp}{2.6bp}
+  \pgfusepathqstroke
+}
+
+\def\insertbackfindforwardnavigationsymbol{%
+  \begin{pgfpicture}{0pt}{-1.5pt}{20pt}{5.5pt}
+    \pgfuseobject{beamerbackfindforwardnav}%
+  \end{pgfpicture}\kern-20pt%
+  \Acrobatmenu{GoBack}{\beamer@linkspace{7pt}}%
+  \Acrobatmenu{Find}{\beamer@linkspace{6pt}}%
+  \Acrobatmenu{GoForward}{\beamer@linkspace{7pt}}}
