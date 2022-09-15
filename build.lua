@@ -12,7 +12,7 @@ sourcefiledir = "./base"
 flattentds = false
 
 -- Install all files from the source tree directly
-installfiles = {"**/*.cls", "**/*.sty", "**/beamericon*.*", "**/beamerbasenavigationsymbols.tex"}
+installfiles = {"**/*.cls", "**/*.sty", "**/beamericon*.*", "**/*.tex"}
 sourcefiles  = installfiles
 unpackfiles  = { }
 
