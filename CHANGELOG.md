@@ -13,6 +13,8 @@ a major and minor version only.
 ### Changed
 
 - simplified non-text links for navigation symbols and framezoom
+- doc: re-organised section about navigation symbols
+- moved parts of `beamerbasenavigation.sty` to `beamerbasenavigationsymbols.tex`
 
 ### Fixed
 - fixed height of non-text links to prevent overlaps in vertically stacked miniframes (see #780)
