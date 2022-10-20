@@ -25,10 +25,19 @@
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
 \long\def\beamer@@frametitle[#1]#2{%
   \ifblank{#2}{}{%
-    \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
+    \gdef\insertframetitle{{%
+      #2%
+      \ifnum\beamer@autobreakcount>0
+        \relax{}\space
+        \CaseSwitch{\usebeamertemplate*{frametitle continuation}}
+          {\usebeamertemplate*{frametitle continuation}}
+          {\usebeamertemplate*{frametitle continuation}}
+          {\usebeamertemplate*{frametitle continuation}}%
+      \fi%
+    }}%
   \gdef\beamer@frametitle{#2}%
   \gdef\beamer@shortframetitle{#1}%
-}%
+  }%
 }
 
 \newcommand\insertshortframetitle[1][]{%
