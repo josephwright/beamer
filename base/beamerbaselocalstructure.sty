@@ -22,17 +22,16 @@
 % The \frametitle command
 %
 %
+\protected\def\beamer@insertframetitlecontinuation{\usebeamertemplate*{frametitle continuation}}
+
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
 \long\def\beamer@@frametitle[#1]#2{%
   \ifblank{#2}{}{%
     \gdef\insertframetitle{{%
       #2%
       \ifnum\beamer@autobreakcount>0
-        \relax{}\space
-        \CaseSwitch{\usebeamertemplate*{frametitle continuation}}
-          {\usebeamertemplate*{frametitle continuation}}
-          {\usebeamertemplate*{frametitle continuation}}
-          {\usebeamertemplate*{frametitle continuation}}%
+        \relax{}\space%
+        \beamer@insertframetitlecontinuation%
       \fi%
     }}%
   \gdef\beamer@frametitle{#2}%
