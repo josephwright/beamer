@@ -10,7 +10,7 @@ a major and minor version only.
 
 ### Fixed
 
-- protect the frametitle continuation with \CaseSwitch so it can be used with \MakeUppercase (see #802)
+- protect the frametitle continuation so it can be used with \MakeUppercase (see #802)
 
 ## [v3.68]
 
