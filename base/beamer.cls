@@ -140,18 +140,18 @@
 
 \DeclareOptionBeamer{noamssymb}{\beamer@amssymbfalse}
 
-\def\beamer@size{{size11.clo}}
-\DeclareOptionBeamer{bigger}{\def\beamer@size{{size12.clo}}}
-\DeclareOptionBeamer{smaller}{\def\beamer@size{{size10.clo}}}
+\def\@ptsize{11}
+\DeclareOptionBeamer{bigger}{\def\@ptsize{12}}
+\DeclareOptionBeamer{smaller}{\def\@ptsize{10}}
 
-\DeclareOptionBeamer{8pt}{\def\beamer@size{{size8.clo}}}
-\DeclareOptionBeamer{9pt}{\def\beamer@size{{size9.clo}}}
-\DeclareOptionBeamer{10pt}{\def\beamer@size{{size10.clo}}}
-\DeclareOptionBeamer{11pt}{\def\beamer@size{{size11.clo}}}
-\DeclareOptionBeamer{12pt}{\def\beamer@size{{size12.clo}}}
-\DeclareOptionBeamer{14pt}{\def\beamer@size{{size14.clo}}}
-\DeclareOptionBeamer{17pt}{\def\beamer@size{{size17.clo}}}
-\DeclareOptionBeamer{20pt}{\def\beamer@size{{size20.clo}}}
+\DeclareOptionBeamer{8pt}{\def\@ptsize{8}}
+\DeclareOptionBeamer{9pt}{\def\@ptsize{9}}
+\DeclareOptionBeamer{10pt}{\def\@ptsize{10}}
+\DeclareOptionBeamer{11pt}{\def\@ptsize{11}}
+\DeclareOptionBeamer{12pt}{\def\@ptsize{12}}
+\DeclareOptionBeamer{14pt}{\def\@ptsize{14}}
+\DeclareOptionBeamer{17pt}{\def\@ptsize{17}}
+\DeclareOptionBeamer{20pt}{\def\@ptsize{20}}
 
 \DeclareOptionBeamer{draft}{\beamer@draftmodetrue}
 \pagenumbering{arabic}
@@ -357,7 +357,7 @@
 \ProcessOptionsBeamer
 
 % Load corresponding size file
-\expandafter\input\beamer@size
+\input{size\@ptsize.clo}
 
 % Filter class option list
 \beamer@filterclassoptions
