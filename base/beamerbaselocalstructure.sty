@@ -25,6 +25,7 @@
 \protected\def\beamer@insertframetitlecontinuation{\usebeamertemplate*{frametitle continuation}}
 
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
+% if this definition changes, also update beamerbasecompatibility.sty under the comment "Fix for metropolis theme"
 \long\def\beamer@@frametitle[#1]#2{%
   \ifblank{#2}{}{%
     \gdef\insertframetitle{{%
