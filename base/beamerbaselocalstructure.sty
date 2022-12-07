@@ -22,13 +22,22 @@
 % The \frametitle command
 %
 %
+\protected\def\beamer@insertframetitlecontinuation{\usebeamertemplate*{frametitle continuation}}
+
 \newcommand<>\frametitle{\alt#1{\@dblarg\beamer@@frametitle}{\beamer@gobbleoptional}}
+% if this definition changes, also update beamerbasecompatibility.sty under the comment "Fix for metropolis theme"
 \long\def\beamer@@frametitle[#1]#2{%
   \ifblank{#2}{}{%
-    \gdef\insertframetitle{{#2\ifnum\beamer@autobreakcount>0\relax{}\space\usebeamertemplate*{frametitle continuation}\fi}}%
-  \gdef\beamer@frametitle{#2}%
-  \gdef\beamer@shortframetitle{#1}%
-}%
+    \gdef\insertframetitle{{%
+      #2%
+      \ifnum\beamer@autobreakcount>0
+        \relax{}\space%
+        \beamer@insertframetitlecontinuation%
+      \fi%
+    }}%
+    \gdef\beamer@frametitle{#2}%
+    \gdef\beamer@shortframetitle{#1}%
+  }%
 }
 
 \newcommand\insertshortframetitle[1][]{%
