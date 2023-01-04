@@ -254,14 +254,14 @@
 % (sub-)section in toc: square
 
 \defbeamertemplate{section in toc}{square}
-{\leavevmode\leftskip=1.75ex%
+{\leavevmode\leftskip=3ex%
   \llap{%
     \usebeamerfont*{section number projected}%
     \usebeamercolor[bg]{section number projected}%
     \vrule width2.25ex height1.85ex depth.4ex%
     \hskip-2.25ex%
-    \hbox to2.25ex{\hfil\color{fg}\inserttocsectionnumber\hfil}}%
-  \kern1.25ex\inserttocsection\par}
+    \hbox to2.25ex{\hfil\color{fg}\inserttocsectionnumber\hfil}\kern1.25ex}%
+  \inserttocsection\par}
 
 \defbeamertemplate{subsection in toc}{square}
 {\leavevmode\leftskip=5ex\llap{%
