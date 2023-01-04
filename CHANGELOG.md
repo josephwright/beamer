@@ -12,7 +12,7 @@ a major and minor version only.
 
 - protect the frametitle continuation so it can be used with \MakeUppercase (see #802)
 - first aid for metropolis theme (see #802)
-- fixed indentation of multiline section titles with the square section in toc template (see #817)
+- fixed indentation of multiline section titles in various toc templates (see #817)
 
 ## [v3.68]
 
