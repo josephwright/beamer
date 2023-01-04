@@ -57,7 +57,7 @@ a major and minor version only.
 - fixed bullet colour of alerted items for custom item colour (see #735)
 - workaround to make miniframes clickable in xelatex (see #332)
 - added missing encoding value to multimedia sound macro (see #607)
-- imporoved problem with shadow of blocks without title (see #647)
+- improved problem with shadow of blocks without title (see #647)
 - reduced artefacts in poppler based viewers for shadow blocks (see #647)
 - workaround to make `\framezoom` clickable in xelatex (see #619)
 - exclude invisible frames from being counted (see #592)
@@ -68,7 +68,7 @@ a major and minor version only.
 ### Added
 
 - new continuation count template "singleframecheck" which will only show the continuation count if a break actually occurs (see #423)
-- new templated for lined note pages (#704)
+- new template for lined note pages (#704)
 
 ### Changed
 
