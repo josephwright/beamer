@@ -281,17 +281,20 @@
 % (sub-)section in toc: ball
 
 \defbeamertemplate{section in toc}{ball unnumbered}
-{\leavevmode\raise0.1ex\beamer@usesphere{section number projected}{bigsphere}\kern1.25ex\inserttocsection\par}
+{\leavevmode\leftskip=2.25ex%
+  \llap{%
+    \raise0.1ex\beamer@usesphere{section number projected}{bigsphere}\kern1.25ex}%
+  \inserttocsection\par}
 
 \defbeamertemplate{subsection in toc}{ball unnumbered}
-{\leavevmode\leftskip=1.5em\raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}%
-  \kern1ex\inserttocsubsection\par}
+{\leavevmode\leftskip=5.1ex\llap{%
+    \raise0.2ex\beamer@usesphere{subsection number projected}{smallsphere}\kern1ex}\inserttocsubsection\par}
 
 \defbeamertemplate{subsubsection in toc}{ball unnumbered}
 {\leavevmode\normalsize\usebeamerfont{subsection in
-    toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
-  \beamer@usesphere{subsubsection number projected}{smallsphere}%
-  \kern0.75ex\inserttocsubsubsection\par}
+    toc}\leftskip=8.2ex\usebeamerfont{subsubsection in toc}%
+  \llap{%
+    \beamer@usesphere{subsubsection number projected}{smallsphere}\kern0.75ex}\inserttocsubsubsection\par}
 
 
 
