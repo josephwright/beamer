@@ -105,20 +105,21 @@ This user's guide contains descriptions of all ``public'' commands, environments
 
   Unfortunately, it is not quite trivial to come up with a good definition for some templates. Fortunately, there are often \emph{predefined options} for a template. These are indicated like this:
   \begin{itemize}
-    \itemoption{square}{}
-    causes a small square to be used to render the template.
-    \itemoption{circle}{\marg{radius}}
-    causes circles of the given radius to be used to render the template.
+    \itemoption{rose}{}
+    causes a rose be used to render the template.
+    \itemoption{shamrock}{\marg{number of leaves}}
+    causes a shamrock with a given number of leaves to be used to render the template.
   \end{itemize}
 
   You can install such a predefined option like this:
 \begin{verbatim}
-\setbeamertemplate{some beamer element}[square]
-%% Now squares are used
+\setbeamertemplate{some beamer element}[rose]
+%% Now a rose are used
 
-\setbeamertemplate{some beamer element}[circle]{3pt}
-%% Now a circle is used
+\setbeamertemplate{some beamer element}[shamrock]{3}
+%% Now a shamrock is used
 \end{verbatim}
+  Note that not all templates have predefined options and that not all templates with predefined options allow an additional argument.
 
   \beamer-colors are explained in Section~\ref{section-colors}. Here is the essence: To change the foreground of the color to, say, red, use
 \begin{verbatim}
