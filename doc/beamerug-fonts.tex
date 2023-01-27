@@ -193,7 +193,7 @@ To use a \beamer-font, you can use the command |\usebeamerfont|. Inside the temp
   \example |\usebeamerfont{frametitle}|
   In the unstarred version of this command, the font is changed according to the attributes specified in the \meta{beamer-font name}, but unspecified attributes remain unchanged. For example, if the font specifies that the font should be ``bold,'' but specifies nothing else, and if the current font is large, then |\usebeamerfont| causes the current font to become large and bold.
 
-  In the starred version of this command, the font is first reset before the font's attributes are applied. Thus, in the above example of a \beamer-font having only the attribute ``boldface'' set, saying |\usebeamerfont*| will \emph{always} cause the current font to become a normal-size, normal-shape, bold, default-family font.
+  In the starred version of this command, the font is first reset before the font's attributes are applied. Thus, in the above example of a \beamer-font having only the attribute ``boldface'' set, saying |\usebeamerfont*| will \emph{always} cause the current font to become a normal-shape, bold, default-family font (the font size won't be reset).
 \end{command}
 
 
