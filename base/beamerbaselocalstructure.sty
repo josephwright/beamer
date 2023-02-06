@@ -495,16 +495,16 @@
        {\let\makelabel\beamer@biblabeltemplate}{}{}
      \apptocmd{\abx@macro@begentry}
        {\let\bbx@tempa\@empty%
-        \usebeamercolor[fg]{bibliography entry author}\usebeamerfont*{bibliography entry author}}{}{}
+        \usebeamercolor[fg]{bibliography entry author}\usebeamerfont{bibliography entry author}}{}{}
      \pretocmd{\abx@macro@labeltitle}
        {\ifboolexpr{ test {\ifcsundef{abx@field@label}}
           and test {\ifcsundef{abx@field@labeltitle}} }{}{\let\bbx@tempa\labelnamepunct}}{}{}
      \pretocmd{\abx@macro@title}
        {\ifcsundef{abx@name@labelname}{}{\let\bbx@tempa\labelnamepunct}%
-        \bbx@tempa\newblock\unspace\usebeamercolor[fg]{bibliography entry title}\usebeamerfont*{bibliography entry title}}{}{}
+        \bbx@tempa\newblock\unspace\usebeamercolor[fg]{bibliography entry title}\usebeamerfont{bibliography entry title}}{}{}
      \apptocmd{\abx@macro@title}
        {\ifcsundef{abx@field@title}{}{\ifpunct{}{\midsentence\newunitpunct}}%
-        \newblock\unspace\usebeamercolor[fg]{bibliography entry note}\usebeamerfont*{bibliography entry note}}{}{}}
+        \newblock\unspace\usebeamercolor[fg]{bibliography entry note}\usebeamerfont{bibliography entry note}}{}{}}
     {}}
 
 % Adding patches to some biblatex styles
