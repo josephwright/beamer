@@ -48,10 +48,12 @@
     \ifx\beamer@thc@bg\@empty\def\beamer@thc@bg{bg}\fi%
     \global\let\beamer@thc@gfg\beamer@thc@fg%
     \global\let\beamer@thc@gbg\beamer@thc@bg%
-    \globalcolorstrue%
-    \colorlet{#1.fg}{\beamer@thc@gfg}%
-    \colorlet{#1.bg}{\beamer@thc@gbg}%
-  \endgroup%
+    \edef\beamer@temp{%
+      \colorlet{#1.fg}{\beamer@thc@gfg}%
+      \colorlet{#1.bg}{\beamer@thc@gbg}%
+    }%
+  \expandafter\endgroup
+  \beamer@temp
 }
 
 \def\setbeamercolor{\@ifstar{\beamer@clearbeamercolor}{\beamer@setbeamercolor}}
