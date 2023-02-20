@@ -46,11 +46,9 @@
     \beamer@thc@docolor{#1}%
     \ifx\beamer@thc@fg\@empty\def\beamer@thc@fg{fg}\fi%
     \ifx\beamer@thc@bg\@empty\def\beamer@thc@bg{bg}\fi%
-    \global\let\beamer@thc@gfg\beamer@thc@fg%
-    \global\let\beamer@thc@gbg\beamer@thc@bg%
     \edef\beamer@temp{%
-      \noexpand\colorlet{#1.fg}{\beamer@thc@gfg}%
-      \noexpand\colorlet{#1.bg}{\beamer@thc@gbg}%
+      \noexpand\colorlet{#1.fg}{\beamer@thc@fg}%
+      \noexpand\colorlet{#1.bg}{\beamer@thc@bg}%
     }%
   \expandafter\endgroup
   \beamer@temp
