@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.69]
+
 ### Fixed
 
 - protect the frametitle continuation so it can be used with \MakeUppercase (see #802)
@@ -221,7 +223,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.68...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.69...HEAD
+[v3.69]: https://github.com/josephwright/beamer/compare/v3.68...v3.69
 [v3.68]: https://github.com/josephwright/beamer/compare/v3.67...v3.68
 [v3.67]: https://github.com/josephwright/beamer/compare/v3.66...v3.67
 [v3.66]: https://github.com/josephwright/beamer/compare/v3.65...v3.66
