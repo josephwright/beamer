@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- smoothbars outer theme: moved the shading between headline and frametitle a bit down to avoid the miniframe appearing clipped off in some pdf viewers
+
 ## [v3.69]
 
 ### Fixed
