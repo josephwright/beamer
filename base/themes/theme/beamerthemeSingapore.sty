@@ -10,7 +10,6 @@
 \DeclareOptionBeamer{compress}{\beamer@compresstrue}
 \ProcessOptionsBeamer
   
-
 \mode<presentation>
 
 \setbeamercolor{section in head/foot}{use=structure,bg=structure.fg!25!bg}
@@ -19,21 +18,32 @@
 
 \setbeamertemplate{frametitle}[default][center]
 
-\AtBeginDocument{%
-  {
-    \usebeamercolor{section in head/foot}
-  }
-  
-  \pgfdeclareverticalshading{beamer@headfade}{\paperwidth}
-  {%
-    color(0cm)=(bg);
-    color(1.25cm)=(section in head/foot.bg)%
-  }
-
-  \setbeamercolor{section in head/foot}{bg=}
+\AtBeginDocument{%    
+  \begingroup
+    \selectcolormodel{gray}
+    \pgfdeclareverticalshading{beamer@headfade}{\the\paperwidth}{%
+      color(0ex)=(pgftransparent!100);%
+      color(1.25cm)=(pgftransparent!0)
+    }
+    \pgfdeclarefading{beamer@headfademask}{\pgfuseshading{beamer@headfade}}
+  \endgroup  
 }
 
-\addtoheadtemplate{\pgfuseshading{beamer@headfade}\vskip-1.25cm}{}
+\addtoheadtemplate{%
+  \begingroup%
+    \begin{pgfpicture}
+      \begin{pgfscope}%
+        \usebeamercolor{section in head/foot}%
+        \pgfsetfillcolor{section in head/foot.bg}%
+        \pgfpathrectangle{\pgfpoint{-.5\paperwidth}{-0.625cm}}{\pgfpoint{\paperwidth}{1.25cm}}%
+        \pgfsetfading{beamer@headfademask}{}%
+        \pgfusepath{fill}%
+      \end{pgfscope}%
+    \end{pgfpicture}%
+  \endgroup%
+  \vskip-1.25cm%
+  \setbeamercolor{section in head/foot}{bg=}%
+}{}
 
 \beamertemplatedotitem
 

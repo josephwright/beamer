@@ -12,6 +12,8 @@ a major and minor version only.
 
 - smoothbars outer theme: moved the shading between headline and frametitle a bit down to avoid the miniframe appearing clipped off in some pdf viewers
 
+- made top shading of Singapore theme transparent (see #782)
+
 ## [v3.69]
 
 ### Fixed
