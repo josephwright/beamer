@@ -14,6 +14,10 @@ a major and minor version only.
 
 - made top shading of Singapore theme transparent (see #782)
 
+### Fixed
+
+- adding strut to the `frame number` and `page number` footlines to avoid jumping (see #840)
+
 ## [v3.69]
 
 ### Fixed
