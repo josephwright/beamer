@@ -10,7 +10,7 @@ a major and minor version only.
 
 ### Added
 
-- making the aspect ration available to the user via `\insertaspectratio`
+- making the aspect ratio available to the user via `\insertaspectratio`
 
 ### Changed
 
