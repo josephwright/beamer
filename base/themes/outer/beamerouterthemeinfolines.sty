@@ -47,11 +47,12 @@
 {%
   \leavevmode%
   \hbox{%
+  \usebeamerfont{section in head/foot}%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.65ex,dp=1.5ex,right]{section in head/foot}%
-    \usebeamerfont{section in head/foot}\insertsectionhead\hspace*{2ex}
+    \usebeamerfont{headline}\usebeamerfont{section in head/foot}\insertsectionhead\hspace*{2ex}
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.65ex,dp=1.5ex,left]{subsection in head/foot}%
-    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsectionhead
+    \usebeamerfont{headline}\usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsectionhead
   \end{beamercolorbox}}%
   \vskip0pt%
 }

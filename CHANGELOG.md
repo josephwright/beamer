@@ -11,8 +11,8 @@ a major and minor version only.
 ### Changed
 
 - smoothbars outer theme: moved the shading between headline and frametitle a bit down to avoid the miniframe appearing clipped off in some pdf viewers
-
 - made top shading of Singapore theme transparent (see #782)
+- scale height of infolines headline with fontsize of `section in head/foot`
 
 ### Fixed
 
