@@ -20,6 +20,7 @@ a major and minor version only.
 ### Fixed
 
 - adding strut to the `frame number` and `page number` footlines to avoid jumping (see #840)
+- fixed bug in `inmargin` inner theme which would show the author indicator even if the author was empty
 
 ## [v3.69]
 

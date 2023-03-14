@@ -65,12 +65,11 @@
     \usebeamercolor[fg]{subtitle}\usebeamerfont{subtitle}\insertsubtitle
   \end{block}
   \vfill
-  \ifx\insertauthor\@empty
-  \else
+  \expandafter\ifblank\expandafter{\beamer@shortauthor}{}{%
   \begin{block}{\insertauthorindicator}
     \usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor\par
   \end{block}
-  \fi
+  }
   \ifx\insertinstitute\@empty
   \else
   \begin{block}{\insertinstituteindicator}
