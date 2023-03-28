@@ -302,7 +302,9 @@
 \newlength\beamer@paperheight
 \setlength\beamer@paperheight{9.60cm}
 
+\def\insertaspectratio{43}%
 \DeclareOptionBeamer{aspectratio}[43]{%
+  \def\insertaspectratio{#1}%
   \ifnum#1=2013 %
     \setlength\beamer@paperwidth{14.00cm}%
     \setlength\beamer@paperheight{9.10cm}%

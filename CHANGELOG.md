@@ -8,15 +8,21 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Added
+
+- making the aspect ratio available to the user via `\insertaspectratio`
+
 ### Changed
 
 - smoothbars outer theme: moved the shading between headline and frametitle a bit down to avoid the miniframe appearing clipped off in some pdf viewers
 - made top shading of Singapore theme transparent (see #782)
 - scale height of infolines headline with fontsize of `section in head/foot`
+- calculate the head/footheight at the start of each frame instead of only at the start of the document
 
 ### Fixed
 
 - adding strut to the `frame number` and `page number` footlines to avoid jumping (see #840)
+- fixed bug in `inmargin` inner theme which would show the author indicator even if the author was empty
 
 ## [v3.69]
 
