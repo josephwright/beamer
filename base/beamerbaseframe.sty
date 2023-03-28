@@ -419,7 +419,6 @@
   \@ifnextchar[{\beamer@@@frame<#1>}{\beamer@@@frame<#1>[]}}
 \def\beamer@@@frame<#1>[{\@ifnextchar<{\beamer@framedefaultospec<#1>[}{\beamer@@@@frame<#1>[}}
 \def\beamer@@@@frame<#1>[#2]{%
-  \beamer@calculateheadfoot
   \framewidth\textwidth
   \beamer@savemode%
   \gdef\beamer@mode{\mode<all>}%
@@ -454,6 +453,7 @@
       \fi%
     \fi%
   \fi%
+  \beamer@calculateheadfoot%
   {\let\@elt\beamer@savecounter\beamer@overlaycounterresets}
   \gdef\beamer@framestartpage{}%
   \ifx\beamer@framerestriction\@undefined\else% restriction stuff
