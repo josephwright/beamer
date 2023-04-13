@@ -10,7 +10,7 @@
 % 1. under the LaTeX Project Public License and/or
 % 2. under the GNU Public License.
 %
-% See the file doc/licenses/LICENSE for more details.
+% See the file LICENSE.md for more details.
 
 \ProvidesClass{beamer}
   [2023/02/20 v3.69 A class for typesetting presentations]
