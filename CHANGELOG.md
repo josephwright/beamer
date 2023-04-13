@@ -93,7 +93,7 @@ a major and minor version only.
 
 - added `aspectratio=2013` class option setting the frames' aspect ratio to 20:13 (see #497)
 - Remove redefinition of `\addtocontents` (see #698)
-- patched macros from the `pdfpages` package to automaticlly remove the frame background for the included pages
+- patched macros from the `pdfpages` package to automatically remove the frame background for the included pages
 - transparent shadows for smoothbars outer theme (see #717)
 - transparent shadows for smoothtree outer theme (see #720) 
 - added new beamer option "show only slides with notes", the old class option "notes=onlyslideswithnotes" now gives an obsolete warning like all the other note options (see #724)
@@ -113,7 +113,7 @@ a major and minor version only.
 
 ### Fixed
 
-- Removed superflous period in combination with the `firstsection` option (#674)
+- Removed superfluous period in combination with the `firstsection` option (#674)
 - Behaviour of `\label` in article mode (#685)
 - Problem with date position in infolines theme (#684)
 
@@ -129,7 +129,7 @@ a major and minor version only.
 
 - `\beamer@bibiconwidth` already defined bug (see #652)
 - shadowboxes and transparent overlays (see #654)
-- workaround for misaligment of biblatex with sidebar theme (see #645)
+- workaround for misalignment of biblatex with sidebar theme (see #645)
 - bug with nonshadow rounded boxed (see #660)
 
 ## [v3.60]
@@ -159,7 +159,7 @@ a major and minor version only.
 - re-introduced `\strut` after the frametitle (see #535)
 - Promote bookmark level for index (see #554)
 - clip `\insertslideintonotes` to show only visible area
-- using biblatex filehooks to make adjustments to the bibliography appearence (see #581)
+- using biblatex filehooks to make adjustments to the bibliography appearance (see #581)
 
 ### Fixed
 
@@ -187,7 +187,7 @@ a major and minor version only.
 
 - Add missing commands with overlay specification (see #525)
 - Replace fixed text width in `inmargin` theme (see #529)
-- Treatment of `+` and `.` overlay specifiations (see #538)
+- Treatment of `+` and `.` overlay specifications (see #538)
 
 ## [v3.55]
 
