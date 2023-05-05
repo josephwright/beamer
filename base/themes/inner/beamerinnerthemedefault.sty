@@ -1,7 +1,7 @@
 % Copyright 2007 by Till Tantau
 % Copyright 2012--2015 by Vedran Mileti\'c, Joseph Wright
 % Copyright 2017,2018 by Louis Stuart, Joseph Wright
-% Copyright 2021 by Joseph Wright, samcarter
+% Copyright 2021,2023 by Joseph Wright, samcarter
 %
 % This file may be distributed and/or modified
 %
@@ -38,35 +38,61 @@
 
 % Title page: default
 
+\defbeamertemplate{title}{default}[1][]{%
+  \begin{beamercolorbox}[sep=8pt,center,#1]{title}
+    \usebeamerfont{title}\inserttitle\par%
+    \ifx\insertsubtitle\@empty%
+    \else%
+      \vskip0.25em%
+      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+    \fi%     
+  \end{beamercolorbox}%
+}
+
+\defbeamertemplate{author}{default}[1][]{%
+  \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+    \usebeamerfont{author}\insertauthor
+  \end{beamercolorbox}
+}
+
+\defbeamertemplate{institute}{default}[1][]{%
+  \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+    \usebeamerfont{institute}\insertinstitute
+  \end{beamercolorbox}
+}
+
+\defbeamertemplate{date}{default}[1][]{%
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}
+}
+
+\defbeamertemplate{titlegraphic}{default}{%
+  {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+}
+
 \defbeamertemplate*{title page}{default}[1][]
 {
   \vbox{}
   \vfill
   \begingroup
     \centering
-    \begin{beamercolorbox}[sep=8pt,center,#1]{title}
-      \usebeamerfont{title}\inserttitle\par%
-      \ifx\insertsubtitle\@empty%
-      \else%
-        \vskip0.25em%
-        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-      \fi%     
-    \end{beamercolorbox}%
+    \usebeamertemplate{title}
     \vskip1em\par
-    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
-      \usebeamerfont{author}\insertauthor
-    \end{beamercolorbox}
-    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
-      \usebeamerfont{institute}\insertinstitute
-    \end{beamercolorbox}
-    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
-      \usebeamerfont{date}\insertdate
-    \end{beamercolorbox}\vskip0.5em
-    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+    \usebeamertemplate{author}
+    \usebeamertemplate{institute}
+    \usebeamertemplate{date}
+    \vskip0.5em
+    \usebeamertemplate{titlegraphic}
   \endgroup
   \vfill
+}[action]{
+  \setbeamertemplate{title}[default][#1]
+  \setbeamertemplate{author}[default][#1]
+  \setbeamertemplate{institute}[default][#1]
+  \setbeamertemplate{date}[default][#1]
+  \setbeamertemplate{titlegraphic}[default]
 }
-
 
 % Part page: default
 

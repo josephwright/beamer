@@ -11,6 +11,7 @@ a major and minor version only.
 ### Added
 
 - making the aspect ratio available to the user via `\insertaspectratio`
+- adding `title`, `author`, `institute`, `date` and `titlegraphic` templates to make title page easier to customise
 
 ### Changed
 
