@@ -32,8 +32,18 @@ You can use the |\titlepage| command to insert a title page into a frame. By def
 
     \begin{templateoptions}
       \itemoption{default}{\oarg{alignment}}
-      The title page is typeset showing the title, followed by the author, his or her affiliation, the date, and a titlegraphic. If any of these are missing, they are not shown. Except for the titlegraphic, if the \beamer-color |title|, |author|, |institute|, or |date| is defined, respectively, it is used as textcolor for these entries. If a background color is defined for them, a colored bar in the corresponding color is drawn behind them, spanning the text width. The corresponding \beamer-fonts are used for these entries.
-
+      The title page is typeset showing the title, followed by the author, their affiliation, the date, and a titlegraphic. If any of these are missing, they are not shown. Except for the titlegraphic, if the \beamer-color |title|, |author|, |institute|, or |date| is defined, respectively, it is used as textcolor for these entries. If a background color is defined for them, a colored bar in the corresponding color is drawn behind them, spanning the text width. The corresponding \beamer-fonts are used for these entries. The following templates are used by the title page:
+      \begin{element}{title}\yes\yes\yes
+      \end{element}
+      \begin{element}{author}\yes\yes\yes
+      \end{element}
+      \begin{element}{institute}\yes\yes\yes
+      \end{element}
+      \begin{element}{date}\yes\yes\yes
+      \end{element}
+      \begin{element}{titlegraphic}\yes\no\no
+      \end{element}      
+      
       The \meta{alignment} option is passed on the |beamercolorbox| and can be used, for example, to flush the title page to the left by specifying |left| here.
     \end{templateoptions}
 
