@@ -19,6 +19,7 @@ a major and minor version only.
 - made top shading of Singapore theme transparent (see #782)
 - scale height of infolines headline with fontsize of `section in head/foot`
 - calculate the head/footheight at the start of each frame instead of only at the start of the document
+- making `\part` compatible with `\nameref`
 
 ### Fixed
 

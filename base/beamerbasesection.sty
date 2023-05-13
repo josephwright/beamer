@@ -102,6 +102,8 @@
 
 \newcommand<>{\part}{\alt#1{\@dblarg\beamer@part}{\beamer@gobbleoptional}}
 \long\def\beamer@part[#1]#2{%
+  \GetTitleString{#1}%
+  \let\@currentlabelname\GetTitleStringResult
   \beamer@savemode
   \mode<all>%
   \ifbeamer@inlecture
