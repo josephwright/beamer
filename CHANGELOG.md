@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.70]
+
 ### Added
 
 - making the aspect ratio available to the user via `\insertaspectratio`
@@ -241,7 +243,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.69...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.70...HEAD
+[v3.70]: https://github.com/josephwright/beamer/compare/v3.69...v3.70
 [v3.69]: https://github.com/josephwright/beamer/compare/v3.68...v3.69
 [v3.68]: https://github.com/josephwright/beamer/compare/v3.67...v3.68
 [v3.67]: https://github.com/josephwright/beamer/compare/v3.66...v3.67
