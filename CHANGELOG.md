@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- scale height of tree and split headlines with fontsize of `section in head/foot`
+
 ## [v3.70]
 
 ### Added
