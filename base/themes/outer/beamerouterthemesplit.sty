@@ -1,5 +1,6 @@
 % Copyright 2007 by Till Tantau
 % Copyright 2012,2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2023 by Joseph Wright, samcarter
 %
 % This file may be distributed and/or modified
 %
@@ -28,12 +29,14 @@
 \defbeamertemplate*{headline}{split theme}
 {%
   \leavevmode%
+  {\usebeamerfont{section in head/foot}%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex]{section in head/foot}%
     \insertsectionnavigationhorizontal{.5\paperwidth}{\hskip0pt plus1filll}{}%
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex]{subsection in head/foot}%
+    \usebeamerfont{subsection in head/foot}%
     \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{\hskip0pt plus1filll}%
-  \end{beamercolorbox}%
+  \end{beamercolorbox}}%
 }
 
 \else
@@ -41,6 +44,7 @@
 \defbeamertemplate*{headline}{split theme}
 {%
   \leavevmode%
+  {\usebeamerfont{section in head/foot}%
   \@tempdimb=2.4375ex%
   \ifnum\beamer@subsectionmax<\beamer@sectionmax%
     \multiply\@tempdimb by\beamer@sectionmax%
@@ -50,12 +54,13 @@
   \ifdim\@tempdimb>0pt%
     \advance\@tempdimb by 1.825ex%
     \begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{section in head/foot}%
-      \vbox to\@tempdimb{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
+      \vbox to\@tempdimb{\vfil\usebeamerfont{section in head/foot}\insertsectionnavigation{.5\paperwidth}\vfil}%
     \end{beamercolorbox}%
     \begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{subsection in head/foot}%
-      \vbox to\@tempdimb{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}%
+      \vbox to\@tempdimb{\vfil\usebeamerfont{subsection in head/foot}\insertsubsectionnavigation{.5\paperwidth}\vfil}%
     \end{beamercolorbox}%
   \fi%
+  }%
 }
 
 \fi

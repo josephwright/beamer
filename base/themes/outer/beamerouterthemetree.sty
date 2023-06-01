@@ -1,5 +1,6 @@
 % Copyright 2007 by Till Tantau
 % Copyright 2015 by Vedran Mileti\'c, Joseph Wright
+% Copyright 2023 by Joseph Wright, samcarter
 %
 % This file may be distributed and/or modified
 %
@@ -20,13 +21,14 @@
 {%
     \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{upper separation line head}
     \end{beamercolorbox}
+    {\usebeamerfont{title in head/foot}%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
-      \usebeamerfont{title in head/foot}\insertshorttitle
-    \end{beamercolorbox}
+      \insertshorttitle
+    \end{beamercolorbox}}
+    {\usebeamerfont{section in head/foot}%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
-      \usebeamerfont{section in head/foot}%
       \ifbeamer@tree@showhooks
         \setbox\beamer@tempbox=\hbox{\insertsectionhead}%
         \ifdim\wd\beamer@tempbox>1pt%
@@ -37,10 +39,10 @@
         \hskip6pt%
       \fi%
       \insertsectionhead
-    \end{beamercolorbox}
+    \end{beamercolorbox}}
+    {\usebeamerfont{subsection in head/foot}%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
-      \usebeamerfont{subsection in head/foot}%
       \ifbeamer@tree@showhooks
         \setbox\beamer@tempbox=\hbox{\insertsubsectionhead}%
         \ifdim\wd\beamer@tempbox>1pt%
@@ -51,7 +53,7 @@
         \hskip12pt%
       \fi%
       \insertsubsectionhead
-    \end{beamercolorbox}
+    \end{beamercolorbox}}
     \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{lower separation line head}
     \end{beamercolorbox}
 }
