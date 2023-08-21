@@ -12,6 +12,10 @@ a major and minor version only.
 
 - scale height of tree and split headlines with fontsize of `section in head/foot`
 
+### Fixed
+
+- ensure that shadows of rounded blocks use proper black for their shadow
+
 ## [v3.70]
 
 ### Added
