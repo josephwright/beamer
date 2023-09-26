@@ -15,6 +15,7 @@ a major and minor version only.
 ### Fixed
 
 - ensure that shadows of rounded blocks use proper black for their shadow
+- using correct template for `\structure` in article mode (see #862)
 
 ## [v3.70]
 
