@@ -13,7 +13,7 @@
 % See the file LICENSE.md for more details.
 
 \ProvidesClass{beamer}
-  [2023/05/15 v3.70 A class for typesetting presentations]
+  [2024/01/06 v3.71 A class for typesetting presentations]
 
 % Setup modes and check for article option
 % Also loads packages required by both beamer and beamerarticle
