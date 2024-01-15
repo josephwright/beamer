@@ -3,7 +3,7 @@
 % Copyright 2011--2013,2015 by Vedran Mileti\'c, Joseph Wright
 % Copyright 2016 by Joseph Wright
 % Copyright 2017,2018 by Louis Stuart, Joseph Wright
-% Copyright 2020--2023 by Joseph Wright, samcarter
+% Copyright 2020--2024 by Joseph Wright, samcarter
 %
 % This file may be distributed and/or modified
 %
@@ -13,7 +13,7 @@
 % See the file LICENSE.md for more details.
 
 \ProvidesClass{beamer}
-  [2023/05/15 v3.70 A class for typesetting presentations]
+  [2024/01/06 v3.71 A class for typesetting presentations]
 
 % Setup modes and check for article option
 % Also loads packages required by both beamer and beamerarticle
