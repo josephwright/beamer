@@ -27,7 +27,7 @@ jobs:
       # If we want to force regeneration of the cache, increase the number after
       # *both* instances of "texlive-v"
       - name: Load cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/texlive
           key: texlive-v1-${{ steps.get-id.outputs.id }}
