@@ -463,32 +463,24 @@
   \else%
     \gdef\beamer@whichframes{all:0}%
   \fi%
-  \ifx\beamer@againname\@empty%
-    \beamer@slideinframe=0\relax%
-    \beamer@anotherslidefalse%
-    \beamer@masterdecode{\beamer@whichframes}%
+  \beamer@slideinframe=0\relax%
+  \beamer@anotherslidefalse%
+  \beamer@masterdecode{\beamer@whichframes}%
+  \let\beamer@howtotreatframe\beamer@doseveralframes%
+  \ifbeamer@autobreak%
     \ifbeamer@anotherslide%
-        \let\beamer@howtotreatframe\beamer@doseveralframes%
-      \ifbeamer@containsverbatim%
-        \let\beamer@howtotreatframe\beamer@dosingleframe%
-      \fi%
-      \ifbeamer@autobreak%
-        \let\beamer@howtotreatframe\beamer@autobreakframe%
-      \fi%
-      \ifbeamer@isfragile%
-        \let\beamer@howtotreatframe\beamer@doexternalframe%
-      \fi%
-    \else% no slides in frame
+      \let\beamer@howtotreatframe\beamer@autobreakframe%
+    \fi%
+  \fi%
+  \ifbeamer@isfragile%
+    \let\beamer@howtotreatframe\beamer@doexternalframe%
+  \fi%
+  \ifbeamer@containsverbatim%
+    \ifbeamer@anotherslide%
+      \let\beamer@howtotreatframe\beamer@dosingleframe%
+    \else%
       \let\beamer@howtotreatframe\beamer@donoframe%
     \fi%
-  \else% again mode
-    \let\beamer@howtotreatframe\beamer@doseveralframes%
-    \ifbeamer@isfragile%
-      \let\beamer@howtotreatframe\beamer@doexternalframe%
-    \fi%
-    \ifbeamer@containsverbatim
-      \let\beamer@howtotreatframe\beamer@dosingleframe
-    \fi
   \fi%
   \beamer@howtotreatframe}
 \def\gobble@onslide{%
