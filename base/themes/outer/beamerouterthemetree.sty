@@ -30,7 +30,7 @@
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{section in head/foot}
       \ifbeamer@tree@showhooks
-        \setbox\beamer@tempbox=\hbox{\insertsectionhead}%
+        \setbox\beamer@tempbox=\hbox{\usebeamertemplate{section in head/foot}}%
         \ifdim\wd\beamer@tempbox>1pt%
           \hskip2pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
           \hskip1pt%
@@ -38,13 +38,13 @@
       \else%  
         \hskip6pt%
       \fi%
-      \insertsectionhead
+      \usebeamertemplate{section in head/foot}
     \end{beamercolorbox}}
     {\usebeamerfont{subsection in head/foot}%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
       \ifbeamer@tree@showhooks
-        \setbox\beamer@tempbox=\hbox{\insertsubsectionhead}%
+        \setbox\beamer@tempbox=\hbox{\usebeamertemplate{subsection in head/foot}}%
         \ifdim\wd\beamer@tempbox>1pt%
           \hskip9.4pt\raise1.9pt\hbox{\vrule width0.4pt height1.875ex\vrule width 5pt height0.4pt}%
           \hskip1pt%
@@ -52,7 +52,7 @@
       \else%  
         \hskip12pt%
       \fi%
-      \insertsubsectionhead
+      \usebeamertemplate{subsection in head/foot}
     \end{beamercolorbox}}
     \begin{beamercolorbox}[wd=\paperwidth,colsep=1.5pt]{lower separation line head}
     \end{beamercolorbox}
