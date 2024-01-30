@@ -11,6 +11,7 @@ a major and minor version only.
 ### Changed
 
 - unified usage of `(sub)section in head/foot` template in headlines
+- simplify decision tree for `\beamer@howtotreatframe` (see #874)
 
 ## [v3.71]
 
