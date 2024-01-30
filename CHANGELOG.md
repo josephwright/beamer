@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- unified usage of `(sub)section in head/foot` template in headlines
+
 ## [v3.71]
 
 ### Changed
