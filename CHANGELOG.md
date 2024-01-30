@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- unified usage of `section in head/foot` template in headlines (`infolines`, `smoothtree` and `tree`)
+
 ## [v3.71]
 
 ### Changed
