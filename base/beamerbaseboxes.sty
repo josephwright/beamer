@@ -20,6 +20,7 @@
 \define@key{beamerboxes}{lower}{\def\bmb@lower{#1}}
 \define@key{beamerboxes}{width}{\edef\bmb@width{#1}}
 \define@key{beamerboxes}{shadow}[true]{\csname bmb@shadow#1\endcsname}
+\define@key{beamerboxes}{bgopacity}{\def\bmb@bgopacity{#1}}
 
 \newif\ifbmb@shadow
 \newbox\bmb@box
@@ -80,6 +81,7 @@
       \else%
         \color{upper.bg}%
       \fi%
+      \ifdefined\bmb@bgopacity\pgfsetfillopacity{\bmb@bgopacity}\fi
       \pgfpathqmoveto{-4bp}{-1bp}
       \pgfpathqcurveto{-4bp}{1.2bp}{-2.2bp}{3bp}{0bp}{3bp}
       \pgfpathlineto{\pgfpoint{\bmb@temp}{3bp}}
@@ -88,7 +90,17 @@
       {\pgfpoint{\bmb@dimb}{1.2bp}}%
       {\pgfpoint{\bmb@dimb}{-1bp}}%
       \bmb@dima=-\ht\bmb@box%
-      \advance\bmb@dima by-2pt%
+      \ifdefined\bmb@bgopacity%
+        % Only with explicity specified opacity, make sure that there is no
+        % overlap between top and bottom part of the box
+        \ifdim\wd\bmb@box=0pt%
+          \advance\bmb@dima by .5pt%
+        \else%
+          \advance\bmb@dima by -1.07pt%
+        \fi%
+      \else%
+        \advance\bmb@dima by -2pt%
+      \fi%
       \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
       \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
       \pgfusepath{fill}
@@ -105,13 +117,16 @@
       \advance\bmb@dima by8bp%
       \pgfpathrectangle{\pgfpoint{-4bp}{-1bp}}{\pgfpoint{\bmb@dima}{8bp}}
       \pgfusepath{clip}
+      \ifdefined\bmb@bgopacity\pgfsetfillopacity{\bmb@bgopacity}\fi%
       {\pgftransformshift{\pgfpoint{-4bp}{0bp}}\pgftext[left,base]{\pgfuseshading{bmb@transition}}}%
     \end{pgfpicture}%
   }%
   \nointerlineskip%
   \vskip-0.5pt%
   \fi%
-  \setbox\bmb@colorbox=\hbox{{\pgfpicturetrue\pgfsetcolor{lower.bg}}}%
+  \setbox\bmb@colorbox=\hbox{{\pgfpicturetrue%
+    \ifdefined\bmb@bgopacity\pgfsetfillopacity{\bmb@bgopacity}\fi%
+    \pgfsetcolor{lower.bg}}}%
   \setbox\bmb@box=\hbox\bgroup\begin{minipage}[b]{\bmb@width}%
     \vskip2pt%
     \usebeamercolor[fg]{\bmb@lower}%
@@ -173,6 +188,16 @@
             \pgfsetcolor{beamer@safeblack}
             \pgfpathrectangle{\pgfpoint{4bp}{8.1bp}}{\pgfpoint{\bmb@boxwidth}{\bmb@boxheight-2bp}}
             \pgfusepath{fill}
+            \ifdefined\bmb@bgopacity%
+              % More precise clipping if bgopacity is specified
+              \pgfpathqmoveto{-4bp}{8.2bp}
+              \pgfpathqlineto{-4bp}{8bp}
+              \pgfpathqcurveto{-4bp}{5.8bp}{-2.2bp}{4bp}{0bp}{4bp}
+              \pgfpathlineto{\pgfpoint{\bmb@boxwidth}{4bp}}
+              \pgfpathqcurveto{\dimexpr\bmb@boxwidth+2.2bp}{4bp}{\dimexpr\bmb@boxwidth+4bp}{5.8bp}{\dimexpr\bmb@boxwidth+4bp}{8bp}
+              \pgfpathqlineto{\dimexpr\bmb@boxwidth+4bp}{8.2bp}
+              \pgfusepath{fill}
+            \fi%
           \end{pgfscope}
         \end{pgfpicture}%
         \hskip4bp%      
@@ -204,6 +229,10 @@
       {\pgfpoint{\the\bmb@dimb}{1bp}}%
       {
         \bmb@dima=\ht\bmb@box%
+        \ifdefined\bmb@bgopacity%
+          % Remove overlap with bgtransparency specified
+          \advance\bmb@dima by-.5pt%
+        \fi%
         \pgfpathlineto{\pgfpoint{\bmb@dimb}{\bmb@dima}}
         \pgfpathlineto{\pgfpoint{-4bp}{\bmb@dima}}
         \pgfusepath{fill}

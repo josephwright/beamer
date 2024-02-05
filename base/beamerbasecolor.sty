@@ -141,6 +141,7 @@
 \define@key{beamercolbox}{rounded}{\csname beamer@colbox@rounded#1\endcsname}
 \define@key{beamercolbox}{ignorebg}[true]{\csname beamer@colbox@ignorebg#1\endcsname}
 \define@key{beamercolbox}{vmode}[]{\def\beamer@vmode{}}
+\define@key{beamercolbox}{bgopacity}{\def\beamer@colbox@bgopacity{#1}}
 
 \newif\ifbeamer@colbox@rounded
 \newif\ifbeamer@colbox@ignorebg
@@ -190,13 +191,24 @@
   \ifx\beamer@colbox@dp\@empty\else\dp\beamer@tempbox=\beamer@colbox@dp\fi%
   \ifbeamer@colbox@rounded%
     \if@tempswa%
-      \begin{beamerboxesrounded}[%
-        shadow=\beamer@colbox@shadow,%
-        lower=\beamer@colbox@color,%
-        upper=normal text,%
-        width=\beamer@colbox@wd]{}%
-        \box\beamer@tempbox%
-      \end{beamerboxesrounded}%
+      \ifdefined\beamer@colbox@bgopacity%
+        \begin{beamerboxesrounded}[%
+          shadow=\beamer@colbox@shadow,%
+          lower=\beamer@colbox@color,%
+          upper=normal text,%
+          width=\beamer@colbox@wd,%
+          bgopacity=\beamer@colbox@bgopacity]{}%
+          \box\beamer@tempbox%
+        \end{beamerboxesrounded}%
+      \else%
+        \begin{beamerboxesrounded}[%
+          shadow=\beamer@colbox@shadow,%
+          lower=\beamer@colbox@color,%
+          upper=normal text,%
+          width=\beamer@colbox@wd]{}%
+          \box\beamer@tempbox%
+        \end{beamerboxesrounded}%
+      \fi%
     \else%
       \ifdim\wd\beamer@tempbox>\textwidth%
         \setbox\beamer@tempbox=\hbox to\textwidth{\hss\box\beamer@tempbox\hss}%
@@ -206,8 +218,10 @@
   \else%
     \if@tempswa\setbox\beamer@tempbox=\hbox{%
       \usebeamercolor{\beamer@colbox@color}%
+      \ifdefined\beamer@colbox@bgopacity\pgfsetfillopacity{\beamer@colbox@bgopacity}\fi%
       \hskip-\beamer@colbox@colseps%
       \fboxsep=\z@\colorbox{bg}{%
+        \pgfsetfillopacity{1}%
         \hskip\beamer@colbox@colseps%
         \box\beamer@tempbox%
         \hskip\beamer@colbox@colseps%

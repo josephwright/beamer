@@ -839,6 +839,8 @@ The \beamer\ class also defines two environments for creating colored boxes.
     \declare{|ignorebg|} causes the background color of the \meta{beamer color} to be ignored, that is, to be treated as if it were set to ``transparent'' or ``empty.''
   \item
     \declare{|vmode|} causes \TeX\ to be in vertical mode when the box starts. Normally, \TeX\ will be in horizontal mode at the start of the box (a |\leavevmode| is inserted automatically at the beginning of the box unless this option is given). Only \TeX perts need this option, so, if you use it, you will probably know what you are doing anyway.
+  \item
+    \declare{|bgopacity|=\marg{opacity}} sets the opacity with which the background is drawn. To draw a box with 30\% transparent background, set |bgopacity=0.7|. Note that combining rounded corners and a transparent background can lead to fine gaps appearing in the box because the box is drawn in multiple segments. If |bgopacity| is not specified, |\pgfsetfillopacity| is never set so that the surrounding opacity setting is adopted.
   \end{itemize}
 \end{environment}
 
@@ -853,6 +855,8 @@ The \beamer\ class also defines two environments for creating colored boxes.
     \declare{|width=|\meta{dimension}} causes the width of the text inside the box to be the specified \meta{dimension}. By default, the |\textwidth| is used. Note that the box will protrude 4pt to the left and right.
   \item
     \declare{|shadow=|\meta{true or false}}. If set to |true|, a shadow will be drawn.
+  \item
+    \declare{|bgopacity|=\marg{opacity}} sets the opacity with which the background is drawn. To draw a box with 30\% transparent background, set |bgopacity=0.7|. Note that with a transparent background fine gaps can appear in the box because the box is drawn in multiple segments. If |bgopacity| is not specified, |\pgfsetfillopacity| is never set so that the surrounding opacity setting is adopted.
   \end{itemize}
   If no \meta{head} is given, the head part is completely suppressed.
   \example
