@@ -66,19 +66,11 @@
 }
 
 \setbeamertemplate{author}{%
-  \ifbeamer@autopdfinfo%
-    \expandafter\ifblank\expandafter{\beamer@andstripped}{}{%
-      \begin{block}{\insertauthorindicator}
-        \usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor\par
-      \end{block}
-    }
-  \else
-    \expandafter\ifblank\expandafter{\beamer@shortauthor}{}{%
-      \begin{block}{\insertauthorindicator}
-        \usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor\par
-      \end{block}
-    }
-  \fi
+  \expandafter\ifblank\expandafter{\beamer@andstripped}{}{%
+    \begin{block}{\insertauthorindicator}
+      \usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor\par
+    \end{block}
+  }
 }
 
 \setbeamertemplate{institute}{%
