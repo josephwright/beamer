@@ -13,6 +13,10 @@ a major and minor version only.
 - unified usage of `(sub)section in head/foot` template in headlines
 - simplify decision tree for `\beamer@howtotreatframe` (see #874)
 
+### Fixed
+
+- fixed problem if inmargin theme is used with the `usepdftitle=false` class option (see #885)
+
 ## [v3.71]
 
 ### Changed
