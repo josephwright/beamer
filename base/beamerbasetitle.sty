@@ -147,11 +147,9 @@
 \long\def\beamer@author[#1]#2{%
   \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}#2}%
   \def\beamer@shortauthor{#1}%
-  \ifbeamer@autopdfinfo%
-    \def\beamer@andstripped{}%
-    \beamer@stripands#2 \and\relax
-    {\let\inst=\@gobble\let\thanks=\@gobble\def\and{, }\hypersetup{pdfauthor={\beamer@andstripped}}}
-  \fi%
+  \def\beamer@andstripped{}%
+  \beamer@stripands#2 \and\relax
+  {\let\inst=\@gobble\let\thanks=\@gobble\def\and{, }  \ifbeamer@autopdfinfo\hypersetup{pdfauthor={\beamer@andstripped}}\fi}
 }
 
 \def\beamer@stripands#1 \and#2\relax{%
