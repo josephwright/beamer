@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Added
+
+- added `bgopacity` option to `beamercolorbox` and `beamerboxesrounded` for transparent background drawing
+
 ### Changed
 
 - unified usage of `(sub)section in head/foot` template in headlines

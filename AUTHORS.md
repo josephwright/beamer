@@ -29,6 +29,7 @@
 - Andreas Scherer <andreas_coder@freenet.de> (documentation fixes)
 - Juergen Spitzmueller <spitzmueller@ds.uzh.ch> (diabel auto-loading amssymb)
 - Gustav Tiger <gustav@tiger.name> (typos in manual)
+- Christoph Jabs <contact@christophjabs.info> (transparency in beamercolorbox and beamerboxesrounded)
 
 # Theme contributors
 
