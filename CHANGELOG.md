@@ -16,6 +16,7 @@ a major and minor version only.
 ### Fixed
 
 - fixed problem if inmargin theme is used with the `usepdftitle=false` class option (see #885)
+- fixed spacing problem for right-aligned frametitles without background colour
 
 ## [v3.71]
 
