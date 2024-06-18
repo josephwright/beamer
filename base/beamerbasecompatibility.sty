@@ -284,6 +284,21 @@
   }
 }
 
+%
+% Fix for ragged2e in article mode (#900)
+%
+\mode
+<article>
+{
+  \def\@raggedtwoe@centercrNoindent{%
+    \AddToHookNext{para/begin}{%
+      \ifx\@raggedtwoe@everyselectfont\relax\else
+        \OmitIndent
+      \fi
+    }%
+     \beamer@origbreakcenter
+  }%
+}
 
 %
 % Obsolete commands from old versions of beamer

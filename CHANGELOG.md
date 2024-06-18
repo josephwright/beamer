@@ -17,6 +17,7 @@ a major and minor version only.
 
 - fixed problem if inmargin theme is used with the `usepdftitle=false` class option (see #885)
 - fixed spacing problem for right-aligned frametitles without background colour
+- fixed missing `\newline` if ragged2e is used together with beamerarticle (#900)
 
 ## [v3.71]
 
