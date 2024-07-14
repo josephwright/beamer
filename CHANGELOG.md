@@ -12,6 +12,7 @@ a major and minor version only.
 
 - unified usage of `(sub)section in head/foot` template in headlines
 - simplify decision tree for `\beamer@howtotreatframe` (see #874)
+- added `\maketitle`, `\title`, `\author`, `\institute` and `\date` to the exceptions for `ignorenonframetext`
 
 ### Fixed
 

@@ -129,6 +129,11 @@
   \ifx\beamer@nexttoken\subsection\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\subsubsection\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\part\let\next=\beamer@stopoutsidemode\fi
+  \ifx\beamer@nexttoken\maketitle\let\next=\beamer@stopoutsidemode\fi
+  \ifx\beamer@nexttoken\author\let\next=\beamer@stopoutsidemode\fi
+  \ifx\beamer@nexttoken\title\let\next=\beamer@stopoutsidemode\fi
+  \ifx\beamer@nexttoken\date\let\next=\beamer@stopoutsidemode\fi
+  \ifx\beamer@nexttoken\institute\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\article\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\mode\let\next=\beamer@stopoutsidemode\fi
   \ifx\beamer@nexttoken\common\let\next=\beamer@stopoutsidemode\fi
