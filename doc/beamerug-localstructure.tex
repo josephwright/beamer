@@ -189,7 +189,7 @@ The |\item| command is overlay specification-aware. If an overlay specification 
 
     \begin{templateinserts}
       \iteminsert{\insertsubsubenumlabel}
-      inserts the current number of the second-level enumeration (as an Arabic number).
+      inserts the current number of the third-level enumeration (as an Arabic number).
     \end{templateinserts}
   \end{element}
 
@@ -377,7 +377,7 @@ The \beamer\ class predefines commands and environments for highlighting text. U
   Environment version of the |\alert| command.
 
   \begin{element}{alerted text begin}\yes\no\no
-    This text is inserted at the beginning of a an |alertenv| environment.
+    This text is inserted at the beginning of an |alertenv| environment.
 
     \begin{templateoptions}
       \itemoption{default}{}
@@ -520,7 +520,10 @@ title}\sarg{action specification}}
 \subsection{Theorem Environments}
 \label{section-theorems}
 
-The \beamer\ class predefines several environments, like |theorem| or |definition| or |proof|, that you can use to typeset things like, well, theorems, definitions, or proofs. The complete list is the following:  |theorem|, |corollary|, |definition|, |definitions|, |fact|, |example|, and |examples|. The following German block environments are also predefined: |Problem|, |Loesung|, |Definition|, |Satz|, |Beweis|, |Folgerung|, |Lemma|, |Fakt|, |Beispiel|, and |Beispiele|.
+The \beamer\ class predefines several environments, like |theorem| or |definition| or |proof|, that you can use to typeset things like, well, theorems, definitions, or proofs. The complete list is the following: 
+|theorem|, |Theorem|, |corollary|, |Corollary|, |definition|, |Definition|, |definitions|, |fact|, |example|, |Example|, |examples|, |Examples|, |lemma|, |Lemma|, |problem|, |Problem|, |proof|, |Proof|, and |solution|.
+
+The following German block environments are also predefined: |Problem|, |Loesung|, |Definition|, |Satz|, |Beweis|, |Folgerung|, |Lemma|, |Fakt|, |Theorem|, |Beispiel|, and |Beispiele|.
 
 Here is a typical example on how to use them:
 \begin{verbatim}
@@ -594,7 +597,7 @@ In |article| mode, theorems are automatically numbered. By specifying the class 
 \begin{environment}{{proof}\sarg{action specification}\oarg{proof name}\sarg{action specification}}
   Typesets a proof. If the optional \meta{proof name} is given, it completely replaces the word ``Proof.'' This is different from normal theorems, where the optional argument is shown in brackets.
 
-  At the end of the theorem, a |\qed| symbol is shown, except if you say |\qedhere| earlier in the proof (this is exactly as in |amsthm|). The default |\qed| symbol is an open circle. To completely suppress the symbol, write |\def\qedsymbol{}| in your preamble. To get a closed square, say
+  At the end of the proof, a |\qed| symbol is shown, except if you say |\qedhere| earlier in the proof (this is exactly as in |amsthm|). The default |\qed| symbol is an open square. To completely suppress the symbol, write |\def\qedsymbol{}| in your preamble. To get a closed square, say
 \begin{verbatim}
 \setbeamertemplate{qed symbol}{\vrule width1.5ex height1.5ex depth0pt}
 \end{verbatim}
@@ -753,7 +756,7 @@ In the |article| version, the package |amsthm| sometimes clashes with the docume
 
 \subsection{Framed and Boxed Text}
 
-In order to draw a frame (a rectangle) around some text, you can use \LaTeX s standard command |\fbox| and also |\frame| (inside a \beamer\ frame, the |\frame| command changes its meaning to the normal \LaTeX\ |\frame| command). More frame types are offered by the package |fancybox|, which defines the following commands: |\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult the \LaTeX\ Companion for details on how to use these commands.
+In order to draw a frame (a rectangle) around some text, you can use \LaTeX's standard command |\fbox| and also |\frame| (inside a \beamer\ frame, the |\frame| command changes its meaning to the normal \LaTeX\ |\frame| command). More frame types are offered by the package |fancybox|, which defines the following commands: |\shadowbox|, |\doublebox|, |\ovalbox|, and |\Ovalbox|. Please consult the \LaTeX\ Companion for details on how to use these commands.
 
 The \beamer\ class also defines two environments for creating colored boxes.
 
@@ -894,7 +897,7 @@ You can use the standard \LaTeX\ environments |figure| and |table| much the same
     \itemoption{numbered}{}
     adds the figure or table number to the caption. Use this option only if your audience has a printed handout or printed lecture notes that follow the same numbering.
     \itemoption{caption name own line}{}
-    As the name suggests, this options puts the caption name (like ``Figure'') on its own line.
+    As the name suggests, this option puts the caption name (like ``Figure'') on its own line.
   \end{templateoptions}
 
   Inside the template, you can use the following inserts:
