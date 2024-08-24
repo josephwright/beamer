@@ -46,7 +46,7 @@ The following font themes only change certain font attributes, they do not choos
     causes mathematical text still to be typeset using sans serif. This option only makes sense if you also use the |stillsansseriftext| option since sans serif math inside serif text looks silly.
   \item
     \declare{|stillsansserifsmall|}
-    will cause ``small'' text to be still typeset using sans serif. This refers to the text in the headline, footline, and sidebars. Using this options is often advisable since small text is often easier to read in sans serif.
+    will cause ``small'' text to be still typeset using sans serif. This refers to the text in the headline, footline, and sidebars. Using this option is often advisable since small text is often easier to read in sans serif.
   \item
     \declare{|stillsansseriflarge|}
     will cause ``large'' text like the presentation title or the frame title to be still typeset using sans serif. Sans serif titles with serif text are a popular combination in typography.
@@ -175,7 +175,7 @@ This section explains how \beamer's font management works.
 
 \subsubsection{Overview of Beamer's Font Management}
 
-\beamer's font mechanism is somewhat similar to \beamer's color mechanism, but not quite the same. As for colors, every \beamer\ element, like the frame titles, the document title, the footnotes, and so on has a certain \beamer-font. As for colors, on the one hand you can specify the font of each element individually; on the other hand fonts also use inheritance, thereby making it easy to globally change the fonts used for, say, ``titlelike things'' or for ``itemizelike things.''
+\beamer's font mechanism is somewhat similar to \beamer's color mechanism, but not quite the same. Similar to colors, every \beamer\ element, like the frame titles, the document title, the footnotes, and so on has a certain \beamer-font. Similar to colors, on the one hand you can specify the font of each element individually; on the other hand fonts also use inheritance, thereby making it easy to globally change the fonts used for, say, ``titlelike things'' or for ``itemizelike things.''
 
 While a \beamer-color has a certain foreground and a certain background, either of which may be empty, a \beamer-font has a size, a shape, a series, and a family, each of which may be empty. The inheritance relation among \beamer-fonts is not necessarily the same as between \beamer-colors, though we have tried to match them whenever possible.
 
