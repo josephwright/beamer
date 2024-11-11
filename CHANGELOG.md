@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Added
+
+- doc: added sentence about limitations of xelatex
+
 ### Changed
 
 - unified usage of `(sub)section in head/foot` template in headlines
