@@ -26,6 +26,7 @@ a major and minor version only.
 - fixed spacing problem for right-aligned frametitles without background colour
 - fixed missing `\newline` if ragged2e is used together with beamerarticle (#900)
 - defined `\fnum@table` to avoid breaking longtable (#905)
+- fixed: other sections would show the template for "miniframe in other subsection" instead of "mini frame in other section"
 
 ## [v3.71]
 
