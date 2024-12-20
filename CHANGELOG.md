@@ -27,6 +27,7 @@ a major and minor version only.
 - fixed missing `\newline` if ragged2e is used together with beamerarticle (#900)
 - defined `\fnum@table` to avoid breaking longtable (#905)
 - fixed: other sections would show the template for "miniframe in other subsection" instead of "mini frame in other section"
+- fixed unstable text position in sidebar theme by compensating for the space automatically inserted after the frametitle in https://github.com/josephwright/beamer/blob/main/base/beamerbaseframe.sty#L126
 
 ## [v3.71]
 
