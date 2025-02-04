@@ -11,6 +11,7 @@ a major and minor version only.
 ### Added
 
 - doc: added sentence about limitations of xelatex
+- added `bgopacity` option to `beamercolorbox` and `beamerboxesrounded` for transparent background drawing
 
 ### Changed
 
