@@ -387,10 +387,10 @@
   block example begin,block example end}
 {}
 
-\defbeamertemplate*{block begin}{default}
+\defbeamertemplate*{block begin}{default}[1][]
 {
   \par\vskip\medskipamount%
-  \begin{beamercolorbox}[colsep*=.75ex]{block title}
+  \begin{beamercolorbox}[colsep*=.75ex,#1]{block title}
     \usebeamerfont*{block title}\insertblocktitle%
   \end{beamercolorbox}\noframebreak%
   {\parskip0pt\par}%
@@ -398,16 +398,16 @@
   {}
   {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body}%
-  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode,#1]{block body}%
     \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
 }
 \defbeamertemplate*{block end}{default}  
 {\end{beamercolorbox}\vskip\smallskipamount}
 
-\defbeamertemplate*{block alerted begin}{default}
+\defbeamertemplate*{block alerted begin}{default}[1][]
 {
   \par\vskip\medskipamount%
-  \begin{beamercolorbox}[colsep*=.75ex]{block title alerted}
+  \begin{beamercolorbox}[colsep*=.75ex,#1]{block title alerted}
     \usebeamerfont*{block title alerted}\insertblocktitle%
   \end{beamercolorbox}\noframebreak%
   {\parskip0pt\par}%
@@ -415,18 +415,17 @@
   {}
   {\ifbeamercolorempty[bg]{block body alerted}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body alerted}%
-  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body alerted}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode,#1]{block body alerted}%
     \ifbeamercolorempty[bg]{block body alerted}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
 }
 
 \defbeamertemplate*{block alerted end}{default}
 {\end{beamercolorbox}\vskip\smallskipamount}
 
-
-\defbeamertemplate*{block example begin}{default}
+\defbeamertemplate*{block example begin}{default}[1][]
 {
   \par\vskip\medskipamount%
-  \begin{beamercolorbox}[colsep*=.75ex]{block title example}
+  \begin{beamercolorbox}[colsep*=.75ex,#1]{block title example}
     \usebeamerfont*{block title example}\insertblocktitle%
   \end{beamercolorbox}\noframebreak%
   {\parskip0pt\par}%
@@ -434,7 +433,7 @@
   {}
   {\ifbeamercolorempty[bg]{block body example}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body example}%
-  \begin{beamercolorbox}[colsep*=.75ex,vmode]{block body example}%
+  \begin{beamercolorbox}[colsep*=.75ex,vmode,#1]{block body example}%
     \ifbeamercolorempty[bg]{block body example}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
 }
 \defbeamertemplate*{block example end}{default}

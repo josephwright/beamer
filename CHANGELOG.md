@@ -12,6 +12,7 @@ a major and minor version only.
 
 - doc: added sentence about limitations of xelatex
 - added `bgopacity` option to `beamercolorbox` and `beamerboxesrounded` for transparent background drawing
+- allow optional argument for the default `block begin`, `block example begin` and `block alerted begin` templates
 
 ### Changed
 
