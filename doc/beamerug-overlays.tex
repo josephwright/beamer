@@ -59,7 +59,7 @@ The effect of |\pause| lasts till the next |\pause|, |\onslide|, or the end of t
 \end{verbatim}
 
 \begin{command}{\pause\oarg{number}}
-  This command causes the text following it to be shown only from the next slide on, or, if the optional \meta{number} is given, from the slide with the number \meta{number}. If the optional \meta{number} is given, the counter |beamerpauses| is set to this number. This command uses the |\onslide| command, internally. This command does \emph{not} work inside |amsmath| environments like |align|, since these do really wicked things.
+  This command causes the text following it to be shown only from the next slide on, or, if the optional \meta{number} is given, from the slide with the number \meta{number}. If the optional \meta{number} is given, the counter |beamerpauses| is set to this number. This command uses the |\onslide| command, internally. This command does \emph{not} work correctly inside |amsmath| environments like |align| and \pgfname\ environements like |tikzpicture| or |tcolorbox|, since these do really wicked things.
 
   \example
 \begin{verbatim}
@@ -303,7 +303,7 @@ The related command |\bibitem| is also overlay specification-aware in the same w
 \begin{frame}
   \begin{align}
     a &= b + c   \label{first}\\ % no specification needed
-    c &= d + e   \label{second}\\% no specification needed
+    c &= d + e   \label{second}% no specification needed
   \end{align}
 
   Blah blah, \uncover<2>{more blah blah.}
@@ -612,7 +612,7 @@ As if all this were not already complicated enough, there is another mode that b
 
 This section also introduces a rather advanced concept. You may also wish to skip it on first reading.
 
-Some overlay specification-aware commands cannot handle not only normal overlay specifications, but also so called \emph{action specifications}. In an action specification, the list of slide numbers and ranges is prefixed by \meta{action}|@|, where \meta{action} is the name of a certain action to be taken on the specified slides:
+Some overlay specification-aware commands can handle not only normal overlay specifications, but also so called \emph{action specifications}. In an action specification, the list of slide numbers and ranges is prefixed by \meta{action}|@|, where \meta{action} is the name of a certain action to be taken on the specified slides:
 \begin{verbatim}
 \item<3-| alert@3> Shown from slide 3 on, alerted on slide 3.
 \end{verbatim}

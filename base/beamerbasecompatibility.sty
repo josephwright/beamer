@@ -155,7 +155,7 @@
 }
 
 %
-% Fix for implict=false for hyperref
+% Fix for implicit=false for hyperref
 %
 \def\WriteBookmarks{0}
 \expandafter\def\csname Parent-4\endcsname{}
@@ -255,9 +255,9 @@
 % 
 % metropolis patches an old version of the \beamer@@frametitle 
 % definition and throws an error if it does not find the outdated 
-% code. To avoid breaking all metropolis persentations, we revert 
+% code. To avoid breaking all metropolis presentations, we revert 
 % back to the old definition at the start of the file and then 
-% overwrite again with the current implimentation at the end
+% overwrite again with the current implementation at the end
 %
 \AddToHook{file/beamerfontthememetropolis.sty/before}{%
   \long\def\beamer@@frametitle[#1]#2{%
@@ -284,6 +284,21 @@
   }
 }
 
+%
+% Fix for ragged2e in article mode (#900)
+%
+\mode
+<article>
+{
+  \def\@raggedtwoe@centercrNoindent{%
+    \AddToHookNext{para/begin}{%
+      \ifx\@raggedtwoe@everyselectfont\relax\else
+        \OmitIndent
+      \fi
+    }%
+     \beamer@origbreakcenter
+  }%
+}
 
 %
 % Obsolete commands from old versions of beamer

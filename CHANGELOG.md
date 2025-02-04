@@ -10,12 +10,26 @@ a major and minor version only.
 
 ### Added
 
+- doc: added sentence about limitations of xelatex
 - added `bgopacity` option to `beamercolorbox` and `beamerboxesrounded` for transparent background drawing
 
 ### Changed
 
 - unified usage of `(sub)section in head/foot` template in headlines
 - simplify decision tree for `\beamer@howtotreatframe` (see #874)
+- added `\maketitle`, `\title`, `\author`, `\institute` and `\date` to the exceptions for `ignorenonframetext`
+- avoid frame breaks between block title and body for rectangular blocks
+- added `\gdef\@currentHref{#2}` to labels (see #917)
+- fine-tune vertical space around section title in miniframe headline (close #895)
+
+### Fixed
+
+- fixed problem if inmargin theme is used with the `usepdftitle=false` class option (see #885)
+- fixed spacing problem for right-aligned frametitles without background colour
+- fixed missing `\newline` if ragged2e is used together with beamerarticle (#900)
+- defined `\fnum@table` to avoid breaking longtable (#905)
+- fixed: other sections would show the template for "miniframe in other subsection" instead of "mini frame in other section"
+- fixed unstable text position in sidebar theme by compensating for the space automatically inserted after the frametitle in https://github.com/josephwright/beamer/blob/main/base/beamerbaseframe.sty#L126
 
 ## [v3.71]
 
