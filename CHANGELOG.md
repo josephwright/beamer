@@ -19,6 +19,7 @@ a major and minor version only.
 - added `\maketitle`, `\title`, `\author`, `\institute` and `\date` to the exceptions for `ignorenonframetext`
 - avoid frame breaks between block title and body for rectangular blocks
 - added `\gdef\@currentHref{#2}` to labels (see #917)
+- fine-tune vertical space around section title in miniframe headline (close #895)
 
 ### Fixed
 
