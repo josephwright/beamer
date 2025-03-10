@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- fixed issue of block body not adapting to surrounding pgf fill opacity
+
 ## [v3.72]
 
 ### Added
