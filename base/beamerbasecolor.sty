@@ -221,7 +221,7 @@
       \ifdefined\beamer@colbox@bgopacity\pgfsetfillopacity{\beamer@colbox@bgopacity}\fi%
       \hskip-\beamer@colbox@colseps%
       \fboxsep=\z@\colorbox{bg}{%
-        \pgfsetfillopacity{1}%
+        \ifdefined\beamer@colbox@bgopacity\pgfsetfillopacity{1}\fi%
         \hskip\beamer@colbox@colseps%
         \box\beamer@tempbox%
         \hskip\beamer@colbox@colseps%
