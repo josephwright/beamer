@@ -11,6 +11,7 @@ a major and minor version only.
 ### Fixed
 
 - fixed issue of block body not adapting to surrounding pgf fill opacity
+- fixed section title alignment in tree and smoothtree outer themes if combined with a split-based outer theme
 
 ## [v3.72]
 
