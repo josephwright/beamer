@@ -12,6 +12,7 @@ a major and minor version only.
 
 - fixed issue of block body not adapting to surrounding pgf fill opacity
 - fixed section title alignment in tree and smoothtree outer themes if combined with a split-based outer theme
+- fixed incorrect uncovering of rounded shadow blocks after `\pause`, see https://tex.stackexchange.com/q/745623/36296
 
 ## [v3.72]
 
