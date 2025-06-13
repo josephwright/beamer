@@ -650,6 +650,14 @@
   \setbeamersize{mini frame size=.1cm,mini frame offset=.05cm}%
 }
 
+\defbeamertemplate{mini frame in current section}{box}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\beamer@boxsize}{\the\beamer@boxsize}}
+    \pgfusepath{stroke}
+  \end{pgfpicture}%
+}
+
 \defbeamertemplate{mini frame in current subsection}{box}
 {%
   \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
@@ -665,6 +673,11 @@
 [action]
 {%
   \setbeamersize{mini frame size=.1cm,mini frame offset=.05cm}%
+}
+
+\defbeamertemplate{mini frame in current section}{tick}
+{%
+  \vrule height\beamer@boxsize width0.4pt%
 }
 
 \defbeamertemplate{mini frame in current subsection}{tick}

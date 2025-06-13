@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- added missing `mini frame in current section` templates for `box` and `tick` (fix #940)
+
 ## [v3.73]
 
 ### Fixed
