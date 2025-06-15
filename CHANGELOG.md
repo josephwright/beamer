@@ -11,6 +11,7 @@ a major and minor version only.
 ### Fixed
 
 - added missing `mini frame in current section` templates for `box` and `tick` (fix #940)
+- adopt workaroud for changed label definition in amsmath from https://chat.stackexchange.com/transcript/message/67866940#67866940 (fix #941)
 
 ## [v3.73]
 
