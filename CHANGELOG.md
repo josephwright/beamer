@@ -8,6 +8,9 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+- Definition of `\beamer@label@in@display` to track `amsmath` changes
+
 ## [v3.74]
 
 ### Fixed
