@@ -188,10 +188,8 @@ A presentation consists of a series of frames. Each frame consists of a series o
 
 \begin{verbatim}
 \begin{frame}[plain]
-  \begin{centering}%
-    \pgfimage[height=\paperheight]{somebigimagefile}%
-    \par%
-  \end{centering}%
+  \centering
+  \pgfimage[height=\paperheight]{somebigimagefile}%
 \end{frame}
 \end{verbatim}
 
@@ -204,11 +202,11 @@ A presentation consists of a series of frames. Each frame consists of a series o
   \pgfuseimage{toptitle}
   \vskip0pt plus 1filll
 
-  \begin{centering}
+  \begin{center}
     {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}
 
     \insertdate
-  \end{centering}
+  \end{center}
 
   \vskip0pt plus 1filll
   \pgfuseimage{bottomtitle}

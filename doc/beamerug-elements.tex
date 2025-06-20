@@ -207,11 +207,10 @@ Suppose we would like to have the frame title typeset in red, centered, and bold
 
 \begin{verbatim}
 \begin{frame}
-  \begin{centering}
+  \begin{center}
     \color{red}
     \textbf{The Title of This Frame.}
-    \par
-  \end{centering}
+  \end{center}
 
   Blah, blah.
 \end{frame}
@@ -222,11 +221,10 @@ In order to typeset the frame title in this way on all slides, in the simplest c
 \begin{verbatim}
 \setbeamertemplate{frametitle}
 {
-  \begin{centering}
-    \color{red}
-    \textbf{\insertframetitle}
-    \par
-  \end{centering}
+  \centering
+  \color{red}
+  \textbf{\insertframetitle}
+  \par
 }
 \end{verbatim}
 We can then use the following code to get the desired effect:
@@ -246,10 +244,9 @@ We can take this example a step further. It would be nicer if we did not have to
 \setbeamercolor{frametitle}{fg=red}
 \setbeamertemplate{frametitle}
 {
-  \begin{centering}
-    \textbf{\insertframetitle}
-    \par
-  \end{centering}
+  \centering
+  \textbf{\insertframetitle}
+  \par
 }
 \end{verbatim}
 
@@ -260,9 +257,8 @@ Next, we can also make the font ``themable.'' Just like the color, the \beamer-f
 \setbeamerfont{frametitle}{series=\bfseries}
 \setbeamertemplate{frametitle}
 {
-  \begin{centering}
-    \insertframetitle\par
-  \end{centering}
+  \centering
+  \insertframetitle\par
 }
 \end{verbatim}
 
