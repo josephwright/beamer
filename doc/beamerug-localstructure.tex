@@ -966,6 +966,8 @@ The main environment for creating columns is called |columns|. Inside this envir
   \item
     \declare{|totalwidth=|\meta{width}} will cause the columns to occupy not the whole page width, but only \meta{width}, all told.
      Note that this means that any margins are ignored.
+  \item
+    \declare{|height=|\meta{height}} will set a fixed height for the columns. 
   \end{itemize}
 
   \example
@@ -998,8 +1000,8 @@ The main environment for creating columns is called |columns|. Inside this envir
 
 To create a column, you can either use the |column| environment or the |\column| command.
 
-\begin{environment}{{column}\sarg{action specification}\oarg{placement}\marg{column width}}
-  Creates a single column of width \meta{column width}. If the \meta{action specification} is present, the given actions are taken on the specified slides, see Section~\ref{section-action-specifications}. The vertical placement of the enclosing |columns| environment can be overruled by specifying a specific \meta{placement} (|t| and |T| for the two top modes, |c| for centered, and |b| for bottom).
+\begin{environment}{{column}\sarg{action specification}\oarg{options}\marg{column width}}
+  Creates a single column of width \meta{column width}. If the \meta{action specification} is present, the given actions are taken on the specified slides, see Section~\ref{section-action-specifications}. The vertical placement of the enclosing |columns| environment can be overruled by specifying a specific placement in \meta{options} (|t| and |T| for the two top modes, |c| for centered, and |b| for bottom). The |height=|\meta{height} key can be used to specify a fixed height.
 
   \example
   The following code has the same effect as the above examples:
@@ -1019,7 +1021,7 @@ To create a column, you can either use the |column| environment or the |\column|
 
 \end{environment}
 
-\begin{command}{{\column}\sarg{action specification}\oarg{placement}\marg{column width}}
+\begin{command}{{\column}\sarg{action specification}\oarg{options}\marg{column width}}
   Starts a single column. The parameters and options are the same as for the |column| environment. The column automatically ends with the next occurrence of |\column| or of a |column| environment or of the end of the current |columns| environment.
 
   \example

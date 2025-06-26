@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### New
+
+- added `height=...` options for `columns` and `column` to set a fixed height
+
 ### Changed
 - Definition of `\beamer@label@in@display` to track `amsmath` changes
 

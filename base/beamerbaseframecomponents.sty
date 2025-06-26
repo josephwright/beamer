@@ -193,6 +193,10 @@
 % Columns
 %
 %
+\newif\ifbeamer@colheight
+\beamer@colheightfalse
+\newlength{\beamer@colheight}
+
 \define@key{beamer@col}{onlytextwidth}[true]{%
   \def\beamer@colentrycode{\hbox to\textwidth\bgroup\ignorespaces}%
   \def\beamer@colexitcode{\unskip\egroup}}
@@ -203,6 +207,7 @@
 \define@key{beamer@col}{t}[true]{\def\beamer@colmode{t}\def\beamer@colalign{t}\def\beamer@colheadskip{}}
 \define@key{beamer@col}{T}[true]{\def\beamer@colmode{T}\def\beamer@colalign{t}\def\beamer@colheadskip{\vskip-1ex\nointerlineskip}}
 \define@key{beamer@col}{b}[true]{\def\beamer@colmode{b}\def\beamer@colalign{b}\def\beamer@colheadskip{}}
+\define@key{beamer@col}{height}{\setlength{\beamer@colheight}{#1}\beamer@colheighttrue}
 
 \newenvironment<>{columns}[1][]{%
   \begin{actionenv}#2%
@@ -264,7 +269,11 @@
   \beamer@colclose\def\beamer@colclose{}%
   \begin{actionenv}#3%
     \setkeys{beamer@col}{#1}%
-    \begin{minipage}[\beamer@colalign]{#2}%
+    \ifbeamer@colheight
+      \begin{minipage}[\beamer@colalign][\beamer@colheight]{#2}%
+    \else
+      \begin{minipage}[\beamer@colalign]{#2}%
+    \fi
       \leavevmode\raggedright\beamer@colheadskip\ignorespaces}
     {\end{minipage}\hfill\end{actionenv}\@ignoretrue}
 \let\endcolumn\endbeamer@columnenv
@@ -274,7 +283,11 @@
   \def\beamer@colclose{\end{minipage}\hfill\end{actionenv}\ignorespaces}%
 \begin{actionenv}#3%
   \setkeys{beamer@col}{#1}%
-  \begin{minipage}[\beamer@colalign]{#2}%
+  \ifbeamer@colheight
+    \begin{minipage}[\beamer@colalign][\beamer@colheight]{#2}%
+  \else
+    \begin{minipage}[\beamer@colalign]{#2}%
+  \fi
     \leavevmode\raggedright\beamer@colheadskip\ignorespaces}
 
 
