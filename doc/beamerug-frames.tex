@@ -1075,7 +1075,7 @@ The frame title is shown prominently at the top of the frame and can be specifie
   The frame title is not typeset immediately when the command |\frametitle| is encountered. Rather, the argument of the command is stored internally and the frame title is only typeset when the complete frame has been read. This gives you access to both the \meta{frame title text} and to the \meta{subframe title text} that is possibly introduced using the |\framesubtitle| command.
 
   \articlenote
-  By default, this command creates a new paragraph in |article| mode, entitled \meta{frame title text}. Using the \meta{overlay specification} makes it easy to suppress a frame title once in a while. If you generally wish to suppress \emph{all} frame titles in |article| mode, say |\setbeamertemplate<article>{frametitle}{}|.
+  By default, this command creates a new paragraph in |article| mode, entitled \meta{frame title text}. Using the \meta{overlay specification} makes it easy to suppress a frame title once in a while. If you generally wish to suppress \emph{all} frame titles in |article| mode, use |\mode<article>{\setbeamertemplate{frametitle}{}}|.
 
   \begin{element}{frametitle}\yes\yes\yes
     \colorfontparents{titlelike}
