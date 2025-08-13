@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.76]
+
 ## [v3.75]
 
 ### New
@@ -304,7 +306,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.75...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.76...HEAD
+[v3.76]: https://github.com/josephwright/beamer/compare/v3.75...v3.76
 [v3.75]: https://github.com/josephwright/beamer/compare/v3.74...v3.75
 [v3.74]: https://github.com/josephwright/beamer/compare/v3.73...v3.74
 [v3.73]: https://github.com/josephwright/beamer/compare/v3.72...v3.73
