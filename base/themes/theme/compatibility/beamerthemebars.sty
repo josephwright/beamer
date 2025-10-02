@@ -7,11 +7,20 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{footline=authorinstitutetitle}{beamerouterthememiniframes}
+\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}
+
+\DeclareOptionBeamer{subsection}[true]{\PassOptionsToPackage{subsection=#1}{beamerouterthememiniframes}}
+\DeclareOptionBeamer{footline}{\PassOptionsToPackage{footline=#1}{beamerouterthememiniframes}}
+\DeclareOptionBeamer{onlysmall}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+\DeclareOptionBeamer{onlylarge}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+
+\ProcessOptionsBeamer
 
 \mode<presentation>
 
-\usefonttheme[onlysmall]{structurebold}
-\useoutertheme[footline=authorinstitutetitle]{miniframes}
+\usefonttheme{structurebold}
+\useoutertheme{miniframes}
 \usecolortheme{whale}
 
 

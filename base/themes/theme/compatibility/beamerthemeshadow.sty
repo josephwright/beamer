@@ -7,14 +7,22 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{shadow=true}{beamerinnerthemerounded}
+\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}
+
+\DeclareOptionBeamer{shadow}[true]{\PassOptionsToPackage{shadow=#1}{beamerinnerthemerounded}}
+\DeclareOptionBeamer{onlysmall}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+\DeclareOptionBeamer{onlylarge}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+
+\ProcessOptionsBeamer
 
 \mode<presentation>
 
-\useinnertheme[shadow=true]{rounded}
+\useinnertheme{rounded}
 \usecolortheme{orchid}
 \usecolortheme{whale}
 \useoutertheme{shadow}
-\usefonttheme[onlysmall]{structurebold}
+\usefonttheme{structurebold}
 
 \setbeamercolor{title}{use=structure,fg=white,bg=structure.fg}
 \setbeamerfont{block title}{size={}}

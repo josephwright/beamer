@@ -7,6 +7,13 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}
+
+\DeclareOptionBeamer{hooks}[true]{\PassOptionsToPackage{hooks=#1}{beamerouterthemetree}}
+\DeclareOptionBeamer{onlysmall}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+\DeclareOptionBeamer{onlylarge}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+
+\ProcessOptionsBeamer
 
 \mode<presentation>
 

@@ -6,13 +6,18 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{shadow=true}{beamerinnerthemerounded}
+
+\DeclareOptionBeamer{shadow}[true]{\PassOptionsToPackage{shadow=#1}{beamerinnerthemerounded}}
+
+\ProcessOptionsBeamer
 
 \mode<presentation>
 
 \useoutertheme{smoothtree}
 \usecolortheme{whale}
 \usecolortheme{orchid}
-\useinnertheme[shadow=true]{rounded}
+\useinnertheme{rounded}
 
 \setbeamerfont{block title}{size={}}
 

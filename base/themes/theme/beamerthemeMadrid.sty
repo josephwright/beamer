@@ -12,12 +12,16 @@
 \newif\ifbeamer@secheader
 \beamer@secheaderfalse
 
+\PassOptionsToPackage{shadow=true}{beamerinnerthemerounded}
+
 \DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\DeclareOptionBeamer{shadow}[true]{\PassOptionsToPackage{shadow=#1}{beamerinnerthemerounded}}
+
 \ProcessOptionsBeamer
 
 \usecolortheme{whale}
 \usecolortheme{orchid}
-\useinnertheme[shadow]{rounded}
+\useinnertheme{rounded}
 \useoutertheme{infolines}
 
 \ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi

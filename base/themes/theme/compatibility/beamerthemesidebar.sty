@@ -15,16 +15,25 @@
 \beamer@sidebardarkfalse
 
 \PassOptionsToPackage{width=2.5cm}{beamerouterthemesidebar}
+\PassOptionsToPackage{right}{beamerouterthemesidebar}
+\PassOptionsToPackage{height=0pt}{beamerouterthemesidebar}
 
+\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{height}{\PassOptionsToPackage{height=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{tab}[true]{\csname beamer@sidebartab#1\endcsname}
 \DeclareOptionBeamer{dark}[true]{\csname beamer@sidebardark#1\endcsname}
+\DeclareOptionBeamer{onlysmall}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+\DeclareOptionBeamer{onlylarge}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
 
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
-\useoutertheme[right,height=0pt]{sidebar}
+\useoutertheme{sidebar}
 
 \ifbeamer@sidebardark
   \usefonttheme{structurebold}
@@ -36,7 +45,7 @@
   \usebeamercolor{palette primary}
   \setbeamertemplate{sidebar canvas right}[vertical shading][top=palette quaternary.bg,bottom=palette primary.bg]
 \else
-  \usecolortheme{seahorse}  
+  \usecolortheme{seahorse}
 
   \usebeamercolor{sidebar}
   \setbeamertemplate{sidebar canvas right}[vertical shading][top=sidebar.bg,bottom=white]

@@ -8,6 +8,9 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+- unified option-handling of themes. They now all allow passing options on to inner/outer/colour/font themes
+
 ## [v3.76]
 
 ## [v3.75]

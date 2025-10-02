@@ -12,11 +12,16 @@
 \newif\ifbeamer@secheader
 \beamer@secheaderfalse
 
+\PassOptionsToPackage{shadow=true}{beamerinnerthemerounded}
+
 \DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\DeclareOptionBeamer{shadow}[true]{\PassOptionsToPackage{shadow=#1}{beamerinnerthemerounded}}
+
+
 \ProcessOptionsBeamer
 
 \usecolortheme{rose}
-\useinnertheme[shadow]{rounded}
+\useinnertheme{rounded}
 \usecolortheme{dolphin}
 \useoutertheme{infolines}
 

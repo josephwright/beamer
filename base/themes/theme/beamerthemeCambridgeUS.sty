@@ -6,10 +6,15 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{shadow=true}{beamerinnerthemerounded}
+
+\DeclareOptionBeamer{shadow}[true]{\PassOptionsToPackage{shadow=#1}{beamerinnerthemerounded}}
+
+\ProcessOptionsBeamer
 
 \mode<presentation>
 
-\useinnertheme[shadow=true]{rounded}
+\useinnertheme{rounded}
 \useoutertheme{infolines}
 \usecolortheme{beaver}
 
