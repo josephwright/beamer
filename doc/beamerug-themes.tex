@@ -67,7 +67,7 @@ All themes listed without author mentioned were developed by Till. If a theme ha
   As the name suggests, this theme is installed by default. It is a sober no-nonsense theme that makes minimal use of color or font variations. This theme is useful for all kinds of talks, except for very long talks.
 \end{themeexample}
 
-\begin{themeexample}[{\opt{|[headheight=|\meta{head height}|,footheight=|\meta{foot height}|]|}}]{boxes}
+\begin{themeexample}[\oarg{options}]{boxes}
   For this theme, you can specify an arbitrary number of templates for the boxes in the headline and in the footline. You can add a template for another box by using the following commands.
 
   \begin{command}{\addheadbox\marg{beamer color}\marg{box template}}
@@ -105,9 +105,15 @@ All themes listed without author mentioned were developed by Till. If a theme ha
 \addfootbox{structure}{\tiny\quad 2. Box}
 \end{verbatim}
   \end{command}
+
+The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|headheight=|\meta{dimension}}
+  \item \declare{|footheight=|\meta{dimension}}
+  \end{itemize}
 \end{themeexample}
 
-\begin{themeexample}[\oarg{options}]{Bergen}
+\begin{themeexample}{Bergen}
   A theme based on the |inmargin| inner theme and the |rectangles| inner theme. Using this theme is not quite trivial since getting the spacing right can be trickier than with most other themes. Also, this theme goes badly with columns. You may wish to consult the remarks on the |inmargin| inner theme.
 
   Bergen is a town in Norway. It hosted \textsc{iwpec} 2004.
@@ -117,32 +123,46 @@ All themes listed without author mentioned were developed by Till. If a theme ha
   A theme giving much information in little space. The following \meta{options} may be given:
   \begin{itemize}
   \item \declare{|secheader|} causes a headline to be inserted showing the current section and subsection. By default, this headline is not shown.
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
   \end{itemize}
 
   \themeauthor Manuel Carro. Boadilla is a village in the vicinity of Madrid, hosting the University's Computer Science department.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Madrid}
-  Like the |Boadilla| theme, except that stronger colors are used and that the itemize icons are not modified. The same \meta{options} as for the |Boadilla| theme may be given.
+  Like the |Boadilla| theme, except that stronger colors are used and that the itemize icons are not modified. The following \meta{options} may be given:
+    \begin{itemize}
+    \item \declare{|secheader|} causes a headline to be inserted showing the current section and subsection. By default, this headline is not shown.
+    \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+    \end{itemize}
 
   \themeauthor Manuel Carro. Madrid is the capital of Spain.
 \end{themeexample}
 
-\begin{themeexample}{AnnArbor}
-  Like |Boadilla|, but using the colors of the University of Michigan.
+\begin{themeexample}[\oarg{option}]{AnnArbor}
+  Like |Boadilla|, but using the colors of the University of Michigan. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   \themeauthor Madhusudan Singh. The University of Michigan is located at Ann Arbor.
 \end{themeexample}
 
-\begin{themeexample}{CambridgeUS}
-  Like |Boadilla|, but using the colors of MIT.
+\begin{themeexample}[\oarg{option}]{CambridgeUS}
+  Like |Boadilla|, but using the colors of MIT. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   \themeauthor Madhusudan Singh.
 \end{themeexample}
 
-\begin{themeexample}{EastLansing}
-  Like |Boadilla|, but using the colors of Michigan State University.
-  
+\begin{themeexample}[\oarg{option}]{EastLansing}
+  Like |Boadilla|, but using the colors of Michigan State University. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
+
   \themeauthor Alan Munn. Michigan State University is located in East Lansing.
 \end{themeexample}
 
@@ -153,33 +173,44 @@ All themes listed without author mentioned were developed by Till. If a theme ha
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Rochester}
-  A dominant theme without any navigational elements. It can be made less dominant by using a different color theme.
-
-  The following \meta{options} may be given:
+  A dominant theme without any navigational elements. It can be made less dominant by using a different color theme. The following \meta{options} may be given:
   \begin{itemize}
-  \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
+    \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
+    \item \declare{|width=|\meta{dimension}} sets the width of the sidebar. By default the width is 0 and the sidebar invisible.
+    \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
+    \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
+    \item \declare{|left|} puts the sidebar on the left (default).
+    \item \declare{|right|} puts the sidebar on the right.
   \end{itemize}
 
   Rochester is a town in upstate New York, USA. Till visited Rochester in 2001.
 \end{themeexample}
 
-
 \subsection{Presentation Themes with a Tree-Like Navigation Bar}
 
-\begin{themeexample}{Antibes}
-  A dominant theme with a tree-like navigation at the top. The rectangular elements mirror the rectangular navigation at the top. The theme can be made less dominant by using a different color theme.
+\begin{themeexample}[\oarg{option}]{Antibes}
+  A dominant theme with a tree-like navigation at the top. The rectangular elements mirror the rectangular navigation at the top. The theme can be made less dominant by using a different color theme. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|hooks|}\opt{|=|\meta{\underline{true} or false}} causes little ``hooks'' to be drawn in front of the section and subsection entries.
+  \end{itemize}
 
   Antibes is a town in the south of France. It hosted \textsc{stacs} 2002.
 \end{themeexample}
 
-\begin{themeexample}{JuanLesPins}
-  A variation on the |Antibes| theme that has a much ``smoother'' appearance. It can be made less dominant by choosing a different color theme.
+\begin{themeexample}[\oarg{option}]{JuanLesPins}
+  A variation on the |Antibes| theme that has a much ``smoother'' appearance. It can be made less dominant by choosing a different color theme. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   Juan--Les--Pins is a cozy village near Antibes. It hosted \textsc{stacs} 2002.
 \end{themeexample}
 
-\begin{themeexample}{Montpellier}
-  A sober theme giving basic navigational hints. The headline can be made more dominant by using a different color theme.
+\begin{themeexample}[\oarg{option}]{Montpellier}
+  A sober theme giving basic navigational hints. The headline can be made more dominant by using a different color theme. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|hooks|}\opt{|=|\meta{\underline{true} or false}} causes little ``hooks'' to be drawn in front of the section and subsection entries.
+  \end{itemize}
 
   Montpellier is in the south of France. It hosted \textsc{stacs} 2004.
 \end{themeexample}
@@ -197,46 +228,71 @@ All themes listed without author mentioned were developed by Till. If a theme ha
 
   This color theme works with all themes that show a table of contents in the sidebar.
 
-  This theme is useful for long talks like lectures that require a table of contents to be visible all the time.
-
-  The following \meta{options} may be given:
+  This theme is useful for long talks like lectures that require a table of contents to be visible all the time. The following \meta{options} may be given:
   \begin{itemize}
   \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
   \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
   \item \declare{|left|} puts the sidebar on the left (default).
   \item \declare{|right|} puts the sidebar on the right.
   \item \declare{|width=|\meta{dimension}} sets the width of the sidebar. If set to zero, no sidebar is created.
+  \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
   \end{itemize}
 
   Berkeley is on the western coast of the USA, near San Francisco. Till visited Berkeley for a year in 2004.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{PaloAlto}
-  A variation on the |Berkeley| theme with less dominance of rectangular areas. The same \meta{options} as for the |Berkeley| theme can be given.
+  A variation on the |Berkeley| theme with less dominance of rectangular areas. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
+  \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
+  \item \declare{|left|} puts the sidebar on the left (default).
+  \item \declare{|right|} puts the sidebar on the right.
+  \item \declare{|width=|\meta{dimension}} sets the width of the sidebar. If set to zero, no sidebar is created.
+  \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   Palo Alto is also near San Francisco. It hosted the Bay Area Theory Workshop 2004.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Goettingen}
-  A relatively sober theme useful for a longer talk that demands a sidebar with a full table of contents.  The same \meta{options} as for the |Berkeley| theme can be given.
+  A relatively sober theme useful for a longer talk that demands a sidebar with a full table of contents. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
+  \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
+  \item \declare{|left|} puts the sidebar on the left (default).
+  \item \declare{|right|} puts the sidebar on the right.
+  \item \declare{|width=|\meta{dimension}} sets the width of the sidebar. If set to zero, no sidebar is created.
+  \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
+  \end{itemize}
 
   G\"ottingen is a town in Germany. It hosted the 42nd Theorietag.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Marburg}
-  A very dominant variation of the |Goettingen| theme. The same \meta{options} may be given.
+  A very dominant variation of the |Goettingen| theme. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
+  \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
+  \item \declare{|left|} puts the sidebar on the left (default).
+  \item \declare{|right|} puts the sidebar on the right.
+  \item \declare{|width=|\meta{dimension}} sets the width of the sidebar. If set to zero, no sidebar is created.
+  \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
+  \end{itemize}
 
   Marburg is a town in Germany. It hosted the 46th Theorietag.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Hannover}
-  In this theme, the sidebar on the left is balanced by right-flushed frame titles.
-
-  The following \meta{options} may be given:
+  In this theme, the sidebar on the left is balanced by right-flushed frame titles. The following \meta{options} may be given:
   \begin{itemize}
   \item \declare{|hideallsubsections|} causes only sections to be shown in the sidebar. This is useful, if you need to save space.
   \item \declare{|hideothersubsections|} causes only the subsections of the current section to be shown. This is useful, if you need to save space.
-  \item \declare{|width=|\meta{dimension}} sets the width of the sidebar.
+  \item \declare{|left|} puts the sidebar on the left (default).
+  \item \declare{|right|} puts the sidebar on the right.
+  \item \declare{|width=|\meta{dimension}} sets the width of the sidebar. If set to zero, no sidebar is created.
+  \item \declare{|height=|\meta{dimension}} sets the height of the frame title bar.
   \end{itemize}
 
   Hannover is a town in Germany. It hosted the 48th Theorietag.
@@ -246,49 +302,78 @@ All themes listed without author mentioned were developed by Till. If a theme ha
 \subsection{Presentation Themes with a Mini Frame Navigation}
 
 \begin{themeexample}[\oarg{options}]{Berlin}
-  A dominant theme with strong colors and dominating rectangular areas. The head- and footlines give lots of information and leave little space for the actual slide contents. This theme is useful for conferences where the audience is not likely to know the title of the talk or who is presenting it. The theme can be made less dominant by using a different color theme.
-
-  The following \meta{options} may be given:
+  A dominant theme with strong colors and dominating rectangular areas. The head- and footlines give lots of information and leave little space for the actual slide contents. This theme is useful for conferences where the audience is not likely to know the title of the talk or who is presenting it. The theme can be made less dominant by using a different color theme. The following \meta{options} may be given:
   \begin{itemize}
   \item \declare{|compress|} causes the mini frames in the headline to use only a single line. This is useful for saving space.
+  \item \declare{|subsection|}\opt{|=|\meta{\underline{true} or false}} shows or surpresses line showing the subsection in the headline.
+  \item \declare{|footline=|\meta{...}} allows choosing different footlines. See the |miniframes| outer theme for available footlines.
   \end{itemize}
 
   Berlin is the capital of Germany.
 \end{themeexample}
 
 \begin{themeexample}[\oarg{options}]{Ilmenau}
-  A variation on the |Berlin| theme. The same \meta{options} may be given.
+  A variation on the |Berlin| theme. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|compress|} causes the mini frames in the headline to use only a single line. This is useful for saving space.
+  \item \declare{|subsection|}\opt{|=|\meta{\underline{true} or false}} shows or surpresses line showing the subsection in the headline.
+  \item \declare{|footline=|\meta{...}} allows choosing different footlines. See the |miniframes| outer theme for available footlines.
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   Ilmenau is a town in Germany. It hosted the 40th Theorietag.
 \end{themeexample}
 
-\begin{themeexample}{Dresden}
-  A variation on the |Berlin| theme with a strong separation into navigational stuff at the top/bottom and a sober main text. The same \meta{options} may be given.
+\begin{themeexample}[\oarg{options}]{Dresden}
+  A variation on the |Berlin| theme with a strong separation into navigational stuff at the top/bottom and a sober main text. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|compress|} causes the mini frames in the headline to use only a single line. This is useful for saving space.
+  \item \declare{|subsection|}\opt{|=|\meta{\underline{true} or false}} shows or surpresses line showing the subsection in the headline.
+  \item \declare{|footline=|\meta{...}} allows choosing different footlines. See the |miniframes| outer theme for available footlines.
+  \end{itemize}
 
   Dresden is a town in Germany. It hosted STACS 2001.
 \end{themeexample}
 
 
-\begin{themeexample}{Darmstadt}
-  A theme with a strong separation into a navigational upper part and an informational main part. By using a different color theme, this separation can be lessened.
+\begin{themeexample}[\oarg{options}]{Darmstadt}
+  A theme with a strong separation into a navigational upper part and an informational main part. By using a different color theme, this separation can be lessened. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|subsection|}\opt{|=|\meta{\underline{true} or false}} shows or surpresses line showing the subsection in the headline.
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   Darmstadt is a town in Germany.
 \end{themeexample}
 
-\begin{themeexample}{Frankfurt}
-  A variation on the |Darmstadt| theme that is slightly less cluttered by leaving out the subsection information.
+\begin{themeexample}[\oarg{options}]{Frankfurt}
+  A variation on the |Darmstadt| theme that is slightly less cluttered by leaving out the subsection information. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|subsection|}\opt{|=|\meta{\underline{true} or false}} shows or surpresses line showing the subsection in the headline.
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   Frankfurt is a town in Germany.
 \end{themeexample}
 
-\begin{themeexample}{Singapore}
-  A not-too-sober theme with navigation that does not dominate.
+\begin{themeexample}[\oarg{options}]{Singapore}
+  A not-too-sober theme with navigation that does not dominate. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|compress|} causes the mini frames in the headline to use only a single line. This is useful for saving space.
+  \item \declare{|subsection|}\opt{|=|\meta{\underline{true} or false}} shows or surpresses line showing the subsection in the headline.
+  \item \declare{|footline=|\meta{...}} allows choosing different footlines. See the |miniframes| outer theme for available footlines.
+  \end{itemize}
 
   Singapore is located in south-eastern Asia. It hosted \textsc{cocoon} 2002.
 \end{themeexample}
 
-\begin{themeexample}{Szeged}
-  A sober theme with a strong dominance of horizontal lines.
+\begin{themeexample}[\oarg{options}]{Szeged}
+  A sober theme with a strong dominance of horizontal lines. The following \meta{options} may be given:
+  \begin{itemize}
+  \item \declare{|compress|} causes the mini frames in the headline to use only a single line. This is useful for saving space.
+  \item \declare{|subsection|}\opt{|=|\meta{\underline{true} or false}} shows or surpresses line showing the subsection in the headline.
+  \item \declare{|footline=|\meta{...}} allows choosing different footlines. See the |miniframes| outer theme for available footlines.
+  \end{itemize}
 
   Szeged is on the south border of Hungary. It hosted \textsc{dlt} 2003.
 \end{themeexample}
@@ -296,8 +381,11 @@ All themes listed without author mentioned were developed by Till. If a theme ha
 
 \subsection{Presentation Themes with Section and Subsection Tables}
 
-\begin{themeexample}{Copenhagen}
-  A not-quite-too-dominant theme. This theme gives compressed information about the current section and subsection at the top and about the title and the author at the bottom. No shadows are used, giving the presentation a ``flat'' look. The theme can be made less dominant by using a different color theme.
+\begin{themeexample}[\oarg{option}]{Copenhagen}
+  A not-quite-too-dominant theme. This theme gives compressed information about the current section and subsection at the top and about the title and the author at the bottom. No shadows are used, giving the presentation a ``flat'' look. The theme can be made less dominant by using a different color theme. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   Copenhagen is the capital of Denmark. It is connected to Malm\"o by the \O resund bridge.
 \end{themeexample}
@@ -314,8 +402,11 @@ All themes listed without author mentioned were developed by Till. If a theme ha
   Malm\"o is a town in southern Sweden. It hosted \textsc{fct} 2001.
 \end{themeexample}
 
-\begin{themeexample}{Warsaw}
-  A dominant variation of the |Copenhagen| theme.
+\begin{themeexample}[\oarg{option}]{Warsaw}
+  A dominant variation of the |Copenhagen| theme. The following \meta{option} may be given:
+  \begin{itemize}
+  \item \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} controls shadows around blocks.
+  \end{itemize}
 
   Warsaw is the capital of Poland. It hosted \textsc{mfcs} 2002.
 \end{themeexample}
@@ -326,17 +417,21 @@ All themes listed without author mentioned were developed by Till. If a theme ha
 Earlier versions of \beamer\ included some further themes. These themes are still available for compatibility, though they are now implemented differently (they also mainly install appropriate color, font, inner, and outer themes). However, they may or may not honor color themes and they will not be supported in the future. The following list shows which of the new themes should be used instead of the old themes. (When switching, you may want to use the font theme |structurebold| with the option |onlysmall|.)
 
 \medskip
-\begin{tabular}{lp{13cm}}
-  Old theme & Replacement options \\\hline
-  none & Use |compatibility|. \\
-  |bars| & Try |Dresden| instead. \\
-  |classic| & Try |Singapore| instead. \\
-  |lined| & Try |Szeged| instead. \\
-  |plain| & Try none or |Pittsburgh| instead. \\
+\noindent
+\begin{tabular}{@{}l>{\raggedright}p{6.4cm}>{\raggedright\arraybackslash}p{7.6cm}@{}}
+  \toprule
+  Old theme & Replacement & Theme options \\
+  \midrule
+  none & Use |compatibility| & |subsection|, |footline|, |onlysmall|, |onlylarge|\\
+  |bars| & Try |Dresden| instead & |subsection|, |footline|, |onlysmall|, |onlylarge|\\
+  |classic| & Try |Singapore| instead &\\
+  |lined| & Try |Szeged| instead & \\
+  |plain| & Try none or |Pittsburgh| instead & |onlysmall|, |onlylarge|\\
   |sidebar| & Try |Goettingen| for the light version and |Marburg| for
-  the dark version. \\
-  |shadow| & Try |Warsaw| instead. \\
-  |split| & Try |Malmoe| instead. \\
+  the dark version & |onlysmall|, |onlylarge|, |hideothersubsections|, |hideallsubsections|, |width|, |height|, |left|, |right|, |tab|, |dark|\\
+  |shadow| & Try |Warsaw| instead & |onlysmall|, |onlylarge|, |shadow|\\
+  |split| & Try |Malmoe| instead & |onlysmall|, |onlylarge|\\
   |tree| & Try |Montpellier| and, for the bars version, |Antibes| or
-  |JuansLesPins|.
+  |JuansLesPins| & |onlysmall|, |onlylarge|, |hooks|\\
+  \bottomrule
 \end{tabular}

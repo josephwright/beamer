@@ -7,13 +7,22 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{subsection=false}{beamerouterthememiniframes}
+\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}
+
+\DeclareOptionBeamer{subsection}[true]{\PassOptionsToPackage{subsection=#1}{beamerouterthememiniframes}}
+\DeclareOptionBeamer{footline}{\PassOptionsToPackage{footline=#1}{beamerouterthememiniframes}}
+\DeclareOptionBeamer{onlysmall}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+\DeclareOptionBeamer{onlylarge}{\PassOptionsToPackage{onlysmall}{beamerfontthemestructurebold}}
+
+\ProcessOptionsBeamer
 
 \mode<presentation>
 
-\usefonttheme[onlysmall]{structurebold}
+\usefonttheme{structurebold}
 \setbeamerfont{frametitle}{series=\bfseries}
 
-\useoutertheme[subsection=false]{miniframes}
+\useoutertheme{miniframes}
 \addtobeamertemplate{headline}
 {}
 {%

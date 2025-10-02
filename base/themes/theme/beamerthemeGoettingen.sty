@@ -6,14 +6,14 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
-
-\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections}{beamerouterthemesidebar}}
-\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections}{beamerouterthemesidebar}}
-
 \PassOptionsToPackage{right}{beamerouterthemesidebar}
 \PassOptionsToPackage{width=2cm}{beamerouterthemesidebar}
+\PassOptionsToPackage{height=0pt}{beamerouterthemesidebar}
 
+\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{height}{\PassOptionsToPackage{height=#1}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerouterthemesidebar}}
 
@@ -21,7 +21,7 @@
 
 \mode<presentation>
 
-\useoutertheme[height=0pt]{sidebar}
+\useoutertheme{sidebar}
 
 {\usebeamercolor{structure}}
 

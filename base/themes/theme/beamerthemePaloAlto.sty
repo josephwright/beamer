@@ -6,19 +6,22 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{shadow=true}{beamerinnerthemerounded}
 
 \DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemesidebar}}
-
 \DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{height}{\PassOptionsToPackage{height=#1}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerouterthemesidebar}}
 \DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerouterthemesidebar}}
+\DeclareOptionBeamer{shadow}[true]{\PassOptionsToPackage{shadow=#1}{beamerinnerthemerounded}}
+
 \ProcessOptionsBeamer
 
 \mode<presentation>
 
 \useoutertheme{sidebar}
-\useinnertheme[shadow=true]{rounded}
+\useinnertheme{rounded}
 \usecolortheme{orchid}
 \usecolortheme{whale}
 

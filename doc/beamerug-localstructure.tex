@@ -520,7 +520,7 @@ title}\sarg{action specification}}
 \subsection{Theorem Environments}
 \label{section-theorems}
 
-The \beamer\ class predefines several environments, like |theorem| or |definition| or |proof|, that you can use to typeset things like, well, theorems, definitions, or proofs. The complete list is the following: 
+The \beamer\ class predefines several environments, like |theorem| or |definition| or |proof|, that you can use to typeset things like, well, theorems, definitions, or proofs. The complete list is the following:
 |theorem|, |Theorem|, |corollary|, |Corollary|, |definition|, |Definition|, |definitions|, |fact|, |example|, |Example|, |examples|, |Examples|, |lemma|, |Lemma|, |problem|, |Problem|, |proof|, |Proof|, and |solution|.
 
 The following German block environments are also predefined: |Problem|, |Loesung|, |Definition|, |Satz|, |Beweis|, |Folgerung|, |Lemma|, |Fakt|, |Theorem|, |Beispiel|, and |Beispiele|.
@@ -835,9 +835,9 @@ The \beamer\ class also defines two environments for creating colored boxes.
 
     A typical example usage of this option arises when you insert a box with a colored background in the middle of normal text. In this case, if the background color is set, you would like a background to be drawn behind the text \emph{and} you would like a certain extra space around this text (the background should not stop immediately at the borders of the text, this looks silly) \emph{and} you would like the normal text always to be at the same horizontal position, independently of whether a background is present or not. In this case, using |colsep*=4pt| is a good option.
   \item
-    \declare{|shadow|}\opt{|=|\meta{true or false}} draws a shadow behind the box. Currently, this option only has an effect if used together with the |rounded| option, but that may change.
+    \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}} draws a shadow behind the box. Currently, this option only has an effect if used together with the |rounded| option, but that may change.
   \item
-    \declare{|rounded|}\opt{|=|\meta{true or false}} causes the borders of the box to be rounded off if there is a background installed. This command internally calls |beamerboxesrounded|. In this case, |colsep*| option will have no effect.
+    \declare{|rounded=|\meta{true or false}} causes the borders of the box to be rounded off if there is a background installed. This command internally calls |beamerboxesrounded|. In this case, |colsep*| option will have no effect.
   \item
     \declare{|ignorebg|} causes the background color of the \meta{beamer color} to be ignored, that is, to be treated as if it were set to ``transparent'' or ``empty.''
   \item
@@ -857,7 +857,7 @@ The \beamer\ class also defines two environments for creating colored boxes.
   \item
     \declare{|width=|\meta{dimension}} causes the width of the text inside the box to be the specified \meta{dimension}. By default, the |\textwidth| is used. Note that the box will protrude 4pt to the left and right.
   \item
-    \declare{|shadow=|\meta{true or false}}. If set to |true|, a shadow will be drawn.
+    \declare{|shadow|}\opt{|=|\meta{\underline{true} or false}}. If set to |true|, a shadow will be drawn.
   \item
     \declare{|bgopacity|=\marg{opacity}} sets the opacity with which the background is drawn. To draw a box with 30\% transparent background, set |bgopacity=0.7|. Note that with a transparent background fine gaps can appear in the box because the box is drawn in multiple segments. If |bgopacity| is not specified, |\pgfsetfillopacity| is never set so that the surrounding opacity setting is adopted.
   \end{itemize}
@@ -967,7 +967,7 @@ The main environment for creating columns is called |columns|. Inside this envir
     \declare{|totalwidth=|\meta{width}} will cause the columns to occupy not the whole page width, but only \meta{width}, all told.
      Note that this means that any margins are ignored.
   \item
-    \declare{|height=|\meta{height}} will set a fixed height for the columns. 
+    \declare{|height=|\meta{height}} will set a fixed height for the columns.
   \end{itemize}
 
   \example
@@ -1056,8 +1056,8 @@ Another package to conveniently position elements at specific positions on the f
   \tikz[remember picture, overlay] \node at (3.1415,1) {I'm here};
 
   \tikz[remember picture, overlay] \node at (current page.center) {I'm the centre of the frame!};
-\end{frame}	
-\end{verbatim} 
+\end{frame}
+\end{verbatim}
 
 \subsection{Verbatim and Fragile Text}
 

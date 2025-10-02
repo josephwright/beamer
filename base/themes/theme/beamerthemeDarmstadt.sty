@@ -6,11 +6,17 @@
 % 2. under the GNU Public License.
 %
 % See the file LICENSE.md for more details.
+\PassOptionsToPackage{shadow=true}{beamerinnerthemerounded}
+
+\DeclareOptionBeamer{subsection}[true]{\PassOptionsToPackage{subsection=#1}{beamerouterthemesmoothbars}}
+\DeclareOptionBeamer{shadow}[true]{\PassOptionsToPackage{shadow=#1}{beamerinnerthemerounded}}
+
+\ProcessOptionsBeamer
 
 \mode<presentation>
 
 \useoutertheme{smoothbars}
-\useinnertheme[shadow=true]{rounded}
+\useinnertheme{rounded}
 \usecolortheme{orchid}
 \usecolortheme{whale}
 
