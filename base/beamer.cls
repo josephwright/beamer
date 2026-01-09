@@ -90,6 +90,7 @@
 \newif\ifbeamer@ignorenonframe
 \newif\ifbeamer@autopdfinfo
 \newif\ifbeamer@onlytextwidth
+\newif\ifbeamer@framefootnotes
 
 % Option management
 \RequirePackage{beamerbaseoptions}
@@ -110,6 +111,7 @@
 \beamer@ignorenonframefalse
 \beamer@autopdfinfotrue
 \beamer@onlytextwidthfalse
+\beamer@framefootnotesfalse
 
 \DeclareOptionBeamer{usepdftitle}[true]{\csname beamer@autopdfinfo#1\endcsname}
 \DeclareOptionBeamer{envcountsect}{\beamer@countsecttrue}
@@ -174,6 +176,7 @@
       \lowercase{\def~{\kern1ex}}}}}
 
 \DeclareOptionBeamer{onlytextwidth}{\beamer@onlytextwidthtrue}
+\DeclareOptionBeamer{framefootnotes}{\beamer@framefootnotestrue}
 
 % obsolete options
 \DeclareOptionBeamer{notes}[show]{\csname beamer@notesaction@#1\endcsname}

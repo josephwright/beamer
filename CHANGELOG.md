@@ -8,6 +8,11 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### NEW
+
+- adding new `framefootnotes` class option, which will set the `frame` option for all footnotes
+- adding `noframe` footnote option to ensure a footnote is shown as part of a minipage 
+
 ### Changed
 - unified option-handling of themes. They now all allow passing options on to inner/outer/colour/font themes
 

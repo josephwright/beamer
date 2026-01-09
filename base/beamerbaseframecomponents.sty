@@ -350,6 +350,11 @@
   \def\beamer@mpfn{footnote}%
   \def\beamer@thempfn{\thefootnote}}
 
+\define@key{beamerfootnote}{noframe}[true]{%
+  \let\beamer@footnotetext=\@footnotetext%
+  \def\beamer@mpfn{mpfootnote}%
+  \def\beamer@thempfn{\thempfootnote}}
+
 \renewcommand<>{\footnote}[1][]{%
   \let\beamer@footnotetext=\@footnotetext%
   \let\beamer@mpfn=\@mpfn%
@@ -359,7 +364,11 @@
   \def\beamer@footarg{}%
   \def\KV@errx##1{\edef\beamer@footarg{\@tempa}}%
   \def\XKV@err##1{\edef\beamer@footarg{\XKV@tkey}}%
-  \setkeys{beamerfootnote}{#1}%
+  \ifbeamer@framefootnotes
+    \setkeys{beamerfootnote}{frame,#1}%
+  \else
+    \setkeys{beamerfootnote}{#1}%
+  \fi
   \let\KV@errx=\beamer@kvorig%
   \let\XKV@errx=\beamer@xkvorig
   \ifx\beamer@footarg\@empty%
