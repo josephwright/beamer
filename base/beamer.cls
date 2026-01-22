@@ -13,7 +13,7 @@
 % See the file LICENSE.md for more details.
 
 \ProvidesClass{beamer}
-  [2025/08/13 v3.76 A class for typesetting presentations]
+  [2026/01/22 v3.77 A class for typesetting presentations]
 
 % Abort if 'new LaTeX' is active
 \ifdefined\IfDocumentMetadataTF
