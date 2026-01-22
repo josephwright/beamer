@@ -19,8 +19,8 @@
 \ifdefined\IfDocumentMetadataTF
   \IfDocumentMetadataTF
     {\ClassError{beamer}{The beamer class is not compatible with \string\DocumentMetadata}
-      {You will need to switch to the new class ltx-talk:
-        beamer will never support \string\DocumentMetadata}}
+      {You will need either to remove \string\DocumentMetadata\space or switch to
+      the new ltx-talk class if you require tagged output.}}
     {}
 \fi
 
