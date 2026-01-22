@@ -15,6 +15,15 @@
 \ProvidesClass{beamer}
   [2025/08/13 v3.76 A class for typesetting presentations]
 
+% Abort if 'new LaTeX' is active
+\ifdefined\IfDocumentMetadataTF
+  \IfDocumentMetadataTF
+    {\ClassError{beamer}{The beamer class is not compatible with \string\DocumentMetadata}
+      {You will need to switch to the new class ltx-talk:
+        beamer will never support \string\DocumentMetadata}}
+    {}
+\fi
+
 % Setup modes and check for article option
 % Also loads packages required by both beamer and beamerarticle
 \RequirePackage{beamerbasemodes}

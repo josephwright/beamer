@@ -15,6 +15,7 @@ a major and minor version only.
 
 ### Changed
 - unified option-handling of themes. They now all allow passing options on to inner/outer/colour/font themes
+- Error if \DcoumentMetadata is used
 
 ## [v3.76]
 
