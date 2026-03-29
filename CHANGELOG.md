@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- redefined `\hyper@natlinkbreak`, see https://github.com/josephwright/beamer/pull/961#issuecomment-4149877759
+
 ## [v3.77]
 
 ### NEW
