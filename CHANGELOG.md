@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Fixed
+
+- redefine `\hyper@natlinkbreak` to avoid problems with natbib, see https://tug.org/pipermail/tex-live/2026-March/052345.html 
+
 ## [v3.77]
 
 ### NEW
