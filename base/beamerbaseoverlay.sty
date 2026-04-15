@@ -319,6 +319,7 @@
   \def\opaqueness<##1>##2{%
     \only<##1>{%
       \beamer@actions{%
+        \gdef\beamer@opacity{##2}%
         \expandafter\xdef\csname beamer@oldcolorhook%
         \the\beamer@coveringdepth\endcsname{\beamer@colorhook}%
         \expandafter\xdef\csname beamer@oldpgfextension%
@@ -330,6 +331,7 @@
         \color{.}%
       }%
       {%
+        \gdef\beamer@opacity{100}%
         \xdef\beamer@colorhook{\csname beamer@oldcolorhook%
           \the\beamer@coveringdepth\endcsname}%
         \xdef\beamer@pgfextension{\csname beamer@oldpgfextension%
