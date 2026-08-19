@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### NEW
+
+- adding `left triangle` templates for itemize and bibliography items, see #967
+
 ### Fixed
 
 - redefined `\hyper@natlinkbreak`, see https://github.com/josephwright/beamer/pull/961#issuecomment-4149877759
