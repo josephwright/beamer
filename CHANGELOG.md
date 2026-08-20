@@ -8,6 +8,8 @@ a major and minor version only.
 
 ## [Unreleased]
 
+## [v3.78]
+
 ### NEW
 
 - adding `left triangle` templates for itemize and bibliography items, see #967
@@ -327,7 +329,8 @@ a major and minor version only.
 - Support for `noxcolor` with `beamerarticle` (see #483)
 - Treatment of mixed overlay/alert specifications
 
-[Unreleased]: https://github.com/josephwright/beamer/compare/v3.77...HEAD
+[Unreleased]: https://github.com/josephwright/beamer/compare/v3.78...HEAD
+[v3.78]: https://github.com/josephwright/beamer/compare/v3.77...v3.78
 [v3.77]: https://github.com/josephwright/beamer/compare/v3.76...v3.77
 [v3.76]: https://github.com/josephwright/beamer/compare/v3.75...v3.76
 [v3.75]: https://github.com/josephwright/beamer/compare/v3.74...v3.75
