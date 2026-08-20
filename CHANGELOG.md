@@ -16,6 +16,7 @@ a major and minor version only.
 
 - redefined `\hyper@natlinkbreak`, see https://github.com/josephwright/beamer/pull/961#issuecomment-4149877759
 - shadow colour of covered blocks, see #962
+- definition of `\TINY`, see #968
 
 ## [v3.77]
 
