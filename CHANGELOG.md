@@ -8,6 +8,10 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### Changed
+
+- doc: updated list of exceptions for `ignorenonframetext`
+
 ## [v3.78]
 
 ### NEW
