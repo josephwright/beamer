@@ -16,6 +16,7 @@
 
 \newbox\beamer@framebox
 \newbox\beamer@frametitlebox
+\newbox\beamer@frameinputbox
 \newbox\beamer@zoombox
 \newcount\beamer@zoomcount
 \newcount\beamer@zoomframecount
@@ -91,6 +92,9 @@
     \beamer@inframetrue%
     \let\frame=\framelatex% inside frames, use LaTeX's \frame command
     \begin{beamer@framepauses}%
+      \ifvoid\beamer@frameinputbox\else%
+        \nointerlineskip\copy\beamer@frameinputbox\nointerlineskip%
+      \fi%
       \refcounter{framenumber}%use frame number for  \label
       \ifbeamer@shrink%
         \hsize=\beamer@shrinkfactorinv\hsize%
@@ -349,6 +353,15 @@
 {\def\beamer@frametext{frame}}
 
 \def\frame{%
+  % Keep a SyncTeX location before collecting the frame body. Without this,
+  % the nearest recorded line can belong to the preceding frame.
+  % The zero kern keeps the box non-void so SyncTeX indexes its boundary.
+  \global\setbox\beamer@frameinputbox=\box\voidb@x%
+  \ifdefined\synctex%
+    \ifnum\synctex=0\else%
+      \global\setbox\beamer@frameinputbox=\hbox{\kern0pt}%
+    \fi%
+  \fi%
   \ifx\@currenvir\beamer@frametext%
     \gdef\beamer@frameoptions{}%
     \let\beamer@next=\beamer@copewithframeenv%
@@ -584,7 +597,8 @@
 \def\beamer@@@@frameinput<#1>[#2]{\@ifnextchar[{\beamer@@@frameinput<#1>[{#2}]}{\beamer@@@frameinput<#1>[{#2}][]}}
 \def\beamer@@@frameinput<#1>[#2][#3]{%
   \global\advance\c@framenumber by-1\relax%
-  \edef\beamer@temp{\noexpand\frame<#1>[#2][{#3,fragile=false}]%
+  % Replaying a fragile frame must preserve its original input location.
+  \edef\beamer@temp{\noexpand\beamer@framecommand<#1>[#2][{#3,fragile=false}]%
     {\begingroup\noexpand\input{\beamer@verbfilename}\endgroup}}%
   \beamer@temp%
   \ifx\beamer@frameenvironmentsubst\beamer@frametext%
