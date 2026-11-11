@@ -234,7 +234,7 @@
       \ifmm@embed%
         % Embed each file only once, e.g. for overlays or reused videos.
         \@ifundefined{mm@filespec@#3}{%
-          \embedfile[id={mm@#3},mimetype={\mm@mimetype}]{#3}%
+          \embedfile[id={mm@#3},mimetype={\mm@mimetype},ucfilespec={\detokenize{#3}}]{#3}%
           \expandafter\xdef\csname mm@filespec@#3\endcsname{%
             \embedfilegetobject{mm@#3}{Filespec}}%
         }{}%
