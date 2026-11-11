@@ -8,6 +8,12 @@ a major and minor version only.
 
 ## [Unreleased]
 
+### NEW
+
+- `multimedia`: `\media` command, which includes video and sound files as
+  screen annotations with media renditions (PDF 1.5) and can embed the
+  media file in the PDF (`embed` option)
+
 ### Changed
 
 - doc: updated list of exceptions for `ignorenonframetext`

@@ -137,6 +137,33 @@ A movie can serve as the destination of a special kind of hyperlink, namely a hy
   \end{itemize}
 \end{command}
 
+The |\movie| command uses the \pdf\ movie annotation, which is deprecated in \pdf~2.0, and it cannot store the movie inside the \pdf\ file. The following command instead uses a screen annotation with a media rendition, the multimedia framework of the \pdf\ standard since \pdf~1.5. With the |embed| option, the media file becomes part of the \pdf\ file, so that the presentation can be passed along as a single file.
+
+\begin{command}{\media\oarg{options}\marg{poster text}\marg{media filename}}
+  Inserts the video or sound file \meta{media filename} into the \pdf\ file. As for |\movie|, the \meta{poster text} is typeset in a box and the media is played in the rectangle of this box; the box is shown until playback starts. The size of the rectangle is determined by the \meta{poster text} or by the |width=|, |height=| and |depth=| options, which override the size of the poster box without scaling its contents.
+
+  Unless the |autostart| option is given, playback starts when the user clicks on the rectangle, and it stops when the page is closed. Whether and how the media is played depends on the viewer application: for example, Okular and the \pdf\ viewer of Firefox play embedded media in screen annotations. Viewers commonly play \textsc{mp4} (H.264) and WebM videos, and \textsc{mp3} sounds.
+
+  The command requires pdf\TeX\ or Lua\TeX\ in \pdf\ mode. With other drivers, only the \meta{poster text} is typeset and a warning is issued.
+
+  The following \meta{options} may be given:
+  \begin{itemize}
+  \item
+    \declare{|autostart|}. Asks the viewer application to start playback when the page is opened. Not all viewer applications support this.
+  \item
+    \declare{|depth=|}\meta{\TeX\ dimension}, \declare{|height=|}\meta{\TeX\ dimension} and \declare{|width=|}\meta{\TeX\ dimension}. As for |\movie|, these override the dimensions of the \meta{poster text} box.
+  \item
+    \declare{|embed|}. Stores the media file in the \pdf\ file. Each file is stored only once, even if it is used several times, for example on several overlays of a frame. Without this option, the \pdf\ file only refers to \meta{media filename}, which must then be passed along with the \pdf\ file; some viewer applications, like the one of Firefox, only play embedded media.
+  \item
+    \declare{|externalviewer|}. As for |\movie|, launches an external application for playing the media file.
+  \item
+    \declare{|mimetype=|}\meta{type}. Sets the media type of the file, for example |video/mp4|. By default, the type is derived from the file extension; this is known for |mp4|, |m4v|, |webm|, |ogv|, |mov|, |mp3|, |m4a|, |oga|, |ogg| and |wav|.
+  \end{itemize}
+
+  \example
+  |\media[embed]{\includegraphics{poster}}{simulation.mp4}|
+\end{command}
+
 \subsubsection{Animations Created by Showing Slides in Rapid Succession}
 
 You can create an animation in a portable way by using the overlay commands of the \beamer\ package to create a series of slides that, when shown in rapid succession, present an animation. This is a flexible approach, but such animations will typically be rather static since it will take some time to advance from one slide to the next. This approach is mostly useful for animations where you want to explain each ``picture'' of the animation. When you advance slides ``by hand,'' that is, by pressing a forward button, it typically takes at least a second for the next slide to show.
