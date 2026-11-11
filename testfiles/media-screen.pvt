@@ -1,0 +1,31 @@
+\input{regression-test}
+\documentclass{article}
+\usepackage{multimedia}
+\pagestyle{empty}
+% Posters are plain rules: no fonts in the PDF, so the reference file
+% doesn't depend on font versions. The clip in support/ is a synthetic
+% 64x32, 1s H.264 file; its content is normalised away ([BINARY STREAM]).
+\newcommand\poster{\rule{4cm}{2cm}}
+\begin{document}
+\START
+
+% Embedded, click to play: file stream + file spec, rendition, click and
+% page-close actions; no page-open action.
+\media[embed]{\poster}{media-screen-clip.mp4}
+\clearpage
+
+% Same file with autostart: reuses the embedded file, adds a page-open
+% action.
+\media[embed,autostart]{\poster}{media-screen-clip.mp4}
+\clearpage
+
+% Changed page counter: /P must still point to the physical page.
+\setcounter{page}{42}
+\media[embed]{\poster}{media-screen-clip.mp4}
+\clearpage
+
+% Linked (not embedded), MIME type given explicitly.
+\media[mimetype=video/webm]{\poster}{media-screen-clip.mp4}
+\clearpage
+
+\END

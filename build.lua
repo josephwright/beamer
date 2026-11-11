@@ -42,7 +42,7 @@ cleanfiles = {"beameruserguide.pdf", "*.zip"}
 
 -- Test set up
 checkengines   = {"pdftex"}
-checksuppfiles = {"*.tex"}
+checksuppfiles = {"*.tex", "*.mp4"}
 
 -- Use standard MakeIndex style
 indexstyle = ""
