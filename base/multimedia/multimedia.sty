@@ -16,7 +16,7 @@
 
 \RequirePackage{keyval}[1997/11/10]
 
-\RequirePackage{embedfile}
+\RequirePackage{pdftexcmds}
 
 \RequirePackage{ifpdf}
 
@@ -115,6 +115,12 @@
 \@namedef{mm@mime@oga}{audio/ogg}
 \@namedef{mm@mime@ogg}{audio/ogg}
 \@namedef{mm@mime@wav}{audio/wav}
+% \mm@mimename: \mm@mimetype as a PDF name (`/' written as `#2F').
+\begingroup
+  \catcode`\#=12
+  \gdef\mm@hashchar{#}%
+\endgroup
+\def\mm@splitmime#1/#2\@nil{#1\mm@hashchar 2F#2}
 % \mm@setmimetype{<file>}: set \mm@mimetype from the extension of <file>
 % unless already set.
 \def\mm@setmimetype#1{%
@@ -233,17 +239,36 @@
     \else%
       \ifmm@embed%
         % Embed each file only once, e.g. for overlays or reused videos.
+        % The embedded file is only referenced from the media clip, not
+        % added to the document's /EmbeddedFiles, so viewers don't list it
+        % as an attachment.
         \@ifundefined{mm@filespec@#3}{%
-          \embedfile[id={mm@#3},mimetype={\mm@mimetype},ucfilespec={\detokenize{#3}}]{#3}%
+          \edef\mm@size{\pdf@filesize{#3}}%
+          \immediate\beamer@pdfobj stream attr {%
+            /Type /EmbeddedFile
+            \ifx\mm@mimetype\@empty\else
+              /Subtype /\expandafter\mm@splitmime\mm@mimetype\@nil
+            \fi
+            \ifx\mm@size\@empty\else /Params << /Size \mm@size\space >>\fi
+          } file {#3}%
+          \edef\mm@efobj{\the\beamer@pdflastobj}%
+          \immediate\beamer@pdfobj {%
+            <<
+              /Type /Filespec
+              /F (\pdf@escapestring{#3})
+              /UF (\pdf@escapestring{#3})
+              /EF << /F \mm@efobj\space 0 R >>
+            >>
+          }%
           \expandafter\xdef\csname mm@filespec@#3\endcsname{%
-            \embedfilegetobject{mm@#3}{Filespec}}%
+            \the\beamer@pdflastobj\space 0 R}%
         }{}%
         \edef\mm@fobj{\csname mm@filespec@#3\endcsname}%
       \else%
         \edef\mm@fobj{%
         <<
           /Type /Filespec
-          /F (#3)
+          /F (\pdf@escapestring{#3})
         >>
         }%
       \fi%
