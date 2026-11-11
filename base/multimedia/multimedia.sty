@@ -16,24 +16,37 @@
 
 \RequirePackage{keyval}[1997/11/10]
 
+\RequirePackage{embedfile}
+
 \RequirePackage{ifpdf}
 
 \ifx\directlua\@undefined
   \let\beamer@pdfpageattr\pdfpageattr
+  \let\beamer@pdfpageref\pdfpageref
   \let\beamer@pdfobj\pdfobj
   \let\beamer@pdfrefobj\pdfrefobj
   \let\beamer@pdflastobj\pdflastobj
   \let\beamer@pdfannot\pdfannot
+  \let\beamer@pdflastannot\pdflastannot
   \let\beamer@pdfstartlink\pdfstartlink
   \let\beamer@pdfendlink\pdfendlink
+  \let\beamer@pdfxform\pdfxform
+  \let\beamer@pdfrefxform\pdfrefxform
+  \let\beamer@pdflastxform\pdflastxform
 \else %
   \edef\beamer@pdfpageattr{\pdfvariable pageattr}
+  % NOTE: There is a bug in the luatex manual, this is the correct pageref definition. See also: https://tex.stackexchange.com/questions/637449/animate-and-hyperref-form-packages-incompatibility-with-lualatex
+  \def\beamer@pdfpageref{\pdffeedback pageref }
   \protected\def\beamer@pdfobj{\pdfextension obj }
   \protected\def\beamer@pdfrefobj{\pdfextension refobj }
   \protected\def\beamer@pdflastobj{\numexpr\pdffeedback lastobj\relax}
   \protected\def\beamer@pdfannot{\pdfextension annot }
+  \protected\def\beamer@pdflastannot{\numexpr\pdffeedback lastannot\relax}
   \protected\def\beamer@pdfstartlink{\pdfextension startlink }
   \protected\def\beamer@pdfendlink{\pdfextension endlink\relax}
+  \let\beamer@pdfxform\saveboxresource
+  \let\beamer@pdfrefxform\useboxresource
+  \let\beamer@pdflastxform\lastsavedboxresourceindex
 \fi
 
 \ifpdf
@@ -55,6 +68,7 @@
 \define@key{multimedia}{duration}{\mm@convert#1{\mm@duration}{/Duration}}%
 \define@key{multimedia}{encoding}{\def\mm@e{/E /#1}}
 \define@key{multimedia}{externalviewer}[]{\mm@externaltrue}
+\define@key{multimedia}{embed}[]{\mm@embedtrue}
 \define@key{multimedia}{height}{\@tempdimb=#1\relax}
 \define@key{multimedia}{inlinesound}[true]{\csname mm@inline#1\endcsname}
 \define@key{multimedia}{label}{\def\mm@label{#1}}
@@ -84,6 +98,7 @@
 \newif\ifmm@autostart
 \newif\ifmm@autostop
 \newif\ifmm@external
+\newif\ifmm@embed
 \newif\ifmm@inline
 \newcount\mm@movie
 
@@ -151,9 +166,134 @@
           /FT/Btn/Ff 65537
           /T (wid@\mm@label)
           /AA <</PO \the\beamer@pdflastobj\space 0 R>>% attention: /O --> /PO for Widget annots
-        }%  
+        }%
       }%
       \fi%
+    \fi%
+  }%
+}
+
+
+\newcommand\media[3][]{%
+  \leavevmode%
+  % Sanity check
+  \IfFileExists{\@currdir #3}{}{%
+    \PackageWarning{multimedia}{The movie file ``#3'' could not be
+      found in the current directory, where it must reside for
+      viewing.}%
+  }%
+  {%
+    % Calculate size of the poster
+    \setbox\@tempboxa=\hbox{#2}%
+    \@tempdima=\wd\@tempboxa%
+    \@tempdimb=\ht\@tempboxa%
+    \@tempdimc=\dp\@tempboxa%
+    \global\advance\mm@movie by1\relax%
+    \edef\mm@label{mmdefaultlabel\the\mm@movie}%
+    \mm@autostartfalse%
+    \mm@externalfalse%
+    \mm@embedfalse%
+    \setkeys{multimedia}{#1}%
+    \wd\@tempboxa=\@tempdima%
+    \ht\@tempboxa=\@tempdimb%
+    \dp\@tempboxa=\@tempdimc%
+    \ifmm@external%
+      \href{run:#3}{\box\@tempboxa}%
+    \else%
+      \ifmm@embed%
+        \embedfile[id={vid}]{#3}%
+        \edef\fobj{\embedfilegetobject{vid}{Filespec}}%
+      \else%
+        \edef\fobj{%
+        <<
+          /Type /Filespec
+          /F (#3)
+        >>
+        }%
+      \fi%
+      \mm@psorpdf{%
+        \PackageWarning{multimedia}{NOT IMPLEMENTED!}%
+       }{%
+        \beamer@pdfxform\@tempboxa
+        \beamer@pdfannot reserveobjnum \edef\annotobj{\the\beamer@pdflastannot}
+        \beamer@pdfobj reserveobjnum \edef\actnobj{\the\beamer@pdflastobj}
+        \beamer@pdfobj reserveobjnum \edef\actnPOobj{\the\beamer@pdflastobj}
+        \beamer@pdfobj reserveobjnum \edef\actnPCobj{\the\beamer@pdflastobj}
+        \beamer@pdfobj reserveobjnum \edef\rndtobj{\the\beamer@pdflastobj}
+        \beamer@pdfobj useobjnum\rndtobj
+        {
+          <<
+            /Type /Rendition
+            /S /MR
+            /C <<
+              /Type /MediaClip
+              /S /MCD
+              /D \fobj
+              /CT (video/mp4)
+              /P <<
+                /Type /MediaPermissions
+                /TF (TEMPACCESS)
+              >>
+            >>
+            /P <<
+              /Type /MediaPlayParams
+              /BE <<
+                /C true
+              >>
+            >>
+          >>
+        }%
+        \beamer@pdfobj useobjnum\actnobj
+        {
+          <<
+            /Type /Action
+            /S /Rendition
+            /OP 0
+            /AN \annotobj\space 0 R
+            /R \rndtobj\space 0 R
+          >>
+        }%
+        \beamer@pdfobj useobjnum\actnPOobj
+        {
+          <<
+            /Type /Action
+            /S /Rendition
+            /OP 4
+            /AN \annotobj\space 0 R
+            /R \rndtobj\space 0 R
+          >>
+        }%
+        \beamer@pdfobj useobjnum\actnPCobj
+        {
+          <<
+            /Type /Action
+            /S /Rendition
+            /OP 1
+            /AN \annotobj\space 0 R
+            /R \rndtobj\space 0 R
+          >>
+        }%
+        \beamer@pdfannot useobjnum\annotobj width \@tempdima height \@tempdimb depth \@tempdimc
+        {
+          /Subtype /Screen
+          /P \beamer@pdfpageref\value{page}\space 0 R
+          /AP <<
+            /N \the\beamer@pdflastxform\space 0 R
+          >>
+          /A \actnobj\space 0 R
+          /AA <<
+            \ifmm@autostart%
+            /PO \actnPOobj\space 0 R
+            \fi%
+            /PC \actnPCobj\space 0 R
+          >>
+        }%
+      }%
+      \beamer@pdfrefobj\rndtobj
+      \beamer@pdfrefobj\actnobj
+      \beamer@pdfrefobj\actnPOobj
+      \beamer@pdfrefobj\actnPCobj
+      \beamer@pdfrefxform\beamer@pdflastxform
     \fi%
   }%
 }
