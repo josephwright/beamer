@@ -237,44 +237,47 @@
     \ifmm@external%
       \href{run:#3}{\box\@tempboxa}%
     \else%
-      \ifmm@embed%
-        % Embed each file only once, e.g. for overlays or reused videos.
-        % The embedded file is only referenced from the media clip, not
-        % added to the document's /EmbeddedFiles, so viewers don't list it
-        % as an attachment.
-        \@ifundefined{mm@filespec@#3}{%
-          \edef\mm@size{\pdf@filesize{#3}}%
-          \immediate\beamer@pdfobj stream attr {%
-            /Type /EmbeddedFile
-            \ifx\mm@mimetype\@empty\else
-              /Subtype /\expandafter\mm@splitmime\mm@mimetype\@nil
-            \fi
-            \ifx\mm@size\@empty\else /Params << /Size \mm@size\space >>\fi
-          } file {#3}%
-          \edef\mm@efobj{\the\beamer@pdflastobj}%
-          \immediate\beamer@pdfobj {%
-            <<
-              /Type /Filespec
-              /F (\pdf@escapestring{#3})
-              /UF (\pdf@escapestring{#3})
-              /EF << /F \mm@efobj\space 0 R >>
-            >>
-          }%
-          \expandafter\xdef\csname mm@filespec@#3\endcsname{%
-            \the\beamer@pdflastobj\space 0 R}%
-        }{}%
-        \edef\mm@fobj{\csname mm@filespec@#3\endcsname}%
-      \else%
-        \edef\mm@fobj{%
-        <<
-          /Type /Filespec
-          /F (\pdf@escapestring{#3})
-        >>
-        }%
-      \fi%
       \mm@psorpdf{%
-        \PackageWarning{multimedia}{NOT IMPLEMENTED!}%
-       }{%
+        \PackageWarning{multimedia}{\string\media\space is only supported
+          with pdfTeX and LuaTeX in PDF mode; showing only the poster
+          for ``#3''}%
+        \box\@tempboxa
+      }{%
+        \ifmm@embed%
+          % Embed each file only once, e.g. for overlays or reused videos.
+          % The embedded file is only referenced from the media clip, not
+          % added to the document's /EmbeddedFiles, so viewers don't list it
+          % as an attachment.
+          \@ifundefined{mm@filespec@#3}{%
+            \edef\mm@size{\pdf@filesize{#3}}%
+            \immediate\beamer@pdfobj stream attr {%
+              /Type /EmbeddedFile
+              \ifx\mm@mimetype\@empty\else
+                /Subtype /\expandafter\mm@splitmime\mm@mimetype\@nil
+              \fi
+              \ifx\mm@size\@empty\else /Params << /Size \mm@size\space >>\fi
+            } file {#3}%
+            \edef\mm@efobj{\the\beamer@pdflastobj}%
+            \immediate\beamer@pdfobj {%
+              <<
+                /Type /Filespec
+                /F (\pdf@escapestring{#3})
+                /UF (\pdf@escapestring{#3})
+                /EF << /F \mm@efobj\space 0 R >>
+              >>
+            }%
+            \expandafter\xdef\csname mm@filespec@#3\endcsname{%
+              \the\beamer@pdflastobj\space 0 R}%
+          }{}%
+          \edef\mm@fobj{\csname mm@filespec@#3\endcsname}%
+        \else%
+          \edef\mm@fobj{%
+          <<
+            /Type /Filespec
+            /F (\pdf@escapestring{#3})
+          >>
+          }%
+        \fi%
         \beamer@pdfxform\@tempboxa
         \beamer@pdfannot reserveobjnum \edef\mm@annotobj{\the\beamer@pdflastannot}%
         \beamer@pdfobj reserveobjnum \edef\mm@actnobj{\the\beamer@pdflastobj}%
@@ -354,11 +357,11 @@
             /PC \mm@actnPCobj\space 0 R
           >>
         }%
+        \beamer@pdfrefobj\mm@rndtobj
+        \beamer@pdfrefobj\mm@actnobj
+        \beamer@pdfrefobj\mm@actnPCobj
+        \beamer@pdfrefxform\beamer@pdflastxform
       }%
-      \beamer@pdfrefobj\mm@rndtobj
-      \beamer@pdfrefobj\mm@actnobj
-      \beamer@pdfrefobj\mm@actnPCobj
-      \beamer@pdfrefxform\beamer@pdflastxform
     \fi%
   }%
 }
