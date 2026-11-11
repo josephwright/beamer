@@ -72,6 +72,7 @@
 \define@key{multimedia}{height}{\@tempdimb=#1\relax}
 \define@key{multimedia}{inlinesound}[true]{\csname mm@inline#1\endcsname}
 \define@key{multimedia}{label}{\def\mm@label{#1}}
+\define@key{multimedia}{mimetype}{\def\mm@mimetype{#1}}
 \define@key{multimedia}{loop}[]{\def\mm@playmode{/Mode /Repeat}\def\mm@repeat{/Repeat true}}
 \define@key{multimedia}{mixsound}[true]{\def\mm@mix{/Mix #1}}
 \define@key{multimedia}{once}[]{\def\mm@playmode{/Mode /Once}}
@@ -101,6 +102,34 @@
 \newif\ifmm@embed
 \newif\ifmm@inline
 \newcount\mm@movie
+
+% MIME types for \media, by (lowercase) file extension; override with
+% the `mimetype' key.
+\@namedef{mm@mime@mp4}{video/mp4}
+\@namedef{mm@mime@m4v}{video/mp4}
+\@namedef{mm@mime@webm}{video/webm}
+\@namedef{mm@mime@ogv}{video/ogg}
+\@namedef{mm@mime@mov}{video/quicktime}
+\@namedef{mm@mime@mp3}{audio/mpeg}
+\@namedef{mm@mime@m4a}{audio/mp4}
+\@namedef{mm@mime@oga}{audio/ogg}
+\@namedef{mm@mime@ogg}{audio/ogg}
+\@namedef{mm@mime@wav}{audio/wav}
+% \mm@setmimetype{<file>}: set \mm@mimetype from the extension of <file>
+% unless already set.
+\def\mm@setmimetype#1{%
+  \ifx\mm@mimetype\@empty
+    \filename@parse{#1}%
+    \edef\mm@ext{\filename@ext}%
+    \lowercase\expandafter{\expandafter\def\expandafter\mm@ext\expandafter{\mm@ext}}%
+    \@ifundefined{mm@mime@\mm@ext}{%
+      \PackageWarning{multimedia}{Unknown media type of ``#1'';
+        set it with the `mimetype' key}%
+    }{%
+      \edef\mm@mimetype{\csname mm@mime@\mm@ext\endcsname}%
+    }%
+  \fi
+}
 
 \newcommand\movie[3][]{%
   \leavevmode%
@@ -193,7 +222,9 @@
     \mm@autostartfalse%
     \mm@externalfalse%
     \mm@embedfalse%
+    \let\mm@mimetype\@empty%
     \setkeys{multimedia}{#1}%
+    \mm@setmimetype{#3}%
     \wd\@tempboxa=\@tempdima%
     \ht\@tempboxa=\@tempdimb%
     \dp\@tempboxa=\@tempdimc%
@@ -201,10 +232,15 @@
       \href{run:#3}{\box\@tempboxa}%
     \else%
       \ifmm@embed%
-        \embedfile[id={vid}]{#3}%
-        \edef\fobj{\embedfilegetobject{vid}{Filespec}}%
+        % Embed each file only once, e.g. for overlays or reused videos.
+        \@ifundefined{mm@filespec@#3}{%
+          \embedfile[id={mm@#3},mimetype={\mm@mimetype}]{#3}%
+          \expandafter\xdef\csname mm@filespec@#3\endcsname{%
+            \embedfilegetobject{mm@#3}{Filespec}}%
+        }{}%
+        \edef\mm@fobj{\csname mm@filespec@#3\endcsname}%
       \else%
-        \edef\fobj{%
+        \edef\mm@fobj{%
         <<
           /Type /Filespec
           /F (#3)
@@ -215,12 +251,14 @@
         \PackageWarning{multimedia}{NOT IMPLEMENTED!}%
        }{%
         \beamer@pdfxform\@tempboxa
-        \beamer@pdfannot reserveobjnum \edef\annotobj{\the\beamer@pdflastannot}
-        \beamer@pdfobj reserveobjnum \edef\actnobj{\the\beamer@pdflastobj}
-        \beamer@pdfobj reserveobjnum \edef\actnPOobj{\the\beamer@pdflastobj}
-        \beamer@pdfobj reserveobjnum \edef\actnPCobj{\the\beamer@pdflastobj}
-        \beamer@pdfobj reserveobjnum \edef\rndtobj{\the\beamer@pdflastobj}
-        \beamer@pdfobj useobjnum\rndtobj
+        \beamer@pdfannot reserveobjnum \edef\mm@annotobj{\the\beamer@pdflastannot}
+        \beamer@pdfobj reserveobjnum \edef\mm@actnobj{\the\beamer@pdflastobj}
+        \ifmm@autostart
+          \beamer@pdfobj reserveobjnum \edef\mm@actnPOobj{\the\beamer@pdflastobj}
+        \fi
+        \beamer@pdfobj reserveobjnum \edef\mm@actnPCobj{\the\beamer@pdflastobj}
+        \beamer@pdfobj reserveobjnum \edef\mm@rndtobj{\the\beamer@pdflastobj}
+        \beamer@pdfobj useobjnum\mm@rndtobj
         {
           <<
             /Type /Rendition
@@ -228,8 +266,8 @@
             /C <<
               /Type /MediaClip
               /S /MCD
-              /D \fobj
-              /CT (video/mp4)
+              /D \mm@fobj
+              \ifx\mm@mimetype\@empty\else /CT (\mm@mimetype)\fi
               /P <<
                 /Type /MediaPermissions
                 /TF (TEMPACCESS)
@@ -243,56 +281,58 @@
             >>
           >>
         }%
-        \beamer@pdfobj useobjnum\actnobj
+        \beamer@pdfobj useobjnum\mm@actnobj
         {
           <<
             /Type /Action
             /S /Rendition
             /OP 0
-            /AN \annotobj\space 0 R
-            /R \rndtobj\space 0 R
+            /AN \mm@annotobj\space 0 R
+            /R \mm@rndtobj\space 0 R
           >>
         }%
-        \beamer@pdfobj useobjnum\actnPOobj
+        \ifmm@autostart
+        \beamer@pdfobj useobjnum\mm@actnPOobj
         {
           <<
             /Type /Action
             /S /Rendition
             /OP 4
-            /AN \annotobj\space 0 R
-            /R \rndtobj\space 0 R
+            /AN \mm@annotobj\space 0 R
+            /R \mm@rndtobj\space 0 R
           >>
         }%
-        \beamer@pdfobj useobjnum\actnPCobj
+        \beamer@pdfrefobj\mm@actnPOobj
+        \fi
+        \beamer@pdfobj useobjnum\mm@actnPCobj
         {
           <<
             /Type /Action
             /S /Rendition
             /OP 1
-            /AN \annotobj\space 0 R
-            /R \rndtobj\space 0 R
+            /AN \mm@annotobj\space 0 R
+            /R \mm@rndtobj\space 0 R
           >>
         }%
-        \beamer@pdfannot useobjnum\annotobj width \@tempdima height \@tempdimb depth \@tempdimc
+        \beamer@pdfannot useobjnum\mm@annotobj width \@tempdima height \@tempdimb depth \@tempdimc
         {
           /Subtype /Screen
           /P \beamer@pdfpageref\value{page}\space 0 R
           /AP <<
             /N \the\beamer@pdflastxform\space 0 R
           >>
-          /A \actnobj\space 0 R
+          /A \mm@actnobj\space 0 R
           /AA <<
             \ifmm@autostart%
-            /PO \actnPOobj\space 0 R
+            /PO \mm@actnPOobj\space 0 R
             \fi%
-            /PC \actnPCobj\space 0 R
+            /PC \mm@actnPCobj\space 0 R
           >>
         }%
       }%
-      \beamer@pdfrefobj\rndtobj
-      \beamer@pdfrefobj\actnobj
-      \beamer@pdfrefobj\actnPOobj
-      \beamer@pdfrefobj\actnPCobj
+      \beamer@pdfrefobj\mm@rndtobj
+      \beamer@pdfrefobj\mm@actnobj
+      \beamer@pdfrefobj\mm@actnPCobj
       \beamer@pdfrefxform\beamer@pdflastxform
     \fi%
   }%
